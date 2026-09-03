@@ -1,0 +1,2279 @@
+SocialCoach: Personalized Social Skill Learning with Agentic
+Tutoring and Practice
+Tianfu Wang
+HKUST (GZ)
+Guangzhou, China
+twang566@connect.hkust-
+gz.edu.cn
+Max Xiong
+Duke University
+Durham, United States
+mx71@duke.edu
+Yuxuan Lei
+Microsoft
+Beijing, China
+t-
+yuxuanlei@microsoft.com
+Jianxun Lian
+Microsoft Research Asia
+Beijing, China
+jianxun.lian@outlook.com
+Hongyuan Zhu
+Microsoft
+Beijing, China
+hongyuanzhu@microsoft.com
+Zhengyu Hu
+HKUST (GZ)
+Guangzhou, China
+v-
+huzhengyu@microsoft.com
+Linxiao Gong
+HKUST (GZ)
+Guangzhou, China
+Igong265@connect.hkust-
+gz.edu.cn
+Dapeng Hu
+Microsoft
+Beijing, China
+dapenghu@microsoft.com
+Xiaofang Li
+Microsoft
+Beijing, China
+xiaofangli@microsoft.com
+Peiting Tsai
+Microsoft
+Beijing, China
+peitingtsai@microsoft.com
+Nicholas Jing Yuan
+Microsoft
+Beijing, China
+nicholas.yuan@microsoft.com
+Qi Zhang
+Microsoft
+Beijing, China
+zhang.qi@microsoft.com
+Abstract
+Social skills such as negotiation and leadership are crucial for per-
+sonal and professional success in today’s interconnected world.
+However, scalable and effective training remains a significant chal-
+lenge due to the scarcity of expert coaching. In this work, we in-
+troduce SocialCoach, an LLM-powered agentic tutoring system for
+personalized social skill learning. SocialCoach constructs a theory-
+to-practice corpus of traceable strategies, cases, and practice scenar-
+ios, and uses this corpus for both scheduling and reflective tutoring.
+We formulate social practice personalization as cold-start, retrieval-
+constrained sequential practice scheduling. Given a learner profile,
+simulated proficiency state, and observed practice history, a policy
+produces structured prescriptions that are realized through cor-
+pus retrieval. To enhance scheduling effectiveness, we optimize
+complete pathways with trajectory-level GRPO using rubric-judge-
+based pairwise preferences. Additionally, we instantiate the sched-
+uling approach in a deployed platform with goal-driven practice
+and knowledge-grounded reflective tutoring. Finally, in the syn-
+thetic cold-start setting, experiment results show that SocialCoach
+achieves higher pathway-quality ratings than baselines in schedul-
+ing and tutoring quality. We also conduct human studies to demon-
+strate its usefulness for real-world social skill learning.
+CCS Concepts
+• Information systems →Data mining; • Social and profes-
+sional topics →Computing education.
+Keywords
+Social Skill Learning, AI for Education, LLM Agent, Personalization
+Conflict 
+Resolution
+Emotional 
+Regulation
+Persuasion & 
+Negotiation
+Leadership 
+Building
+Scalability
+Personalization
+Immersion
+Mastery
+(a) Representative Social Skills
+(b) Expert Coaching Loop
+Diverse Practical Requirements
+Material
+Preparation
+Curriculum
+Design
+Simulated
+Practice
+Knowledge
+Tutoring
+Figure 1: The social skills training landscape. (a) Examples
+of critical social skills. (b) The typical expert coaching loop,
+highlighting diverse practical requirements.
+1
+Introduction
+In this increasingly interconnected and collaborative global land-
+scape, proficiency in complex social skills is critical for both per-
+sonal well-being and professional success. As illustrated in Fig-
+ure 1(a), social skills, such as negotiation, leadership, and conflict
+resolution, profoundly shape an individual’s ability to navigate
+interpersonal environments [6]. These competencies not only un-
+derpin effective interpersonal relationships but also serve as sig-
+nificant drivers of economic value. Yet, despite their undeniable
+importance, the effective acquisition of these skills remains a criti-
+cal gap for most learners worldwide. Traditionally, expert coaching
+is a proven pathway for social skill development. As illustrated
+in Figure 1(b), this educational loop consists of several key stages,
+including the knowledge preparation for specialized skills, tailored
+curriculum design, scenario simulation for practice and providing
+arXiv:2606.04155v2  [cs.HC]  16 Aug 2026
+
+Tianfu Wang et al.
+constructive guidance. However, effectively orchestrating these
+stages requires substantial human expertise and resources, which
+limits the scalability and accessibility of high-quality coaching [29].
+The advent of Artificial Intelligence (AI) presents a transfor-
+mative opportunity to address these limitations. However, early
+AI-driven methods often selectively focus on isolated educational
+tasks such as social dialogue generation or knowledge tutoring, and
+have limited generalizability over various topics. Large Language
+Models (LLMs) have demonstrated a remarkable capacity for both
+vast knowledge integration and context-aware dialogue generation.
+This is crucial to distinguish their application in declarative knowl-
+edge acquisition from the experiential, practice-driven nature of
+social skill development [41]. Several works have begun to lever-
+age LLM for social conversational practice [15, 21] and to develop
+frameworks for specific competencies like conflict resolution [34]
+and empathy [37]. Despite these advances, existing approaches
+typically target individual coaching stages or specific social skills
+and do not fully meet the practical requirements. Consequently, a
+significant gap persists in the absence of a unified social skill devel-
+opment framework that can support comprehensive social skills,
+adaptive scenario practice, and pedagogically grounded tutoring.
+This highlights a clear need for a holistic framework that enables
+scalable, personalized training experiences.
+To build such a framework, three fundamental data science chal-
+lenges must be addressed [20]: (a) Scalable Knowledge Discovery and
+Structuring. To ensure pedagogical rigor, a trustworthy knowledge
+base must be grounded in verifiable, expert-endorsed principles.
+However, while LLM-generated content risks unverifiability and
+hallucination, expert knowledge in social coaching is predomi-
+nantly unstructured and tacit, often residing in practitioner experi-
+ence or scattered sources. Thus, a core challenge lies in automati-
+cally extracting, codifying, and structuring validated expertise from
+authoritative sources at scale. (b) Personalized Practice Curricula
+Scheduling. Real-world learners differ in their backgrounds, goals,
+target skills, and prior practice. Static curricula cannot account
+for these differences, while unconstrained generation may request
+scenarios that do not exist in the available corpus. The scheduling
+problem is therefore both personalized and retrieval-constrained:
+each prescription must fit the learner while remaining realizable
+as a traceable practice scenario. (c) Diagnostic Coaching Scaffolding
+Development. Effective tutoring aims to promote learner autonomy
+in real-world social skill application. This requires accurately as-
+sessing the knowledge deficits in practices and scaffolding to bridge
+the "knowing–doing" gap. Besides, beyond prescriptive feedback
+alone, the system must enable guided reflection by linking practice
+to theory and diagnosing skill gaps. Delivering such diagnostic,
+reflective guidance remains an underexplored challenge.
+To bridge these critical gaps, we introduce SocialCoach, an agen-
+tic tutoring and practice system for personalized social skill learning.
+First, to ensure educational validity at scale, we develop a structured
+framework for organizing social skill knowledge, grounded in a
+theory-to-practice paradigm and enriched through multi-faceted
+semantic associations. An automated pipeline transforms unstruc-
+tured expert books into a coherent corpus of strategic theories, illus-
+trative cases, and practical scenarios. This corpus provides a trace-
+able practice space for both personalized scheduling and knowledge-
+grounded tutoring. Second, at the core of personalization, we for-
+mulate next-practice selection as a cold-start, retrieval-constrained
+scheduling problem. We develop a prescription–retrieval–adaptation
+policy that conditions on the learner’s profile, simulated proficiency
+state, observed practice history, and available corpus. An expected
+proficiency estimator generates bounded skill-level transitions for
+each selected scenario to simulate state transitions. We optimize the
+scheduling policy for complete practice pathways using pairwise
+judge-based GRPO training. Finally, to close the practice and tutor-
+ing loop, we introduce a pedagogically grounded coaching process
+that tightly integrates interactive practice with metacognitive scaf-
+folding. After a learner engages in a goal-driven simulated scenario,
+the system performs an evidence-linked assessment of observed
+behavior and provides tailored, knowledge-grounded guidance.
+In experiments, we evaluate corpus quality, pathway quality,
+tutoring quality, and perceived usefulness. Automated evaluation
+assigns higher quality ratings to SocialCoach than to compared
+baselines, which is well-aligned with experts. Furthermore, the user
+study reveals a better learning experience with SocialCoach.
+We highlight our main contributions as follows.
+• We introduce SocialCoach, an agentic tutoring and practice
+system for personalized social skill learning, and formulate
+its central personalization problem as cold-start, retrieval-
+constrained sequential practice scheduling.
+• We establish a theory-to-practice social knowledge frame-
+work with multi-faceted semantic categorization. The re-
+sulting corpus provides a structured practice space for
+scheduling and knowledge-grounded tutoring.
+• To address cold-start personalization, we propose a retrieval-
+constrained learning pathway scheduling algorithm that
+formulates practice planning as a prescription–retrieval–
+adaptation process. It also leverages the pairwise pathway
+GRPO to optimize the prescription policy.
+• We instantiate SocialCoach in a deployed platform and
+evaluate it through corpus analysis, automated evaluation,
+and user study. Results show its effectiveness on corpus
+quality, tutoring quality, and user learning experience.
+2
+Related Work
+LLM-powered Tutoring Systems. LLMs are increasingly being
+leveraged to enhance Intelligent Tutoring Systems (ITS), which
+serve as conversational partners, moving beyond the static, content-
+centric traditional platforms [4, 18]. Prior work has explored spe-
+cialized functions within ITS, including learner profiling [43] and
+performance assessment [32]. Also, there are some studies on en-
+hancing pedagogical strategies of chatbot tutors like Socratic guid-
+ance [7, 24]. Furthermore, several multi-agent architectures [30, 39]
+have been proposed to orchestrate complementary pedagogical
+roles, where specialized agents collaborate on tasks such as content
+creation, feedback, and evaluation. Despite these advances, most
+LLM-powered tutors remain oriented toward knowledge trans-
+mission rather than practice-based development. However, social
+skill learning emphasizes iterative practice, contextual sensitivity,
+
+SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice
+Strategic
+Theories
+Illustrative 
+Cases
+Practical 
+Scenarios
+Immersive Simulation-based Practice
+Knowledge-Grounded Reflective Tutoring
+Extraction
+Personal 
+Information
+Refinement
+Filtering
+Tagging
+Online News
+Academic Papers
+Sociology Books
+Historical
+Behaviour
+Background
+Objectives
+Characters
+Raw
+Content
+Filtered
+Knowledge
+Multi-faced
+Tags
+Refined
+Knowledge
+Guidance
+Automated Knowledge Discovery
+Associated Tags
+User Social Profile
+Pedagogical Coaching Scaffolding
+Estimated
+Proficiency 
+Status
+Data Sources
+Automated Knowledge Extraction
+Scenario
+Goal-driven Simulation
+Social Knowledge Corpus
+Targeted
+Knowledge 
+Retrieval
+Reflective
+Feedback
+Generator
+Ending
+Human
+NPC A
+NPC B
+…
+Success
+Failure
+Social Skill
+Social Competency
+Scenario Topic
+CASEL
+Competencies
+Behavioral Performance Assessment
+Profile &
+Dialogue & 
+Diagnosis
+Theory & Case
+Context
+Recorded
+Conversional
+Logs
+Performance
+Deficit
+Attribution
+Social 
+Behaviour 
+Diagnosis
+Learner 
+Prescription 
+Agent
+Scenario
+Adaptation
+Agent
+Learner 
+Prescription
+Personalized 
+Scenario
+Adaptive Practice Scheduling
+Candidate
+Retrieval
+Module
+Scenario
+Candidate
+Targeted
+Skills
+Attribution-Based Assessment
+Deficit
+Attribution
+Figure 2: An overview of the SocialCoach Framework for personalized social skill training at scale.
+and behavioral transfer. Thus, a critical gap remains in developing
+scalable, personalized, and pedagogically grounded LLM-driven
+tutoring and practice systems tailored to social skill learning [41].
+Intelligent Social Emotional Learning. Social–emotional learn-
+ing (SEL) focuses on helping learners cultivate positive attitudes,
+self-awareness, and healthy interpersonal relationships [8]. Early
+AI-driven efforts in this space emphasized conversational support,
+real-time feedback, and scaffolds for socio-emotional growth [33].
+With the rise of LLMs, the field has shifted toward adaptive, role-
+playing–based systems that can target specific skills with greater
+nuance [41]. Recent LLM-based approaches have demonstrated
+promise in skills such as conflict resolution [34], empathy coach-
+ing [37], and stress self-regulation [10] However, despite these
+advances, current systems are typically scoped to narrow skill ar-
+eas and face persistent challenges around knowledge traceability
+and pedagogical reliability. This fragmentation limits the scalabil-
+ity and pedagogical grounding of learning experiences of social
+skill learning. It also hinders cross-context skill transfer, creating a
+“knowing–doing” gap between understanding and practical use.
+Personalization in Educational System. Personalized learning
+experience is vital for improving efficiency and engagement as
+learners progress [26]. Particularly, designing adaptive learning
+pathways can better match individual needs than traditional or rule-
+based curricula. To improve path personalization, prior work [5, 13]
+trains models for specific scenarios using supervised learning on
+well-labeled data. However, such data are often proprietary or
+scarce in many educational scenarios. To address this cold-start
+problem, recent studies [2, 23] use simulated environments and
+reinforcement learning to optimize learning-path policies. These
+simulators are typically designed for structured domains such as
+mathematics and computer science [2]; social-skill practice instead
+requires sequencing open-ended scenarios under learner and corpus
+constraints. We therefore use a bounded, scenario-conditioned profi-
+ciency transition as a cold-start planning proxy, rather than asking
+an LLM learner to generate and then self-assess an entire prac-
+tice response. Outside educational scheduling, profile-conditioned
+retrieval uses persona descriptions as queries over external cor-
+pora [17], personalized query expansion incorporates user-specific
+signals before retrieval [47], and history-aware retrieval reformu-
+lates queries using relevant prior turns [27]. These mechanisms
+motivate our matched retrieval controls, but do not themselves
+optimize multi-session practice pathways.
+3
+Problem Definition
+Let S denote the available social skills and K𝑠the corpus of trace-
+able practice scenarios. A synthetic learner is represented by profile
+information 𝑈, stated goals 𝐺⊆S, an initial proficiency vector
+𝑈0
+𝑝∈[1, 5] |S|, and an append-only history 𝐻𝑡of realized practice
+and retrieval events. The initial scores are part of profile generation
+rather than measurements of real users. From K𝑠, 𝑈𝑡
+𝑝, and 𝐻𝑡, the
+system derives the available practice candidates.
+At session 𝑡, the scheduler observes the state 𝑠𝑡= (𝑈,𝐺,𝑈𝑡
+𝑝, 𝐻𝑡)
+and produces a structured prescription 𝑎𝑡. The retriever realizes this
+prescription as a corpus scenario 𝑝𝑡. Given 𝑝𝑡, the tutoring system
+guides the learning. The planning environment then updates the
+learner state and practice history: 𝑠𝑡+1 = T (𝑠𝑡,𝑎𝑡, 𝑝𝑡). A pathway is
+sequential because each selected practice changes the state observed
+by subsequent scheduling decisions. We seek a policy that produces
+personalized, coherent, and progression-aware pathways under
+corpus and horizon constraints in cold-start settings.
+4
+The SocialCoach Framework
+To achieve personalized social skill learning at scale, we introduce
+SocialCoach, an agentic tutoring and practice system illustrated
+in Figure 2. SocialCoach holistically integrates several critical com-
+ponents. Firstly, it automatically constructs a comprehensive and
+pedagogically-grounded social skills knowledge corpus from di-
+verse, unstructured sources using LLMs. Second, it maintains a user
+profile and a factual history of completed practices and retrieval
+events. Additionally, SocialCoach employs an adaptive practice
+scheduling policy trained with reinforcement learning to prepare
+scenario sequences tailored to individual goals. For each practice, it
+
+Tianfu Wang et al.
+Social 
+Skills
+Scenario
+Type
+Social 
+Competency
+Strategic
+Theory
+Illustrative
+Case
+Practical
+Scenario
+Figure 3: The proposed theory-to-practice social knowledge
+framework with multi-faceted categorization perspectives.
+delivers pedagogically grounded coaching through immersive prac-
+tice, behavior-grounded assessment, and personalized feedback. We
+elaborate on each of these components below.
+4.1
+Automated Knowledge Discovery
+Effective social skill training depends on the availability of high-
+quality, context-rich pedagogical content that reflects real-world
+interpersonal challenges. However, expert knowledge in this do-
+main is often tacit and dispersed across unstructured sources such as
+books, articles, and media [9]. Manual curation of such knowledge
+is labor-intensive and difficult to scale, while direct LLM-based con-
+tent generation risks unverifiability and hallucination [38]. These
+methods compromise knowledge scalability or pedagogical relia-
+bility. To overcome these challenges, we introduce an end-to-end,
+LLM-driven pipeline that automatically constructs a structured
+and trustworthy social knowledge corpus K. This method ensures
+pedagogical traceability and supports diverse social skills at scale.
+4.1.1
+Theory-to-Practice Knowledge Organization. Effective
+social skills education requires more than isolated facts or generic
+tips; it demands a comprehensive framework that connects abstract
+principles, concrete examples, and hands-on practice. Most existing
+approaches treat these components in isolation, limiting transfer-
+ability and depth of learning. We address this gap by designing
+a theory-to-practice knowledge framework across three pedagog-
+ical levels [36]. This method links what learners should do with
+why and how to do it in practice. This integration comprises three
+interrelated layers:
+• Strategic Theories K𝑡: Provides the conceptual "why" through
+abstract principles defining effective social interaction.
+• Illustrative Case K𝑐: Bridges theory and practice by showing
+the "how" through concrete examples and case studies that
+demonstrate social principles in action.
+• Practical Scenarios K𝑠: Enables the "doing" by immersing
+learners in hands-on simulations for active practice and
+assessment, thereby closing the "knowing-doing" gap.
+4.1.2
+Multi-faceted Semantic Categorization. Social interac-
+tions are highly diverse and context-dependent, requiring not only
+an understanding of specific skills but also their flexible applica-
+tion across various scenarios. Thus, we introduce a multi-faceted
+semantic categorization method to structure the knowledge corpus.
+This method represents knowledge in a granular yet holistic way,
+facilitating flexible indexing and fine-grained retrieval of content
+based on each learner’s unique needs. Specifically, each knowledge
+item is categorized along the following dimensions:
+• Social Competency (C𝑐): Foundational social-emotional abili-
+ties based on widely-used CASEL theory [8], encompassing
+self-awareness, self-management, social awareness, rela-
+tionship skills, and responsible decision-making.
+• Social Skills (C𝑠): Actionable, specific skills such as conflict
+resolution, empathy, and negotiation. Drawing from the
+CASEL framework, we identify 34 essential social skills that
+support the five core competencies 1.
+• Scenario Context (C𝑡): Contextual categories that are de-
+rived from social environments and relationship dynamics,
+such as workplace, romantic and public situations [16].
+See Appendix A.1 for detailed descriptions of these categories.
+4.1.3
+LLM-Powered Corpus Construction Pipeline. To scal-
+ably extract pedagogical and traceable content of social knowl-
+edge, we introduce an automated pipeline leveraging LLM-powered
+multi-agent systems for efficient knowledge extraction and anno-
+tation [25]. This pipeline yields a structured and pedagogically
+grounded knowledge base, with the following principal key stages.
+(a) Curated Data Collection. To ensure both pedagogical value and
+rigor, we strategically aggregate high-quality, diverse materials on
+social skill. These sources include authoritative books, academic pa-
+pers, news articles, and other reputable resources, thereby ensuring
+coverage of established theories and authentic scenarios.
+(b) Schema-Guided Extraction. We first define the schema to rep-
+resent three types of social knowledge items (see Appendix A.1 for
+detailed schema description). Guided by this schema, an extraction
+agent systematically transforms the unstructured collected data
+into a set of structured knowledge entities.
+(c) Output Validation. Then, we use a filtering agent to verify that
+the the extracted content adheres to the schema’s format guidelines
+and the completeness across all required fields.
+(d) Multi-faceted Tagging. To structure the knowledge semanti-
+cally, a tagging agent annotates each knowledge item with multi-
+faceted categories, enabling nuanced organization.
+(e) Knowledge Refinement. After tagging, a refinement agent
+reviews and revises both the content and metadata of each item to
+improve quality and accuracy. This step resolves inconsistencies,
+such as incomplete descriptions or incorrect tag assignments.
+Through this multi-stage process, we construct a structured
+social knowledge corpus K = (K𝑡, K𝑐, K𝑠), where each 𝑘∈K is
+associated with semantic labels 𝑐𝑐∈C𝑐, 𝑐𝑠∈C𝑠, and 𝑐𝑡∈C𝑡.
+4.2
+User Social Profiling
+Personalized social skills training requires a record of learner’s goals
+and prior practice [31]. We maintain a user record 𝑈𝑡that separates
+self-reported information from observed interaction evidence.
+• Personal Information 𝑈𝑖. Each user is initially characterized
+by optional self-reported background, preferences, and tar-
+get social skills 𝑆𝑈⊆𝑆. These attributes tailor scenario
+practices and guidance content.
+1https://casel.org/fundamentals-of-sel/what-is-the-casel-framework
+
+SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice
+• Practice History 𝐻𝑡. The system records completed sce-
+narios, retrieval traces, transcript evidence, reflection re-
+sponses, and factual activity logs. These observations pro-
+vide context for later scheduling and tutoring.
+• Assessment Records 𝐷𝑡. When a learner completes a real
+practice, SocialCoach stores evidence-linked strengths, weak-
+nesses, and diagnostic notes. These records retain the sup-
+porting transcript spans and are not converted into an LLM-
+estimated proficiency transition.
+After each completed session, the skill proficiency changes Δ𝑡result
+in state transitions, 𝑈𝑡+1
+𝑝
+←(𝑈𝑡
+𝑝, Δ𝑡). During the learning journey,
+the practice scheduler conditions on the learner information 𝑈𝑖,
+stated goals 𝐺, transited state 𝑈𝑡
+𝑝, and observed practice history 𝐻𝑡.
+The resulting event (𝑎𝑡, 𝑝𝑡, Δ𝑡,𝑈𝑡+1
+𝑝
+) is appended to 𝐻𝑡+1.
+4.3
+Adaptive Practice Scheduling via
+Trajectory-Level Preference Optimization
+The development of social skills is experiential, and effective progress
+hinges on presenting each learner with the right practice at the
+right time. While static curricula lack enough personalization, LLM-
+generated content risks pedagogical value. Inspired by the judgment
+of human coaches, we introduce an adaptive practice scheduler and
+optimize complete practice pathways using agentic RL [40]. The
+scheduler operates over traceable corpus events and an explicitly
+simulated proficiency state. We separate the state-transition esti-
+mator from the pairwise pathway judge so that the same score is
+not used both to create state changes and to independently reward
+each session.
+4.3.1
+Prescription-Retrieval-then-Adaptation. At each ses-
+sion 𝑡, we schedule a scenario practice 𝑝𝑡with the following stages.
+Practice Prescription. The prescription agent conditions on the
+learner’s profile, stated goals, current simulated proficiency, and
+observed practice history to produce the next scenario requirement.
+This requirement consists of a brief query, core skill constraints,
+and optional scenario attributes used as retrieval filters, such as
+situational context and relationship type.
+Candidate Retrieval. The prescribed requirement serves as a
+query and filters to retrieve the most suitable scenario from the
+social knowledge corpus 𝐾𝑠. We combine tag-based filtering for
+pedagogical alignment with semantic search to rank eligible can-
+didates. Optional constraints are relaxed in a fixed order when
+necessary; core skill constraints are retained, and an unsatisfied
+core constraint returns an explicit failure.
+Context Adaptation. Finally, a context adaptation agent personal-
+izes the retrieved scenario. Based on the learner’s profile 𝑈𝑡, the
+agent selects the most suitable role in the scenario for the learner’s
+role-playing practice. This step personalizes the retrieved context
+while remaining grounded in the structured and traceable corpus.
+See Appendix A.2 for the prescription schema and retrievability.
+4.3.2
+Cold-Start Pathway Environment. Real longitudinal learn-
+ing trajectories are scarce and costly to collect. We therefore build a
+cold-start environment from representative learner profiles and the
+frozen scenario corpus. It represents cognitive change only through
+a bounded expected transition conditioned on the selected practice;
+it does not generate learner utterances or treat the transition as
+Simulated
+Learner State
+Profile & Goal
+History State
+Learner 
+Prescription 
+Policy
+Prescription
+Practice Preparation
+Candidate Retrieval
+Practice Adaptation
+Expected
+Proficiency
+Delta
+Estimator
+Delta ∆_𝑡
+Trajectory-
+level GRPO
+Generated Pathways
+x N
+Pairwise Pathway GRPO
+Pairwise Pathway
+Judge as Reward
+Policy Update
+Action
+State Transition
+Environment
+Figure 4: Prescription policy optimization with the pathway
+preference GRPO for cold-start personalization.
+observed human learning. The resulting state trajectory models
+short-horizon proficiency transitions within a scheduled sequence.
+Representative Learner Profiles. We construct profiles from So-
+cioVorse [46] and PersonaHub [11]. We embed demographic and
+personality descriptions with Qwen3-Embedding-8B [48], use Max-
+imal Marginal Relevance [3] to obtain a diverse subset, and apply
+the Hungarian algorithm [22] for one-to-one matching. As in our
+original profile construction, each matched profile is assigned 3–
+5 target skills and starting proficiency scores 𝑈0
+𝑝on a 1–5 scale.
+These scores instantiate heterogeneous cold-start states, which are
+synthetic assignments to simulate the initial states and goal.
+Expected Proficiency Delta Estimator. To simulate the learning
+state transition, we employ an expected proficiency delta estimator
+LLM𝐸Δ based on an LLM rubric judge to serve as a state transition
+proxy. Its rubric is pre-calibrated by experts to refine the criteria and
+anchor definitions, which considers profile and goal fit, target-skill
+coverage, fit between current proficiency and scenario difficulty,
+etc. After retrieval, LLM𝐸Δ receives the learner profile 𝑈, goals
+𝐺, current target-skill state 𝑈𝑡
+𝑝, practice history 𝐻𝑡and scheduled
+scenario practice 𝑝𝑡. It predicts the expected proficiency change
+assuming completing the practice,
+Δ𝑡= LLM𝐸Δ (𝑈,𝐺,𝑈𝑡
+𝑝, 𝐻𝑡, 𝑝𝑡).
+(1)
+Its output is constrained to a bounded nonnegative interval. Unsup-
+ported or weakly associated skills and severe difficulty mismatch
+receive zero delta; supported cross-skill changes have a lower cap
+than directly practiced skills. Let m(𝑝𝑡) denote the mask of skills
+supported by the scenario. The simulated state transition is
+𝑈𝑡+1
+𝑝
+= clip[1,5]
+
+𝑈𝑡
+𝑝+ m(𝑝𝑡) ⊙Δ𝑡
+
+,
+(2)
+Here, ⊙denotes element-wise multiplication. Appendix D.3 inde-
+pendently validates this proxy on held-out transition cases.
+Dynamic Pathway State. At step 𝑡, the environment state is 𝑠𝑡=
+(𝑈,𝐺,𝑈𝑡
+𝑝, 𝐻𝑡), where𝑈and𝐺are learner information and goals,𝑈𝑡
+𝑝
+is the simulated proficiency vector, and 𝐻𝑡is the append-only event
+history. The scenario corpus K𝑠and pathway horizon 𝑇are fixed;
+prior coverage and remaining steps are derived deterministically
+from 𝐻𝑡and 𝑡rather than represented as separate policy inputs.
+The policy emits 𝑎𝑡, retrieval returns 𝑝𝑡, and the transition appends
+(𝑎𝑡, 𝑝𝑡, Δ𝑡,𝑈𝑡+1
+𝑝
+) to 𝐻𝑡. Thus, expected proficiency and observed
+practice history evolve across the pathway.
+
+Tianfu Wang et al.
+4.3.3
+Pairwise Trajectory Reward and GRPO. In open-ended
+social learning, multiple pathways may produce cumulative and
+user-dependent outcomes, making statewise scoring and absolute
+trajectory rewards difficult to calibrate [45]. Therefore, we propose
+a pathway preference GRPO to train it with complete-path pair-
+wise feedback, which provides a more reliable and discriminative
+optimization signal [44].
+For each initial profile, the policy samples a group of complete
+pathways {𝜏𝑖}𝑀
+𝑖=1. For such an open-ended task, we use a Qwen3-
+235B judge 𝐽train that compares pathway pairs using a fixed rubric
+for goal alignment, scenario fit, sequence coherence, appropriate
+coverage, and expected target-skill progression [19]. Given the same
+learner profile and two pathway histories, its output is
+𝑦𝑖𝑗= 𝐽train(𝑈,𝐺,𝜏𝑖,𝜏𝑗) ∈{1, 0.5, 0},
+(3)
+where the values denote win, tie, and loss for 𝜏𝑖. We randomize
+presentation order and compute each pathway’s pairwise win rate
+𝑤𝑖= 𝑁−1
+𝑖
+Í
+𝑗∈N𝑖𝑦𝑖𝑗over its compared opponents N𝑖, with 𝑁𝑖=
+|N𝑖|. We rank the 𝑀pathways by 𝑤𝑖. Let 𝑞𝑖∈[1, 𝑀] denote this
+rank from lowest to highest, with average ranks for ties. GRPO [35]
+uses the group reward and trajectory-level advantage
+𝑅𝑖= 2𝑞𝑖−1
+𝑀−1 −1,
+𝐴𝑖= 𝑅𝑖−𝜇𝑅
+𝜎𝑅+ 𝜖.
+(4)
+The same 𝐴𝑖is applied to the prescription tokens in 𝜏𝑖; no inter-
+mediate session receives a separate reward. Groups with no rank
+variation are skipped. We further fine-tune with multi-turn RL.
+Signal Separation. The delta estimator only updates the sim-
+ulated learning state. The pairwise judge supplies the trajectory
+preference used for optimization. Final pathway evaluation uses
+an independent pointwise 1–5 judge that scores one generated
+pathway at a time, together with a blinded expert subset.
+4.4
+Pedagogical Coaching Scaffolding
+Effective social skill acquisition requires more than passive expo-
+sure to content. It demands an iterative loop of guided practice,
+diagnostic assessment, and personalized feedback grounded in ped-
+agogical principles [1]. To address this, we introduce a three-stage
+coaching framework in SocialCoach that integrates immersive prac-
+tice, evidence-linked practice assessment, and reflective tutoring.
+By linking theory to practice, SocialCoach is designed to support
+deeper comprehension and application of the discussed strategies,
+helping address the "knowing–doing" gap.
+4.4.1
+Immersive Scenario-Based Practice. At each learning
+session 𝑡, for the scheduled scenario 𝑘𝑡
+𝑠, the social skill learning be-
+gins with immersive, goal-driven simulations designed to replicate
+real-world challenges. These tailored scenarios ensure engagement
+by creating a gamified practice environment.
+Goal-Driven Scenario Simulation. The practice sessions are struc-
+tured as goal-driven interaction games, where learners assume
+specific roles within challenging contexts [49]. Each session tasks
+the learner with achieving defined social objectives, such as mediat-
+ing a conflict or negotiating a compromise, while interacting with
+LLM-driven agents representing other participants. These agents
+dynamically adapt their behavior and dialogue to the learner’s
+actions, ensuring a realistic and responsive simulation. Sessions
+conclude upon goal achievement or reaching the interaction limit,
+with conversation logs recorded as 𝐿𝑡←simulation(𝑈𝑡,𝑘𝑡
+𝑠).
+Role-Playing Consistency Enhancement To maintain realism, we
+infer contextual features such as power dynamics, emotional tone,
+and implicit social norms of virtual agents based on extracted dia-
+logues in the corpus. Then, we embed them into prompts to enhance
+the response consistency, aligning with their character roles and
+the scenario context, and enhancing the interaction immersion.
+4.4.2
+Practice Assessment. After each practice, SocialCoach
+identifies transcript-grounded strengths and weaknesses.
+Social Behavior Diagnosis. Using an LLM-powered diagnostic
+agent, SocialCoach analyzes conversation logs 𝐿𝑡to identify explicit
+strategies (e.g., active listening) and implicit reasoning (e.g., emo-
+tional awareness), i.e., 𝐷𝑡
+𝑏= LLMdiagnosis(𝑈𝑡, 𝐿𝑡). The agent detects
+and categorizes both positive and negative behaviors demonstrated
+during the simulation. These behaviors are mapped to CASEL com-
+petencies and targeted social skills, which enables precise identifi-
+cation of skill gaps and areas of improvement.
+Deficit Attribution. Each weakness is classified as an acquisition
+deficit (insufficient understanding) or a performance deficit (diffi-
+culty applying known skills), i.e., 𝐷𝑡
+𝑐= LLMattribution(𝑈𝑡, 𝐿𝑡, 𝐷𝑡
+𝑏) [12].
+These are tutoring labels, not causal claims.
+4.4.3
+Knowledge-Grounded Reflective Tutoring. To close the
+coaching loop, SocialCoach delivers reflective, actionable feedback
+tailored to the learner’s specific needs. This stage aims to support
+learners’ understanding and application of the discussed strategies.
+Targeted Knowledge Retrieval. Based on the diagnostic assess-
+ment, SocialCoach retrieves relevant materials based on both tag-
+based filter and semantic embedding from the structured knowledge
+corpus, K𝑡= (K𝑡
+𝑡, K𝑡
+𝑐) ⊂K. For identified performance deficits,
+illustrative cases K𝑡
+𝑐⊆K𝑐are provided to demonstrate skill appli-
+cation in analogous real-world contexts. Additionally, for acquisi-
+tion deficits, foundational theories K𝑡
+𝑡⊆K𝑡are also retrieved to
+strengthen conceptual understanding.
+Reflective Guidance Generation. Rather than just static feedback
+𝐷𝑡and K𝑡, SocialCoach further adopts Socratic questioning [24] to
+foster critical reflection, i.e., 𝐺𝑡= LLMguidance(𝑈𝑡, 𝐿𝑡, 𝐷𝑡
+𝑏, 𝐷𝑡
+𝑐, K𝑡).
+For example, it might ask: "Back to the situation of a case, what
+alternative strategies could you have employed to de-escalate the
+conflict?" This approach enables a reflective exercise, encouraging
+learners to analyze their actions and explore alternative strategies.
+5
+Experiments
+We conduct a comprehensive empirical study of SocialCoach to as-
+sess the quality of its knowledge corpus, the judge-rated quality of
+its adaptive scenario scheduling, and the perceived value of its peda-
+gogically grounded coaching. Generated outputs, prompt templates,
+and evaluation materials are available in the public SocialCoach
+materials repository.
+5.1
+System Implementation
+5.1.1
+Data Collection Method. For the research goal in this
+study, we construct the social knowledge corpus by curating books
+from recognized lists and category rankings. First, we identify rele-
+vant books using category rankings from platforms like Amazon
+
+SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice
+Table 1: Corpus Statistics and Tag Diversity.
+Type
+Overall Statistics
+Norm. Shannon Entropy
+Size
+Avg. Words
+Competence
+Skill
+Context
+Theory
+14,186
+150.21
+0.81
+0.74
+N/A
+Case
+23,521
+86.92
+0.84
+0.77
+0.79
+Scenario
+5,463
+372.45
+0.86
+0.89
+0.82
+Table 2: Mean Expert Likert Ratings on Corpus.
+Type
+Mean Tag Ratings
+Content Pedagogical Value
+Competence
+Skill
+Context
+Soundness
+Accessibility
+Pedagogy
+Theory
+4.78
+4.62
+-
+4.08
+3.81
+3.26
+Case
+4.68
+4.55
+3.86
+4.06
+3.98
+3.40
+Scenario
+4.92
+4.82
+4.63
+4.83
+4.41
+4.44
+Books’ self-help section2 (e.g., relationships, emotional intelligence)
+and BookAuthority.org3 (e.g., leadership, empathy, social intelli-
+gence). Then, we gather the available files of these books from
+the Open Library website4. After a manual review for relevance
+and quality, we selected 200 books to ensure a focused and com-
+prehensive corpus. The final corpus includes many widely cited
+works such as “Nonviolent Communication: A Language of Life"
+and “Emotional Intelligence: Why It Can Matter More Than IQ".
+5.1.2
+System Implementation Details. We support various LLMs
+as agent backends, including GPT-5, Gemini-3-Pro, DeepSeek-R1-
+0528 (DSR1), Qwen3-235B, and Qwen3-8B. Concretely, for the cor-
+pus construction pipeline, we employ Qwen3-235B as the backend,
+Chroma as the vector database, and Qwen3-Embedding-8B [48] as
+the embedding model for candidate retrieval. Regarding the rep-
+resentative profile used in simulated environments, we visualize
+the distribution to show their consistency and diversity. See Ap-
+pendix B.2 for details. Next, for the prescription agent, we adopt
+Qwen3-8B as the base LLM and optimize it with pathway preference
+GRPO [35], implemented using the ROLL framework [40] for multi-
+turn agentic reinforcement learning. In a simulated environment,
+both the proficiency estimator LLM𝐸Δ and pairwise reward judge
+use Qwen3-235B. See more training details in Appendix B.1. Finally,
+for coaching scaffolding, this service layer supports multiple LLMs
+and uses GPT-5 by default.
+5.1.3
+Human Expert Panel. All expert-based evaluations use the
+same panel of three workplace practitioners, each with 5–8 years of
+relevant professional experience in social-skills development and
+emotional-intelligence-related practice. For each task, they review
+the task-specific rubric and anchors before independently evaluat-
+ing the items; model identities, automatic scores, and experimental
+conditions are hidden whenever applicable.
+5.2
+Analysis of Knowledge Corpus
+Our automated pipeline produces a corpus of 43,170 structured
+knowledge entries, each tagged with multifaceted semantics. To
+assess the quality, diversity, and pedagogical value of this corpus,
+we conducted the following multi-faceted analysis.
+2https://www.amazon.com/amz-books/store
+3https://bookauthority.org/categories
+4https://openlibrary.org
+5.2.1
+Overall Corpus Statistics. As shown in Table 1, this cor-
+pus is composed of 14,186 theories, 23,521 cases, and 5,463 scenarios.
+We analyze the textual depth of each category by calculating the av-
+erage word count, revealing that scenarios are considerably longer
+than theories and cases. This difference reflects their pedagogical
+roles: scenarios provide detailed immersive practice, while theories
+and cases offer concise conceptual knowledge and examples.
+5.2.2
+Tag Diversity & Distribution. To estimate whether the
+corpus is well-balanced, we evaluated the diversity of our seman-
+tic tags using normalized Shannon entropy, which measures the
+uniformity of a distribution on a [0, 1] scale. As shown in Table 1,
+the entropy values indicate that the corpus covers a broad range
+of social situations rather than being limited to a few contexts. A
+detailed breakdown of the tag distributions is as follows:
+5.2.3
+Expert Likert Ratings. To assess tag quality and pedagogi-
+cal value, the expert panel independently rated a stratified random
+sample of 150 corpus entries (50 per knowledge type). Items were
+presented in randomized order, using predefined 1–5 rating criteria.
+The manual validation yielded an average Fleiss’ Kappa of 0.63
+across assessments. See Appendix C.2 for details.
+5.3
+Evaluation on System Quality
+We evaluate on 200 profiles held out from policy training. Each pro-
+file combines demographic context, personality description, stated
+target skills, and a synthetic initial proficiency state. To ensure
+a matched comparison, all scheduling methods receive the same
+initial states, and all transition-aware configurations use the same
+frozen delta estimator. Its cumulative delta is reported only as a
+planning diagnostic; the primary final outcomes remain pathway
+quality and expert alignment. Following existing studies [14, 39, 42],
+we use GPT-5 [28] as an independent pointwise evaluator. It sees
+one pathway at a time and assigns anchored 1–5 ratings.
+5.3.1
+Evaluation on Practice Scheduling. We compare the fol-
+lowing baselines: (a) Profile Retrieval [17] directly ranks scenarios
+against the serialized profile and goals; (b) P-RAGmodel [47] gener-
+ates a fixed pathway from a personalized query; (c) HA-RAG [27]
+sequentially schedules practices conditioned each query on per-
+sistent practice history. All methods use the same initial profile,
+corpus snapshot, prescription schema, retrieval interface, and 10-
+session horizon. We instantiate P-RAG and HA-RAG with Qwen3-
+8B, Qwen3-235B, DeepSeek-R1-0528, and GPT-5.
+Baseline Comparison. Results are shown in Table 3. Across the
+four pathway-quality dimensions, SocialCoach outperforms these
+baselines, even based on a better backbone model. Paired bootstrap
+analysis shows that SocialCoach improves over HA-RAGGPT-5 by
+0.47 points on average across the four pathway-quality dimensions
+(95% CI [0.40, 0.54], 𝑝< 0.01). With Qwen3-8B as the shared back-
+bone, SocialCoach also reduces the first-attempt retrieval failure
+rate from 3.5% to 0.0%, indicating better alignment between its
+prescriptions and the available corpus.
+Ablation Study. We further evaluate three match ablations:
+(a) w/o Proficiency Transition fixes 𝑈𝑡
+𝑝= 𝑈0
+𝑝while retaining the
+growing practice history, isolating the contribution of progression-
+aware proficiency updates. (b) w/o Pairwise Reward replaces A/B/Tie
+
+Tianfu Wang et al.
+Table 3: Evaluation results on practice scheduling. Entries
+are mean ± SD across three independent runs.
+Method
+Goal Fit
+Pers.
+Ped. Value
+Coher.
+Profile Retrieval
+2.92 ± 0.16
+3.04 ± 0.13
+2.78 ± 0.14
+3.12 ± 0.17
+P-RAGQwen3-8B
+3.24 ± 0.06
+3.15 ± 0.08
+3.12 ± 0.16
+3.40 ± 0.17
+P-RAGQwen3-235B
+3.36 ± 0.16
+3.46 ± 0.09
+3.30 ± 0.05
+3.56 ± 0.16
+P-RAGDeepSeek-R1-0528
+3.45 ± 0.14
+3.34 ± 0.16
+3.32 ± 0.18
+3.58 ± 0.06
+P-RAGGPT-5
+3.48 ± 0.10
+3.40 ± 0.17
+3.38 ± 0.05
+3.64 ± 0.06
+HA-RAGQwen3-8B
+3.46 ± 0.17
+3.38 ± 0.15
+3.34 ± 0.12
+3.61 ± 0.07
+HA-RAGQwen3-235B
+3.60 ± 0.04
+3.72 ± 0.17
+3.55 ± 0.07
+3.82 ± 0.17
+HA-RAGDeepSeek-R1-0528
+3.74 ± 0.11
+3.64 ± 0.07
+3.60 ± 0.09
+3.86 ± 0.15
+HA-RAGGPT-5
+3.72 ± 0.05
+3.70 ± 0.06
+3.66 ± 0.05
+3.90 ± 0.09
+SocialCoachQwen3-8B
+4.22 ± 0.13
+4.18 ± 0.14
+4.15 ± 0.15
+4.32 ± 0.06
+w/o GRPO Training
+3.72 ± 0.10
+3.61 ± 0.16
+3.58 ± 0.06
+3.75 ± 0.16
+w/o Proficiency Transition
+4.04 ± 0.12
+3.96 ± 0.09
+3.92 ± 0.15
+4.14 ± 0.07
+w/o Pairwise Reward
+4.02 ± 0.14
+4.06 ± 0.05
+3.91 ± 0.06
+4.12 ± 0.17
+pathway comparisons with independently assigned 1–5 pathway
+scores while preserving trajectory-level credit assignment, isolat-
+ing the effect of feedback form. (c) w/o GRPO Training retains the
+full progression-aware state and frozen 𝐸Δ but uses the untuned
+Qwen3-8B policy without judge feedback or policy updates, isolat-
+ing the effect of trajectory-level policy optimization. All other com-
+ponents and computational budgets are held fixed unless directly
+ablated. All three ablations underperform the full model across
+the pathway-quality dimensions. Removing GRPO training causes
+the largest degradation, while freezing proficiency transitions also
+consistently reduces performance. The pointwise-reward variant
+performs worse than its pairwise counterpart, supporting the bene-
+fit of pairwise feedback beyond trajectory-level credit alone.
+Cross-Judge Robustness. We further pre-specify a cross-family
+robustness check using Qwen3-235B and DeepSeek-R1-0528 in
+Appendix D.2, which shows the evaluation robustness.
+5.3.2
+Evaluation on Pedagogical Tutoring. To evaluate the
+pedagogical feedback, we use GPT-5 [28] to generate synthetic
+interaction traces for 200 practice sessions. These traces are evalua-
+tion inputs rather than observations of learner behavior or learning
+change. We compare SocialCoach against four baselines: (a) Prompt-
+ing LLM that provides feedback directly, (b) RAG model that re-
+trieves from our corpus, and two ablated variants of our system: (c)
+one without assessment workflow, and (d) another without retrieval
+module. Safety screening excludes high-risk and crisis-oriented sce-
+narios, restricting SocialCoach to low-stakes practice. We evaluate
+guidance along eight dimensions: Diagnosis (problem identifica-
+tion), Attribution (deficit-classification quality), Traceability (source
+faithfulness), Specificity (relevance to user actions), Actionability
+(clarity of improvements), Reflectiveness (Socratic questioning),
+Encouragement (supportive tone), and Personalization (fit to the
+learner profile).
+As shown in Figure 5, SocialCoach receives higher scores than the
+baselines and ablated models across most metrics. Its higher Diagno-
+sis and Attribution ratings support separating behavior identifica-
+tion from provisional deficit classification. Additionally, we observe
+that both retrieval-based methods, such as SocialCoach and RAG,
+achieve high scores in Traceability. This suggests that anchoring
+feedback in a verifiable knowledge corpus can improve perceived
+reliability. Furthermore, SocialCoach also receives higher scores
+on more integrative metrics, such as Actionability and Personal-
+ization. This supports the value of combining component design
+with educational domain knowledge. Overall, these results suggest
+that SocialCoach can deliver personalized, pedagogical guidance
+within a comprehensive coaching loop under our synthetic-input
+and judge-rated evaluation setting.
+5.3.3
+Alignment with Human Evaluation. We further conduct
+several blinded expert studies to validate the alignment of auto-
+mated evaluation results with human judgment. (a) Proficiency-
+Transition Estimator. On 100 held-out transition cases, the estimator
+shows moderate agreement with expert labels (weighted 𝜅= 0.56).
+(b) Pairwise Training Judge. On 100 held-out pathway pairs, the
+judge reaches 74% exact A/B/Tie agreement with expert-majority
+judgments (𝜅= 0.51). (c) Expert Pathway Preference. On a sepa-
+rate set of 100 held-out profiles, experts favor SocialCoachQwen3-8B
+over HA-RAGGPT-5, with a tie-adjusted preference rate of 68% (95%
+CI [62%, 74%]). (d) Pointwise Evaluator. When scoring the same
+anonymous pathway and tutoring outputs, the evaluator correlates
+moderately with expert ratings across all four pathway-quality
+dimensions (𝜌∈[0.55, 0.64], all 𝑝< 0.01) and six of eight tutor-
+ing criteria; Specificity and Encouragement do not reach statistical
+significance. Together, these results support the automatic signals
+as planning, training, and evaluation proxies, but do not establish
+human learning gains. See Appendix D.3 for their details.
+5.3.4
+Case Study of Learning Journey. In addition to our quan-
+titative analysis and LLM-based evaluations, we further provide
+case studies in Appendix D.4, which trace a concrete learning jour-
+ney to illustrate system behavior and perceived pedagogical value.
+5.4
+End-to-end User Study
+5.4.1
+Practical Platform Deployment. We instantiated SocialCoach
+in an internally deployed research platform. The platform features
+a mobile-first React frontend and a Python backend. SocialCoach
+serves as its core engine via algorithmic APIs that power adap-
+tive practice scheduling, the LLM-driven simulation arena, and the
+coaching loop. We provide its key interfaces in Appendix E.1. The
+platform was made available to an internal beta cohort before the
+user study, offering a gamified environment for social skill learning.
+5.4.2
+User Study Analysis. With institutional review board ap-
+proval, we conducted a 10-practice study with 50 participants (25
+university students, 25 early-career professionals; aged 20–30). Par-
+ticipants were instructed to use the platform for at least 10 prac-
+tices. At the end of the study period, we administered a post-study
+perceived-usefulness questionnaire and conducted semi-structured
+interviews. See Appendix E.2 for the results.
+Additionally, we also conducted a randomized pilot (𝑛= 10)
+over that yielded numerically higher adaptive-group means for en-
+gagement, expert-rated pedagogical fit, and immediate and delayed
+strategy recall. See Appendix E.3 for details.
+6
+Conclusion
+In this paper, we introduced SocialCoach, an LLM-powered agentic
+tutoring and practice framework for personalized social skill learn-
+ing. We formulate its central personalization problem as cold-start,
+retrieval-constrained sequential practice scheduling. Our approach
+
+SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice
+Dia
+Att
+Tra
+Spe
+Act
+Ref
+Enc
+Per
+3.0
+3.4
+3.8
+4.2
+4.6
+5.0
+(a) GPT-5
+Dia
+Att
+Tra
+Spe
+Act
+Ref
+Enc
+Per
+3.0
+3.4
+3.8
+4.2
+4.6
+5.0
+(b) Gemini-3-Pro
+Dia
+Att
+Tra
+Spe
+Act
+Ref
+Enc
+Per
+3.0
+3.4
+3.8
+4.2
+4.6
+5.0
+(d) DeepSeek-R1-0528
+Dia
+Att
+Tra
+Spe
+Act
+Ref
+Enc
+Per
+3.0
+3.4
+3.8
+4.2
+4.6
+5.0
+(c) Qwen3-235B
+Methods
+Prompting
+RAG
+SocialCoach
+w/o Diagnosis
+w/o Retrieval
+Dia  Diagnosis
+Att  Attribution
+Tra  Traceability
+Spe  Specificity
+Act  Actionability
+Ref  Reflectiveness
+Enc  Encouragement
+Per  Personalization
+Figure 5: Evaluation results on tutoring guidance.
+couples retrieval-grounded prescriptions, a bounded Expected Pro-
+ficiency Delta Estimator that updates the synthetic target-skill state,
+and pairwise trajectory-level GRPO over complete pathways. The
+full system instantiates this scheduling approach with a theory-to-
+practice corpus and a downstream practice and reflective tutoring
+loop. Our evaluations demonstrate the quality and diversity of
+the constructed corpus and show that SocialCoach outperforms
+retrieval-based baselines and matched ablations in pathway sched-
+uling and pedagogical tutoring. Blinded expert studies further sup-
+port the reliability of its planning, training, and evaluation prox-
+ies and favor its generated pathways over the strongest baseline.
+Platform deployment and user studies provide early evidence of
+engagement, perceived usefulness, and improved learning experi-
+ence. Together, these findings position SocialCoach as a practical
+and scalable framework for personalized social skill learning.
+References
+[1] Taylor N Allbright, Julie A Marsh, Kate E Kennedy, Heather J Hough, and Susan
+McKibben. 2019.
+Social-emotional learning practices: Insights from outlier
+schools. Journal of Research in Innovative Teaching & Learning 12, 1 (2019),
+35–52.
+[2] Jonathan Bassen, Bharathan Balaji, Michael Schaarschmidt, Candace Thille, Jay
+Painter, Dawn Zimmaro, Alex Games, Ethan Fast, and John C. Mitchell. 2020.
+Reinforcement Learning for the Adaptive Scheduling of Educational Activities.
+In CHI.
+[3] Jaime Carbonell and Jade Goldstein. 1998. The use of MMR, diversity-based
+reranking for reordering documents and producing summaries. In SIGIR.
+[4] Zhendong Chu, Shen Wang, Jian Xie, Tinghui Zhu, Yibo Yan, Jinheng Ye, Aoxiao
+Zhong, Xuming Hu, Jing Liang, Philip S Yu, et al. 2025. Llm agents for education:
+Advances and applications. arXiv preprint arXiv:2503.11733 (2025).
+[5] Jiwon Chun, Yankun Zhao, Hanlin Chen, and Meng Xia. 2025. PlanGlow: Person-
+alized Study Planning with an Explainable and Controllable LLM-Driven System.
+In L@S.
+[6] Susan A Dean. 2017. Soft skills needed for the 21st century workforce. Walden
+University.
+[7] David Dinucu-Jianu, Jakub Macina, Nico Daheim, Ido Hakimi, Iryna Gurevych,
+and Mrinmaya Sachan. 2025.
+From Problem-Solving to Teaching Problem-
+Solving: Aligning LLMs with Pedagogy using Reinforcement Learning. arXiv
+preprint arXiv:2505.15607 (2025).
+[8] Joseph A Durlak. 2015. Handbook of social and emotional learning: Research and
+practice. Guilford Publications.
+[9] Julian G Elliott, Steven E Stemler, Robert J Sternberg, Elena L Grigorenko, and
+Newman Hoffman. 2011. The socially skilled teacher and the development of
+tacit knowledge. British Educational Research Journal 37, 1 (2011), 83–103.
+[10] Anna Fang, Hriday Chhabria, Alekhya Maram, and Haiyi Zhu. 2025. Social
+Simulation for Everyday Self-Care: Design Insights from Leveraging VR, AR,
+and LLMs for Practicing Stress Relief. In CHI.
+[11] Tao Ge, Xin Chan, Xiaoyang Wang, Dian Yu, Haitao Mi, and Dong Yu. 2024.
+Scaling synthetic data creation with 1,000,000,000 personas. arXiv preprint
+arXiv:2406.20094 (2024).
+[12] Frank M. Gresham. 2015. Disruptive Behavior Disorders: Evidence-Based Practice
+for Assessment and Intervention. Guilford Publications.
+[13] Hengnian Gu, Zhiyi Duan, Pan Xie, and Dongdai Zhou. 2024. Modeling balanced
+explicit and implicit relations with contrastive learning for knowledge concept
+recommendation in MOOCs. In WWW.
+[14] Jiawei Gu, Xuhui Jiang, Zhichao Shi, Hexiang Tan, Xuehao Zhai, Chengjin Xu,
+Wei Li, Yinghan Shen, Shengjie Ma, Honghao Liu, et al. 2024. A survey on
+llm-as-a-judge. arXiv preprint arXiv:2411.15594 (2024).
+[15] Michael Guevarra, Indronil Bhattacharjee, Srijita Das, Christabel Wayllace, Car-
+rie Demmans Epp, Matthew E Taylor, and Alan Tay. 2025. An LLM-Guided
+Tutoring System for Social Skills Training. In AAAI.
+[16] Sarah Susanna Hoppler, Robin Segerer, and Jana Nikitin. 2022. The six com-
+ponents of social interactions: Actor, partner, relation, activities, context, and
+evaluation. Frontiers in Psychology 12 (2022), 743074.
+[17] Qiushi Huang, Shuai Fu, Xubo Liu, Wenwu Wang, Tom Ko, Yu Zhang, and Lil-
+ian Tang. 2023. Learning Retrieval Augmentation for Personalized Dialogue
+Generation. In Proceedings of the 2023 Conference on Empirical Methods in Natu-
+ral Language Processing. Association for Computational Linguistics, 2523–2540.
+doi:10.18653/v1/2023.emnlp-main.154
+[18] Chris Davis Jaldi, Eleni Ilkou, Noah Schroeder, and Cogan Shimizu. 2025. Ed-
+ucation in the era of Neurosymbolic AI. Journal of Web Semantics 85 (2025),
+100857.
+[19] Ruipeng Jia, Yunyi Yang, Yuxin Wu, Yongbo Gai, Siyuan Tao, Mengyu Zhou,
+Jianhe Lin, Xiaoxi Jiang, and Guanjun Jiang. 2026. Open Rubric System: Scaling
+Reinforcement Learning with Pairwise Adaptive Rubric. arXiv:2602.14069 [cs.CL]
+https://arxiv.org/abs/2602.14069
+[20] Stephanie M Jones and Emily J Doolittle. 2017. Social and emotional learning:
+Introducing the issue. The future of children 27, 1 (2017), 3–11.
+[21] Matthew Jörke, Shardul Sapkota, Lyndsea Warkenthien, Niklas Vainio, Paul
+Schmiedmayer, Emma Brunskill, and James A. Landay. 2025. GPTCoach: Towards
+LLM-Based Physical Activity Coaching. In CHI.
+[22] Harold W. Kuhn. 1955. The Hungarian method for the assignment problem.
+Naval Research Logistics Quarterly 2, 1-2 (1955), 83–97.
+[23] Qingyao Li, Wei Xia, Li’ang Yin, Jiarui Jin, and Yong Yu. 2024. Privileged knowl-
+edge state distillation for reinforcement learning-based educational path recom-
+mendation. In KDD.
+[24] Jiayu Liu, Zhenya Huang, Tong Xiao, Jing Sha, Jinze Wu, Qi Liu, Shijin Wang,
+and Enhong Chen. 2024. SocraticLM: Exploring socratic personalized teaching
+with large language models. Advances in Neural Information Processing Systems
+37 (2024), 85693–85721.
+[25] Yujie Luo, Xiangyuan Ru, Kangwei Liu, Lin Yuan, Mengshu Sun, Ningyu Zhang,
+Lei Liang, Zhiqiang Zhang, Jun Zhou, Lanning Wei, Da Zheng, Haofen Wang, and
+Huajun Chen. 2025. OneKE: A Dockerized Schema-Guided LLM Agent-based
+Knowledge Extraction System. In WWW.
+[26] Setareh Maghsudi, Andrew Lan, Jie Xu, and Mihaela van Der Schaar. 2021.
+Personalized education in the artificial intelligence era: what to expect next.
+IEEE Signal Processing Magazine 38, 3 (2021), 37–50.
+[27] Fengran Mo, Chen Qu, Kelong Mao, Tianyu Zhu, Zhan Su, Kaiyu Huang, and
+Jian-Yun Nie. 2024. History-Aware Conversational Dense Retrieval. In Find-
+ings of the Association for Computational Linguistics: ACL 2024. Association for
+Computational Linguistics, 13366–13378. doi:10.18653/v1/2024.findings-acl.792
+[28] OpenAI. 2025. GPT-5 System Card. https://cdn.openai.com/gpt-5-system-card.
+pdf. Published August 7, 2025.
+[29] Sarah M Ovink and Brian D Veazey. 2011. More than “getting us through:” A
+case study in cultural capital enrichment of underrepresented minority under-
+graduates. Research in higher education 52, 4 (2011), 370–394.
+[30] Jiahuan Pei, Fanghua Ye, Xin Sun, Wentao Deng, Koen Hindriks, and Junxiao
+Wang. 2025. Conversational Education at Scale: A Multi-LLM Agent Workflow
+for Procedural Learning and Pedagogic Quality Assessment. In EMNLP.
+[31] Erasmo Purificato, Ludovico Boratto, and Ernesto William De Luca. 2024.
+User modeling and user profiling: A comprehensive survey. arXiv preprint
+arXiv:2402.09660 (2024).
+[32] Sajratul Y Rubaiat and Hasan M Jamil. 2025. Context-Aware Scientific Knowledge
+Extraction on Linked Open Data using Large Language Models. arXiv preprint
+arXiv:2506.17580 (2025).
+
+Tianfu Wang et al.
+[33] Surbhi Seema Sethi and Kanishk Jain. 2024. AI technologies for social emotional
+learning: recent research and future directions. Journal of Research in Innovative
+Teaching & Learning 17, 2 (2024), 213–225.
+[34] Omar Shaikh, Valentino Emil Chai, Michele Gelfand, Diyi Yang, and Michael S.
+Bernstein. 2024. Rehearsal: Simulating Conflict to Teach Conflict Resolution. In
+CHI.
+[35] Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei
+Zhang, Mingchuan Zhang, YK Li, Yang Wu, et al. 2024. Deepseekmath: Pushing
+the limits of mathematical reasoning in open language models. arXiv preprint
+arXiv:2402.03300 (2024).
+[36] Lee S. Shulman. 1998. Theory, practice, and the education of professionals. The
+Elementary School Journal 98, 5 (1998), 511–526.
+[37] Ian Steenstra, Farnaz Nouraei, and Timothy W Bickmore. 2025. Scaffolding
+Empathy: Training Counselors with Simulated Patients and Utterance-level
+Performance Visualizations. In CHI.
+[38] Tianlong Wang, Xianfeng Jiao, Yinghao Zhu, Zhongzhi Chen, Yifan He, Xu Chu,
+Junyi Gao, Yasha Wang, and Liantao Ma. 2025. Adaptive activation steering:
+A tuning-free llm truthfulness improvement method for diverse hallucinations
+categories. In WWW.
+[39] Tianfu Wang, Yi Zhan, Jianxun Lian, Zhengyu Hu, Nicholas Jing Yuan, Qi Zhang,
+Xing Xie, and Hui Xiong. 2025. LLM-powered Multi-agent Framework for Goal-
+oriented Learning in Intelligent Tutoring System. In WWW.
+[40] Weixun Wang, Shaopan Xiong, Gengru Chen, Wei Gao, Sheng Guo, Yancheng
+He, Ju Huang, Jiaheng Liu, Zhendong Li, Xiaoyang Li, et al. 2025. Reinforcement
+Learning Optimization for Large-Scale Learning: An Efficient and User-Friendly
+Scaling Library. arXiv preprint arXiv:2506.06122 (2025).
+[41] Diyi Yang, Caleb Ziems, William Held, Omar Shaikh, Michael S Bernstein, and
+John Mitchell. 2024. Social skill training with large language models. arXiv
+preprint arXiv:2404.04204 (2024).
+[42] Haofei Yu, Zhengyang Qi, Yining Zhao, Kolby Nottingham, Keyang Xuan, Bod-
+hisattwa Prasad Majumder, Hao Zhu, Paul Pu Liang, and Jiaxuan You. 2025.
+Sotopia-RL: Reward Design for Social Intelligence. arXiv preprint arXiv:2508.03905
+(2025).
+[43] Yi Zhan, Qi Liu, Weibo Gao, Zheng Zhang, Tianfu Wang, Shuanghong Shen,
+Junyu Lu, and Zhenya Huang. 2025. CoderAgent: Simulating Student Behavior
+for Personalized Programming Learning with Large Language Models. In IJCAI.
+[44] Qiang Zhang, Boli Chen, Fanrui Zhang, Ruixue Ding, Shihang Wang, Qiuchen
+Wang, Yinfeng Huang, Haonan Zhang, Rongxiang Zhu, Pengyong Wang, Ailin
+Ren, Xin Li, Pengjun Xie, Jiawei Liu, Ning Guo, Jingren Zhou, and Zheng-Jun
+Zha. 2026. ArenaRL: Scaling RL for Open-Ended Agents via Tournament-based
+Relative Ranking. arXiv:2601.06487 [cs.LG] https://arxiv.org/abs/2601.06487
+[45] Rongsheng Zhang, Jiji Tang, Junnan Ren, Zuyi Bao, Weijie Chen, Ruofan
+Hu, Zhou Zhao, Tangjie Lv, and Yan Zhang. 2026.
+DynSess: Dynamic
+Session-Level Evaluation and Optimization Framework for Role-Playing Agents.
+arXiv:2605.29256 [cs.CL] https://arxiv.org/abs/2605.29256
+[46] Xinnong Zhang, Jiayu Lin, Xinyi Mou, Shiyue Yang, Xiawei Liu, Libo Sun, Hanjia
+Lyu, Yihang Yang, Weihong Qi, Yue Chen, et al. 2025. Socioverse: A world model
+for social simulation powered by llm agents and a pool of 10 million real-world
+users. arXiv preprint arXiv:2504.10157 (2025).
+[47] Yingyi Zhang, Pengyue Jia, Derong Xu, Yi Wen, Xianneng Li, Yichao Wang,
+Wenlin Zhang, Xiaopeng Li, Weinan Gan, Huifeng Guo, Yong Liu, and Xiangyu
+Zhao. 2026. Personalize Before Retrieve: LLM-based Personalized Query Expan-
+sion for User-Centric Retrieval. Proceedings of the AAAI Conference on Artificial
+Intelligence 40, 19 (2026), 16406–16414. doi:10.1609/aaai.v40i19.38679
+[48] Yanzhao Zhang, Mingxin Li, Dingkun Long, Xin Zhang, Huan Lin, Baosong
+Yang, Pengjun Xie, An Yang, Dayiheng Liu, Junyang Lin, et al. 2025. Qwen3
+Embedding: Advancing Text Embedding and Reranking Through Foundation
+Models. arXiv preprint arXiv:2506.05176 (2025).
+[49] Xuhui Zhou, Hao Zhu, Leena Mathur, Ruohong Zhang, Haofei Yu, Zhengyang Qi,
+Louis-Philippe Morency, Yonatan Bisk, Daniel Fried, Graham Neubig, et al. 2024.
+SOTOPIA: Interactive Evaluation for Social Intelligence in Language Agents. In
+ICLR.
+A
+Details of Framework Design
+A.1
+Knowledge Categorization Details
+To ensure our knowledge corpus is pedagogically sound and eas-
+ily retrievable, we structure it using a multifaceted categorization
+method. Each piece of knowledge is tagged along three key dimen-
+sions: its associated CASEL competency, the specific social skill it
+addresses, and the scenario type in which it applies.
+A.1.1
+Associated Social Competencies. In this work, we adopt
+the Collaborative for Academic, Social, and Emotional Learning
+Listing 1: An example of a structured prescription.
+1
+{
+2
+"query": "Practice a respectful disagreement during a
+project meeting.",
+3
+"core_constraints": {
+4
+"target_skills": ["Conflict Resolution"],
+5
+"contexts": ["Workplace"]
+6
+},
+7
+"optional_constraints": {
+8
+"related_skills": ["Teamwork"],
+9
+"relationship_types": ["Senior", "Peer"]
+10
+}
+11
+}
+(CASEL) framework [8], which is recognized as one of the most
+popular SEL frameworks by the Explore SEL project5 of Harvard
+Graduate School of Education. CASEL provides a widely acknowl-
+edged foundation for understanding social-emotional learning and
+identifies five core competencies: Self-Awareness, Self-Management,
+Social Awareness, Relationship Skills, and Responsible Decision-
+Making. These competencies represent the broad, overarching abil-
+ities crucial for navigating social interactions effectively.
+A.1.2
+Associated Social Skills. To bridge the gap between CASEL’s
+abstract competencies and practical application, the CASEL office
+further categorizes knowledge by associated Social Skills. These
+are defined as granular, observable, and teachable behaviors—such
+as specific communication techniques or actions—that individuals
+can practice to demonstrate proficiency within the broader CASEL
+domains. Our system tags content with these fine-grained skills to
+enable the precise targeting of learning objectives and assessment
+criteria. The relationship between CASEL competencies and their
+corresponding social skills is detailed in Table 4.
+A.1.3
+Scenario Contextual Types. Since the usefulness of a so-
+cial skill often depends on its context, we also categorize scenarios
+by Scenario Type. This categorization is hierarchical to provide
+nuanced classification. First, we assign a high-level category de-
+scribing the general environment where the interaction occurs
+(e.g., Workplace, Family). Next, we refine this with a more detailed
+sub-category (e.g., Office, Parent-child). This hierarchical approach,
+detailed in Table 5, helps learners practice skills in contexts directly
+relevant to their personal and professional lives.
+A.2
+Prescription Schema and Retrievability
+We provide a formal description of the prescription action schema
+and the retrievability mechanism for scenario practices.
+A.2.1
+Action Schema Components. The action 𝑎𝑡is a structured
+scenario requirement with a short retrieval query, core constraints,
+and optional preferences. Core constraints define what the selected
+practice must satisfy; optional fields refine context or relationship
+type when matching scenarios exist. All labels come from the frozen
+corpus taxonomy, which keeps retrieval behavior auditable and
+limits unconstrained query programs.
+A.2.2
+Retrievability Guarantee. Strict filtering can produce an empty
+candidate set. We therefore distinguish core constraints, such as
+5http://exploresel.gse.harvard.edu/compare-domains/
+
+SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice
+Table 4: The list of social skills grouped by their main related
+competencies under the CASEL framework.
+Competencies
+Social Skills
+Self-Awareness
+Identifying emotions
+Social and cultural identity
+Recognizing strengths
+Growth mindset
+Self-efficacy
+Examining bias
+Sense of purpose
+Self-Management
+Emotion regulation
+Impulse control
+Stress management
+Self-discipline and motivation
+Perseverance
+Goal-setting
+Organizational skills
+Initiative and Agency
+Social Awareness
+Perspective-taking
+Empathy and compassion
+Expressing gratitude
+Appreciating diversity
+Identifying social norms and demands
+Sense of belonging
+Relationship Skills
+Communication
+Cultural competence
+Building relationships
+Teamwork and working cooperatively
+Resolving conflicts
+Helping/Seeking help
+Leadership
+Standing up for the rights of others
+Responsible
+Decision-Making
+Demonstrating
+curiosity
+and
+open-
+mindedness
+Identifying and solving problems
+Analyzing situations and consequences
+Ethical responsibility
+Reflecting on one’s role to promote individ-
+ual and collective well-being
+the target skill, from optional context preferences. Retrieval first
+enforces both sets. If no candidate is found, optional constraints
+are relaxed in a fixed order and every change is recorded. Core
+constraints are never removed; if they cannot be satisfied, the sys-
+tem returns an explicit failure rather than presenting an unrelated
+scenario as suitable.
+Table 5: 7 scenario contextual categories detailed in 26 types.
+Contextual Category
+Detailed Contextual Types
+Workplace
+Office, meetings, job interviews, professional collaboration
+Family
+Parent-child, siblings, home interactions, Spouse
+Friendship
+Informal, emotional bonding, casual talk
+Romantic
+Dating, partner conflicts, affection sharing
+Education
+Classroom, peer discussion, teacher-student roles
+Public/Stranger
+Store, transport, unknown people, Park, Courtroom
+Party/Social
+Events, birthdays, wine parties, social mingling
+30
+20
+10
+0
+10
+20
+30
+30
+20
+10
+0
+10
+20
+30
+Training
+Testing
+Figure 6: Representative learner profile distribution.
+B
+Details on Experimental Setting
+B.1
+Descriptions of Training Settings
+We train the prescription policy for 200 steps with a KL-loss coeffi-
+cient of 0.001. For each prescription response, it has a maximum
+generation length of 2048 tokens. We configure the parallel envi-
+ronment manager with a batch size of 64 and a group size of 8.
+We construct 1,000 representative training profiles with 3–5 tar-
+get skills and synthetic starting proficiency scores on a 1–5 scale,
+and optimize 10-session pathways by sampling eight pathways per
+GRPO group. After each retrieval, a rubric-based expected profi-
+ciency delta estimator with the frozen Qwen3-235B updates only
+the skills supported by the selected scenario, which assumes prac-
+tice completion and does not generate a learner response. A frozen
+Qwen3-235B model as judge then provides A/B/Tie comparisons
+between complete pathways using both traceable scenario evidence
+and the resulting state trajectory. These training experiments are
+conducted on a cluster of 16 NVIDIA H20 GPUs with a learning
+rate of 1.0 × 10−6.
+B.2
+Visualization on Profile Distribution
+We visualize the distribution of representative learner profile em-
+beddings using t-SNE, as shown in Figure 6.
+C
+Analysis on Knowledge Corpus
+C.1
+Visualization on Corpus Distribution
+Social Competency Co-occurrence. The heatmap in Figure 8 reveals
+logical correlations between competencies. We observe two distinct
+
+Tianfu Wang et al.
+Family
+31%
+Workplace
+27%
+Public/Stranger
+13%
+Friendship
+8%
+Education
+8%
+Romantic
+8%
+Party/Social
+5%
+Parent-child
+44%
+home interactions
+25%
+Spouse
+21%
+siblings
+8%
+emotional bonding
+2%
+Informal
+0.0894%
+casual talk
+0.0447%
+professional collaboration
+38%
+Office
+36%
+meetings
+23%
+job interviews
+2%
+Store
+0.2%
+Informal
+0.1%
+Events
+0.05%
+unknown people
+23%
+Courtroom
+21%
+Store
+18%
+transport
+15%
+Events
+13%
+Park
+9%
+social mingling
+0.216%
+casual talk
+0.216%
+Office
+0.216%
+Informal
+0.108%
+meetings
+0.108%
+home interactions
+0.108%
+Informal
+53%
+emotional bonding
+36%
+casual talk
+11%
+peer discussion
+1%
+home interactions
+0.165%
+Classroom
+56%
+teacher-student roles
+30%
+peer discussion
+12%
+meetings
+1%
+Events
+1%
+professional collaboration
+0.333%
+Informal
+0.167%
+home interactions
+0.167%
+partner conflicts
+65%
+Dating
+23%
+affection sharing
+11%
+Spouse
+1%
+emotional bonding
+0.358%
+social mingling
+56%
+Events
+31%
+wine parties
+8%
+birthdays
+3%
+casual talk
+1%
+Informal
+0.291%
+Figure 7: Distribution of scenario contextual types.
+SoA
+SM
+SA
+RS
+RDM
+SoA
+SM
+SA
+RS
+RDM
+1.00
+0.18
+0.15
+0.47
+0.35
+0.18
+1.00
+0.33
+0.17
+0.29
+0.15
+0.33
+1.00
+0.15
+0.23
+0.47
+0.17
+0.15
+1.00
+0.28
+0.35
+0.29
+0.23
+0.28
+1.00
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1.0
+Competency Labels
+SoA: Social Awareness
+SA: Self-Awareness
+RDM: Responsible Decision-Making
+SM: Self-Management
+RS: Relationship Skills
+Figure 8: Co-occurrence heatmap of social competencies
+clusters with strong positive correlations (scores > 0.3): one linking
+Social Awareness with Relationship Skills, and another connect-
+ing Self-Awareness, Self-Management, and Responsible Decision-
+Making. This indicates that our corpus effectively captures the
+synergistic nature of social skills, where understanding others is
+tied to interaction, and personal insight is linked to self-regulation
+and thoughtful action.
+Social Skill Frequency. Figure 9 displays the frequency of the
+most common social skills within our corpus. Foundational abilities
+such as communication, empathy and compassion, and Perspective-
+taking are the most prevalent.
+0
+2000
+4000
+6000
+8000
+10000
+12000
+Frequency Count
+Communication
+Empathy and compassion
+Perspective-taking
+Emotion regulation
+Building relationships
+Self-discipline and motivation
+Self-efficacy
+Resolving conflicts
+Goal-setting
+Impulse control
+Figure 9: Top 10 social skills by frequency.
+Scenario Context Distribution. The distribution of scenario con-
+texts, visualized in Figure 7, is broadly balanced across key life
+domains. The most prominent categories are Family (31%) and
+Workplace (27%), with coverage of other areas like public and edu-
+cational settings. This balance suggests the corpus provides con-
+textually relevant scenarios for a range of real-world interpersonal
+challenges.
+C.2
+Expert Likert Ratings of Corpus
+Tag Ratings. The expert panel rated the provided competence, skill,
+and context tags against the corresponding corpus content. Rat-
+ings of 1, 3, and 5 denoted incorrect, partially aligned, and directly
+aligned tags, respectively. As shown in Table 2, scenarios received
+the highest mean tag ratings, while theories and cases received
+lower ratings on the dimensions applicable to them. These results
+indicate that the sampled tags were generally viewed as aligned
+with the content.
+Content Pedagogical Value. To assess content quality, the panel
+rated each knowledge item for Soundness (credibility and authen-
+ticity), Accessibility (clarity for a typical learner), and Pedagogy
+(potential usefulness for achieving a meaningful learning outcome).
+As shown in Table 2, the results highlight the high pedagogical
+quality of the corpus across three dimensions. While scenario rat-
+ings consistently achieved the highest, the foundational theory
+scores are slightly lower. This indicates room for improvement in
+making abstract principles more engaging and instructionally im-
+pactful. Overall, experts rated the sampled corpus items as credible,
+clear, and potentially useful, with scenarios receiving the strongest
+ratings for experiential learning.
+D
+Evaluation on Scheduling and Tutoring
+D.1
+Separation of Training and Evaluation
+Signals
+SocialCoach uses three automatic components with non-overlapping
+roles. The frozen 𝐸Δ updates only the synthetic planning state, 𝐽train
+provides pairwise pathway preferences for GRPO, and 𝐽eval inde-
+pendently rates held-out pathways without contributing to policy
+
+SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice
+updates. Experts separately assess transition and pathway judg-
+ments, while tutoring outputs and user-study responses are eval-
+uated outside the scheduling-training loop. These signals remain
+proxies and do not establish human learning gains.
+D.2
+Cross-Judge Robustness
+The same frozen anonymous pathways are independently scored
+by GPT-5, Qwen3-235B, and DeepSeek-R1-0528 using the identical
+1–5 rubric and evidence bundle. For each dimension, we compute
+pairwise Spearman correlations over pathway-level scores, rather
+than over a small set of method means. Kendall’s 𝑊measures how
+consistently all three judges rank the same pathways. As shown
+in Table 6, the results show judge stablity cross difference models
+under the same rubric.
+D.3
+Alignment with Human Evaluation
+Proficiency Delta Calibration. The expert panel first calibrates
+the rubric, prompt, and ordered output anchors of 𝐸Δ on a separate
+development set. Disagreements are used to refine the criteria and
+anchor definitions; the estimator and its anchor-to-delta mapping
+are then frozen. For independent validation, the panel labels a
+stratified sample of 100 transition cases that are disjoint from both
+calibration and policy training. The sample covers different target
+skills, initial proficiency levels, direct and cross-skill transitions,
+and novel versus repeated practice. Given the estimator inputs but
+not its output, each expert assigns an ordered expected-change
+label (no, small, or moderate); the estimator’s bounded numeric
+output is converted using the frozen anchors. As shown in Table 7,
+we report quadratic weighted 𝜅against the median expert label and
+ordinal Krippendorff’s 𝛼across the three experts, with bootstrap
+95% confidence intervals.
+Training-Judge Calibration. We sample 100 pathway pairs
+from the frozen candidate groups of held-out profiles. The blinded
+expert panel independently selects A, B, or Tie from the learner
+goals and anonymous pathway evidence without seeing model iden-
+tities, judge outputs, or numeric delta traces. Compared with the
+expert-majority label, 𝐽train achieves 74% exact A/B/Tie agreement
+and Cohen’s 𝜅= 0.51, indicating moderate alignment with expert
+pedagogical preferences.
+Expert Pathway Preference. On a separate random sample of
+100 held-out profiles, the blinded expert panel directly compares
+the complete pathways generated by SocialCoachQwen3-8B and the
+strongest baseline, HA-RAGGPT-5. Each pair uses the same learner
+profile, initial proficiency state, and corpus snapshot; pathway order
+is randomized, and model identities, automatic scores, and numeric
+delta traces are hidden. Panel members independently select A, B,
+or Tie. We aggregate the judgments by profile using the majority
+label and treat cases without a majority as ties. SocialCoach records
+62 wins, 18 ties, and 20 losses, corresponding to a tie-adjusted
+preference rate of 68% (profile-level bootstrap 95% CI: [62%, 74%]).
+Inter-rater agreement on the original expert judgments is 0.61 ac-
+cording to nominal Krippendorff’s 𝛼.
+Pointwise-Evaluator Calibration. The blinded expert panel
+independently scores the same anonymous outputs as the held-out
+evaluator. For pathway quality, we use the predefined 1 −5 anchors
+Perscription
+Practice
+Simulation
+Guidance
+Learner
+Persona
+A PhD student
+Junior AI 
+Research Intern
+Target Skills
+Teamwork
+Conflict Resolution
+Turn 1
+Alex: “Hey, Ben, …”
+Ben: “I hear you, ..”
+Turn 2
+Alex: “I know the …”
+Ben: “It's not just ...”
+Turn n
+Title
+The Research Debate
+Character
+Alex, Ben [learner]
+Background
+A team plans to dev…
+…
+…
+…
+…
+Query
+Navigating technical 
+disagreements with …
+Filters
+Skills: [resolving conflicts, 
+…], OR
+Competencies: [self-
+management, …], AND
+Overall Feedback
+Hi Alex, this was a 
+very successful
+Key Strengths
+[…]
+Areas for Improvement
+[…]
+Figure 10: An illustrative learning journey case.
+and report rank correlation, weighted agreement, and confidence
+intervals. The results are shown in Table 8. The learning-path agree-
+ment results show moderate positive correlations across all four
+dimensions. The tutoring analysis likewise shows moderate agree-
+ment on several criteria; Specificity and Encouragement do not
+reach significance. Automatic scores remain proxy measurements
+rather than evidence of learning gains.
+D.4
+Case Study of Learning Journey
+We illustrate a case study in Figure 10, featuring a learner whose
+persona is a junior AI research intern. This learner, while technically
+proficient, struggles with navigating professional disagreements
+and seeks to improve Teamwork and Conflict Resolution skills.
+Based on this profile, the prescription agent generates a targeted
+query for a scenario about "navigating technical disagreements with
+peers," using filters to find content tagged with the Relationship
+Skills and Responsible Decision-Making competencies. The system
+retrieves a highly relevant scenario from the corpus titled "The
+Research Debate." In this practice, two researchers must resolve a
+conflict over choosing between a high-risk, innovative solution and
+a safer, established one under a tight deadline. Then, the adaptation
+agent assigns the learner the role of "Alex," the character advocating
+for the more ambitious, innovative approach.
+In the simulation, the learner (as Alex) moves from defending his
+position to resolving the conflict. After validating his colleague’s
+concerns about the project timeline, he proposes a concrete com-
+promise: a "two-day spike" to test the new solution without risking
+the schedule. They reached a consensus.
+Upon completion, the system provides a detailed guidance report.
+The feedback praises the learner’s effective use of validation and
+integrative negotiation to reach a win-win outcome. It also identifies
+an area for growth: asking clarifying questions earlier to bypass
+the initial defensive exchange. Finally, the report poses reflective
+questions to help the learner consider how to establish shared goals.
+This process forms a complete learning loop.
+E
+User Study via Deployed Platform
+E.1
+Description of Product Interfaces
+We instantiated SocialCoach in an internally deployed research
+platform, whose key interfaces are presented in Figure 11. After
+onboarding for initial profiling, the user journey begins in the prac-
+tice arena, where learners are presented with a variety of scenarios
+like "Managing Tensions in a Meeting". SocialCoach’s adaptive
+module dynamically schedules these scenarios to match the user’s
+specific learning needs. Upon selecting a practice, the learner is
+
+Tianfu Wang et al.
+Table 6: Cross-judge agreement on pathway-level ratings. Pairwise columns report Spearman’s 𝜌; Kendall’s 𝑊reports three-
+judge rank concordance.
+Metric
+GPT-5–Qwen3-235B 𝜌
+GPT-5–DeepSeek-R1-0528 𝜌
+Qwen3-235B–DeepSeek-R1-0528 𝜌
+Kendall’s 𝑊
+Goal Fit
+0.72
+0.68
+0.75
+0.71
+Personalization
+0.65
+0.61
+0.69
+0.64
+Pedagogical Value
+0.78
+0.74
+0.80
+0.77
+Sequence Coherence
+0.69
+0.66
+0.72
+0.68
+Figure 11: Several interfaces of the internally deployed research platform.
+Pedagogical
+Alignment
+4.66 ± 0.55
+Curriculum
+Fluidity
+4.38 ± 0.82
+Situational
+Fidelity
+4.32 ± 0.73
+Agent
+Realism
+4.40 ± 0.66
+Diagnostic
+Accuracy
+4.46 ± 0.67
+Reﬂective
+Depth
+4.76 ± 0.51
+0
+20
+40
+60
+80
+100
+Skill
+Transferability
+4.56 ± 0.67
+0
+20
+40
+60
+80
+100
+Engagement
+Retention
+4.48 ± 0.75
+Strongly Disagree
+Disagree
+Neutral
+Agree
+Strongly Agree
+Adaptive
+Scheduling
+—————————————————————————————————————————————
+Immersive
+Practice
+—————————————————————————————————————————————
+Reﬂective
+Tutoring
+—————————————————————————————————————————————
+Overall
+Impact
+Figure 12: Self-reported questionnaire results from 50 participants. These outcomes measure perceived experience and intended
+application, not observed skill transfer.
+Table 7: Independent expert validation of the Expected Profi-
+ciency Delta Estimator on 100 held-out transition cases.
+Comparison
+Agreement
+95% CI
+𝐸Δ vs. median expert label (weighted 𝜅)
+0.56
+[0.38, 0.64]
+Three experts (Krippendorff’s 𝛼)
+0.61
+[0.44, 0.70]
+briefed on the scenario’s background, the characters involved (e.g.,
+"Sam" and "Anna"), and the social objectives they need to achieve.
+The learner then enters an immersive simulation, engaging in a
+goal-driven conversation with LLM-powered agents who respond
+dynamically to their actions. This interactive dialogue serves as
+the basis for subsequent evidence-linked practice assessment and
+knowledge-grounded reflective tutoring. The gamified design of
+
+SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice
+Table 8: Agreement between held-out pointwise evaluation
+and human experts.
+Category
+Metric
+Correlation
+p-value
+Learning Path
+Goal fit
+0.64
+p < 0.01
+Personalization
+0.58
+p < 0.01
+Pedagogical value
+0.62
+p < 0.01
+Sequence coherence
+0.55
+p < 0.01
+Tutoring Guidance
+Diagnosis
+0.48
+p < 0.01
+Attribution
+0.39
+p < 0.01
+Traceability
+0.52
+p < 0.01
+Specificity
+0.21
+p > 0.05
+Actionability
+0.45
+p < 0.01
+Reflectiveness
+0.36
+p < 0.05
+Encouragement
+0.34
+p > 0.05
+Personalization
+0.41
+p < 0.01
+the platform illustrates how SocialCoach can be instantiated as an
+engaging learning experience that integrates adaptive practice with
+a complete pedagogical coaching loop.
+E.2
+Analysis of User Study
+Results are shown in Figure 12; we summarize the main patterns
+below.
+Adaptive and Targeted Scheduling. Participants highly val-
+ued the system’s ability to align practice with individual needs.
+Pedagogical Alignment was rated at 4.66 ± 0.55, suggesting that
+users perceived the system as matching social competencies to
+personal growth goals. Curriculum Fluidity followed at 4.38 ± 0.82,
+with users noting that the adaptive pathways provided a logical
+progression through increasingly complex social challenges. One
+participant noted, “The clear guidance made it easier to navigate
+addressing complex tasks and achieve goals.”
+Immersive Practice and Realism. Participants perceived the
+simulation environment as realistic. Agent Realism received a high
+rating of 4.40 ± 0.66, highlighting the perceived consistency of the
+AI agents’ personas and their natural responses. Situational Fidelity
+was rated at 4.32 ± 0.73, indicating that users felt the scenarios
+captured pressures similar to real-world social environments. As
+one participant stated, “The interactions felt surprisingly real; I felt
+the same level of social pressure as I would in a physical workplace
+conflict.”
+Diagnostic and Reflective Guidance. The reflective tutoring
+components achieved the highest marks in the study. Reflective
+Depth stood out with a rating of 4.76 ± 0.51, suggesting that users
+found Socratic questioning useful for analyzing their strategies.
+The self-reported item labeled Diagnostic Accuracy received 4.46 ±
+0.67, indicating that participants perceived the diagnostic feedback
+as relevant. “The feedback helped me discover the ’why’ behind
+my behavior,” a participant observed.
+Perceived Usefulness and Application Intent. Participants
+reported perceived usefulness and confidence in applying prac-
+ticed strategies. The questionnaire item labeled Skill Transferability
+received 4.56 ± 0.67, reflecting intended application rather than
+observed skill transfer. The item labeled Engagement Retention re-
+ceived 4.48 ± 0.75, reflecting continued-use intention rather than
+observed behavioral retention. One final interview revealed, “[The
+Metric
+Adaptive
+Static
+User engagement (1–5)
+4.4 ± 0.5
+3.7 ± 0.6
+Pedagogical fit (1–5)
+4.5 ± 0.9
+3.8 ± 0.3
+Avg. Strategy recall (immediate, 𝑇1)
+2.8 ± 0.8
+1.6 ± 0.5
+Avg. Strategy recall (delayed, 𝑇2)
+2.2 ± 0.7
+0.6 ± 0.5
+Table 9: Pilot learning experience study results. Values are
+descriptive means ± SD across participants.
+platform] transformed my understanding of social intelligence into
+actionable skills I can use every day.”
+E.3
+Pilot Learning Experience Study
+Design. We conducted a pilot learning experience study with 10
+participants. After initial profiling, participants were assigned 1:1 to
+the adaptive or static condition using a computer-generated random
+permutation, yielding five participants per condition. SocialCoach
+generated a participant-specific ten-session practice path for every
+learner. The adaptive condition could revise the remaining path af-
+ter each session using the learner’s stated goals, updated synthetic
+planning state, and newly observed practice history; the static con-
+dition followed the initially personalized path without subsequent
+revision. Both conditions shared the same interface, scenario pool,
+simulator, tutoring and feedback modules, practice count, and time
+budget.
+Measures. Rather than measuring stable trait change, we focused
+on practice pathway quality and immediate learning processes.
+After each session, participants rated their engagement with the
+scenario (1–5). The same expert panel, blinded to condition, later
+rated the pedagogical fit of each scheduled scenario (1–5). At the
+end of the study (𝑇1), participants wrote down the specific strategies
+they planned to apply next time. One week later (𝑇2), they were
+asked to recall those strategies without prompting. Session-level
+measures were first aggregated within each participant. Given the
+small sample (𝑛= 5 per condition), we report descriptive statistics
+only and do not conduct inferential tests.
+Interpretation. In this small pilot, the adaptive group showed
+numerically higher means across all four outcomes. The between-
+group differences were 0.7 points for both engagement and expert-
+rated pedagogical fit, 1.2 recalled strategies at 𝑇1, and 1.4 recalled
+strategies at 𝑇2. The common direction across participant-rated
+engagement, blinded expert fit, and both recall measurements is
+consistent with the hypothesis that session-by-session path revision
+can maintain alignment with learner goals and practice history; the
+relatively larger delayed-recall difference makes retention a useful
+target for a larger confirmatory study. With only five participants
+per condition and no inferential tests, however, these patterns are
+exploratory and do not establish population-level or causal effects.
+F
+Further Discussion
+F.1
+Modeling Scope and Limitations
+Longer-term proficiency changes, including forgetting, are not ex-
+plicitly modeled; when an updated learner profile becomes available,
+its proficiency state can initialize a subsequent scheduling episode.
+
+Tianfu Wang et al.
+F.2
+Safety, Fairness, and Cultural Context
+SocialCoach is intended for low-stakes practice and reflection, not
+clinical assessment, employment decisions, or other high-stakes
+judgments. Numeric initial proficiency and delta transitions are
+used only inside the synthetic cold-start environment: starting
+scores are not inferred from demographic attributes, and predicted
+deltas are not presented as assessments of real users. Maximum
+Marginal Relevance (MMR) [3] and one-to-one matching with the
+Hungarian algorithm [22] are used to sample diverse profile com-
+binations, but these procedures are sampling steps rather than
+guarantees of demographic fairness or stereotype avoidance. The
+system may still reproduce assumptions present in its source mate-
+rial or model outputs. Because the corpus and profile sources are
+primarily English-language and culturally situated, we do not claim
+cross-cultural validity. SocialCoach currently focuses on text-based,
+language-mediated practice and does not observe non-verbal or
+embodied cues such as prosody, gaze, gesture, facial expression, or
+physiological responses. Accordingly, the reported evidence should
+not be interpreted as covering embodied social competence or trans-
+fer to face-to-face settings. Scenarios and guidance should therefore
+be interpreted as context-conditioned practice prompts, and the cur-
+rent expert review should not be read as a comprehensive fairness
+or cultural audit.
+F.3
+Data Provenance and Licensing
+The corpus was constructed from 200 books accessed through Open
+Library and transformed into structured theories (𝐾𝑡), cases (𝐾𝑐),
+and scenarios (𝐾𝑠). We retain source metadata and provenance for
+derived items, while the underlying source texts and local download
+files are not part of the paper artifact. The complete experiment
+corpus is maintained separately from the released illustrative ex-
+amples. We do not redistribute the source books or the complete
+experimental corpus. We do not make a blanket copyright or fair-
+use determination in this paper: source-specific licenses, access
+terms, and institutional review govern redistribution. Any artifact
+release is therefore limited to code, schemas, manifests, and derived
+examples permitted by those terms.

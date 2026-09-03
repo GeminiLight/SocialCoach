@@ -1,0 +1,14 @@
+{
+  "name": "SocialCoach · 社交教练",
+  "short_name": "社交教练",
+  "description": "把最难开口的那场对话，先在这里练一遍。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f5ef",
+  "theme_color": "#f8f5ef",
+  "lang": "zh-CN",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/apple-icon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
