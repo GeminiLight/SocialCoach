@@ -4,3 +4,9 @@ node_modules/
 .env.local
 .env.*.local
 *.log
+
+# Local launch planning and unpublished marketing drafts
+marketing/
+
+# Rejected logo explorations — kept locally for reference, not part of the app
+docs/icon-candidates/
