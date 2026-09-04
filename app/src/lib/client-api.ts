@@ -2,6 +2,32 @@ import type { Scenario } from "@/data/corpus/types";
 import type { Lang, SkillId } from "@/data/taxonomy";
 import type { Adaptation, ChatMessage, Prescription, Profile, Proficiency, Report, RetrievalTrace, RoleplayMeta } from "./types";
 import { parsePartialJSON } from "./partial-json";
+import { byokConfig } from "./byok";
+import { makeByokLLM } from "./llm-client";
+import type { LLM } from "./llm-core";
+import { runSchedule } from "./tasks/schedule";
+import { runRehearse } from "./tasks/rehearse";
+import { runHint } from "./tasks/hint";
+import { runRoleplay } from "./tasks/roleplay";
+import { runReflect } from "./tasks/reflect";
+import { runAssess } from "./tasks/assess";
+import type { AssessInput, ReflectInput, ScheduleInput, TurnInput } from "./tasks/types";
+
+/**
+ * The one place that decides where a model call goes.
+ *
+ * With the learner's own credentials configured, the task runs here in the
+ * browser and talks to their endpoint directly — their key never reaches our
+ * server. Otherwise it goes to `/api/*` and the deployment's key.
+ *
+ * There is deliberately no fallback between the two: if the learner's own
+ * endpoint fails, that error surfaces. Quietly retrying on our key would spend
+ * someone else's money while the learner believed they were on their own quota.
+ */
+function own(): { llm: LLM; fast: string; smart: string } | null {
+  const c = byokConfig();
+  return c ? { llm: makeByokLLM(c), fast: c.fastModel.trim(), smart: c.smartModel.trim() } : null;
+}
 
 const OFFLINE_MSG = { zh: "看起来断网了，连上网络后再试。", en: "You seem to be offline. Reconnect and try again." };
 function offlineError(lang?: Lang) {
@@ -44,6 +70,8 @@ export function schedule(body: {
   scenarioId?: string;
   scenario?: Scenario;
 }, signal?: AbortSignal) {
+  const o = own();
+  if (o) return runSchedule(body as ScheduleInput, o.llm, o.fast);
   return post<ScheduleResult>("/api/schedule", body, signal);
 }
 
@@ -55,13 +83,21 @@ export async function assessStream(
   body: { scenario: Scenario; learnerCharacterId: string; messages: ChatMessage[]; lang: Lang; goals: SkillId[]; learnerName?: string; objectiveDone?: boolean[]; outcome?: string },
   onPartial: (p: Partial<Report>) => void,
 ): Promise<Report> {
+  const o = own();
+  if (o) {
+    let acc = "";
+    return runAssess(body as AssessInput, o.llm, o.smart, (d) => {
+      acc += d;
+      const p = parsePartialJSON<Report>(acc);
+      if (p) onPartial(p);
+    });
+  }
   const full = await streamText("/api/assess", body, (acc) => {
     const cut = acc.indexOf("\n@@");
     const head = cut === -1 ? acc : acc.slice(0, cut);
     const p = parsePartialJSON<Report>(head);
     if (p) onPartial(p);
   });
-  const ERR = "\n@@error\n";
   const FIN = "\n@@final\n";
   const err = full.indexOf(ERR);
   if (err !== -1) throw new Error(full.slice(err + ERR.length).trim());
@@ -70,12 +106,51 @@ export async function assessStream(
   return JSON.parse(full.slice(fin + FIN.length)) as Report;
 }
 
-export function hint(body: { scenario: Scenario; learnerCharacterId: string; messages: ChatMessage[]; lang: Lang; learnerName?: string }) {
+export function hint(body: TurnInput) {
+  const o = own();
+  if (o) return runHint(body, o.llm, o.fast);
   return post<{ hint: string }>("/api/hint", body);
 }
 
 export function rehearse(body: { description: string; lang: Lang; profile?: Partial<Profile> }) {
+  const o = own();
+  if (o) return runRehearse(body, o.llm, o.fast);
   return post<{ scenario: Scenario }>("/api/rehearse", body);
+}
+
+const ERR = "\n@@error\n";
+
+/**
+ * One exchange of the simulation. `onText` receives the accumulated protocol
+ * text; the caller parses it with `parseRoleplay`, which also surfaces an
+ * in-stream `@@error`.
+ */
+export async function roleplayStream(body: TurnInput, onText: (full: string) => void, signal?: AbortSignal): Promise<string> {
+  const o = own();
+  if (o) {
+    let acc = "";
+    return runRoleplay(body, o.llm, o.fast, (d) => {
+      acc += d;
+      onText(acc);
+    });
+  }
+  return streamText("/api/roleplay", body, onText, signal);
+}
+
+/** The coach's reply to a reflection answer. */
+export async function reflectStream(body: ReflectInput, onText: (full: string) => void): Promise<string> {
+  const o = own();
+  if (o) {
+    let acc = "";
+    return runReflect(body, o.llm, o.fast, (d) => {
+      acc += d;
+      onText(acc);
+    });
+  }
+  const full = await streamText("/api/reflect", body, onText);
+  const err = full.indexOf(ERR);
+  if (err !== -1) throw new Error(full.slice(err + ERR.length).trim());
+  return full;
 }
 
 /** Stream plain text from an endpoint; calls onText with the accumulated text. */

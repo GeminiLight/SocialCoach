@@ -7,7 +7,8 @@ import { COMPETENCIES, CONTEXTS, SKILLS, skillById, type ContextId, type Lang, t
 import { SCENARIOS } from "@/data/corpus";
 import { t } from "@/lib/i18n";
 import { useApp } from "@/store/useApp";
-import { Button, Chip } from "@/components/ui";
+import { openModelSheet } from "@/lib/byok";
+import { BottomBar, Button, Chip } from "@/components/ui";
 import { Level } from "@/components/SkillBits";
 import { compColor, compSoft } from "@/lib/format";
 
@@ -66,7 +67,7 @@ export default function Onboarding() {
     setGoals((g) => (g.includes(id) ? g.filter((x) => x !== id) : g.length >= 5 ? g : [...g, id]));
 
   return (
-    <div className="min-h-dvh flex flex-col pt-safe">
+    <div className="min-h-dvh flex flex-col pt-safe lg:mx-auto lg:w-full lg:max-w-[600px]">
       {/* progress */}
       <div className="px-5 pt-4 flex items-center justify-between">
         <div className="flex gap-1.5" aria-label={`step ${step + 1} of ${STEPS}`}>
@@ -97,13 +98,17 @@ export default function Onboarding() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -16 }}
           transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-          className="flex-1 flex flex-col px-5 pt-8 pb-32"
+          className="flex-1 flex flex-col px-5 pt-8 pb-32 lg:pb-8"
         >
           {step === 0 && (
             <div className="flex-1 flex flex-col justify-center gap-7">
-              <div className="h-14 w-14 rounded-2xl bg-ink flex items-end justify-end p-1.5">
-                <span className="h-6 w-6 rounded-lg bg-accent" />
-              </div>
+              <svg width={72} height={56} viewBox="56 96 402 314" aria-hidden>
+                <path d="M124 298 Q118 366 96 400 Q170 384 230 310 Z" fill="var(--ink)" />
+                <rect x="64" y="104" width="344" height="216" rx="74" fill="var(--ink)" />
+                <rect x="122" y="160" width="236" height="32" rx="16" fill="var(--paper)" />
+                <rect x="122" y="220" width="150" height="32" rx="16" fill="var(--paper)" />
+                <path d="M256 352 L434 364" stroke="var(--accent)" strokeWidth="32" strokeLinecap="round" fill="none" />
+              </svg>
               <h1 className="display text-[36px] leading-[1.12] whitespace-pre-line">{t(lang, "ob_welcome_title")}</h1>
               <p className="text-[16px] text-ink-2 leading-relaxed max-w-[34ch]">{t(lang, "ob_welcome_body")}</p>
               <WelcomeTickets lang={lang} />
@@ -191,7 +196,7 @@ export default function Onboarding() {
                 <h1 className="display text-[28px] leading-tight">{t(lang, "ob_ctx_title")}</h1>
                 <p className="text-[14px] text-ink-3 mt-2">{t(lang, "ob_ctx_sub")}</p>
               </header>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
                 {CONTEXTS.map((c, i) => {
                   const on = contexts.includes(c.id);
                   return (
@@ -237,12 +242,24 @@ export default function Onboarding() {
                   ))}
                 </div>
               </div>
+
+              {/* Said once, at zero cost to anyone who does not care. */}
+              <div className="dotted pt-4 flex items-center justify-between gap-4">
+                <p className="text-[12px] text-ink-3 leading-relaxed">{t(lang, "ob_model_note")}</p>
+                <button
+                  type="button"
+                  onClick={openModelSheet}
+                  className="press shrink-0 h-8 px-3 rounded-full border border-dashed border-line-strong text-[12px] font-medium text-ink-2 hover:bg-inset"
+                >
+                  {t(lang, "ob_model_quickset")}
+                </button>
+              </div>
             </div>
           )}
         </motion.div>
       </AnimatePresence>
 
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] px-5 pb-safe pb-6 pt-3 bg-gradient-to-t from-paper via-paper to-transparent">
+      <BottomBar className="px-5 pb-safe pb-6 pt-3 lg:pb-8">
         {step === 1 && (
           <p className={clsx("text-center text-[13px] mb-2", canNext ? "text-moss" : "text-ink-3")}>
             {goals.length < 3 ? t(lang, "ob_goals_pick_more", { n: 3 - goals.length }) : t(lang, "ob_goals_ok", { n: goals.length })}
@@ -255,7 +272,7 @@ export default function Onboarding() {
         ) : (
           <Button block size="lg" onClick={finish}>{t(lang, "ob_done")}</Button>
         )}
-      </div>
+      </BottomBar>
     </div>
   );
 }

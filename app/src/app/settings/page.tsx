@@ -3,7 +3,9 @@ import { useState } from "react";
 import { clsx } from "clsx";
 import { Download, Trash2, ChevronRight } from "lucide-react";
 import { Shell } from "@/components/Shell";
-import { Button, Chip, Page, SectionTitle, Sheet, useToast } from "@/components/ui";
+import { Button, Chip, Page, SectionTitle, Sheet, Switch, useToast } from "@/components/ui";
+import { isReady, STORAGE_KEY, useByok } from "@/lib/byok";
+import { stopSpeaking, unlockSpeech } from "@/lib/speech";
 import { useApp, useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
 import { COMPETENCIES, SKILLS, skillById, type Lang, type SkillId } from "@/data/taxonomy";
@@ -16,6 +18,8 @@ export default function Settings() {
   const [edit, setEdit] = useState(false);
   const [goalsOpen, setGoalsOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const byok = useByok();
+  const ownModel = isReady(byok);
   const [name, setName] = useState(profile?.name ?? "");
   const [bio, setBio] = useState(profile?.bio ?? "");
   if (!profile) return null;
@@ -38,14 +42,15 @@ export default function Settings() {
 
   return (
     <Shell>
-      <Page className="pt-4 flex flex-col gap-8">
-        <h1 className="display text-[30px] leading-tight">{t(lang, "st_title")}</h1>
+      <Page className="pt-4 flex flex-col gap-8 lg:pt-9 lg:grid lg:grid-cols-2 lg:gap-x-0 lg:gap-y-12">
+        <h1 className="display text-[30px] lg:text-[38px] leading-tight lg:col-span-2">{t(lang, "st_title")}</h1>
 
+        <div className="contents lg:flex lg:flex-col lg:gap-12 lg:pr-10">
         <section className="flex flex-col gap-3">
           <SectionTitle right={<button onClick={() => setEdit(true)} className="press text-[13px] text-ink-3 h-8">{t(lang, "st_edit")}</button>}>{t(lang, "st_profile")}</SectionTitle>
           <div className="card p-4 flex flex-col gap-1">
             <p className="display text-[20px]">{profile.name || (lang === "zh" ? "未命名" : "Unnamed")}</p>
-            <p className="text-[14px] text-ink-2 leading-relaxed">{profile.bio || t(lang, "ob_bio_ph")}</p>
+            <p className="text-[14px] text-ink-2 leading-relaxed lg:max-w-[var(--measure)]">{profile.bio || t(lang, "ob_bio_ph")}</p>
           </div>
         </section>
 
@@ -56,7 +61,9 @@ export default function Settings() {
           </div>
         </section>
 
-        <section className="card divide-y divide-line">
+        <section className="flex flex-col gap-3">
+          <SectionTitle>{t(lang, "st_prefs")}</SectionTitle>
+          <div className="card divide-y divide-line">
           <Row label={t(lang, "st_language")}>
             <div className="inline-flex rounded-full border border-line p-0.5 text-[12px] font-medium">
               {(["zh", "en"] as Lang[]).map((l) => (
@@ -65,10 +72,33 @@ export default function Settings() {
             </div>
           </Row>
           <Row label={t(lang, "st_voice")}>
-            <button role="switch" aria-checked={settings.tts} onClick={() => setSettings({ tts: !settings.tts })} className={clsx("press relative h-7 w-12 rounded-full transition-colors", settings.tts ? "bg-ink" : "bg-line-strong")}>
-              <span className={clsx("absolute top-1 h-5 w-5 rounded-full bg-paper transition-transform", settings.tts ? "translate-x-6" : "translate-x-1")} />
-            </button>
+            <Switch
+              checked={settings.tts}
+              // Turning it on is a user gesture — the only thing iOS accepts to
+              // unlock speech. Spend it here so the first line actually plays.
+              onChange={(v) => {
+                if (v) unlockSpeech();
+                else stopSpeaking();
+                setSettings({ tts: v });
+              }}
+              label={t(lang, "st_voice")}
+            />
           </Row>
+          </div>
+        </section>
+
+        </div>
+
+        <div className="contents lg:flex lg:flex-col lg:gap-12 lg:border-l lg:border-line lg:pl-10">
+        <section className="flex flex-col gap-3">
+          <SectionTitle>{t(lang, "st_model")}</SectionTitle>
+          <button onClick={byok.openSheet} className="press card card-link w-full text-left p-4 flex items-center gap-3">
+            <span className="flex-1 min-w-0 flex flex-col gap-1">
+              <span className="text-[14px] font-medium">{ownModel ? `${t(lang, "st_model_own")} · ${byok.fastModel}` : t(lang, "st_model_default")}</span>
+              <span className="text-[12px] text-ink-3 leading-snug">{ownModel ? t(lang, "st_model_local") : t(lang, "st_model_row_hint")}</span>
+            </span>
+            <ChevronRight size={16} className="text-ink-4 shrink-0" />
+          </button>
         </section>
 
         <section className="flex flex-col gap-3">
@@ -81,9 +111,10 @@ export default function Settings() {
 
         <section className="flex flex-col gap-2">
           <SectionTitle>{t(lang, "st_about")}</SectionTitle>
-          <p className="text-[13px] text-ink-3 leading-relaxed">{t(lang, "st_about_body")}</p>
+          <p className="text-[13px] text-ink-3 leading-relaxed lg:max-w-[var(--measure)]">{t(lang, "st_about_body")}</p>
           <a className="text-[13px] text-teal underline underline-offset-2" href="https://arxiv.org/abs/2606.04155" target="_blank" rel="noreferrer">arXiv:2606.04155</a>
         </section>
+        </div>
       </Page>
 
       <Sheet open={edit} onClose={() => setEdit(false)} title={t(lang, "st_profile")}>
@@ -112,7 +143,7 @@ export default function Settings() {
       <Sheet open={confirm} onClose={() => setConfirm(false)} title={t(lang, "st_reset")}>
         <div className="flex flex-col gap-4 pt-2">
           <p className="text-[14px] text-ink-2 leading-relaxed">{t(lang, "st_reset_confirm")}</p>
-          <Button block variant="danger" onClick={() => { reset(); setConfirm(false); }}>{t(lang, "st_reset")}</Button>
+          <Button block variant="danger" onClick={() => { byok.clear(); try { localStorage.removeItem(STORAGE_KEY); } catch {} reset(); setConfirm(false); }}>{t(lang, "st_reset")}</Button>
           <Button block variant="ghost" onClick={() => setConfirm(false)}>{t(lang, "cancel")}</Button>
         </div>
       </Sheet>

@@ -7,6 +7,8 @@ import type { ChatMessage, Profile, Proficiency, Reflection, Report, Session } f
 
 export interface Settings {
   tts: boolean;
+  /** The learner has been told that voice input uploads audio to their browser's vendor. */
+  voiceNoticeSeen?: boolean;
 }
 
 interface AppState {
