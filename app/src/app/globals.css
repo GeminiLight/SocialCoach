@@ -24,6 +24,18 @@
   --danger-soft: oklch(0.94 0.04 25);
   --gold: oklch(0.78 0.14 85);
 
+  /* Large high-contrast surfaces — the rehearse banner, the next-step slab.
+     Small controls invert happily in dark; a full-width near-white block does
+     not, which is the glare the design brief rules out. */
+  --slab: var(--ink);
+  --slab-ink: var(--paper);
+  /* Paper grain, the sheet's inner edge, and the loading sweep all used to be
+     hardcoded near-white and would glow in the dark palette. */
+  --grain: oklch(0.93 0.012 75);
+  --edge-hi: oklch(1 0 0 / 0.5);
+  --sweep-hi: oklch(1 0 0 / 0.6);
+  --edge-shadow: oklch(0.2 0.02 60 / 0.5);
+
   --radius-sm: 10px;
   --radius: 16px;
   --radius-lg: 22px;
@@ -50,6 +62,81 @@
   --font-sans: var(--font-hanken), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
   --font-display: var(--font-sans);
   --font-body: var(--font-sans);
+
+  color-scheme: light;
+}
+
+/* ── Dark: paper in a dim room, not a glowing UI ──
+   Same hues, mirrored lightness. The ground stays warm brown-black rather than
+   neutral or blue so the "worn paperback" reading survives at night, and the
+   accent lifts instead of saturating. Three states: system by default, with an
+   explicit choice winning in either direction. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --paper: oklch(0.205 0.012 62);
+    --paper-deep: oklch(0.165 0.011 60);
+    --card: oklch(0.238 0.013 63);
+    --inset: oklch(0.272 0.014 63);
+    --ink: oklch(0.935 0.012 78);
+    --ink-2: oklch(0.80 0.013 75);
+    --ink-3: oklch(0.655 0.013 70);
+    --ink-4: oklch(0.515 0.012 68);
+    --line: oklch(0.315 0.014 65);
+    --line-strong: oklch(0.425 0.016 65);
+    --accent: oklch(0.70 0.145 42);
+    /* In light this is the darker, more emphatic ochre; on a dark tint it has
+       to move the other way to stay emphatic. */
+    --accent-deep: oklch(0.795 0.125 46);
+    --accent-soft: oklch(0.315 0.055 44);
+    --accent-ink: oklch(0.17 0.02 50);
+    --teal: oklch(0.715 0.085 200);
+    --teal-soft: oklch(0.285 0.04 200);
+    --moss: oklch(0.725 0.10 145);
+    --moss-soft: oklch(0.275 0.045 145);
+    --danger: oklch(0.715 0.155 25);
+    --danger-soft: oklch(0.305 0.06 25);
+    --gold: oklch(0.815 0.13 85);
+
+    --slab: oklch(0.30 0.016 62);
+    --slab-ink: var(--ink);
+    --grain: oklch(0.275 0.014 68);
+    --edge-hi: oklch(1 0 0 / 0.06);
+    --sweep-hi: oklch(1 0 0 / 0.10);
+    --edge-shadow: oklch(0 0 0 / 0.55);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: oklch(0.205 0.012 62);
+  --paper-deep: oklch(0.165 0.011 60);
+  --card: oklch(0.238 0.013 63);
+  --inset: oklch(0.272 0.014 63);
+  --ink: oklch(0.935 0.012 78);
+  --ink-2: oklch(0.80 0.013 75);
+  --ink-3: oklch(0.655 0.013 70);
+  --ink-4: oklch(0.515 0.012 68);
+  --line: oklch(0.315 0.014 65);
+  --line-strong: oklch(0.425 0.016 65);
+  --accent: oklch(0.70 0.145 42);
+  --accent-deep: oklch(0.795 0.125 46);
+  --accent-soft: oklch(0.315 0.055 44);
+  --accent-ink: oklch(0.17 0.02 50);
+  --teal: oklch(0.715 0.085 200);
+  --teal-soft: oklch(0.285 0.04 200);
+  --moss: oklch(0.725 0.10 145);
+  --moss-soft: oklch(0.275 0.045 145);
+  --danger: oklch(0.715 0.155 25);
+  --danger-soft: oklch(0.305 0.06 25);
+  --gold: oklch(0.815 0.13 85);
+
+  --slab: oklch(0.30 0.016 62);
+  --slab-ink: var(--ink);
+  --grain: oklch(0.275 0.014 68);
+  --edge-hi: oklch(1 0 0 / 0.06);
+  --sweep-hi: oklch(1 0 0 / 0.10);
 }
 
 @theme inline {
@@ -74,6 +161,8 @@
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
   --color-gold: var(--gold);
+  --color-slab: var(--slab);
+  --color-slab-ink: var(--slab-ink);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --radius-sm: var(--radius-sm);
@@ -100,7 +189,7 @@ body {
 /* subtle paper grain outside the app column on wide screens */
 @media (min-width: 560px) {
   body {
-    background-image: radial-gradient(oklch(0.93 0.012 75) 0.6px, transparent 0.6px);
+    background-image: radial-gradient(var(--grain) 0.6px, transparent 0.6px);
     background-size: 14px 14px;
   }
 }
@@ -129,7 +218,7 @@ a { color: inherit; text-decoration: none; }
   position: relative;
 }
 @media (min-width: 560px) {
-  .sheet { border-left: 1px solid var(--line); border-right: 1px solid var(--line); box-shadow: 0 0 0 1px oklch(1 0 0 / 0.5) inset; }
+  .sheet { border-left: 1px solid var(--line); border-right: 1px solid var(--line); box-shadow: 0 0 0 1px var(--edge-hi) inset; }
 }
 @media (min-width: 48rem) { .sheet { max-width: 40rem; } }
 @media (min-width: 64rem) {
@@ -205,7 +294,7 @@ a { color: inherit; text-decoration: none; }
 
 /* staged loader */
 @keyframes sweep { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
-.sweep::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.6), transparent); animation: sweep 1.4s infinite var(--ease-out); }
+.sweep::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, var(--sweep-hi), transparent); animation: sweep 1.4s infinite var(--ease-out); }
 
 /* entrance */
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

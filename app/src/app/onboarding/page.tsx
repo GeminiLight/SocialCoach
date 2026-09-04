@@ -10,7 +10,7 @@ import { useApp } from "@/store/useApp";
 import { openModelSheet } from "@/lib/byok";
 import { BottomBar, Button, Chip } from "@/components/ui";
 import { Level } from "@/components/SkillBits";
-import { compColor, compSoft } from "@/lib/format";
+import { compColor, compSoft, hueColor } from "@/lib/format";
 
 const STEPS = 5;
 
@@ -26,10 +26,10 @@ function WelcomeTickets({ lang }: { lang: Lang }) {
         return (
           <li
             key={s.id}
-            className="absolute left-0 right-8 card px-4 py-3 flex items-center gap-3 shadow-[0_6px_18px_-12px_oklch(0.2_0.02_60/0.5)] rise"
+            className="absolute left-0 right-8 card px-4 py-3 flex items-center gap-3 shadow-[0_6px_18px_-12px_var(--edge-shadow)] rise"
             style={{ top: i * 40, transform: `rotate(${tilts[i]}deg)`, "--i": i + 2, zIndex: i } as React.CSSProperties}
           >
-            <span className="h-8 w-8 rounded-full shrink-0" style={{ background: `oklch(0.86 0.06 ${npc.hue})` }} />
+            <span className="h-8 w-8 rounded-full shrink-0" style={{ background: hueColor(npc.hue) }} />
             <span className="text-[14px] font-medium truncate">{s.title[lang]}</span>
             <span className="ml-auto text-[11px] text-ink-4 num shrink-0">{s.minutes} {t(lang, "min")}</span>
           </li>

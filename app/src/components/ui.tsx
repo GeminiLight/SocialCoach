@@ -114,7 +114,7 @@ export function Avatar({ name, hue, size = 40, className }: { name: string; hue:
   return (
     <span
       className={clsx("inline-flex items-center justify-center rounded-full shrink-0 font-semibold display", className)}
-      style={{ width: size, height: size, background: hueColor(hue), color: `oklch(0.32 0.08 ${hue})`, fontSize: size * 0.42, border: `1px solid oklch(0.78 0.08 ${hue})` }}
+      style={{ width: size, height: size, background: hueColor(hue), color: hueColor(hue, 0.32, 0.08), fontSize: size * 0.42, border: `1px solid ${hueColor(hue, 0.78, 0.08)}` }}
       aria-hidden
     >
       {initial}

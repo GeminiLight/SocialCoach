@@ -36,7 +36,7 @@ export function Radar({ values, lang, size = 260, showLabels = true, className }
         <line key={i} x1={cx} y1={cy} x2={p[0]} y2={p[1]} stroke="var(--line)" strokeWidth={1} />
       ))}
       {any && (
-        <polygon points={valPts.map((p) => `${p[0]},${p[1]}`).join(" ")} fill="oklch(0.6 0.155 40 / 0.16)" stroke="var(--accent)" strokeWidth={1.6} strokeLinejoin="round" style={{ transition: "all 600ms cubic-bezier(0.16,1,0.3,1)" }} />
+        <polygon points={valPts.map((p) => `${p[0]},${p[1]}`).join(" ")} fill="var(--accent)" fillOpacity={0.16} stroke="var(--accent)" strokeWidth={1.6} strokeLinejoin="round" style={{ transition: "all 600ms cubic-bezier(0.16,1,0.3,1)" }} />
       )}
       {valPts.map((p, i) =>
         p[2] == null ? null : <circle key={i} cx={p[0]} cy={p[1]} r={3.5} fill={compColor(COMPETENCIES[i].id)} stroke="var(--paper)" strokeWidth={1.5} />,

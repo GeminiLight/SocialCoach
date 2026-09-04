@@ -9,6 +9,7 @@ import { Toaster } from "./ui";
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const hydrated = useApp((s) => s.hydrated);
   const profile = useApp((s) => s.profile);
+  const settings = useApp((s) => s.settings);
   const router = useRouter();
   const path = usePathname();
   const byok = useByok();
@@ -42,6 +43,14 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     // zh-CN to screen readers and translation prompts on an English browser.
     document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
   }, [lang]);
+
+  // An explicit choice pins the palette; "system" removes the attribute so the
+  // prefers-color-scheme block takes over again.
+  useEffect(() => {
+    const t = settings.theme ?? "system";
+    if (t === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", t);
+  }, [settings.theme]);
 
   useEffect(() => {
     if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {

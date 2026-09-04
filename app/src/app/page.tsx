@@ -102,16 +102,16 @@ export default function Home() {
         </section>
 
         {/* Rehearse */}
-        <Link href="/rehearse" className="press block rounded-[var(--radius)] bg-ink text-paper p-5 relative overflow-hidden">
-          <span className="absolute -right-6 -top-6 h-28 w-28 rounded-full" style={{ background: "oklch(0.6 0.155 40 / 0.35)" }} />
-          <span className="absolute right-10 top-10 h-16 w-16 rounded-full" style={{ background: "oklch(0.6 0.155 40 / 0.25)" }} />
+        <Link href="/rehearse" className="press block rounded-[var(--radius)] bg-slab text-slab-ink p-5 relative overflow-hidden">
+          <span className="absolute -right-6 -top-6 h-28 w-28 rounded-full" style={{ background: "color-mix(in oklch, var(--accent) 35%, transparent)" }} />
+          <span className="absolute right-10 top-10 h-16 w-16 rounded-full" style={{ background: "color-mix(in oklch, var(--accent) 25%, transparent)" }} />
           <div className="relative flex items-start gap-3">
-            <Sparkles size={20} className="mt-1 text-accent-soft shrink-0" />
+            <Sparkles size={20} className="mt-1 text-accent shrink-0" />
             <div className="flex-1">
               <p className="display text-[19px] leading-tight">{t(lang, "home_rehearse_title")}</p>
-              <p className="text-[13px] text-paper/70 mt-1.5 leading-snug max-w-[30ch]">{t(lang, "home_rehearse_sub")}</p>
+              <p className="text-[13px] text-slab-ink/70 mt-1.5 leading-snug max-w-[30ch]">{t(lang, "home_rehearse_sub")}</p>
             </div>
-            <ArrowRight size={18} className="mt-1 text-paper/70" />
+            <ArrowRight size={18} className="mt-1 text-slab-ink/70" />
           </div>
         </Link>
 

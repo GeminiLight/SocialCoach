@@ -15,9 +15,34 @@ export function relDate(ts: number, lang: Lang): string {
   return d.toLocaleDateString(lang === "zh" ? "zh-CN" : "en-US", { month: "short", day: "numeric" });
 }
 
+/**
+ * These hues are computed rather than tokenised — one per competency, one per
+ * character — so a CSS variable cannot theme them. `light-dark()` can: it picks
+ * by the resolved `color-scheme`, which follows the system unless the root
+ * element pins it, so the same call works for system dark and for an explicit
+ * choice. (Verified to work in SVG `fill` attributes, which is where most of
+ * these land.)
+ *
+ * The dark counterpart mirrors lightness around the midpoint and trims chroma:
+ * a pale tint used as a background has to become a deep tint, while ink-weight
+ * colours have to lift to stay legible on a dark ground.
+ */
+function themed(l: number, c: number, hue: number) {
+  // Piecewise, because these lightnesses mean different things. A first attempt
+  // mirrored everything around the midpoint and collapsed 0.67–0.93 into a
+  // narrow band near 0.30 — cover art turned into a black rectangle because the
+  // shapes and the ground they sit on landed on the same value.
+  //   ≥ 0.88  a ground wash: has to clear the card it sits on, not just the paper
+  //   ≥ 0.60  a drawn shape: has to stay clearly above that ground
+  //   < 0.60  ink weight: lifts to stay legible on a dark ground
+  const dl = l >= 0.88 ? 0.3 - (l - 0.88) * 0.3 : l >= 0.6 ? 0.3 + (0.88 - l) * 0.95 : Math.min(0.88, 1.18 - l);
+  // Dark surfaces need more chroma than light ones to still read as coloured.
+  const dc = l >= 0.6 ? Math.min(0.1, c * 1.9) : c * 0.95;
+  return `light-dark(oklch(${l} ${c} ${hue}), oklch(${dl.toFixed(3)} ${dc.toFixed(3)} ${hue}))`;
+}
+
 export function compColor(id: CompetencyId, l = 0.58, c = 0.11) {
-  const hue = COMPETENCIES.find((x) => x.id === id)!.hue;
-  return `oklch(${l} ${c} ${hue})`;
+  return themed(l, c, COMPETENCIES.find((x) => x.id === id)!.hue);
 }
 export function compSoft(id: CompetencyId) {
   return compColor(id, 0.94, 0.03);
@@ -29,5 +54,5 @@ export function skillSoft(id: SkillId) {
   return compSoft(skillById(id).competency);
 }
 export function hueColor(hue: number, l = 0.86, c = 0.06) {
-  return `oklch(${l} ${c} ${hue})`;
+  return themed(l, c, hue);
 }

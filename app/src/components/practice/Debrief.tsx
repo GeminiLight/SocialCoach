@@ -280,8 +280,8 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
 
         {!streaming && report.nextStep && (
-          <section className="bg-ink text-paper rounded-[var(--radius)] p-5 flex flex-col gap-2">
-            <span className="eyebrow text-paper/60">{t(lang, "rp_next_step")}</span>
+          <section className="bg-slab text-slab-ink rounded-[var(--radius)] p-5 flex flex-col gap-2">
+            <span className="eyebrow text-slab-ink/60">{t(lang, "rp_next_step")}</span>
             <p className="display text-[20px] leading-snug">{report.nextStep}</p>
           </section>
         )}

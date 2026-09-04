@@ -71,6 +71,19 @@ export default function Settings() {
               ))}
             </div>
           </Row>
+          <Row label={t(lang, "st_theme")}>
+            <div className="inline-flex rounded-full border border-line p-0.5 text-[12px] font-medium">
+              {(["system", "light", "dark"] as const).map((v) => (
+                <button
+                  key={v}
+                  onClick={() => setSettings({ theme: v })}
+                  className={clsx("press px-3 h-7 rounded-full", (settings.theme ?? "system") === v ? "bg-ink text-paper" : "text-ink-3")}
+                >
+                  {t(lang, v === "system" ? "st_theme_system" : v === "light" ? "st_theme_light" : "st_theme_dark")}
+                </button>
+              ))}
+            </div>
+          </Row>
           <Row label={t(lang, "st_voice")}>
             <Switch
               checked={settings.tts}

@@ -5,8 +5,12 @@ import type { ContextId, Lang, SkillId } from "@/data/taxonomy";
 import type { Scenario } from "@/data/corpus/types";
 import type { ChatMessage, Profile, Proficiency, Reflection, Report, Session } from "@/lib/types";
 
+export type Theme = "system" | "light" | "dark";
+
 export interface Settings {
   tts: boolean;
+  /** "system" follows the OS; the other two pin it. */
+  theme?: Theme;
   /** The learner has been told that voice input uploads audio to their browser's vendor. */
   voiceNoticeSeen?: boolean;
 }

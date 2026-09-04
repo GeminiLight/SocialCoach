@@ -14,7 +14,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f8f5ef",
+  // The browser chrome should match whichever ground the page is on.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8f5ef" },
+    { media: "(prefers-color-scheme: dark)", color: "#22201d" },
+  ],
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -24,6 +28,14 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN" className={`${hanken.variable}`}>
+      {/* Before first paint, so a pinned light theme does not flash dark (or the
+          reverse). Reads the persisted store directly; failures are ignored and
+          the media query decides. */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `try{var t=JSON.parse(localStorage.getItem("socialcoach.v1")||"{}").state?.settings?.theme;if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t)}catch(e){}`,
+        }}
+      />
       <body>
         <AppProviders>{children}</AppProviders>
       </body>
