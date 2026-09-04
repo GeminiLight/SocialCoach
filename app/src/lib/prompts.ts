@@ -1,5 +1,6 @@
 import type { Scenario, Theory, Case } from "@/data/corpus/types";
 import { COMPETENCIES, CONTEXTS, SKILLS, skillById, competencyById, type Lang, type L, type SkillId } from "@/data/taxonomy";
+import { SCENARIO_ICON_NAMES } from "@/data/scenario-icons";
 import type { ChatMessage, Profile, Proficiency } from "./types";
 
 export const pick = (l: L, lang: Lang) => l[lang];
@@ -191,6 +192,11 @@ export function reflectSystem(s: Scenario, lang: Lang) {
 
 /* ───────────────────────── Rehearse (custom scenario) ───────────────────────── */
 
+/** The icon allow-list, so a generated scenario cannot name one that does not exist. */
+function iconBlock() {
+  return `ICONS: ${SCENARIO_ICON_NAMES.join(", ")}`;
+}
+
 export function rehearseSystem(lang: Lang) {
   return `You are the scenario-authoring agent of SocialCoach. A learner describes a REAL upcoming or recurring conversation. Turn it into a practice scenario in the app's schema so they can rehearse it.
 
@@ -200,6 +206,8 @@ Rules:
 - 2–3 objectives that are observable in dialogue. Success/failure conditions concrete.
 - Tag with the taxonomy below: 1–3 skill ids (most relevant first), 1–2 competency ids, one context id and type, relationship types, difficulty 1–3, maxTurns 6–10.
 - Opening line comes from an NPC and drops the learner straight into the tension.
+- Pick the ONE icon from the list below that best names the situation — the object or act at its centre, not the emotion. Use the context's obvious choice only if nothing fits better.
+${iconBlock()}
 ${taxonomyBlock()}
 
 ${LANG_RULE[lang]} Provide every text field as an object {"zh": "...", "en": "..."} but fill ONLY the "${lang}" key with real content; set the other key to an empty string "" (the app mirrors it). Keep total output compact.
@@ -216,7 +224,8 @@ Return ONLY JSON:
   "objectives": [{"zh":"","en":""}],
   "success": {"zh":"","en":""}, "failure": {"zh":"","en":""},
   "opening": {"characterId":"<npc id>","text":{"zh":"","en":""}},
-  "keywords": ["..."]
+  "keywords": ["..."],
+  "icon": "<one id from the icon list>"
 }`;
 }
 
