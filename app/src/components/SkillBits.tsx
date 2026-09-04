@@ -21,16 +21,25 @@ export function CompetencyLabel({ id, lang }: { id: SkillId; lang: Lang }) {
   return <span className="eyebrow" style={{ color: compColor(c.id, 0.45, 0.09) }}>{c.name[lang]}</span>;
 }
 
-/** 1–5 proficiency as five ink-filled cells. */
-export function Level({ value, color, className }: { value: number | undefined; color?: string; className?: string }) {
+/**
+ * 1–5 proficiency as five ink-filled cells. Pass `from` to show where the
+ * learner started: the gain since then renders as a lighter wash behind the
+ * fill, so the row shows movement and not just a level.
+ */
+export function Level({ value, from, color, className }: { value: number | undefined; from?: number; color?: string; className?: string }) {
   const v = value ?? 0;
+  const base = from == null ? v : Math.max(0, Math.min(v, from));
   return (
     <span className={clsx("inline-flex items-center gap-[3px]", className)} aria-label={value ? value.toFixed(1) : "unrated"}>
       {[1, 2, 3, 4, 5].map((i) => {
         const fill = Math.max(0, Math.min(1, v - (i - 1)));
+        const solid = Math.max(0, Math.min(1, base - (i - 1)));
         return (
           <span key={i} className="relative h-2.5 w-4 rounded-[3px] overflow-hidden border" style={{ borderColor: "var(--line-strong)", background: "var(--card)" }}>
-            <span className="absolute inset-y-0 left-0" style={{ width: `${fill * 100}%`, background: color ?? "var(--ink)", transition: "width 600ms cubic-bezier(0.16,1,0.3,1)" }} />
+            {fill > solid && (
+              <span className="absolute inset-y-0 left-0" style={{ width: `${fill * 100}%`, background: color ?? "var(--ink)", opacity: 0.34 }} />
+            )}
+            <span className="absolute inset-y-0 left-0" style={{ width: `${solid * 100}%`, background: color ?? "var(--ink)", transition: "width 600ms cubic-bezier(0.16,1,0.3,1)" }} />
           </span>
         );
       })}

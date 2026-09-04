@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { clsx } from "clsx";
 import { ArrowLeft, Bookmark, ChevronDown, RotateCcw, Share2, Send } from "lucide-react";
-import { Button, IconButton, Stages, Stars, Spinner, useToast } from "@/components/ui";
+import { BottomBar, Button, IconButton, Marginalia, Stages, Stars, Spinner, useToast } from "@/components/ui";
 import { SkillTag, Level } from "@/components/SkillBits";
 import { CaseBody, TheoryBody } from "@/components/Knowledge";
 import { useApp, useLang } from "@/store/useApp";
 import { t, tList } from "@/lib/i18n";
-import { assessStream, streamText } from "@/lib/client-api";
+import { assessStream, reflectStream } from "@/lib/client-api";
 import { buildSession } from "@/lib/session-utils";
 import type { Report, Session } from "@/lib/types";
 import { caseById, theoryById } from "@/data/corpus";
@@ -77,25 +77,29 @@ export function Debrief({ session }: { session: Session }) {
   /* ── phase: ended, report not yet started streaming ── */
   if (!report && !hasPartial) {
     return (
-      <div className="min-h-dvh pt-safe px-5 flex flex-col">
+      <div className="min-h-dvh pt-safe px-5 flex flex-col lg:mx-auto lg:w-full lg:max-w-[1000px] xl:max-w-[1120px] lg:px-6">
         <div className="pt-2 -ml-2"><IconButton label={t(lang, "back")} onClick={() => router.push("/")}><ArrowLeft size={20} /></IconButton></div>
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="flex-1 flex flex-col gap-8 pt-10">
-          <div className="flex flex-col items-center text-center gap-4">
-            <StarBurst n={n} of={sc.objectives.length} />
-            <h1 className="display text-[32px] leading-tight">{t(lang, outcomeKey)}</h1>
-            <p className="text-[14px] text-ink-3 max-w-[32ch]">{t(lang, "pr_ended_sub")}</p>
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="flex-1 flex flex-col gap-8 pt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-x-12 lg:items-start lg:pt-14">
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col items-center text-center gap-4 lg:items-start lg:text-left">
+              <StarBurst n={n} of={sc.objectives.length} />
+              <h1 className="display text-[32px] leading-tight">{t(lang, outcomeKey)}</h1>
+              <p className="text-[14px] text-ink-3 max-w-[32ch]">{t(lang, "pr_ended_sub")}</p>
+            </div>
+            <div className="card p-5">
+              {err ? (
+                <div className="flex flex-col gap-3">
+                  <p className="text-[14px] text-danger">{err}</p>
+                  <Button variant="secondary" onClick={() => { setErr(null); void run(); }}>{t(lang, "retry")}</Button>
+                </div>
+              ) : (
+                <Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} intervalMs={6000} slowAfterMs={60000} />
+              )}
+            </div>
           </div>
-          <div className="card p-5">
-            {err ? (
-              <div className="flex flex-col gap-3">
-                <p className="text-[14px] text-danger">{err}</p>
-                <Button variant="secondary" onClick={() => { setErr(null); void run(); }}>{t(lang, "retry")}</Button>
-              </div>
-            ) : (
-              <Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} intervalMs={6000} />
-            )}
-          </div>
-          <Transcript session={session} title={t(lang, "pr_reread")} />
+          <Marginalia className="lg:sticky lg:top-6 lg:h-[calc(100dvh-5rem)] lg:overflow-y-auto">
+            <Transcript session={session} title={t(lang, "pr_reread")} />
+          </Marginalia>
         </motion.div>
       </div>
     );
@@ -171,8 +175,8 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
   };
 
   return (
-    <div className="min-h-dvh pt-safe pb-36">
-      <div className="px-3 pt-2 flex items-center justify-between">
+    <div className="min-h-dvh pt-safe pb-36 lg:pb-12 lg:mx-auto lg:w-full lg:max-w-[1000px] xl:max-w-[1120px] lg:px-6">
+      <div className="px-3 pt-2 flex items-center justify-between lg:px-0">
         <IconButton label={t(lang, "back")} onClick={() => router.push("/")}><ArrowLeft size={20} /></IconButton>
         <div className="flex items-center gap-1">
           <AnimatePresence>
@@ -185,7 +189,8 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
           <IconButton label={t(lang, "rp_share")} onClick={share} disabled={streaming} className={streaming ? "opacity-40" : ""}><Share2 size={18} /></IconButton>
         </div>
       </div>
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="px-5 flex flex-col gap-9">
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-x-12 lg:items-start">
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="px-5 flex flex-col gap-9 lg:px-0">
         <header className="flex flex-col gap-3">
           <p className="eyebrow">{t(lang, "rp_title")} · {sc.title[lang]}</p>
           <div className="flex items-center gap-3">
@@ -305,7 +310,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
 
         {!streaming && (
-          <section>
+          <section className="lg:hidden">
             <button onClick={() => setShowTranscript((x) => !x)} className="press inline-flex items-center gap-1.5 text-[13px] text-ink-3 h-8">
               {t(lang, "rp_transcript")} <ChevronDown size={14} className={clsx("transition-transform", showTranscript && "rotate-180")} />
             </button>
@@ -314,14 +319,19 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
             </div>
           </section>
         )}
+        {!streaming && (
+          <BottomBar className="px-5 pb-safe pb-6 pt-4 flex gap-2 lg:px-0 lg:pb-0">
+            <Button block size="lg" variant="ink" onClick={() => router.push("/")}>{t(lang, "rp_back_home")}</Button>
+            <Button size="lg" variant="secondary" onClick={onAgain} className="px-4" aria-label={t(lang, "rp_practice_again")}><RotateCcw size={18} /></Button>
+          </BottomBar>
+        )}
       </motion.div>
 
-      {!streaming && (
-        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] px-5 pb-safe pb-6 pt-4 bg-gradient-to-t from-paper via-paper to-transparent flex gap-2">
-          <Button block size="lg" variant="ink" onClick={() => router.push("/")}>{t(lang, "rp_back_home")}</Button>
-          <Button size="lg" variant="secondary" onClick={onAgain} className="px-4" aria-label={t(lang, "rp_practice_again")}><RotateCcw size={18} /></Button>
-        </div>
-      )}
+      {/* the margin: your own words, so every quoted line can be checked against the source */}
+      <Marginalia lgOnly className="lg:sticky lg:top-6 lg:h-[calc(100dvh-5rem)] lg:overflow-y-auto">
+        <Transcript session={session} title={t(lang, "rp_transcript")} />
+      </Marginalia>
+      </div>
     </div>
   );
 }
@@ -410,7 +420,7 @@ function ReflectItem({ session, question, idx, addReflection, updateReflection, 
       index = session.reflections.length;
     }
     try {
-      const reply = await streamText("/api/reflect", { scenario: session.scenario, question, answer, lang, summary }, (acc) => setLive(strip(acc)));
+      const reply = await reflectStream({ scenario: session.scenario, question, answer, lang, summary }, (acc) => setLive(strip(acc)));
       updateReflection(session.id, index, { coachReply: strip(reply).trim() });
     } catch {
       updateReflection(session.id, index, { coachReply: undefined });

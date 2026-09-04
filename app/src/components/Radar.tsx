@@ -1,9 +1,16 @@
 "use client";
+import { clsx } from "clsx";
 import { COMPETENCIES, type CompetencyId, type Lang } from "@/data/taxonomy";
 import { compColor } from "@/lib/format";
 
-/** Pentagon radar of the five CASEL competencies (values 1–5). */
-export function Radar({ values, lang, size = 260, showLabels = true }: { values: Record<CompetencyId, number | null>; lang: Lang; size?: number; showLabels?: boolean }) {
+/**
+ * Pentagon radar of the five CASEL competencies (values 1–5).
+ *
+ * `size` is the viewBox unit, not a pixel size: the svg fills its container and
+ * everything inside — geometry and label type — scales with it. Size it by
+ * constraining the wrapper.
+ */
+export function Radar({ values, lang, size = 260, showLabels = true, className }: { values: Record<CompetencyId, number | null>; lang: Lang; size?: number; showLabels?: boolean; className?: string }) {
   const cx = size / 2;
   const cy = size / 2;
   const R = size * 0.34;
@@ -21,7 +28,7 @@ export function Radar({ values, lang, size = 260, showLabels = true }: { values:
   });
   const any = valPts.filter((p) => p[2] != null).length >= 3;
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label="competency radar">
+    <svg viewBox={`0 0 ${size} ${size}`} className={clsx("w-full h-auto", className)} role="img" aria-label="competency radar">
       {[0.25, 0.5, 0.75, 1].map((f) => (
         <polygon key={f} points={poly(R * f)} fill="none" stroke="var(--line)" strokeWidth={1} strokeDasharray={f === 1 ? undefined : "2 4"} />
       ))}

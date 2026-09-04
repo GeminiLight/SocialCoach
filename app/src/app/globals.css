@@ -40,8 +40,16 @@
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
 
-  --font-display: var(--font-young-serif), "Songti SC", "Noto Serif SC", Georgia, serif;
-  --font-body: var(--font-hanken), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  /* frame: every width step in the app is one of these */
+  --col: 480px;        /* the phone column */
+  --rail-w: 232px;     /* desktop nav rail */
+  --content-max: 1600px; /* widest the content block gets; the paper itself fills */
+  --margin-w: 232px;   /* marginalia column */
+  --measure: 62ch;     /* comfortable line length for running text */
+
+  --font-sans: var(--font-hanken), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
 }
 
 @theme inline {
@@ -107,25 +115,58 @@ a { color: inherit; text-decoration: none; }
 }
 
 @layer components {
-.app-col {
+/* ── The paper ──
+   A centered column on phone (480) and tablet portrait (640), with grain and a
+   hairline edge showing outside it. From `lg` the paper fills the window
+   instead — no edge to draw, and no wasted gutter. Line length is then held by
+   the content itself (see --measure), not by the width of the paper. */
+.sheet {
   width: 100%;
-  max-width: 480px;
+  max-width: var(--col);
   min-height: 100dvh;
   margin: 0 auto;
   background: var(--paper);
   position: relative;
 }
 @media (min-width: 560px) {
-  .app-col { border-left: 1px solid var(--line); border-right: 1px solid var(--line); box-shadow: 0 0 0 1px oklch(1 0 0 / 0.5) inset; }
+  .sheet { border-left: 1px solid var(--line); border-right: 1px solid var(--line); box-shadow: 0 0 0 1px oklch(1 0 0 / 0.5) inset; }
+}
+@media (min-width: 48rem) { .sheet { max-width: 40rem; } }
+@media (min-width: 64rem) {
+  .sheet { max-width: none; border-left: 0; border-right: 0; box-shadow: none; }
+  body { background-image: none; }
 }
 
-.display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.005em; }
+/* Bottom action bar: floats over the page on phone/tablet with its width
+   tracking the sheet, then rejoins the document flow on desktop so each page
+   can put it where it belongs. */
+.bar-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--col);
+  background-image: linear-gradient(to top, var(--paper) 0%, var(--paper) 50%, transparent 100%);
+}
+@media (min-width: 48rem) { .bar-fixed { max-width: 40rem; } }
+@media (min-width: 64rem) {
+  .bar-fixed { position: static; transform: none; width: auto; max-width: none; background-image: none; }
+}
+
+.display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.018em; }
 .num { font-family: var(--font-display); font-variant-numeric: tabular-nums; }
 .eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
 
 .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
 .inset { background: var(--inset); border-radius: var(--radius-sm); }
 .hairline { height: 1px; background: var(--line); }
+
+/* pointer devices get a hover affordance on tappable rows; the press
+   transform below still wins while the pointer is down */
+@media (hover: hover) and (pointer: fine) {
+  .card-link:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+}
 .dotted { border-top: 1px dashed var(--line-strong); }
 
 /* pressable */

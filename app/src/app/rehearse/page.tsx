@@ -46,7 +46,7 @@ export default function Rehearse() {
   const examples = ["rh_ex_1", "rh_ex_2", "rh_ex_3", "rh_ex_4"] as const;
 
   return (
-    <div className="min-h-dvh pt-safe pb-10">
+    <div className="min-h-dvh pt-safe pb-10 lg:mx-auto lg:w-full lg:max-w-[680px] lg:px-4 lg:pt-6">
       <div className="px-3 pt-2 flex items-center">
         <IconButton label={t(lang, "back")} onClick={() => (window.history.length > 1 ? router.back() : router.push("/"))}><ArrowLeft size={20} /></IconButton>
       </div>
@@ -58,7 +58,7 @@ export default function Rehearse() {
               <p className="text-[14px] text-ink-2 mt-2 leading-relaxed">{t(lang, "rh_sub")}</p>
             </header>
             {busy ? (
-              <div className="card p-5"><Stages title={t(lang, "rh_generating")} steps={tList(lang, "rh_gen_steps")} intervalMs={4000} /></div>
+              <div className="card p-5"><Stages title={t(lang, "rh_generating")} steps={tList(lang, "rh_gen_steps")} intervalMs={4000} slowAfterMs={40000} /></div>
             ) : (
               <>
                 <textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} placeholder={t(lang, "rh_ph")} className="px-4 py-3.5 rounded-2xl bg-card border border-line text-[15px] leading-relaxed placeholder:text-ink-4 focus:border-ink transition-colors" maxLength={800} />
@@ -94,7 +94,7 @@ export default function Rehearse() {
         {preview && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-5">
             <div className="card overflow-hidden">
-              <div className="relative h-36" style={{ background: `oklch(0.92 0.04 ${preview.characters[1]?.hue ?? 40})` }}>
+              <div className="relative h-36 bg-paper-deep">
                 <ScenarioCover scenario={preview} full />
                 <span className="absolute left-4 top-4 h-7 px-2.5 inline-flex items-center rounded-full bg-paper/90 text-[12px] font-medium">{contextById(preview.context).glyph} {contextById(preview.context).name[lang]}</span>
               </div>

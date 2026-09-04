@@ -1,14 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Young_Serif, Hanken_Grotesk } from "next/font/google";
+import { Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { AppProviders } from "@/components/AppProviders";
 
-const youngSerif = Young_Serif({ subsets: ["latin"], weight: "400", variable: "--font-young-serif", display: "swap" });
 const hanken = Hanken_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-hanken", display: "swap" });
 
 export const metadata: Metadata = {
   title: "SocialCoach · 社交教练",
-  description: "把最难开口的那场对话，先在这里练一遍。Rehearse the conversation you're dreading, before it happens.",
+  description: "把一直没说的那句话，说出来。跟有自己目的、不会让你赢的 AI 角色实战演练，拿到引用你原话的教练复盘——告诉你是不会，还是会但没做到。每天 3 分钟。Say the thing you've been not saying.",
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, statusBarStyle: "default", title: "社交教练" },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
@@ -24,7 +23,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="zh-CN" className={`${youngSerif.variable} ${hanken.variable}`}>
+    <html lang="zh-CN" className={`${hanken.variable}`}>
       <body>
         <AppProviders>{children}</AppProviders>
       </body>

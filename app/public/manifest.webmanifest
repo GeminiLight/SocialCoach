@@ -1,14 +1,16 @@
 {
   "name": "SocialCoach · 社交教练",
   "short_name": "社交教练",
-  "description": "把最难开口的那场对话，先在这里练一遍。",
+  "description": "把一直没说的那句话，说出来。",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8f5ef",
   "theme_color": "#f8f5ef",
   "lang": "zh-CN",
   "icons": [
-    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
-    { "src": "/apple-icon.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ]
 }
