@@ -52,7 +52,7 @@ export default function Onboarding() {
   const [open, setOpen] = useState<string | null>(COMPETENCIES[3].id);
 
   const canNext = useMemo(() => {
-    if (step === 1) return goals.length >= 3 && goals.length <= 5;
+    if (step === 1) return goals.length >= 1 && goals.length <= 5;
     return true;
   }, [step, goals]);
 
@@ -262,7 +262,7 @@ export default function Onboarding() {
       <BottomBar className="px-5 pb-safe pb-6 pt-3 lg:pb-8">
         {step === 1 && (
           <p className={clsx("text-center text-[13px] mb-2", canNext ? "text-moss" : "text-ink-3")}>
-            {goals.length < 3 ? t(lang, "ob_goals_pick_more", { n: 3 - goals.length }) : t(lang, "ob_goals_ok", { n: goals.length })}
+            {goals.length === 0 ? t(lang, "ob_goals_pick_more") : t(lang, "ob_goals_ok", { n: goals.length })}
           </p>
         )}
         {step < STEPS - 1 ? (

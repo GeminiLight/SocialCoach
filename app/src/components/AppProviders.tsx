@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useApp } from "@/store/useApp";
+import { useApp, useLang } from "@/store/useApp";
 import { isReady, useByok } from "@/lib/byok";
 import { ModelSheet } from "./ModelSheet";
 import { Toaster } from "./ui";
@@ -12,6 +12,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const path = usePathname();
   const byok = useByok();
+  const lang = useLang();
   const [needsModel, setNeedsModel] = useState(false);
   const forced = needsModel && !isReady(byok);
 
@@ -36,8 +37,11 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   }, [hydrated, profile, path, router]);
 
   useEffect(() => {
-    if (profile?.lang) document.documentElement.lang = profile.lang === "zh" ? "zh-CN" : "en";
-  }, [profile?.lang]);
+    // Follow the resolved language, not just an explicit choice: before
+    // onboarding there is no profile, and the document would keep claiming
+    // zh-CN to screen readers and translation prompts on an English browser.
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+  }, [lang]);
 
   useEffect(() => {
     if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
