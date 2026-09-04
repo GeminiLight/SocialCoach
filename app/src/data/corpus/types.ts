@@ -41,6 +41,8 @@ export interface Scenario {
   failure: L;
   maxTurns: number;
   opening: { characterId: string; text: L };
+  /** Icon key from `data/scenario-icons.ts`. Generated scenarios carry their own. */
+  icon?: string;
   /** Traceable source that inspired the scenario. */
   source: string;
   keywords: string[];
