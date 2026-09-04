@@ -1,0 +1,10 @@
+# 把 example.com 换成你的域名，DNS A 记录指向这台机器，Caddy 会自动申请证书。
+example.com {
+	encode zstd gzip
+
+	reverse_proxy app:3000 {
+		# 关键：对话和复盘是流式响应（text/plain，不是 SSE），
+		# 默认缓冲会让文字一次性蹦出来，逐字生成的效果全没了。
+		flush_interval -1
+	}
+}

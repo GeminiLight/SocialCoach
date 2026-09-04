@@ -1,0 +1,32 @@
+# 单机部署：Caddy 负责 TLS 与反代，app 只监听内网。
+#   1. 复制 .env.production.example 为 .env.production 并填好
+#   2. 把 Caddyfile 里的域名改成你的
+#   3. docker compose up -d --build
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env.production
+    # 不对外发布端口：只有 Caddy 能访问它
+    expose:
+      - "3000"
+    # 限流计数在内存里，多副本会各算各的 —— 保持单实例
+    deploy:
+      replicas: 1
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data      # 证书，删了会触发 Let's Encrypt 限速
+      - caddy_config:/config
+    depends_on:
+      - app
+
+volumes:
+  caddy_data:
+  caddy_config:

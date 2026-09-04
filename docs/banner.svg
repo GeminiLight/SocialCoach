@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="SocialCoach · 社交教练 — Say the thing you’ve been not saying.">
+  <rect width="1200" height="340" fill="#faf6f1"/>
+  <line x1="88" y1="0" x2="88" y2="340" stroke="#ded8d1" stroke-width="1.5"/>
+  <g fill="none" stroke="#ded8d1" stroke-width="1.2">
+    <polygon points="982.0,64.0 1082.8,137.2 1044.3,255.8 919.7,255.8 881.2,137.2"/><polygon points="982.0,100.0 1048.5,148.4 1023.1,226.6 940.9,226.6 915.5,148.4"/><polygon points="982.0,135.0 1015.3,159.2 1002.6,198.3 961.4,198.3 948.7,159.2"/>
+    <line x1="982" y1="170" x2="982.0" y2="64.0"/>
+    <line x1="982" y1="170" x2="1082.8" y2="137.2"/>
+    <line x1="982" y1="170" x2="1044.3" y2="255.8"/>
+    <line x1="982" y1="170" x2="919.7" y2="255.8"/>
+    <line x1="982" y1="170" x2="881.2" y2="137.2"/>
+  </g>
+  <polygon points="982.0,91.6 1030.4,154.3 1036.8,245.5 944.6,221.5 939.7,156.2" fill="#ca592e" fill-opacity="0.15" stroke="#ca592e" stroke-opacity="0.6" stroke-width="2"/>
+  <circle cx="982.0" cy="91.6" r="4.5" fill="#ad7c2f"/>
+  <circle cx="1030.4" cy="154.3" r="4.5" fill="#518046"/>
+  <circle cx="1036.8" cy="245.5" r="4.5" fill="#00656a"/>
+  <circle cx="944.6" cy="221.5" r="4.5" fill="#c65b4c"/>
+  <circle cx="939.7" cy="156.2" r="4.5" fill="#485996"/>
+  <text x="132" y="72" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" font-size="21" fill="#7d726a" letter-spacing="7">社交教练</text>
+  <text x="130" y="156" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="74" fill="#261d16" letter-spacing="-1.5">SocialCoach</text>
+  <text x="132" y="234" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="33" fill="#261d16">Say the thing you&#8217;ve been not saying.</text>
+  <path d="M134 248.5 C 200 245, 278 251, 350 246.5 S 508 251.5, 586 246.5 S 636 250, 664 247" fill="none" stroke="#ca592e" stroke-width="2.6" stroke-linecap="round" opacity="0.85"/>
+  <text x="133" y="284" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" font-size="19" fill="#7d726a" letter-spacing="1.5">把一直没说的那句话，说出来。</text>
+</svg>
