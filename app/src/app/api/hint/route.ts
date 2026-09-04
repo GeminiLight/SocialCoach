@@ -1,29 +1,17 @@
 import { NextResponse } from "next/server";
-import { client, FAST_MODEL } from "@/lib/llm";
-import { hintSystem, transcriptBlock, pick } from "@/lib/prompts";
-import type { Scenario } from "@/data/corpus/types";
-import type { ChatMessage } from "@/lib/types";
+import { FAST_MODEL, serverLLM } from "@/lib/llm";
+import { runHint } from "@/lib/tasks/hint";
+import type { TurnInput } from "@/lib/tasks/types";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { asLang, fail } from "@/lib/api-utils";
-import type Anthropic from "@anthropic-ai/sdk";
 
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
   try {
-    const { scenario, learnerCharacterId, messages, lang: l, learnerName } = (await req.json()) as {
-      scenario: Scenario; learnerCharacterId: string; messages: ChatMessage[]; lang: string; learnerName?: string;
-    };
-    const lang = asLang(l);
-    const name = learnerName || pick(scenario.characters.find((c) => c.id === learnerCharacterId)!.name, lang);
-    const res = await client().messages.create({
-      model: FAST_MODEL,
-      max_tokens: 200,
-      thinking: { type: "disabled" },
-      system: hintSystem(scenario, learnerCharacterId, lang),
-      messages: [{ role: "user", content: `TRANSCRIPT SO FAR:\n${transcriptBlock(messages, scenario, lang, name)}\n\nGive the hint.` }],
-    });
-    const hint = res.content.filter((b): b is Anthropic.TextBlock => b.type === "text").map((b) => b.text).join("").trim();
-    return NextResponse.json({ hint });
+    checkRateLimit(req);
+    const body = (await req.json()) as TurnInput & { lang: string };
+    return NextResponse.json(await runHint({ ...body, lang: asLang(body.lang) }, serverLLM, FAST_MODEL));
   } catch (e) {
     return fail(e);
   }

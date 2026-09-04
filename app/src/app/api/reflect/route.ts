@@ -1,24 +1,17 @@
-import { client, FAST_MODEL } from "@/lib/llm";
-import { reflectSystem } from "@/lib/prompts";
-import type { Scenario } from "@/data/corpus/types";
-import { asLang, fail, textStream } from "@/lib/api-utils";
+import { FAST_MODEL, serverLLM } from "@/lib/llm";
+import { runReflect } from "@/lib/tasks/reflect";
+import type { ReflectInput } from "@/lib/tasks/types";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { asLang, fail, taskStream } from "@/lib/api-utils";
 
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
   try {
-    const { scenario, question, answer, lang: l, summary } = (await req.json()) as {
-      scenario: Scenario; question: string; answer: string; lang: string; summary?: string;
-    };
-    const lang = asLang(l);
-    const stream = client().messages.stream({
-      model: FAST_MODEL,
-      max_tokens: 400,
-      thinking: { type: "disabled" },
-      system: reflectSystem(scenario, lang),
-      messages: [{ role: "user", content: `Coach's earlier summary of the practice: ${summary ?? "(n/a)"}\n\nReflection question: ${question}\nLearner's answer: ${answer}` }],
-    });
-    return textStream(stream);
+    checkRateLimit(req);
+    const body = (await req.json()) as ReflectInput & { lang: string };
+    const input = { ...body, lang: asLang(body.lang) };
+    return taskStream((onDelta) => runReflect(input, serverLLM, FAST_MODEL, onDelta));
   } catch (e) {
     return fail(e);
   }
