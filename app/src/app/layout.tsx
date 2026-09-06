@@ -28,14 +28,18 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN" className={`${hanken.variable}`}>
-      {/* Before first paint, so a pinned light theme does not flash dark (or the
-          reverse). Reads the persisted store directly; failures are ignored and
-          the media query decides. */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `try{var t=JSON.parse(localStorage.getItem("socialcoach.v1")||"{}").state?.settings?.theme;if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t)}catch(e){}`,
-        }}
-      />
+      <head>
+        {/* Before first paint, so a pinned light theme does not flash dark (or
+            the reverse). Reads the persisted store directly; failures are
+            ignored and the media query decides. It has to be in <head> and
+            without `async`: React refuses to order a blocking script anywhere
+            else, and deferring it is the same as not having it. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=JSON.parse(localStorage.getItem("socialcoach.v1")||"{}").state?.settings?.theme;if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t)}catch(e){}`,
+          }}
+        />
+      </head>
       <body>
         <AppProviders>{children}</AppProviders>
       </body>
