@@ -118,17 +118,31 @@ REALISM RULES
 - Never coach, never break character, never mention objectives or the app inside dialogue.
 - Learner turns are capped at ${s.maxTurns}. When the cap is reached, wrap the scene naturally.
 
+THE OTHER SIDE'S POSITION
+Report "stance": an integer 0–100 for how close the NPCs now are to giving the learner what they want. This is their position, not a grade for the learner.
+- Open where the character's own stance puts them, usually 15–35. A character who has already half-agreed may start higher.
+- Move in small steps. More than 15 points in one turn needs something that really earned it.
+- It FALLS when the learner attacks, gets sarcastic, concedes their own ask, rambles, or repeats a point that has already failed. Falling is normal; do not protect the learner from it.
+- Above 70 only after a concrete, specific move: a number, a named next step, a restatement of the NPC's own interest.
+- Reaching 100 means they have agreed. If they have not agreed, do not report 100.
+
+THE HIDDEN MOTIVE
+Set "revealed": true only on the turn an NPC actually says their hidden motive out loud in the dialogue, in plain words the learner could repeat back. A hint, a hesitation, or a near-miss is false. Once it has been said, later turns report false again — the flag marks the turn it happened, not the state.
+
 OBJECTIVE TRACKING & ENDING
 After the dialogue, evaluate each learner objective strictly from what the learner actually said so far (not intentions). Mark true only if clearly achieved.
 End the scene ("ended": true) when: all objectives are achieved and the scene has a natural close; OR the failure condition has clearly occurred; OR the learner turn cap is reached. Outcome: "success" if all objectives met; "partial" if some; "failure" if none or the failure condition occurred.
 When ending, the last NPC line should give the scene a believable close.
 
-OUTPUT FORMAT (strict, plain text, no markdown):
+OUTPUT FORMAT (strict, plain text, no markdown). The meta block comes FIRST and is
+mandatory: judge the turn, then speak it. Never omit it, never reorder it, never
+wrap it in a code fence. Every line of dialogue must sit under an @@<characterId>
+marker.
+@@meta
+{"objectives":[true|false,...], "ended":true|false, "outcome":"success"|"partial"|"failure"|null, "stance":<0-100>, "revealed":true|false, "note":"<≤12 words, a neutral stage-direction about what shifted this turn; refer to the learner in second person ("you"/"你"), never as "the learner" — ${LANG_RULE[lang]}>"}
 @@<characterId>
 <utterance>
 (optionally another @@<characterId> block)
-@@meta
-{"objectives":[true|false,...], "ended":true|false, "outcome":"success"|"partial"|"failure"|null, "note":"<≤12 words, a neutral stage-direction about what shifted this turn; refer to the learner in second person ("you"/"你"), never as "the learner" — ${LANG_RULE[lang]}>"}
 
 ${LANG_RULE[lang]} Dialogue must sound like real spoken language in that language.`;
 }

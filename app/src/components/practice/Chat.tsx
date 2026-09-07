@@ -14,6 +14,7 @@ import type { ChatMessage, Session } from "@/lib/types";
 import type { Character } from "@/data/corpus/types";
 import type { Lang } from "@/data/taxonomy";
 import { canListen, recognitionError, speak, stopSpeaking, unlockSpeech } from "@/lib/speech";
+import { Stance } from "./Stance";
 
 export function Chat({ session }: { session: Session }) {
   const lang = useLang();
@@ -42,6 +43,12 @@ export function Chat({ session }: { session: Session }) {
   const learnerTurns = session.messages.filter((m) => m.role === "learner").length;
   const remaining = Math.max(0, sc.maxTurns - learnerTurns);
   const objectives = session.adaptation?.objectives ?? sc.objectives.map((o) => o[lang]);
+  const trail = session.stanceTrail ?? [];
+  // Before the first turn reports one, show them where the scenario put them.
+  const stance = trail.at(-1) ?? 20;
+  const prevStance = trail.at(-2);
+  // With one NPC the meter is theirs by name; with two it is the room's.
+  const stanceName = npcs.length === 1 ? npcs[0].name[lang] : t(lang, "pr_stance_label");
 
   // opening line (idempotent: read the live store so a double-invoked effect can't duplicate it)
   useEffect(() => {
@@ -147,6 +154,13 @@ export function Chat({ session }: { session: Session }) {
         }
         const turnsUsed = learnerTurns + 1;
         if (meta?.note) setNote(meta.note);
+        if (typeof meta?.stance === "number") {
+          updateSession(session.id, (s0) => ({ stanceTrail: [...(s0.stanceTrail ?? []), meta.stance!] }));
+        }
+        // The flag marks the turn it happened; the first one to claim it wins.
+        if (meta?.revealed && !session.revealedAtTurn) {
+          updateSession(session.id, { revealedAtTurn: turnsUsed });
+        }
         if (meta?.ended || turnsUsed >= sc.maxTurns) {
           const n = done.filter(Boolean).length;
           const outcome = meta?.outcome ?? (n === done.length ? "success" : n > 0 ? "partial" : "failure");
@@ -254,6 +268,7 @@ export function Chat({ session }: { session: Session }) {
             ))}
           </div>
         </div>
+        <Stance name={stanceName} value={stance} prev={prevStance} lang={lang} className="px-1 lg:hidden" />
         {/* objectives as ink cells */}
         <Objectives items={objectives} done={session.objectiveDone} label={t(lang, "pr_objectives")} layout="strip" className="lg:hidden" />
       </header>
@@ -346,6 +361,11 @@ export function Chat({ session }: { session: Session }) {
         <section className="flex flex-col gap-3">
           <span className="eyebrow">{t(lang, "pr_objectives")}</span>
           <Objectives items={objectives} done={session.objectiveDone} label={t(lang, "pr_objectives")} layout="stack" />
+        <section className="flex flex-col gap-3">
+          <span className="eyebrow">{t(lang, "pr_stance_label")}</span>
+          <Stance name={stanceName} value={stance} prev={prevStance} lang={lang} layout="block" />
+        </section>
+        <div className="dotted" />
         </section>
         <div className="dotted" />
         <section className="flex flex-col gap-3">

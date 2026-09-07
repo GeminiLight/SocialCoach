@@ -12,6 +12,7 @@ import { t, tList } from "@/lib/i18n";
 import { assessStream, reflectStream } from "@/lib/client-api";
 import { buildSession } from "@/lib/session-utils";
 import type { Report, Session } from "@/lib/types";
+import type { Character } from "@/data/corpus/types";
 import { caseById, theoryById } from "@/data/corpus";
 import { skillById, SKILLS, type SkillId } from "@/data/taxonomy";
 import { compColor } from "@/lib/format";
@@ -21,7 +22,7 @@ const skillIds = new Set(SKILLS.map((s) => s.id));
 export function Debrief({ session }: { session: Session }) {
   const lang = useLang();
   const router = useRouter();
-  const { profile, applyReport, addSession } = useApp();
+  const { profile, applyReport, addSession, updateSession } = useApp();
   const [err, setErr] = useState<string | null>(null);
   const [partial, setPartial] = useState<Partial<Report> | null>(null);
   const inflight = useRef(false);
@@ -74,6 +75,28 @@ export function Debrief({ session }: { session: Session }) {
   const outcomeKey = session.outcome === "success" ? "pr_ended_success" : session.outcome === "partial" ? "pr_ended_partial" : "pr_ended_failure";
   const hasPartial = !!partial && (!!partial.summary || (partial.strengths?.length ?? 0) > 0);
 
+  /* ── phase: the reveal ──
+     Every scene hides something the other side never says, and the model is
+     told to give it up only when it is earned. Until now nothing on screen ever
+     said whether the learner got there, which left a whole mechanic invisible.
+     It holds the stage until dismissed rather than for as long as the report
+     takes, because a moment that vanishes on a timer is not a moment. */
+  const withHidden = sc.characters.filter((c) => c.id !== session.learnerCharacterId && c.hidden);
+  if (withHidden.length > 0 && !session.revealSeen) {
+    return (
+      <HiddenReveal
+        session={session}
+        characters={withHidden}
+        outcomeKey={outcomeKey}
+        objectivesMet={n}
+        ready={!!report || hasPartial}
+        err={err}
+        onRetry={() => { setErr(null); void run(); }}
+        onDone={() => updateSession(session.id, { revealSeen: true })}
+      />
+    );
+  }
+
   /* ── phase: ended, report not yet started streaming ── */
   if (!report && !hasPartial) {
     return (
@@ -110,6 +133,103 @@ export function Debrief({ session }: { session: Session }) {
 }
 
 /* Stars that light up one by one. */
+/** CJK sets a thin space against Latin, but not against more CJK. The reveal
+ *  headline butts a character's name straight against 「一直没说的是」, so a
+ *  Latin name needs the gap and 「妈妈」 must not get one. */
+function cjkGap(name: string) {
+  return /[A-Za-z0-9)\]]$/.test(name) ? name + "\u2009" : name;
+}
+
+/* ───────────── Hidden-motive reveal ───────────── */
+/**
+ * What the other side was actually protecting, and whether you got it out of
+ * them. This is the only screen in the app that withholds something and then
+ * hands it over, which makes it the one place the simulation reads as a game
+ * with a solution rather than a conversation that happened.
+ *
+ * It doubles as the wait for the report: the assessment streams behind it, so
+ * the slowest moment in the loop is spent on its most interesting content
+ * instead of a spinner.
+ */
+function HiddenReveal({
+  session,
+  characters,
+  outcomeKey,
+  objectivesMet,
+  ready,
+  err,
+  onRetry,
+  onDone,
+}: {
+  session: Session;
+  characters: Character[];
+  outcomeKey: string;
+  objectivesMet: number;
+  ready: boolean;
+  err: string | null;
+  onRetry: () => void;
+  onDone: () => void;
+}) {
+  const lang = useLang();
+  const got = session.revealedAtTurn;
+  const ease = [0.16, 1, 0.3, 1] as const;
+
+  return (
+    <div className="min-h-dvh pt-safe px-5 flex flex-col lg:mx-auto lg:w-full lg:max-w-[760px] lg:px-6">
+      <div className="flex-1 flex flex-col justify-center gap-7 py-14">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease }} className="flex flex-col gap-2">
+          <Stars n={objectivesMet} of={session.objectiveDone.length} />
+          <h1 className="display text-[26px] leading-tight text-ink-2">{t(lang, outcomeKey as "pr_ended_success")}</h1>
+        </motion.div>
+
+        {characters.map((c, i) => (
+          <motion.section
+            key={c.id}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 + i * 0.5, ease }}
+            className="flex flex-col gap-3"
+          >
+            <span className="eyebrow text-accent-deep">{t(lang, "pr_reveal_eyebrow")}</span>
+            <p className="display text-[21px] leading-snug">{t(lang, "pr_reveal_never", { name: cjkGap(c.name[lang]) })}</p>
+            <blockquote className="bg-slab text-slab-ink rounded-2xl px-5 py-4 text-[17px] leading-relaxed">
+              {c.hidden![lang]}
+            </blockquote>
+          </motion.section>
+        ))}
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.35 + characters.length * 0.5 + 0.35 }}
+          className="dotted pt-5 flex flex-col gap-1.5"
+        >
+          <p className={clsx("text-[15px] font-semibold", got ? "text-moss" : "text-ink")}>
+            {got ? t(lang, "pr_reveal_got_it", { n: got }) : t(lang, "pr_reveal_missed")}
+          </p>
+          <p className="text-[13.5px] text-ink-3 leading-relaxed lg:max-w-[var(--measure)]">
+            {t(lang, got ? "pr_reveal_got_why" : "pr_reveal_missed_why")}
+          </p>
+        </motion.div>
+      </div>
+
+      <BottomBar className="pb-safe pb-6 pt-3">
+        {err ? (
+          <div className="flex flex-col gap-2">
+            <p className="text-[13px] text-danger">{err}</p>
+            <Button block variant="secondary" onClick={onRetry}>{t(lang, "retry")}</Button>
+          </div>
+        ) : (
+          <Button block size="lg" variant="ink" onClick={onDone} disabled={!ready}>
+            {ready ? t(lang, "pr_reveal_to_report") : <><Spinner />{t(lang, "pr_reveal_waiting")}</>}
+          </Button>
+        )}
+      </BottomBar>
+    </div>
+  );
+}
+
+
 function StarBurst({ n, of }: { n: number; of: number }) {
   return (
     <div className="flex items-center gap-2" aria-label={`${n}/${of}`}>

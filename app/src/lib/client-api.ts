@@ -191,6 +191,10 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
   const lines = raw.split("\n");
   let cur: { characterId: string; text: string } | null = null;
   let metaBuf: string[] | null = null;
+  /** Whether lines are still flowing into the meta block. Its buffer staying
+   *  non-null is not the same question: meta leads the turn, so the buffer
+   *  outlives the block and must not keep swallowing the dialogue after it. */
+  let inMeta = false;
   let errBuf: string[] | null = null;
   const flush = () => {
     if (cur) {
@@ -204,16 +208,19 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
       errBuf.push(line);
       continue;
     }
-    if (metaBuf) {
-      metaBuf.push(line);
+    const m = line.match(/^@@\s*([\w-]+)\s*$/);
+    if (inMeta && !m) {
+      metaBuf!.push(line);
       continue;
     }
-    const m = line.match(/^@@\s*([\w-]+)\s*$/);
     if (m) {
       flush();
       const id = m[1].toLowerCase();
-      if (id === "meta") metaBuf = [];
-      else if (id === "error") errBuf = [];
+      inMeta = false;
+      if (id === "meta") {
+        metaBuf = metaBuf ?? [];
+        inMeta = true;
+      } else if (id === "error") errBuf = [];
       else {
         const match = validIds.find((v) => v.toLowerCase() === id) ?? validIds[0];
         cur = { characterId: match, text: "" };
@@ -221,8 +228,17 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
       continue;
     }
     if (!cur) {
-      // text before any marker: attribute to the first NPC
-      if (line.trim()) cur = { characterId: validIds[0], text: line + "\n" };
+      // Text before any marker is dialogue the model forgot to label — except a
+      // bare meta object, which must never be spoken aloud as a line.
+      const t2 = line.trim();
+      if (t2.startsWith("{") || t2.startsWith("```")) {
+        if (!metaBuf) {
+          metaBuf = [line];
+          inMeta = true;
+        }
+        continue;
+      }
+      if (t2) cur = { characterId: validIds[0], text: line + "\n" };
       continue;
     }
     cur.text += line + "\n";
@@ -230,10 +246,22 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
   flush();
   if (errBuf) out.error = errBuf.join("\n").trim();
   if (metaBuf) {
-    const txt = metaBuf.join("\n").trim();
+    const raw2 = metaBuf.join("\n").trim().replace(/^```(?:json)?/i, "").replace(/```$/, "");
+    const a = raw2.indexOf("{");
+    const b = raw2.lastIndexOf("}");
+    const txt = a !== -1 && b > a ? raw2.slice(a, b + 1) : raw2;
     try {
       const j = JSON.parse(txt) as RoleplayMeta;
-      out.meta = { objectives: Array.isArray(j.objectives) ? j.objectives.map(Boolean) : [], ended: !!j.ended, outcome: j.outcome ?? null, note: j.note };
+      const st = Number(j.stance);
+      out.meta = {
+        objectives: Array.isArray(j.objectives) ? j.objectives.map(Boolean) : [],
+        ended: !!j.ended,
+        outcome: j.outcome ?? null,
+        note: j.note,
+        // A model that omits the field, or answers with prose, must not move the meter.
+        stance: Number.isFinite(st) ? Math.max(0, Math.min(100, Math.round(st))) : undefined,
+        revealed: j.revealed === true,
+      };
     } catch {
       out.meta = null; // still streaming
     }

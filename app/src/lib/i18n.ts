@@ -158,6 +158,25 @@ const dict = {
   rh_sub: { zh: "描述你面对的真实处境：对方是谁、你想要什么、你担心什么。越具体越好。", en: "Describe the real situation: who it's with, what you want, what you're afraid of. The more specific, the better." },
   rh_ph: { zh: "例如：下周要和直属领导谈调薪。她人很好但一直说预算紧。我想要至少 10%，怕她说「年底再看」我就接受了。", en: "e.g. Comp talk with my manager next week. She's kind but keeps saying budgets are tight. I want at least 10% and I'm afraid I'll fold if she says 'let's revisit at year end'." },
   rh_examples: { zh: "试试这些", en: "Try one of these" },
+  // The other side's position. Named after them, never scored as the learner's.
+  pr_stance_unmoved: { zh: "还没松动", en: "not budging" },
+  pr_stance_wavering: { zh: "有点动摇", en: "wavering" },
+  pr_stance_considering: { zh: "在考虑了", en: "considering it" },
+  pr_stance_almost: { zh: "快松口了", en: "nearly there" },
+  pr_stance_agreed: { zh: "同意了", en: "agreed" },
+  pr_stance_back: { zh: "退回去了", en: "pulled back" },
+  pr_stance_label: { zh: "对方的立场", en: "Where they stand" },
+
+  // The reveal: what the other side never said out loud.
+  pr_reveal_eyebrow: { zh: "对方没说出口的", en: "What they never said" },
+  pr_reveal_never: { zh: "{name}一直没说的是", en: "What {name} never said out loud" },
+  pr_reveal_got_it: { zh: "你在第 {n} 回合问出来了。", en: "You got it out of them on turn {n}." },
+  pr_reveal_missed: { zh: "这一局你没问出来。", en: "You never got there this time." },
+  pr_reveal_missed_why: { zh: "它不会主动说。要靠一个好问题、一次共情，或者先让对方觉得安全。", en: "They will not volunteer it. It takes a good question, real empathy, or making it safe enough to say." },
+  pr_reveal_got_why: { zh: "问出对方真正在意什么，是这一局里最难的一步。", en: "Getting to what the other side actually cares about is the hardest move in the scene." },
+  pr_reveal_to_report: { zh: "看复盘", en: "See the debrief" },
+  pr_reveal_waiting: { zh: "教练还在读转录", en: "Your coach is still reading" },
+
   rh_ex_1: { zh: "跟合租室友谈他伴侣总住这里", en: "Talk to my roommate about their partner always staying over" },
   rh_ex_2: { zh: "告诉爸妈我今年过年不回家", en: "Tell my parents I'm not coming home for the holidays" },
   rh_ex_3: { zh: "拒绝老同学的保险推销又不伤感情", en: "Turn down an old classmate's insurance pitch without hurting them" },

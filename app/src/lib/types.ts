@@ -106,6 +106,12 @@ export interface Session {
   report?: Report;
   reflections: Reflection[];
   origin: "scheduled" | "arena" | "rehearse";
+  /** The other side's position after each learner turn. Drives the meter and, later, the turn map. */
+  stanceTrail?: number[];
+  /** 1-based learner turn on which the hidden motive came out. Absent means it never did. */
+  revealedAtTurn?: number;
+  /** The reveal screen is a one-time moment; don't replay it on revisit. */
+  revealSeen?: boolean;
 }
 
 export interface RoleplayMeta {
@@ -113,4 +119,12 @@ export interface RoleplayMeta {
   ended: boolean;
   outcome?: "success" | "partial" | "failure" | null;
   note?: string;
+  /**
+   * 0–100: how close the NPCs are to giving the learner what they want. It is
+   * the other side's position, not a score for the learner, and it is allowed
+   * to fall — a meter that only rises would make the simulation agreeable.
+   */
+  stance?: number;
+  /** True on the turn an NPC says their hidden motive out loud. */
+  revealed?: boolean;
 }
