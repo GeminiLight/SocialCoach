@@ -106,6 +106,12 @@
 - **解决方案：** `require(join(appDir, 'node_modules', '.pnpm', 'node_modules', 'sharp'))`——`.pnpm/node_modules/` 是 pnpm 的「隐藏提升」目录，所有传递依赖都在。`site/scripts/og.mjs` 用的就是这条路径。
 - **教训：** 借 app 的依赖做脚本时，按 pnpm 的目录结构解析，不要假设 npm 的扁平布局。
 
+### 含 `.github/workflows/` 的提交推不上去
+- **现象：** `git push origin main` 报 `refusing to allow an OAuth App to create or update workflow … without workflow scope`。
+- **原因：** `origin` 是 https，凭据来自 `gh` 的 OAuth token，只有 `gist, read:org, repo` 三个 scope。
+- **解决方案：** 本机 SSH 已通（`ssh -T git@github.com`），直接 `git push git@github.com:GeminiLight/SocialCoach.git main`；推完 `git fetch origin`，否则 `git status` 仍显示 ahead。或 `gh auth refresh -s workflow` 一次性补 scope（需要浏览器）。
+- **教训：** 先 `gh auth status` 看 scope，再决定用哪条通道推 workflow 文件。
+
 ## 协作
 
 ### 有并发编辑者时，验证「工作区」等于没验证
