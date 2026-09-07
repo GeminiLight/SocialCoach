@@ -56,3 +56,16 @@ export function skillSoft(id: SkillId) {
 export function hueColor(hue: number, l = 0.86, c = 0.06) {
   return themed(l, c, hue);
 }
+
+/**
+ * A hue whose two schemes are chosen independently.
+ *
+ * `themed` mirrors one lightness into the other scheme, which is right almost
+ * everywhere — but it cannot preserve an ordering between two colours. Hair
+ * darker than a face in light mode comes out lighter than it in dark mode,
+ * because the mirror maps the darker input further up. Where the relationship
+ * between two tones is the point, both ends have to be stated.
+ */
+export function huePair(hue: number, light: number, dark: number, c = 0.05) {
+  return `light-dark(oklch(${light} ${c} ${hue}), oklch(${dark} ${(c * 1.15).toFixed(3)} ${hue}))`;
+}
