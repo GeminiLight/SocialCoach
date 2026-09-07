@@ -16,6 +16,7 @@
 | B6 | LICENSE | 📋 | 需要用户选定许可证 |
 | B7 | Live 站点地址 | 📋 | README 两处占位符 |
 | B8 | wiki 文档体系 | 🚧 | 本次建立 |
+| B9 | 官网 | 🚧 | `site/`，GitHub Pages（Actions 来源），待启用 |
 
 ---
 
@@ -102,6 +103,23 @@ Research（论文 + BibTeX，压到最后）
 | mermaid 图 | 只注入 `fontFamily`，**不锁颜色** | 锁品牌色会让深色模式读者看到刺眼浅色块；GitHub 默认主题自己适配 |
 
 **改 banner 必须重新渲染确认**，不能只看 SVG 源码——文字宽度依赖字体回落，下划线与雷达的相对位置会漂。
+
+---
+
+## B9: 官网
+
+`site/` 是独立于 `app/` 的纯静态一页站：`content.mjs`（`L(zh, en)` 文案）+ `build.mjs`（零依赖）→ `dist/`，中文在 `/`，英文在 `/en/`。用户要求「前面 highlight 有论文，最后一节 Research 链接论文」，对应首屏的 arXiv 药丸和末节「这个产品来自一篇论文」。
+
+| 决策点 | 选择 | 原因 | 放弃的方案 |
+|---|---|---|---|
+| 放哪 | 仓库 `main` 的 `site/`，GitHub Pages 用 **GitHub Actions 来源**部署 | 源码和产品同仓同分支；不用维护孤儿分支；`configure-pages` 会把最终域名（含自定义域）传给构建，canonical / hreflang / sitemap 自动正确 | 单独 `gh-pages` 分支（老做法，多一个要同步的分支）；塞进 Next 应用的 `/about`（官网 URL 难看，且 `/` 已被产品占用并重定向到 onboarding） |
+| 双语 | 两个独立 URL + `hreflang` + `x-default` 指向中文 | 搜索引擎和 LLM 爬虫都能拿到完整文本；与 Stage C 的 i18n 方向一致 | 单页 JS 切换语言（爬虫只见一种） |
+| 视觉 | 复用 `globals.css` 的 OKLCH 色板（浅 / 深）、banner 的衬线字标与赭石波浪线、五边形雷达 | 与 README banner 和产品一眼同源 | 单独设计一套「官网风」 |
+| 截图 | `assets/screenshot-01-home-*.png` / `screenshot-03-evidence-debrief-*.png` 存在才渲染，同时次要 CTA 切成「先看一次真实复盘」 | 不允许占位框上线；截图是 B5 的产物，到位即生效 | 用概念插画或伪造对话（资产计划明确禁止） |
+| 论文边界 | 「研究」一节和 `llms.txt` 都写明：论文研究系统 ≠ 当前产品；43,170 条研究语料 ≠ 产品内置 46/42/30 | 避免把论文结果读成产品效果证明 | — |
+| 部署保护 | workflow 先查 Pages 是否已启用，未启用则绿色跳过并给 notice | 私有仓库未开 Pages 时不在每次推送上留红叉 | `configure-pages` 的 `enablement: true`（会替用户把站点公开） |
+
+未做：产品截图（B5）、正式域名、README 占位链接替换（B7；`https://socialcoach-app.vercel.app` 已 curl 验证是本项目）。
 
 ---
 

@@ -10,3 +10,6 @@ marketing/
 
 # Rejected logo explorations — kept locally for reference, not part of the app
 docs/icon-candidates/
+
+# Official site build output (site/build.mjs)
+site/dist/

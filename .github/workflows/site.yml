@@ -1,0 +1,73 @@
+# Builds site/ and publishes it to GitHub Pages.
+#
+# One-time setup: Settings → Pages → Build and deployment → Source: "GitHub Actions".
+# No gh-pages branch is involved; the source stays on main next to the code.
+# On a custom domain, configure-pages reports it as base_url and the build picks
+# it up, so canonical / hreflang / sitemap URLs stay correct without edits.
+
+name: site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "docs/social-coach-paper.pdf"
+      - ".github/workflows/site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.check.outputs.enabled }}
+    steps:
+      # Until Pages is switched on in Settings this run ends green with a notice
+      # instead of a red X on every push that touches site/.
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${{ github.repository }}/pages" >/dev/null 2>&1; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::GitHub Pages is not enabled. Settings → Pages → Source: GitHub Actions, then re-run this workflow."
+          fi
+      - if: steps.check.outputs.enabled == 'true'
+        uses: actions/checkout@v4
+      - if: steps.check.outputs.enabled == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - if: steps.check.outputs.enabled == 'true'
+        id: pages
+        uses: actions/configure-pages@v5
+      - if: steps.check.outputs.enabled == 'true'
+        run: node site/build.mjs
+        env:
+          SITE_URL: ${{ steps.pages.outputs.base_url }}
+      - if: steps.check.outputs.enabled == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.enabled == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

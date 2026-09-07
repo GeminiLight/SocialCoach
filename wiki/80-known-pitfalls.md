@@ -94,6 +94,18 @@
 - **解决方案：** 已删除（2026-09-03）。
 - **教训：** 临时端点从写下第一行起就加 `if (process.env.NODE_ENV === "production") return new Response(null, {status: 404})`，不要依赖注释和记性。
 
+### 本机 headless Chrome 截图写完文件却不退出
+- **现象：** `Google Chrome --headless --screenshot=x.png …` 产出了 PNG，但进程一直挂着，工具超时。`--headless=new`、`--timeout`、`--virtual-time-budget` 都没用。
+- **原因：** 未定位（Chrome 152 / macOS 25.5）。文件在几秒内就写好了，是退出卡住。
+- **解决方案：** 后台启动，轮询文件出现后 `kill`。另外 Chrome 桌面窗口有最小宽度，`--window-size=390,…` 实际按约 500px 排版再裁到 390，**手机宽度必须用一个 390px 的 `<iframe>` 包起来截**（要加 `--allow-file-access-from-files`）。
+- **教训：** 截图工具的输出尺寸对不代表排版视口对；核对一次真实断点行为再下结论。
+
+### pnpm 不会把 `sharp` 提升到 `app/node_modules/sharp`
+- **现象：** `createRequire(app/package.json)('sharp')` 报 `Cannot find module 'sharp'`，虽然 Next 依赖它、构建也能用。
+- **原因：** pnpm 只把直接依赖放到 `node_modules/` 顶层，`sharp` 是 Next 的可选依赖，只在虚拟仓 `node_modules/.pnpm/` 里。
+- **解决方案：** `require(join(appDir, 'node_modules', '.pnpm', 'node_modules', 'sharp'))`——`.pnpm/node_modules/` 是 pnpm 的「隐藏提升」目录，所有传递依赖都在。`site/scripts/og.mjs` 用的就是这条路径。
+- **教训：** 借 app 的依赖做脚本时，按 pnpm 的目录结构解析，不要假设 npm 的扁平布局。
+
 ## 协作
 
 ### 有并发编辑者时，验证「工作区」等于没验证

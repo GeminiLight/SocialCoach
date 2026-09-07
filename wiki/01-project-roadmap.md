@@ -42,6 +42,7 @@
 | B6 | LICENSE 文件与 README 章节 | 📋 | 缺许可证会直接挡住团队与公司采用 |
 | B7 | Live 站点地址替换 README 占位符 | 📋 | 现为 `REPLACE-WITH-YOUR-URL`，两处 |
 | B8 | wiki 文档体系 | 🚧 | 本次建立 |
+| B9 | 官网（`site/`：一页式双语静态站，首屏与末节都指向论文） | 🚧 | 2026-09-08 建成并推送，含 JSON-LD / hreflang / sitemap / `llms.txt` / OG 图；上线只差 Settings → Pages 选 GitHub Actions 来源。截图位留空，文件到位自动渲染 → [11-stage-b](./11-stage-b.md#b9-官网) |
 
 ### Stage C — 可索引化与 GEO
 

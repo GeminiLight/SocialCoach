@@ -42,6 +42,12 @@ SocialCoach/
 │   ├── PRODUCT.md                早期产品定义（已被 wiki/00 取代，保留作历史）
 │   ├── banner.svg / banner-dark.svg   README 品牌 banner
 │   └── reference/                paper.txt · fig10/11
+├── site/                         官网：一页式双语静态站，独立于 app/ → 详见 ./11-stage-b.md#b9-官网
+│   ├── content.mjs               全部文案（L(zh, en) 双语对象）+ 站点 / app / 论文 URL
+│   ├── build.mjs                 零依赖构建 → dist/（/ 中文，/en/ 英文，sitemap · robots · llms.txt · 404）
+│   ├── scripts/og.mjs            用 app 的 sharp 生成 assets/og-{zh,en}.png
+│   └── assets/                   icon.svg（与 app/public 同源）· OG 图 · 产品截图（可选，存在才渲染）
+├── .github/workflows/site.yml    site/** 变更 → 构建 → GitHub Pages（Actions 来源；Pages 未启用时绿色跳过）
 ├── wiki/                         本文档体系
 └── README.md                     对外宣传物
 ```

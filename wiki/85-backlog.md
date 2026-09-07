@@ -7,7 +7,7 @@
 
 ## Bug
 
-- [ ] README 两处 `REPLACE-WITH-YOUR-URL` 是死链（导航行 + Live 徽章）。推送前必须替换，否则宣传页第一个链接点下去 404
+- [ ] README 两处 `REPLACE-WITH-YOUR-URL` 是死链（导航行 + Live 徽章）。推送前必须替换，否则宣传页第一个链接点下去 404。可用 `https://socialcoach-app.vercel.app`（2026-09-08 `curl` 确认 title / lang 是本项目；`socialcoach-lime.vercel.app` 返回 404，仓库 homepage 字段指向的是这个死地址）
 
 ## 技术债
 
@@ -18,6 +18,9 @@
 
 ## 改进想法
 
+- [ ] 官网上线：Settings → Pages → Source 选 GitHub Actions，然后重跑 `site` workflow；再决定要不要绑自有域名（官网主域 + 产品子域）。见 `site/README.md`
+- [ ] 产品截图除 `docs/screenshots/` 外，同时放一份到 `site/assets/`（命名见 `site/README.md`），官网首屏与「复盘」一步会自动渲染
+- [ ] 仓库 GitHub 的 homepage 字段仍是 `socialcoach-lime.vercel.app`（404），应改成官网或 `socialcoach-app.vercel.app`
 - [ ] `/learn` 详情栏在条目短时下方仍有大片空白。真正的解法是填入相关内容（引用该理论的案例、可练这个技能的场景），属于功能而非打磨
 - [ ] 情境筛选 chip 用的是 `taxonomy` 里的 emoji `glyph`，与编辑感排版有张力，是否保留待定
 - [ ] `/arena` 截图右边缘有一个被裁切的圆形元素，未定位到来源（`page.tsx:106` 那个装饰圆在首页，不是这里）
