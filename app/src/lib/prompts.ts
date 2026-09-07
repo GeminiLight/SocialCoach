@@ -181,6 +181,8 @@ METHOD (paper §4.4)
 6. Next step: one concrete thing to try in real life this week, ≤ 25 words.
 7. Proficiency deltas: for each TARGET skill practiced in this scenario, estimate expected change in [0, 0.5]; unrelated skills get 0 or are omitted; skills the scenario only touched indirectly cap at 0.2. Failure can still earn small positive deltas if learning was visible. Never negative.
 
+VERDICT: one line that opens the report, at most 20 words. It must be a judgement, not a score or a summary: name what the learner actually secured and what it cost them, in that order, when both exist ("You got the date, but gave up your floor"). No praise, no encouragement, no hedging, no restating the objectives. If they secured nothing, say what they gave away instead.
+
 TONE: Warm, specific, honest. Lead with what worked. No generic praise ("great job"). No moralizing. Address the learner as "you".
 STARS: number of objectives achieved (0–3, clamp to 3).
 ${LANG_RULE[lang]} Keep "evidence" and "original" fields as exact quotes in the transcript's language.
@@ -189,6 +191,7 @@ Return ONLY JSON:
 {
   "stars": 0|1|2|3,
   "outcome": "success"|"partial"|"failure",
+  "verdict": "<one line, ≤20 words, a judgement>",
   "summary": "<2–3 sentences>",
   "strengths": [{"behavior":"...","evidence":"<exact quote>","skill":"<skill id>"}],
   "weaknesses": [{"behavior":"...","evidence":"<exact quote or 'no attempt' description>","skill":"<skill id>","deficit":"acquisition"|"performance","whyItMatters":"..."}],
@@ -240,6 +243,52 @@ Return ONLY JSON:
   "opening": {"characterId":"<npc id>","text":{"zh":"","en":""}},
   "keywords": ["..."],
   "icon": "<one id from the icon list>"
+}`;
+}
+
+/* ───────────────────────── Pattern (across sessions) ───────────────────────── */
+
+/**
+ * The one thing a learner does over and over.
+ *
+ * The product proposal calls this the engine that turns someone with a
+ * conversation tomorrow into someone practising a skill: an acute problem
+ * becomes a chronic one the moment they see it is a habit and not bad luck. The
+ * hard constraint is that it must be earned from the transcripts — inventing a
+ * plausible-sounding pattern would be exactly the "advice without evidence"
+ * this product exists against, and it would be more convincing than any single
+ * report, which makes it more damaging when wrong.
+ */
+export function patternSystem(lang: Lang) {
+  return `You are the coach of SocialCoach, looking across several of one learner's past practice sessions at once.
+
+Find AT MOST ONE thing they do repeatedly — a move, an avoidance, a moment they consistently mishandle. Something they could not see from any single debrief.
+
+HARD RULES
+- The pattern must appear in AT LEAST TWO DIFFERENT sessions. One vivid instance is not a pattern.
+- Every quote in "evidence" must be copied EXACTLY from the evidence given below, character for character. Never write a quote that is not in the input. Never paraphrase into quotation marks.
+- Quotes must come from at least two different session titles.
+- If nothing genuinely recurs, return {"found": false} with empty fields. Saying "not yet" is correct and useful; manufacturing a pattern is not.
+- Do not count something as recurring just because the same skill id appears twice. The behaviour has to be the same behaviour.
+
+WHAT MAKES A GOOD PATTERN
+- It names a moment and a move: "when they raise their voice, you switch to apologising", not "you could be more assertive".
+- It is about what they DID, in their own words, not about their character.
+- "turns where the other side pulled back" is a strong signal: the same turn number across sessions often means the same habit.
+- The next step is one concrete thing to try in the next practice, ≤20 words.
+
+TONE: Direct, second person, no praise, no diagnosis of the person. This lands harder than any single report, so it must be plainly true.
+
+${LANG_RULE[lang]}
+
+Return ONLY JSON:
+{
+  "found": true|false,
+  "pattern": "<≤20 words, the recurring move, second person>",
+  "why": "<2–3 sentences: what it costs them, grounded in the quotes>",
+  "evidence": [{"title":"<session title, exactly as given>","quote":"<exact quote from that session>"}],
+  "skill": "<skill id most implicated, or omit>",
+  "nextStep": "<≤20 words, one concrete thing to try next time>"
 }`;
 }
 

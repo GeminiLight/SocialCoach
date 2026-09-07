@@ -196,6 +196,28 @@ const dict = {
 
   // report
   rp_title: { zh: "复盘", en: "Debrief" },
+  // Where the scene turned. The strip is the other side's position per turn.
+  rp_map_label: { zh: "这场对话的走势", en: "How the scene moved" },
+  rp_map_title: { zh: "转折在哪里", en: "Where it turned" },
+  rp_map_turn: { zh: "第 {n} 回合", en: "Turn {n}" },
+  rp_map_gain: { zh: "推进了", en: "gained ground" },
+  rp_map_hold: { zh: "没动", en: "held" },
+  rp_map_loss: { zh: "让了一步", en: "gave ground" },
+  rp_map_no_line: { zh: "这一回合你没有开口。", en: "You did not speak on this turn." },
+  rp_map_hint_loss: { zh: "第 {n} 回合对方的立场退回去了。点一下看你当时说了什么。", en: "They pulled back on turn {n}. Tap it to see what you said." },
+  rp_map_hint_clean: { zh: "你一步都没让。点任意一格看当时说了什么。", en: "You never gave ground. Tap any turn to read it back." },
+
+  // The cross-session habit. Named as a finding, never as a diagnosis.
+  pg_pattern_title: { zh: "你反复在做的一件事", en: "The one thing you keep doing" },
+  pg_pattern_locked: { zh: "再练 {n} 场，这里会告诉你一件只有跨场次才看得出来的事。", en: "{n} more sessions and this will tell you something no single debrief can." },
+  pg_pattern_reading: { zh: "教练正在读你过去的转录", en: "Your coach is reading your past transcripts" },
+  pg_pattern_none: { zh: "目前还看不出反复出现的模式。这是好消息，也可能只是场次还不够多。", en: "Nothing recurring yet. That is good news, and it may also just be too few sessions." },
+  pg_pattern_again: { zh: "重新分析", en: "Read again" },
+
+  // The wait for today's pick carries last session's verdict instead of nothing.
+  home_last_time: { zh: "上一次", en: "Last time" },
+  home_last_gave: { zh: "《{title}》第 {n} 回合，你让了一步。", en: "In “{title}”, you gave ground on turn {n}." },
+
   rp_strengths: { zh: "做得好的", en: "What worked" },
   rp_weaknesses: { zh: "可以更好的", en: "What could be better" },
   rp_deficit_acq: { zh: "策略盲区", en: "Didn't know" },

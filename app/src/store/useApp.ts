@@ -4,6 +4,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import type { ContextId, Lang, SkillId } from "@/data/taxonomy";
 import type { Scenario } from "@/data/corpus/types";
 import type { ChatMessage, Profile, Proficiency, Reflection, Report, Session } from "@/lib/types";
+import type { PatternResult } from "@/lib/tasks/types";
 
 export type Theme = "system" | "light" | "dark";
 
@@ -24,6 +25,12 @@ export interface Settings {
 interface AppState {
   hydrated: boolean;
   profile: Profile | null;
+  /**
+   * The cross-session habit, cached with the session ids it was read from so it
+   * only re-runs when there is genuinely new material. It is a model call over
+   * the whole history, and it should not fire on every visit to Growth.
+   */
+  patternInsight: { result: PatternResult; from: string[]; at: number } | null;
   proficiency: Proficiency;
   sessions: Session[];
   customScenarios: Scenario[];
@@ -54,6 +61,7 @@ interface AppState {
   toggleBookmark: (id: string) => void;
   setToday: (sessionId: string | null) => void;
   setSettings: (s: Partial<Settings>) => void;
+  setPatternInsight: (result: PatternResult, from: string[]) => void;
   reset: () => void;
 }
 
@@ -72,7 +80,10 @@ const initial = {
   practiceDays: [],
   todaySessionId: null,
   todayDate: null,
-  settings: { tts: false },
+  patternInsight: null,
+  // Voice on by default: an NPC that speaks changes the felt stakes of a scene
+  // more than any visual does, and a setting nobody finds is a setting nobody uses.
+  settings: { tts: true },
 };
 
 export const useApp = create<AppState>()(
@@ -142,6 +153,7 @@ export const useApp = create<AppState>()(
       toggleBookmark: (id) => set((s) => ({ bookmarks: s.bookmarks.includes(id) ? s.bookmarks.filter((b) => b !== id) : [...s.bookmarks, id] })),
       setToday: (todaySessionId) => set({ todaySessionId, todayDate: todayKey() }),
       setSettings: (p) => set((s) => ({ settings: { ...s.settings, ...p } })),
+      setPatternInsight: (result, from) => set({ patternInsight: { result, from, at: Date.now() } }),
       reset: () => {
         try { sessionStorage.removeItem("socialcoach.rehearsal-draft"); } catch {}
         set({ ...initial, hydrated: true });
@@ -160,6 +172,11 @@ export const useApp = create<AppState>()(
         todaySessionId: s.todaySessionId,
         todayDate: s.todayDate,
         settings: s.settings,
+        // This list is an allow-list on purpose — it is why a BYOK key can never
+        // end up in here. New state therefore has to be added deliberately, and
+        // this one has to be, or the cross-session read re-runs a smart-model
+        // call on every visit to Growth, which is what caching it prevents.
+        patternInsight: s.patternInsight,
       }),
       onRehydrateStorage: () => (state) => state?.setHydrated(),
     },

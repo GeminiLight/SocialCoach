@@ -71,6 +71,13 @@ export interface Alternative {
 export interface Report {
   stars: 0 | 1 | 2 | 3;
   outcome: "success" | "partial" | "failure";
+  /**
+   * One line, the shape of a judgement: what the learner got, and what it cost.
+   * It opens the report, where three stars and "2/3 objectives" used to sit —
+   * a tally is not a verdict, and the report's most interesting finding was
+   * reading at the same volume as everything else around it.
+   */
+  verdict: string;
   summary: string;
   strengths: EvidenceItem[];
   weaknesses: WeaknessItem[];

@@ -112,6 +112,12 @@
 - **解决方案：** 本机 SSH 已通（`ssh -T git@github.com`），直接 `git push git@github.com:GeminiLight/SocialCoach.git main`；推完 `git fetch origin`，否则 `git status` 仍显示 ahead。或 `gh auth refresh -s workflow` 一次性补 scope（需要浏览器）。
 - **教训：** 先 `gh auth status` 看 scope，再决定用哪条通道推 workflow 文件。
 
+### `partialize` 是白名单，新状态默认不持久化
+- **现象：** 跨场次分析的结果存进了 store，刷新页面就没了，每次进「成长」都重新跑一次智能模型调用。路由日志显示请求 200 且只花了 4.8 秒，但 localStorage 里读不到。
+- **原因：** `useApp` 的 `persist` 配了显式 `partialize`，只列出要写盘的字段。新加的 `patternInsight` 不在其中，于是它只活在内存里。
+- **解决方案：** 显式加进 `partialize`。
+- **教训：** 这个白名单**不是**要改成自动持久化——它正是 BYOK 的 key 进不了导出文件的原因。代价是新状态必须手动登记，所以加完 store 字段要顺手确认一次它该不该落盘。验证时读 localStorage 而不是内存 store，否则这类问题看不出来。
+
 ## 协作
 
 ### 有并发编辑者时，验证「工作区」等于没验证

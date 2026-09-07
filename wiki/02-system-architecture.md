@@ -65,7 +65,9 @@ profile/goals/proficiency/history
   ③ 适配 adaptation     LLM 重写 briefing / objectives / focus / why
         │
         ▼  POST /api/roleplay          （流式，每回合一次）
-  文本协议：@@<characterId> + 台词，末尾 @@meta {objectives,ended,outcome,note}
+  文本协议：开头 @@meta {objectives,ended,outcome,stance,revealed,note}，之后 @@<characterId> + 台词
+  meta 必须在前：放末尾时快模型经常整块不写（实测 6 回合只出 2 次）
+  stance 存进 session.stanceTrail，revealed 存 session.revealedAtTurn
   客户端边流边解析（partial-json.ts）
         │
         ▼  POST /api/assess            （流式，正文先出，@@final 后带完整 JSON）
@@ -75,6 +77,19 @@ profile/goals/proficiency/history
         │
         ▼  applyReport() 写回 proficiency（有界、非负增量）
 ```
+
+这条链之外有一条**跨场次**的读取，只在「成长」页触发：
+
+```
+已复盘的 sessions（report.weaknesses 的原话 + stanceTrail 里下降的回合号）
+        │
+        ▼  POST /api/pattern            （非流式，smart 模型）
+  找一个反复出现的行为 → 代码层校验引文真实性、要求横跨 ≥2 个场次
+        │
+        ▼  store.patternInsight（按读过的 session id 集合缓存，只有新场次才重跑）
+```
+
+它和上面那条链的区别是**方向**：单场链是「这次怎么样」，这条是「你一直怎么样」。产品提案把后者称为把 A 类用户转成 B 类用户的引擎。
 
 **检索的关键约束**（`src/lib/retrieval.ts`，对应论文 §4.3.1）：
 

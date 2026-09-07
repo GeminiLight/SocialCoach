@@ -6,6 +6,7 @@ import { Shell } from "@/components/Shell";
 import { Chip, Page, SectionTitle, Sheet, Stars } from "@/components/ui";
 import { Radar } from "@/components/Radar";
 import { Footprint } from "@/components/Footprint";
+import { PatternCard } from "@/components/PatternCard";
 import { Level } from "@/components/SkillBits";
 import { ScenarioCover } from "@/components/ScenarioCover";
 import { computeStreak, useApp, useLang } from "@/store/useApp";
@@ -51,6 +52,11 @@ export default function Progress() {
           <h1 className="display text-[28px] sm:text-[32px] lg:text-[38px] leading-snug text-balance">{t(lang, "pg_heading")}</h1>
           <p className="mt-3 text-[14px] text-ink-3 leading-relaxed">{t(lang, "pg_intro")}</p>
         </header>
+
+        {/* Above the totals: totals are inventory, this is a finding about them. */}
+        <section className="lg:col-span-2 order-0" aria-label={t(lang, "pg_pattern_title")}>
+          <PatternCard />
+        </section>
 
         <div className="contents lg:flex lg:flex-col lg:gap-10 lg:pr-10 min-w-0">
           <section className="order-1 flex flex-col gap-4" aria-label={t(lang, "pg_overview")}>

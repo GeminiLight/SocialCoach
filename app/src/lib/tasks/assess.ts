@@ -9,6 +9,8 @@ import type { AssessInput } from "./types";
 const skillIds = new Set(SKILLS.map((s) => s.id));
 
 /** Clamp and validate whatever the model returned so the client can trust every field. */
+const firstSentence = (s: string) => (s.match(/^[^。．.!?！？]{4,}[。．.!?！？]?/)?.[0] ?? s).trim();
+
 export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theories: Theory[], cases: Case[]): Report {
   const stars = Math.max(0, Math.min(3, Math.round(Number(raw.stars) || 0))) as Report["stars"];
   const clean = <T extends { skill: string }>(arr: T[] | undefined) => (arr ?? []).filter((x) => x && skillIds.has(x.skill as SkillId));
@@ -32,6 +34,9 @@ export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theorie
   return {
     stars,
     outcome,
+    // The headline cannot be blank, so fall back to the summary's first
+    // sentence: weaker than a real verdict, but never an empty first screen.
+    verdict: (raw.verdict ?? "").trim() || firstSentence(raw.summary ?? ""),
     summary: raw.summary ?? "",
     strengths: clean(raw.strengths) as Report["strengths"],
     weaknesses: clean(raw.weaknesses) as Report["weaknesses"],
