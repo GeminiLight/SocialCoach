@@ -42,11 +42,11 @@
 | B2 | 主句定稿并三处对齐 | ✅ | README / `layout.tsx` / `manifest.webmanifest` |
 | B3 | README 按开源产品惯例重排 | ✅ | Key features / Architecture / Quick start / Deployment / Tech stack / Design / Contributing / Disclaimer / Research |
 | B4 | 品牌 banner（明暗双版 SVG，色值由 `globals.css` OKLCH 精确换算） | ✅ | `docs/banner.svg` / `banner-dark.svg` |
-| B5 | 产品截图（首页 / 对话中 / 复盘） | 📋 | 阻塞 README 最有效的一块 |
+| B5 | 产品截图（首页 / 对话中 / 复盘） | ✅ | 2026-09-08 用 `site/scripts/screenshots.mjs` 对线上正式版自动拍摄，中英各三张，存 `docs/screenshots/` 与 `site/assets/`；README pitch 下方已嵌入 |
 | B6 | LICENSE 文件与 README 章节 | 📋 | 缺许可证会直接挡住团队与公司采用 |
-| B7 | Live 站点地址替换 README 占位符 | 📋 | 现为 `REPLACE-WITH-YOUR-URL`，两处 |
+| B7 | Live 站点地址替换 README 占位符 | ✅ | 2026-09-08 两处指向 `https://socialcoach-app.vercel.app`（curl 验证），仓库 homepage 字段同步 |
 | B8 | wiki 文档体系 | 🚧 | 本次建立 |
-| B9 | 官网（`site/`：一页式双语静态站，首屏与末节都指向论文） | 🚧 | 2026-09-08 建成并推送，含 JSON-LD / hreflang / sitemap / `llms.txt` / OG 图；上线只差 Settings → Pages 选 GitHub Actions 来源。截图位留空，文件到位自动渲染 → [11-stage-b](./11-stage-b.md#b9-官网) |
+| B9 | 官网（`site/`：一页式双语静态站，首屏与末节都指向论文） | ✅ | 2026-09-08 上线 `https://tianfuwang.tech/SocialCoach/`（GitHub Pages，Actions 来源，账号自定义域）；含 JSON-LD / hreflang / sitemap / `llms.txt` / OG 图 / 真实截图 → [11-stage-b](./11-stage-b.md#b9-官网) |
 
 ### Stage C — 可索引化与 GEO
 

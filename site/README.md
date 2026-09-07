@@ -27,14 +27,15 @@ open site/dist/index.html          # 或 npx serve site/dist
 
 ## 产品截图
 
-首屏与「复盘」一步预留了真实截图位，文件存在才渲染，不存在就不显示（不出现占位框）。按 `marketing/03-asset-plan.md` 的命名放进 `assets/`：
+三处截图位，文件存在才渲染，不存在就退回图标或雷达（不出现占位框）。命名沿用 `marketing/03-asset-plan.md`：
 
 | 文件 | 出现位置 |
 |---|---|
-| `screenshot-01-home-{zh,en}.png` | 首屏右侧手机框，替代雷达装饰 |
-| `screenshot-03-evidence-debrief-{zh,en}.png` | 「复盘先引用你的原话」一步右侧；同时把次要 CTA 从「看看它怎么练」换成「先看一次真实复盘」 |
+| `screenshot-01-home-{zh,en}.png` | 首屏手机框，叠在淡化的雷达上 |
+| `screenshot-02-pushback-{zh,en}.png` | 「对方会反驳」一步右侧 |
+| `screenshot-03-evidence-debrief-{zh,en}.png` | 「复盘先引用你的原话」一步右侧；同时次要 CTA 变成「先看一次真实复盘」 |
 
-竖屏 1170×2532 或等比例；画面里不能有真实姓名、公司、邮箱或 API key。
+重拍：`node site/scripts/screenshots.mjs --lang=zh`（再跑一次 `--lang=en`）。脚本用 DevTools 协议驱动本机 Chrome，对 `--base`（默认线上正式版）种一个演示档案，走首页 → 对练两轮 → 复盘，输出到 `docs/screenshots/`（全页原图在 `raw/`，不入库）。复盘取滚到「可以更好的」那一帧（脚本里叫 `03b`），把它改名为 `screenshot-03-evidence-debrief-*.png`，再把三张拷到 `assets/`。每跑一次约四五次模型调用，演示名字和台词写在脚本顶部。
 
 ## 边界
 

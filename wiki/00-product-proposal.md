@@ -70,7 +70,7 @@
 
 | 项 | 内容 |
 |---|---|
-| 主句 | **Say the thing you've been not saying.** / 把一直没说的那句话，说出来。 |
+| 主句 | **Say the thing you've been not saying.** / 想说的话，说出来。（2026-09-08 中文由「把一直没说的那句话，说出来。」改为此句，英文不变；官网 `site/content.mjs` 的 `hero.h1` 与 `footer.tagline` 是第四处同源） |
 | 支撑句 | 你知道该开口问而不是指责——直到对方叹了口气。知道从来不是瓶颈，压力下的重复次数才是。 |
 | 发布火力句（未启用） | ChatGPT will agree with you. Your boss won't. |
 | 已否决 | `Before you knock.`（只在推门前一秒生效的门槛句）；15 个以机制词（练 / 陪练 / 阻力 / 复盘 / 还手）为核心的候选——机制不进主句 |

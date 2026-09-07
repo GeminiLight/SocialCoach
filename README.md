@@ -2,12 +2,12 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/banner-dark.svg">
-  <img src="docs/banner.svg" width="860" alt="SocialCoach · 社交教练 — Say the thing you&#8217;ve been not saying. 把一直没说的那句话，说出来。">
+  <img src="docs/banner.svg" width="860" alt="SocialCoach · 社交教练 — Say the thing you&#8217;ve been not saying. 想说的话，说出来。">
 </picture>
 
-**[Try it live](https://REPLACE-WITH-YOUR-URL)** · [Quick start](#quick-start) · [Key features](#key-features) · [Architecture](#architecture) · [Paper](https://arxiv.org/abs/2606.04155)
+**[Try it live](https://socialcoach-app.vercel.app)** · [Quick start](#quick-start) · [Key features](#key-features) · [Architecture](#architecture) · [Paper](https://arxiv.org/abs/2606.04155)
 
-[![Live](https://img.shields.io/badge/Live-Try%20it-4A6B5A?style=for-the-badge&logo=vercel&logoColor=white&labelColor=2B2018)](https://REPLACE-WITH-YOUR-URL)
+[![Live](https://img.shields.io/badge/Live-Try%20it-4A6B5A?style=for-the-badge&logo=vercel&logoColor=white&labelColor=2B2018)](https://socialcoach-app.vercel.app)
 [![Paper](https://img.shields.io/badge/Paper-arXiv%202606.04155-B31B1B?style=for-the-badge&logo=arxiv&logoColor=white&labelColor=2B2018)](https://arxiv.org/abs/2606.04155)
 
 </div>
@@ -15,6 +15,19 @@
 You already know you should open with a question instead of an accusation. You know it right up until your manager sighs — and then you fold. Knowing was never the bottleneck; **reps under pressure are.** Every book, course and tips thread sells you the knowing, and most "AI role-play" apps stop at the chat.
 
 SocialCoach gives you the other half: characters who won't hand you the win, and a coach who tells you afterwards — quoting your own words — whether you didn't know the move, or knew it and couldn't land it. Three minutes a day.
+
+<table align="center">
+<tr>
+<td align="center" width="33%"><img src="docs/screenshots/screenshot-01-home-zh.png" width="260" alt="Home: today's practice, and why it was picked for you"></td>
+<td align="center" width="33%"><img src="docs/screenshots/screenshot-02-pushback-zh.png" width="260" alt="Mid-practice: a polite reply, and the manager pushes harder"></td>
+<td align="center" width="33%"><img src="docs/screenshots/screenshot-03-evidence-debrief-zh.png" width="260" alt="Debrief: your own line quoted first, then the verdict, the source, the next move"></td>
+</tr>
+<tr>
+<td align="center"><sub>Not another tip. A first rep.</sub></td>
+<td align="center"><sub>Being polite didn't get a yes.</sub></td>
+<td align="center"><sub>It shows what you said before it judges.</sub></td>
+</tr>
+</table>
 
 ## Key features
 

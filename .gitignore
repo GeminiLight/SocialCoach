@@ -13,3 +13,6 @@ docs/icon-candidates/
 
 # Official site build output (site/build.mjs)
 site/dist/
+
+# Full-page raw captures from site/scripts/screenshots.mjs; only the framed shots are kept
+docs/screenshots/raw/

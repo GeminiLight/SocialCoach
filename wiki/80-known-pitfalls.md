@@ -106,6 +106,18 @@
 - **解决方案：** `require(join(appDir, 'node_modules', '.pnpm', 'node_modules', 'sharp'))`——`.pnpm/node_modules/` 是 pnpm 的「隐藏提升」目录，所有传递依赖都在。`site/scripts/og.mjs` 用的就是这条路径。
 - **教训：** 借 app 的依赖做脚本时，按 pnpm 的目录结构解析，不要假设 npm 的扁平布局。
 
+### CDP `Runtime.evaluate` 返回 DOM 元素会静默失败
+- **现象：** 用 DevTools 协议轮询「按钮出现了吗」，按钮明明在截图里，脚本却一直等到超时。
+- **原因：** 表达式返回的是元素本身，`returnByValue: true` 序列化失败报 `Object reference chain is too long`，被 try/catch 吞掉后看起来像「还没出现」。
+- **解决方案：** 等待条件一律包成 `!!(...)` 返回布尔；`site/scripts/screenshots.mjs` 的 `waitFor` 已这样做，并把 eval 错误打到日志。
+- **教训：** 轮询循环里的 catch 必须至少打印一次错误，否则任何脚本 bug 都会伪装成超时。
+
+### DevTools 连接会在流程中途掉线（close 1006）
+- **现象：** 截图流程走到复盘时 WebSocket 关闭，Chrome 进程还活着，页面也还在。
+- **原因：** 未定位，与运行时长无关（50 秒到 2.5 分钟都出现过）。
+- **解决方案：** 每条命令前检查连接，掉了就重新 `GET /json/list` 找回同一个 tab 并重连、重做模拟设置，流程继续；不要在掉线时杀 Chrome。
+- **教训：** 对长流程自动化，把「重连到同一个 tab」当默认能力，而不是失败后从头再跑（每跑一次都是四五次模型调用）。
+
 ### 含 `.github/workflows/` 的提交推不上去
 - **现象：** `git push origin main` 报 `refusing to allow an OAuth App to create or update workflow … without workflow scope`。
 - **原因：** `origin` 是 https，凭据来自 `gh` 的 OAuth token，只有 `gist, read:org, repo` 三个 scope。

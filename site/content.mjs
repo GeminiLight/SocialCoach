@@ -10,9 +10,9 @@ export const L = (zh, en) => ({ zh, en });
 export const pick = (v, lang) => (v && typeof v === "object" && "zh" in v ? v[lang] : v);
 
 export const site = {
-  // Where the built site lives. GitHub Actions overrides this with the real
-  // Pages URL (custom domain included); local builds fall back to the project page.
-  defaultUrl: "https://geminilight.github.io/SocialCoach",
+  // Where the built site lives. GitHub Actions overrides this with whatever
+  // configure-pages reports; the account's Pages domain makes that this URL.
+  defaultUrl: "https://tianfuwang.tech/SocialCoach",
   appUrl: "https://socialcoach-app.vercel.app",
   repoUrl: "https://github.com/GeminiLight/SocialCoach",
   arxivId: "2606.04155",
@@ -27,7 +27,7 @@ export const site = {
 
 export const meta = {
   title: L(
-    "SocialCoach · 社交教练 — 把一直没说的那句话，说出来。",
+    "SocialCoach · 社交教练 — 想说的话，说出来。",
     "SocialCoach — Say the thing you've been not saying.",
   ),
   description: L(
@@ -52,8 +52,8 @@ export const hero = {
   pill: L("来自同名研究论文", "From the research paper"),
   pillTag: "arXiv:2606.04155",
   eyebrow: L("SocialCoach", "社交教练"),
-  h1: L("把一直没说的那句话，说出来。", "Say the thing you've been not saying."),
-  h1Alt: L("Say the thing you've been not saying.", "把一直没说的那句话，说出来。"),
+  h1: L("想说的话，说出来。", "Say the thing you've been not saying."),
+  h1Alt: L("Say the thing you've been not saying.", "想说的话，说出来。"),
   sub: L(
     "和不会轻易让步的 AI 角色先练一次困难对话。结束后，教练引用你的原话，告诉你是还不会，还是会但在压力下没做到。无需注册。",
     "Rehearse a difficult conversation against an AI character who pushes back. The debrief quotes what you actually said and shows whether you did not know the move or could not execute it under pressure. No account required.",
@@ -74,27 +74,28 @@ export const gap = {
   eyebrow: L("知道 ≠ 做到", "Knowing is not doing"),
   title: L("你不是不知道怎么说", "You already know what to say"),
   lead: L(
-    "你大概知道应该先问、不要指责。问题出在对方叹气、反驳或沉默之后：脑内预演和收藏的建议，都没有这个压力。",
-    "You know to open with a question instead of an accusation. The trouble starts after the sigh, the pushback, or the silence. Rehearsing in your head, and every article you saved, never had that pressure.",
+    "你大概知道应该先问、不要指责。问题出在*对方叹气、反驳或沉默之后*：脑内预演和收藏的建议，都没有这个压力。",
+    "You know to open with a question instead of an accusation. The trouble starts *after the sigh, the pushback, or the silence*. Rehearsing in your head, and every article you saved, never had that pressure.",
   ),
   hooks: [
     L(
-      "你不是不知道怎么拒绝。你是不知道老板再追问一句时，自己还能不能拒绝。",
-      "You know how to say no. What you don't know is whether you still can after your manager asks one more time.",
+      "你不是不知道怎么拒绝。你是不知道老板*再追问一句*时，自己还能不能拒绝。",
+      "You know how to say no. What you don't know is whether you still can *after your manager asks one more time*.",
     ),
     L(
-      "加薪谈话在脑子里很顺，因为脑子里的老板从不说「今年真的没预算」。",
-      "The raise conversation goes smoothly in your head, because the manager in your head never says “there's really no budget this year.”",
+      "加薪谈话在脑子里很顺，因为脑子里的老板从不说*「今年真的没预算」*。",
+      "The raise conversation goes smoothly in your head, because the manager in your head never says *“there's really no budget this year.”*",
     ),
     L(
-      "提醒朋友还钱最难的不是第一句，是他笑着说「朋友之间别这么急」之后。",
-      "The hard part of asking a friend for the money back isn't the first line. It's what comes after “come on, we're friends.”",
+      "提醒朋友还钱最难的不是第一句，是他笑着说*「朋友之间别这么急」*之后。",
+      "The hard part of asking a friend for the money back isn't the first line. It's what comes after *“come on, we're friends.”*",
     ),
   ],
   deficits: [
     {
       label: L("不会", "Didn't know the move"),
       tag: "acquisition",
+      fix: L("配一条有出处的策略", "A sourced strategy"),
       body: L(
         "还没掌握这个动作。需要的是知道该做什么，配一条有出处的策略。",
         "You haven't got the move yet. What you need is the move itself, with a sourced strategy attached.",
@@ -103,6 +104,7 @@ export const gap = {
     {
       label: L("会，但没做到", "Knew it, and folded"),
       tag: "performance",
+      fix: L("在压力下再练一次", "Another rep, under pressure"),
       body: L(
         "知道该怎么说，但在压力下没做出来。需要的是重复次数，不是再一条建议。",
         "You knew what to say and didn't, under pressure. What you need is reps, not another tip.",
@@ -120,6 +122,7 @@ export const how = {
   title: L("怎么练", "How it works"),
   steps: [
     {
+      icon: "scene",
       title: L("选一场对话", "Pick a conversation"),
       body: L(
         "46 个双语场景，覆盖职场、家庭、朋友、亲密关系、学校、陌生人和社交场合。也可以描述你明天那场真实对话，约 15 秒生成一个定制场景。",
@@ -127,7 +130,10 @@ export const how = {
       ),
     },
     {
+      id: "pushback",
+      icon: "pushback",
       title: L("对方会反驳", "The other side pushes back"),
+      screenshotAlt: L("对练中：经理继续施压，目标进度与剩余回合可见", "Mid-practice: the manager keeps pushing; goal progress and turns left are visible"),
       body: L(
         "角色有自己的目标、立场，和一件没告诉你的事。回合有上限，你可能输。态度好不会让它自动让步。",
         "Characters have an objective of their own, a position, and something they aren't telling you. Turns are limited. You can lose. Being polite doesn't make them yield.",
@@ -135,6 +141,7 @@ export const how = {
     },
     {
       id: "debrief",
+      icon: "quote",
       title: L("复盘先引用你的原话", "The debrief quotes you first"),
       body: L(
         "每条判断先引用你刚才说过的话，再区分是不会，还是会但没做到，再给出处和下一次的动作。没有证据的评价不会出现。",
@@ -143,6 +150,7 @@ export const how = {
       screenshotAlt: L("复盘报告：引用原话、归因、出处和下一步", "Debrief report: quoted line, attribution, source and next move"),
     },
     {
+      icon: "radar",
       title: L("下一次练什么，它替你选", "It picks tomorrow's practice"),
       body: L(
         "5 项 CASEL 能力 × 34 项社交技能 × 7 类情境的技能图谱，根据这次结果安排下一次训练，并用雷达记录变化。",
@@ -179,6 +187,7 @@ export const trust = {
   ],
   cards: [
     {
+      icon: "gauge",
       title: L("熟练度是模型估计", "Proficiency is a model estimate"),
       body: L(
         "不是心理测量，也不是能力认证，界面里会标注。它只用于你自己的练习，不用于招聘、绩效或评价别人。",
@@ -186,6 +195,7 @@ export const trust = {
       ),
     },
     {
+      icon: "device",
       title: L("数据留在你的设备上", "Your data stays on your device"),
       body: L(
         "无账号、无用户数据库，记录可导出、可重置。每次生成仍会把本次输入发送给你选择的模型服务；你可以用自己的 API key，或指向本地端点。",
@@ -193,6 +203,7 @@ export const trust = {
       ),
     },
     {
+      icon: "box",
       title: L("可以自己部署", "Self-hostable"),
       body: L(
         "一台小机器加 Docker Compose。支持 Anthropic、OpenAI 以及任何 OpenAI 兼容端点。",
@@ -325,7 +336,7 @@ export const research = {
 };
 
 export const footer = {
-  tagline: L("把一直没说的那句话，说出来。", "Say the thing you've been not saying."),
+  tagline: L("想说的话，说出来。", "Say the thing you've been not saying."),
   links: {
     app: L("开始练习", "Start practising"),
     repo: L("GitHub", "GitHub"),

@@ -7,7 +7,7 @@
 
 ## Bug
 
-- [ ] README 两处 `REPLACE-WITH-YOUR-URL` 是死链（导航行 + Live 徽章）。推送前必须替换，否则宣传页第一个链接点下去 404。可用 `https://socialcoach-app.vercel.app`（2026-09-08 `curl` 确认 title / lang 是本项目；`socialcoach-lime.vercel.app` 返回 404，仓库 homepage 字段指向的是这个死地址）
+- [x] README 两处 `REPLACE-WITH-YOUR-URL` 是死链（导航行 + Live 徽章）。2026-09-08 已替换为 `https://socialcoach-app.vercel.app`（`curl` 确认 title / lang 是本项目）；仓库 homepage 字段也从 404 的 `socialcoach-lime` 改为该地址
 
 ## 技术债
 
@@ -20,16 +20,17 @@
 
 ## 改进想法
 
-- [ ] 官网上线：Settings → Pages → Source 选 GitHub Actions，然后重跑 `site` workflow；再决定要不要绑自有域名（官网主域 + 产品子域）。见 `site/README.md`
-- [ ] 产品截图除 `docs/screenshots/` 外，同时放一份到 `site/assets/`（命名见 `site/README.md`），官网首屏与「复盘」一步会自动渲染
-- [ ] 仓库 GitHub 的 homepage 字段仍是 `socialcoach-lime.vercel.app`（404），应改成官网或 `socialcoach-app.vercel.app`
+- [x] 官网上线（2026-09-08，`https://tianfuwang.tech/SocialCoach/`）。仍待决定：是否绑独立域名（官网主域 + 产品子域），以及 Pages 的 HTTPS 强制开关（当前 `https_enforced: false`）
+- [x] 产品截图放 `docs/screenshots/` 与 `site/assets/`，中英各三张（2026-09-08）
+- [x] 仓库 homepage 字段改为 `socialcoach-app.vercel.app`（2026-09-08）
+- [ ] 英文版官网的三张截图是英文界面，但演示对话里的学习者名字是 Sam；中文版是小周。若要统一，重跑 `site/scripts/screenshots.mjs` 改 `profile.name`
 - [ ] `/learn` 详情栏在条目短时下方仍有大片空白。真正的解法是填入相关内容（引用该理论的案例、可练这个技能的场景），属于功能而非打磨
 - [ ] 情境筛选 chip 用的是 `taxonomy` 里的 emoji `glyph`，与编辑感排版有张力，是否保留待定
 - [ ] `/arena` 截图右边缘有一个被裁切的圆形元素，未定位到来源（`page.tsx:106` 那个装饰圆在首页，不是这里）
 
 - [ ] 语言切换胶囊在 `settings/page.tsx` 与 `onboarding/page.tsx` 各写了一份完全相同的 markup，应抽成 `Segmented` 组件（无 bug，但改一处不会同步另一处）
 
-- [ ] 产品截图三张（首页 / 对话中 / 复盘报告）放 `docs/screenshots/`，排进 README pitch 段落下方。当前 README 最大缺口
+- [x] 产品截图三张（首页 / 对话中 / 复盘报告）放 `docs/screenshots/`，排进 README pitch 段落下方（2026-09-08）
 - [ ] README 章节名是否加 emoji（三个参考项目都加，与设计反参考冲突）——需要显式决定，见 [11-stage-b.md](./11-stage-b.md#b3-readme-结构)
 - [ ] Star History 图表（等 star 有量后再加）
 - [ ] `Architecture` 流程图的节点名仍是论文术语（`Prescription` / `Adaptation` / `Bounded proficiency delta`）。是否换成用户语言待定——换了对产品读者友好，但与代码的对应关系变弱

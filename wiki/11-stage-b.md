@@ -12,11 +12,11 @@
 | B2 | 主句定稿并三处对齐 | ✅ | README / `layout.tsx` / `manifest.webmanifest` |
 | B3 | README 按开源产品惯例重排 | ✅ | |
 | B4 | 品牌 banner（明暗双版） | ✅ | `docs/banner.svg` / `banner-dark.svg` |
-| B5 | 产品截图 | 📋 | 首页 / 对话中 / 复盘，三张手机截图 |
+| B5 | 产品截图 | ✅ | 中英各三张，`site/scripts/screenshots.mjs` 对线上版自动拍摄 |
 | B6 | LICENSE | 📋 | 需要用户选定许可证 |
-| B7 | Live 站点地址 | 📋 | README 两处占位符 |
+| B7 | Live 站点地址 | ✅ | `socialcoach-app.vercel.app`，README 两处 + 仓库 homepage |
 | B8 | wiki 文档体系 | 🚧 | 本次建立 |
-| B9 | 官网 | 🚧 | `site/`，GitHub Pages（Actions 来源），待启用 |
+| B9 | 官网 | ✅ | `site/` → `https://tianfuwang.tech/SocialCoach/`（GitHub Pages，Actions 来源） |
 
 ---
 
@@ -46,7 +46,7 @@
 
 | 决策点 | 选择 | 原因 | 放弃的方案 |
 |---|---|---|---|
-| 主句 | **Say the thing you've been not saying.** / 把一直没说的那句话，说出来。 | 卖结果与行动，传播性好；命中「有件事拖了几周还没说」这个真实状态 | `You know what to say. You just can't say it yet.` —— 卖共鸣、转化更好，保留作落地页副本 / 广告变体 |
+| 主句 | **Say the thing you've been not saying.** / 想说的话，说出来。 | 卖结果与行动，传播性好；命中「有件事拖了几周还没说」这个真实状态。2026-09-08 用户把中文从「把一直没说的那句话，说出来。」缩成「想说的话，说出来。」，更短更口语 | `You know what to say. You just can't say it yet.` —— 卖共鸣、转化更好，保留作落地页副本 / 广告变体 |
 | 门槛句 | 不设 | 用户判断「只在推门前一秒生效的句子产品并不需要」 | `Before you knock.` / 敲门之前 —— 已否决 |
 | 发布火力句 | 暂不启用 | 点名对手会把品牌绑在别人名字上；留给发布帖而非产品自身 | `ChatGPT will agree with you. Your boss won't.` —— 保留待用 |
 
@@ -119,7 +119,9 @@ Research（论文 + BibTeX，压到最后）
 | 论文边界 | 「研究」一节和 `llms.txt` 都写明：论文研究系统 ≠ 当前产品；43,170 条研究语料 ≠ 产品内置 46/42/30 | 避免把论文结果读成产品效果证明 | — |
 | 部署保护 | workflow 先查 Pages 是否已启用，未启用则绿色跳过并给 notice | 私有仓库未开 Pages 时不在每次推送上留红叉 | `configure-pages` 的 `enablement: true`（会替用户把站点公开） |
 
-未做：产品截图（B5）、正式域名、README 占位链接替换（B7；`https://socialcoach-app.vercel.app` 已 curl 验证是本项目）。
+2026-09-08 第二轮（用户反馈「太纯文本」）：加了纸纹底、桌面左侧页边线、`*词*` 手绘下划线标记、「不会 / 没做到」两张抽象批注示意图（灰条 + 赭石下划线 + 引出线，刻意不放伪造对话）、四步各配单线图标或真实手机截图、论文卡片加 arXiv 印章、滚动进场（仅 transform / opacity，尊重 reduced-motion）。截图由 `site/scripts/screenshots.mjs` 用 DevTools 协议对线上版自动拍：种一个演示档案 → 首页（展开「为什么是这个」）→ 对练两轮（先含糊后清晰）→ 结束 → 复盘；复盘取滚到「可以更好的」的一帧，因为它同屏有原话、判断、「知道但没做到」归因与换一种说法。
+
+未做：正式域名（目前挂在账号自定义域 `tianfuwang.tech` 下）。
 
 ---
 

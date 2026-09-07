@@ -1,7 +1,7 @@
 {
   "name": "SocialCoach · 社交教练",
   "short_name": "社交教练",
-  "description": "把一直没说的那句话，说出来。",
+  "description": "想说的话，说出来。",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8f5ef",
