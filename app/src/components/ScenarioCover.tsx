@@ -1,26 +1,20 @@
 "use client";
 import { clsx } from "clsx";
 import type { Scenario } from "@/data/corpus/types";
-import { ScenarioIcon } from "@/data/scenario-icons";
+import { ScenarioIcon, scenarioIconName } from "@/data/scenario-icons";
 import { useLang } from "@/store/useApp";
-import { hueColor } from "@/lib/format";
 
-/**
- * Covers are built from the scenario's own words, not from a template.
- *
- * The previous version keyed one bubble motif per `context` — but 14 of 34
- * scenarios are `workplace`, so the four cards you see side by side on the home
- * page all drew the same picture, and the palette came from character hues that
- * span the whole wheel (mint, purple, magenta — none of them ours).
- *
- * Rule that replaced it: **structure comes from content, category only picks
- * colour.** Here the content is `opening.text` — the line the other person
- * opens with. Every scenario has a different one, so no two covers can repeat,
- * and the cover does something an illustration cannot: it tells you what you
- * are walking into. The 44px tile shows the person instead — see below.
- */
+/** A small, curated palette follows the scene's subject, shared by tiles and covers. */
+function scenarioTone(scenario: Scenario) {
+  const icon = scenarioIconName(scenario);
+  if (["flame", "message-square-warning", "shield-alert", "megaphone", "user-x"].includes(icon)) return "clay";
+  if (["banknote", "piggy-bank", "trophy", "receipt", "gift"].includes(icon)) return "ochre";
+  if (["heart", "heart-crack", "coffee", "moon", "wine"].includes(icon)) return "rose";
+  if (["split", "clock", "calendar-x", "clipboard-list", "package", "scale", "briefcase", "battery-low"].includes(icon)) return "olive";
+  return "teal";
+}
 
-/** The opening clause, so the coach's ochre mark lands on the telling phrase. */
+/** The opening clause, so the annotation lands on the telling phrase. */
 function firstClause(text: string): [string, string] {
   const m = text.match(/^[^，,。；;！？!?…]{2,}[，,。；;！？!?…]?/);
   const head = m?.[0] ?? text;
@@ -45,17 +39,13 @@ export function ScenarioCover({
     scenario.characters.find((c) => c.id === scenario.opening.characterId) ??
     scenario.characters.find((c) => c.id !== "you" && !c.playable);
 
-  /*
-    A 44px tile cannot meaningfully separate 34 scenarios — context is 41%
-    workplace and the primary competency is 50% relationship-skills, so keying
-    the mark on either category collapses back to one picture. The only thing
-    that genuinely differs per scenario is the person: show who you are up
-    against. Same source as the large cover, one step quieter.
-  */
+  const tone = scenarioTone(scenario);
+
   if (!full && !tall) {
     return (
       <span
-        className={clsx("relative shrink-0 rounded-xl grid place-items-center bg-paper-deep border border-line text-ink-2", className)}
+        className={clsx("scenario-tile relative shrink-0 rounded-xl grid place-items-center border", className)}
+        data-tone={tone}
         style={{ width: size, height: size }}
         aria-hidden
       >
@@ -68,9 +58,9 @@ export function ScenarioCover({
   const [head, rest] = firstClause(scenario.opening.text[lang]);
 
   return (
-    <div className={clsx("absolute inset-0 overflow-hidden bg-paper-deep", className)} aria-hidden>
+    <div className={clsx("scenario-cover absolute inset-0 overflow-hidden", className)} data-tone={tone} aria-hidden>
       {/* manuscript margin */}
-      <span className="absolute inset-y-0 left-8 w-px bg-line lg:left-10" />
+      <span className="absolute inset-y-0 left-8 w-px lg:left-10" style={{ background: "var(--scene-rule)" }} />
 
       {/*
         `full` is used at two very different heights — 96px in the arena grid and
@@ -87,7 +77,7 @@ export function ScenarioCover({
       >
         {speaker && (
           <span className="flex items-center gap-1.5 eyebrow">
-            <span className="h-2 w-2 rounded-full shrink-0" style={{ background: hueColor(speaker.hue, 0.55, 0.11) }} />
+            <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "var(--scene-color)" }} />
             <span className="truncate">{speaker.role[lang]}</span>
           </span>
         )}
@@ -102,7 +92,7 @@ export function ScenarioCover({
               silently in Tailwind v4 — no error, just no colour. */}
           <span
             className="underline decoration-[2.5px] underline-offset-[5px] [text-decoration-skip-ink:none]"
-            style={{ textDecorationColor: "var(--accent)" }}
+            style={{ textDecorationColor: "var(--scene-color)" }}
           >
             {head}
           </span>
@@ -110,7 +100,7 @@ export function ScenarioCover({
         </p>
       </div>
 
-      <span className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-paper-deep to-transparent" />
+
     </div>
   );
 }

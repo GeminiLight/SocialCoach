@@ -54,7 +54,7 @@ export interface Scenario {
 export interface Theory {
   id: string;
   title: L;
-  source: { book: string; author: string };
+  source: { book: string; author: string; url?: string };
   principle: L;
   howTo: L[];
   competencies: CompetencyId[];
@@ -66,7 +66,7 @@ export interface Theory {
 export interface Case {
   id: string;
   title: L;
-  source: { book: string; author: string };
+  source: { book: string; author: string; url?: string };
   situation: L;
   whatHappened: L;
   takeaway: L;

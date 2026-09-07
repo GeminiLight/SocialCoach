@@ -9,8 +9,9 @@ import { t } from "@/lib/i18n";
 import { useApp } from "@/store/useApp";
 import { openModelSheet } from "@/lib/byok";
 import { BottomBar, Button, Chip } from "@/components/ui";
+import { BrandMark } from "@/components/BrandMark";
 import { Level } from "@/components/SkillBits";
-import { compColor, compSoft, hueColor } from "@/lib/format";
+import { compColor, hueColor } from "@/lib/format";
 
 const STEPS = 5;
 
@@ -102,13 +103,7 @@ export default function Onboarding() {
         >
           {step === 0 && (
             <div className="flex-1 flex flex-col justify-center gap-7">
-              <svg width={72} height={56} viewBox="56 96 402 314" aria-hidden>
-                <path d="M124 298 Q118 366 96 400 Q170 384 230 310 Z" fill="var(--ink)" />
-                <rect x="64" y="104" width="344" height="216" rx="74" fill="var(--ink)" />
-                <rect x="122" y="160" width="236" height="32" rx="16" fill="var(--paper)" />
-                <rect x="122" y="220" width="150" height="32" rx="16" fill="var(--paper)" />
-                <path d="M256 352 L434 364" stroke="var(--accent)" strokeWidth="32" strokeLinecap="round" fill="none" />
-              </svg>
+              <BrandMark size={72} />
               <h1 className="display text-[36px] leading-[1.12] whitespace-pre-line">{t(lang, "ob_welcome_title")}</h1>
               <p className="text-[16px] text-ink-2 leading-relaxed max-w-[34ch]">{t(lang, "ob_welcome_body")}</p>
               <WelcomeTickets lang={lang} />

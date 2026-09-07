@@ -17,7 +17,7 @@
 
 | # | 功能 | 状态 | 备注 |
 |---|---|---|---|
-| A1 | 三层语料库（理论 / 案例 / 场景，双语，全部带 `source`） | ✅ | 34 / 24 / 34；`src/data/corpus/` |
+| A1 | 三层语料库（理论 / 案例 / 场景，双语，全部带 `source`） | ✅ | 42 / 30 / 46（2026-09-07 扩充，新增案例明确标为教学示例）；`src/data/corpus/` |
 | A2 | 多面分类体系（5 CASEL × 34 技能 × 7 情境 / 26 类型） | ✅ | `src/data/taxonomy.ts` |
 | A3 | 自适应排程 `/api/schedule`（处方 → 受约束检索 → 适配） | ✅ | 固定放松顺序，核心约束不放松 |
 | A4 | 沉浸式角色扮演 `/api/roleplay`（流式、隐藏动机、目标追踪、回合上限、可失败） | ✅ | `@@characterId` / `@@meta` 文本协议 |
@@ -25,9 +25,9 @@
 | A6 | 知识检索卡片 + 苏格拉底式反思 `/api/reflect` | ✅ | 报告内嵌理论 / 案例 |
 | A7 | 对话中提示 `/api/hint` | ✅ | ≤40 词，只点动作不代写 |
 | A8 | `/rehearse` 生成真实处境场景 | ✅ | ~15s，输出全量打标场景 |
-| A9 | 本地持久化 store + 导出 / 重置 | ✅ | Zustand persist，零注册 |
+| A9 | 本地持久化 store + 导出 / 重置 | ✅ | Zustand persist，零注册；排练描述有标签页草稿，重置时同步清理 |
 | A10 | 能力雷达 / 熟练度 / 时间线 / 反思日志 | ✅ | `/progress` |
-| A11 | 8 个路由页面 + 移动优先 PWA | ✅ | manifest + service worker |
+| A11 | 8 个路由页面 + 移动优先 PWA | ✅ | manifest + service worker；2026-09-07 打磨首页、场景目录、排练表单及共享导航 / 弹窗 |
 | A12 | 中英双语 UI，模型输出跟随用户语言 | ✅ | `src/lib/i18n.ts` |
 
 ### Stage B — 定位与对外物料
@@ -47,7 +47,7 @@
 
 | # | 功能 | 状态 | 备注 |
 |---|---|---|---|
-| C1 | 语料落地页 SSG（`corpus` 92 条 × 双语 = 184 页，独立 `generateMetadata`） | 📋 | 当前 8/8 路由 `use client`，爬虫拿到空壳 |
+| C1 | 语料落地页 SSG（`corpus` 118 条 × 双语 = 236 页，独立 `generateMetadata`） | 📋 | 当前 8/8 路由 `use client`，爬虫拿到空壳 |
 | C2 | `sitemap.ts` / `robots.ts` / `metadataBase` | 📋 | 全缺 |
 | C3 | 动态 OG 图（`opengraph-image.tsx`） | 📋 | 全缺 |
 | C4 | JSON-LD：`SoftwareApplication` + `ScholarlyArticle` | 📋 | 论文是 GEO 资产 |
@@ -62,4 +62,4 @@
 | 2026-09-03 | 定位定稿 + 主句三处对齐 + README 重排 + banner | ✅ |
 | 2026-09-03 | wiki 体系建立 | 🚧 |
 | — | 线上可访问 + LICENSE + 截图（Stage B 收口） | 📋 |
-| — | 184 个落地页可被 LLM 爬虫读到（Stage C 收口） | 📋 |
+| — | 236 个落地页可被 LLM 爬虫读到（Stage C 收口） | 📋 |

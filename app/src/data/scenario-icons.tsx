@@ -18,7 +18,7 @@ import type { ContextId } from "./taxonomy";
  *    anything keyed on a category collapses into one repeated picture. A glyph
  *    chosen per scenario does not.
  * 2. **Then the colour can stay disciplined.** Because the glyph carries the
- *    variation, icons render in a single ink tone — no 360° hue wheel, no
+ *    variation, ScenarioCover pairs icons with five muted pigments — no 360° hue wheel, no
  *    pastel candy, no character-initial avatars that say nothing.
  *
  * The registry is an explicit allow-list rather than a dynamic `lucide-react`

@@ -44,6 +44,8 @@
 
 ## 已完成（待整理进 changelog）
 
+- [x] 2026-09-07 UI/UX 打磨：首页周记录与熟练度说明、场景目录与组合筛选、排练描述草稿与填写引导、统一品牌图形、原生弹窗与明确退出操作。验收见 [界面评审](./archive/reviews/review-2026-09-07-ui-ux.md)
+
 - [x] 核心定位定稿：敌人是「建议」、知道≠做到、A/B 客户分层 → [11-stage-b.md](./11-stage-b.md#b1-核心定位)
 - [x] 主句定稿 `Say the thing you've been not saying.` 并三处对齐（README / `layout.tsx` / `manifest.webmanifest`）
 - [x] README 按开源产品惯例重排（Key features / Architecture / Quick start / Deployment / Tech stack / Design / Contributing / Disclaimer / Research）
@@ -55,3 +57,7 @@
 - [x] 场景封面重做：改为「对方的第一句话」，废掉按 context 的气泡 motif，清掉四处粉彩父底色
 - [x] 应用图标重做：竖直分色心 + 墨色火花，含独立 maskable 变体、manifest 修正、PNG 重导 → 规范见 [03-design-principle.md](./03-design-principle.md#应用图标)
 - [x] 删除临时布局夹具 `/api/dev-seed`（无环境守卫，曾有上线泄漏风险）→ 教训已收进 [80-known-pitfalls.md](./80-known-pitfalls.md)
+
+- [x] 2026-09-07 其他页面精修：知识目录与阅读排版、收藏搜索与收起内容焦点隔离、设置资料与偏好控件，以及首页 / 练习场 / 排练引导细节；验收续记在 [界面评审](./archive/reviews/review-2026-09-07-ui-ux.md)。
+
+- [x] 2026-09-07 语料多样化：新增 12 场景、8 知识、6 教学示例；补充来源链接与语料完整性检查。见 [来源记录](./refs/corpus-sources-2026-09.md)。

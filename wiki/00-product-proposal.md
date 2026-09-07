@@ -86,7 +86,7 @@
 **成功标志：** 定位陈述定稿、主句三处对齐、README 按开源产品惯例重排并有品牌 banner。→ 🚧 进行中
 
 ### Stage C — 可索引化与 GEO
-**目标：** 把 `corpus` 的 92 条内容 × 双语变成 184 个可被爬虫和 LLM 读到的落地页。
+**目标：** 把 `corpus` 的 118 条内容 × 双语变成 236 个可被爬虫和 LLM 读到的落地页。
 **成功标志：** LLM 爬虫能拿到正文；sitemap / robots / OG / JSON-LD / hreflang 齐备；论文接入 `ScholarlyArticle`。
 
 ### Stage D — 发布与增长
