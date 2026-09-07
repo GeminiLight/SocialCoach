@@ -61,3 +61,33 @@ export interface AssessInput extends TurnInput {
   objectiveDone?: boolean[];
   outcome?: string;
 }
+
+/** One past session, flattened to the evidence a pattern could be built from. */
+export interface PatternSession {
+  title: string;
+  at: number;
+  outcome?: string;
+  verdict?: string;
+  /** Learner turns on which the other side's position fell. A habit's fingerprint. */
+  gaveGroundOn: number[];
+  turns: number;
+  weaknesses: { behavior: string; evidence: string; skill: string; deficit: string }[];
+}
+
+export interface PatternInput {
+  lang: Lang;
+  goals: SkillId[];
+  sessions: PatternSession[];
+}
+
+export interface PatternResult {
+  /** False when nothing genuinely recurs. Saying so is the honest answer. */
+  found: boolean;
+  /** The recurring move, second person, ≤20 words. */
+  pattern: string;
+  why: string;
+  /** At least two, from at least two different sessions, or `found` is false. */
+  evidence: { title: string; quote: string }[];
+  skill?: SkillId;
+  nextStep: string;
+}

@@ -13,6 +13,7 @@ import { assessStream, reflectStream } from "@/lib/client-api";
 import { buildSession } from "@/lib/session-utils";
 import type { Report, Session } from "@/lib/types";
 import type { Character } from "@/data/corpus/types";
+import { TurnMap } from "./TurnMap";
 import { caseById, theoryById } from "@/data/corpus";
 import { skillById, SKILLS, type SkillId } from "@/data/taxonomy";
 import { compColor } from "@/lib/format";
@@ -313,12 +314,28 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="px-5 flex flex-col gap-9 lg:px-0">
         <header className="flex flex-col gap-3">
           <p className="eyebrow">{t(lang, "rp_title")} · {sc.title[lang]}</p>
+          {/* The verdict carries the first screen. Stars and a tally are a score,
+              and a score answers a question nobody was asking; they drop below it. */}
+          {report.verdict ? (
+            <h1 className="display text-[27px] leading-[1.24] text-ink lg:text-[31px]">
+              {report.verdict}
+              {streaming && !report.summary && <Caret />}
+            </h1>
+          ) : (
+            streaming && <p className="display text-[27px] leading-[1.24] text-ink-4">…</p>
+          )}
           <div className="flex items-center gap-3">
-            <Stars n={stars} of={sc.objectives.length} size={26} />
-            <span className="text-[13px] text-ink-3">{t(lang, "rp_stars_of", { n: stars, m: sc.objectives.length })}</span>
+            <Stars n={stars} of={sc.objectives.length} size={20} />
+            <span className="text-[12px] text-ink-3">{t(lang, "rp_stars_of", { n: stars, m: sc.objectives.length })}</span>
           </div>
-          {report.summary && <p className="display text-[19px] leading-[1.5] text-ink">{report.summary}{streaming && !strengths.length && <Caret />}</p>}
+          {report.summary && <p className="text-[15px] leading-[1.65] text-ink-2 lg:max-w-[var(--measure)]">{report.summary}{streaming && !strengths.length && <Caret />}</p>}
         </header>
+
+        {(session.stanceTrail?.length ?? 0) > 0 && (
+          <Section title={t(lang, "rp_map_title")}>
+            <TurnMap session={session} lang={lang} />
+          </Section>
+        )}
 
         {strengths.length > 0 && (
           <Section title={t(lang, "rp_strengths")}>

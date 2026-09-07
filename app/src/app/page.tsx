@@ -31,6 +31,18 @@ export default function Home() {
   );
   const streak = computeStreak(practiceDays);
   const unfinished = sessions.find((s) => s.id !== todaySessionId && s.status === "active" && s.messages.some((m) => m.role === "learner"));
+  /** Last session's verdict, to fill today's wait with something worth reading. */
+  const lastVerdict = useMemo(() => {
+    const last = [...sessions].reverse().find((x) => x.status === "assessed" && x.report?.verdict);
+    if (!last) return null;
+    const trail = last.stanceTrail ?? [];
+    const gaveGroundOn: number[] = [];
+    trail.forEach((v, i) => {
+      if (v < (i === 0 ? 20 : trail[i - 1])) gaveGroundOn.push(i + 1);
+    });
+    return { verdict: last.report!.verdict, title: last.scenario.title[lang], gaveGroundOn };
+  }, [sessions, lang]);
+
   const hour = new Date().getHours();
   const greet = hour < 12 ? "home_greeting_morning" : hour < 18 ? "home_greeting_afternoon" : "home_greeting_evening";
 
@@ -108,8 +120,24 @@ export default function Home() {
             {/* Today card */}
             <section aria-live="polite" aria-busy={loading}>
               {loading && (
-                <div className="card p-6 lg:p-8 min-h-80 flex flex-col justify-center">
+                <div className="card p-6 lg:p-8 min-h-80 flex flex-col justify-center gap-7">
                   <Stages title={t(lang, "home_scheduling")} steps={tList(lang, "home_scheduling_steps")} slowAfterMs={25000} />
+                  {/* The first thing anyone sees on their first visit of the day used
+                      to be ten seconds of a four-step checklist. The wait is the
+                      right length; what was wrong is that it carried nothing. Last
+                      session's verdict is exactly what to have in mind before the
+                      next one, so it goes here instead of a spinner. */}
+                  {lastVerdict && (
+                    <div className="dotted pt-5 flex flex-col gap-1.5">
+                      <p className="eyebrow">{t(lang, "home_last_time")}</p>
+                      <p className="display text-[17px] leading-snug text-ink-2">{lastVerdict.verdict}</p>
+                      {lastVerdict.gaveGroundOn.length > 0 && (
+                        <p className="text-[12.5px] text-ink-3">
+                          {t(lang, "home_last_gave", { n: lastVerdict.gaveGroundOn.join("、"), title: lastVerdict.title })}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
               {error && !loading && (

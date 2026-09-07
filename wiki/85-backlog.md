@@ -11,6 +11,8 @@
 
 ## 技术债
 
+- [ ] **34 个场景里只有 17 个有 `hidden`（底牌）。** 没有底牌的场景会跳过揭示屏，直接进报告——机制只在一半场景里生效。补另外 17 个属于扩语料，按项目约束需要用户点头
+
 - [ ] 缺 `LICENSE` 文件。无许可证会直接挡住团队 / 公司采用，也让 README 无法按开源惯例加 License 一节。**需要用户选定许可证**
 - [ ] 8/8 页面路由 `use client`，零可索引性。→ [12-stage-c.md](./12-stage-c.md)
 - [ ] `docs/PRODUCT.md` 已被 [00-product-proposal.md](./00-product-proposal.md) 取代。保留作历史，但需在文件头加一行指向 wiki，避免 Agent 读到过时定位

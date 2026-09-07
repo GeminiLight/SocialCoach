@@ -11,7 +11,8 @@ import { runHint } from "./tasks/hint";
 import { runRoleplay } from "./tasks/roleplay";
 import { runReflect } from "./tasks/reflect";
 import { runAssess } from "./tasks/assess";
-import type { AssessInput, ReflectInput, ScheduleInput, TurnInput } from "./tasks/types";
+import { runPattern } from "./tasks/pattern";
+import type { AssessInput, PatternInput, PatternResult, ReflectInput, ScheduleInput, TurnInput } from "./tasks/types";
 
 /**
  * The one place that decides where a model call goes.
@@ -116,6 +117,13 @@ export function rehearse(body: { description: string; lang: Lang; profile?: Part
   const o = own();
   if (o) return runRehearse(body, o.llm, o.fast);
   return post<{ scenario: Scenario }>("/api/rehearse", body);
+}
+
+/** The habit across several sessions. Uses the smart model: it reads more and matters more. */
+export function pattern(body: PatternInput) {
+  const o = own();
+  if (o) return runPattern(body, o.llm, o.smart);
+  return post<PatternResult>("/api/pattern", body);
 }
 
 const ERR = "\n@@error\n";
