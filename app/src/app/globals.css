@@ -8,7 +8,7 @@
   --inset: oklch(0.95 0.012 78);
   --ink: oklch(0.24 0.02 60);
   --ink-2: oklch(0.4 0.02 60);
-  --ink-3: oklch(0.56 0.018 62);
+  --ink-3: oklch(0.52 0.018 62);
   --ink-4: oklch(0.7 0.014 65);
   --line: oklch(0.885 0.012 75);
   --line-strong: oklch(0.8 0.016 72);
@@ -16,6 +16,9 @@
   --accent-deep: oklch(0.52 0.15 38);
   --accent-soft: oklch(0.94 0.04 48);
   --accent-ink: oklch(0.985 0.01 70);
+  --action: var(--accent-deep);
+  --action-hover: oklch(0.46 0.14 38);
+  --overlay: oklch(0.17 0.016 60 / 0.45);
   --teal: oklch(0.46 0.08 200);
   --teal-soft: oklch(0.93 0.03 200);
   --moss: oklch(0.55 0.1 145);
@@ -23,6 +26,18 @@
   --danger: oklch(0.55 0.17 25);
   --danger-soft: oklch(0.94 0.04 25);
   --gold: oklch(0.78 0.14 85);
+
+  /* Scene pigments: colored stock and matching ink, never a full hue wheel. */
+  --scene-clay-color: light-dark(oklch(0.47 0.115 35), oklch(0.76 0.105 35));
+  --scene-clay-paper: light-dark(oklch(0.935 0.032 35), oklch(0.255 0.030 35));
+  --scene-ochre-color: light-dark(oklch(0.47 0.095 78), oklch(0.78 0.105 78));
+  --scene-ochre-paper: light-dark(oklch(0.945 0.042 78), oklch(0.265 0.030 78));
+  --scene-olive-color: light-dark(oklch(0.45 0.065 130), oklch(0.76 0.075 130));
+  --scene-olive-paper: light-dark(oklch(0.935 0.028 130), oklch(0.250 0.025 130));
+  --scene-teal-color: light-dark(oklch(0.44 0.065 190), oklch(0.75 0.075 190));
+  --scene-teal-paper: light-dark(oklch(0.935 0.025 190), oklch(0.250 0.025 190));
+  --scene-rose-color: light-dark(oklch(0.47 0.085 15), oklch(0.77 0.085 15));
+  --scene-rose-paper: light-dark(oklch(0.935 0.030 15), oklch(0.255 0.025 15));
 
   /* Large high-contrast surfaces — the rehearse banner, the next-step slab.
      Small controls invert happily in dark; a full-width near-white block does
@@ -58,6 +73,10 @@
   --content-max: 1600px; /* widest the content block gets; the paper itself fills */
   --margin-w: 232px;   /* marginalia column */
   --measure: 62ch;     /* comfortable line length for running text */
+  --form-max: 760px;
+  --focus-max: 1120px;
+  --dialog-max: 520px;
+  --tile-w: 256px;
 
   --font-sans: var(--font-hanken), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
   --font-display: var(--font-sans);
@@ -91,6 +110,7 @@
     --accent-deep: oklch(0.795 0.125 46);
     --accent-soft: oklch(0.315 0.055 44);
     --accent-ink: oklch(0.17 0.02 50);
+    --action-hover: oklch(0.84 0.10 46);
     --teal: oklch(0.715 0.085 200);
     --teal-soft: oklch(0.285 0.04 200);
     --moss: oklch(0.725 0.10 145);
@@ -124,6 +144,7 @@
   --accent-deep: oklch(0.795 0.125 46);
   --accent-soft: oklch(0.315 0.055 44);
   --accent-ink: oklch(0.17 0.02 50);
+  --action-hover: oklch(0.84 0.10 46);
   --teal: oklch(0.715 0.085 200);
   --teal-soft: oklch(0.285 0.04 200);
   --moss: oklch(0.725 0.10 145);
@@ -154,6 +175,8 @@
   --color-accent-deep: var(--accent-deep);
   --color-accent-soft: var(--accent-soft);
   --color-accent-ink: var(--accent-ink);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
   --color-teal: var(--teal);
   --color-teal-soft: var(--teal-soft);
   --color-moss: var(--moss);
@@ -198,6 +221,9 @@ body {
 button { font: inherit; color: inherit; }
 input, textarea { font: inherit; color: inherit; }
 textarea { resize: none; }
+button:not(:disabled), [role="button"], select { cursor: pointer; }
+input, textarea, select { min-width: 0; }
+h1, h2, h3 { text-wrap: balance; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 a { color: inherit; text-decoration: none; }
 
@@ -250,6 +276,27 @@ a { color: inherit; text-decoration: none; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
 .inset { background: var(--inset); border-radius: var(--radius-sm); }
 .hairline { height: 1px; background: var(--line); }
+
+[data-tone="clay"] { --scene-color: var(--scene-clay-color); --scene-paper: var(--scene-clay-paper); }
+[data-tone="ochre"] { --scene-color: var(--scene-ochre-color); --scene-paper: var(--scene-ochre-paper); }
+[data-tone="olive"] { --scene-color: var(--scene-olive-color); --scene-paper: var(--scene-olive-paper); }
+[data-tone="teal"] { --scene-color: var(--scene-teal-color); --scene-paper: var(--scene-teal-paper); }
+[data-tone="rose"] { --scene-color: var(--scene-rose-color); --scene-paper: var(--scene-rose-paper); }
+.scenario-cover, .scenario-tile { --scene-rule: color-mix(in oklch, var(--scene-color) 18%, var(--scene-paper)); }
+.scenario-cover { background: var(--scene-paper); }
+.scenario-tile { background: color-mix(in oklch, var(--scene-color) 8%, var(--scene-paper)); color: var(--scene-color); border-color: var(--scene-rule); }
+
+.skip-link { position: fixed; top: 12px; left: 12px; z-index: 70; padding: 12px 20px; background: var(--ink); color: var(--paper); border-radius: var(--radius-sm); transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
+.notebook-row { border-bottom: 1px solid var(--line); transition: background-color 160ms var(--ease-out); }
+.notebook-row:hover { background: var(--paper-deep); }
+.writing-field { border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--card); transition: border-color 160ms var(--ease-out); }
+.writing-field:focus-within { border-color: var(--accent-deep); outline: 2px solid var(--accent-soft); outline-offset: 3px; }
+.sheet-dialog { position: fixed; inset: auto 0 0; width: min(100%, var(--col)); max-width: none; max-height: 88dvh; padding: 0; margin: 0 auto; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg) var(--radius-lg) 0 0; overflow: hidden; }
+.sheet-dialog[open] { display: flex; flex-direction: column; animation: rise 220ms var(--ease-out); }
+.sheet-dialog::backdrop { background: var(--overlay); }
+@media (min-width: 48rem) { .sheet-dialog { width: 40rem; } }
+@media (min-width: 64rem) { .sheet-dialog { inset: 0; width: min(calc(100% - 48px), var(--dialog-max)); margin: auto; max-height: 80dvh; border-radius: var(--radius-lg); } }
 
 /* pointer devices get a hover affordance on tappable rows; the press
    transform below still wins while the pointer is down */
@@ -315,3 +362,23 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22p
 input[type="range"]::-moz-range-track { height: 4px; background: var(--line-strong); border-radius: 999px; }
 input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 999px; background: var(--card); border: 2px solid var(--ink); }
 }
+
+/* A tinted opening page in the growth journal. */
+.growth-invitation {
+  background: color-mix(in oklch, var(--scene-ochre-paper) 65%, var(--card));
+  border: 1px solid color-mix(in oklch, var(--scene-ochre-color) 18%, var(--card));
+}
+
+/* Related paper stocks distinguish personal notes from the reading library. */
+.profile-paper, .rehearsal-invitation, .rehearsal-guide {
+  background: color-mix(in oklch, var(--scene-ochre-paper) 50%, var(--paper));
+  border: 1px solid color-mix(in oklch, var(--scene-ochre-color) 18%, var(--paper));
+}
+@media (min-width: 1024px) {
+  .knowledge-selected {
+    background: color-mix(in oklch, var(--scene-teal-paper) 65%, var(--card));
+    border-color: color-mix(in oklch, var(--scene-teal-color) 30%, var(--line));
+  }
+}
+
+.knowledge-principle { background: var(--scene-teal-paper); }

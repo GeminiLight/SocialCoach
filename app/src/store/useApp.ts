@@ -13,6 +13,12 @@ export interface Settings {
   theme?: Theme;
   /** The learner has been told that voice input uploads audio to their browser's vendor. */
   voiceNoticeSeen?: boolean;
+  /**
+   * Which figure the learner's own avatar draws. Everyone plays a character
+   * called 「你」, so seeding from the name alone would hand every user the
+   * same one; this makes it theirs, and re-rollable.
+   */
+  avatarSeed?: number;
 }
 
 interface AppState {
@@ -136,7 +142,10 @@ export const useApp = create<AppState>()(
       toggleBookmark: (id) => set((s) => ({ bookmarks: s.bookmarks.includes(id) ? s.bookmarks.filter((b) => b !== id) : [...s.bookmarks, id] })),
       setToday: (todaySessionId) => set({ todaySessionId, todayDate: todayKey() }),
       setSettings: (p) => set((s) => ({ settings: { ...s.settings, ...p } })),
-      reset: () => set({ ...initial, hydrated: true }),
+      reset: () => {
+        try { sessionStorage.removeItem("socialcoach.rehearsal-draft"); } catch {}
+        set({ ...initial, hydrated: true });
+      },
     }),
     {
       name: "socialcoach.v1",

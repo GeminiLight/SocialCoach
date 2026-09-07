@@ -337,8 +337,10 @@ export function Chat({ session }: { session: Session }) {
               onChange={(e) => { setInput(e.target.value); grow(e.target); }}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void send(input); } }}
               rows={1}
+              aria-label={t(lang, "pr_input_ph")}
+              aria-describedby="composer-hint"
               placeholder={listening ? t(lang, "pr_listening") : t(lang, "pr_input_ph")}
-              className="flex-1 min-w-0 bg-transparent outline-none text-[15px] leading-[1.5] py-1.5 max-h-[132px] placeholder:text-ink-4"
+              className="flex-1 min-w-0 bg-transparent outline-none text-base leading-[1.5] py-1.5 max-h-[132px] placeholder:text-ink-4"
               disabled={busy}
               enterKeyHint="send"
             />
@@ -352,6 +354,7 @@ export function Chat({ session }: { session: Session }) {
             <ArrowUp size={20} />
           </button>
         </div>
+        <p id="composer-hint" className="hidden lg:block text-center text-[11px] text-ink-3 mt-2">{t(lang, "pr_keyboard_hint")}</p>
       </div>
 
       </div>
@@ -359,13 +362,13 @@ export function Chat({ session }: { session: Session }) {
       {/* the margin: what you are trying to do, and who you are up against */}
       <Marginalia lgOnly className="lg:min-h-0 lg:overflow-y-auto lg:py-6">
         <section className="flex flex-col gap-3">
-          <span className="eyebrow">{t(lang, "pr_objectives")}</span>
-          <Objectives items={objectives} done={session.objectiveDone} label={t(lang, "pr_objectives")} layout="stack" />
-        <section className="flex flex-col gap-3">
           <span className="eyebrow">{t(lang, "pr_stance_label")}</span>
           <Stance name={stanceName} value={stance} prev={prevStance} lang={lang} layout="block" />
         </section>
         <div className="dotted" />
+        <section className="flex flex-col gap-3">
+          <span className="eyebrow">{t(lang, "pr_objectives")}</span>
+          <Objectives items={objectives} done={session.objectiveDone} label={t(lang, "pr_objectives")} layout="stack" />
         </section>
         <div className="dotted" />
         <section className="flex flex-col gap-3">
@@ -394,9 +397,10 @@ export function Chat({ session }: { session: Session }) {
 
       <Sheet open={endOpen} onClose={() => setEndOpen(false)} title={t(lang, "pr_end_early")}>
         <div className="flex flex-col gap-3 pt-2">
-          <p className="text-[14px] text-ink-2">{t(lang, "pr_end_confirm")}</p>
-          <Button block variant="ink" onClick={() => { setEndOpen(false); endEarly(); }} disabled={learnerTurns === 0}><LogOut size={16} />{t(lang, "pr_end_early")}</Button>
-          <Button block variant="ghost" onClick={() => { setEndOpen(false); router.push("/"); }}>{t(lang, "back")}</Button>
+          <p className="text-[14px] text-ink-2 leading-relaxed">{t(lang, learnerTurns > 0 ? "pr_end_confirm" : "pr_no_evidence")}</p>
+          {learnerTurns > 0 && <Button block variant="ink" onClick={() => { setEndOpen(false); endEarly(); }}><LogOut size={16} />{t(lang, "pr_end_review")}</Button>}
+          <Button block variant={learnerTurns > 0 ? "secondary" : "ink"} onClick={() => setEndOpen(false)}>{t(lang, "pr_resume_dialogue")}</Button>
+          <Button block variant="ghost" onClick={() => { setEndOpen(false); router.push("/"); }}>{t(lang, learnerTurns > 0 ? "pr_pause" : "pr_leave_empty")}</Button>
         </div>
       </Sheet>
     </div>

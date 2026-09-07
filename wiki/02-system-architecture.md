@@ -12,7 +12,7 @@
 | 动效 | Framer Motion 13 |
 | 校验 | Zod 4 |
 | LLM | `@anthropic-ai/sdk` 0.123，双模型路由（fast / smart） |
-| 存储 | **无数据库、无账号**。全部状态在浏览器 localStorage |
+| 存储 | **无数据库、无账号**。练习档案在 localStorage；未提交的排练描述在当前标签页 sessionStorage |
 | 部署 | Vercel，Node runtime API routes，Root Directory = `app` |
 | 包管理 | pnpm 11.24 |
 
@@ -32,7 +32,7 @@ SocialCoach/
 │   ├── src/components/           Shell / Radar / Knowledge / practice/{Chat,Briefing,Debrief}
 │   ├── src/data/
 │   │   ├── taxonomy.ts           5 CASEL × 34 技能 × 7 情境（分类的唯一来源）
-│   │   └── corpus/               theories(34) · cases(24) · scenarios-a(16)+b(18)
+│   │   └── corpus/               theories(42) · cases(30) · scenarios-a(16)+b(18)+c(12)
 │   ├── src/lib/                  llm · prompts · retrieval · types · i18n · api-utils
 │   │                             partial-json · format · session-utils · client-api · use-media
 │   ├── src/store/useApp.ts       全部客户端状态
@@ -123,6 +123,10 @@ interface Session {                      // 一轮练习的完整快照，存在
 
 **`L` 类型是全局约定**：任何面向用户的静态文案都是 `{zh, en}`，用 `pick(v, lang)` 取值。新增语料字段若面向用户，必须是 `L`。
 
+### 排练描述草稿（2026-09-07）
+
+`/rehearse` 每次输入时把描述写入 `sessionStorage["socialcoach.rehearsal-draft"]`，回到页面或刷新时恢复。清空输入会删除该键；`useApp.reset()` 同时删除当前标签页的草稿。存储不可用时继续保留内存中的输入，并不显示保存成功提示。草稿最多 800 字符，不引入任何服务端持久化；点击生成时仍走原有 `/api/rehearse` 请求。成功生成的场景继续由 `customScenarios` 保存。
+
 ## API 路由概览
 
 > 完整契约见 [04-api-reference.md](./04-api-reference.md)。
@@ -156,3 +160,7 @@ pnpm dev            # 开发 → http://localhost:3000
 pnpm build && pnpm start   # 生产
 pnpm lint
 ```
+
+### 2026-09-07 语料扩充
+
+`corpus/index.ts` 聚合既有语料与 `scenarios-c` / `theories-c` / `cases-c`，因此目录、排程与复盘检索共用新增内容。`sources.ts` 集中维护本轮查证的 8 个来源；知识 source 新增可选 `url`，共享正文组件在知识页与复盘中呈现依据链接。旧数据无需迁移。新增案例的标题、情境和要点明确标注教学示例，避免被检索后误当作真实报告。完整清单见 [来源记录](./refs/corpus-sources-2026-09.md)。

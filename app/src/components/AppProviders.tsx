@@ -1,4 +1,5 @@
 "use client";
+import { MotionConfig } from "framer-motion";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useApp, useLang } from "@/store/useApp";
@@ -59,6 +60,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="sheet">
       {hydrated ? children : <div className="min-h-dvh" />}
       {/* One instance for the whole app. `forced` has nothing to fall back on,
@@ -66,5 +68,6 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
       <ModelSheet open={hydrated && (forced || byok.sheetOpen)} onClose={byok.closeSheet} forced={forced} />
       <Toaster />
     </div>
+    </MotionConfig>
   );
 }

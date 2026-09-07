@@ -18,10 +18,10 @@ SocialCoach gives you the other half: characters who won't hand you the win, and
 
 ## Key features
 
-- **Characters who push back.** 34 bilingual scenarios across the seven places these conversations actually happen — work, family, friendship, romance, school, strangers, social occasions. Every character has their own objective and something they aren't telling you, you get a fixed number of turns, and **you can lose.**
+- **Characters who push back.** 46 bilingual scenarios across the seven places these conversations actually happen — work, family, friendship, romance, school, strangers, social occasions. Every character has their own objective and something they aren't telling you, you get a fixed number of turns, and **you can lose.**
 - **A debrief that quotes you.** Every point in the report cites the line you actually said. Evidence before judgment — never a vibe score.
 - **Diagnosis, not a grade.** It separates *didn't know the move* from *knew it and folded under pressure*, because the fix for those two is completely different.
-- **Advice with sources.** Suggestions arrive attached to a strategy or case retrieved from a corpus of 34 strategies and 24 documented cases — not invented on the spot.
+- **Advice with sources.** Suggestions arrive attached to a strategy or case retrieved from a corpus of 42 strategies and 30 source-grounded cases and labelled teaching illustrations — not invented on the spot.
 - **A Socratic close.** Two reflection questions, and the coach responds to what you actually answered.
 - **Rehearse your real conversation.** Describe the one you actually have coming up and get a custom, fully tagged scenario in about 15 seconds — your manager, your sister, your landlord, with their real objections in their mouths.
 - **It picks tomorrow's practice for you.** A skill map of 5 CASEL competencies × 34 social skills × 7 context types drives what you're served next and the radar that tracks your growth.

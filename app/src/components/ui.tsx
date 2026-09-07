@@ -2,12 +2,11 @@
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { create } from "zustand";
-import { useEffect, useState, type ButtonHTMLAttributes, type ReactNode } from "react";
-import { hueColor } from "@/lib/format";
+import { useEffect, useRef, useState, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { AvatarFigure } from "@/data/avatars";
 import { isReady, openModelSheet, useByok } from "@/lib/byok";
 import { useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
-import { useIsDesktop } from "@/lib/use-media";
 import { X } from "lucide-react";
 
 /* ───────────── Button ───────────── */
@@ -19,25 +18,26 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   block?: boolean;
 }
 export function Button({ variant = "primary", size = "md", loading, block, className, children, disabled, ...rest }: ButtonProps) {
-  const base = "press inline-flex items-center justify-center gap-2 font-semibold rounded-full select-none whitespace-nowrap";
+  const base = "press min-w-0 [&>svg]:shrink-0 inline-flex items-center justify-center gap-2 font-semibold rounded-full select-none text-center leading-snug";
   const sizes = { sm: "h-9 px-4 text-[13px]", md: "h-12 px-5 text-[15px]", lg: "h-14 px-6 text-base" }[size];
   const variants: Record<Variant, string> = {
-    primary: "bg-accent text-accent-ink hover:bg-accent-deep",
+    primary: "bg-action text-accent-ink hover:bg-action-hover",
     ink: "bg-ink text-paper hover:opacity-90",
     secondary: "bg-card text-ink border border-line-strong hover:bg-inset",
     ghost: "bg-transparent text-ink-2 hover:bg-inset",
     danger: "bg-danger-soft text-danger hover:opacity-90",
   };
   return (
-    <button className={clsx(base, sizes, variants[variant], block && "w-full", className)} disabled={disabled || loading} {...rest}>
+    <button className={clsx(base, sizes, variants[variant], block && "w-full", className)} disabled={disabled || loading} aria-busy={loading || undefined} {...rest}>
       {loading ? <Spinner /> : children}
     </button>
   );
 }
 
 export function Spinner({ className }: { className?: string }) {
+  const lang = useLang();
   return (
-    <span className={clsx("inline-flex items-center gap-1", className)} aria-label="loading">
+    <span className={clsx("inline-flex items-center gap-1", className)} aria-label={t(lang, "loading")}>
       <span className="dot" /><span className="dot" /><span className="dot" />
     </span>
   );
@@ -45,7 +45,7 @@ export function Spinner({ className }: { className?: string }) {
 
 export function IconButton({ className, children, label, ...rest }: ButtonHTMLAttributes<HTMLButtonElement> & { label: string }) {
   return (
-    <button aria-label={label} title={label} className={clsx("press h-10 w-10 inline-flex items-center justify-center rounded-full text-ink-2 hover:bg-inset", className)} {...rest}>
+    <button aria-label={label} title={label} className={clsx("press h-11 w-11 shrink-0 inline-flex items-center justify-center rounded-full text-ink-2 hover:bg-inset", className)} {...rest}>
       {children}
     </button>
   );
@@ -57,10 +57,11 @@ export function Chip({ active, children, onClick, className, style, small }: { a
   return (
     <Comp
       onClick={onClick}
+      aria-pressed={onClick ? !!active : undefined}
       style={style}
       className={clsx(
         "press inline-flex items-center gap-1.5 rounded-full border whitespace-nowrap",
-        small ? "h-7 px-2.5 text-[12px]" : "h-9 px-3.5 text-[13px] font-medium",
+        small ? "min-h-9 px-2.5 text-[12px]" : "min-h-11 px-3.5 text-[13px] font-medium",
         active ? "bg-ink text-paper border-ink" : "bg-card border-line text-ink-2 hover:border-line-strong",
         className,
       )}
@@ -109,17 +110,26 @@ export function Switch({ checked, onChange, label, className }: { checked: boole
 }
 
 /* ───────────── Avatar ───────────── */
-export function Avatar({ name, hue, size = 40, className }: { name: string; hue: number; size?: number; className?: string }) {
-  const initial = Array.from(name.trim())[0] ?? "?";
-  return (
-    <span
-      className={clsx("inline-flex items-center justify-center rounded-full shrink-0 font-semibold display", className)}
-      style={{ width: size, height: size, background: hueColor(hue), color: hueColor(hue, 0.32, 0.08), fontSize: size * 0.42, border: `1px solid ${hueColor(hue, 0.78, 0.08)}` }}
-      aria-hidden
-    >
-      {initial}
-    </span>
-  );
+/**
+ * A character's presence. `seed` decides the figure and defaults to the name,
+ * which is stable for corpus characters; the learner passes their own so a
+ * reroll can change it. `hue` stays the corpus author's choice — see
+ * `data/avatars` for why only the form is procedural.
+ */
+export function Avatar({
+  name,
+  hue,
+  size = 40,
+  seed,
+  className,
+}: {
+  name: string;
+  hue: number;
+  size?: number;
+  seed?: string;
+  className?: string;
+}) {
+  return <AvatarFigure seed={seed ?? name} hue={hue} size={size} className={className} />;
 }
 
 /* ───────────── Stars (objectives) ───────────── */
@@ -187,41 +197,51 @@ export function Stages({ steps, title, intervalMs = 2600, slowAfterMs = 25000 }:
 
 /* ───────────── Bottom sheet ───────────── */
 export function Sheet({ open, onClose, title, children }: { open: boolean; onClose: () => void; title?: string; children: ReactNode }) {
-  const desktop = useIsDesktop();
+  const lang = useLang();
+  const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
+    const element = dialog.current;
+    if (!element) return;
+    if (!open) { element.close(); return; }
+    const previousFocus = document.activeElement;
+    element.showModal();
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      element.close();
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus({ preventScroll: true });
     };
-  }, [open, onClose]);
+  }, [open]);
+  if (!open) return null;
   return (
-    <AnimatePresence>
-      {open && (
-        <>
-          <motion.div className="fixed inset-0 z-40 bg-ink/30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} onClick={onClose} />
-          <motion.div
-            role="dialog"
-            aria-modal
-            className="fixed z-50 left-1/2 bottom-0 w-full max-w-[480px] md:max-w-[40rem] -translate-x-1/2 bg-paper rounded-t-[24px] border-t border-line max-h-[88dvh] flex flex-col lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:max-w-[520px] lg:rounded-[24px] lg:border lg:max-h-[80dvh]"
-            initial={desktop ? { opacity: 0, scale: 0.97 } : { y: "100%" }}
-            animate={desktop ? { opacity: 1, scale: 1 } : { y: 0 }}
-            exit={desktop ? { opacity: 0, scale: 0.98 } : { y: "100%" }}
-            transition={{ duration: desktop ? 0.22 : 0.36, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="flex items-center justify-between px-5 pt-3 pb-2">
-              <span className="h-1 w-10 rounded-full bg-line-strong absolute left-1/2 -translate-x-1/2 top-2 lg:hidden" />
-              <h3 className="display text-[18px] mt-3">{title}</h3>
-              <IconButton label="close" onClick={onClose} className="mt-2 -mr-2"><X size={18} /></IconButton>
-            </div>
-            <div className="overflow-y-auto px-5 pb-safe pb-6">{children}</div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+    <dialog
+      ref={dialog}
+      aria-label={title || t(lang, "dialog_label")}
+      className="sheet-dialog"
+      onKeyDown={(event) => {
+        if (event.key !== "Tab") return;
+        const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(
+          'button:not(:disabled), a[href], input:not(:disabled), textarea:not(:disabled), select:not(:disabled), [tabindex]:not([tabindex="-1"])',
+        )).filter((element) => element.getClientRects().length > 0);
+        const first = controls[0];
+        const last = controls.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }}
+      onCancel={(event) => { event.preventDefault(); onClose(); }}
+      onClick={(event) => {
+        if (event.target !== event.currentTarget) return;
+        const box = event.currentTarget.getBoundingClientRect();
+        if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) onClose();
+      }}
+    >
+      <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-line shrink-0">
+        <h2 className="display text-[20px]">{title}</h2>
+        <IconButton label={t(lang, "close")} onClick={onClose}><X size={18} /></IconButton>
+      </div>
+      <div className="overflow-y-auto px-5 pt-4 pb-safe pb-6">{children}</div>
+    </dialog>
   );
 }
 

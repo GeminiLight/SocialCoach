@@ -1,12 +1,27 @@
 import { SCENARIOS_A } from "./scenarios-a";
 import { SCENARIOS_B } from "./scenarios-b";
-import { THEORIES } from "./theories";
-import { CASES } from "./cases";
+import { THEORIES as THEORIES_BASE } from "./theories";
+import { THEORIES_C } from "./theories-c";
+import { SCENARIOS_C } from "./scenarios-c";
+import { CASES_C } from "./cases-c";
+import { CASES as CASES_BASE } from "./cases";
 import type { Case, Character, Scenario, Theory } from "./types";
 import { L } from "../taxonomy";
 
 /** Role the learner plays in each corpus scenario (they are always "you"). */
 const LEARNER_ROLE: Record<string, { zh: string; en: string }> = {
+  "friend-good-news": L("也申请过驻留的朋友", "Friend who also applied for the residency"),
+  "trip-budget-boundary": L("有旅行预算上限的朋友", "Friend with a travel budget ceiling"),
+  "family-photo-permission": L("照片被公开的成年子女", "Adult child whose photo was posted"),
+  "holiday-two-families": L("协调假期安排的成年子女", "Adult child coordinating holiday visits"),
+  "class-name-correction": L("夜校新学员", "New evening-class student"),
+  "language-club-space": L("第二语言练习者", "Second-language learner"),
+  "event-access-request": L("使用轮椅的报名者", "Prospective participant who uses a wheelchair"),
+  "party-alcohol-pressure": L("决定不喝酒的新邻居", "New neighbor choosing not to drink"),
+  "community-room-sharing": L("社区读书会组织者", "Community reading-group organizer"),
+  "friend-secret-apology": L("泄露秘密的朋友", "Friend who shared a confidence"),
+  "partner-alone-evening": L("需要独处的伴侣", "Partner who needs solitude"),
+  "async-message-misread": L("负责选择周报格式的同事", "Colleague choosing a report format"),
   "meeting-tension": L("产品团队成员", "Product team member"),
   "salary-raise": L("两年资历的员工", "Two-year employee"),
   "research-debate": L("研究者 Alex", "Researcher Alex"),
@@ -40,7 +55,7 @@ const LEARNER_ROLE: Record<string, { zh: string; en: string }> = {
   "wine-party-disagreement": L("晚宴客人", "Dinner guest"),
   "public-transport-seat": L("乘客", "Passenger"),
   "gratitude-to-mentor": L("学员", "Mentee"),
-  "roommate-guest-boundary": L("室友", "Roommate")
+  "roommate-guest-boundary": L("室友", "Roommate"),
 };
 
 /** Every corpus scenario gets an explicit, playable "you" character so scheduling, role-play and reports share one id. */
@@ -59,8 +74,9 @@ export function withLearner(s: Scenario): Scenario {
   return { ...s, characters: [you, ...s.characters] };
 }
 
-export const SCENARIOS: Scenario[] = [...SCENARIOS_A, ...SCENARIOS_B].map(withLearner);
-export { THEORIES, CASES };
+export const SCENARIOS: Scenario[] = [...SCENARIOS_A, ...SCENARIOS_B, ...SCENARIOS_C].map(withLearner);
+export const THEORIES: Theory[] = [...THEORIES_BASE, ...THEORIES_C];
+export const CASES: Case[] = [...CASES_BASE, ...CASES_C];
 export type { Case, Scenario, Theory };
 
 export const scenarioById = (id: string) => SCENARIOS.find((s) => s.id === id);

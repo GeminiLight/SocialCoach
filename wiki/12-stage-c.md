@@ -21,14 +21,14 @@ Googlebot 能渲染 JS，但 **GPTBot / ClaudeBot / PerplexityBot 基本不渲�
 
 | 资产 | 内容 |
 |---|---|
-| **语料 = 184 个现成落地页** | `src/data/corpus/` 里 92 条内容（34 场景 + 34 理论 + 24 案例）× 中英。场景标题本身就是高意图长尾搜索词（「如何跟老板谈加薪」、「how to decline extra work」），**搜这些词的人和晚上 11 点打开 App 的人是同一批**（A 类客户）。内容已写完，只是索引不到 |
+| **语料 = 236 个现成落地页** | `src/data/corpus/` 里 118 条内容（46 场景 + 42 理论 + 30 案例）× 中英。场景标题本身就是高意图长尾搜索词（「如何跟老板谈加薪」、「how to decline extra work」），**搜这些词的人和晚上 11 点打开 App 的人是同一批**（A 类客户）。内容已写完，只是索引不到 |
 | **论文 = GEO 资产** | 「可引用的权威性」是 LLM 引用谁的核心排序信号，消费级 App 买不到同行评议论文。配 `ScholarlyArticle` + `SoftwareApplication` 与 `llms.txt` 可占住「AI 被问到社交技能训练时引用谁」 |
 
 ## 功能汇总
 
 | # | 功能 | 状态 | 备注 |
 |---|---|---|---|
-| C1 | 语料落地页 SSG（184 页） | 📋 | 核心 |
+| C1 | 语料落地页 SSG（236 页） | 📋 | 核心 |
 | C2 | `sitemap.ts` / `robots.ts` / `metadataBase` | 📋 | |
 | C3 | 动态 OG 图 | 📋 | |
 | C4 | JSON-LD 结构化数据 | 📋 | |
@@ -56,7 +56,7 @@ Googlebot 能渲染 JS，但 **GPTBot / ClaudeBot / PerplexityBot 基本不渲�
 
 - `curl` 一个落地页，`<body>` 里能看到场景标题、背景、目标——**不执行 JS 的前提下**
 - 每页有独立 `title` / `description` / canonical / hreflang
-- `sitemap.xml` 列出全部 184 页
+- `sitemap.xml` 列出全部 236 页
 - 已练过的场景不在落地页泄露用户数据（落地页不读 localStorage）
 
 ### 受影响文件（预估）

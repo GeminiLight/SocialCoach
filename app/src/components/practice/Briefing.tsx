@@ -12,12 +12,13 @@ import { schedule } from "@/lib/client-api";
 import { historyFor, npcsOf } from "@/lib/session-utils";
 import type { Session } from "@/lib/types";
 import { contextById } from "@/data/taxonomy";
+import { learnerSeed } from "@/data/avatars";
 
 
 export function Briefing({ session }: { session: Session }) {
   const lang = useLang();
   const router = useRouter();
-  const { profile, proficiency, sessions, updateSession } = useApp();
+  const { profile, proficiency, sessions, updateSession, settings } = useApp();
   const [err, setErr] = useState<string | null>(null);
   const inflight = useRef(false);
   const sc = session.scenario;
@@ -80,7 +81,7 @@ export function Briefing({ session }: { session: Session }) {
           <div className="flex flex-col gap-3">
             {learner && (
               <div className="flex items-center gap-3 inset px-3 py-2.5">
-                <Avatar name={learner.name[lang]} hue={learner.hue} size={40} />
+                <Avatar name={learner.name[lang]} hue={learner.hue} size={40} seed={learnerSeed(profile?.name ?? "", settings.avatarSeed)} />
                 <div className="flex-1 min-w-0">
                   <p className="text-[14px] font-semibold">{t(lang, "pr_you_play")} · {learner.role[lang]}</p>
                   {learner.id !== "you" && <p className="text-[12px] text-ink-3 truncate">{learner.name[lang]}</p>}

@@ -22,12 +22,11 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  maximumScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="zh-CN" className={`${hanken.variable}`}>
+    <html lang="zh-CN" className={`${hanken.variable}`} suppressHydrationWarning>
       <head>
         {/* Before first paint, so a pinned light theme does not flash dark (or
             the reverse). Reads the persisted store directly; failures are
