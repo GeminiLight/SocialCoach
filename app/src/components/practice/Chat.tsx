@@ -109,6 +109,21 @@ export function Chat({ session }: { session: Session }) {
     };
   }, [settings.tts]);
 
+  /**
+   * On a desktop the cursor starts in the composer, and returns there after each
+   * reply. Sending with the button moves focus to the button, and the next thing
+   * anyone does is type again, so every turn otherwise costs a click.
+   *
+   * Deliberately not on phones or tablets: raising the keyboard on arrival would
+   * cover the transcript the scene just opened with. `pointer: fine` is what
+   * separates a laptop from an iPad in landscape, which `min-width` alone does not.
+   */
+  useEffect(() => {
+    if (busy || endOpen || voiceNotice) return;
+    if (typeof window === "undefined" || !window.matchMedia("(min-width: 1024px) and (pointer: fine)").matches) return;
+    taRef.current?.focus();
+  }, [busy, endOpen, voiceNotice]);
+
   const finish = useCallback(
     (objectiveDone: boolean[], outcome: "success" | "partial" | "failure", noteText?: string) => {
       updateSession(session.id, { objectiveDone, outcome, outcomeNote: noteText, status: "ended", endedAt: Date.now() });

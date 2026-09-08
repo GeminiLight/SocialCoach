@@ -1,6 +1,6 @@
 # AGENTS.md
 
-SocialCoach · 社交教练 —— LLM 社交技能教练。应用在 `app/`（Next.js），仓库根只有文档。
+SocialCoach —— LLM 社交技能教练。应用在 `app/`（Next.js），仓库根只有文档。
 
 ## 入口
 
@@ -47,6 +47,7 @@ python3 ~/.claude/skills/project-wiki/scripts/wiki_audit.py wiki/
 - **语料必须有 `source`。** 不生成无出处的「策略」或「案例」。
 - **不引入账号体系或服务端存储。** 状态留在设备上、可导出。
 - **面向用户的静态文案是 `L = {zh, en}` 双语对象**，用 `pick(v, lang)` 取值。
-- **对外文案三处同源**：`README.md`、`app/src/app/layout.tsx` 的 `metadata.description`、`app/public/manifest.webmanifest` 的 `description`。改一处必须改三处。
+- **产品名对外一律是 `SocialCoach`**，中文语境也不例外。中文说明放在名字下面的副行（`nav_workspace`：你的情商练习场），不做第二个名字。
+- **主句四处同源**：`README.md`、`app/src/app/layout.tsx` 的 `metadata.description`、`app/public/manifest.webmanifest` 的 `description`、`site/content.mjs` 的 `hero.h1` 与 `footer.tagline`。同源指的是**主句本身逐字一致**，不是整个字符串相等——manifest 只放主句，layout 是主句加一段展开，README 是行文。改主句必须四处一起改。
 - **色值只在 `app/src/app/globals.css` 定义**（OKLCH）。组件里不写死颜色；对外 SVG 用脚本换算的 hex。
 - **结构化输出走 `jsonCall()` / `extractJSON()`**，不要用 SDK 的 `output_config.format`（当前网关不支持）。

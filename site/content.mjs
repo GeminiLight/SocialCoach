@@ -27,7 +27,7 @@ export const site = {
 export const meta = {
   title: L(
     "SocialCoach — 想说的话，说出来。",
-    "SocialCoach — Say the thing you've been not saying.",
+    "SocialCoach — Say the thing you’ve been not saying.",
   ),
   description: L(
     "面向真实困难对话的 AI 社交技能陪练。和有自己目标、不会轻易让步的角色练几轮；复盘引用你刚才说过的话，判断你是还不会，还是会但在压力下没做到。无需注册。来自同名研究 arXiv:2606.04155。",
@@ -52,8 +52,8 @@ export const hero = {
   pill: L("来自同名研究论文", "From the research paper"),
   pillTag: "arXiv:2606.04155",
   eyebrow: L("SocialCoach", "SocialCoach"),
-  h1: L("想说的话，说出来。", "Say the thing you've been not saying."),
-  h1Alt: L("Say the thing you've been not saying.", "想说的话，说出来。"),
+  h1: L("想说的话，说出来。", "Say the thing you’ve been not saying."),
+  h1Alt: L("Say the thing you’ve been not saying.", "想说的话，说出来。"),
   sub: L(
     "和不会轻易让步的 AI 角色先练一次困难对话。结束后，教练引用你的原话，告诉你是还不会，还是会但在压力下没做到。无需注册。",
     "Rehearse a difficult conversation against an AI character who pushes back. The debrief quotes what you actually said and shows whether you did not know the move or could not execute it under pressure. No account required.",
@@ -346,7 +346,7 @@ export const research = {
 };
 
 export const footer = {
-  tagline: L("想说的话，说出来。", "Say the thing you've been not saying."),
+  tagline: L("想说的话，说出来。", "Say the thing you’ve been not saying."),
   links: {
     app: L("开始练习", "Start practising"),
     repo: L("GitHub", "GitHub"),

@@ -1,4 +1,4 @@
-# SocialCoach · 社交教练 — 产品定义
+# SocialCoach — 产品定义
 
 > 参考论文：Wang et al., *SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice* (arXiv 2606.04155v2)。
 
