@@ -37,14 +37,15 @@ export const meta = {
 };
 
 export const nav = {
-  how: L("怎么练", "How it works"),
-  trust: L("为什么可信", "Why trust it"),
+  how: L("训练流程", "How it works"),
+  trust: L("方法与证据", "Evidence"),
+  privacy: L("隐私与边界", "Privacy"),
   faq: L("常见问题", "FAQ"),
-  research: L("研究", "Research"),
+  research: L("论文", "Paper"),
   cta: L("练明天那场对话", "Rehearse your conversation"),
-  switchLabel: L("English", "中文"),
-  switchShort: L("EN", "中"),
-  switchAria: L("Switch to English", "切换到中文"),
+  langAria: L("语言", "Language"),
+  themeAria: L("切换外观", "Toggle appearance"),
+  themeNames: L(["跟随系统", "浅色", "深色"], ["System", "Light", "Dark"]),
   skip: L("跳到正文", "Skip to content"),
 };
 
@@ -62,17 +63,18 @@ export const hero = {
   ctaDebrief: L("先看一次真实复盘", "See a real debrief"),
   ctaHow: L("看看它怎么练", "See how it works"),
   micro: [
-    L("无需注册", "No account"),
-    L("记录留在设备上", "History stays on your device"),
-    L("每轮约三分钟", "About three minutes a round"),
+    { icon: "enter", text: L("无需注册", "No account") },
+    { icon: "device", text: L("记录留在设备上", "History stays on your device") },
+    { icon: "clock", text: L("每轮约三分钟", "About three minutes a round") },
   ],
   radarAria: L("五项 CASEL 能力的雷达图装饰", "Decorative radar of the five CASEL competencies"),
   screenshotAlt: L("SocialCoach 首页：今日训练与选择理由", "SocialCoach home: today's practice and why it was picked"),
 };
 
 export const gap = {
-  eyebrow: L("知道 ≠ 做到", "Knowing is not doing"),
-  title: L("你不是不知道怎么说", "You already know what to say"),
+  no: "01",
+  eyebrow: L("问题所在", "The problem"),
+  title: L("知道该怎么说，不等于说得出来", "Knowing what to say is not the same as saying it"),
   lead: L(
     "你大概知道应该先问、不要指责。问题出在*对方叹气、反驳或沉默之后*：脑内预演和收藏的建议，都没有这个压力。",
     "You know to open with a question instead of an accusation. The trouble starts *after the sigh, the pushback, or the silence*. Rehearsing in your head, and every article you saved, never had that pressure.",
@@ -118,8 +120,9 @@ export const gap = {
 };
 
 export const how = {
-  eyebrow: L("一轮约三分钟", "One round, about three minutes"),
-  title: L("怎么练", "How it works"),
+  no: "02",
+  eyebrow: L("训练流程", "How it works"),
+  title: L("一次训练，四步", "One round, four steps"),
   steps: [
     {
       icon: "scene",
@@ -161,14 +164,15 @@ export const how = {
 };
 
 export const trust = {
-  eyebrow: L("为什么可信", "Why trust it"),
+  no: "03",
+  eyebrow: L("方法与证据", "Method and evidence"),
   title: L("判断有证据，建议有出处", "Evidence before judgment, sources before advice"),
   stats: [
-    { n: "46", label: L("双语场景", "bilingual scenarios") },
-    { n: "42", label: L("策略", "strategies") },
-    { n: "30", label: L("案例", "cases") },
-    { n: "7", label: L("类生活情境", "context types") },
-    { n: "34", label: L("项社交技能", "social skills") },
+    { n: "46", icon: "scene", label: L("双语场景", "bilingual scenarios") },
+    { n: "42", icon: "book", label: L("策略", "strategies") },
+    { n: "30", icon: "quote", label: L("案例", "cases") },
+    { n: "7", icon: "pin", label: L("类生活情境", "context types") },
+    { n: "34", icon: "sparkle", label: L("项社交技能", "social skills") },
   ],
   statsNote: L(
     "每条策略和案例都带来源；用于教学的构造案例会明确标注。",
@@ -185,6 +189,12 @@ export const trust = {
     "The Seven Principles for Making Marriage Work",
     "Thanks for the Feedback",
   ],
+};
+
+export const privacy = {
+  no: "04",
+  eyebrow: L("隐私与边界", "Privacy and limits"),
+  title: L("数据留在你手里，边界写在明处", "Your data stays yours, and the limits are written down"),
   cards: [
     {
       icon: "gauge",
@@ -210,12 +220,21 @@ export const trust = {
         "One small box and Docker Compose. Works with Anthropic, OpenAI, and any OpenAI-compatible endpoint.",
       ),
     },
+    {
+      icon: "ban",
+      title: L("不做的事", "What it is not for"),
+      body: L(
+        "不做心理诊断、危机干预、医疗或法律建议。熟练度分数不能用于招聘、绩效或录用决策。",
+        "No diagnosis, crisis intervention, medical or legal advice. Proficiency scores are never for hiring, reviews or admissions.",
+      ),
+    },
   ],
 };
 
 export const faq = {
-  eyebrow: L("常见问题", "FAQ"),
-  title: L("你可能想问", "Questions people ask"),
+  no: "05",
+  eyebrow: L("问答", "Questions"),
+  title: L("常见问题", "Frequently asked questions"),
   items: [
     {
       q: L("这和直接让 ChatGPT 扮演老板有什么不同？", "How is this different from asking ChatGPT to play my manager?"),
@@ -263,6 +282,7 @@ export const faq = {
 };
 
 export const research = {
+  no: "06",
   eyebrow: L("研究", "Research"),
   title: L("这个产品来自一篇论文", "The paper behind the product"),
   paperTitle: "SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice",

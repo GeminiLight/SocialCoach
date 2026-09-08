@@ -8,7 +8,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync, rmSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { pick, site, meta, nav, hero, gap, how, trust, faq, research, footer } from "./content.mjs";
+import { pick, site, meta, nav, hero, gap, how, trust, privacy, faq, research, footer } from "./content.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
@@ -74,7 +74,7 @@ ${dots}</svg>`;
 const squiggle = `<svg class="squiggle" viewBox="0 0 540 12" aria-hidden="true" preserveAspectRatio="none">
 <path d="M4 8.5 C 70 5, 150 11, 220 6.5 S 380 11.5, 460 6.5 S 510 10, 536 7" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" opacity="0.85"/></svg>`;
 
-const arrow = `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l3.5 4-3.5 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const arrow = `<svg class="arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l3.5 4-3.5 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 // Monoline glyphs, 1.6px stroke, currentColor. Restraint on purpose: they mark, they do not decorate.
 const ICON = {
@@ -85,6 +85,21 @@ const ICON = {
   gauge: `<path d="M8 32a16 16 0 0 1 32 0"/><path d="M24 32l7-11"/><circle cx="24" cy="32" r="2" fill="currentColor" stroke="none"/><path d="M14 40h20" stroke-dasharray="2 3"/>`,
   device: `<rect x="13" y="4" width="22" height="40" rx="5"/><path d="M21 8h6"/><rect x="18" y="22" width="12" height="10" rx="2"/><path d="M21 22v-3a3 3 0 0 1 6 0v3"/>`,
   box: `<path d="M24 6l16 8v18l-16 8-16-8V14z"/><path d="M8 14l16 8 16-8M24 22v18"/>`,
+  clock: `<circle cx="24" cy="24" r="16"/><path d="M24 14v10l7 4"/>`,
+  enter: `<path d="M20 8h-9a3 3 0 0 0-3 3v26a3 3 0 0 0 3 3h9"/><path d="M18 24h22M33 17l7 7-7 7"/>`,
+  book: `<path d="M8 10a4 4 0 0 1 4-4h26v32H12a4 4 0 0 0-4 4z"/><path d="M8 42a4 4 0 0 1 4-4h26"/><path d="M17 14h13M17 21h9"/>`,
+  pin: `<path d="M24 42S11 31 11 21a13 13 0 0 1 26 0c0 10-13 21-13 21z"/><circle cx="24" cy="21" r="4"/>`,
+  sparkle: `<path d="M22 6c1.4 8.5 4.8 11.9 13.3 13.3C26.8 20.7 23.4 24.1 22 32.6 20.6 24.1 17.2 20.7 8.7 19.3 17.2 17.9 20.6 14.5 22 6z"/><path d="M36 30l1 3.5 3.5 1-3.5 1L36 39l-1-3.5-3.5-1 3.5-1z" stroke-width="1.3"/>`,
+  ban: `<circle cx="24" cy="24" r="16"/><path d="M13 13l22 22"/>`,
+  help: `<circle cx="24" cy="24" r="16"/><path d="M18.5 19a5.5 5.5 0 1 1 8 4.9c-1.7.9-2.5 2-2.5 3.6"/><circle cx="24" cy="33" r="1.3" fill="currentColor" stroke="none"/>`,
+  file: `<path d="M12 6h16l10 10v26H12z"/><path d="M28 6v10h10"/><path d="M18 27h12M18 33h12"/>`,
+  external: `<path d="M20 10H10v28h28V28"/><path d="M27 8h13v13M40 8L23 25"/>`,
+  code: `<path d="M16 15L7 24l9 9M32 15l9 9-9 9M28 9l-8 30"/>`,
+  globe: `<circle cx="24" cy="24" r="16"/><path d="M8 24h32M24 8c5 5 7.5 10.3 7.5 16S29 35 24 40c-5-5-7.5-10.3-7.5-16S19 13 24 8z"/>`,
+  sun: `<circle cx="24" cy="24" r="7"/><path d="M24 5v5M24 38v5M5 24h5M38 24h5M10.6 10.6l3.5 3.5M33.9 33.9l3.5 3.5M10.6 37.4l3.5-3.5M33.9 14.1l3.5-3.5"/>`,
+  moon: `<path d="M29 7a16 16 0 1 0 12 27A17.5 17.5 0 0 1 29 7z"/>`,
+  auto: `<rect x="6" y="9" width="36" height="24" rx="3"/><path d="M17 41h14M24 33v8"/><path d="M14 21a10 10 0 0 1 10-8v16a10 10 0 0 1-10-8z" fill="currentColor" stroke="none" opacity=".35"/>`,
+  shield: `<path d="M24 6l14 5v12c0 9-6 15-14 19-8-4-14-10-14-19V11z"/><path d="M17 24l5 5 9-10"/>`,
 };
 const icon = (name, size = 28) => `<svg class="icon" width="${size}" height="${size}" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICON[name] || ""}</svg>`;
 
@@ -141,22 +156,33 @@ const css = `
   --ease-out:cubic-bezier(0.22,1,0.36,1);--ease-expo:cubic-bezier(0.16,1,0.3,1);
   color-scheme:light dark;
 }
-@media (prefers-color-scheme:dark){:root{
-  --paper:oklch(0.205 0.012 62);--paper-deep:oklch(0.165 0.011 60);--card:oklch(0.238 0.013 63);--inset:oklch(0.272 0.014 63);
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:oklch(0.205 0.012 62);--paper-deep:oklch(0.165 0.011 60);--card:oklch(0.238 0.013 63);--inset:oklch(0.272 0.014 63);
   --ink:oklch(0.935 0.012 78);--ink-2:oklch(0.80 0.013 75);--ink-3:oklch(0.655 0.013 70);--ink-4:oklch(0.515 0.012 68);
   --line:oklch(0.315 0.014 65);--line-strong:oklch(0.425 0.016 65);
   --accent:oklch(0.70 0.145 42);--accent-deep:oklch(0.795 0.125 46);--accent-soft:oklch(0.315 0.055 44);--accent-ink:oklch(0.17 0.02 50);
   --action-hover:oklch(0.84 0.10 46);
   --c-amber:oklch(0.78 0.10 75);--c-moss:oklch(0.74 0.09 140);--c-teal:oklch(0.72 0.08 200);--c-clay:oklch(0.76 0.10 30);--c-indigo:oklch(0.72 0.09 270);
   --grain-opacity:.09;
-  --shadow:0 30px 60px -30px oklch(0 0 0 / .7), 0 2px 6px -2px oklch(0 0 0 / .4);
-}}
+  --shadow:0 30px 60px -30px oklch(0 0 0 / .7), 0 2px 6px -2px oklch(0 0 0 / .4);}
+:root:not([data-theme="light"]) body::before{mix-blend-mode:screen}
+:root:not([data-theme="light"]) mark.ul{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.5C20 3 40 7 60 4.5S100 6.5 118 4' fill='none' stroke='%23e08a5c' stroke-width='2' stroke-linecap='round' opacity='.9'/%3E%3C/svg%3E")}}
+:root[data-theme="dark"]{--paper:oklch(0.205 0.012 62);--paper-deep:oklch(0.165 0.011 60);--card:oklch(0.238 0.013 63);--inset:oklch(0.272 0.014 63);
+  --ink:oklch(0.935 0.012 78);--ink-2:oklch(0.80 0.013 75);--ink-3:oklch(0.655 0.013 70);--ink-4:oklch(0.515 0.012 68);
+  --line:oklch(0.315 0.014 65);--line-strong:oklch(0.425 0.016 65);
+  --accent:oklch(0.70 0.145 42);--accent-deep:oklch(0.795 0.125 46);--accent-soft:oklch(0.315 0.055 44);--accent-ink:oklch(0.17 0.02 50);
+  --action-hover:oklch(0.84 0.10 46);
+  --c-amber:oklch(0.78 0.10 75);--c-moss:oklch(0.74 0.09 140);--c-teal:oklch(0.72 0.08 200);--c-clay:oklch(0.76 0.10 30);--c-indigo:oklch(0.72 0.09 270);
+  --grain-opacity:.09;
+  --shadow:0 30px 60px -30px oklch(0 0 0 / .7), 0 2px 6px -2px oklch(0 0 0 / .4);}
+:root[data-theme="dark"] body::before{mix-blend-mode:screen}
+:root[data-theme="dark"] mark.ul{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.5C20 3 40 7 60 4.5S100 6.5 118 4' fill='none' stroke='%23e08a5c' stroke-width='2' stroke-linecap='round' opacity='.9'/%3E%3C/svg%3E")}
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:5rem}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-size:1.0625rem;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;position:relative}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background-image:GRAIN;opacity:var(--grain-opacity);mix-blend-mode:multiply}
-@media (prefers-color-scheme:dark){body::before{mix-blend-mode:screen}}
 body>*{position:relative;z-index:1}
 a{color:inherit}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
@@ -169,10 +195,13 @@ h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.01em;line-height:1.15;text-w
 .skip:focus{left:8px;z-index:50}
 .eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600;display:flex;align-items:center;gap:.6rem}
 .eyebrow::before{content:"";width:1.25rem;height:2px;background:var(--accent);border-radius:2px;flex:0 0 auto}
+.eyebrow.num::before{display:none}
+.eyebrow .no{font-family:var(--font-serif);font-size:1.05rem;letter-spacing:0;color:var(--accent);line-height:1}
+.eyebrow .no::after{content:"";display:inline-block;width:1rem;height:1px;background:var(--line-strong);margin:0 .1rem 0 .7rem;vertical-align:middle}
+.icon{flex:0 0 auto}
 .measure{max-width:var(--measure)}
 .muted{color:var(--ink-3)}
 mark.ul{background:none;color:inherit;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.5C20 3 40 7 60 4.5S100 6.5 118 4' fill='none' stroke='%23ca592e' stroke-width='2' stroke-linecap='round' opacity='.85'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:100% .5em;background-position:0 100%;padding-bottom:.12em}
-@media (prefers-color-scheme:dark){mark.ul{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.5C20 3 40 7 60 4.5S100 6.5 118 4' fill='none' stroke='%23e08a5c' stroke-width='2' stroke-linecap='round' opacity='.9'/%3E%3C/svg%3E")}}
 
 /* the margin rule: one hairline down the page, the banner's own left edge */
 main{position:relative}
@@ -194,16 +223,25 @@ html.js .reveal[data-d="1"]{transition-delay:.08s}html.js .reveal[data-d="2"]{tr
 .nav-links a{text-decoration:none;color:var(--ink-2);position:relative}
 .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:2px;background:var(--accent);transition:right .25s var(--ease-out)}
 .nav-links a:hover{color:var(--ink)}.nav-links a:hover::after{right:0}
-.lang{font-size:.9rem;color:var(--ink-2);text-decoration:none;padding:.4rem .6rem;border-radius:999px;border:1px solid transparent;white-space:nowrap}
-.lang:hover{border-color:var(--line-strong)}
-.lang .short{display:none}
-@media (max-width:40rem){.nav .wrap{gap:.5rem;min-height:56px}.brand .zh{display:none}.lang .long{display:none}.lang .short{display:inline}.nav .btn-sm{padding:.5rem .8rem;font-size:.88rem;white-space:nowrap}}
+.ctrl{display:flex;align-items:center;gap:.5rem}
+.seg{display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:999px;padding:2px;gap:2px;background:var(--card)}
+.seg .icon{width:15px;height:15px;color:var(--ink-3);margin:0 .15rem 0 .5rem}
+.seg a{text-decoration:none;font-size:.8rem;font-weight:600;line-height:1;padding:.42rem .62rem;border-radius:999px;color:var(--ink-2);transition:background .18s,color .18s}
+.seg a:hover{background:var(--paper-deep)}
+.seg a.on{background:var(--ink);color:var(--paper)}
+.theme{width:36px;height:36px;border-radius:999px;border:1px solid var(--line-strong);background:var(--card);display:grid;place-items:center;color:var(--ink-2);cursor:pointer;padding:0;transition:background .18s,transform .15s var(--ease-out)}
+.theme:hover{background:var(--paper-deep)}.theme:active{transform:scale(.94)}
+.theme .icon{width:18px;height:18px;display:none}
+html:not([data-theme]) .theme .i-auto,html[data-theme="light"] .theme .i-sun,html[data-theme="dark"] .theme .i-moon{display:block}
+@media (max-width:40rem){.nav .wrap{gap:.5rem;min-height:56px}.brand .word,.brand .zh{display:none}.nav .btn-sm{padding:.5rem .8rem;font-size:.88rem;white-space:nowrap}.seg .icon{display:none}.seg a{padding:.4rem .5rem}}
 @media (min-width:64rem){.nav-links{display:flex}}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.2rem;border-radius:999px;font-weight:600;font-size:.98rem;text-decoration:none;border:1px solid transparent;transition:background .18s var(--ease-out),transform .12s var(--ease-out),border-color .18s,box-shadow .2s}
-.btn svg{transition:transform .2s var(--ease-out)}
-.btn:hover svg{transform:translateX(3px)}
+.btn .arrow{transition:transform .2s var(--ease-out)}
+.btn:hover .arrow{transform:translateX(3px)}
+.btn .icon{width:16px;height:16px;color:var(--accent-deep)}
+.btn-primary .icon{color:inherit}
 .btn:active{transform:translateY(1px) scale(.99)}
 .btn-primary{background:var(--action);color:var(--accent-ink);box-shadow:0 8px 20px -12px var(--accent-deep)}
 .btn-primary:hover{background:var(--action-hover)}
@@ -227,8 +265,8 @@ html.js .reveal[data-d="1"]{transition-delay:.08s}html.js .reveal[data-d="2"]{tr
 .hero .sub{font-size:1.15rem;line-height:1.6;color:var(--ink-2);max-width:56ch}
 .ctas{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
 .micro{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;margin:1.25rem 0 0;padding:0;font-size:.9rem;color:var(--ink-3)}
-.micro li{list-style:none;display:flex;align-items:center;gap:.5rem}
-.micro li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.micro li{list-style:none;display:flex;align-items:center;gap:.45rem}
+.micro .icon{width:16px;height:16px;color:var(--accent)}
 .hero-art{display:flex;justify-content:center;position:relative;min-height:320px}
 .hero-art .radar{width:min(380px,80vw)}
 .hero-art.with-phone .radar{position:absolute;width:min(560px,110%);left:50%;top:50%;transform:translate(-50%,-50%);opacity:.55}
@@ -279,6 +317,7 @@ html.js .reveal[data-d="1"]{transition-delay:.08s}html.js .reveal[data-d="2"]{tr
 /* trust */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem 1rem;margin-top:.5rem}
 @media (min-width:48rem){.stats{grid-template-columns:repeat(5,1fr)}}
+.stat .icon{width:22px;height:22px;color:var(--accent-deep);margin-bottom:.6rem}
 .stat .n{font-family:var(--font-serif);font-size:clamp(2.4rem,3.6vw,3.2rem);line-height:1;letter-spacing:-0.02em}
 .stat .l{font-size:.92rem;color:var(--ink-3);margin-top:.35rem}
 .inkrow{display:inline-flex;gap:4px;margin-top:.7rem}
@@ -287,11 +326,12 @@ html.js .reveal[data-d="1"]{transition-delay:.08s}html.js .reveal[data-d="2"]{tr
 .stats-note{margin-top:1.75rem;color:var(--ink-2);max-width:var(--measure)}
 .sources{margin-top:.5rem;color:var(--ink-3);font-size:.95rem;max-width:var(--measure)}
 .sources i{font-family:var(--font-serif);color:var(--ink-2)}
-.cards{display:grid;gap:1rem;margin-top:2.5rem}
-@media (min-width:48rem){.cards{grid-template-columns:repeat(3,1fr)}}
+.cards{display:grid;gap:1rem;margin-top:.5rem}
+@media (min-width:48rem){.cards{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:64rem){.cards{grid-template-columns:repeat(4,1fr)}}
 .card{padding:1.5rem;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);transition:transform .25s var(--ease-out),box-shadow .25s}
 @media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}}
-.card .icon{color:var(--accent-deep);margin-bottom:1rem}
+.card .icon{color:var(--accent-deep);margin-bottom:1rem;width:30px;height:30px;padding:6px;box-sizing:content-box;border-radius:12px;background:var(--accent-soft)}
 .card h3{font-size:1.15rem;margin-bottom:.6rem}
 .card p{color:var(--ink-2);font-size:1rem}
 
@@ -301,11 +341,13 @@ html.js .reveal[data-d="1"]{transition-delay:.08s}html.js .reveal[data-d="2"]{tr
 .faq details{border-top:1px solid var(--line)}
 .faq details:last-child{border-bottom:1px solid var(--line)}
 @media (min-width:64rem){.faq details:nth-last-child(2){border-bottom:1px solid var(--line)}}
-.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.15rem 0;font-weight:600;font-size:1.08rem}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.8rem;padding:1.15rem 0;font-weight:600;font-size:1.08rem}
+.faq summary .icon{width:20px;height:20px;color:var(--accent)}
+.faq summary span{flex:1}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";font-family:var(--font-serif);font-size:1.5rem;color:var(--accent);flex:0 0 auto;transition:transform .25s var(--ease-out)}
 .faq details[open] summary::after{transform:rotate(45deg)}
-.faq .a{padding:0 0 1.35rem;color:var(--ink-2);max-width:var(--measure)}
+.faq .a{padding:0 0 1.35rem 1.75rem;color:var(--ink-2);max-width:var(--measure)}
 
 /* research */
 .paper{display:grid;gap:2.5rem;align-items:start}
@@ -325,6 +367,8 @@ html.js .reveal[data-d="1"]{transition-delay:.08s}html.js .reveal[data-d="2"]{tr
 .covers li::before{content:"";flex:0 0 6px;height:6px;border-radius:50%;background:var(--accent);margin-top:.65em}
 .boundary{margin-top:1.75rem;padding:1.25rem 1.4rem;background:var(--paper-deep);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink-2)}
 .boundary .eyebrow{margin-bottom:.4rem}
+.boundary .eyebrow::before{display:none}
+.boundary .eyebrow .icon{width:16px;height:16px;color:var(--accent)}
 .bib{margin-top:1.75rem}
 .bib-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
 .bib button{font:inherit;font-size:.85rem;font-weight:600;color:var(--ink-2);background:var(--card);border:1px solid var(--line-strong);border-radius:999px;padding:.35rem .8rem;cursor:pointer}
@@ -440,11 +484,19 @@ ${mark(30, "m-nav")}
 <nav class="nav-links" aria-label="${l === "zh" ? "页面导航" : "Site"}">
 <a href="#how">${esc(pick(nav.how, l))}</a>
 <a href="#trust">${esc(pick(nav.trust, l))}</a>
+<a href="#privacy">${esc(pick(nav.privacy, l))}</a>
 <a href="#faq">${esc(pick(nav.faq, l))}</a>
 <a href="#research">${esc(pick(nav.research, l))}</a>
 </nav>
-<a class="lang" href="${p.other}" hreflang="${l === "zh" ? "en" : "zh-CN"}" lang="${l === "zh" ? "en" : "zh-CN"}" aria-label="${esc(pick(nav.switchAria, l))}"><span class="long">${esc(pick(nav.switchLabel, l))}</span><span class="short" aria-hidden="true">${esc(pick(nav.switchShort, l))}</span></a>
+<div class="ctrl">
+<nav class="seg" aria-label="${esc(pick(nav.langAria, l))}">
+${icon("globe", 15)}
+<a href="${l === "zh" ? (p.rel || "./") : p.other}" lang="zh-CN" hreflang="zh-CN"${l === "zh" ? ' class="on" aria-current="page"' : ""}>中</a>
+<a href="${l === "en" ? "./" : p.other}" lang="en" hreflang="en"${l === "en" ? ' class="on" aria-current="page"' : ""}>EN</a>
+</nav>
+<button class="theme" type="button" data-theme-toggle aria-label="${esc(pick(nav.themeAria, l))}" data-names="${esc(pick(nav.themeNames, l).join("|"))}">${icon("auto", 18).replace('class="icon"', 'class="icon i-auto"')}${icon("sun", 18).replace('class="icon"', 'class="icon i-sun"')}${icon("moon", 18).replace('class="icon"', 'class="icon i-moon"')}</button>
 <a class="btn btn-primary btn-sm" href="${site.appUrl}">${esc(pick(nav.cta, l))}</a>
+</div>
 </div>
 </header>`;
 };
@@ -476,7 +528,7 @@ ${squiggle}
 <a class="btn btn-primary" href="${site.appUrl}">${esc(pick(hero.ctaPrimary, l))} ${arrow}</a>
 ${secondary}
 </div>
-<ul class="micro">${hero.micro.map((m) => `<li>${esc(pick(m, l))}</li>`).join("")}</ul>
+<ul class="micro">${hero.micro.map((m) => `<li>${icon(m.icon, 16)}${esc(pick(m.text, l))}</li>`).join("")}</ul>
 </div>
 <div class="hero-art${s1 ? " with-phone" : ""}">${art}</div>
 </div>
@@ -488,7 +540,7 @@ const gapHtml = (p) => {
   return `<section class="section" id="gap">
 <div class="wrap">
 <div class="section-head reveal">
-<p class="eyebrow">${esc(pick(gap.eyebrow, l))}</p>
+<p class="eyebrow num"><span class="no">${gap.no}</span>${esc(pick(gap.eyebrow, l))}</p>
 <h2>${esc(pick(gap.title, l))}</h2>
 <p class="lead">${rich(pick(gap.lead, l))}</p>
 </div>
@@ -510,7 +562,7 @@ const howHtml = (p) => {
   return `<section class="section" id="how">
 <div class="wrap">
 <div class="section-head reveal">
-<p class="eyebrow">${esc(pick(how.eyebrow, l))}</p>
+<p class="eyebrow num"><span class="no">${how.no}</span>${esc(pick(how.eyebrow, l))}</p>
 <h2>${esc(pick(how.title, l))}</h2>
 </div>
 <ol class="steps">${how.steps
@@ -535,15 +587,27 @@ const trustHtml = (p) => {
   return `<section class="section" id="trust">
 <div class="wrap">
 <div class="section-head reveal">
-<p class="eyebrow">${esc(pick(trust.eyebrow, l))}</p>
+<p class="eyebrow num"><span class="no">${trust.no}</span>${esc(pick(trust.eyebrow, l))}</p>
 <h2>${esc(pick(trust.title, l))}</h2>
 </div>
 <div class="stats">${trust.stats
-    .map((s, i) => `<div class="stat reveal" data-d="${Math.min(i, 3)}"><div class="n">${s.n}</div><div class="l">${esc(pick(s.label, l))}</div>${inkRow(8 - i, 8)}</div>`)
+    .map((s, i) => `<div class="stat reveal" data-d="${Math.min(i, 3)}">${icon(s.icon, 22)}<div class="n">${s.n}</div><div class="l">${esc(pick(s.label, l))}</div>${inkRow(8 - i, 8)}</div>`)
     .join("")}</div>
 <p class="stats-note">${esc(pick(trust.statsNote, l))}</p>
 <p class="sources">${esc(pick(trust.sourcesLabel, l))}${l === "zh" ? "：" : ": "}${trust.sources.map((s) => `<i>${esc(s)}</i>`).join(l === "zh" ? "、" : ", ")}${l === "zh" ? "。" : "."}</p>
-<div class="cards">${trust.cards
+</div>
+</section>`;
+};
+
+const privacyHtml = (p) => {
+  const l = p.lang;
+  return `<section class="section" id="privacy">
+<div class="wrap">
+<div class="section-head reveal">
+<p class="eyebrow num"><span class="no">${privacy.no}</span>${esc(pick(privacy.eyebrow, l))}</p>
+<h2>${esc(pick(privacy.title, l))}</h2>
+</div>
+<div class="cards">${privacy.cards
     .map((c, i) => `<div class="card reveal" data-d="${i}">${icon(c.icon, 30)}<h3>${esc(pick(c.title, l))}</h3><p>${esc(pick(c.body, l))}</p></div>`)
     .join("")}</div>
 </div>
@@ -555,11 +619,11 @@ const faqHtml = (p) => {
   return `<section class="section" id="faq">
 <div class="wrap">
 <div class="section-head reveal">
-<p class="eyebrow">${esc(pick(faq.eyebrow, l))}</p>
+<p class="eyebrow num"><span class="no">${faq.no}</span>${esc(pick(faq.eyebrow, l))}</p>
 <h2>${esc(pick(faq.title, l))}</h2>
 </div>
 <div class="faq">${faq.items
-    .map((it) => `<details><summary>${esc(pick(it.q, l))}</summary><p class="a">${esc(pick(it.a, l))}</p></details>`)
+    .map((it) => `<details><summary>${icon("help", 20)}<span>${esc(pick(it.q, l))}</span></summary><p class="a">${esc(pick(it.a, l))}</p></details>`)
     .join("")}</div>
 </div>
 </section>`;
@@ -574,7 +638,7 @@ const researchHtml = (p) => {
   return `<section class="section" id="research">
 <div class="wrap">
 <div class="section-head reveal">
-<p class="eyebrow">${esc(pick(research.eyebrow, l))}</p>
+<p class="eyebrow num"><span class="no">${research.no}</span>${esc(pick(research.eyebrow, l))}</p>
 <h2>${esc(pick(research.title, l))}</h2>
 </div>
 <div class="paper">
@@ -585,17 +649,17 @@ const researchHtml = (p) => {
 <p class="affs" lang="en">${affs}</p>
 <p class="venue">${esc(pick(research.venue, l))}</p>
 <div class="links">
-<a class="btn btn-ghost btn-sm" href="${site.arxivUrl}">${esc(pick(research.links.arxiv, l))}</a>
-<a class="btn btn-ghost btn-sm" href="${p.rel}${site.localPdf}">${esc(pick(research.links.pdf, l))}</a>
-<a class="btn btn-ghost btn-sm" href="${site.repoUrl}">${esc(pick(research.links.code, l))}</a>
-<a class="btn btn-ghost btn-sm" href="#bibtex">${esc(pick(research.links.bibtex, l))}</a>
+<a class="btn btn-ghost btn-sm" href="${site.arxivUrl}">${icon("external", 16)}${esc(pick(research.links.arxiv, l))}</a>
+<a class="btn btn-ghost btn-sm" href="${p.rel}${site.localPdf}">${icon("file", 16)}${esc(pick(research.links.pdf, l))}</a>
+<a class="btn btn-ghost btn-sm" href="${site.repoUrl}">${icon("code", 16)}${esc(pick(research.links.code, l))}</a>
+<a class="btn btn-ghost btn-sm" href="#bibtex">${icon("quote", 16)}${esc(pick(research.links.bibtex, l))}</a>
 </div>
 </div>
 <div class="reveal" data-d="1">
 <p class="lead">${esc(pick(research.lead, l))}</p>
 <h3 style="margin-top:1.75rem;font-size:1.1rem">${esc(pick(research.coversTitle, l))}</h3>
 <ul class="covers">${research.covers.map((c) => `<li>${esc(pick(c, l))}</li>`).join("")}</ul>
-<div class="boundary"><span class="eyebrow">${esc(pick(research.boundaryLabel, l))}</span>${esc(pick(research.boundary, l))}</div>
+<div class="boundary"><span class="eyebrow">${icon("shield", 16)}${esc(pick(research.boundaryLabel, l))}</span>${esc(pick(research.boundary, l))}</div>
 <div class="bib" id="bibtex">
 <div class="bib-head"><span class="eyebrow">${esc(pick(research.bibtexLabel, l))}</span><button type="button" data-copy="bib" data-done="${esc(pick(research.copied, l))}">${esc(pick(research.copy, l))}</button></div>
 <pre id="bib">${esc(research.bibtex)}</pre>
@@ -619,7 +683,7 @@ const footerHtml = (p) => {
 <a href="${site.appUrl}">${esc(pick(footer.links.app, l))}</a>
 <a href="${site.repoUrl}">${esc(pick(footer.links.repo, l))}</a>
 <a href="${site.arxivUrl}">${esc(pick(footer.links.paper, l))}</a>
-<a href="${p.other}" hreflang="${l === "zh" ? "en" : "zh-CN"}" lang="${l === "zh" ? "en" : "zh-CN"}">${esc(pick(nav.switchLabel, l))}</a>
+<a href="${p.other}" hreflang="${l === "zh" ? "en" : "zh-CN"}" lang="${l === "zh" ? "en" : "zh-CN"}">${l === "zh" ? "English" : "中文"}</a>
 </nav>
 </div>
 <p class="disc">${esc(pick(footer.disclaimer, l))}</p>
@@ -628,6 +692,7 @@ const footerHtml = (p) => {
 </footer>
 <script>
 (function(){if(!("IntersectionObserver" in window))return;var els=document.querySelectorAll(".reveal");var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{rootMargin:"0px 0px -8% 0px",threshold:.08});els.forEach(function(el){io.observe(el)})})();
+(function(){var b=document.querySelector("[data-theme-toggle]");if(!b)return;var names=(b.getAttribute("data-names")||"").split("|");var order=["","light","dark"];function cur(){return document.documentElement.getAttribute("data-theme")||""}function label(){b.title=names[order.indexOf(cur())]||""}label();b.addEventListener("click",function(){var next=order[(order.indexOf(cur())+1)%order.length];if(next)document.documentElement.setAttribute("data-theme",next);else document.documentElement.removeAttribute("data-theme");try{next?localStorage.setItem("sc-theme",next):localStorage.removeItem("sc-theme")}catch(e){}label()})})();
 (function(){var b=document.querySelector('[data-copy]');if(!b||!navigator.clipboard)return;b.addEventListener('click',function(){var t=document.getElementById(b.getAttribute('data-copy')).textContent;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent=b.getAttribute('data-done');setTimeout(function(){b.textContent=o},1600)})})})();
 </script>`;
 };
@@ -635,7 +700,7 @@ const footerHtml = (p) => {
 const page = (p) => `<!doctype html>
 <html lang="${p.htmlLang}">
 <head>
-<script>document.documentElement.classList.add("js")</script>
+<script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("sc-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 ${head(p)}
 </head>
 <body>
@@ -646,6 +711,7 @@ ${heroHtml(p)}
 ${gapHtml(p)}
 ${howHtml(p)}
 ${trustHtml(p)}
+${privacyHtml(p)}
 ${faqHtml(p)}
 ${researchHtml(p)}
 </main>
