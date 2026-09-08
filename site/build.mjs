@@ -350,16 +350,17 @@ html:not([data-theme]) .theme .i-auto,html[data-theme="light"] .theme .i-sun,htm
 /* research */
 .paper{display:grid;gap:2.5rem;align-items:start}
 @media (min-width:64rem){.paper{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:4rem}}
-.paper-card{position:relative;padding:2rem 2rem 1.75rem;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--line) 31px 32px);background-origin:content-box;background-clip:content-box}
-.paper-card>*{background:var(--card)}
-.stamp{position:absolute;top:-14px;right:18px;transform:rotate(-6deg);font-family:var(--font-serif);font-size:.82rem;letter-spacing:.08em;color:var(--accent-deep);border:2px solid var(--accent);padding:.3rem .65rem;border-radius:6px;background:var(--card)!important;text-transform:uppercase;box-shadow:0 2px 0 var(--accent-soft)}
-.paper-title{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.4rem,1.8vw + .4rem,1.8rem);line-height:1.3;letter-spacing:-0.01em;padding-top:.25rem}
+.paper-card{position:relative;padding:1.6rem 1.75rem 1.5rem;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.paper-card .top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.paper-card .venue{margin:0;font-family:var(--font-sans);font-size:.8rem;letter-spacing:.08em;color:var(--ink-3);font-weight:600}
+.stamp{transform:rotate(-3deg);font-family:var(--font-serif);font-size:.8rem;letter-spacing:.06em;color:var(--accent-deep);border:2px solid var(--accent);padding:.28rem .6rem;border-radius:6px;background:var(--card);white-space:nowrap;box-shadow:0 2px 0 var(--accent-soft)}
+.paper-title{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.4rem,1.8vw + .4rem,1.8rem);line-height:1.3;letter-spacing:-0.01em;padding-bottom:1.1rem;border-bottom:1px solid var(--line)}
 .authors{margin-top:1.25rem;color:var(--ink-2);line-height:1.7;font-size:.95rem}
 .authors sup{font-size:.7em;color:var(--ink-3);margin-left:.05em}
 .affs{margin-top:.6rem;color:var(--ink-3);font-size:.86rem;line-height:1.6}
 .affs sup{font-size:.7em;margin-right:.15em}
-.venue{margin-top:1rem;font-family:var(--font-serif);color:var(--ink-3);font-size:.95rem}
-.links{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;padding-top:1.25rem;border-top:1px solid var(--line)}
+.links .btn-sm{padding:.5rem .85rem;font-size:.88rem}
 .covers{margin:1.25rem 0 0;padding:0;list-style:none;display:grid;gap:.6rem}
 .covers li{display:flex;gap:.75rem;color:var(--ink-2)}
 .covers li::before{content:"";flex:0 0 6px;height:6px;border-radius:50%;background:var(--accent);margin-top:.65em}
@@ -477,7 +478,7 @@ const navHtml = (p) => {
 <div class="wrap">
 <a class="brand" href="${p.rel || "./"}" aria-label="SocialCoach">
 ${mark(30, "m-nav")}
-<span><span class="word">SocialCoach</span><span class="zh" style="display:block">${l === "zh" ? "社交教练" : "SOCIAL COACH"}</span></span>
+<span><span class="word">SocialCoach</span>${l === "zh" ? '<span class="zh" style="display:block">社交教练</span>' : ""}</span>
 </a>
 <nav class="nav-links" aria-label="${l === "zh" ? "页面导航" : "Site"}">
 <a href="#how">${esc(pick(nav.how, l))}</a>
@@ -641,11 +642,10 @@ const researchHtml = (p) => {
 </div>
 <div class="paper">
 <div class="paper-card reveal">
-<span class="stamp">arXiv · ${site.arxivId}</span>
+<div class="top"><p class="venue">${esc(pick(research.venue, l))}</p><span class="stamp">arXiv · ${site.arxivId}</span></div>
 <p class="paper-title" lang="en">${esc(research.paperTitle)}</p>
 <p class="authors" lang="en">${authors}</p>
 <p class="affs" lang="en">${affs}</p>
-<p class="venue">${esc(pick(research.venue, l))}</p>
 <div class="links">
 <a class="btn btn-ghost btn-sm" href="${site.arxivUrl}">${icon("external", 16)}${esc(pick(research.links.arxiv, l))}</a>
 <a class="btn btn-ghost btn-sm" href="${p.rel}${site.localPdf}">${icon("file", 16)}${esc(pick(research.links.pdf, l))}</a>
@@ -674,7 +674,7 @@ const footerHtml = (p) => {
 <div class="wrap">
 <div class="top">
 <div>
-<a class="brand" href="${p.rel || "./"}" aria-label="SocialCoach">${mark(30, "m-foot")}<span><span class="word">SocialCoach</span><span class="zh" style="display:block">${l === "zh" ? "社交教练" : "SOCIAL COACH"}</span></span></a>
+<a class="brand" href="${p.rel || "./"}" aria-label="SocialCoach">${mark(30, "m-foot")}<span><span class="word">SocialCoach</span>${l === "zh" ? '<span class="zh" style="display:block">社交教练</span>' : ""}</span></a>
 <p class="tag">${esc(pick(footer.tagline, l))}</p>
 </div>
 <nav aria-label="${l === "zh" ? "页脚链接" : "Footer"}">

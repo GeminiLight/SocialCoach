@@ -306,7 +306,7 @@ export const research = {
     "Microsoft",
     "Microsoft Research Asia",
   ],
-  venue: L("arXiv:2606.04155 · cs.HC · 2026", "arXiv:2606.04155 · cs.HC · 2026"),
+  venue: L("预印本 · cs.HC · 2026", "Preprint · cs.HC · 2026"),
   datePublished: "2026-08-16",
   lead: L(
     "论文把「下一次该练什么」定义为一个冷启动、受检索约束的序列决策问题：给定学习者画像、模拟的熟练度状态和练习历史，策略先写出一份结构化处方，再由语料检索把它实现出来。语料本身是一个可追溯的「理论到实践」知识框架，排程和反思式辅导都从这里读取。产品里的每一次复盘所依赖的「不会」与「会但没做到」的区分，也来自这里。",
@@ -337,7 +337,7 @@ export const research = {
     "The paper studies the research system and an internally deployed research platform. The product on this site is its productised version, shipping a separate, smaller, source-checked corpus. The paper's results should not be read as proof of this product's effectiveness.",
   ),
   links: {
-    arxiv: L("arXiv 页面", "arXiv page"),
+    arxiv: L("arXiv", "arXiv"),
     pdf: L("PDF", "PDF"),
     code: L("GitHub", "GitHub"),
     bibtex: L("BibTeX", "BibTeX"),
