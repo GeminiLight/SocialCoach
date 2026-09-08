@@ -59,7 +59,7 @@ const svg = (lang) => {
 <rect width="1200" height="630" fill="${C.paper}"/>
 <line x1="88" y1="0" x2="88" y2="630" stroke="${C.line}" stroke-width="1.5"/>
 ${radar(985, 300, 170)}
-<text x="132" y="118" font-family="${zh ? sans : serif}" font-size="22" fill="${C.ink3}" letter-spacing="${zh ? 7 : 2}">${zh ? "社交教练" : "SOCIAL COACH"}</text>
+<text x="132" y="118" font-family="${zh ? sans : serif}" font-size="22" fill="${C.ink3}" letter-spacing="${zh ? 7 : 2}">${zh ? "情商练习场" : "SOCIAL COACH"}</text>
 <text x="130" y="176" font-family="${serif}" font-size="44" fill="${C.ink}" letter-spacing="-1">SocialCoach</text>
 ${h1Lines.map((ln, i) => `<text x="130" y="${y0 + i * (h1Size + 10)}" font-family="${zh ? sans : serif}" font-weight="${zh ? 600 : 400}" font-size="${h1Size}" fill="${C.ink}" letter-spacing="${zh ? 0 : -1.5}">${esc(ln)}</text>`).join("")}
 <path d="M134 ${y0 + (h1Lines.length - 1) * (h1Size + 10) + 22} C 200 ${y0 + (h1Lines.length - 1) * (h1Size + 10) + 18}, 300 ${y0 + (h1Lines.length - 1) * (h1Size + 10) + 25}, 400 ${y0 + (h1Lines.length - 1) * (h1Size + 10) + 20} S 560 ${y0 + (h1Lines.length - 1) * (h1Size + 10) + 26}, 640 ${y0 + (h1Lines.length - 1) * (h1Size + 10) + 21}" fill="none" stroke="${C.accent}" stroke-width="3" stroke-linecap="round" opacity="0.85"/>

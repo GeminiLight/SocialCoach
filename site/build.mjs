@@ -8,7 +8,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync, rmSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { pick, site, meta, nav, hero, gap, how, trust, privacy, faq, research, footer } from "./content.mjs";
+import { pick, site, meta, nav, hero, marquee, gap, how, trust, privacy, faq, research, footer } from "./content.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
@@ -33,6 +33,38 @@ const shot = (n, lang) => {
   const file = `${SHOT_NAMES[n]}-${lang}.png`;
   return existsSync(join(here, "assets", file)) ? `assets/${file}` : null;
 };
+
+/* -------------------------------- corpus --------------------------------- */
+// The scenario strip reads the product's corpus straight from app/src/data so it
+// never drifts. It is a regex over our own TS, not a TS parser: each scenario
+// object starts at a two-space-indented brace and has title/context fields.
+const corpusDir = join(root, "app", "src", "data", "corpus");
+const CONTEXT_NAMES = (() => {
+  const tax = readFileSync(join(root, "app", "src", "data", "taxonomy.ts"), "utf8");
+  const start = tax.indexOf("export const CONTEXTS");
+  const end = tax.indexOf("export const", start + 10);
+  const block = tax.slice(start, end < 0 ? undefined : end);
+  const names = {};
+  for (const m of block.matchAll(/\{ id: "([a-z-]+)", name: L\("([^"]+)", "([^"]+)"\)/g)) names[m[1]] = { zh: m[2], en: m[3] };
+  return names;
+})();
+const CONTEXT_HUE = { workplace: "--c-clay", family: "--c-amber", friendship: "--c-moss", romantic: "--c-rose", education: "--c-teal", party: "--c-ochre", public: "--c-indigo" };
+const SCENARIOS = readdirSync(corpusDir)
+  .filter((f) => /^scenarios-[a-z]\.ts$/.test(f))
+  .sort()
+  .flatMap((f) =>
+    readFileSync(join(corpusDir, f), "utf8")
+      .split(/\n  \{\n/)
+      .slice(1)
+      .map((b) => {
+        const id = b.match(/^\s*id: "([^"]+)"/)?.[1];
+        const t = b.match(/\n\s*title: L\("((?:[^"\\]|\\.)*)", "((?:[^"\\]|\\.)*)"\)/);
+        const context = b.match(/\n\s*context: "([a-z-]+)"/)?.[1];
+        return id && t && context ? { id, title: { zh: t[1], en: t[2] }, context } : null;
+      })
+      .filter(Boolean),
+  );
+if (SCENARIOS.length < 20) console.warn(`warn: only ${SCENARIOS.length} scenarios parsed from the corpus`);
 
 /* ---------------------------------- SVG ---------------------------------- */
 
@@ -146,7 +178,7 @@ const css = `
   --action:var(--accent-deep);
   --action-hover:oklch(0.46 0.14 38);
   --slab:var(--ink);--slab-ink:var(--paper);
-  --c-amber:oklch(0.62 0.10 75);--c-moss:oklch(0.55 0.09 140);--c-teal:oklch(0.50 0.08 200);--c-clay:oklch(0.58 0.11 30);--c-indigo:oklch(0.50 0.09 270);
+  --c-amber:oklch(0.62 0.10 75);--c-moss:oklch(0.55 0.09 140);--c-teal:oklch(0.50 0.08 200);--c-clay:oklch(0.58 0.11 30);--c-indigo:oklch(0.50 0.09 270);--c-rose:oklch(0.60 0.10 15);--c-ochre:oklch(0.62 0.11 60);
   --grain-opacity:.14;
   --shadow:0 30px 60px -32px oklch(0.2 0.02 60 / .45), 0 2px 6px -2px oklch(0.2 0.02 60 / .12);
   --radius-sm:10px;--radius:16px;--radius-lg:22px;
@@ -163,7 +195,7 @@ const css = `
   --line:oklch(0.315 0.014 65);--line-strong:oklch(0.425 0.016 65);
   --accent:oklch(0.70 0.145 42);--accent-deep:oklch(0.795 0.125 46);--accent-soft:oklch(0.315 0.055 44);--accent-ink:oklch(0.17 0.02 50);
   --action-hover:oklch(0.84 0.10 46);
-  --c-amber:oklch(0.78 0.10 75);--c-moss:oklch(0.74 0.09 140);--c-teal:oklch(0.72 0.08 200);--c-clay:oklch(0.76 0.10 30);--c-indigo:oklch(0.72 0.09 270);
+  --c-amber:oklch(0.78 0.10 75);--c-moss:oklch(0.74 0.09 140);--c-teal:oklch(0.72 0.08 200);--c-clay:oklch(0.76 0.10 30);--c-indigo:oklch(0.72 0.09 270);--c-rose:oklch(0.76 0.09 15);--c-ochre:oklch(0.78 0.10 60);
   --grain-opacity:.09;
   --shadow:0 30px 60px -30px oklch(0 0 0 / .7), 0 2px 6px -2px oklch(0 0 0 / .4);}
 :root:not([data-theme="light"]) body::before{mix-blend-mode:screen}
@@ -272,6 +304,22 @@ html:not([data-theme]) .theme .i-auto,html[data-theme="light"] .theme .i-sun,htm
 .phone img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:30px}
 .phone::after{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:34%;height:22px;background:var(--paper-deep);border-radius:0 0 14px 14px}
 .hero-art .phone{width:min(280px,72vw);transform:rotate(-2deg)}
+
+/* scenario strip: two rows, opposite directions, paused on hover */
+.marquee{padding:0 0 clamp(40px,5vw,72px)}
+.marquee-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.1rem}
+.marquee-head a{display:inline-flex;align-items:center;gap:.4rem;font-size:.92rem;color:var(--ink-2);text-decoration:none;font-weight:600}
+.marquee-head a:hover{color:var(--ink)}
+.viewport{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);display:grid;gap:.7rem}
+.track{display:flex;width:max-content;animation:slide var(--dur,80s) linear infinite}
+.track.rev{animation-direction:reverse}
+.viewport:hover .track{animation-play-state:paused}
+.row{display:flex;gap:.7rem;padding-right:.7rem;margin:0;list-style:none}
+@keyframes slide{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.track{animation:none}.viewport{overflow-x:auto}}
+.chip{display:inline-flex;align-items:center;gap:.6rem;white-space:nowrap;padding:.55rem .95rem .55rem .75rem;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:.95rem;color:var(--ink)}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--dot)}
+.chip .ctx{font-size:.78rem;color:var(--ink-3);letter-spacing:.04em}
 
 /* sections */
 .section{padding:clamp(56px,8vw,112px) 0;border-top:1px solid var(--line)}
@@ -455,7 +503,7 @@ const head = (p) => {
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf6f1">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#211c18">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="SocialCoach · 社交教练">
+<meta property="og:site_name" content="SocialCoach">
 <meta property="og:title" content="${esc(pick(meta.title, l))}">
 <meta property="og:description" content="${esc(pick(meta.description, l))}">
 <meta property="og:url" content="${p.url}">
@@ -478,7 +526,7 @@ const navHtml = (p) => {
 <div class="wrap">
 <a class="brand" href="${p.rel || "./"}" aria-label="SocialCoach">
 ${mark(30, "m-nav")}
-<span><span class="word">SocialCoach</span>${l === "zh" ? '<span class="zh" style="display:block">社交教练</span>' : ""}</span>
+<span><span class="word">SocialCoach</span>${l === "zh" ? '<span class="zh" style="display:block">情商练习场</span>' : ""}</span>
 </a>
 <nav class="nav-links" aria-label="${l === "zh" ? "页面导航" : "Site"}">
 <a href="#how">${esc(pick(nav.how, l))}</a>
@@ -531,6 +579,25 @@ ${secondary}
 </div>
 <div class="hero-art${s1 ? " with-phone" : ""}">${art}</div>
 </div>
+</section>`;
+};
+
+const marqueeHtml = (p) => {
+  const l = p.lang;
+  const contexts = new Set(SCENARIOS.map((s) => s.context));
+  const chip = (s) =>
+    `<li class="chip" style="--dot:var(${CONTEXT_HUE[s.context] || "--c-amber"})"><span class="dot"></span><span class="ctx">${esc(pick(CONTEXT_NAMES[s.context] || { zh: s.context, en: s.context }, l))}</span><span>${esc(pick(s.title, l))}</span></li>`;
+  // interleave contexts so no row is a block of one colour
+  const byCtx = [...contexts].map((c) => SCENARIOS.filter((s) => s.context === c));
+  const mixed = [];
+  for (let i = 0; byCtx.some((a) => a.length > i); i++) for (const a of byCtx) if (a[i]) mixed.push(a[i]);
+  const half = Math.ceil(mixed.length / 2);
+  const rows = [mixed.slice(0, half), mixed.slice(half)];
+  const row = (items, rev) => `<div class="track${rev ? " rev" : ""}" style="--dur:${Math.round(items.length * 3.4)}s"><ul class="row">${items.map(chip).join("")}</ul><ul class="row" aria-hidden="true">${items.map(chip).join("")}</ul></div>`;
+  const eyebrow = pick(marquee.eyebrow, l).replace("{n}", SCENARIOS.length).replace("{c}", contexts.size);
+  return `<section class="marquee" aria-label="${esc(pick(marquee.aria, l))}">
+<div class="wrap marquee-head"><p class="eyebrow">${esc(eyebrow)}</p><a href="${site.appUrl}/arena">${esc(pick(marquee.all, l))} ${arrow}</a></div>
+<div class="viewport">${row(rows[0], false)}${row(rows[1], true)}</div>
 </section>`;
 };
 
@@ -674,7 +741,7 @@ const footerHtml = (p) => {
 <div class="wrap">
 <div class="top">
 <div>
-<a class="brand" href="${p.rel || "./"}" aria-label="SocialCoach">${mark(30, "m-foot")}<span><span class="word">SocialCoach</span>${l === "zh" ? '<span class="zh" style="display:block">社交教练</span>' : ""}</span></a>
+<a class="brand" href="${p.rel || "./"}" aria-label="SocialCoach">${mark(30, "m-foot")}<span><span class="word">SocialCoach</span>${l === "zh" ? '<span class="zh" style="display:block">情商练习场</span>' : ""}</span></a>
 <p class="tag">${esc(pick(footer.tagline, l))}</p>
 </div>
 <nav aria-label="${l === "zh" ? "页脚链接" : "Footer"}">
@@ -706,6 +773,7 @@ ${head(p)}
 ${navHtml(p)}
 <main id="main">
 ${heroHtml(p)}
+${marqueeHtml(p)}
 ${gapHtml(p)}
 ${howHtml(p)}
 ${trustHtml(p)}
@@ -755,7 +823,7 @@ ${pages.map((q) => `  <url>\n    <loc>${q.url}</loc>\n${alt}\n  </url>`).join("\
 
 writeFileSync(
   join(out, "llms.txt"),
-  `# SocialCoach · 社交教练
+  `# SocialCoach
 
 > ${pick(meta.description, "en")}
 

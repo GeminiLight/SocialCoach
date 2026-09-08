@@ -5,7 +5,7 @@ SocialCoach 的对外官网：一页式、中英双语、纯静态，独立于 `
 | 文件 | 作用 |
 |---|---|
 | `content.mjs` | 全部文案，`L(zh, en)` 双语对象，与 app 同一套约定。事实以 `wiki/00-product-proposal.md` 和 `README.md` 为准 |
-| `build.mjs` | 零依赖构建：`node site/build.mjs` → `dist/`（中文在 `/`，英文在 `/en/`），附 `sitemap.xml` / `robots.txt` / `llms.txt` / JSON-LD / hreflang |
+| `build.mjs` | 零依赖构建：`node site/build.mjs` → `dist/`（中文在 `/`，英文在 `/en/`），附 `sitemap.xml` / `robots.txt` / `llms.txt` / JSON-LD / hreflang。首屏下方的场景滚动条直接用正则读 `app/src/data/corpus/scenarios-*.ts` 和 `taxonomy.ts` 的 CONTEXTS，语料改了官网自动跟 |
 | `scripts/og.mjs` | 用 `app/node_modules` 里的 sharp 生成 1200×630 社交预览图到 `assets/og-{zh,en}.png`，改文案后重跑一次并提交 |
 | `assets/` | `icon.svg`（与 `app/public/icon.svg` 同源）、OG 图、产品截图 |
 | `../.github/workflows/site.yml` | 推送到 `main` 且改动了 `site/**` 时构建并发布到 GitHub Pages |

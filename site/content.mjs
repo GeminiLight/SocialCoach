@@ -27,7 +27,7 @@ export const site = {
 
 export const meta = {
   title: L(
-    "SocialCoach · 社交教练 — 想说的话，说出来。",
+    "SocialCoach — 想说的话，说出来。",
     "SocialCoach — Say the thing you've been not saying.",
   ),
   description: L(
@@ -52,7 +52,7 @@ export const nav = {
 export const hero = {
   pill: L("来自同名研究论文", "From the research paper"),
   pillTag: "arXiv:2606.04155",
-  eyebrow: L("SocialCoach", "社交教练"),
+  eyebrow: L("SocialCoach", "SocialCoach"),
   h1: L("想说的话，说出来。", "Say the thing you've been not saying."),
   h1Alt: L("Say the thing you've been not saying.", "想说的话，说出来。"),
   sub: L(
@@ -69,6 +69,12 @@ export const hero = {
   ],
   radarAria: L("五项 CASEL 能力的雷达图装饰", "Decorative radar of the five CASEL competencies"),
   screenshotAlt: L("SocialCoach 首页：今日训练与选择理由", "SocialCoach home: today's practice and why it was picked"),
+};
+
+export const marquee = {
+  aria: L("场景一览", "Scenario overview"),
+  eyebrow: L("{n} 个双语场景 · {c} 类生活情境", "{n} bilingual scenarios · {c} contexts"),
+  all: L("全部场景", "All scenarios"),
 };
 
 export const gap = {
