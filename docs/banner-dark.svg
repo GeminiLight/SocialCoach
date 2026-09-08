@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="SocialCoach · 社交教练 — Say the thing you’ve been not saying.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="SocialCoach — Say the thing you’ve been not saying.">
   <rect width="1200" height="340" fill="#1b1510"/>
   <line x1="88" y1="0" x2="88" y2="340" stroke="#3d3730" stroke-width="1.5"/>
   <g fill="none" stroke="#3d3730" stroke-width="1.2">
@@ -15,7 +15,7 @@
   <circle cx="1036.8" cy="245.5" r="4.5" fill="#00656a"/>
   <circle cx="944.6" cy="221.5" r="4.5" fill="#c65b4c"/>
   <circle cx="939.7" cy="156.2" r="4.5" fill="#485996"/>
-  <text x="132" y="72" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" font-size="21" fill="#a49d95" letter-spacing="7">社交教练</text>
+  <text x="132" y="72" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" font-size="21" fill="#a49d95" letter-spacing="7">情商练习场</text>
   <text x="130" y="156" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="74" fill="#ebe7df" letter-spacing="-1.5">SocialCoach</text>
   <text x="132" y="234" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="33" fill="#ebe7df">Say the thing you&#8217;ve been not saying.</text>
   <path d="M134 248.5 C 200 245, 278 251, 350 246.5 S 508 251.5, 586 246.5 S 636 250, 664 247" fill="none" stroke="#e67e54" stroke-width="2.6" stroke-linecap="round" opacity="0.85"/>

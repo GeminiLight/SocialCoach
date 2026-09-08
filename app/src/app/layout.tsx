@@ -6,10 +6,10 @@ import { AppProviders } from "@/components/AppProviders";
 const hanken = Hanken_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-hanken", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "SocialCoach · 社交教练",
+  title: "SocialCoach",
   description: "想说的话，说出来。跟有自己目的、不会让你赢的 AI 角色实战演练，拿到引用你原话的教练复盘——告诉你是不会，还是会但没做到。每天 3 分钟。Say the thing you've been not saying.",
   manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, statusBarStyle: "default", title: "社交教练" },
+  appleWebApp: { capable: true, statusBarStyle: "default", title: "SocialCoach" },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
 };
 

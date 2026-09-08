@@ -4,7 +4,7 @@ export const pick = (value: L, lang: Lang) => value[lang];
 
 const dict = {
   nav_label: { zh: "主导航", en: "Main navigation" },
-  nav_workspace: { zh: "你的练习手册", en: "Your practice notebook" },
+  nav_workspace: { zh: "你的情商练习场", en: "Your EQ training ground" },
   nav_local: { zh: "练习记录保存在此设备", en: "Practice history stays on this device" },
   skip_content: { zh: "跳到主要内容", en: "Skip to content" },
   home_intro: { zh: "留几分钟，给那场难开口的对话。", en: "A few minutes for the conversation on your mind." },
@@ -59,7 +59,10 @@ const dict = {
   nav_progress: { zh: "成长", en: "Growth" },
   nav_learn: { zh: "知识", en: "Learn" },
   nav_me: { zh: "我", en: "Me" },
-  app_name: { zh: "社交教练", en: "SocialCoach" },
+  // The wordmark is "SocialCoach" in both languages. A product with one name
+  // is easier to search for, to say out loud and to link to than a product
+  // with two, and the Chinese descriptor lives in `nav_workspace` instead.
+  app_name: { zh: "SocialCoach", en: "SocialCoach" },
   tagline: { zh: "把最难开口的那场对话，先在这里练一遍。", en: "Rehearse the conversation you're dreading, before it happens." },
 
   // onboarding

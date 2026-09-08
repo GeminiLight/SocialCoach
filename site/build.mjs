@@ -460,7 +460,6 @@ const jsonLd = (p) => {
     "@type": "SoftwareApplication",
     "@id": `${SITE_URL}/#app`,
     name: site.name,
-    alternateName: site.nameZh,
     description: pick(meta.description, l),
     url: site.appUrl,
     applicationCategory: "EducationalApplication",
@@ -473,7 +472,7 @@ const jsonLd = (p) => {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#site`,
     url: `${SITE_URL}/`,
-    name: `${site.name} · ${site.nameZh}`,
+    name: site.name,
     inLanguage: p.htmlLang,
     about: { "@id": `${SITE_URL}/#app` },
   };

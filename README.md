@@ -2,7 +2,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/banner-dark.svg">
-  <img src="docs/banner.svg" width="860" alt="SocialCoach · 社交教练 — Say the thing you&#8217;ve been not saying. 想说的话，说出来。">
+  <img src="docs/banner.svg" width="860" alt="SocialCoach — Say the thing you&#8217;ve been not saying. 想说的话，说出来。">
 </picture>
 
 **[Try it live](https://socialcoach-app.vercel.app)** · [Quick start](#quick-start) · [Key features](#key-features) · [Architecture](#architecture) · [Paper](https://arxiv.org/abs/2606.04155)

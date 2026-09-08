@@ -284,7 +284,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
 
   const share = async () => {
     const lines = [
-      lang === "zh" ? `我在「社交教练」练了《${sc.title.zh}》` : `I practiced "${sc.title.en}" on SocialCoach`,
+      lang === "zh" ? `我在「SocialCoach」练了《${sc.title.zh}》` : `I practiced "${sc.title.en}" on SocialCoach`,
       t(lang, "rp_stars_of", { n: stars, m: sc.objectives.length }),
       strengths[0] ? `${t(lang, "rp_strengths")}: ${strengths[0].behavior}` : "",
       report.nextStep ? `${t(lang, "rp_next_step")}: ${report.nextStep}` : "",
