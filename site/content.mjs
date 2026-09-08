@@ -21,7 +21,6 @@ export const site = {
   // Copied from ../docs at build time so Scholar can find PDF + abstract on one host.
   localPdf: "paper/socialcoach-2606.04155.pdf",
   name: "SocialCoach",
-  nameZh: "社交教练",
   year: 2026,
 };
 
@@ -37,9 +36,9 @@ export const meta = {
 };
 
 export const nav = {
-  how: L("训练流程", "How it works"),
-  trust: L("方法与证据", "Evidence"),
-  privacy: L("隐私与边界", "Privacy"),
+  how: L("流程", "Flow"),
+  trust: L("依据", "Sources"),
+  privacy: L("隐私", "Privacy"),
   faq: L("常见问题", "FAQ"),
   research: L("论文", "Paper"),
   cta: L("练一场对话", "Rehearse your conversation"),
@@ -127,7 +126,7 @@ export const gap = {
 
 export const how = {
   no: "02",
-  eyebrow: L("训练流程", "How it works"),
+  eyebrow: L("流程", "Flow"),
   title: L("一次训练，四步", "One round, four steps"),
   steps: [
     {
@@ -171,7 +170,7 @@ export const how = {
 
 export const trust = {
   no: "03",
-  eyebrow: L("方法与证据", "Method and evidence"),
+  eyebrow: L("语料与出处", "Corpus and sources"),
   title: L("判断有证据，建议有出处", "Evidence before judgment, sources before advice"),
   stats: [
     { n: "46", icon: "scene", label: L("双语场景", "bilingual scenarios") },
@@ -199,7 +198,7 @@ export const trust = {
 
 export const privacy = {
   no: "04",
-  eyebrow: L("隐私与边界", "Privacy and limits"),
+  eyebrow: L("数据与边界", "Data and limits"),
   title: L("数据留在你手里，边界写在明处", "Your data stays yours, and the limits are written down"),
   cards: [
     {
