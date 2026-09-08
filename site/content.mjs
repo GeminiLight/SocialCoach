@@ -42,7 +42,7 @@ export const nav = {
   privacy: L("隐私与边界", "Privacy"),
   faq: L("常见问题", "FAQ"),
   research: L("论文", "Paper"),
-  cta: L("练明天那场对话", "Rehearse your conversation"),
+  cta: L("练一场对话", "Rehearse your conversation"),
   langAria: L("语言", "Language"),
   themeAria: L("切换外观", "Toggle appearance"),
   themeNames: L(["跟随系统", "浅色", "深色"], ["System", "Light", "Dark"]),
@@ -59,7 +59,7 @@ export const hero = {
     "和不会轻易让步的 AI 角色先练一次困难对话。结束后，教练引用你的原话，告诉你是还不会，还是会但在压力下没做到。无需注册。",
     "Rehearse a difficult conversation against an AI character who pushes back. The debrief quotes what you actually said and shows whether you did not know the move or could not execute it under pressure. No account required.",
   ),
-  ctaPrimary: L("练明天那场对话", "Rehearse your conversation"),
+  ctaPrimary: L("练一场对话", "Rehearse your conversation"),
   ctaDebrief: L("先看一次真实复盘", "See a real debrief"),
   ctaHow: L("看看它怎么练", "See how it works"),
   micro: [

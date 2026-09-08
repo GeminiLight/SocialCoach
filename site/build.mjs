@@ -203,9 +203,7 @@ h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.01em;line-height:1.15;text-w
 .muted{color:var(--ink-3)}
 mark.ul{background:none;color:inherit;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.5C20 3 40 7 60 4.5S100 6.5 118 4' fill='none' stroke='%23ca592e' stroke-width='2' stroke-linecap='round' opacity='.85'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:100% .5em;background-position:0 100%;padding-bottom:.12em}
 
-/* the margin rule: one hairline down the page, the banner's own left edge */
 main{position:relative}
-@media (min-width:76rem){main::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - var(--content)/2 - 1.25rem);width:1px;background:var(--line)}}
 
 /* reveal on scroll (transform/opacity only) */
 html.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
