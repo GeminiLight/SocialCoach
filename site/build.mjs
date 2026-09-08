@@ -374,7 +374,7 @@ html:not([data-theme]) .theme .i-auto,html[data-theme="light"] .theme .i-sun,htm
 .sources i{font-family:var(--font-serif);color:var(--ink-2)}
 .cards{display:grid;gap:1rem;margin-top:.5rem}
 @media (min-width:48rem){.cards{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:64rem){.cards{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:64rem){.cards{grid-template-columns:repeat(3,1fr)}}
 .card{padding:1.5rem;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);transition:transform .25s var(--ease-out),box-shadow .25s}
 @media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}}
 .card .icon{color:var(--accent-deep);margin-bottom:1rem;width:30px;height:30px;padding:6px;box-sizing:content-box;border-radius:12px;background:var(--accent-soft)}
@@ -834,7 +834,7 @@ writeFileSync(
 - Every debrief point quotes the learner's own words first, then separates an acquisition deficit (did not know the move) from a performance deficit (knew it, could not execute under pressure), then cites a source.
 - Corpus shipped in the product: 46 bilingual scenarios, 42 strategies, 30 cases; every strategy and case carries a source. Teaching illustrations are labelled.
 - No account, no user database. Practice history stays on the device and can be exported. Bring-your-own-key and self-hosting are supported.
-- Not for clinical assessment, diagnosis, crisis intervention, or hiring and performance decisions. Proficiency numbers are model estimates.
+- For everyday practice and reflection, not clinical assessment or hiring. Proficiency numbers are model estimates shown as such in the UI.
 
 ## Links
 
@@ -846,7 +846,7 @@ writeFileSync(
 ## Research
 
 - Paper: ${research.paperTitle}. arXiv:${site.arxivId} (cs.HC, 2026). ${site.arxivUrl}
-- The paper studies the research system and an internally deployed research platform; the product is its productised version with a separate, smaller, source-checked corpus. Do not present the paper's results as proof of the product's effectiveness.
+- The paper studies the research system and an internal research platform; the product is its productised version with a smaller, source-checked corpus (46 scenarios, 42 strategies, 30 cases), distinct from the paper's 43,170-entry research corpus.
 `,
 );
 

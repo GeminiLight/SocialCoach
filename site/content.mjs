@@ -180,8 +180,8 @@ export const trust = {
     { n: "34", icon: "sparkle", label: L("项社交技能", "social skills") },
   ],
   statsNote: L(
-    "每条策略和案例都带来源；用于教学的构造案例会明确标注。",
-    "Every strategy and case carries a source; teaching illustrations are labelled as such.",
+    "每条策略和案例都带来源。",
+    "Every strategy and case carries a source.",
   ),
   sourcesLabel: L("出处包括", "Sources include"),
   sources: [
@@ -198,39 +198,31 @@ export const trust = {
 
 export const privacy = {
   no: "04",
-  eyebrow: L("数据与边界", "Data and limits"),
-  title: L("数据留在你手里，边界写在明处", "Your data stays yours, and the limits are written down"),
+  eyebrow: L("数据与部署", "Data and deployment"),
+  title: L("数据留在你手里", "Your data stays yours"),
   cards: [
     {
-      icon: "gauge",
-      title: L("熟练度是模型估计", "Proficiency is a model estimate"),
+      icon: "device",
+      title: L("记录留在设备上", "History lives on your device"),
       body: L(
-        "不是心理测量，也不是能力认证，界面里会标注。它只用于你自己的练习，不用于招聘、绩效或评价别人。",
-        "Not a psychometric, not a certification, and the UI says so. It is for your own practice only, never for hiring, reviews, or judging someone else.",
+        "无账号、无用户数据库。练习记录随时导出或重置；每次生成只把当次对话发给你选的模型服务。",
+        "No account, no user database. Export or reset your history any time; each turn sends only that conversation to the model provider you chose.",
       ),
     },
     {
-      icon: "device",
-      title: L("数据留在你的设备上", "Your data stays on your device"),
+      icon: "sparkle",
+      title: L("用你自己的模型", "Bring your own model"),
       body: L(
-        "无账号、无用户数据库，记录可导出、可重置。每次生成仍会把本次输入发送给你选择的模型服务；你可以用自己的 API key，或指向本地端点。",
-        "No account, no user database; export or reset anytime. Each generation still sends that request to the model provider you chose; bring your own key, or point it at a local endpoint.",
+        "支持 Anthropic、OpenAI 和任何 OpenAI 兼容端点。填自己的 API key，或指向本地模型，请求直接从你的浏览器发出。",
+        "Anthropic, OpenAI, or any OpenAI-compatible endpoint. Use your own API key or point it at a local model; requests go straight from your browser.",
       ),
     },
     {
       icon: "box",
       title: L("可以自己部署", "Self-hostable"),
       body: L(
-        "一台小机器加 Docker Compose。支持 Anthropic、OpenAI 以及任何 OpenAI 兼容端点。",
-        "One small box and Docker Compose. Works with Anthropic, OpenAI, and any OpenAI-compatible endpoint.",
-      ),
-    },
-    {
-      icon: "ban",
-      title: L("不做的事", "What it is not for"),
-      body: L(
-        "不做心理诊断、危机干预、医疗或法律建议。熟练度分数不能用于招聘、绩效或录用决策。",
-        "No diagnosis, crisis intervention, medical or legal advice. Proficiency scores are never for hiring, reviews or admissions.",
+        "一台小机器加 Docker Compose 就能跑起来，语料和技能图谱都在仓库里。",
+        "One small box and Docker Compose. The corpus and the skill map ship in the repository.",
       ),
     },
   ],
@@ -244,8 +236,8 @@ export const faq = {
     {
       q: L("这和直接让 ChatGPT 扮演老板有什么不同？", "How is this different from asking ChatGPT to play my manager?"),
       a: L(
-        "通用聊天模型可以完成一次角色扮演。SocialCoach 把训练约束固定下来：角色有独立目标和隐藏动机，不会提前泄漏答案；练习有回合上限和失败条件；结束后每条判断先引用本次对话原话，再给归因、来源和下一次训练。只想随便演一次的人不需要换工具；想重复训练、看见进步的人才需要它。",
-        "A general chat model can play a role once. SocialCoach fixes the training constraints: characters have their own objective and a hidden motive and won't leak the answer; practice has a turn limit and a failure state; afterwards every point quotes the transcript first, then gives attribution, a source and the next practice. If you only want to improvise once, you don't need another tool. If you want to repeat and see progress, you do.",
+        "通用聊天模型可以演一次。SocialCoach 把训练约束固定下来：角色有独立目标和隐藏动机，不会提前泄漏答案；练习有回合上限和失败条件；结束后每条判断先引用本次对话原话，再给归因、来源和下一次训练。",
+        "A general chat model can play a role once. SocialCoach fixes the training constraints: characters have their own objective and a hidden motive and won't leak the answer; practice has a turn limit and a failure state; afterwards every point quotes the transcript first, then gives attribution, a source and the next practice.",
       ),
     },
     {
@@ -256,31 +248,24 @@ export const faq = {
       ),
     },
     {
-      q: L("AI 给的分数可信吗？", "Can I trust the scores?"),
+      q: L("熟练度是怎么算的？", "Where do the proficiency numbers come from?"),
       a: L(
-        "熟练度是模型估计，不是心理测量或客观能力认证。我们不要求你相信一个裸分数，而是先展示它依据的原话、判断维度和来源。它只能用于个人练习，不能用于招聘、绩效或评价别人。",
-        "Proficiency is a model estimate, not a psychometric or an objective certification. You are not asked to trust a bare number; you see the quoted line, the dimension and the source it rests on first. It is for personal practice only, never for hiring, reviews, or judging someone else.",
+        "由教练模型根据每次对话估计，界面会标注。它依据的东西你都看得到：引用的原话、判断的维度和出处。多练几次，雷达上的变化比单次数字更有参考价值。",
+        "The coach model estimates it from each conversation, and the UI says so. Everything it rests on is visible: the quoted line, the dimension, the source. Over several rounds the movement on the radar tells you more than any single number.",
       ),
     },
     {
       q: L("我的私人对话保存在哪里？", "Where do my conversations go?"),
       a: L(
-        "练习历史保存在你的设备上，没有账号和用户数据库，可以随时导出或重置。模型生成仍需要把本次请求发送到所选的模型服务；你可以使用自己的 API key，或本地兼容端点。",
-        "Practice history is stored on your device. There is no account and no user database, and you can export or reset it at any time. Generating a reply still sends that request to the model provider you selected; you can use your own API key or a local compatible endpoint.",
+        "在你的设备上。没有账号和用户数据库，可以随时导出或重置。生成回复时只把当次对话发给你选的模型服务，也可以换成自己的 API key 或本地端点。",
+        "On your device. There is no account and no user database, and you can export or reset it at any time. Generating a reply sends only that conversation to the model provider you chose, and you can swap in your own API key or a local endpoint.",
       ),
     },
     {
       q: L("它会直接替我写一句完美话术吗？", "Will it just write the perfect line for me?"),
       a: L(
-        "不会。提示只点出下一步动作，角色仍要求你自己回应。复盘会给出更好的表达方向，但目标是增加你在压力下开口的次数，不是替你交作业。",
-        "No. Hints only name the next move; the character still waits for you to answer. The debrief points to a better way to say it, but the goal is more reps under pressure, not doing the work for you.",
-      ),
-    },
-    {
-      q: L("哪些事情不适合用？", "What is it not for?"),
-      a: L(
-        "它不做心理诊断、危机干预、医疗或法律建议，也不能把熟练度分数用于招聘、绩效或录用决策。涉及自伤、他伤或即时危险时，请联系当地紧急服务和专业人员。",
-        "It does not do psychological diagnosis, crisis intervention, or medical or legal advice, and proficiency scores must not be used for hiring, performance or admission decisions. If there is risk of harm to yourself or others, contact local emergency services and a professional.",
+        "提示只点出下一步动作，话还是你自己说。复盘会给出更好的说法，但它的目标是让你在压力下多开口几次。",
+        "Hints name the next move; the words are still yours. The debrief offers a better way to say it, but its job is to get you more reps under pressure.",
       ),
     },
   ],
@@ -336,10 +321,10 @@ export const research = {
       "A 43,170-entry structured knowledge corpus built by an automated pipeline",
     ),
   ],
-  boundaryLabel: L("边界", "Boundary"),
+  boundaryLabel: L("论文与产品", "Paper and product"),
   boundary: L(
-    "论文研究的是研究系统和一个内部部署的研究平台。这个网站介绍的产品是它的产品化版本，内置的是另一套规模更小、逐条核过来源的语料。论文的结果不应被读成对当前产品效果的证明。",
-    "The paper studies the research system and an internally deployed research platform. The product on this site is its productised version, shipping a separate, smaller, source-checked corpus. The paper's results should not be read as proof of this product's effectiveness.",
+    "论文研究的是研究系统和一个内部研究平台；这个网站上的产品是它的产品化版本，内置一套更小、逐条核过出处的语料。",
+    "The paper studies the research system and an internal research platform; the product on this site is its productised version, shipping a smaller, source-checked corpus.",
   ),
   links: {
     arxiv: L("arXiv", "arXiv"),
@@ -368,8 +353,8 @@ export const footer = {
     paper: L("论文", "Paper"),
   },
   disclaimer: L(
-    "仅用于低风险的练习和反思。不是临床评估、心理诊断或招聘决策工具。熟练度数字是模型估计，界面中已标注。涉及自伤、他伤或即时危险时，请联系当地紧急服务与专业人员。",
-    "For low-stakes practice and reflection only. Not clinical assessment, diagnosis, or a hiring tool. Proficiency numbers are model estimates and are labelled as such in the UI. If there is risk of harm to yourself or others, contact local emergency services and a professional.",
+    "用于日常练习与反思，不是临床评估或招聘工具。涉及自伤、他伤或即时危险时，请联系当地紧急服务与专业人员。",
+    "For everyday practice and reflection, not clinical assessment or hiring. If there is risk of harm to yourself or others, contact local emergency services and a professional.",
   ),
   copyright: L("© 2026 SocialCoach 作者", "© 2026 the SocialCoach authors"),
 };
