@@ -1,6 +1,6 @@
 <!-- Last verified: 2026-09-03 | Current stage: B -->
 
-# 产品提案：SocialCoach · 社交教练
+# 产品提案：SocialCoach
 
 ## 产品愿景
 
@@ -75,7 +75,11 @@
 | 发布火力句（未启用） | ChatGPT will agree with you. Your boss won't. |
 | 已否决 | `Before you knock.`（只在推门前一秒生效的门槛句）；15 个以机制词（练 / 陪练 / 阻力 / 复盘 / 还手）为核心的候选——机制不进主句 |
 
-同一句话存在于三处，改任何一处必须三处一起改：`README.md`、`app/src/app/layout.tsx` 的 `metadata.description`、`app/public/manifest.webmanifest` 的 `description`。
+**产品名对外一律是 `SocialCoach`**，中文语境也不例外（2026-09-08 定）。中文说明放在名字下面的副行，不做第二个名字：应用内是 `nav_workspace` 的「你的情商练习场」，banner 与 OG 图用紧凑形式「情商练习场」。
+
+主句存在于四处，改任何一处必须四处一起改：`README.md`、`app/src/app/layout.tsx` 的 `metadata.description`、`app/public/manifest.webmanifest` 的 `description`、`site/content.mjs` 的 `hero.h1` 与 `footer.tagline`。
+
+**同源指主句逐字一致，不是整串相等。** manifest 只放主句（安装提示要短），layout 是主句加一段展开（搜索摘要要长），README 是行文。曾经有人拿字符串相等去校验并误报成违规，所以在这里写明。英文主句里的撇号统一用印刷体 `’`。
 
 ## 路线图叙事
 
