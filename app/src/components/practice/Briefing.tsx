@@ -2,11 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Clock, MessageSquare } from "lucide-react";
-import { Avatar, BottomBar, Button, IconButton, Marginalia, Stages } from "@/components/ui";
+import { ArrowLeft, ArrowRight, Clock, MessageSquare, Timer } from "lucide-react";
+import { clsx } from "clsx";
+import { Avatar, BottomBar, Button, IconButton, Marginalia, Stages, Switch } from "@/components/ui";
 import { SkillTag } from "@/components/SkillBits";
 import { ScenarioCover } from "@/components/ScenarioCover";
-import { useApp, useLang } from "@/store/useApp";
+import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
 import { t, tList } from "@/lib/i18n";
 import { schedule } from "@/lib/client-api";
 import { historyFor, npcsOf } from "@/lib/session-utils";
@@ -18,7 +19,7 @@ import { learnerSeed } from "@/data/avatars";
 export function Briefing({ session }: { session: Session }) {
   const lang = useLang();
   const router = useRouter();
-  const { profile, proficiency, sessions, updateSession, settings } = useApp();
+  const { profile, proficiency, sessions, updateSession, settings, setSettings } = useApp();
   const [err, setErr] = useState<string | null>(null);
   const inflight = useRef(false);
   const sc = session.scenario;
@@ -39,8 +40,11 @@ export function Briefing({ session }: { session: Session }) {
   const ctx = contextById(sc.context);
   const objectives = session.adaptation?.objectives ?? sc.objectives.map((o) => o[lang]);
 
+  // The choice made here is remembered as the default for the next scene; the
+  // scene itself takes a snapshot, so the mid-scene toggle touches only itself.
+  const timed = !!settings.timed;
   const enter = () => {
-    updateSession(session.id, { status: "active", startedAt: Date.now() });
+    updateSession(session.id, { status: "active", startedAt: Date.now(), timed });
   };
 
   return (
@@ -81,7 +85,7 @@ export function Briefing({ session }: { session: Session }) {
           <div className="flex flex-col gap-3">
             {learner && (
               <div className="flex items-center gap-3 inset px-3 py-2.5">
-                <Avatar name={learner.name[lang]} hue={learner.hue} size={40} seed={learnerSeed(profile?.name ?? "", settings.avatarSeed)} />
+                <Avatar name={learner.name[lang]} hue={learner.hue} size={40} seed={learnerSeed(profile?.name ?? "", settings.avatarSeed, settings.avatarPortrait)} />
                 <div className="flex-1 min-w-0">
                   <p className="text-[14px] font-semibold">{t(lang, "pr_you_play")} · {learner.role[lang]}</p>
                   {learner.id !== "you" && <p className="text-[12px] text-ink-3 truncate">{learner.name[lang]}</p>}
@@ -111,6 +115,7 @@ export function Briefing({ session }: { session: Session }) {
             <p className="text-[14px] leading-relaxed">{session.adaptation.focus}</p>
           </section>
         )}
+        <ClockRow timed={timed} seconds={settings.patience ?? DEFAULT_PATIENCE} onChange={(v) => setSettings({ timed: v })} className="lg:hidden" />
         <p className="text-[11px] text-ink-4">{t(lang, "source")}: {sc.source}</p>
       </motion.div>
       </div>
@@ -119,6 +124,7 @@ export function Briefing({ session }: { session: Session }) {
       <Marginalia lgOnly className="lg:sticky lg:top-6 lg:h-[calc(100dvh-3rem)] lg:gap-5">
         <span className="eyebrow">{t(lang, "pr_objectives")}</span>
         <ObjectiveList items={objectives} />
+        <ClockRow timed={timed} seconds={settings.patience ?? DEFAULT_PATIENCE} onChange={(v) => setSettings({ timed: v })} />
         <Button block size="lg" variant="ink" onClick={enter} disabled={adapting && !err} className="mt-1">
           {t(lang, "pr_enter")} <ArrowRight size={18} />
         </Button>
@@ -129,6 +135,24 @@ export function Briefing({ session }: { session: Session }) {
           {t(lang, "pr_enter")} <ArrowRight size={18} />
         </Button>
       </BottomBar>
+    </div>
+  );
+}
+
+/**
+ * Replies on the clock, decided before the door opens. Real conversations do
+ * not wait fifteen seconds for an answer; with this on, neither does this one.
+ */
+function ClockRow({ timed, seconds, onChange, className }: { timed: boolean; seconds: number; onChange: (v: boolean) => void; className?: string }) {
+  const lang = useLang();
+  return (
+    <div className={clsx("inset px-3 py-2.5 flex items-center gap-3", className)}>
+      <Timer size={18} className={clsx("shrink-0 transition-colors", timed ? "text-accent-deep" : "text-ink-3")} aria-hidden />
+      <div className="flex-1 min-w-0">
+        <p className="text-[14px] font-semibold">{t(lang, "pr_clock_title")}</p>
+        <p className="text-[12px] text-ink-3 leading-snug">{timed ? t(lang, "pr_clock_brief_on", { c: seconds }) : t(lang, "pr_clock_brief_off")}</p>
+      </div>
+      <Switch checked={timed} onChange={onChange} label={t(lang, "pr_clock_title")} />
     </div>
   );
 }

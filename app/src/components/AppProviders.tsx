@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useApp, useLang } from "@/store/useApp";
 import { isReady, useByok } from "@/lib/byok";
 import { ModelSheet } from "./ModelSheet";
+import { FeedbackWidget } from "./Feedback";
 import { Toaster } from "./ui";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
@@ -66,6 +67,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
       {/* One instance for the whole app. `forced` has nothing to fall back on,
           so it cannot be dismissed until it works. */}
       <ModelSheet open={hydrated && (forced || byok.sheetOpen)} onClose={byok.closeSheet} forced={forced} />
+      {hydrated && <FeedbackWidget />}
       <Toaster />
     </div>
     </MotionConfig>

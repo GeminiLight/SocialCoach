@@ -20,10 +20,26 @@ export interface Settings {
    * same one; this makes it theirs, and re-rollable.
    */
   avatarSeed?: number;
+  /** Validated versioned portrait; independent of the learner’s display name. */
+  avatarPortrait?: string;
+  /**
+   * Default for new scenes: replies on the clock. Real conversations do not
+   * wait fifteen seconds for an answer, and neither, with this on, does the
+   * simulation. Off unless the learner asks for it — it is a harder mode.
+   */
+  timed?: boolean;
+  /** How long the other side waits before they carry on, in seconds. */
+  patience?: Patience;
 }
+
+export type Patience = 10 | 15 | 20;
+export const DEFAULT_PATIENCE: Patience = 15;
+export const PATIENCE_OPTIONS: readonly Patience[] = [10, 15, 20];
 
 interface AppState {
   hydrated: boolean;
+  /** In-memory onboarding choice, shared with global dialogs. */
+  onboardingLang: Lang | undefined;
   profile: Profile | null;
   /**
    * The cross-session habit, cached with the session ids it was read from so it
@@ -72,6 +88,7 @@ export const todayKey = (d = new Date()) => {
 
 const initial = {
   hydrated: false,
+  onboardingLang: undefined as Lang | undefined,
   profile: null,
   proficiency: {},
   sessions: [],
@@ -93,7 +110,7 @@ export const useApp = create<AppState>()(
       setHydrated: () => set({ hydrated: true }),
       setProfile: (profile) => set({ profile }),
       updateProfile: (p) => set((s) => ({ profile: s.profile ? { ...s.profile, ...p } : s.profile })),
-      setLang: (lang) => set((s) => ({ profile: s.profile ? { ...s.profile, lang } : s.profile })),
+      setLang: (lang) => set((s) => ({ onboardingLang: lang, profile: s.profile ? { ...s.profile, lang } : s.profile })),
       setProficiency: (proficiency) => set({ proficiency }),
       addSession: (session) => set((s) => ({ sessions: [session, ...s.sessions] })),
       removeSession: (id) => set((s) => ({ sessions: s.sessions.filter((x) => x.id !== id), todaySessionId: s.todaySessionId === id ? null : s.todaySessionId })),
@@ -202,6 +219,6 @@ export function computeStreak(days: string[]): number {
   return n;
 }
 
-export const useLang = (): Lang => useApp((s) => s.profile?.lang ?? (typeof navigator !== "undefined" && !navigator.language.startsWith("zh") ? "en" : "zh"));
+export const useLang = (): Lang => useApp((s) => s.profile?.lang ?? s.onboardingLang ?? (typeof navigator !== "undefined" && !navigator.language.startsWith("zh") ? "en" : "zh"));
 export const useGoals = (): SkillId[] => useApp((s) => s.profile?.goals ?? []);
 export const useContexts = (): ContextId[] => useApp((s) => s.profile?.contexts ?? []);

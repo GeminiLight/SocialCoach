@@ -90,6 +90,8 @@ pnpm dev                       # → http://localhost:3000
 
 ## Deployment
 
+**ModelScope Studio:** [Open the public demo](https://modelscope.cn/studios/GeminiLight/SocialCoach). The repository-root `Dockerfile` builds `app/` and serves on port 7860; configure model credentials through Studio Secrets. See the [deployment record](wiki/specs/spec-modelscope-deployment.md).
+
 **Self-hosted (recommended):** one small box, Docker Compose, automatic TLS. A Hong Kong or Singapore host reaches both mainland China and the rest of the world, needs no ICP filing, and sits close to domestic model endpoints.
 
 ```bash
@@ -145,6 +147,13 @@ Signature moments: objective progress fills in like ink on paper; the report rea
 ## Contributing
 
 Issues and PRs welcome. The corpus is the easiest place to help: scenarios, strategies and cases live in [`app/src/data/corpus/`](app/src/data/corpus) as typed, bilingual objects with a `source` field — add one and it gets tagged, retrieved and scheduled like everything else.
+
+## License
+
+Copyright 2026 SocialCoach contributors.
+
+SocialCoach is licensed under the [Apache License 2.0](LICENSE).
+Third-party materials retain their respective licenses and rights; references to books, papers, and other sources do not relicense those works.
 
 ## Disclaimer
 

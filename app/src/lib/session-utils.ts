@@ -2,7 +2,7 @@ import type { Scenario } from "@/data/corpus/types";
 import { COMPETENCIES, skillById, type CompetencyId, type Lang, type SkillId } from "@/data/taxonomy";
 import type { ScheduleResult } from "./client-api";
 import { uid } from "./format";
-import type { Proficiency, Session } from "./types";
+import type { ChatMessage, Proficiency, Session } from "./types";
 
 export function defaultLearnerId(s: Scenario): string {
   const p = s.characters.find((c) => c.playable);
@@ -57,6 +57,26 @@ export function competencyValues(prof: Proficiency): Record<CompetencyId, number
     out[c.id] = vals.length ? +(vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(2) : null;
   }
   return out;
+}
+
+/** The last thing anyone said or did — coach hints are whispers, not part of the room. */
+export function lastSpoken(msgs: ChatMessage[]): ChatMessage | undefined {
+  for (let i = msgs.length - 1; i >= 0; i--) if (msgs[i].role !== "coach") return msgs[i];
+  return undefined;
+}
+
+/**
+ * Silences since the learner last said anything. One is a lapse the other side
+ * fills; two in a row is a conversation they walk away from.
+ */
+export function silenceStreak(msgs: ChatMessage[]): number {
+  let n = 0;
+  for (let i = msgs.length - 1; i >= 0; i--) {
+    const m = msgs[i];
+    if (m.role === "learner") break;
+    if (m.role === "event" && m.kind === "silence") n++;
+  }
+  return n;
 }
 
 export function sessionMinutes(s: Session) {

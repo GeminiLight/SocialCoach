@@ -68,6 +68,12 @@
 - **解决方案：** 显式写 `left`。另外加 1px 边框后 `box-sizing: border-box` 会改变内框尺寸，内边距要跟着重算（48×28 带 1px 边框 → 内框 46×26 → 20px knob 的对称内边距是 3px，行程 20px）。
 - **教训：** 绝对定位元素的两个轴都要显式锚定，不要依赖静态位置。
 
+### 自定义 hook 的返回对象里混入 ref，调用方读任何字段都被判为「渲染期读 ref」
+- **现象：** `useReplyClock` 返回 `{ stage, visible, lineRef }`，`Chat` 在 JSX 里读 `clock.stage` 就被 `react-hooks/refs` 报 `Cannot access ref value during render`，即使读的字段和 ref 无关。
+- **原因：** eslint-config-next 16 带的 React Compiler 规则按值流追踪 `useRef` 结果；同一个对象里有 ref，整个对象就被当作 ref 容器。另外在渲染期写 `latest.current = fn` 也会被判「渲染期更新 ref」。
+- **解决方案：** 让调用方自己 `useRef` 并把 ref 作为参数传进 hook，hook 的返回值只放普通值；「保存最新回调」改在无依赖数组的 `useEffect` 里赋值。
+- **教训：** 这套规则下自定义 hook 的返回值不要夹带 ref。需要 DOM 引用就让它从外面进来。
+
 ### 关闭的双语弹窗也可能触发水合错误
 - **现象：** 将 `Sheet` 换成原生 `dialog` 后，刷新中文页面出现服务端 `Model` 与客户端「模型」不一致。
 - **原因：** 浏览器原生关闭状态只是隐藏元素；如果始终输出内容，服务端默认语言与客户端档案语言仍会参与 React 水合。
@@ -75,6 +81,12 @@
 - **教训：** 无障碍组件改造要同时验证首次加载、刷新和语言切换，不能只检查客户端点击打开。
 
 ## 构建 / 部署
+
+### ModelScope 通过 `su` 启动容器用户
+- **现象：** Docker 镜像构建成功，创空间却进入 `DeployFailed`；运行日志显示 `su next -c ...` 和 `This account is not available`（2026-09-09 实测）。
+- **原因：** Alpine 的 `adduser -S` 默认给系统用户设置不可登录的 shell；魔搭的启动包装器通过 `su` 执行命令，因此 Node 尚未启动就退出。
+- **解决方案：** ModelScope 专用根目录 Dockerfile 创建用户时加 `-s /bin/sh`，继续使用非 root 用户运行应用。
+- **教训：** 云平台可能包装容器启动命令；镜像构建通过后仍需查看运行日志，确认进程实际监听目标端口。
 
 ### `socialcoach.vercel.app` 已被他人占用
 - **现象：** 该域名返回 HTTP 200，但页面是 `lang="es"` 的深蓝暗色应用，与本项目无关。

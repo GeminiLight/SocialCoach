@@ -192,6 +192,21 @@ const dict = {
   pr_error: { zh: "对话中断了。", en: "The conversation was interrupted." },
   pr_scene_over: { zh: "场景已结束", en: "Scene over" },
   pr_engine_note: { zh: "旁白", en: "Aside" },
+
+  // Replies on the clock. The seconds are the other side's patience, so the
+  // copy is about them: who is looking, who is losing it, who carried on.
+  pr_clock_title: { zh: "限时应答", en: "Reply on the clock" },
+  pr_clock_explain: { zh: "{a} 秒，对方看向你。{b} 秒，开始不耐烦。{c} 秒还没开口，话头就过去了，对方接着说。", en: "At {a} seconds they look at you. At {b}, they start losing patience. At {c}, the moment passes and they carry on without you." },
+  pr_clock_this_scene: { zh: "这一局限时", en: "On the clock this scene" },
+  pr_clock_patience: { zh: "对方的耐心", en: "Their patience" },
+  pr_clock_seconds: { zh: "{n} 秒", en: "{n} s" },
+  pr_clock_brief_on: { zh: "开着。{c} 秒不开口，对方就接着说了。", en: "On. Stay quiet {c} seconds and they carry on without you." },
+  pr_clock_brief_off: { zh: "关着。这一局可以慢慢想。", en: "Off. Take your time this scene." },
+  pr_clock_look_one: { zh: "{name}看着你，等你开口。", en: "{name} is looking at you, waiting." },
+  pr_clock_look_all: { zh: "大家都看向你。", en: "Everyone turns to you." },
+  pr_clock_impatient: { zh: "{name}有点不耐烦了。", en: "{name} is getting impatient." },
+  pr_clock_lapsed: { zh: "你沉默了 {n} 秒。", en: "You were silent for {n} seconds." },
+  pr_clock_floor: { zh: "{name}不再等了。你开口，对话才会继续。", en: "{name} has stopped waiting. Say something and the scene goes on." },
   rp_failed: { zh: "复盘没能生成完整，再试一次通常就好。", en: "The debrief didn't come through cleanly. Trying again usually fixes it." },
   rp_writing: { zh: "教练正在写", en: "Coach is writing" },
   rp_writing_more: { zh: "还在写：理论与案例、反思问题、下一步…", en: "Still writing: theory and cases, reflection questions, next step…" },

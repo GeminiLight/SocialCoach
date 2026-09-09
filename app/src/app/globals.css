@@ -39,6 +39,31 @@
   --scene-rose-color: light-dark(oklch(0.47 0.085 15), oklch(0.77 0.085 15));
   --scene-rose-paper: light-dark(oklch(0.935 0.030 15), oklch(0.255 0.025 15));
 
+  /* Portrait pigments stay physical in both themes: skin and hair never invert. */
+  --avatar-skin-0: oklch(0.88 0.055 58);
+  --avatar-shade-0: oklch(0.76 0.075 49);
+  --avatar-skin-1: oklch(0.78 0.075 57);
+  --avatar-shade-1: oklch(0.66 0.085 48);
+  --avatar-skin-2: oklch(0.66 0.085 52);
+  --avatar-shade-2: oklch(0.54 0.080 43);
+  --avatar-skin-3: oklch(0.53 0.070 48);
+  --avatar-shade-3: oklch(0.43 0.065 40);
+  --avatar-hair-0: oklch(0.28 0.025 55);
+  --avatar-hair-1: oklch(0.39 0.060 48);
+  --avatar-hair-2: oklch(0.56 0.060 76);
+  --avatar-feature: oklch(0.25 0.030 45);
+  --avatar-linen: oklch(0.94 0.020 78);
+  --avatar-clay-paper: light-dark(oklch(0.92 0.037 45), oklch(0.40 0.035 45));
+  --avatar-clay-ink: oklch(0.49 0.100 36);
+  --avatar-ochre-paper: light-dark(oklch(0.93 0.050 85), oklch(0.42 0.040 85));
+  --avatar-ochre-ink: oklch(0.51 0.065 77);
+  --avatar-olive-paper: light-dark(oklch(0.91 0.035 130), oklch(0.40 0.030 130));
+  --avatar-olive-ink: oklch(0.44 0.050 140);
+  --avatar-teal-paper: light-dark(oklch(0.91 0.025 190), oklch(0.40 0.030 190));
+  --avatar-teal-ink: oklch(0.43 0.045 200);
+  --avatar-rose-paper: light-dark(oklch(0.92 0.030 15), oklch(0.40 0.030 15));
+  --avatar-rose-ink: oklch(0.47 0.065 15);
+
   /* Large high-contrast surfaces — the rehearse banner, the next-step slab.
      Small controls invert happily in dark; a full-width near-white block does
      not, which is the glare the design brief rules out. */
@@ -285,6 +310,16 @@ a { color: inherit; text-decoration: none; }
 .scenario-cover, .scenario-tile { --scene-rule: color-mix(in oklch, var(--scene-color) 18%, var(--scene-paper)); }
 .scenario-cover { background: var(--scene-paper); }
 .scenario-tile { background: color-mix(in oklch, var(--scene-color) 8%, var(--scene-paper)); color: var(--scene-color); border-color: var(--scene-rule); }
+/* The tall cover is a ruled page. `--rule` is both the line spacing of the paper
+   and the line-height of the quote, and both are anchored to the bottom edge, so
+   the text sits on the rules whatever its line count. The stock darkens a touch
+   toward the foot so the sheet reads as paper, not a flat tint. */
+.scenario-cover-tall {
+  --rule: 30px;
+  --scene-rule-soft: color-mix(in oklch, var(--scene-color) 9%, var(--scene-paper));
+  background: linear-gradient(to bottom, var(--scene-paper), color-mix(in oklch, var(--scene-color) 6%, var(--scene-paper)));
+}
+.scenario-ruling { background-image: repeating-linear-gradient(to top, var(--scene-rule-soft) 0 1px, transparent 1px var(--rule)); }
 
 .skip-link { position: fixed; top: 12px; left: 12px; z-index: 70; padding: 12px 20px; background: var(--ink); color: var(--paper); border-radius: var(--radius-sm); transform: translateY(-160%); }
 .skip-link:focus { transform: translateY(0); }
@@ -382,3 +417,25 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 }
 
 .knowledge-principle { background: var(--scene-teal-paper); }
+
+/* A contact sheet of portraits: focus and selection have separate outlines. */
+.avatar-preview { background: var(--paper-deep); border: 1px solid var(--line); }
+.avatar-option {
+  min-height: 76px; display: flex; align-items: center; justify-content: center;
+  position: relative; border: 1px solid transparent; border-radius: var(--radius);
+  background: transparent;
+}
+.avatar-option[aria-pressed="true"] { border-color: var(--action); background: var(--accent-soft); }
+.avatar-option-check {
+  position: absolute; right: 4px; bottom: 4px; display: grid; place-items: center;
+  width: 18px; height: 18px; border-radius: 50%; background: var(--action); color: var(--accent-ink);
+}
+.avatar-swatch { min-width: 44px; min-height: 44px; display: grid; place-items: center; border-radius: 50%; border: 1px solid transparent; }
+.avatar-swatch[aria-pressed="true"] { border-color: var(--action); }
+.avatar-swatch-pigment { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line-strong); }
+.avatar-swatch[aria-pressed="true"] .avatar-swatch-pigment { outline: 2px solid var(--paper); outline-offset: -4px; }
+@media (hover: hover) and (pointer: fine) {
+  .avatar-option:hover { background: var(--inset); }
+  .avatar-option[aria-pressed="true"]:hover { background: var(--accent-soft); }
+  .avatar-swatch:hover { background: var(--inset); }
+}

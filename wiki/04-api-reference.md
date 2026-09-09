@@ -77,6 +77,8 @@
 
 **请求：** `{ scenario, learnerCharacterId, messages: ChatMessage[], lang, learnerName? }`
 
+`messages` 里可以出现 `{ role: "event", kind: "silence", seconds }`：限时应答里用户到点没开口。它占用户的位置进入回合（`(名字 says nothing for 15 seconds.)`），**不计入 `maxTurns`**；服务端按连续沉默次数追加一行系统提示，第二次连续沉默要求 NPC 收场（`ended: true`）。→ [spec-timed-reply](./specs/spec-timed-reply.md)
+
 **响应：** `text/plain` 流。格式严格如下：
 
 ```
@@ -212,3 +214,16 @@
 | 503 | `Anthropic.APIConnectionError` —— 连不上模型 |
 
 流式路由的模型错误发生在流开始之后，只能从流尾的 `@@error` 拿到。
+
+
+## 用户反馈
+
+### `GET /api/feedback`
+
+返回 `{ available: boolean }`，仅检查四项收件配置是否齐全，不返回凭证，`Cache-Control: no-store`。
+
+### `POST /api/feedback`
+
+JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: string, contact?: string, tags?: string[], rating?: helpful|unhelpful, page: 页面类型, lang: zh|en }`。页面白名单为首页、arena、learn、progress、settings、rehearse、onboarding、practice；practice 不包含会话 ID。标签白名单详见 `feedback/schema.ts`。未知字段拒绝；描述 ≤2000、联系方式 ≤160、标签 ≤3、实际请求体 ≤16 KB。
+
+成功 `{ ok: true, id }`；错误 `{ error: 稳定错误码 }`：400 invalid_request、403 跨站、409 id_conflict、413 too_large、415 非 JSON、429 rate_limited（Retry-After）、503 unavailable、502 delivery_failed。没有真实上游成功响应不会回报送达。Node runtime，maxDuration=30；内存限流和上游幂等限制见 [反馈方案](./specs/spec-user-feedback.md)。
