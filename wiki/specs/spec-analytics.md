@@ -1,6 +1,6 @@
 # 匿名使用统计 → 飞书
 
-状态：已上线 Vercel 生产（PR #6 合并，2026-09-10）。生产 `/api/track` 返回可用；用浏览器在线上跑了一局，4 次 POST 全部 202，运行日志无 `[track]` 错误，即建月表与写入未报错。ModelScope 空间代码已推送（`ceee413`），但推送不触发重建：需在网页加 Secret `ANALYTICS_FEISHU_TABLE_PREFIX=events` 并重启空间，之后 `/api/track` 才可用。
+状态：已上线 Vercel 生产（PR #6 合并，2026-09-10）。生产 `/api/track` 返回可用；用浏览器在线上跑了一局，4 次 POST 全部 202，运行日志无 `[track]` 错误，即建月表与写入未报错。ModelScope 空间代码已推送��`ceee413`），明文变量 `ANALYTICS_FEISHU_TABLE_PREFIX=events` 已通过 OpenAPI 加上并触发重建（推送本身不触发重建，见部署记录）。
 
 测试那一局来自设备 `5cc1c7e0-b946-4bfe-939b-4d3a0b1fcec9`、会话 `qnassz7oxuoe`，Base 里 `events_2026_09` 表中这四行是测试数据，可删。
 
