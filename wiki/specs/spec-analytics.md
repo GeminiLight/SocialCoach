@@ -59,4 +59,4 @@
 - `npx tsx scripts/check-feedback.ts` 在飞书客户端抽出后仍通过。
 - 端到端：本机起 mock 飞书（`FEISHU_BASE_URL`）加生产构建，浏览器跑一局，mock 收到建表与四类事件的记录。
 - 生产：Vercel 运行日志只有 `λ POST /api/track` 的 info 行，没有 `[track]` 错误行；写入在 `after()` 里完成，失败会以短错误码落日志，所以「无错误行」是建表与写入成功的证据，但没有从 Base 读回核对。
-- 未验证：`scripts/retention.ts` 用到的 `search` 接口过滤语法以真实调用为准；ModelScope ���在 Secret 配好后再跑一局核对。
+- 未验证：`scripts/retention.ts` 用到的 `search` 接口过滤语法以真实调用为准；ModelScope 等首批真实会话进来后核对。
