@@ -176,6 +176,7 @@ type ChatRole = "learner" | "npc" | "coach" | "event";   // event = 房间里发
 | POST | `/api/reflect` | 反思回应 | fast | 文本流 | 30 |
 | POST | `/api/hint` | 对话中提示 | fast | JSON | 30 |
 | POST | `/api/rehearse` | 生成自定义场景 | fast | JSON | 120 |
+| POST | `/api/track` | 匿名使用统计 → 飞书月表 | — | 202 | 30 |
 
 ## 环境变量
 

@@ -37,6 +37,7 @@
 - [ ] `Architecture` 流程图的节点名仍是论文术语（`Prescription` / `Adaptation` / `Bounded proficiency delta`）。是否换成用户语言待定——换了对产品读者友好，但与代码的对应关系变弱
 - [ ] 发布火力句 `ChatGPT will agree with you. Your boss won't.` 已定稿待用，用于 HN / Product Hunt / 小红书发布帖
 - [ ] `You know what to say. You just can't say it yet.` 作为落地页副本 / 广告变体
+- [ ] 统计后续：真实飞书凭证下验证自动建月表（`bitable:app`）与 `search` 过滤语法；飞书仪表盘按「事件 = session_start」建每日局数与场景分布两张图；Postgres 迁移路径：Supabase / Neon 免费档（0.5 GB，免费档一周不用会暂停，Pro 每月约 25 美元）或阿里云 RDS PostgreSQL Serverless（每月几十元），迁移是导出各月表 CSV 灌库并替换 `deliverEvents`，客户端不改
 - [ ] 限时应答后续：耐心秒数按场景难度给默认值（difficulty 3 → 10 秒）；沉默事件是否进入跨场次模式识别（`/api/pattern`）作为「一被顶就冻住」的证据；reduced motion 下的墨线与「开着朗读时等台词读完再计时」未单独验证
 
 ## 进行中（另一 session，未提交）

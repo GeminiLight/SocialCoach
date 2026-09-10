@@ -11,6 +11,7 @@ import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
 import { t, tList } from "@/lib/i18n";
 import { schedule } from "@/lib/client-api";
 import { historyFor, npcsOf } from "@/lib/session-utils";
+import { track } from "@/lib/analytics/track";
 import type { Session } from "@/lib/types";
 import { contextById } from "@/data/taxonomy";
 import { learnerSeed } from "@/data/avatars";
@@ -44,7 +45,9 @@ export function Briefing({ session }: { session: Session }) {
   // scene itself takes a snapshot, so the mid-scene toggle touches only itself.
   const timed = !!settings.timed;
   const enter = () => {
-    updateSession(session.id, { status: "active", startedAt: Date.now(), timed });
+    const startedAt = Date.now();
+    updateSession(session.id, { status: "active", startedAt, timed });
+    track({ name: "session_start", ts: startedAt, session: session.id, scenario: sc.custom ? "custom" : sc.id, origin: session.origin, context: sc.context, difficulty: sc.difficulty, timed });
   };
 
   return (

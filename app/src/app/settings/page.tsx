@@ -224,6 +224,9 @@ export default function Settings() {
               {t(lang, "st_local_note")}
             </p>
             <div className="card divide-y divide-line">
+              <Row label={t(lang, "st_telemetry")} hint={t(lang, "st_telemetry_hint")}>
+                <Switch checked={settings.telemetry !== false} onChange={(v) => setSettings({ telemetry: v })} label={t(lang, "st_telemetry")} />
+              </Row>
               <button
                 onClick={exportData}
                 className="press w-full flex items-center gap-3 px-4 min-h-16 py-3.5 text-left text-[14px] font-medium"

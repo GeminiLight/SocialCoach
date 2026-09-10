@@ -334,6 +334,8 @@ const dict = {
   st_bio_empty: { zh: "写下你最近想练习的事，让每日推荐更贴近你。", en: "Share what you want to work on to help shape your daily practice." },
   st_avatar_reroll: { zh: "换一个头像", en: "New avatar" },
   st_local_note: { zh: "练习记录保存在这台设备", en: "Practice records are saved on this device" },
+  st_telemetry: { zh: "匿名使用统计", en: "Anonymous usage stats" },
+  st_telemetry_hint: { zh: "只记打开、进入和结束了哪个场景、时长和结果，随机设备 ID，不含任何对话内容。", en: "Records opens, which scenario you entered and finished, duration and outcome, under a random device id. Never what was said." },
   st_export_hint: { zh: "下载一份资料与练习记录备份。", en: "Download a backup of your profile and practice records." },
   st_goal_hint: { zh: "已选 {n} 项；至少保留一项，修改立即保存。", en: "{n} selected. Keep at least one; changes save immediately." },
   st_voice_hint: { zh: "对话时自动朗读对方的台词。", en: "Automatically read the other person’s lines during practice." },
@@ -394,7 +396,7 @@ const dict = {
   st_model_incomplete: { zh: "填完密钥与两个模型名", en: "Fill in the key and both model names" },
   ob_model_title: { zh: "先接一个模型", en: "Connect a model first" },
   ob_model_sub: { zh: "这个部署没有配模型。填你自己的，只存在这台设备。", en: "This deployment has no model configured. Add your own; it stays on this device." },
-  st_about_body: { zh: "基于论文 SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice（Wang 等，2026）。用于低风险的练习与反思，不是临床评估。练习数据保存在你的设备上；用语音输入时，音频由浏览器上传给它的厂商做识别。", en: "Built on SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice (Wang et al., 2026). For low-stakes practice and reflection, not clinical assessment. Your practice data stays on your device; voice input is the exception — your browser uploads that audio to its vendor to transcribe." },
+  st_about_body: { zh: "基于论文 SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice（Wang 等，2026）。用于低风险的练习与反思，不是临床评估。练习数据保存在你的设备上；用语音输入时，音频由浏览器上传给它的厂商做识别。开着匿名使用统计时，打开应用和每局的场景、时长、结果会以随机设备 ID 记入我们的统计表，不含对话内容，可在「数据」里关闭。", en: "Built on SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice (Wang et al., 2026). For low-stakes practice and reflection, not clinical assessment. Your practice data stays on your device; voice input is the exception — your browser uploads that audio to its vendor to transcribe. With anonymous usage stats on, app opens and each practice's scenario, duration and outcome are recorded under a random device id, never the conversation; switch it off under Data." },
   st_edit: { zh: "编辑", en: "Edit" },
   st_stats: { zh: "统计", en: "Stats" },
 

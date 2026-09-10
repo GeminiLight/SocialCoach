@@ -11,6 +11,7 @@ import { CaseBody, TheoryBody } from "@/components/Knowledge";
 import { useApp, useLang } from "@/store/useApp";
 import { t, tList } from "@/lib/i18n";
 import { assessStream, reflectStream } from "@/lib/client-api";
+import { track } from "@/lib/analytics/track";
 import { buildSession } from "@/lib/session-utils";
 import type { Report, Session } from "@/lib/types";
 import type { Character } from "@/data/corpus/types";
@@ -49,6 +50,7 @@ export function Debrief({ session }: { session: Session }) {
         (p) => setPartial(p),
       );
       applyReport(session.id, final);
+      track({ name: "debrief_view", ts: Date.now(), session: session.id, scenario: sc.custom ? "custom" : sc.id, stars: final.stars, outcome: final.outcome });
       setPartial(null);
     } catch (e) {
       console.error("[assess]", e);

@@ -7,6 +7,7 @@ import { isReady, useByok } from "@/lib/byok";
 import { ModelSheet } from "./ModelSheet";
 import { FeedbackWidget } from "./Feedback";
 import { Toaster } from "./ui";
+import { trackOpen } from "@/lib/analytics/track";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const hydrated = useApp((s) => s.hydrated);
@@ -53,6 +54,11 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     if (t === "system") document.documentElement.removeAttribute("data-theme");
     else document.documentElement.setAttribute("data-theme", t);
   }, [settings.theme]);
+
+  // Counted once the learner exists: onboarding visits are not retention.
+  useEffect(() => {
+    if (hydrated && profile) trackOpen();
+  }, [hydrated, profile]);
 
   useEffect(() => {
     if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {

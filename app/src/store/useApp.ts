@@ -5,6 +5,7 @@ import type { ContextId, Lang, SkillId } from "@/data/taxonomy";
 import type { Scenario } from "@/data/corpus/types";
 import type { ChatMessage, Profile, Proficiency, Reflection, Report, Session } from "@/lib/types";
 import type { PatternResult } from "@/lib/tasks/types";
+import { DEVICE_KEY, OPEN_DAY_KEY } from "@/lib/analytics/keys";
 
 export type Theme = "system" | "light" | "dark";
 
@@ -30,6 +31,12 @@ export interface Settings {
   timed?: boolean;
   /** How long the other side waits before they carry on, in seconds. */
   patience?: Patience;
+  /**
+   * Anonymous usage events (which scenario, how long, how it ended; never
+   * what was said) to the team's table. Undefined means on; the switch in
+   * Settings is the way out, and About says what leaves the device.
+   */
+  telemetry?: boolean;
 }
 
 export type Patience = 10 | 15 | 20;
@@ -173,6 +180,8 @@ export const useApp = create<AppState>()(
       setPatternInsight: (result, from) => set({ patternInsight: { result, from, at: Date.now() } }),
       reset: () => {
         try { sessionStorage.removeItem("socialcoach.rehearsal-draft"); } catch {}
+        // The analytics device id goes with everything else: a reset learner is a new device.
+        try { localStorage.removeItem(DEVICE_KEY); localStorage.removeItem(OPEN_DAY_KEY); } catch {}
         set({ ...initial, hydrated: true });
       },
     }),
