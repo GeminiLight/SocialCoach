@@ -51,7 +51,7 @@
 | B10 | ModelScope 公开体验入口 | ✅ | 2026-09-09 `GeminiLight/SocialCoach`；免费 CPU Docker 创空间，Apache-2.0；页面与线上对话 / 复盘流式验证通过 → [部署记录](./specs/spec-modelscope-deployment.md) |
 
 | B11 | 用户反馈 → 飞书 | 🚧 | 专用应用和收件表已建；双部署真实提交通过，待确认本人表格管理权限 → [反馈方案](./specs/spec-user-feedback.md) |
-| B12 | 匿名使用统计 → 飞书（四个事件、按月建表、留存脚本） | 🚧 | 2026-09-10 实现与离线 / mock 验证完成；真实飞书联调与 B11 共用凭证 → [spec-analytics](./specs/spec-analytics.md) |
+| B12 | 匿名使用统计 → 飞书（四个事件、按月建表、留存脚本） | ✅ | 2026-09-10 Vercel 生产上线并跑通一局无错误；ModelScope 代码已同步，待 Secret `ANALYTICS_FEISHU_TABLE_PREFIX` → [spec-analytics](./specs/spec-analytics.md) |
 
 ### Stage C — 可索引化与 GEO
 

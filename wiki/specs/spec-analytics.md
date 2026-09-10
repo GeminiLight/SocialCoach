@@ -1,6 +1,8 @@
 # 匿名使用统计 → 飞书
 
-状态：已实现，离线校验脚本与端到端（本机 mock 飞书）通过；真实飞书写入待凭证到位后联调（2026-09-10）。
+状态：已上线 Vercel 生产（PR #6 合并，2026-09-10）。生产 `/api/track` 返回可用；用浏览器在线上跑了一局，4 次 POST 全部 202，运行日志无 `[track]` 错误，即建月表与写入未报错。ModelScope 空间代码已同步（`ceee413`），等 Secrets 里加 `ANALYTICS_FEISHU_TABLE_PREFIX=events` 后生效。
+
+测试那一局来自设备 `5cc1c7e0-b946-4bfe-939b-4d3a0b1fcec9`、会话 `qnassz7oxuoe`，Base 里 `events_2026_09` 表中这四行是测试数据，可删。
 
 ## 为什么，以及边界
 
@@ -56,4 +58,5 @@
 - `npx tsx scripts/check-track.ts`：未配置时 GET 报不可用、POST 204 丢弃；严格 schema 拒绝多余字段、非法场景 id、超过 20 条、跨站、超大；首次写入自动建月表，同月复用缓存，跨月各写各表；`client_token` 等于批次 id；飞书失败不影响 202；钉死表跳过发现；每 IP 限流。
 - `npx tsx scripts/check-feedback.ts` 在飞书客户端抽出后仍通过。
 - 端到端：本机起 mock 飞书（`FEISHU_BASE_URL`）加生产构建，浏览器跑一局，mock 收到建表与四类事件的记录。
-- 未验证：真实飞书凭证下的建表权限与写入；`search` 接口的过滤语法以真实调用为准。
+- 生产：Vercel 运行日志只有 `λ POST /api/track` 的 info 行，没有 `[track]` 错误行；写入在 `after()` 里完成，失败会以短错误码落日志，所以「无错误行」是建表与写入成功的证据，但没有从 Base 读回核对。
+- 未验证：`scripts/retention.ts` 用到的 `search` 接口过滤语法以真实调用为准；ModelScope ���在 Secret 配好后再跑一局核对。
