@@ -84,6 +84,17 @@ const BY_CONTEXT: Record<ContextId, ScenarioIconName> = {
   party: "wine",
 };
 
+/** Soft, category-specific hues for context chips and onboarding cards. */
+export const CONTEXT_HUES: Record<ContextId, number> = {
+  workplace: 215,
+  family: 32,
+  friendship: 48,
+  romantic: 338,
+  education: 265,
+  public: 185,
+  party: 300,
+};
+
 /**
  * Curated icon per corpus scenario. Kept here rather than in the corpus files
  * so the two large scenario modules stay untouched; scenarios generated at
@@ -149,4 +160,19 @@ export function ScenarioIcon({
   className?: string;
 }) {
   return createElement(SCENARIO_ICONS[scenarioIconName(scenario)], { size, strokeWidth, className });
+}
+
+/** Context-level icon, used where a category is the unit rather than a scenario. */
+export function ContextIcon({
+  context,
+  size = 20,
+  strokeWidth = 1.7,
+  className,
+}: {
+  context: ContextId;
+  size?: number;
+  strokeWidth?: number;
+  className?: string;
+}) {
+  return createElement(SCENARIO_ICONS[BY_CONTEXT[context]], { size, strokeWidth, className });
 }

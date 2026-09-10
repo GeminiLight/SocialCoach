@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { clsx } from "clsx";
 import { ChevronDown } from "lucide-react";
 import { COMPETENCIES, CONTEXTS, SKILLS, skillById, type ContextId, type Lang, type SkillId } from "@/data/taxonomy";
+import { CONTEXT_HUES } from "@/data/scenario-icons";
+import { ContextIllustration } from "@/data/context-illustrations";
 import { SCENARIOS } from "@/data/corpus";
 import { t } from "@/lib/i18n";
 import { useApp, useLang } from "@/store/useApp";
@@ -205,7 +207,14 @@ export default function Onboarding() {
                       style={{ "--i": i } as React.CSSProperties}
                       aria-pressed={on}
                     >
-                      <span className="text-[22px] leading-none">{c.glyph}</span>
+                      <span
+                        className="h-12 w-12 rounded-2xl inline-flex items-center justify-center shrink-0"
+                        style={{
+                          background: hueColor(CONTEXT_HUES[c.id], on ? 0.94 : 0.965, on ? 0.055 : 0.038),
+                        }}
+                      >
+                        <ContextIllustration context={c.id} size={34} />
+                      </span>
                       <span className="font-semibold text-[15px]">{c.name[lang]}</span>
                       <span className="text-[12px] text-ink-3 leading-snug">{c.types.slice(0, 3).map((x) => x[lang]).join(" · ")}</span>
                     </button>
