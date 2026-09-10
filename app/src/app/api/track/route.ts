@@ -13,7 +13,9 @@ import { analyticsConfigured, deliverEvents } from "@/lib/analytics/feishu";
  * response the client would act on — a beacon is fire-and-forget by design.
  */
 export const runtime = "nodejs";
-export const maxDuration = 30;
+// `after()` work counts toward this. A cold table needs a column check and a
+// dozen cross-border Feishu calls before its first write; 30 s was not enough.
+export const maxDuration = 60;
 
 const HOUR = 3_600_000;
 /** A practice is three or four flushes; this is many practices from one address. */

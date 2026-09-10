@@ -124,9 +124,12 @@ export function ensureFields(tableId: string): Promise<void> {
         if (!data.has_more || !data.page_token) break;
         pageToken = data.page_token;
       }
-      for (const f of FIELDS) {
-        if (have.has(f.field_name)) continue;
-        await feishuCall("analytics_add_field", `/bitable/v1/apps/${app()}/tables/${t}/fields`, { method: "POST", body: JSON.stringify(f) });
+      // A few at a time: twelve sequential cross-border calls once blew the
+      // function's time budget on Vercel and took the batch down with them;
+      // all at once risks Feishu's write-conflict error on the same table.
+      const missing = FIELDS.filter((f) => !have.has(f.field_name));
+      for (let i = 0; i < missing.length; i += 4) {
+        await Promise.all(missing.slice(i, i + 4).map((f) => feishuCall("analytics_add_field", `/bitable/v1/apps/${app()}/tables/${t}/fields`, { method: "POST", body: JSON.stringify(f) })));
       }
     })();
     ensured.set(tableId, p);

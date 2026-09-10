@@ -88,6 +88,12 @@
 - **解决方案：** ModelScope 专用根目录 Dockerfile 创建用户时加 `-s /bin/sh`，继续使用非 root 用户运行应用。
 - **教训：** 云平台可能包装容器启动命令；镜像构建通过后仍需查看运行日志，确认进程实际监听目标端口。
 
+### `after()` 里的工作计入 Vercel 函数时长
+- **现象：** `/api/track` 第二批上线后，生产第一条 POST 记了 `Vercel Runtime Timeout Error: Task timed out after 30 seconds`，那批事件丢了。
+- **原因：** 落点第一次写旧表前要补 12 列，加上列表和写入是 14 次串行跨境飞书调用，全在 `after()` 里跑；`after()` 不是 fire-and-forget，它占用函数的 `maxDuration`，而路由写的是 30 秒。
+- **解决方案：** 补列改为每次 4 个并发，`maxDuration` 提到 60；本地 mock 看不出来，因为本机到 mock 的延迟是零。
+- **教训：** 放进 `after()` 的工作要按「跨境往返 × 次数」估时，并且给 `maxDuration` 留出余量；一次性迁移类的工作（补列、建表）最容易在冷实例上撞时限。
+
 ### `socialcoach.vercel.app` 已被他人占用
 - **现象：** 该域名返回 HTTP 200，但页面是 `lang="es"` 的深蓝暗色应用，与本项目无关。
 - **原因：** Vercel 子域先到先得，同名撞车。
