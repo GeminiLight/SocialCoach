@@ -77,6 +77,8 @@
 
 **请求：** `{ scenario, learnerCharacterId, messages: ChatMessage[], lang, learnerName? }`
 
+`messages` 里可以出现 `{ role: "event", kind: "silence", seconds }`：限时应答里用户到点没开口。它占用户的位置进入回合（`(名字 says nothing for 15 seconds.)`），**不计入 `maxTurns`**；服务端按连续沉默次数追加一行系统提示，第二次连续沉默要求 NPC 收场（`ended: true`）。→ [spec-timed-reply](./specs/spec-timed-reply.md)
+
 **响应：** `text/plain` 流。格式严格如下：
 
 ```
@@ -99,6 +101,18 @@
 **`@@meta` 必须在台词之前。** 放在末尾时快模型六个回合只输出两次，目标追踪因此长期静默失效。→ [80-known-pitfalls.md](./80-known-pitfalls.md)
 
 **协议约束（改 prompt 时必须保住）：** NPC 不得跳出角色、不得提及目标或 App、不得提前吐露 `hidden`；用户敌意时真实升级或退让，用户用对技能时按比例软化而非立刻投降。→ 详见 [00-product-proposal.md#不做什么](./00-product-proposal.md#不做什么)
+
+---
+
+### `POST /api/track`
+
+匿名使用统计入口。**客户端先 `GET` 询问 `{ available }`，未配置的部署不会收到 POST。**
+
+**请求：** `{ id: uuid, device: uuid, lang, events: TrackEvent[1..20] }`，`events` 是 `app_open` / `session_start` / `session_end` / `debrief_view` 的严格联合类型（见 `src/lib/analytics/schema.ts`），多任何字段整批 400。
+
+**响应：** `202 { ok: true }`，写入在 `after()` 里完成；未配置 `204`；跨站 `403`；超 16 KB `413`；每 IP 每小时 240 次后 `429`。
+
+落点是飞书 Base 按月建表，配置见 `.env.example` 的 `ANALYTICS_FEISHU_*`。→ [spec-analytics](./specs/spec-analytics.md)
 
 ---
 
@@ -212,3 +226,16 @@
 | 503 | `Anthropic.APIConnectionError` —— 连不上模型 |
 
 流式路由的模型错误发生在流开始之后，只能从流尾的 `@@error` 拿到。
+
+
+## 用户反馈
+
+### `GET /api/feedback`
+
+返回 `{ available: boolean }`，仅检查四项收件配置是否齐全，不返回凭证，`Cache-Control: no-store`。
+
+### `POST /api/feedback`
+
+JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: string, contact?: string, tags?: string[], rating?: helpful|unhelpful, page: 页面类型, lang: zh|en }`。页面白名单为首页、arena、learn、progress、settings、rehearse、onboarding、practice；practice 不包含会话 ID。标签白名单详见 `feedback/schema.ts`。未知字段拒绝；描述 ≤2000、联系方式 ≤160、标签 ≤3、实际请求体 ≤16 KB。
+
+成功 `{ ok: true, id }`；错误 `{ error: 稳定错误码 }`：400 invalid_request、403 跨站、409 id_conflict、413 too_large、415 非 JSON、429 rate_limited（Retry-After）、503 unavailable、502 delivery_failed。没有真实上游成功响应不会回报送达。Node runtime，maxDuration=30；内存限流和上游幂等限制见 [反馈方案](./specs/spec-user-feedback.md)。

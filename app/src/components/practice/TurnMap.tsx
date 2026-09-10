@@ -15,6 +15,8 @@ interface Turn {
   delta: number;
   kind: Kind;
   said: string;
+  /** This move was a silence: the learner left them waiting instead of speaking. */
+  silent: boolean;
 }
 
 /**
@@ -34,7 +36,9 @@ interface Turn {
 function turnsOf(session: Session): Turn[] {
   const trail = session.stanceTrail ?? [];
   if (trail.length === 0) return [];
-  const said = session.messages.filter((m) => m.role === "learner").map((m) => m.text);
+  // Every move the other side answered, in order: a line, or a silence that
+  // stood where a line should have. The trail has one entry per answer.
+  const moves = session.messages.filter((m) => m.role === "learner" || (m.role === "event" && m.kind === "silence"));
   const open = 20; // where a scene starts before any turn has reported
   return trail.map((stance, i) => {
     const prev = i === 0 ? open : trail[i - 1];
@@ -47,7 +51,8 @@ function turnsOf(session: Session): Turn[] {
       // A small wobble is not a move; anything negative is, because giving
       // ground is the thing this product exists to make visible.
       kind: delta <= -1 ? "loss" : delta >= 5 ? "gain" : "hold",
-      said: said[i] ?? "",
+      said: moves[i]?.text ?? "",
+      silent: moves[i]?.role === "event",
     };
   });
 }
@@ -83,7 +88,8 @@ export function TurnMap({ session, lang, className }: { session: Session; lang: 
                   <span
                     className={clsx(
                       "absolute inset-x-0 bottom-0 rounded-[3px] transition-[height] duration-500",
-                      x.kind === "gain" ? "bg-ink" : "bg-ink-4",
+                      // A silence is drawn hollow: nothing was said, so nothing is filled in.
+                      x.silent ? "border border-dashed border-ink-4 bg-transparent" : x.kind === "gain" ? "bg-ink" : "bg-ink-4",
                     )}
                     style={{ height: `${Math.max(4, x.stance)}%` }}
                   />
@@ -117,7 +123,7 @@ export function TurnMap({ session, lang, className }: { session: Session; lang: 
             {t(lang, "rp_map_turn", { n: sel.n })} · {t(lang, KIND_KEY[sel.kind])}
             {sel.kind !== "hold" && <span className="num text-ink-4 ml-1.5">{sel.delta > 0 ? "+" : ""}{sel.delta}</span>}
           </p>
-          <p className="text-[14px] leading-relaxed text-ink-2">{sel.said ? `“${sel.said}”` : t(lang, "rp_map_no_line")}</p>
+          <p className={clsx("text-[14px] leading-relaxed text-ink-2", sel.silent && "italic text-ink-3")}>{sel.silent ? sel.said : sel.said ? `“${sel.said}”` : t(lang, "rp_map_no_line")}</p>
         </div>
       ) : (
         <p className="text-[12px] text-ink-3 leading-relaxed">

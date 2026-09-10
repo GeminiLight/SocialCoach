@@ -13,10 +13,11 @@
 
 - [ ] **34 个场景里只有 17 个有 `hidden`（底牌）。** 没有底牌的场景会跳过揭示屏，直接进报告——机制只在一半场景里生效。补另外 17 个属于扩语料，按项目约束需要用户点头
 
-- [ ] 缺 `LICENSE` 文件。无许可证会直接挡住团队 / 公司采用，也让 README 无法按开源惯例加 License 一节。**需要用户选定许可证**
+- [x] 缺 `LICENSE` 文件。2026-09-09 用户选定 Apache-2.0，已加入官方许可全文及 README License 一节，注明第三方材料保留各自权利。
 - [ ] 8/8 页面路由 `use client`，零可索引性。→ [12-stage-c.md](./12-stage-c.md)
 - [ ] `docs/PRODUCT.md` 已被 [00-product-proposal.md](./00-product-proposal.md) 取代。保留作历史，但需在文件头加一行指向 wiki，避免 Agent 读到过时定位
 - [ ] 无任何自动化测试。语料的类型正确性（`skills` / `context` / `competencies` 是否为合法 id）目前只靠 TS 编译和运行时校验
+- [x] 2026-09-09 `app/scripts/check-avatars.ts` 已同步新版 `portraitFor`，验证保存、改名稳定性与旧种子回退；全量 `tsc --noEmit` 通过。
 
 ## 改进想法
 
@@ -36,6 +37,8 @@
 - [ ] `Architecture` 流程图的节点名仍是论文术语（`Prescription` / `Adaptation` / `Bounded proficiency delta`）。是否换成用户语言待定——换了对产品读者友好，但与代码的对应关系变弱
 - [ ] 发布火力句 `ChatGPT will agree with you. Your boss won't.` 已定稿待用，用于 HN / Product Hunt / 小红书发布帖
 - [ ] `You know what to say. You just can't say it yet.` 作为落地页副本 / 广告变体
+- [ ] 统计后续：真实飞书凭证下验证自动建月表（`bitable:app`）与 `search` 过滤语法；飞书仪表盘按「事件 = session_start」建每日局数与场景分布两张图；Postgres 迁移路径：Supabase / Neon 免费档（0.5 GB，免费档一周不用会暂停，Pro 每月约 25 美元）或阿里云 RDS PostgreSQL Serverless（每月几十元），迁移是导出各月表 CSV 灌库并替换 `deliverEvents`，客户端不改
+- [ ] 限时应答后续：耐心秒数按场景难度给默认值（difficulty 3 → 10 秒）；沉默事件是否进入跨场次模式识别（`/api/pattern`）作为「一被顶就冻住」的证据；reduced motion 下的墨线与「开着朗读时等台词读完再计时」未单独验证
 
 ## 进行中（另一 session，未提交）
 
@@ -45,10 +48,15 @@
 
 ## 待验证
 
+- [x] ModelScope 国内体验入口：2026-09-09 已公开部署，免费 CPU、Apache-2.0；页面资源及对话 / 复盘流式接口通过。见 [部署记录](./specs/spec-modelscope-deployment.md)。
+- [ ] ModelScope 扩展验收：完成一轮浏览器端练习并刷新验证记录，比较创空间嵌入页与独立域名的浏览器存储隔离；本次已验证嵌入页加载与语言切换。
+
 - [ ] Vercel 部署后确认流式路由（`/api/roleplay`、`/api/assess`）在 Vercel 边缘缓冲下正常工作——本地正常不代表线上正常，`X-Accel-Buffering: no` 已设但未在线上验证
 - [ ] `/api/assess` 的 `maxDuration = 180` 是否够用（Vercel 计划有函数时长上限）
 
 ## 已完成（待整理进 changelog）
+
+- [x] 2026-09-09 头像生成与选择重做：固定比例的人物肖像、24 款起点、五组配色、外观微调、保存前预览 / 取消 / 恢复、改名后稳定及设备导出；见 [头像规范](./03-design-principle.md#头像avatar--avatarfigure)。
 
 - [x] 2026-09-07 UI/UX 打磨：首页周记录与熟练度说明、场景目录与组合筛选、排练描述草稿与填写引导、统一品牌图形、原生弹窗与明确退出操作。验收见 [界面评审](./archive/reviews/review-2026-09-07-ui-ux.md)
 

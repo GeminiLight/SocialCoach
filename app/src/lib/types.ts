@@ -13,7 +13,13 @@ export interface Profile {
 /** Estimated proficiency per skill, 1–5. Only goal skills are tracked initially. */
 export type Proficiency = Partial<Record<SkillId, number>>;
 
-export type ChatRole = "learner" | "npc" | "coach";
+/**
+ * "event" is something that happened in the room rather than something anyone
+ * said — today only a silence. It sits in the learner's place in the transcript
+ * so the simulation can react to it, but it is not a learner turn and is never
+ * quoted as their words.
+ */
+export type ChatRole = "learner" | "npc" | "coach" | "event";
 
 export interface ChatMessage {
   id: string;
@@ -21,8 +27,10 @@ export interface ChatMessage {
   characterId?: string;
   text: string;
   ts: number;
-  /** For coach hints shown inline */
-  kind?: "hint";
+  /** For coach hints shown inline, or the kind of event this line records. */
+  kind?: "hint" | "silence";
+  /** For a silence: how long the learner left the other side waiting. */
+  seconds?: number;
 }
 
 export interface Prescription {
@@ -119,6 +127,12 @@ export interface Session {
   revealedAtTurn?: number;
   /** The reveal screen is a one-time moment; don't replay it on revisit. */
   revealSeen?: boolean;
+  /**
+   * Replies are on the clock: leave the other side waiting and they carry on
+   * without you. Snapshotted from settings when the scene is entered, so the
+   * mid-scene toggle changes this scene and nothing else.
+   */
+  timed?: boolean;
 }
 
 export interface RoleplayMeta {

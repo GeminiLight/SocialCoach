@@ -5,6 +5,7 @@ import type { ContextId, Lang, SkillId } from "@/data/taxonomy";
 import type { Scenario } from "@/data/corpus/types";
 import type { ChatMessage, Profile, Proficiency, Reflection, Report, Session } from "@/lib/types";
 import type { PatternResult } from "@/lib/tasks/types";
+import { DEVICE_KEY, OPEN_DAY_KEY } from "@/lib/analytics/keys";
 
 export type Theme = "system" | "light" | "dark";
 
@@ -20,10 +21,32 @@ export interface Settings {
    * same one; this makes it theirs, and re-rollable.
    */
   avatarSeed?: number;
+  /** Validated versioned portrait; independent of the learner’s display name. */
+  avatarPortrait?: string;
+  /**
+   * Default for new scenes: replies on the clock. Real conversations do not
+   * wait fifteen seconds for an answer, and neither, with this on, does the
+   * simulation. Off unless the learner asks for it — it is a harder mode.
+   */
+  timed?: boolean;
+  /** How long the other side waits before they carry on, in seconds. */
+  patience?: Patience;
+  /**
+   * Anonymous usage events (which scenario, how long, how it ended; never
+   * what was said) to the team's table. Undefined means on; the switch in
+   * Settings is the way out, and About says what leaves the device.
+   */
+  telemetry?: boolean;
 }
+
+export type Patience = 10 | 15 | 20;
+export const DEFAULT_PATIENCE: Patience = 15;
+export const PATIENCE_OPTIONS: readonly Patience[] = [10, 15, 20];
 
 interface AppState {
   hydrated: boolean;
+  /** In-memory onboarding choice, shared with global dialogs. */
+  onboardingLang: Lang | undefined;
   profile: Profile | null;
   /**
    * The cross-session habit, cached with the session ids it was read from so it
@@ -72,6 +95,7 @@ export const todayKey = (d = new Date()) => {
 
 const initial = {
   hydrated: false,
+  onboardingLang: undefined as Lang | undefined,
   profile: null,
   proficiency: {},
   sessions: [],
@@ -93,7 +117,7 @@ export const useApp = create<AppState>()(
       setHydrated: () => set({ hydrated: true }),
       setProfile: (profile) => set({ profile }),
       updateProfile: (p) => set((s) => ({ profile: s.profile ? { ...s.profile, ...p } : s.profile })),
-      setLang: (lang) => set((s) => ({ profile: s.profile ? { ...s.profile, lang } : s.profile })),
+      setLang: (lang) => set((s) => ({ onboardingLang: lang, profile: s.profile ? { ...s.profile, lang } : s.profile })),
       setProficiency: (proficiency) => set({ proficiency }),
       addSession: (session) => set((s) => ({ sessions: [session, ...s.sessions] })),
       removeSession: (id) => set((s) => ({ sessions: s.sessions.filter((x) => x.id !== id), todaySessionId: s.todaySessionId === id ? null : s.todaySessionId })),
@@ -156,6 +180,8 @@ export const useApp = create<AppState>()(
       setPatternInsight: (result, from) => set({ patternInsight: { result, from, at: Date.now() } }),
       reset: () => {
         try { sessionStorage.removeItem("socialcoach.rehearsal-draft"); } catch {}
+        // The analytics device id goes with everything else: a reset learner is a new device.
+        try { localStorage.removeItem(DEVICE_KEY); localStorage.removeItem(OPEN_DAY_KEY); } catch {}
         set({ ...initial, hydrated: true });
       },
     }),
@@ -202,6 +228,6 @@ export function computeStreak(days: string[]): number {
   return n;
 }
 
-export const useLang = (): Lang => useApp((s) => s.profile?.lang ?? (typeof navigator !== "undefined" && !navigator.language.startsWith("zh") ? "en" : "zh"));
+export const useLang = (): Lang => useApp((s) => s.profile?.lang ?? s.onboardingLang ?? (typeof navigator !== "undefined" && !navigator.language.startsWith("zh") ? "en" : "zh"));
 export const useGoals = (): SkillId[] => useApp((s) => s.profile?.goals ?? []);
 export const useContexts = (): ContextId[] => useApp((s) => s.profile?.contexts ?? []);

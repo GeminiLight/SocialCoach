@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 import { COMPETENCIES, CONTEXTS, SKILLS, skillById, type ContextId, type Lang, type SkillId } from "@/data/taxonomy";
 import { SCENARIOS } from "@/data/corpus";
 import { t } from "@/lib/i18n";
-import { useApp } from "@/store/useApp";
+import { useApp, useLang } from "@/store/useApp";
 import { openModelSheet } from "@/lib/byok";
 import { BottomBar, Button, Chip } from "@/components/ui";
 import { BrandMark } from "@/components/BrandMark";
@@ -43,7 +43,8 @@ function WelcomeTickets({ lang }: { lang: Lang }) {
 export default function Onboarding() {
   const setProfile = useApp((s) => s.setProfile);
   const setProficiency = useApp((s) => s.setProficiency);
-  const [lang, setLang] = useState<Lang>(() => (typeof navigator !== "undefined" && !navigator.language.startsWith("zh") ? "en" : "zh"));
+  const lang = useLang();
+  const setLang = useApp((s) => s.setLang);
   const [step, setStep] = useState(0);
   const [goals, setGoals] = useState<SkillId[]>([]);
   const [rates, setRates] = useState<Partial<Record<SkillId, number>>>({});

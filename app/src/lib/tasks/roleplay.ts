@@ -1,5 +1,6 @@
 import type { LLM } from "@/lib/llm-core";
 import { pick, roleplaySystem } from "@/lib/prompts";
+import { lastSpoken, silenceStreak } from "@/lib/session-utils";
 import type { TurnInput } from "./types";
 
 /**
@@ -25,6 +26,11 @@ export async function runRoleplay(input: TurnInput, llm: LLM, fastModel: string,
     if (m.role === "coach") continue;
     if (m.role === "npc") {
       npcBuf.push(`@@${m.characterId}\n${m.text}`);
+    } else if (m.role === "event") {
+      // A silence takes the learner's place in the exchange without spending
+      // one of their turns: they did not speak, that is the point.
+      flushNpc();
+      turns.push({ role: "user", content: `(${learnerName} says nothing for ${m.seconds ?? 0} seconds.)` });
     } else {
       flushNpc();
       learnerTurns++;
@@ -37,13 +43,21 @@ export async function runRoleplay(input: TurnInput, llm: LLM, fastModel: string,
   if (turns[turns.length - 1]?.role !== "user") turns.push({ role: "user", content: "(…)" });
 
   const remaining = Math.max(0, scenario.maxTurns - learnerTurns);
+  const last = lastSpoken(messages);
+  const streak = last?.role === "event" && last.kind === "silence" ? silenceStreak(messages) : 0;
+  const silenceNote =
+    streak === 0
+      ? ""
+      : streak === 1
+        ? ` The learner has just gone silent for ${last?.seconds ?? 0} seconds (first silence in a row). Fill it in character.`
+        : ` The learner has gone silent again, ${last?.seconds ?? 0} seconds this time (silence #${streak} in a row). The character gives up on this conversation now: a believable exit line, "ended": true, outcome judged from the objectives so far.`;
   const run = llm.chatStream({
     model: fastModel,
     maxTokens: 1800,
     thinking: false,
     system: [
       { text: roleplaySystem(scenario, learnerCharacterId, lang, learnerName), cache: true },
-      { text: `Learner turns used: ${learnerTurns}/${scenario.maxTurns} (${remaining} remaining${remaining === 0 ? " — this is the final exchange, close the scene" : ""}).` },
+      { text: `Learner turns used: ${learnerTurns}/${scenario.maxTurns} (${remaining} remaining${remaining === 0 ? " — this is the final exchange, close the scene" : ""}).${silenceNote}` },
     ],
     messages: turns,
   });

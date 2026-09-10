@@ -1,4 +1,5 @@
 "use client";
+import { FeedbackPrompt } from "@/components/Feedback";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -10,6 +11,7 @@ import { CaseBody, TheoryBody } from "@/components/Knowledge";
 import { useApp, useLang } from "@/store/useApp";
 import { t, tList } from "@/lib/i18n";
 import { assessStream, reflectStream } from "@/lib/client-api";
+import { track } from "@/lib/analytics/track";
 import { buildSession } from "@/lib/session-utils";
 import type { Report, Session } from "@/lib/types";
 import type { Character } from "@/data/corpus/types";
@@ -48,6 +50,7 @@ export function Debrief({ session }: { session: Session }) {
         (p) => setPartial(p),
       );
       applyReport(session.id, final);
+      track({ name: "debrief_view", ts: Date.now(), session: session.id, scenario: sc.custom ? "custom" : sc.id, stars: final.stars, outcome: final.outcome });
       setPartial(null);
     } catch (e) {
       console.error("[assess]", e);
@@ -251,6 +254,9 @@ function Transcript({ session, title }: { session: Session; title?: string }) {
       {title && <p className="eyebrow">{title}</p>}
       <ol className="flex flex-col gap-2.5">
         {session.messages.filter((m) => m.role !== "coach").map((m) => {
+          if (m.role === "event") {
+            return <li key={m.id} className="text-[12.5px] italic text-ink-4 pl-6">{m.text}</li>;
+          }
           const c = sc.characters.find((x) => x.id === m.characterId);
           const mine = m.role === "learner";
           return (
@@ -415,6 +421,8 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
             </div>
           </Section>
         )}
+
+        {!streaming && <FeedbackPrompt />}
 
         {!streaming && report.nextStep && (
           <section className="bg-slab text-slab-ink rounded-[var(--radius)] p-5 flex flex-col gap-2">

@@ -113,8 +113,8 @@ export function Switch({ checked, onChange, label, className }: { checked: boole
 /**
  * A character's presence. `seed` decides the figure and defaults to the name,
  * which is stable for corpus characters; the learner passes their own so a
- * reroll can change it. `hue` stays the corpus author's choice — see
- * `data/avatars` for why only the form is procedural.
+ * selection can persist it. An authored `hue` selects a muted palette; a saved
+ * portrait carries its own palette. See `data/avatars`.
  */
 export function Avatar({
   name,
@@ -196,7 +196,7 @@ export function Stages({ steps, title, intervalMs = 2600, slowAfterMs = 25000 }:
 }
 
 /* ───────────── Bottom sheet ───────────── */
-export function Sheet({ open, onClose, title, children }: { open: boolean; onClose: () => void; title?: string; children: ReactNode }) {
+export function Sheet({ open, onClose, title, children, footer }: { open: boolean; onClose: () => void; title?: string; children: ReactNode; footer?: ReactNode }) {
   const lang = useLang();
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -241,6 +241,7 @@ export function Sheet({ open, onClose, title, children }: { open: boolean; onClo
         <IconButton label={t(lang, "close")} onClick={onClose}><X size={18} /></IconButton>
       </div>
       <div className="overflow-y-auto px-5 pt-4 pb-safe pb-6">{children}</div>
+      {footer && <div className="shrink-0 border-t border-line bg-card px-5 py-4 pb-safe">{footer}</div>}
     </dialog>
   );
 }

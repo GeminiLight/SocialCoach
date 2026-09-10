@@ -1,17 +1,19 @@
 "use client";
 import { useState } from "react";
 import { clsx } from "clsx";
-import { Check, Download, Monitor, Moon, Shuffle, Sun, Trash2, ChevronRight, HardDrive, SlidersHorizontal } from "lucide-react";
+import { Check, Download, Monitor, Moon, Pencil, Sun, Trash2, ChevronRight, HardDrive, SlidersHorizontal } from "lucide-react";
 import { SkillTag } from "@/components/SkillBits";
 import { Shell } from "@/components/Shell";
 import { Button, Chip, Page, SectionTitle, Sheet, Switch, useToast } from "@/components/ui";
 import { isReady, STORAGE_KEY, useByok } from "@/lib/byok";
 import { stopSpeaking, unlockSpeech } from "@/lib/speech";
-import { useApp, useLang } from "@/store/useApp";
-import { t } from "@/lib/i18n";
+import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
+import { t, pick } from "@/lib/i18n";
+import { clockMarks, PatiencePicker } from "@/components/practice/ReplyClock";
 import { COMPETENCIES, SKILLS, type Lang, type SkillId } from "@/data/taxonomy";
 import { compColor } from "@/lib/format";
 import { AvatarFigure, learnerSeed } from "@/data/avatars";
+import { AvatarPicker } from "@/components/AvatarPicker";
 
 export default function Settings() {
   const lang = useLang();
@@ -31,6 +33,7 @@ export default function Settings() {
   } = useApp();
   const toast = useToast((s) => s.show);
   const [edit, setEdit] = useState(false);
+  const [avatarOpen, setAvatarOpen] = useState(false);
   const [goalsOpen, setGoalsOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const byok = useByok();
@@ -43,7 +46,7 @@ export default function Settings() {
     const blob = new Blob(
       [
         JSON.stringify(
-          { profile, proficiency, sessions, customScenarios, bookmarks, practiceDays, exportedAt: new Date().toISOString() },
+          { profile, proficiency, sessions, customScenarios, bookmarks, practiceDays, avatar: { seed: settings.avatarSeed, portrait: settings.avatarPortrait }, exportedAt: new Date().toISOString() },
           null,
           2,
         ),
@@ -92,18 +95,23 @@ export default function Settings() {
               {t(lang, "st_profile")}
             </SectionTitle>
             <div className="profile-paper rounded-2xl p-5 flex flex-col gap-3">
-              <div className="flex items-center gap-3">
-                <AvatarFigure seed={learnerSeed(profile.name, settings.avatarSeed)} hue={40} size={48} />
+              <div className="flex items-center gap-4">
                 <button
                   type="button"
-                  onClick={() => setSettings({ avatarSeed: (settings.avatarSeed ?? 0) + 1 })}
-                  className="press inline-flex items-center gap-1.5 h-9 px-3 rounded-full border border-dashed border-line-strong text-[12px] font-medium text-ink-2 hover:bg-inset min-h-11"
+                  onClick={() => setAvatarOpen(true)}
+                  aria-label={pick({ zh: "编辑头像", en: "Edit portrait" }, lang)}
+                  className="press relative rounded-full shrink-0"
                 >
-                  <Shuffle size={14} />
-                  {t(lang, "st_avatar_reroll")}
+                  <AvatarFigure seed={learnerSeed(profile.name, settings.avatarSeed, settings.avatarPortrait)} hue={40} size={72} />
+                  <span className="absolute -bottom-1 -right-1 rounded-full bg-card border border-line p-1.5 text-ink-2"><Pencil size={12} aria-hidden /></span>
                 </button>
+                <div className="min-w-0">
+                  <p className="display text-[22px] break-words">{profile.name || pick({ zh: "未命名", en: "Unnamed" }, lang)}</p>
+                  <button type="button" onClick={() => setAvatarOpen(true)} className="press inline-flex items-center gap-1 min-h-11 text-[13px] text-action">
+                    {pick({ zh: "挑选头像", en: "Choose a portrait" }, lang)}<ChevronRight size={14} aria-hidden />
+                  </button>
+                </div>
               </div>
-              <p className="display text-[22px] break-words">{profile.name || (lang === "zh" ? "未命名" : "Unnamed")}</p>
               <p className="text-[14px] text-ink-2 leading-relaxed lg:max-w-[var(--measure)]">{profile.bio || t(lang, "st_bio_empty")}</p>
             </div>
           </section>
@@ -182,6 +190,12 @@ export default function Settings() {
                   label={t(lang, "st_voice")}
                 />
               </Row>
+              <Row label={t(lang, "pr_clock_title")} hint={t(lang, "pr_clock_explain", clockMarks(settings.patience ?? DEFAULT_PATIENCE))}>
+                <Switch checked={!!settings.timed} onChange={(v) => setSettings({ timed: v })} label={t(lang, "pr_clock_title")} />
+              </Row>
+              <Row label={t(lang, "pr_clock_patience")}>
+                <PatiencePicker value={settings.patience ?? DEFAULT_PATIENCE} onChange={(p) => setSettings({ patience: p })} lang={lang} />
+              </Row>
             </div>
           </section>
         </div>
@@ -210,6 +224,9 @@ export default function Settings() {
               {t(lang, "st_local_note")}
             </p>
             <div className="card divide-y divide-line">
+              <Row label={t(lang, "st_telemetry")} hint={t(lang, "st_telemetry_hint")}>
+                <Switch checked={settings.telemetry !== false} onChange={(v) => setSettings({ telemetry: v })} label={t(lang, "st_telemetry")} />
+              </Row>
               <button
                 onClick={exportData}
                 className="press w-full flex items-center gap-3 px-4 min-h-16 py-3.5 text-left text-[14px] font-medium"
@@ -245,6 +262,17 @@ export default function Settings() {
           </section>
         </div>
       </Page>
+
+      {avatarOpen && <AvatarPicker
+        currentSeed={learnerSeed(profile.name, settings.avatarSeed, settings.avatarPortrait)}
+        lang={lang}
+        onClose={() => setAvatarOpen(false)}
+        onSave={(avatarPortrait) => {
+          setSettings({ avatarPortrait });
+          setAvatarOpen(false);
+          toast(pick({ zh: "头像已更新", en: "Portrait updated" }, lang));
+        }}
+      />}
 
       <Sheet open={edit} onClose={() => setEdit(false)} title={t(lang, "st_profile")}>
         <div className="flex flex-col gap-4 pt-2">

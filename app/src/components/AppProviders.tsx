@@ -5,7 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useApp, useLang } from "@/store/useApp";
 import { isReady, useByok } from "@/lib/byok";
 import { ModelSheet } from "./ModelSheet";
+import { FeedbackWidget } from "./Feedback";
 import { Toaster } from "./ui";
+import { trackOpen } from "@/lib/analytics/track";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const hydrated = useApp((s) => s.hydrated);
@@ -53,6 +55,11 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     else document.documentElement.setAttribute("data-theme", t);
   }, [settings.theme]);
 
+  // Counted once the learner exists: onboarding visits are not retention.
+  useEffect(() => {
+    if (hydrated && profile) trackOpen();
+  }, [hydrated, profile]);
+
   useEffect(() => {
     if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
       navigator.serviceWorker.register("/sw.js").catch(() => {});
@@ -66,6 +73,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
       {/* One instance for the whole app. `forced` has nothing to fall back on,
           so it cannot be dismissed until it works. */}
       <ModelSheet open={hydrated && (forced || byok.sheetOpen)} onClose={byok.closeSheet} forced={forced} />
+      {hydrated && <FeedbackWidget />}
       <Toaster />
     </div>
     </MotionConfig>

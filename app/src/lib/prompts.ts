@@ -53,10 +53,14 @@ export function scenarioBlock(s: Scenario, lang: Lang, learnerId?: string): stri
   ].join("\n");
 }
 
+/** How a silence reads in the transcript — in the learner's place, in the transcript's language. */
+export const silenceMarker = (seconds: number, lang: Lang) => (lang === "zh" ? `（沉默了 ${seconds} 秒，没有开口）` : `(said nothing for ${seconds} seconds)`);
+
 export function transcriptBlock(msgs: ChatMessage[], s: Scenario, lang: Lang, learnerName: string): string {
   return msgs
     .filter((m) => m.role !== "coach")
     .map((m, i) => {
+      if (m.role === "event") return `[${i + 1}] ${learnerName} (LEARNER): ${silenceMarker(m.seconds ?? 0, lang)}`;
       const who = m.role === "learner" ? `${learnerName} (LEARNER)` : pick(s.characters.find((c) => c.id === m.characterId)?.name ?? { zh: "NPC", en: "NPC" }, lang);
       return `[${i + 1}] ${who}: ${m.text}`;
     })
@@ -129,6 +133,9 @@ Report "stance": an integer 0–100 for how close the NPCs now are to giving the
 THE HIDDEN MOTIVE
 Set "revealed": true only on the turn an NPC actually says their hidden motive out loud in the dialogue, in plain words the learner could repeat back. A hint, a hesitation, or a near-miss is false. Once it has been said, later turns report false again — the flag marks the turn it happened, not the state.
 
+SILENCE
+A learner turn can read "(says nothing for N seconds)". That is a real event, not a formatting slip: the learner froze and left this character waiting. Answer it the way this character actually would when left hanging — prod them, fill the gap, take the silence as an answer, or press harder. Never wait politely, never coach, never mention timers or the app. If being left hanging would cost the learner ground with this character, let "stance" fall. When the turn note says it is the second silence in a row, the character gives up on the conversation: a believable exit line and "ended": true.
+
 OBJECTIVE TRACKING & ENDING
 After the dialogue, evaluate each learner objective strictly from what the learner actually said so far (not intentions). Mark true only if clearly achieved.
 End the scene ("ended": true) when: all objectives are achieved and the scene has a natural close; OR the failure condition has clearly occurred; OR the learner turn cap is reached. Outcome: "success" if all objectives met; "partial" if some; "failure" if none or the failure condition occurred.
@@ -173,7 +180,7 @@ Cases:
 ${cs}
 
 METHOD (paper §4.4)
-1. Social behavior diagnosis: identify explicit strategies (e.g. restating, concrete proposal) and implicit reasoning (e.g. emotional awareness) the learner showed — positive and negative. Each item MUST quote the learner's exact words from the transcript as evidence. Map each to one skill id.
+1. Social behavior diagnosis: identify explicit strategies (e.g. restating, concrete proposal) and implicit reasoning (e.g. emotional awareness) the learner showed — positive and negative. Each item MUST quote the learner's exact words from the transcript as evidence. Map each to one skill id. A transcript line marking that the learner said nothing for N seconds is behavior too, not a gap: it may serve as evidence (quote the marker as written), and what the other side did with that silence is part of its cost.
 2. Deficit attribution for each weakness: "acquisition" = the learner does not seem to know the strategy; "performance" = they know it but failed to apply under pressure (e.g. did it late, did it once then abandoned). These are tutoring labels, not judgments about the person.
 3. Alternatives: pick 1–3 of the learner's actual lines and rewrite each as a stronger line, with one sentence on why. Keep the learner's voice; do not make it sound like a textbook.
 4. Knowledge: choose theories (for acquisition deficits) and cases (for performance deficits) from the retrieved list; in "whyThis" explain in one or two sentences why these fit this transcript, referring to them by their TITLES in quotes (never by id).

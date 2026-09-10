@@ -14,9 +14,15 @@
 | LLM | `@anthropic-ai/sdk` 0.123，双模型路由（fast / smart） |
 | 存储 | **无数据库、无账号**。练习档案在 localStorage；未提交的排练描述在当前标签页 sessionStorage |
 | 部署 | Vercel，Node runtime API routes，Root Directory = `app` |
+| 国内体验入口 | ModelScope `GeminiLight/SocialCoach`，根目录 Dockerfile，Node standalone 单进程，`0.0.0.0:7860`；密钥通过平台 Secrets 注入 |
+| 统一分享入口 | `socialcoach.aurax.live`，Cloudflare 按访问 IP 做 302：`CN` → 魔搭创空间，其他地区 → Vercel；跳转后保留各站点原有域名和本地档案 |
 | 包管理 | pnpm 11.24 |
 
 单进程应用，无 worker / daemon / 定时任务。
+
+## 用户反馈（2026-09-09）
+
+新增独立 `POST /api/feedback`：严格校验用户主动提交的反馈后，通过服务端飞书应用凭证写入固定多维表格。不接入 LLM，不自动附带转录、档案或密钥。`GET /api/feedback` 只返回配置是否齐全。接入状态和隐私边界见 [反馈方案](./specs/spec-user-feedback.md)。
 
 ## 目录结构
 
@@ -71,6 +77,7 @@ profile/goals/proficiency/history
   meta 必须在前：放末尾时快模型经常整块不写（实测 6 回合只出 2 次）
   stance 存进 session.stanceTrail，revealed 存 session.revealedAtTurn
   客户端边流边解析（partial-json.ts）
+  限时应答到点：客户端追加 role:"event" 的沉默消息再调一次，NPC 以角色身份接话；不计回合
         │
         ▼  POST /api/assess            （流式，正文先出，@@final 后带完整 JSON）
   诊断 → 归因 → 检索理论/案例 → 生成报告；服务端 clamp 所有数值后才发 @@final
@@ -100,6 +107,10 @@ profile/goals/proficiency/history
 - 仍无候选时才放松 `exclude_history`（允许重复练过的场景），再无则返回 `null`。
 - 排序 = 标签对齐（主技能 ×2 + 相关技能 ×1）+ 对 `query` 的词汇匹配分。**没有向量检索、没有 embedding**。
 - `custom: true`（用户 `/rehearse` 生成的）场景永远不进排程池。
+
+## 头像选择（2026-09-09）
+
+`settings/page.tsx` → `AvatarPicker` 的本地草稿 → 用户确认后 `setSettings({ avatarPortrait })` → 现有 persist 白名单中的 `settings` → localStorage。`learnerSeed()` 优先读取经过格式校验的版本化肖像，兼容旧名字 / 数字种子；资料页与练习简报共用。取消不写 store，改名不重生成。导出文件新增 `avatar: { seed, portrait }`。全部绘制与选择在设备完成，无新增 API 或外部图像依赖。
 
 ## 核心类型
 
@@ -141,7 +152,10 @@ interface Session {                      // 一轮练习的完整快照，存在
   status: "briefing"|"active"|"ended"|"assessed";
   report?: Report; reflections: Reflection[];
   origin: "scheduled" | "arena" | "rehearse";
+  stanceTrail?: number[]; revealedAtTurn?: number;
+  timed?: boolean;                       // 限时应答：进入场景时从 settings 快照
 }
+type ChatRole = "learner" | "npc" | "coach" | "event";   // event = 房间里发生的事（目前只有沉默），不是谁说的话
 ```
 
 **`L` 类型是全局约定**：任何面向用户的静态文案都是 `{zh, en}`，用 `pick(v, lang)` 取值。新增语料字段若面向用户，必须是 `L`。
@@ -162,6 +176,7 @@ interface Session {                      // 一轮练习的完整快照，存在
 | POST | `/api/reflect` | 反思回应 | fast | 文本流 | 30 |
 | POST | `/api/hint` | 对话中提示 | fast | JSON | 30 |
 | POST | `/api/rehearse` | 生成自定义场景 | fast | JSON | 120 |
+| POST | `/api/track` | 匿名使用统计 → 飞书月表 | — | 202 | 30 |
 
 ## 环境变量
 

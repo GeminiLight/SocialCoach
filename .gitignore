@@ -16,3 +16,6 @@ site/dist/
 
 # Full-page raw captures from site/scripts/screenshots.mjs; only the framed shots are kept
 docs/screenshots/raw/
+
+# Cloudflare API token for scripts/dns-sync.mjs
+.cloudflare

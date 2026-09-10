@@ -1,0 +1,21 @@
+# Only application build inputs and the license enter the image build context.
+**
+!Dockerfile
+!LICENSE
+!app/
+!app/package.json
+!app/pnpm-lock.yaml
+!app/pnpm-workspace.yaml
+!app/next.config.ts
+!app/next-env.d.ts
+!app/postcss.config.mjs
+!app/tsconfig.json
+!app/src/
+!app/src/**
+!app/public/
+!app/public/**
+# Defense in depth for accidentally added credentials under source/public.
+**/.env*
+**/*.pem
+**/*.key
+**/*.token
