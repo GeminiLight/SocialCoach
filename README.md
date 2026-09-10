@@ -10,6 +10,8 @@
 [![Live](https://img.shields.io/badge/Live-Try%20it-4A6B5A?style=for-the-badge&logo=vercel&logoColor=white&labelColor=2B2018)](https://socialcoach-app.vercel.app)
 [![Paper](https://img.shields.io/badge/Paper-arXiv%202606.04155-B31B1B?style=for-the-badge&logo=arxiv&logoColor=white&labelColor=2B2018)](https://arxiv.org/abs/2606.04155)
 
+**[English](README.md) · [简体中文](README.zh-CN.md)**
+
 </div>
 
 You already know you should open with a question instead of an accusation. You know it right up until your manager sighs — and then you fold. Knowing was never the bottleneck; **reps under pressure are.** Every book, course and tips thread sells you the knowing, and most "AI role-play" apps stop at the chat.
