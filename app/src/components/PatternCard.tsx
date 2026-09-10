@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { track } from "@/lib/analytics/track";
 import { motion } from "framer-motion";
 import { RefreshCw } from "lucide-react";
 import { Button, Spinner } from "@/components/ui";
@@ -83,6 +84,16 @@ export function PatternCard() {
     if (enough && stale && !busy && !err) void run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enough, stale]);
+
+  // Seen, or honestly "nothing recurs yet" — once per visit either way.
+  const seen = useRef(false);
+  const found = !!cached?.result?.found;
+  const shown = enough && !stale && !!cached;
+  useEffect(() => {
+    if (!shown || seen.current) return;
+    seen.current = true;
+    track({ name: "pattern_view", ts: Date.now(), found });
+  }, [shown, found]);
 
   if (!enough) {
     return (

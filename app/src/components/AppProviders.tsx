@@ -55,9 +55,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     else document.documentElement.setAttribute("data-theme", t);
   }, [settings.theme]);
 
-  // Counted once the learner exists: onboarding visits are not retention.
+  // Once per day, profile or not; the flag separates visitors from learners.
   useEffect(() => {
-    if (hydrated && profile) trackOpen();
+    if (hydrated) trackOpen(!!profile);
   }, [hydrated, profile]);
 
   useEffect(() => {

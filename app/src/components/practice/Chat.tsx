@@ -12,6 +12,7 @@ import { hint as hintApi, parseRoleplay, roleplayStream } from "@/lib/client-api
 import { lastSpoken, npcsOf, silenceStreak } from "@/lib/session-utils";
 import { uid } from "@/lib/format";
 import { track } from "@/lib/analytics/track";
+import { byokConfig } from "@/lib/byok";
 import type { ChatMessage, Session } from "@/lib/types";
 import type { Character } from "@/data/corpus/types";
 import type { Lang } from "@/data/taxonomy";
@@ -152,6 +153,9 @@ export function Chat({ session }: { session: Session }) {
         silences: live.messages.filter((m) => m.role === "event" && m.kind === "silence").length,
         duration_s: Math.max(0, Math.round((endedAt - live.startedAt) / 1000)),
         ended_by: by,
+        hints: live.messages.filter((m) => m.role === "coach" && m.kind === "hint").length,
+        revealed_turn: live.revealedAtTurn,
+        byok: !!byokConfig(),
       });
     },
     [session, sc, updateSession],

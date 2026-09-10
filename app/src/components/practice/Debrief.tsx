@@ -562,6 +562,7 @@ function ReflectItem({ session, question, idx, addReflection, updateReflection, 
     let index = rIdx;
     if (index === -1) {
       addReflection(session.id, { question, answer });
+      track({ name: "reflect", ts: Date.now(), session: session.id, index: idx });
       index = session.reflections.length;
     }
     try {

@@ -6,13 +6,19 @@ import { tableNameFor } from "../src/lib/analytics/feishu";
  *
  *   npx tsx scripts/retention.ts [--days 30] [--tz Asia/Shanghai] [--csv]
  *
- * Reads `app_open` and `session_start` rows from every `<prefix>_YYYY_MM`
- * table (or the pinned table), buckets them into device-days in the given time
- * zone, and prints, per first-seen day: how many devices arrived, how many were
- * back on day +1 and day +7 (visit retention), and how many started another
- * practice within seven days (practice retention — the number that says
- * whether an "I have a conversation tomorrow" learner became a "I want to get
- * better" one).
+ * Reads `app_open`, `onboarding_done` and `session_start` rows from every
+ * `<prefix>_YYYY_MM` table (or the pinned table), buckets them into device-days
+ * in the given time zone, and prints two things.
+ *
+ * The funnel: devices that opened at all, that finished onboarding, that
+ * entered a scene — the drop-offs a launch post has to be judged by.
+ *
+ * Learner cohorts, by the day a device first opened with a profile (or
+ * finished onboarding): how many were back on day +1 and day +7 (visit
+ * retention), and how many started another practice within seven days
+ * (practice retention — the number that says whether an "I have a
+ * conversation tomorrow" learner became a "I want to get better" one).
+ * Visitors who never made a profile are in the funnel and out of the cohorts.
  *
  * Needs the same FEEDBACK_FEISHU_* credentials as the server plus read access
  * to the Base (bitable:app or base:record:retrieve).
@@ -28,7 +34,7 @@ const dayFmt = new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric",
 const dayOf = (ts: number) => dayFmt.format(new Date(ts));
 const shift = (day: string, n: number) => dayOf(Date.parse(`${day}T12:00:00Z`) + n * 86_400_000);
 
-type Row = { 事件?: string; 时间?: number; 设备?: string | { text?: string }[] };
+type Row = { 事件?: string; 时间?: number; 设备?: string | { text?: string }[]; 有档案?: boolean };
 const text = (v: Row["设备"]) => (Array.isArray(v) ? v.map((x) => x.text ?? "").join("") : v ?? "");
 
 async function tableIds(): Promise<string[]> {
@@ -46,7 +52,7 @@ async function* rows(table: string): AsyncGenerator<Row> {
     const q = new URLSearchParams({ page_size: "500", ...(pageToken ? { page_token: pageToken } : {}) });
     const data = await feishuCall<{ items?: { fields: Row }[]; has_more?: boolean; page_token?: string }>("search", `/bitable/v1/apps/${app}/tables/${encodeURIComponent(table)}/records/search?${q}`, {
       method: "POST",
-      body: JSON.stringify({ field_names: ["事件", "时间", "设备"], filter: { conjunction: "or", conditions: [{ field_name: "事件", operator: "is", value: ["app_open"] }, { field_name: "事件", operator: "is", value: ["session_start"] }] } }),
+      body: JSON.stringify({ field_names: ["事件", "时间", "设备", "有档案"], filter: { conjunction: "or", conditions: ["app_open", "onboarding_done", "session_start"].map((v) => ({ field_name: "事件", operator: "is", value: [v] })) } }),
       timeoutMs: 20_000,
     });
     for (const it of data.items ?? []) yield it.fields;
@@ -57,17 +63,26 @@ async function* rows(table: string): AsyncGenerator<Row> {
 
 async function main() {
   if (!feishuAppConfigured()) throw new Error("FEEDBACK_FEISHU_APP_ID / APP_SECRET / BASE_TOKEN are required");
-  const opens = new Map<string, Set<string>>();
+  const visits = new Map<string, Set<string>>();   // every open, profile or not
+  const opens = new Map<string, Set<string>>();    // opens as a learner (rows before the flag existed count as learners)
   const practices = new Map<string, Set<string>>();
+  const onboarded = new Set<string>();
+  const add = (m: Map<string, Set<string>>, device: string, day: string) => m.set(device, (m.get(device) ?? new Set()).add(day));
   for (const table of await tableIds()) {
     for await (const r of rows(table)) {
       const device = text(r.设备);
       if (!device || typeof r.时间 !== "number") continue;
       const day = dayOf(r.时间);
-      const into = r.事件 === "session_start" ? practices : r.事件 === "app_open" ? opens : null;
-      if (!into) continue;
-      into.set(device, (into.get(device) ?? new Set()).add(day));
+      if (r.事件 === "session_start") add(practices, device, day);
+      else if (r.事件 === "onboarding_done") { onboarded.add(device); add(opens, device, day); }
+      else if (r.事件 === "app_open") { add(visits, device, day); if (r.有档案 !== false) add(opens, device, day); }
     }
+  }
+  const since = shift(dayOf(Date.now()), -DAYS);
+  const recent = (m: Map<string, Set<string>>) => [...m].filter(([, days]) => [...days].some((d) => d >= since)).length;
+  if (!CSV) {
+    console.log(`Funnel, devices active in the last ${DAYS} days (${TZ}): opened ${recent(visits)} · finished onboarding ${[...onboarded].filter((d) => [...(opens.get(d) ?? [])].some((x) => x >= since)).length} · entered a scene ${recent(practices)}`);
+    console.log("");
   }
   const first = new Map<string, string>();
   for (const [device, days] of opens) first.set(device, [...days].sort()[0]);
@@ -82,7 +97,6 @@ async function main() {
     if (later) c.p7++;
     cohorts.set(day, c);
   }
-  const since = shift(dayOf(Date.now()), -DAYS);
   const list = [...cohorts].filter(([day]) => day >= since).sort();
   const pct = (a: number, b: number) => (b ? `${Math.round((100 * a) / b)}%` : "—");
   if (CSV) {

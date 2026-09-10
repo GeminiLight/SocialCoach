@@ -108,7 +108,7 @@
 
 匿名使用统计入口。**客户端先 `GET` 询问 `{ available }`，未配置的部署不会收到 POST。**
 
-**请求：** `{ id: uuid, device: uuid, lang, events: TrackEvent[1..20] }`，`events` 是 `app_open` / `session_start` / `session_end` / `debrief_view` 的严格联合类型（见 `src/lib/analytics/schema.ts`），多任何字段整批 400。
+**请求：** `{ id: uuid, device: uuid, lang, events: TrackEvent[1..20] }`，`events` 是十个事件（`app_open` / `onboarding_done` / `briefing_view` / `session_start` / `session_end` / `debrief_view` / `reflect` / `pattern_view` / `api_error`）的严格联合类型（见 `src/lib/analytics/schema.ts`），多任何字段整批 400。
 
 **响应：** `202 { ok: true }`，写入在 `after()` 里完成；未配置 `204`；跨站 `403`；超 16 KB `413`；每 IP 每小时 240 次后 `429`。
 

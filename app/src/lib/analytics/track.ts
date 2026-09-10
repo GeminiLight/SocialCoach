@@ -94,8 +94,13 @@ export async function flushTracking() {
   }
 }
 
-/** One `app_open` per device per local day, so the table is device-days and retention is a count. */
-export function trackOpen() {
+/**
+ * One `app_open` per device per local day, so the table is device-days and
+ * retention is a count. Sent with or without a profile: the funnel needs the
+ * visitors who left during onboarding, and `profile` lets retention keep to
+ * the learners.
+ */
+export function trackOpen(profile: boolean) {
   if (typeof window === "undefined" || !enabled()) return;
   const d = new Date();
   const today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -105,5 +110,7 @@ export function trackOpen() {
   } catch {
     return;
   }
-  track({ name: "app_open", ts: Date.now() });
+  const ua = window.matchMedia("(min-width: 64rem) and (pointer: fine)").matches ? "desktop" : "mobile";
+  const standalone = window.matchMedia("(display-mode: standalone)").matches || ("standalone" in navigator && (navigator as { standalone?: boolean }).standalone === true);
+  track({ name: "app_open", ts: Date.now(), profile, ua, standalone });
 }

@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
+import { track } from "@/lib/analytics/track";
 import { AnimatePresence, motion } from "framer-motion";
 import { clsx } from "clsx";
 import { ChevronDown } from "lucide-react";
@@ -63,6 +64,7 @@ export default function Onboarding() {
     for (const g of goals) prof[g] = rates[g] ?? 2.5;
     setProficiency(prof);
     setProfile({ name: name.trim(), bio: bio.trim(), goals, contexts, lang, createdAt: Date.now() });
+    track({ name: "onboarding_done", ts: Date.now() });
   };
 
   const toggleGoal = (id: SkillId) =>

@@ -16,16 +16,23 @@
 
 ## 事件
 
-四个事件，`app_open` 每台设备每个本地日只发一条，表里天然是「设备 × 日」。
+十个事件。`app_open` 每台设备每个本地日只发一条，表里天然是「设备 × 日」。新问题优先加字段而不是加事件，因为行数是稀缺资源（见「看板」末尾）。
 
 | 事件 | 时机 | 字段 |
 |---|---|---|
-| `app_open` | 有档案后的每日首次打开 | — |
-| `session_start` | 简报页「进入对话」 | session, scenario, origin, context, difficulty, timed |
-| `session_end` | 场景结束（`ended_by`: engine / cap / silence / user） | session, scenario, outcome, turns, silences, duration_s, ended_by |
+| `app_open` | 每日首次打开，有无档案都发 | profile（是否有档案）、ua（mobile / desktop）、standalone（是否装成 PWA） |
+| `onboarding_done` | 建好档案 | — |
+| `briefing_view` | 简报页出现（开始等模型） | session, scenario, origin |
+| `session_start` | 简报页「进入对话」 | session, scenario, origin, context, difficulty, timed, wait_s（简报页停留秒数） |
+| `session_end` | 场景结束（`ended_by`: engine / cap / silence / user） | session, scenario, outcome, turns, silences, duration_s, ended_by, hints（要了几次提示）, revealed_turn（第几回合问出底牌，没问出为空）, byok（自带模型） |
 | `debrief_view` | 复盘报告生成 | session, scenario, stars, outcome |
+| `reflect` | 回答了一道反思题 | session, index |
+| `pattern_view` | 成长页展示了跨场次模式（或诚实地说没有） | found |
+| `api_error` | 模型调用失败（用户看到的那种） | task（schedule / roleplay / hint / assess / reflect / rehearse / pattern）, kind（http / network / stream）, status, byok。**不带错误文本** |
 
-没有 `session_abandon`：`session_start` 与 `session_end` 的差就是放弃数。
+漏斗 = `app_open`（全部设备）→ `onboarding_done` → `briefing_view` → `session_start` → `session_end` → `debrief_view` → `reflect`。注意 `wait_s` 只量简报页的停留：练习场和排练进来的场景在简报页等适配，数字有意义；今日推荐的适配发生在首页卡片加载时，简报页只剩阅读时间。没有 `session_abandon`：`session_start` 与 `session_end` 的差就是放弃数；`briefing_view` 与 `session_start` 的差是等模型时走掉的人。
+
+2026-09-10 第二批（`app_open` 三个字段、`onboarding_done`、`briefing_view`、`wait_s`、`hints` / `revealed_turn` / `byok`、`reflect`、`pattern_view`、`api_error`）比首批多了十二列。落点在每个进程第一次写某张表前对比列名，缺的列通过 `POST …/fields` 补上（`ensureFields`），所以旧月表不用手动改。
 
 ## 数据流
 
@@ -47,7 +54,9 @@
 - 场景分布、每日局数、平均时长、结束方式：飞书仪表盘直接按字段分组画。
 - 留存：`npx tsx scripts/retention.ts [--days 30] [--tz Asia/Shanghai] [--csv]`，按设备首见日分队列，输出 T+1、T+7 访问复访和 7 日内再练比例。需要 Base 的读权限。
 
-现在只看两个数：`session_start` 的日计数，和 7 日内再练比例。
+现在只看两个数：`session_start` 的日计数，和 7 日内再练比例。`retention.ts` 顶部另打印漏斗三个数：打开过、完成引导、进过场景。
+
+行数预算：一局约 5 行（简报、开始、结束、复盘、每设备每天一行打开），加错误和反思。单表两万行，每天一百局约两个月满一张月表；到那个量级要么改半月表，要么按 backlog 里的路径换库。
 
 ## 换落点
 
@@ -57,6 +66,6 @@
 
 - `npx tsx scripts/check-track.ts`：未配置时 GET 报不可用、POST 204 丢弃；严格 schema 拒绝多余字段、非法场景 id、超过 20 条、跨站、超大；首次写入自动建月表，同月复用缓存，跨月各写各表；`client_token` 等于批次 id；飞书失败不影响 202；钉死表跳过发现；每 IP 限流。
 - `npx tsx scripts/check-feedback.ts` 在飞书客户端抽出后仍通过。
-- 端到端：本机起 mock 飞书（`FEISHU_BASE_URL`）加生产构建，浏览器跑一局，mock 收到建表与四类事件的记录。
+- 端到端：本机起 mock 飞书（`FEISHU_BASE_URL`）加生产构建，浏览器跑一局，mock 收到建表与各类事件的记录。第二批事件用一张预置的 18 列旧表跑：落点先列出列名，补了 12 列，然后无档案打开、简报、开始（含等待秒）、结束（含提示次数、自带模型）、复盘、反思六条记录全部落表。
 - 生产：Vercel 运行日志只有 `λ POST /api/track` 的 info 行，没有 `[track]` 错误行；写入在 `after()` 里完成，失败会以短错误码落日志，所以「无错误行」是建表与写入成功的证据，但没有从 Base 读回核对。
 - 未验证：`scripts/retention.ts` 用到的 `search` 接口过滤语法以真实调用为准；ModelScope 等首批真实会话进来后核对。

@@ -13,6 +13,8 @@ import { runReflect } from "./tasks/reflect";
 import { runAssess } from "./tasks/assess";
 import { runPattern } from "./tasks/pattern";
 import type { AssessInput, PatternInput, PatternResult, ReflectInput, ScheduleInput, TurnInput } from "./tasks/types";
+import { track } from "./analytics/track";
+import type { TrackEvent } from "./analytics/schema";
 
 /**
  * The one place that decides where a model call goes.
@@ -30,9 +32,40 @@ function own(): { llm: LLM; fast: string; smart: string } | null {
   return c ? { llm: makeByokLLM(c), fast: c.fastModel.trim(), smart: c.smartModel.trim() } : null;
 }
 
+type Task = Extract<TrackEvent, { name: "api_error" }>["task"];
+
+/** A failed call, with the number analytics needs and the message the learner sees. */
+export class ApiError extends Error {
+  constructor(message: string, public readonly status: number, public readonly kind: "http" | "network" | "stream") {
+    super(message);
+  }
+}
+
+/**
+ * Report a failure as the learner saw it: task, kind and status code only.
+ * A learner's own endpoint failing is theirs, but it still explains a bad
+ * session, so it is recorded with `byok` set rather than dropped.
+ */
+function reportFailure(task: Task, e: unknown, byok: boolean) {
+  if (e instanceof DOMException && e.name === "AbortError") return;
+  const status = e instanceof ApiError ? e.status : typeof (e as { status?: unknown })?.status === "number" ? (e as { status: number }).status : 0;
+  const kind = e instanceof ApiError ? e.kind : status ? "http" : "network";
+  track({ name: "api_error", ts: Date.now(), task, kind, status: Math.max(0, Math.min(999, status)), byok });
+}
+
+/** Run a task and record its failure before rethrowing it unchanged. */
+async function watched<T>(task: Task, byok: boolean, run: () => Promise<T>): Promise<T> {
+  try {
+    return await run();
+  } catch (e) {
+    reportFailure(task, e, byok);
+    throw e;
+  }
+}
+
 const OFFLINE_MSG = { zh: "看起来断网了，连上网络后再试。", en: "You seem to be offline. Reconnect and try again." };
 function offlineError(lang?: Lang) {
-  return new Error(OFFLINE_MSG[lang === "en" ? "en" : "zh"]);
+  return new ApiError(OFFLINE_MSG[lang === "en" ? "en" : "zh"], 0, "network");
 }
 async function safeFetch(url: string, init: RequestInit, lang?: Lang) {
   if (typeof navigator !== "undefined" && navigator.onLine === false) throw offlineError(lang);
@@ -51,7 +84,7 @@ async function post<T>(url: string, body: unknown, signal?: AbortSignal): Promis
     try {
       msg = ((await res.json()) as { error?: string }).error ?? msg;
     } catch {}
-    throw new Error(msg);
+    throw new ApiError(msg, res.status, "http");
   }
   return (await res.json()) as T;
 }
@@ -72,8 +105,7 @@ export function schedule(body: {
   scenario?: Scenario;
 }, signal?: AbortSignal) {
   const o = own();
-  if (o) return runSchedule(body as ScheduleInput, o.llm, o.fast);
-  return post<ScheduleResult>("/api/schedule", body, signal);
+  return watched("schedule", !!o, () => (o ? runSchedule(body as ScheduleInput, o.llm, o.fast) : post<ScheduleResult>("/api/schedule", body, signal)));
 }
 
 /**
@@ -85,45 +117,44 @@ export async function assessStream(
   onPartial: (p: Partial<Report>) => void,
 ): Promise<Report> {
   const o = own();
-  if (o) {
-    let acc = "";
-    return runAssess(body as AssessInput, o.llm, o.smart, (d) => {
-      acc += d;
-      const p = parsePartialJSON<Report>(acc);
+  return watched("assess", !!o, async () => {
+    if (o) {
+      let acc = "";
+      return runAssess(body as AssessInput, o.llm, o.smart, (d) => {
+        acc += d;
+        const p = parsePartialJSON<Report>(acc);
+        if (p) onPartial(p);
+      });
+    }
+    const full = await streamText("/api/assess", body, (acc) => {
+      const cut = acc.indexOf("\n@@");
+      const head = cut === -1 ? acc : acc.slice(0, cut);
+      const p = parsePartialJSON<Report>(head);
       if (p) onPartial(p);
     });
-  }
-  const full = await streamText("/api/assess", body, (acc) => {
-    const cut = acc.indexOf("\n@@");
-    const head = cut === -1 ? acc : acc.slice(0, cut);
-    const p = parsePartialJSON<Report>(head);
-    if (p) onPartial(p);
+    const FIN = "\n@@final\n";
+    const err = full.indexOf(ERR);
+    if (err !== -1) throw new ApiError(full.slice(err + ERR.length).trim(), 200, "stream");
+    const fin = full.indexOf(FIN);
+    if (fin === -1) throw new ApiError("Assessment ended unexpectedly.", 200, "stream");
+    return JSON.parse(full.slice(fin + FIN.length)) as Report;
   });
-  const FIN = "\n@@final\n";
-  const err = full.indexOf(ERR);
-  if (err !== -1) throw new Error(full.slice(err + ERR.length).trim());
-  const fin = full.indexOf(FIN);
-  if (fin === -1) throw new Error("Assessment ended unexpectedly.");
-  return JSON.parse(full.slice(fin + FIN.length)) as Report;
 }
 
 export function hint(body: TurnInput) {
   const o = own();
-  if (o) return runHint(body, o.llm, o.fast);
-  return post<{ hint: string }>("/api/hint", body);
+  return watched("hint", !!o, () => (o ? runHint(body, o.llm, o.fast) : post<{ hint: string }>("/api/hint", body)));
 }
 
 export function rehearse(body: { description: string; lang: Lang; profile?: Partial<Profile> }) {
   const o = own();
-  if (o) return runRehearse(body, o.llm, o.fast);
-  return post<{ scenario: Scenario }>("/api/rehearse", body);
+  return watched("rehearse", !!o, () => (o ? runRehearse(body, o.llm, o.fast) : post<{ scenario: Scenario }>("/api/rehearse", body)));
 }
 
 /** The habit across several sessions. Uses the smart model: it reads more and matters more. */
 export function pattern(body: PatternInput) {
   const o = own();
-  if (o) return runPattern(body, o.llm, o.smart);
-  return post<PatternResult>("/api/pattern", body);
+  return watched("pattern", !!o, () => (o ? runPattern(body, o.llm, o.smart) : post<PatternResult>("/api/pattern", body)));
 }
 
 const ERR = "\n@@error\n";
@@ -135,30 +166,37 @@ const ERR = "\n@@error\n";
  */
 export async function roleplayStream(body: TurnInput, onText: (full: string) => void, signal?: AbortSignal): Promise<string> {
   const o = own();
-  if (o) {
-    let acc = "";
-    return runRoleplay(body, o.llm, o.fast, (d) => {
-      acc += d;
-      onText(acc);
-    });
-  }
-  return streamText("/api/roleplay", body, onText, signal);
+  return watched("roleplay", !!o, async () => {
+    if (o) {
+      let acc = "";
+      return runRoleplay(body, o.llm, o.fast, (d) => {
+        acc += d;
+        onText(acc);
+      });
+    }
+    const full = await streamText("/api/roleplay", body, onText, signal);
+    // The caller reads `@@error` out of the protocol; the count belongs here.
+    if (full.includes(ERR)) reportFailure("roleplay", new ApiError("stream", 200, "stream"), false);
+    return full;
+  });
 }
 
 /** The coach's reply to a reflection answer. */
 export async function reflectStream(body: ReflectInput, onText: (full: string) => void): Promise<string> {
   const o = own();
-  if (o) {
-    let acc = "";
-    return runReflect(body, o.llm, o.fast, (d) => {
-      acc += d;
-      onText(acc);
-    });
-  }
-  const full = await streamText("/api/reflect", body, onText);
-  const err = full.indexOf(ERR);
-  if (err !== -1) throw new Error(full.slice(err + ERR.length).trim());
-  return full;
+  return watched("reflect", !!o, async () => {
+    if (o) {
+      let acc = "";
+      return runReflect(body, o.llm, o.fast, (d) => {
+        acc += d;
+        onText(acc);
+      });
+    }
+    const full = await streamText("/api/reflect", body, onText);
+    const err = full.indexOf(ERR);
+    if (err !== -1) throw new ApiError(full.slice(err + ERR.length).trim(), 200, "stream");
+    return full;
+  });
 }
 
 /** Stream plain text from an endpoint; calls onText with the accumulated text. */
@@ -169,7 +207,7 @@ export async function streamText(url: string, body: unknown, onText: (full: stri
     try {
       msg = ((await res.json()) as { error?: string }).error ?? msg;
     } catch {}
-    throw new Error(msg);
+    throw new ApiError(msg, res.status, "http");
   }
   const reader = res.body.getReader();
   const dec = new TextDecoder();

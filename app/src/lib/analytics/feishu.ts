@@ -37,6 +37,19 @@ export const FIELDS: { field_name: string; type: number; property?: Record<strin
   { field_name: "语言", type: SELECT },
   { field_name: "平台", type: SELECT },
   { field_name: "版本", type: TEXT },
+  // Added 2026-09-10; `ensureFields` adds these to tables created before.
+  { field_name: "有档案", type: CHECKBOX },
+  { field_name: "设备类型", type: SELECT },
+  { field_name: "独立窗口", type: CHECKBOX },
+  { field_name: "等待秒", type: NUMBER, property: { formatter: "0" } },
+  { field_name: "提示次数", type: NUMBER, property: { formatter: "0" } },
+  { field_name: "揭示回合", type: NUMBER, property: { formatter: "0" } },
+  { field_name: "自带模型", type: CHECKBOX },
+  { field_name: "任务", type: SELECT },
+  { field_name: "错误类型", type: SELECT },
+  { field_name: "状态码", type: NUMBER, property: { formatter: "0" } },
+  { field_name: "序号", type: NUMBER, property: { formatter: "0" } },
+  { field_name: "找到模式", type: CHECKBOX },
 ];
 
 export function toFields(e: TrackEvent, batch: Pick<TrackBatch, "device" | "lang">): Record<string, string | number | boolean> {
@@ -48,9 +61,17 @@ export function toFields(e: TrackEvent, batch: Pick<TrackBatch, "device" | "lang
     "平台": deploymentName(),
     "版本": buildVersion(),
   };
-  if (e.name === "session_start") Object.assign(row, { "会话": e.session, "场景": e.scenario, "来源": e.origin, "情境": e.context, "难度": e.difficulty, "限时": e.timed });
-  if (e.name === "session_end") Object.assign(row, { "会话": e.session, "场景": e.scenario, "结果": e.outcome, "回合": e.turns, "沉默": e.silences, "时长秒": e.duration_s, "结束方式": e.ended_by });
+  if (e.name === "app_open") Object.assign(row, { "有档案": e.profile, "设备类型": e.ua, "独立窗口": e.standalone });
+  if (e.name === "briefing_view") Object.assign(row, { "会话": e.session, "场景": e.scenario, "来源": e.origin });
+  if (e.name === "session_start") Object.assign(row, { "会话": e.session, "场景": e.scenario, "来源": e.origin, "情境": e.context, "难度": e.difficulty, "限时": e.timed, "等待秒": e.wait_s });
+  if (e.name === "session_end") {
+    Object.assign(row, { "会话": e.session, "场景": e.scenario, "结果": e.outcome, "回合": e.turns, "沉默": e.silences, "时长秒": e.duration_s, "结束方式": e.ended_by, "提示次数": e.hints, "自带模型": e.byok });
+    if (e.revealed_turn !== undefined) row["揭示回合"] = e.revealed_turn;
+  }
   if (e.name === "debrief_view") Object.assign(row, { "会话": e.session, "场景": e.scenario, "星数": e.stars, "结果": e.outcome });
+  if (e.name === "reflect") Object.assign(row, { "会话": e.session, "序号": e.index });
+  if (e.name === "pattern_view") Object.assign(row, { "找到模式": e.found });
+  if (e.name === "api_error") Object.assign(row, { "任务": e.task, "错误类型": e.kind, "状态码": e.status, "自带模型": e.byok });
   return row;
 }
 
@@ -81,15 +102,54 @@ export async function listTables(): Promise<Map<string, string>> {
   return byName;
 }
 
+/**
+ * A table made by an earlier build lacks the columns added since. Writing a
+ * field Feishu does not know fails the whole batch, so before the first write
+ * to any table in this process its columns are compared with FIELDS and the
+ * missing ones created. Once per table per process — fields do not disappear.
+ */
+const ensured = new Map<string, Promise<void>>();
+
+export function ensureFields(tableId: string): Promise<void> {
+  let p = ensured.get(tableId);
+  if (!p) {
+    p = (async () => {
+      const t = encodeURIComponent(tableId);
+      const have = new Set<string>();
+      let pageToken = "";
+      for (let i = 0; i < 5; i++) {
+        const q = new URLSearchParams({ page_size: "100", ...(pageToken ? { page_token: pageToken } : {}) });
+        const data = await feishuCall<{ items?: { field_name: string }[]; has_more?: boolean; page_token?: string }>("analytics_fields", `/bitable/v1/apps/${app()}/tables/${t}/fields?${q}`);
+        for (const f of data.items ?? []) have.add(f.field_name);
+        if (!data.has_more || !data.page_token) break;
+        pageToken = data.page_token;
+      }
+      for (const f of FIELDS) {
+        if (have.has(f.field_name)) continue;
+        await feishuCall("analytics_add_field", `/bitable/v1/apps/${app()}/tables/${t}/fields`, { method: "POST", body: JSON.stringify(f) });
+      }
+    })();
+    ensured.set(tableId, p);
+    p.catch(() => ensured.delete(tableId));
+  }
+  return p;
+}
+
 /** Create-if-missing is guarded per name so concurrent batches at a month boundary make one table, not two. */
 const creating = new Map<string, Promise<string>>();
 
 export async function resolveTable(month: string): Promise<string> {
   const pinned = process.env.ANALYTICS_FEISHU_TABLE_ID;
-  if (pinned) return pinned;
+  if (pinned) {
+    await ensureFields(pinned);
+    return pinned;
+  }
   const name = tableNameFor(month);
   const known = (await listTables()).get(name);
-  if (known) return known;
+  if (known) {
+    await ensureFields(known);
+    return known;
+  }
   let pending = creating.get(name);
   if (!pending) {
     pending = (async () => {
@@ -99,6 +159,8 @@ export async function resolveTable(month: string): Promise<string> {
       });
       if (!data.table_id) throw new Error("analytics_create_table_failed");
       tables?.byName.set(name, data.table_id);
+      // Born with the full column set; nothing to compare.
+      ensured.set(data.table_id, Promise.resolve());
       return data.table_id;
     })();
     creating.set(name, pending);
