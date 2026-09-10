@@ -1,8 +1,8 @@
 # 匿名使用统计 → 飞书
 
-状态：已上线 Vercel 生产（PR #6 合并，2026-09-10）。生产 `/api/track` 返回可用；用浏览器在线上跑了一局，4 次 POST 全部 202，运行日志无 `[track]` 错误，即建月表与写入未报错。ModelScope 空间已跑新构建（`ceee413`）：明文变量 `ANALYTICS_FEISHU_TABLE_PREFIX=events` 通过 OpenAPI 加上、`deploy` 触发重建，约 7 分钟 Running，浏览器内 `/api/track` 返回可用；国内还没有真实会话写入，首批数据进来后看运行日志有无 `[track]` 行即可。
+状态：两端上线（2026-09-10）。Vercel 生产：第一批四个事件跑通；第二批（共十个事件、补 12 列）上线时第一条 POST 撞了 30 秒函数超时（见踩坑记录），改为并发补列并把时限提到 60 秒后再跑一局，日志全部 info 无错误。ModelScope：变量与重建都通过 OpenAPI 完成，空间当前构建 `beb8a04`，浏览器内 `/api/track` 返回可用；国内还没有真实会话，首批数据来了看运行日志有无 `[track]` 行。
 
-测试那一局来自设备 `5cc1c7e0-b946-4bfe-939b-4d3a0b1fcec9`、会话 `qnassz7oxuoe`，Base 里 `events_2026_09` 表中这四行是测试数据，可删。
+Vercel 上的三局测试来自设备 `5cc1c7e0-b946-4bfe-939b-4d3a0b1fcec9`、`f65cc4b3-b5cf-4e84-a5f3-360e626ab90f`、`f85830e0-1d7f-45f3-87d3-17ea84ebb85f`，Base 里 `events_2026_09` 表中这些行是测试数据，可删；第二台设备那一局的首批事件因超时丢了一部分。
 
 ## 为什么，以及边界
 
