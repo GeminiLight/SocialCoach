@@ -150,6 +150,10 @@ Signature moments: objective progress fills in like ink on paper; the report rea
 
 Issues and PRs welcome. The corpus is the easiest place to help: scenarios, strategies and cases live in [`app/src/data/corpus/`](app/src/data/corpus) as typed, bilingual objects with a `source` field — add one and it gets tagged, retrieved and scheduled like everything else.
 
+## Friends
+
+- [LinuxDo Community](https://linux.do) — a community for Linux, open source, and AI builders.
+
 ## License
 
 Copyright 2026 SocialCoach contributors.

@@ -150,6 +150,10 @@ Next.js 16 App Router · React 19 · TypeScript · Tailwind v4 · Zustand（持�
 
 欢迎提 Issue 和 PR。最容易参与的地方是语料：场景、策略和案例都在 [`app/src/data/corpus/`](app/src/data/corpus) 里，是带 `source` 字段的、类型化的双语对象——新增一条，它就会像其他内容一样被打标、检索和排程。
 
+## 友链
+
+- [LinuxDo 社区](https://linux.do) —— 一个关于 Linux、开源与 AI 构建者的社区。
+
 ## 许可证
 
 Copyright 2026 SocialCoach contributors.
