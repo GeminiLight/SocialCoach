@@ -53,10 +53,10 @@ export function Stance({
   const block = layout === "block";
 
   return (
-    <div className={clsx("min-w-0", className)} aria-label={`${name} · ${t(lang, KEY[state])}`}>
+    <div className={clsx("min-w-0", className)} role="group" aria-label={`${name} · ${t(lang, KEY[state])}`}>
       <p className={clsx("flex items-baseline gap-1.5 leading-tight", block ? "text-[13px]" : "text-[11px]")}>
         <span className="font-semibold text-ink-2 truncate">{name}</span>
-        <span className={clsx("shrink-0", state === "unmoved" ? "text-ink-4" : "text-ink-3")}>{t(lang, KEY[state])}</span>
+        <span className="shrink-0 text-ink-3">{t(lang, KEY[state])}</span>
         {dropped && (
           <motion.span
             initial={{ opacity: 0, x: 4 }}
@@ -70,9 +70,9 @@ export function Stance({
       </p>
       <div className={clsx("relative mt-1.5 rounded-full bg-line overflow-hidden", block ? "h-2" : "h-1.5")}>
         <motion.span
-          className={clsx("absolute inset-y-0 left-0 rounded-full", state === "agreed" ? "bg-moss" : "bg-ink")}
+          className={clsx("absolute inset-0 origin-left rounded-full", state === "agreed" ? "bg-moss" : "bg-ink")}
           initial={false}
-          animate={{ width: `${Math.max(2, value)}%` }}
+          animate={{ scaleX: Math.max(2, Math.min(100, value)) / 100 }}
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
         />
         {/* Where they stood before this turn, so a retreat leaves a visible mark. */}

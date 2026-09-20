@@ -30,17 +30,17 @@ export default function Home() {
     [sessions, todaySessionId, todayDate, today],
   );
   const streak = computeStreak(practiceDays);
-  const unfinished = sessions.find((s) => s.id !== todaySessionId && s.status === "active" && s.messages.some((m) => m.role === "learner"));
+  const unfinished = sessions.find((s) => s.id !== todaySessionId && s.status === "active");
   /** Last session's verdict, to fill today's wait with something worth reading. */
   const lastVerdict = useMemo(() => {
-    const last = [...sessions].reverse().find((x) => x.status === "assessed" && x.report?.verdict);
+    const last = sessions.find((x) => x.status === "assessed" && x.report?.verdict && x.report.verdictEvidence);
     if (!last) return null;
     const trail = last.stanceTrail ?? [];
     const gaveGroundOn: number[] = [];
     trail.forEach((v, i) => {
       if (v < (i === 0 ? 20 : trail[i - 1])) gaveGroundOn.push(i + 1);
     });
-    return { verdict: last.report!.verdict, title: last.scenario.title[lang], gaveGroundOn };
+    return { evidence: last.report!.verdictEvidence, verdict: last.report!.verdict, title: last.scenario.title[lang], gaveGroundOn };
   }, [sessions, lang]);
 
   const hour = new Date().getHours();
@@ -130,6 +130,7 @@ export default function Home() {
                   {lastVerdict && (
                     <div className="dotted pt-5 flex flex-col gap-1.5">
                       <p className="eyebrow">{t(lang, "home_last_time")}</p>
+                      <blockquote className="text-[13px] text-ink-3 leading-relaxed">“{lastVerdict.evidence}”</blockquote>
                       <p className="display text-[17px] leading-snug text-ink-2">{lastVerdict.verdict}</p>
                       {lastVerdict.gaveGroundOn.length > 0 && (
                         <p className="text-[12.5px] text-ink-3">
@@ -155,7 +156,18 @@ export default function Home() {
               )}
             </section>
 
-            <Link href="/rehearse" className="press group flex items-start gap-4 rounded-[var(--radius)] rehearsal-invitation p-5 lg:p-6">
+            {recent[0]?.report?.nextStep && recent[0].report.verdictEvidence && (
+              <section className="takeaway-note flex flex-col gap-3 py-5 border-y border-line">
+                <div className="flex flex-wrap items-center justify-between gap-x-3">
+                  <h2 className="eyebrow">{t(lang, "home_carry_forward")}</h2>
+                  <Link href={`/practice/${recent[0].id}`} className="press inline-flex items-center gap-1 min-h-11 text-[12px] text-accent-deep">{t(lang, "home_review_link")}<ArrowUpRight size={14} /></Link>
+                </div>
+                {recent[0].report.verdictEvidence && <blockquote className="text-[13px] text-ink-3 leading-relaxed">“{recent[0].report.verdictEvidence}”</blockquote>}
+                <p className="text-[16px] font-medium leading-relaxed max-w-[var(--measure)]">{recent[0].report.nextStep}</p>
+              </section>
+            )}
+
+            <Link href="/rehearse" className="press group flex items-start gap-4 rounded-[var(--radius)] border border-line p-5 lg:p-6 hover:bg-paper-deep">
               <span className="h-11 w-11 rounded-xl bg-card border border-line flex items-center justify-center shrink-0">
                 <PenLine size={20} className="text-accent-deep" aria-hidden />
               </span>
@@ -213,7 +225,9 @@ export default function Home() {
                             {relDate(s.startedAt, lang)} · {contextById(s.scenario.context).name[lang]}
                           </p>
                         </div>
-                        <Stars n={s.report?.stars ?? 0} size={14} />
+                        <span title={s.report?.scoringVersion === 2 ? t(lang, "rp_quality", { n: s.report.stars }) : t(lang, "rp_legacy")}>
+                          {s.report?.scoringVersion === 2 && !s.report.ratings?.length ? <span className="text-[11px] text-ink-3">{t(lang, "rp_unrated")}</span> : <Stars n={s.report?.stars ?? 0} size={14} />}
+                        </span>
                       </Link>
                     </li>
                   ))}
@@ -244,12 +258,12 @@ function TodayCard({ session, onStart, onSwap }: { session: ReturnType<typeof bu
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="card overflow-hidden lg:grid lg:grid-cols-[38%_minmax(0,1fr)] lg:min-h-[360px]"
+      className="today-feature card overflow-hidden lg:grid lg:grid-cols-[minmax(0,1fr)_32%] lg:min-h-[380px]"
     >
-      <div className="relative h-44 bg-paper-deep lg:h-auto lg:border-r lg:border-line">
+      <div className="relative h-36 bg-paper-deep lg:order-2 lg:h-auto lg:border-l lg:border-line">
         <ScenarioCover scenario={sc} size={160} full className="lg:hidden" />
         <ScenarioCover scenario={sc} tall className="hidden lg:block" />
-        <div className="absolute left-4 top-4 flex gap-2">
+        <div className="absolute left-4 top-4 flex flex-wrap gap-2 lg:hidden">
           <span className="h-7 px-2.5 inline-flex items-center rounded-full bg-paper/90 text-[12px] font-medium">
             {t(lang, "scheduled_badge")}
           </span>
@@ -258,9 +272,10 @@ function TodayCard({ session, onStart, onSwap }: { session: ReturnType<typeof bu
           </span>
         </div>
       </div>
-      <div className="p-5 flex flex-col gap-4 lg:p-6 lg:gap-5 lg:justify-center min-w-0">
+      <div className="p-5 flex flex-col gap-4 lg:p-8 lg:gap-5 lg:justify-center min-w-0">
+        <p className="eyebrow hidden lg:block">{t(lang, "scheduled_badge")} <span className="px-1.5">/</span> {contextById(sc.context).name[lang]}</p>
         <div>
-          <h2 className="display text-[24px] lg:text-[28px] leading-tight">{sc.title[lang]}</h2>
+          <h2 className="display text-[26px] lg:text-[30px] leading-tight">{sc.title[lang]}</h2>
           <p className="text-[14px] lg:text-[15.5px] text-ink-2 mt-2 lg:mt-3 leading-relaxed lg:max-w-[var(--measure)]">{sc.hook[lang]}</p>
         </div>
         <div className="flex flex-wrap gap-1.5">

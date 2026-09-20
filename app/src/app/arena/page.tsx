@@ -1,7 +1,7 @@
 "use client";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Search, ArrowRight, ArrowUpRight, ChevronDown, Clock3, PenLine, SlidersHorizontal, X } from "lucide-react";
+import { Search, ArrowRight, ArrowUpRight, ChevronDown, PenLine, SlidersHorizontal, X } from "lucide-react";
 import Link from "next/link";
 import { Shell } from "@/components/Shell";
 import { Button, Chip, Empty, IconButton, Page } from "@/components/ui";
@@ -13,17 +13,33 @@ import { CONTEXTS, SKILLS, contextById, skillById, type ContextId, type SkillId 
 import { useApp, useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
 import { buildSession } from "@/lib/session-utils";
+import { rememberArenaLocation } from "@/lib/arena-location";
 import { clsx } from "clsx";
 
 export default function Arena() {
   const lang = useLang();
   const router = useRouter();
   const params = useSearchParams();
+  useEffect(() => { rememberArenaLocation(params.toString()); }, [params]);
   const { profile, sessions, customScenarios, addSession } = useApp();
-  const [q, setQ] = useState("");
-  const [ctx, setCtx] = useState<ContextId | "all" | "mine">("all");
-  const [skill, setSkill] = useState<SkillId | null>(() => SKILLS.find((s) => s.id === params.get("skill"))?.id ?? null);
-  const [difficulty, setDifficulty] = useState("all");
+  // The URL keeps the collection intact when returning from a scene.
+  const q = params.get("q") ?? "";
+  const contextParam = params.get("context");
+  const ctx: ContextId | "all" | "mine" = contextParam === "mine" ? "mine" : CONTEXTS.find((c) => c.id === contextParam)?.id ?? "all";
+  const skill = SKILLS.find((s) => s.id === params.get("skill"))?.id ?? null;
+  const difficulty = ["1", "2", "3"].includes(params.get("difficulty") ?? "") ? params.get("difficulty")! : "all";
+  const practiced = ["new", "done"].includes(params.get("history") ?? "") ? params.get("history")! : "all";
+  const visible = Math.max(12, Math.min(500, Number(params.get("limit")) || 12));
+  const setFilter = (key: string, value: string | null) => {
+    const next = new URLSearchParams(params.toString());
+    if (!value || value === "all") next.delete(key); else next.set(key, value);
+    if (key !== "limit") next.delete("limit");
+    window.history.replaceState(null, "", `/arena${next.size ? `?${next}` : ""}`);
+  };
+  const setQ = (value: string) => setFilter("q", value);
+  const setCtx = (value: ContextId | "all" | "mine") => setFilter("context", value);
+  const setSkill = (value: SkillId | null) => setFilter("skill", value);
+  const setDifficulty = (value: string) => setFilter("difficulty", value);
   const [moreSkills, setMoreSkills] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const starting = useRef(false);
@@ -36,6 +52,8 @@ export default function Arena() {
   const list = useMemo(() => {
     const query = q.trim().toLowerCase();
     return all.filter((s) => {
+      if (practiced === "new" && counts.has(s.id)) return false;
+      if (practiced === "done" && !counts.has(s.id)) return false;
       if (ctx === "mine" && !s.custom) return false;
       if (ctx !== "all" && ctx !== "mine" && s.context !== ctx) return false;
       if (skill && !s.skills.includes(skill) && !s.relatedSkills?.includes(skill)) return false;
@@ -55,7 +73,7 @@ export default function Arena() {
       }
       return true;
     });
-  }, [all, ctx, skill, difficulty, q]);
+  }, [all, ctx, skill, difficulty, q, practiced, counts]);
   const forYou = useMemo(() => {
     if (!profile) return [];
     return SCENARIOS.filter(
@@ -72,12 +90,9 @@ export default function Arena() {
     addSession(session);
     router.push(`/practice/${session.id}`);
   };
-  const filtering = ctx !== "all" || !!skill || !!q.trim() || difficulty !== "all";
+  const filtering = ctx !== "all" || !!skill || !!q.trim() || difficulty !== "all" || practiced !== "all";
   const reset = () => {
-    setQ("");
-    setCtx("all");
-    setSkill(null);
-    setDifficulty("all");
+    window.history.replaceState(null, "", "/arena");
     searchRef.current?.focus();
   };
   const orderedSkills = [...SKILLS.filter((s) => profile?.goals.includes(s.id)), ...SKILLS.filter((s) => !profile?.goals.includes(s.id))];
@@ -153,6 +168,11 @@ export default function Arena() {
                 </option>
               ))}
             </select>
+            <select aria-label={t(lang, "arena_status_filter")} value={practiced} onChange={(e) => setFilter("history", e.target.value)} className="min-h-12 px-3 rounded-[var(--radius-sm)] border border-line bg-card text-[13px] text-ink-2">
+              <option value="all">{t(lang, "arena_status_all")}</option>
+              <option value="new">{t(lang, "arena_status_new")}</option>
+              <option value="done">{t(lang, "arena_status_done")}</option>
+            </select>
           </div>
           <div id="skill-filters" hidden={!moreSkills}>
             <div className="p-4 rounded-[var(--radius)] bg-paper-deep flex flex-wrap gap-2">
@@ -168,22 +188,22 @@ export default function Arena() {
           </div>
           <div
             className="flex gap-2 -mx-5 px-5 overflow-x-auto no-scrollbar md:mx-0 md:px-0 md:flex-wrap"
-            aria-label={t(lang, "arena_by_context")}
+            role="group" aria-label={t(lang, "arena_by_context")}
           >
             <Chip active={ctx === "all"} onClick={() => setCtx("all")}>
               {t(lang, "arena_all")}
-              <span className="num opacity-70">{all.length}</span>
+              <span className="num">{all.length}</span>
             </Chip>
             {customScenarios.length > 0 && (
               <Chip active={ctx === "mine"} onClick={() => setCtx("mine")}>
                 {t(lang, "custom_badge")}
-                <span className="num opacity-70">{customScenarios.length}</span>
+                <span className="num">{customScenarios.length}</span>
               </Chip>
             )}
             {CONTEXTS.map((c) => (
               <Chip key={c.id} active={ctx === c.id} onClick={() => setCtx(ctx === c.id ? "all" : c.id)}>
                 {c.name[lang]}
-                <span className="num opacity-70">{all.filter((s) => s.context === c.id).length}</span>
+                <span className="num">{all.filter((s) => s.context === c.id).length}</span>
               </Chip>
             ))}
           </div>
@@ -207,22 +227,18 @@ export default function Arena() {
                     i === 2 && "md:col-span-2 xl:col-span-1",
                   )}
                 >
-                  <div className="relative h-36 bg-paper-deep w-full">
-                    <ScenarioCover scenario={sc} full />
-                  </div>
-                  <div className="p-5 flex flex-col gap-3 flex-1 w-full">
-                    <span className="text-[11px] text-ink-3">
-                      {contextById(sc.context).name[lang]} · {t(lang, `diff_${sc.difficulty}` as "diff_1")}
-                    </span>
-                    <h3 className="font-semibold text-[17px] leading-snug">{sc.title[lang]}</h3>
-                    <div className="flex items-center justify-between gap-2 mt-auto pt-3 border-t border-line">
-                      <span className="inline-flex items-center gap-1.5 text-[12px] text-ink-3 num">
-                        <Clock3 size={13} />
-                        {sc.minutes} {t(lang, "min")}
-                      </span>
-                      <span className="h-8 w-8 inline-flex items-center justify-center rounded-full bg-accent-soft text-accent-deep">
-                        <ArrowUpRight size={16} aria-hidden />
-                      </span>
+                  <div className="p-5 flex flex-col gap-4 flex-1 w-full">
+                    <div className="flex items-center justify-between gap-3">
+                      <ScenarioCover scenario={sc} size={44} />
+                      <span className="text-[12px] text-ink-3 num">{sc.minutes} {t(lang, "min")} · {t(lang, `diff_${sc.difficulty}` as "diff_1")}</span>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <h3 className="font-semibold text-[17px] leading-snug">{sc.title[lang]}</h3>
+                      <p className="text-[13px] text-ink-2 leading-relaxed line-clamp-2">{sc.hook[lang]}</p>
+                    </div>
+                    <div className="flex items-center justify-between gap-2 mt-auto pt-3 border-t border-line text-[12px] text-ink-3">
+                      <span>{contextById(sc.context).name[lang]}</span>
+                      <span className="inline-flex items-center gap-1.5 font-medium text-accent-deep">{t(lang, "arena_preview")}<ArrowRight size={14} aria-hidden /></span>
                     </div>
                   </div>
                 </button>
@@ -266,7 +282,7 @@ export default function Arena() {
             />
           )}
           <div className="flex flex-col">
-            {list.map((sc, i) => {
+            {list.slice(0, visible).map((sc, i) => {
               const count = counts.get(sc.id) ?? 0;
               return (
                 <button
@@ -309,6 +325,10 @@ export default function Arena() {
               );
             })}
           </div>
+          {list.length > 0 && <div className="flex flex-col items-center gap-3 pt-6">
+            <p className="text-[12px] text-ink-3 num">{t(lang, "arena_showing", { n: Math.min(visible, list.length), total: list.length })}</p>
+            {visible < list.length && <Button variant="secondary" onClick={() => setFilter("limit", String(visible + 12))}>{t(lang, "arena_show_more", { n: Math.min(12, list.length - visible) })}<ChevronDown size={16} /></Button>}
+          </div>}
         </section>
         <Link
           href="/rehearse"

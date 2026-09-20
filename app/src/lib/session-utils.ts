@@ -43,7 +43,8 @@ export function historyFor(sessions: Session[], lang: Lang) {
       skills: s.scenario.skills,
       context: s.scenario.context,
       outcome: s.outcome,
-      stars: s.report?.stars,
+      stars: s.report?.scoringVersion === 2 && !s.report.ratings?.length ? undefined : s.report?.stars,
+      scoringVersion: s.report?.scoringVersion,
       at: s.startedAt,
     }));
 }

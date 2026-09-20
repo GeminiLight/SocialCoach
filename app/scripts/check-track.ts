@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
+import { eventSchema } from "../src/lib/analytics/schema";
+import { toFields } from "../src/lib/analytics/feishu";
 import { GET, POST } from "../src/app/api/track/route";
 
 /**
@@ -18,6 +20,13 @@ async function main() {
   let fieldAdds = 0;
   const written: { url: string; body: { records: { fields: Record<string, unknown> }[] } }[] = [];
   const ts = Date.UTC(2026, 8, 10, 12, 0, 0);
+  const oldScore = { name: "debrief_view", ts, session: "abc123def456", scenario: "neighbor-noise", stars: 2, outcome: "partial" };
+  const metadata = { device: randomUUID(), lang: "zh" as const };
+  assert.equal(toFields(eventSchema.parse(oldScore), metadata)["评分口径"], "目标达成");
+  const newScore = { ...oldScore, scoring_version: 2, rated: false };
+  assert.equal(toFields(eventSchema.parse(newScore), metadata)["评分口径"], "沟通表现");
+  assert.equal(toFields(eventSchema.parse(newScore), metadata)["评分状态"], "证据不足");
+  assert.equal(eventSchema.safeParse({ ...newScore, evidence: "private words" }).success, false);
   const batch = (events: unknown[], extra: Record<string, unknown> = {}) => ({ id: randomUUID(), device: randomUUID(), lang: "zh", events, ...extra });
   const start = { name: "session_start", ts, session: "abc123def456", scenario: "neighbor-noise", origin: "arena", context: "community", difficulty: 2, timed: true, wait_s: 12 };
   const end = { name: "session_end", ts: ts + 90_000, session: "abc123def456", scenario: "neighbor-noise", outcome: "partial", turns: 5, silences: 1, duration_s: 90, ended_by: "engine", hints: 1, revealed_turn: 3, byok: false };
@@ -127,10 +136,10 @@ async function main() {
     assert.equal((await POST(request(batch([start])))).status, 202);
     await settle();
     assert.match(written.at(-1)!.url, /tables\/tblpinned\//); assert.equal(creates, 2);
-    assert.equal(fieldAdds, 12, "the twelve newer columns were added"); assert.ok(fieldsOf.tblpinned.includes("等待秒"));
+    assert.equal(fieldAdds, 14, "the fourteen newer columns were added"); assert.ok(fieldsOf.tblpinned.includes("等待秒"));
     assert.equal((await POST(request(batch([start])))).status, 202);
     await settle();
-    assert.equal(fieldAdds, 12, "reconciled once per process");
+    assert.equal(fieldAdds, 14, "reconciled once per process");
     delete process.env.ANALYTICS_FEISHU_TABLE_ID;
 
     // rate window per address

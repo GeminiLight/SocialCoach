@@ -57,6 +57,21 @@ export interface RetrievalTrace {
   relaxed: string[];
   candidates: number;
   chosen: string;
+  roleFit?: { characterId: string; fit: "compatible" | "uncertain"; reason: string };
+}
+
+/** A scene can close without either side getting their original ask. */
+export interface Closure {
+  kind: "agreement" | "boundary" | "deferred" | "withdrawal";
+  learnerQuote?: string;
+  npcQuote: string;
+}
+
+export interface SkillRating {
+  skill: SkillId;
+  level: 0 | 1 | 2 | 3;
+  evidence: string;
+  reason: string;
 }
 
 export interface EvidenceItem {
@@ -77,14 +92,14 @@ export interface Alternative {
 }
 
 export interface Report {
+  /** Absent on legacy reports, whose stars counted completed objectives. */
+  scoringVersion?: 2;
+  ratings?: SkillRating[];
   stars: 0 | 1 | 2 | 3;
   outcome: "success" | "partial" | "failure";
-  /**
-   * One line, the shape of a judgement: what the learner got, and what it cost.
-   * It opens the report, where three stars and "2/3 objectives" used to sit —
-   * a tally is not a verdict, and the report's most interesting finding was
-   * reading at the same volume as everything else around it.
-   */
+  /** Exact learner quote supporting the headline; absent on legacy reports. */
+  verdictEvidence?: string;
+  /** Evidence-backed judgment, separating the result from communication quality. */
   verdict: string;
   summary: string;
   strengths: EvidenceItem[];
@@ -116,6 +131,7 @@ export interface Session {
   status: SessionStatus;
   outcome?: "success" | "partial" | "failure";
   outcomeNote?: string;
+  closure?: Closure;
   startedAt: number;
   endedAt?: number;
   report?: Report;
@@ -138,6 +154,7 @@ export interface Session {
 export interface RoleplayMeta {
   objectives: boolean[];
   ended: boolean;
+  closure?: Closure;
   outcome?: "success" | "partial" | "failure" | null;
   note?: string;
   /**

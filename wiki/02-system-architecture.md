@@ -22,7 +22,7 @@
 
 ## 用户反馈（2026-09-09）
 
-新增独立 `POST /api/feedback`：严格校验用户主动提交的反馈后，通过服务端飞书应用凭证写入固定多维表格。不接入 LLM，不自动附带转录、档案或密钥。`GET /api/feedback` 只返回配置是否齐全。接入状态和隐私边界见 [反馈方案](./specs/spec-user-feedback.md)。
+新增独立 `POST /api/feedback`：严格校验用户主动提交的反馈后，通过服务端飞书应用凭证写入固定多维表格。不接入 LLM，不自动附带转录、档案或密钥。`GET /api/feedback` 只返回配置是否齐全。接入状态和隐私边界见 [反馈方案](./archive/specs/spec-user-feedback.md)。
 
 ## 目录结构
 
@@ -69,18 +69,20 @@ profile/goals/proficiency/history
         │
         ▼  POST /api/schedule           （非流式，一次返回四件套）
   ① 处方 prescription   LLM 产出 JSON：query + core_constraints + optional_constraints + rationale
-  ② 检索 retrieval      纯本地函数 retrieveScenario()，不过 LLM
-  ③ 适配 adaptation     LLM 重写 briefing / objectives / focus / why
+  ② 角色适配性 role-fit  在核心候选池中判断身份/权限/关系的相容性，冲突需引用档案原文
+  ③ 检索 retrieval      纯本地函数 retrieveScenario()；优先相容角色，再放松可选约束
+  ④ 适配 adaptation     LLM 重写 briefing / objectives / focus / why，不改场景事实
         │
         ▼  POST /api/roleplay          （流式，每回合一次）
-  文本协议：开头 @@meta {objectives,ended,outcome,stance,revealed,note}，之后 @@<characterId> + 台词
+  文本协议：开头 @@meta {objectives,ended,closure?,outcome,stance,revealed,note}，之后 @@<characterId> + 台词
   meta 必须在前：放末尾时快模型经常整块不写（实测 6 回合只出 2 次）
   stance 存进 session.stanceTrail，revealed 存 session.revealedAtTurn
   客户端边流边解析（partial-json.ts）
   限时应答到点：客户端追加 role:"event" 的沉默消息再调一次，NPC 以角色身份接话；不计回合
         │
         ▼  POST /api/assess            （流式，正文先出，@@final 后带完整 JSON）
-  诊断 → 归因 → 检索理论/案例 → 生成报告；服务端 clamp 所有数值后才发 @@final
+  检索理论/案例 → 生成报告 → 引文/技能/分数校验 → 发出校验后的正文与 @@final
+  ratings 评沟通质量，stars 由有效 ratings 均值取整；outcome 只描述初始目标达成
         │
         ▼  POST /api/reflect           （流式）针对用户的回答给教练回应
         │
@@ -102,6 +104,7 @@ profile/goals/proficiency/history
 
 **检索的关键约束**（`src/lib/retrieval.ts`，对应论文 §4.3.1）：
 
+- 自动推荐先校验用户技能与情境偏好，再对候选角色做语义匹配：compatible 优先；无相容候选才使用 uncertain；conflict 不进入检索池。无解返回可解释错误，不再随机兜底。手动选场景不受自动推荐过滤。
 - **核心约束永不放松**：`target_skills` 命中（`skills` 或 `relatedSkills`）+ `contexts` 命中。
 - **可选约束按固定顺序放松**，每次放松都记进 `RetrievalTrace.relaxed`：`relationship_types` → `difficulty` → `related_skills`。
 - 仍无候选时才放松 `exclude_history`（允许重复练过的场景），再无则返回 `null`。
@@ -164,6 +167,14 @@ type ChatRole = "learner" | "npc" | "coach" | "event";   // event = 房间里发
 
 `/rehearse` 每次输入时把描述写入 `sessionStorage["socialcoach.rehearsal-draft"]`，回到页面或刷新时恢复。清空输入会删除该键；`useApp.reset()` 同时删除当前标签页的草稿。存储不可用时继续保留内存中的输入，并不显示保存成功提示。草稿最多 800 字符，不引入任何服务端持久化；点击生成时仍走原有 `/api/rehearse` 请求。成功生成的场景继续由 `customScenarios` 保存。
 
+### 练习输入与目录返回（2026-09-21）
+
+`useSessionDraft(sessionId)` 同步写入 `sessionStorage["socialcoach.draft.<id>"]`，刷新或当前标签页返回时恢复；空文本 / 发送时删除。网络失败的已发送内容仍在本地转录中，点击重试会恢复到输入框。`PracticePage` 按 session id 给组件设置 key，避免切换场次复用草稿状态。存储权限不足时保留内存输入并提示未保存。
+
+`/arena` 的搜索、情境、技能、难度、练习记录筛选及展示数量由 URL 查询参数驱动，使用原生 `history.replaceState` 更新而不增加每次输入的返回栈。`arena-location.ts` 在标签页记住最近目录地址，简报返回时恢复；读取只接受 `/arena` 或 `/arena?...`。`useApp.reset()` 删除这两类标签页数据及原有排练草稿，不清理其他应用的键。
+
+以上是浏览器交互状态，不加入导出档案，不新增 API、账号或服务端练习存储。`PracticeJourney` 只负责路径导航说明，不改变会话状态机。
+
 ## API 路由概览
 
 > 完整契约见 [04-api-reference.md](./04-api-reference.md)。
@@ -202,3 +213,9 @@ pnpm lint
 ### 2026-09-07 语料扩充
 
 `corpus/index.ts` 聚合既有语料与 `scenarios-c` / `theories-c` / `cases-c`，因此目录、排程与复盘检索共用新增内容。`sources.ts` 集中维护本轮查证的 8 个来源；知识 source 新增可选 `url`，共享正文组件在知识页与复盘中呈现依据链接。旧数据无需迁移。新增案例的标题、情境和要点明确标注教学示例，避免被检索后误当作真实报告。完整清单见 [来源记录](./refs/corpus-sources-2026-09.md)。
+
+## 通用练习策略（2026-09-21，本地实现）
+
+`practice-policy.ts` 提供引文校验、初始目标结果与有证据的提前结束判断。`scenarioBlock` 分 simulation / learner 两种视图：NPC 模拟保留私有设定；简报、提示与复盘不接收 NPC 的隐藏动机、内部立场及成功/失败模板。已说出口的信息仍从转录进入复盘，防止事后用底牌要求用户猜答案。
+
+`Report.scoringVersion=2` 区分新沟通星数与旧目标星数，旧报告不迁移、不重评分；证据不足显示「暂不评分」，不更新熟练度。匿名统计增加评分口径与评分状态，不上传引文或角色匹配理由。模型仍负责语义判断，代码只保证结构、来源匹配和分数计算，不能证明一段评价在语义上公正。边界与验证见 [通用策略方案](./specs/spec-general-practice-policy.md)。

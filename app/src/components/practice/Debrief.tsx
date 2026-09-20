@@ -2,9 +2,9 @@
 import { FeedbackPrompt } from "@/components/Feedback";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { clsx } from "clsx";
-import { ArrowLeft, Bookmark, ChevronDown, RotateCcw, Share2, Send } from "lucide-react";
+import { Bookmark, ChevronDown, RotateCcw, Share2, Send } from "lucide-react";
 import { BottomBar, Button, IconButton, Marginalia, Stages, Stars, Spinner, useToast } from "@/components/ui";
 import { SkillTag, Level } from "@/components/SkillBits";
 import { CaseBody, TheoryBody } from "@/components/Knowledge";
@@ -15,6 +15,7 @@ import { track } from "@/lib/analytics/track";
 import { buildSession } from "@/lib/session-utils";
 import type { Report, Session } from "@/lib/types";
 import type { Character } from "@/data/corpus/types";
+import { PracticeJourney } from "./PracticeJourney";
 import { TurnMap } from "./TurnMap";
 import { caseById, theoryById } from "@/data/corpus";
 import { skillById, SKILLS, type SkillId } from "@/data/taxonomy";
@@ -50,7 +51,7 @@ export function Debrief({ session }: { session: Session }) {
         (p) => setPartial(p),
       );
       applyReport(session.id, final);
-      track({ name: "debrief_view", ts: Date.now(), session: session.id, scenario: sc.custom ? "custom" : sc.id, stars: final.stars, outcome: final.outcome });
+      track({ name: "debrief_view", ts: Date.now(), session: session.id, scenario: sc.custom ? "custom" : sc.id, stars: final.stars, outcome: final.outcome, scoring_version: final.scoringVersion, rated: final.scoringVersion === 2 ? !!final.ratings?.length : true });
       setPartial(null);
     } catch (e) {
       console.error("[assess]", e);
@@ -104,9 +105,9 @@ export function Debrief({ session }: { session: Session }) {
   /* ── phase: ended, report not yet started streaming ── */
   if (!report && !hasPartial) {
     return (
-      <div className="min-h-dvh pt-safe px-5 flex flex-col lg:mx-auto lg:w-full lg:max-w-[1000px] xl:max-w-[1120px] lg:px-6">
-        <div className="pt-2 -ml-2"><IconButton label={t(lang, "back")} onClick={() => router.push("/")}><ArrowLeft size={20} /></IconButton></div>
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="flex-1 flex flex-col gap-8 pt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-x-12 lg:items-start lg:pt-14">
+      <div className="min-h-dvh pt-safe px-5 flex flex-col lg:mx-auto lg:w-full lg:max-w-[var(--focus-max)] lg:px-6">
+        <PracticeJourney phase={2} onBack={() => router.push("/")} />
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="flex-1 flex flex-col gap-8 pt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_var(--margin-w)] lg:gap-x-10 lg:items-start lg:pt-14">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col items-center text-center gap-4 lg:items-start lg:text-left">
               <StarBurst n={n} of={sc.objectives.length} />
@@ -120,7 +121,7 @@ export function Debrief({ session }: { session: Session }) {
                   <Button variant="secondary" onClick={() => { setErr(null); void run(); }}>{t(lang, "retry")}</Button>
                 </div>
               ) : (
-                <Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} intervalMs={6000} slowAfterMs={60000} />
+                <Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} slowAfterMs={60000} />
               )}
             </div>
           </div>
@@ -175,11 +176,13 @@ function HiddenReveal({
   onDone: () => void;
 }) {
   const lang = useLang();
+  const router = useRouter();
   const got = session.revealedAtTurn;
   const ease = [0.16, 1, 0.3, 1] as const;
 
   return (
-    <div className="min-h-dvh pt-safe px-5 flex flex-col lg:mx-auto lg:w-full lg:max-w-[760px] lg:px-6">
+    <div className="min-h-dvh pt-safe px-5 flex flex-col lg:mx-auto lg:w-full lg:max-w-[var(--form-max)] lg:px-6">
+      <PracticeJourney phase={2} onBack={() => router.push("/")} />
       <div className="flex-1 flex flex-col justify-center gap-7 py-14">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease }} className="flex flex-col gap-2">
           <Stars n={objectivesMet} of={session.objectiveDone.length} />
@@ -236,7 +239,7 @@ function HiddenReveal({
 
 function StarBurst({ n, of }: { n: number; of: number }) {
   return (
-    <div className="flex items-center gap-2" aria-label={`${n}/${of}`}>
+    <div className="flex items-center gap-2" role="img" aria-label={`${n}/${of}`}>
       {Array.from({ length: of }).map((_, i) => (
         <motion.span key={i} initial={{ scale: 0.4, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.25 + i * 0.18, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}>
           <Stars n={i < n ? 1 : 0} of={1} size={38} />
@@ -255,7 +258,7 @@ function Transcript({ session, title }: { session: Session; title?: string }) {
       <ol className="flex flex-col gap-2.5">
         {session.messages.filter((m) => m.role !== "coach").map((m) => {
           if (m.role === "event") {
-            return <li key={m.id} className="text-[12.5px] italic text-ink-4 pl-6">{m.text}</li>;
+            return <li key={m.id} className="text-[12.5px] italic text-ink-3 pl-6">{m.text}</li>;
           }
           const c = sc.characters.find((x) => x.id === m.characterId);
           const mine = m.role === "learner";
@@ -287,11 +290,14 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
   const questions = (report.reflectionQuestions ?? []).filter(Boolean);
   const deltaEntries = (Object.entries(report.deltas ?? {}) as [SkillId, number][]).filter(([k, v]) => (v ?? 0) > 0 && (goals.includes(k) || sc.skills.includes(k)));
   const stars = report.stars ?? session.objectiveDone.filter(Boolean).length;
+  const quality = report.scoringVersion === 2;
+  const rated = !quality || !!report.ratings?.length;
+  const starLabel = quality ? (rated ? t(lang, "rp_quality", { n: stars }) : t(lang, "rp_unrated")) : t(lang, "rp_stars_of", { n: stars, m: sc.objectives.length });
 
   const share = async () => {
     const lines = [
       lang === "zh" ? `我在「SocialCoach」练了《${sc.title.zh}》` : `I practiced "${sc.title.en}" on SocialCoach`,
-      t(lang, "rp_stars_of", { n: stars, m: sc.objectives.length }),
+      starLabel,
       strengths[0] ? `${t(lang, "rp_strengths")}: ${strengths[0].behavior}` : "",
       report.nextStep ? `${t(lang, "rp_next_step")}: ${report.nextStep}` : "",
     ].filter(Boolean).join("\n");
@@ -302,40 +308,50 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
   };
 
   return (
-    <div className="min-h-dvh pt-safe pb-36 lg:pb-12 lg:mx-auto lg:w-full lg:max-w-[1000px] xl:max-w-[1120px] lg:px-6">
-      <div className="px-3 pt-2 flex items-center justify-between lg:px-0">
-        <IconButton label={t(lang, "back")} onClick={() => router.push("/")}><ArrowLeft size={20} /></IconButton>
-        <div className="flex items-center gap-1">
-          <AnimatePresence>
-            {streaming && (
-              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="inline-flex items-center gap-2 text-[12px] text-ink-3 pr-2">
-                <Spinner />{t(lang, "rp_writing")}
-              </motion.span>
-            )}
-          </AnimatePresence>
-          <IconButton label={t(lang, "rp_share")} onClick={share} disabled={streaming} className={streaming ? "opacity-40" : ""}><Share2 size={18} /></IconButton>
-        </div>
+    <div className="min-h-dvh pt-safe pb-36 lg:pb-12 lg:mx-auto lg:w-full lg:max-w-[var(--focus-max)] lg:px-6">
+      <div className="px-3 lg:px-0 mb-6">
+        <PracticeJourney phase={2} onBack={() => router.push("/")} actions={<IconButton label={t(lang, "rp_share")} onClick={share} disabled={streaming}><Share2 size={18} /></IconButton>} />
       </div>
-      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-x-12 lg:items-start">
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_var(--margin-w)] lg:gap-x-10 lg:items-start">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="px-5 flex flex-col gap-9 lg:px-0">
         <header className="flex flex-col gap-3">
           <p className="eyebrow">{t(lang, "rp_title")} · {sc.title[lang]}</p>
           {/* The verdict carries the first screen. Stars and a tally are a score,
               and a score answers a question nobody was asking; they drop below it. */}
+          {report.verdictEvidence && <Quote text={report.verdictEvidence} session={session} />}
           {report.verdict ? (
             <h1 className="display text-[27px] leading-[1.24] text-ink lg:text-[31px]">
               {report.verdict}
               {streaming && !report.summary && <Caret />}
             </h1>
           ) : (
-            streaming && <p className="display text-[27px] leading-[1.24] text-ink-4">…</p>
+            streaming && <p className="display text-[27px] leading-[1.24] text-ink-3">…</p>
           )}
           <div className="flex items-center gap-3">
-            <Stars n={stars} of={sc.objectives.length} size={20} />
-            <span className="text-[12px] text-ink-3">{t(lang, "rp_stars_of", { n: stars, m: sc.objectives.length })}</span>
+            {rated && <Stars n={stars} of={quality ? 3 : sc.objectives.length} size={20} />}
+            <span className="text-[12px] text-ink-3">{starLabel}</span>
           </div>
+          {quality && <p className="text-[12px] text-ink-3">{t(lang, "rp_stars_of", { n: session.objectiveDone.filter(Boolean).length, m: sc.objectives.length })}</p>}
           {report.summary && <p className="text-[15px] leading-[1.65] text-ink-2 lg:max-w-[var(--measure)]">{report.summary}{streaming && !strengths.length && <Caret />}</p>}
         </header>
+
+        {!streaming && (
+          <nav aria-label={t(lang, "rp_reading_guide")} className="review-index sticky top-0 z-10 flex gap-1 overflow-x-auto bg-paper py-2 border-y border-line">
+            {[
+              { id: "review-strengths", label: "rp_strengths" as const, show: strengths.length > 0 },
+              { id: "review-weaknesses", label: "rp_weaknesses" as const, show: weaknesses.length > 0 },
+              { id: "review-alternatives", label: "rp_alternatives" as const, show: alternatives.length > 0 },
+              { id: "review-reflect", label: "rp_reflect" as const, show: questions.length > 0 },
+            ].filter((item) => item.show).map((item) => <a key={item.id} href={`#${item.id}`} className="press shrink-0 inline-flex items-center justify-center rounded-full px-3 min-h-11 text-[13px] text-ink-2 hover:bg-inset">{t(lang, item.label)}</a>)}
+          </nav>
+        )}
+
+        {!streaming && report.nextStep && (
+          <section className="bg-slab text-slab-ink rounded-[var(--radius)] p-6 flex flex-col gap-3">
+            <h2 className="eyebrow text-slab-ink">{t(lang, "rp_next_step")}</h2>
+            <p className="display text-[20px] leading-relaxed">{report.nextStep}</p>
+          </section>
+        )}
 
         {(session.stanceTrail?.length ?? 0) > 0 && (
           <Section title={t(lang, "rp_map_title")}>
@@ -344,17 +360,15 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
 
         {strengths.length > 0 && (
-          <Section title={t(lang, "rp_strengths")}>
+          <Section id="review-strengths" title={t(lang, "rp_strengths")}>
             <ul className="flex flex-col gap-4">
               {strengths.map((s, i) => (
-                <Reveal key={i}>
-                  <li className="flex flex-col gap-2">
+                <Reveal key={i} className="flex flex-col gap-2">
+                    <Quote text={s.evidence} good session={session} />
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-[15px] font-semibold leading-snug">{s.behavior}</p>
                       <SkillTag id={s.skill} lang={lang} small className="shrink-0 mt-0.5" />
                     </div>
-                    <Quote text={s.evidence} good session={session} />
-                  </li>
                 </Reveal>
               ))}
             </ul>
@@ -362,16 +376,15 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
 
         {weaknesses.length > 0 && (
-          <Section title={t(lang, "rp_weaknesses")}>
+          <Section id="review-weaknesses" title={t(lang, "rp_weaknesses")}>
             <ul className="flex flex-col gap-5">
               {weaknesses.map((w, i) => (
-                <Reveal key={i}>
-                  <li className="flex flex-col gap-2">
+                <Reveal key={i} className="flex flex-col gap-2">
+                    <Quote text={w.evidence} session={session} />
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-[15px] font-semibold leading-snug">{w.behavior}</p>
                       <SkillTag id={w.skill} lang={lang} small className="shrink-0 mt-0.5" />
                     </div>
-                    <Quote text={w.evidence} session={session} />
                     {w.whyItMatters && <p className="text-[14px] text-ink-2 leading-relaxed">{w.whyItMatters}</p>}
                     {w.deficit && (
                       <div className={clsx("inline-flex items-center gap-2 self-start rounded-full pl-1 pr-3 h-7 text-[12px] font-medium", w.deficit === "acquisition" ? "bg-teal-soft text-teal" : "bg-accent-soft text-accent-deep")} title={t(lang, w.deficit === "acquisition" ? "rp_deficit_acq_hint" : "rp_deficit_perf_hint")}>
@@ -379,7 +392,6 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
                         {t(lang, w.deficit === "acquisition" ? "rp_deficit_acq" : "rp_deficit_perf")}
                       </div>
                     )}
-                  </li>
                 </Reveal>
               ))}
             </ul>
@@ -387,16 +399,14 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
 
         {alternatives.length > 0 && (
-          <Section title={t(lang, "rp_alternatives")}>
+          <Section id="review-alternatives" title={t(lang, "rp_alternatives")}>
             <ul className="flex flex-col gap-4">
               {alternatives.map((a, i) => (
-                <Reveal key={i}>
-                  <li className="card p-4 flex flex-col gap-3">
+                <Reveal key={i} className="card p-4 flex flex-col gap-3">
                     <div><span className="eyebrow">{t(lang, "rp_you_said")}</span><p className="text-[14px] text-ink-3 mt-1 leading-relaxed">“{a.original}”</p></div>
                     <div className="hairline" />
                     <div><span className="eyebrow text-moss">{t(lang, "rp_try")}</span><p className="text-[15px] mt-1 leading-relaxed font-medium">“{a.better}”</p></div>
                     {a.why && <p className="text-[13px] text-ink-3 leading-relaxed">{a.why}</p>}
-                  </li>
                 </Reveal>
               ))}
             </ul>
@@ -413,7 +423,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
 
         {!streaming && questions.length > 0 && (
-          <Section title={t(lang, "rp_reflect")} sub={t(lang, "rp_reflect_sub")}>
+          <Section id="review-reflect" title={t(lang, "rp_reflect")} sub={t(lang, "rp_reflect_sub")}>
             <div className="flex flex-col gap-4">
               {questions.map((q, i) => (
                 <ReflectItem key={i} session={session} question={q} idx={i} addReflection={addReflection} updateReflection={updateReflection} summary={report.summary ?? ""} />
@@ -424,12 +434,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
 
         {!streaming && <FeedbackPrompt />}
 
-        {!streaming && report.nextStep && (
-          <section className="bg-slab text-slab-ink rounded-[var(--radius)] p-5 flex flex-col gap-2">
-            <span className="eyebrow text-slab-ink/60">{t(lang, "rp_next_step")}</span>
-            <p className="display text-[20px] leading-snug">{report.nextStep}</p>
-          </section>
-        )}
+
 
         {!streaming && deltaEntries.length > 0 && (
           <Section title={t(lang, "rp_growth")} sub={t(lang, "rp_growth_note")}>
@@ -456,12 +461,10 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
 
         {!streaming && (
           <section className="lg:hidden">
-            <button onClick={() => setShowTranscript((x) => !x)} className="press inline-flex items-center gap-1.5 text-[13px] text-ink-3 h-8">
+            <button aria-expanded={showTranscript} aria-controls="review-transcript" onClick={() => setShowTranscript((x) => !x)} className="press inline-flex items-center gap-1.5 text-[13px] text-ink-3 min-h-11">
               {t(lang, "rp_transcript")} <ChevronDown size={14} className={clsx("transition-transform", showTranscript && "rotate-180")} />
             </button>
-            <div className="grid transition-[grid-template-rows] duration-300" style={{ gridTemplateRows: showTranscript ? "1fr" : "0fr" }}>
-              <div className="overflow-hidden pt-2"><Transcript session={session} /></div>
-            </div>
+            <div id="review-transcript" hidden={!showTranscript} className="pt-3"><Transcript session={session} /></div>
           </section>
         )}
         {!streaming && (
@@ -485,17 +488,17 @@ function Caret() {
   return <span className="inline-block w-[2px] h-[1em] bg-accent align-[-0.15em] ml-0.5 animate-pulse" aria-hidden />;
 }
 
-function Reveal({ children }: { children: React.ReactNode }) {
+function Reveal({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}>
+    <motion.li className={className} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}>
       {children}
-    </motion.div>
+    </motion.li>
   );
 }
 
-function Section({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
+function Section({ id, title, sub, children }: { id?: string; title: string; sub?: string; children: React.ReactNode }) {
   return (
-    <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className="flex flex-col gap-4">
+    <motion.section id={id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className="flex flex-col gap-4 scroll-mt-24">
       <div className="flex flex-col gap-1">
         <h2 className="display text-[20px] leading-tight">{title}</h2>
         {sub && <p className="text-[13px] text-ink-3 leading-relaxed">{sub}</p>}
@@ -527,7 +530,7 @@ function KnowledgeCard({ kind, title, source, saved, onSave, children }: { kind:
       <button onClick={() => setOpen((o) => !o)} className="press w-full text-left p-4 flex flex-col gap-1.5">
         <div className="flex items-center justify-between">
           <span className={clsx("eyebrow", kind === "theory" ? "text-teal" : "text-accent-deep")}>{t(lang, kind === "theory" ? "rp_theory" : "rp_case")}</span>
-          <ChevronDown size={16} className={clsx("text-ink-4 transition-transform", open && "rotate-180")} />
+          <ChevronDown size={16} className={clsx("text-ink-3 transition-transform", open && "rotate-180")} />
         </div>
         <p className="display text-[17px] leading-snug">{title}</p>
         <p className="text-[12px] text-ink-3">{t(lang, "rp_from")} {source}</p>
@@ -579,7 +582,7 @@ function ReflectItem({ session, question, idx, addReflection, updateReflection, 
 
   return (
     <div className="flex flex-col gap-3">
-      <p className="text-[15px] leading-relaxed font-medium"><span className="num text-ink-4 mr-2">{idx + 1}</span>{question}</p>
+      <p className="text-[15px] leading-relaxed font-medium"><span className="num text-ink-3 mr-2">{idx + 1}</span>{question}</p>
       {existing?.coachReply ? (
         <>
           <p className="text-[14px] leading-relaxed whitespace-pre-wrap pl-5 text-ink-2">{existing.answer}</p>
@@ -588,8 +591,8 @@ function ReflectItem({ session, question, idx, addReflection, updateReflection, 
       ) : (
         <>
           <div className="flex items-end gap-2">
-            <textarea value={text} onChange={(e) => setText(e.target.value)} rows={2} placeholder={t(lang, "rp_reflect_ph")} className="flex-1 px-3.5 py-2.5 rounded-2xl bg-card border border-line text-[14px] leading-relaxed placeholder:text-ink-4 focus:border-ink transition-colors" disabled={busy} />
-            <button onClick={submit} disabled={!text.trim() || busy} aria-label={t(lang, "rp_send")} className="press h-10 w-10 shrink-0 rounded-full bg-ink text-paper inline-flex items-center justify-center disabled:opacity-30">
+            <textarea aria-label={question} value={text} onChange={(e) => setText(e.target.value)} rows={2} placeholder={t(lang, "rp_reflect_ph")} className="flex-1 px-3.5 py-2.5 rounded-2xl bg-card border border-line text-[14px] leading-relaxed placeholder:text-ink-3 focus:border-ink transition-colors" disabled={busy} />
+            <button onClick={submit} disabled={!text.trim() || busy} aria-label={t(lang, "rp_send")} className="press h-11 w-11 shrink-0 rounded-full bg-ink text-paper inline-flex items-center justify-center disabled:opacity-30">
               {busy && !reply ? <Spinner /> : <Send size={16} />}
             </button>
           </div>

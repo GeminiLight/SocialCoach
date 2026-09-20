@@ -7,8 +7,7 @@ import { asLang, fail, taskStream } from "@/lib/api-utils";
 export const maxDuration = 180;
 
 /**
- * Streams the tutor's raw output so the client can render sections as they are
- * written, then appends "\n@@final\n<sanitized report json>" as the
+ * Emits only the evidence-validated report, then appends "\n@@final\n<sanitized report json>" as the
  * authoritative result.
  */
 export async function POST(req: Request) {

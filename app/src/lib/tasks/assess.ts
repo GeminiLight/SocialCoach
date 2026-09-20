@@ -1,56 +1,66 @@
 import { extractJSON, type LLM } from "@/lib/llm-core";
-import { assessSystem, pick, transcriptBlock } from "@/lib/prompts";
+import { assessSystem, pick, silenceMarker, transcriptBlock } from "@/lib/prompts";
 import { retrieveKnowledge } from "@/lib/retrieval";
 import type { Case, Scenario, Theory } from "@/data/corpus/types";
-import type { Report } from "@/lib/types";
-import { SKILLS, type SkillId } from "@/data/taxonomy";
+import { goalOutcome, hasQuote } from "@/lib/practice-policy";
+import type { ChatMessage, Report } from "@/lib/types";
+import { SKILLS, type Lang, type SkillId } from "@/data/taxonomy";
 import type { AssessInput } from "./types";
 
 const skillIds = new Set(SKILLS.map((s) => s.id));
 
 /** Clamp and validate whatever the model returned so the client can trust every field. */
-const firstSentence = (s: string) => (s.match(/^[^。．.!?！？]{4,}[。．.!?！？]?/)?.[0] ?? s).trim();
+const list = <T,>(v: T[] | undefined): T[] => Array.isArray(v) ? v : [];
+const str = (v: unknown): string => typeof v === "string" ? v.trim() : "";
+const unrated = { zh: "这次对话还没有足够的原话证据支持评价。", en: "This conversation does not yet provide enough quoted evidence for an assessment." };
 
-export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theories: Theory[], cases: Case[]): Report {
-  const stars = Math.max(0, Math.min(3, Math.round(Number(raw.stars) || 0))) as Report["stars"];
-  const clean = <T extends { skill: string }>(arr: T[] | undefined) => (arr ?? []).filter((x) => x && skillIds.has(x.skill as SkillId));
+export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theories: Theory[], cases: Case[], messages: ChatMessage[] = [], goals: SkillId[] = [], lang: Lang = "zh", objectiveDone: boolean[] = []): Report {
+  const spoken = messages.filter((m) => m.role === "learner").map((m) => m.text);
+  const evidence = [...spoken, ...messages.filter((m) => m.role === "event" && m.kind === "silence").map((m) => silenceMarker(m.seconds ?? 0, lang))];
+  const practiced = [...scenario.skills, ...(scenario.relatedSkills ?? [])];
+  const targeted = goals.filter((k) => practiced.includes(k));
+  const ratingSkills = new Set(targeted.length ? targeted : scenario.skills);
+  const seen = new Set<string>();
+  const ratings = list(raw.ratings).filter((r) => {
+    if (!r || !ratingSkills.has(r.skill) || seen.has(r.skill) || !Number.isInteger(r.level) || r.level < 0 || r.level > 3 || !hasQuote(r.evidence, spoken) || !str(r.reason)) return false;
+    seen.add(r.skill);
+    return true;
+  });
+  const stars = (ratings.length ? Math.round(ratings.reduce((sum, r) => sum + r.level, 0) / ratings.length) : 0) as Report["stars"];
+  const clean = <T extends { skill: string; evidence: string; behavior: string }>(arr: T[] | undefined) => list(arr).filter((x) => x && skillIds.has(x.skill as SkillId) && practiced.includes(x.skill as SkillId) && str(x.behavior) && hasQuote(x.evidence, evidence));
+  const strengths = clean(raw.strengths);
+  const weaknesses = clean(raw.weaknesses).filter((w) => w.deficit === "acquisition" || w.deficit === "performance");
   const tIds = new Set(theories.map((t) => t.id));
   const cIds = new Set(cases.map((c) => c.id));
   const knowledge = {
-    theoryIds: (raw.knowledge?.theoryIds ?? []).filter((id) => tIds.has(id)).slice(0, 2),
-    caseIds: (raw.knowledge?.caseIds ?? []).filter((id) => cIds.has(id)).slice(0, 2),
-    whyThis: raw.knowledge?.whyThis ?? "",
+    theoryIds: list(raw.knowledge?.theoryIds).filter((id) => tIds.has(id)).slice(0, 2),
+    caseIds: list(raw.knowledge?.caseIds).filter((id) => cIds.has(id)).slice(0, 2),
+    whyThis: str(raw.knowledge?.whyThis),
   };
-  if (!knowledge.theoryIds.length && theories[0]) knowledge.theoryIds = [theories[0].id];
-  if (!knowledge.caseIds.length && cases[0]) knowledge.caseIds = [cases[0].id];
   const deltas: Report["deltas"] = {};
-  for (const [k, v] of Object.entries(raw.deltas ?? {})) {
-    if (!skillIds.has(k as SkillId)) continue;
-    const n = Math.max(0, Math.min(0.5, Number(v) || 0));
-    const direct = scenario.skills.includes(k as SkillId);
-    deltas[k as SkillId] = +(direct ? n : Math.min(n, 0.2)).toFixed(2);
+  for (const r of ratings) {
+    // A quote and a positive demonstration are prerequisites for progression.
+    const v = Number(raw.deltas?.[r.skill]);
+    if (r.level === 0 || !Number.isFinite(v)) continue;
+    deltas[r.skill] = +Math.max(0, Math.min(scenario.skills.includes(r.skill) ? 0.5 : 0.2, v)).toFixed(2);
   }
-  const outcome = raw.outcome === "success" || raw.outcome === "partial" || raw.outcome === "failure" ? raw.outcome : stars === 3 ? "success" : stars > 0 ? "partial" : "failure";
+  const outcome = raw.outcome === "success" || raw.outcome === "partial" || raw.outcome === "failure" ? raw.outcome : goalOutcome(objectiveDone);
+  const verdictEvidence = hasQuote(raw.verdictEvidence, spoken) ? raw.verdictEvidence : undefined;
   return {
-    stars,
-    outcome,
-    // The headline cannot be blank, so fall back to the summary's first
-    // sentence: weaker than a real verdict, but never an empty first screen.
-    verdict: (raw.verdict ?? "").trim() || firstSentence(raw.summary ?? ""),
-    summary: raw.summary ?? "",
-    strengths: clean(raw.strengths) as Report["strengths"],
-    weaknesses: clean(raw.weaknesses) as Report["weaknesses"],
-    alternatives: (raw.alternatives ?? []).filter((a) => a && a.better),
+    scoringVersion: 2, ratings, stars, outcome, verdictEvidence,
+    verdict: verdictEvidence ? str(raw.verdict) : pick(unrated, lang),
+    summary: verdictEvidence ? str(raw.summary) : "",
+    strengths, weaknesses,
+    alternatives: list(raw.alternatives).filter((a) => a && hasQuote(a.original, spoken) && str(a.better) && str(a.why)),
     knowledge,
-    reflectionQuestions: (raw.reflectionQuestions ?? []).filter(Boolean).slice(0, 3),
-    nextStep: raw.nextStep ?? "",
-    deltas,
+    reflectionQuestions: list(raw.reflectionQuestions).filter((q) => str(q)).slice(0, 3),
+    nextStep: str(raw.nextStep), deltas,
   };
 }
 
 /**
- * Diagnose the conversation. Streams the tutor's raw output so the caller can
- * render sections as they are written, then resolves with the sanitized report.
+ * Diagnose the conversation. Validate evidence before exposing any report text.
+ * The transport still supports @@final; raw, unverified assessments never flash in the UI.
  */
 export async function runAssess(input: AssessInput, llm: LLM, smartModel: string, onDelta?: (d: string) => void): Promise<Report> {
   const { scenario, learnerCharacterId, messages, goals, lang } = input;
@@ -74,11 +84,13 @@ export async function runAssess(input: AssessInput, llm: LLM, smartModel: string
     messages: [
       {
         role: "user",
-        content: `TRANSCRIPT:\n${transcript}\n\nSimulation engine's objective tracking: ${JSON.stringify(input.objectiveDone ?? [])}; engine outcome: ${input.outcome ?? "n/a"} (verify against the transcript; you may disagree).\n\nProduce the assessment JSON. Write the fields in this order so the reader can follow along: stars, outcome, summary, strengths, weaknesses, alternatives, knowledge, reflectionQuestions, nextStep, deltas.`,
+        content: `TRANSCRIPT:\n${transcript}\n\nSimulation engine's objective tracking: ${JSON.stringify(input.objectiveDone ?? [])}; engine outcome: ${input.outcome ?? "n/a"} (verify against the transcript; you may disagree).\n\nProduce the assessment JSON. Write ratings, outcome, verdictEvidence, verdict, summary, strengths, weaknesses, alternatives, knowledge, reflectionQuestions, nextStep, deltas. Judge communication independently of the engine outcome.`,
       },
     ],
   });
-  for await (const d of run.deltas) onDelta?.(d);
+  for await (const delta of run.deltas) { void delta; }
   if (run.refused()) throw new Error("The model declined this request.");
-  return sanitizeReport(extractJSON<Partial<Report>>(run.text()), scenario, kb.theories, kb.cases);
+  const report = sanitizeReport(extractJSON<Partial<Report>>(run.text()), scenario, kb.theories, kb.cases, messages, goals, lang, input.objectiveDone);
+  onDelta?.(JSON.stringify(report));
+  return report;
 }

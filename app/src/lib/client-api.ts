@@ -298,11 +298,12 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
     const txt = a !== -1 && b > a ? raw2.slice(a, b + 1) : raw2;
     try {
       const j = JSON.parse(txt) as RoleplayMeta;
-      const st = Number(j.stance);
+      const st = typeof j.stance === "number" ? j.stance : NaN;
       out.meta = {
-        objectives: Array.isArray(j.objectives) ? j.objectives.map(Boolean) : [],
-        ended: !!j.ended,
-        outcome: j.outcome ?? null,
+        objectives: Array.isArray(j.objectives) ? j.objectives.map((v) => v === true) : [],
+        ended: j.ended === true,
+        closure: j.closure,
+        outcome: j.outcome === "success" || j.outcome === "partial" || j.outcome === "failure" ? j.outcome : null,
         note: j.note,
         // A model that omits the field, or answers with prose, must not move the meter.
         stance: Number.isFinite(st) ? Math.max(0, Math.min(100, Math.round(st))) : undefined,

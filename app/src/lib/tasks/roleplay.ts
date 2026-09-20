@@ -5,7 +5,7 @@ import type { TurnInput } from "./types";
 
 /**
  * One exchange of the simulation. Streams the role-play protocol
- * (`@@<characterId>` blocks plus a trailing `@@meta`) and resolves with the
+ * (`@@<characterId>` blocks preceded by `@@meta`) and resolves with the
  * full text; the caller parses it with `parseRoleplay`.
  */
 export async function runRoleplay(input: TurnInput, llm: LLM, fastModel: string, onDelta?: (d: string) => void): Promise<string> {
@@ -50,7 +50,7 @@ export async function runRoleplay(input: TurnInput, llm: LLM, fastModel: string,
       ? ""
       : streak === 1
         ? ` The learner has just gone silent for ${last?.seconds ?? 0} seconds (first silence in a row). Fill it in character.`
-        : ` The learner has gone silent again, ${last?.seconds ?? 0} seconds this time (silence #${streak} in a row). The character gives up on this conversation now: a believable exit line, "ended": true, outcome judged from the objectives so far.`;
+        : ` The learner has gone silent again, ${last?.seconds ?? 0} seconds this time (silence #${streak} in a row). The character gives up on this conversation now: a believable exit line, "ended": true, this practice limit is not evidence of poor communication; original goal attainment and skill are separate.`;
   const run = llm.chatStream({
     model: fastModel,
     maxTokens: 1800,

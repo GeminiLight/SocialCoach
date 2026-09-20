@@ -8,7 +8,7 @@
 
 | 方法 | 路径 | 用途 | 模型 | 返回形态 | maxDuration | 引入阶段 |
 |---|---|---|---|---|---|---|
-| POST | `/api/schedule` | 处方 → 受约束检索 → 角色适配 | fast | JSON | 120 | A |
+| POST | `/api/schedule` | 处方 → 角色相容性 → 受约束检索 → 简报适配 | fast | JSON | 120 | A |
 | POST | `/api/roleplay` | NPC 对话回合 | fast | 文本流（自定义协议） | 60 | A |
 | POST | `/api/assess` | 复盘报告 | smart | 文本流 + `@@final` JSON | 180 | A |
 | POST | `/api/reflect` | 反思回应 | fast | 文本流 | 30 | A |
@@ -42,7 +42,7 @@
 | `scenarioId` | `string` | — | 指定场景，跳过处方 |
 | `scenario` | `Scenario` | — | 直接传入场景对象（`/rehearse` 生成的） |
 
-`HistoryItem`：`{ scenarioId, title, skills[], context, outcome?, stars?, at }`
+`HistoryItem`：`{ scenarioId, title, skills[], context, outcome?, stars?, scoringVersion?: 2, at }`
 
 **响应：**
 
@@ -51,7 +51,7 @@
 | `scenario` | `Scenario` | 检索或指定的场景 |
 | `prescription` | `Prescription?` | 跳过处方时不返回 |
 | `adaptation` | `Adaptation` | 个性化 briefing / objectives / focus / why |
-| `retrieval` | `RetrievalTrace?` | `{ relaxed[], candidates, chosen }`，放松过哪些约束 |
+| `retrieval` | `RetrievalTrace?` | `{ relaxed[], candidates, chosen, roleFit?: { characterId, fit: "compatible"\|"uncertain", reason } }`，记录角色相容性与约束放松 |
 
 ```json
 {
@@ -92,9 +92,10 @@
 | 字段 | 类型 | 说明 |
 |---|---|---|
 | `objectives` | `boolean[]` | 与 `scenario.objectives` 等长，严格按用户实际说出的话判定 |
-| `ended` | `boolean` | 目标全达成 / 失败条件触发 / 到达 `maxTurns` |
+| `ended` | `boolean` | 模型提出收尾；提前结束还需 `closure` 引文通过校验。目标未达成、遭到拒绝或触发原失败示例不再自动终止 |
+| `closure` | `{ kind, learnerQuote?, npcQuote }?` | kind 为 agreement / boundary / deferred / withdrawal。前三者需最近用户原话 + 本回合 NPC 原话；单方离场允许缺用户引文。回合上限、手动结束和限时沉默仍独立生效 |
 | `outcome` | `"success"\|"partial"\|"failure"\|null` | `ended` 为 true 时给值 |
-| `stance` | `number` 0–100 | 对方离答应还有多远。**这是对方的立场，不是用户的分数**，允许下降，用户攻击 / 自我退让 / 重复失败论点时必须下降。存进 `session.stanceTrail` |
+| `stance` | `number` 0–100 | 对方离答应还有多远。**这是对方的立场，不是用户的分数**，允许下降；正当边界也可能让对方更抗拒。存进 `session.stanceTrail` |
 | `revealed` | `boolean` | 本回合 NPC 是否把 `hidden` 明确说出口。只标事件发生的那一回合，之后回到 false |
 | `note` | `string` | ≤12 词的中立舞台提示，第二人称 |
 
@@ -131,7 +132,7 @@
 
 ### `POST /api/assess`
 
-生成复盘报告。**流式：先流正文供 UI 展示进度，末尾以 `@@final` 追加服务端校验并 clamp 过的完整 `Report` JSON。**
+生成复盘报告。**沿用文本流协议，但等模型完成并验证引文后才发正文；末尾 `@@final` 追加同一份校验后的 `Report` JSON。** 等待期间 UI 显示已有分析进度；不展示未校验评价。托管与 BYOK 共用 `runAssess()`。
 
 **请求：**
 
@@ -149,23 +150,28 @@
 **响应：**
 
 ```
-<正文流…>
+<校验后的报告 JSON>
 @@final
-{"stars":2,"outcome":"partial","verdict":"你拿到了时间点，代价是把底线交了出去。","summary":"…",
+{"scoringVersion":2,"ratings":[{"skill":"communication","level":2,"evidence":"实际用户原话","reason":"情境中的效果"}],"verdictEvidence":"实际用户原话","stars":2,"outcome":"partial","verdict":"你拿到了时间点，代价是把底线交了出去。","summary":"…",
  "strengths":[…],"weaknesses":[…],
  "alternatives":[…],"knowledge":{"theoryIds":[…],"caseIds":[…],"whyThis":"…"},
- "reflectionQuestions":["…","…"],"nextStep":"…","deltas":{"negotiation":0.4}}
+ "reflectionQuestions":["…","…"],"nextStep":"…","deltas":{"communication":0.4}}
 ```
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
-| `verdict` | `string` | 报告第一屏那一句，≤20 词。必须是**判决**而不是分数或摘要：先说拿到了什么，再说代价是什么。空值时降级取 `summary` 的第一句 |
+| `scoringVersion` | `2` | 新报告的评分口径；旧报告缺失此字段，保留旧目标星数 |
+| `ratings` | `{skill, level: 0–3, evidence, reason}[]` | 实际练习的目标技能；无目标交集时取场景主技能。每技能一项，必须有用户原话，缺证据不评分 |
+| `stars` | `0–3` | 有效 ratings 均值四舍五入，与目标数独立；ratings 为空时数值占位 0，UI 显示未评分 |
+| `outcome` | `success / partial / failure` | 初始目标结果，不能从 stars 推导 |
+| `verdictEvidence` | `string?` | 经过转录校验的用户原话，显示在判决前 |
+| `verdict` | `string` | 有证据的简短判断；无有效 verdictEvidence 时显示证据不足，隐藏 summary |
 | `weaknesses[].deficit` | `"acquisition" \| "performance"` | **产品定位的核心字段**，不会 vs 会但没做到 |
 | `weaknesses[].evidence` | `string` | 必须是转录里的原话 |
 | `knowledge` | `{theoryIds, caseIds, whyThis}` | 由 `retrieveKnowledge()` 检索，非模型编造 |
 | `deltas` | `Proficiency` | 有界、非负；服务端 clamp 后才发出 |
 
-服务端会校验 `skill` 是否在 `SKILLS` 里、数值是否越界，**客户端可以信任 `@@final` 的每个字段**。
+共享任务层会校验技能范围、引文确实来自用户（沉默事件只用于行为条目）、去重评分、过滤无证据评价/改写，并限定有证据的技能增量。引文存在不等于解释必然正确，语义公正性仍需行为评测。NPC 私有设定与预设成功/失败模板不传入复盘。
 
 ---
 
@@ -238,4 +244,10 @@
 
 JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: string, contact?: string, tags?: string[], rating?: helpful|unhelpful, page: 页面类型, lang: zh|en }`。页面白名单为首页、arena、learn、progress、settings、rehearse、onboarding、practice；practice 不包含会话 ID。标签白名单详见 `feedback/schema.ts`。未知字段拒绝；描述 ≤2000、联系方式 ≤160、标签 ≤3、实际请求体 ≤16 KB。
 
-成功 `{ ok: true, id }`；错误 `{ error: 稳定错误码 }`：400 invalid_request、403 跨站、409 id_conflict、413 too_large、415 非 JSON、429 rate_limited（Retry-After）、503 unavailable、502 delivery_failed。没有真实上游成功响应不会回报送达。Node runtime，maxDuration=30；内存限流和上游幂等限制见 [反馈方案](./specs/spec-user-feedback.md)。
+成功 `{ ok: true, id }`；错误 `{ error: 稳定错误码 }`：400 invalid_request、403 跨站、409 id_conflict、413 too_large、415 非 JSON、429 rate_limited（Retry-After）、503 unavailable、502 delivery_failed。没有真实上游成功响应不会回报送达。Node runtime，maxDuration=30；内存限流和上游幂等限制见 [反馈方案](./archive/specs/spec-user-feedback.md)。
+
+### 通用策略的兼容性补充（2026-09-21）
+
+- `/api/schedule` 核心候选为空或所有角色与用户明确背景冲突时返回 422，提示调整偏好/使用排练。角色匹配模型输出不完整返回 502，不随机换场景。
+- `/api/track` 的 `debrief_view` 可新增 `scoring_version: 2`、`rated: boolean`；无版本的旧客户端继续接受。飞书新增「评分口径」「评分状态」两列，分别标识沟通表现/目标达成、已评分/证据不足。历史未标口径行按旧目标星数解释，不能混合比较。
+- 引文、评分理由、档案与聊天内容不进入统计事件，严格 schema 继续拒绝多余字段。

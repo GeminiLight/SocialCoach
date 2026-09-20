@@ -33,6 +33,8 @@ export const FIELDS: { field_name: string; type: number; property?: Record<strin
   { field_name: "沉默", type: NUMBER, property: { formatter: "0" } },
   { field_name: "时长秒", type: NUMBER, property: { formatter: "0" } },
   { field_name: "星数", type: NUMBER, property: { formatter: "0" } },
+  { field_name: "评分口径", type: TEXT },
+  { field_name: "评分状态", type: TEXT },
   { field_name: "结束方式", type: SELECT },
   { field_name: "语言", type: SELECT },
   { field_name: "平台", type: SELECT },
@@ -68,7 +70,9 @@ export function toFields(e: TrackEvent, batch: Pick<TrackBatch, "device" | "lang
     Object.assign(row, { "会话": e.session, "场景": e.scenario, "结果": e.outcome, "回合": e.turns, "沉默": e.silences, "时长秒": e.duration_s, "结束方式": e.ended_by, "提示次数": e.hints, "自带模型": e.byok });
     if (e.revealed_turn !== undefined) row["揭示回合"] = e.revealed_turn;
   }
-  if (e.name === "debrief_view") Object.assign(row, { "会话": e.session, "场景": e.scenario, "星数": e.stars, "结果": e.outcome });
+  if (e.name === "debrief_view") Object.assign(row, { "会话": e.session, "场景": e.scenario, "星数": e.stars, "结果": e.outcome,
+    "评分口径": e.scoring_version === 2 ? "沟通表现" : "目标达成", "评分状态": e.rated === false ? "证据不足" : "已评分",
+  });
   if (e.name === "reflect") Object.assign(row, { "会话": e.session, "序号": e.index });
   if (e.name === "pattern_view") Object.assign(row, { "找到模式": e.found });
   if (e.name === "api_error") Object.assign(row, { "任务": e.task, "错误类型": e.kind, "状态码": e.status, "自带模型": e.byok });

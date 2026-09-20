@@ -17,7 +17,7 @@ export default function PracticePage() {
   }, [hydrated, session, router]);
 
   if (!session) return null;
-  if (session.status === "briefing") return <Briefing session={session} />;
-  if (session.status === "active") return <Chat session={session} />;
-  return <Debrief session={session} />;
+  if (session.status === "briefing") return <Briefing key={id} session={session} />;
+  if (session.status === "active") return <Chat key={id} session={session} />;
+  return <Debrief key={id} session={session} />;
 }

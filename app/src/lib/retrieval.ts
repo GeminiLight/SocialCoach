@@ -31,6 +31,11 @@ function scenarioText(s: Scenario) {
   return [s.title.en, s.title.zh, s.hook.en, s.hook.zh, s.background.en, ...s.keywords, ...s.skills.map((k) => skillById(k).name.en)];
 }
 
+export function matchesCore(s: Scenario, p: Prescription): boolean {
+  return !s.custom && p.core_constraints.target_skills.some((k) => s.skills.includes(k) || s.relatedSkills?.includes(k))
+    && (!p.core_constraints.contexts?.length || p.core_constraints.contexts.includes(s.context));
+}
+
 export function retrieveScenario(
   p: Prescription,
   exclude: Set<string>,
@@ -41,11 +46,7 @@ export function retrieveScenario(
   const opt = p.optional_constraints ?? {};
 
   const base = pool.filter((s) => !exclude.has(s.id) && !s.custom);
-  const coreOk = (s: Scenario) => {
-    const skillHit = core.target_skills.some((k) => s.skills.includes(k) || s.relatedSkills?.includes(k));
-    const ctxOk = !core.contexts?.length || core.contexts.includes(s.context);
-    return skillHit && ctxOk;
-  };
+  const coreOk = (s: Scenario) => matchesCore(s, p);
 
   let cands = base.filter(coreOk);
   // Relaxation order for optional constraints (fixed): relationship → difficulty → related skills

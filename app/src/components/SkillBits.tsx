@@ -30,7 +30,7 @@ export function Level({ value, from, color, className }: { value: number | undef
   const v = value ?? 0;
   const base = from == null ? v : Math.max(0, Math.min(v, from));
   return (
-    <span className={clsx("inline-flex items-center gap-[3px]", className)} aria-label={value ? value.toFixed(1) : "unrated"}>
+    <span className={clsx("inline-flex items-center gap-[3px]", className)} role="img" aria-label={value ? value.toFixed(1) : "unrated"}>
       {[1, 2, 3, 4, 5].map((i) => {
         const fill = Math.max(0, Math.min(1, v - (i - 1)));
         const solid = Math.max(0, Math.min(1, base - (i - 1)));

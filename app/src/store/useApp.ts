@@ -179,7 +179,12 @@ export const useApp = create<AppState>()(
       setSettings: (p) => set((s) => ({ settings: { ...s.settings, ...p } })),
       setPatternInsight: (result, from) => set({ patternInsight: { result, from, at: Date.now() } }),
       reset: () => {
-        try { sessionStorage.removeItem("socialcoach.rehearsal-draft"); } catch {}
+        try {
+          // Clear only this app's tab state, including unsent practice drafts.
+          for (const key of Object.keys(sessionStorage)) {
+            if (key === "socialcoach.rehearsal-draft" || key === "socialcoach.arena.location" || key.startsWith("socialcoach.draft.")) sessionStorage.removeItem(key);
+          }
+        } catch {}
         // The analytics device id goes with everything else: a reset learner is a new device.
         try { localStorage.removeItem(DEVICE_KEY); localStorage.removeItem(OPEN_DAY_KEY); } catch {}
         set({ ...initial, hydrated: true });

@@ -2,9 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Clock, MessageSquare, Timer } from "lucide-react";
+import { ArrowRight, Clock, MessageSquare, Timer } from "lucide-react";
 import { clsx } from "clsx";
-import { Avatar, BottomBar, Button, IconButton, Marginalia, Stages, Switch } from "@/components/ui";
+import { Avatar, BottomBar, Button, Marginalia, Stages, Switch } from "@/components/ui";
+import { PracticeJourney } from "./PracticeJourney";
 import { SkillTag } from "@/components/SkillBits";
 import { ScenarioCover } from "@/components/ScenarioCover";
 import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
@@ -15,6 +16,7 @@ import { track } from "@/lib/analytics/track";
 import type { Session } from "@/lib/types";
 import { contextById } from "@/data/taxonomy";
 import { learnerSeed } from "@/data/avatars";
+import { arenaReturnPath } from "@/lib/arena-location";
 
 
 export function Briefing({ session }: { session: Session }) {
@@ -23,6 +25,7 @@ export function Briefing({ session }: { session: Session }) {
   const { profile, proficiency, sessions, updateSession, settings, setSettings } = useApp();
   const [err, setErr] = useState<string | null>(null);
   const inflight = useRef(false);
+  const [attempt, setAttempt] = useState(0);
   const sc = session.scenario;
   const adapting = !session.adaptation;
   const shownAt = useRef(0);
@@ -43,7 +46,7 @@ export function Briefing({ session }: { session: Session }) {
       .catch((e) => setErr(e instanceof Error ? e.message : t(lang, "error_generic")))
       .finally(() => { inflight.current = false; });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [adapting, profile]);
+  }, [adapting, profile, attempt]);
 
   const learner = sc.characters.find((c) => c.id === session.learnerCharacterId);
   const npcs = npcsOf(sc, session.learnerCharacterId);
@@ -60,18 +63,18 @@ export function Briefing({ session }: { session: Session }) {
   };
 
   return (
-    <div className="min-h-dvh flex flex-col pt-safe lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-x-12 lg:items-start lg:mx-auto lg:w-full lg:max-w-[1000px] xl:max-w-[1120px] lg:px-6 lg:pt-6 lg:pb-12">
+    <div className="min-h-dvh flex flex-col pt-safe lg:grid lg:grid-cols-[minmax(0,1fr)_var(--margin-w)] lg:gap-x-10 lg:items-start lg:mx-auto lg:w-full lg:max-w-[var(--focus-max)] lg:px-6 lg:pt-2 lg:pb-12">
+      <div className="px-3 lg:px-0 lg:col-span-2 mb-4"><PracticeJourney phase={0} onBack={() => router.push(session.origin === "arena" ? arenaReturnPath() : "/")} /></div>
       <div className="contents lg:block">
       <div className="relative h-44 shrink-0 bg-paper-deep lg:h-64 lg:rounded-[var(--radius-lg)] lg:overflow-hidden">
         <ScenarioCover scenario={sc} full />
-        <div className="absolute inset-x-0 top-0 px-3 pt-2 flex items-center justify-between">
-          <IconButton label={t(lang, "back")} onClick={() => router.push("/")} className="bg-paper/80"><ArrowLeft size={20} /></IconButton>
+        <div className="absolute inset-x-0 top-0 px-3 pt-2 flex items-center justify-end">
           <span className="h-8 px-3 inline-flex items-center gap-1.5 rounded-full bg-paper/85 text-[12px] font-medium">{ctx.glyph} {ctx.name[lang]} · {sc.contextType[lang]}</span>
         </div>
         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-paper to-transparent lg:hidden" />
       </div>
 
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="px-5 -mt-6 flex flex-col gap-6 pb-36 lg:px-0 lg:mt-7 lg:pb-0">
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="px-5 mt-3 flex flex-col gap-6 pb-36 lg:px-0 lg:mt-7 lg:pb-0">
         <header className="flex flex-col gap-2">
           <p className="eyebrow">{t(lang, "pr_briefing")}</p>
           <h1 className="display text-[30px] leading-[1.15]">{sc.title[lang]}</h1>
@@ -84,11 +87,14 @@ export function Briefing({ session }: { session: Session }) {
         </header>
 
         {adapting && !err ? (
-          <div className="card p-5"><Stages title={t(lang, "pr_preparing")} steps={tList(lang, "home_scheduling_steps").slice(3)} intervalMs={5000} slowAfterMs={25000} /></div>
+          <div className="card p-5"><Stages title={t(lang, "pr_preparing")} steps={tList(lang, "home_scheduling_steps").slice(3)} slowAfterMs={25000} /></div>
         ) : (
           <>
             <p className="text-[16px] leading-relaxed text-ink">{session.adaptation?.briefing ?? sc.background[lang]}</p>
-            {err && <p className="text-[13px] text-danger">{err}</p>}
+            {err && <div role="alert" className="rounded-[var(--radius)] bg-danger-soft p-4 flex flex-col gap-2">
+              <p className="text-[13px] text-danger">{err}</p>
+              <Button variant="secondary" onClick={() => { setErr(null); setAttempt((v) => v + 1); }}>{t(lang, "pr_preparation_retry")}</Button>
+            </div>}
           </>
         )}
 
@@ -128,7 +134,7 @@ export function Briefing({ session }: { session: Session }) {
           </section>
         )}
         <ClockRow timed={timed} seconds={settings.patience ?? DEFAULT_PATIENCE} onChange={(v) => setSettings({ timed: v })} className="lg:hidden" />
-        <p className="text-[11px] text-ink-4">{t(lang, "source")}: {sc.source}</p>
+        <p className="text-[11px] text-ink-3">{t(lang, "source")}: {sc.source}</p>
       </motion.div>
       </div>
 
@@ -137,13 +143,13 @@ export function Briefing({ session }: { session: Session }) {
         <span className="eyebrow">{t(lang, "pr_objectives")}</span>
         <ObjectiveList items={objectives} />
         <ClockRow timed={timed} seconds={settings.patience ?? DEFAULT_PATIENCE} onChange={(v) => setSettings({ timed: v })} />
-        <Button block size="lg" variant="ink" onClick={enter} disabled={adapting && !err} className="mt-1">
+        <Button block size="lg" variant="primary" onClick={enter} disabled={adapting && !err} className="mt-1">
           {t(lang, "pr_enter")} <ArrowRight size={18} />
         </Button>
       </Marginalia>
 
       <BottomBar className="px-5 pb-safe pb-6 pt-4 lg:hidden">
-        <Button block size="lg" variant="ink" onClick={enter} disabled={adapting && !err}>
+        <Button block size="lg" variant="primary" onClick={enter} disabled={adapting && !err}>
           {t(lang, "pr_enter")} <ArrowRight size={18} />
         </Button>
       </BottomBar>

@@ -14,6 +14,7 @@ export interface HistoryItem {
   context: string;
   outcome?: string;
   stars?: number;
+  scoringVersion?: 2;
   at: number;
 }
 

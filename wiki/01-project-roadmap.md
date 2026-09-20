@@ -21,7 +21,7 @@
 | A2 | 多面分类体系（5 CASEL × 34 技能 × 7 情境 / 26 类型） | ✅ | `src/data/taxonomy.ts` |
 | A3 | 自适应排程 `/api/schedule`（处方 → 受约束检索 → 适配） | ✅ | 固定放松顺序，核心约束不放松 |
 | A4 | 沉浸式角色扮演 `/api/roleplay`（流式、隐藏动机、目标追踪、回合上限、可失败） | ✅ | `@@characterId` / `@@meta` 文本协议 |
-| A5 | 证据式复盘 `/api/assess`（引用原话、acquisition/performance 归因、有界增量） | ✅ | 流式正文 + `@@final` JSON |
+| A5 | 证据式复盘 `/api/assess`（引用原话、acquisition/performance 归因、有界增量） | ✅ | 2026-09-21 改为先验证引文再发正文与 `@@final`，新星数评沟通表现 |
 | A6 | 知识检索卡片 + 苏格拉底式反思 `/api/reflect` | ✅ | 报告内嵌理论 / 案例 |
 | A7 | 对话中提示 `/api/hint` | ✅ | ≤40 词，只点动作不代写 |
 | A8 | `/rehearse` 生成真实处境场景 | ✅ | ~15s，输出全量打标场景 |
@@ -34,6 +34,8 @@
 | A15 | 判决式复盘开场 + 对话地图（按回合画推进 / 没动 / 让了一步） | ✅ | `Report.verdict`；地图数据来自 `session.stanceTrail` |
 | A16 | 跨场次模式识别（`/api/pattern`，引文防伪 + 至少两个场次） | ✅ | 产品提案里的 A→B 转化引擎，此前无实现 |
 | A17 | 限时应答（可选模式：对方耐心 10 / 15 / 20 秒，三段升级，沉默进转录，连续两次对方离场） | ✅ | 2026-09-09；默认关闭，`role: "event"` 沉默事件不计回合 → [spec](./specs/spec-timed-reply.md) |
+| A18 | 通用练习策略：角色匹配、信息边界、收尾证据、表现/结果分离 | ✅ 本地实现 | 未部署；真实模型小样本通过，仍需扩大盲测 → [方案](./specs/spec-general-practice-policy.md) |
+| A19 | 核心练习路径 UI/UX 精修 | ✅ 本地实现 | 2026-09-21 今日 / 目录 / 准备 / 对话 / 复盘统一路径，草稿与目录状态恢复、真实等待、触控与可访问性 → [评审](./archive/reviews/review-2026-09-21-product-ux.md) |
 
 ### Stage B — 定位与对外物料
 
@@ -50,7 +52,7 @@
 | B9 | 官网（`site/`：一页式双语静态站，首屏与末节都指向论文） | ✅ | 2026-09-08 上线 `https://tianfuwang.tech/SocialCoach/`（GitHub Pages，Actions 来源，账号自定义域）；含 JSON-LD / hreflang / sitemap / `llms.txt` / OG 图 / 真实截图 → [11-stage-b](./11-stage-b.md#b9-官网) |
 | B10 | ModelScope 公开体验入口 | ✅ | 2026-09-09 `GeminiLight/SocialCoach`；免费 CPU Docker 创空间，Apache-2.0；页面与线上对话 / 复盘流式验证通过 → [部署记录](./specs/spec-modelscope-deployment.md) |
 
-| B11 | 用户反馈 → 飞书 | 🚧 | 专用应用和收件表已建；双部署真实提交通过，待确认本人表格管理权限 → [反馈方案](./specs/spec-user-feedback.md) |
+| B11 | 用户反馈 → 飞书 | ✅ | 双部署真实提交通过；2026-09-17 本人 Base 可管理权限已添加并读回确认 → [反馈方案](./archive/specs/spec-user-feedback.md) |
 | B12 | 匿名使用统计 → 飞书（四个事件、按月建表、留存脚本） | ✅ | 2026-09-10 Vercel 生产上线并跑通一局无错误；ModelScope 通过 OpenAPI 加变量并重建，`/api/track` 已可用 → [spec-analytics](./specs/spec-analytics.md) |
 
 ### Stage C — 可索引化与 GEO

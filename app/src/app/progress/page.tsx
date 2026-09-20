@@ -22,7 +22,7 @@ export default function Progress() {
   const [addOpen, setAddOpen] = useState(false);
   const done = useMemo(() => sessions.filter((s) => s.status === "assessed"), [sessions]);
   const minutes = done.reduce((a, s) => a + sessionMinutes(s), 0);
-  const stars = done.reduce((a, s) => a + (s.report?.stars ?? 0), 0);
+  const stars = done.reduce((a, s) => a + (s.report?.scoringVersion === 2 ? s.report.stars : 0), 0);
   const vals = competencyValues(proficiency);
   const journal = useMemo(
     () => done.flatMap((s) => s.reflections.filter((r) => r.answer.trim()).map((r) => ({ ...r, session: s }))),
@@ -122,7 +122,10 @@ export default function Progress() {
                           {relDate(s.startedAt, lang)} · {sessionMinutes(s)} {t(lang, "min")}
                         </p>
                       </div>
-                      <Stars n={s.report?.stars ?? 0} size={14} />
+                      <div className="flex flex-col items-end gap-1">
+                        {s.report?.scoringVersion === 2 && !s.report.ratings?.length ? <span className="text-[11px] text-ink-3">{t(lang, "rp_unrated")}</span> : <Stars n={s.report?.stars ?? 0} size={14} />}
+                        {(s.report?.scoringVersion !== 2 || !!s.report.ratings?.length) && <span className="text-[11px] text-ink-3">{s.report?.scoringVersion === 2 ? t(lang, "rp_quality", { n: s.report.stars }) : t(lang, "rp_legacy")}</span>}
+                      </div>
                     </Link>
                   </li>
                 ))}

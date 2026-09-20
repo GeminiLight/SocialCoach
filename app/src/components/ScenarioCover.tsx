@@ -89,8 +89,8 @@ export function ScenarioCover({
             <span className="flex items-center gap-3">
               <AvatarFigure seed={speaker.name[lang]} hue={speaker.hue} size={36} />
               <span className="flex flex-col min-w-0">
-                <span className="eyebrow truncate">{speaker.role[lang]}</span>
-                {speaker.name[lang] !== speaker.role[lang] && <span className="text-[12px] text-ink-3 truncate">{speaker.name[lang]}</span>}
+                <span className="eyebrow text-ink-2 truncate">{speaker.role[lang]}</span>
+                {speaker.name[lang] !== speaker.role[lang] && <span className="text-[12px] text-ink-2 truncate">{speaker.name[lang]}</span>}
               </span>
             </span>
           )}
@@ -130,7 +130,7 @@ export function ScenarioCover({
       */}
       <div className="absolute inset-0 flex flex-col justify-center gap-1.5 pr-4 pl-11 lg:pl-14 py-4">
         {speaker && (
-          <span className="flex items-center gap-1.5 eyebrow">
+          <span className="flex items-center gap-1.5 eyebrow text-ink-2">
             <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "var(--scene-color)" }} />
             <span className="truncate">{speaker.role[lang]}</span>
           </span>

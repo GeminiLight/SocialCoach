@@ -60,7 +60,9 @@ export const eventSchema = z.discriminatedUnion("name", [
     byok: z.boolean(),
   }).strict(),
   /** The report was produced and shown. */
-  z.object({ name: z.literal("debrief_view"), ts, session, scenario, stars: z.number().int().min(0).max(3), outcome }).strict(),
+  z.object({ name: z.literal("debrief_view"), ts, session, scenario, stars: z.number().int().min(0).max(3), outcome,
+    scoring_version: z.literal(2).optional(), rated: z.boolean().optional(),
+  }).strict(),
   /** A Socratic question was answered — the report was read, not just generated. */
   z.object({ name: z.literal("reflect"), ts, session, index: z.number().int().min(0).max(9) }).strict(),
   /** The cross-session habit was shown on Growth, or honestly not found. */
