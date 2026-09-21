@@ -183,7 +183,7 @@ SocialCoach builds on [*SocialCoach: Personalized Social Skill Learning with Age
 
 The paper studies personalized practice scheduling and tutoring with a traceable theory-to-practice corpus. It also covers policy training, synthetic evaluations, and human studies. This repository contains the deployed application; its implementation and bundled corpus are documented here separately from the research experiments.
 
-<details>
+<details open>
 <summary><strong>Cite the paper</strong></summary>
 
 ```bibtex

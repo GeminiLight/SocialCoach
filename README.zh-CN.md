@@ -183,7 +183,7 @@ SocialCoach 基于 Wang 等人的论文 [*SocialCoach: Personalized Social Skill
 
 论文研究如何基于可溯源的“理论 → 实践”语料，提供个性化练习排程与教练指导，并包含策略训练、合成评测与用户研究。本仓库提供实际部署的应用；当前实现与内置语料在仓库中单独说明。
 
-<details>
+<details open>
 <summary><strong>引用论文</strong></summary>
 
 ```bibtex
