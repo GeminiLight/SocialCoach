@@ -5,181 +5,212 @@
   <img src="docs/banner.svg" width="860" alt="SocialCoach — Say the thing you&#8217;ve been not saying. 想说的话，说出来。">
 </picture>
 
-**[在线体验](https://socialcoach-app.vercel.app)** · [快速开始](#快速开始) · [核心功能](#核心功能) · [架构](#架构) · [论文](https://arxiv.org/abs/2606.04155)
+**你的专属 AI 情商教练。**
 
-**[English](README.md) · 简体中文**
+通过真实情境对练与个性化反馈，练习社交沟通，学会处理冲突。
 
-[![Live](https://img.shields.io/badge/Live-Try%20it-4A6B5A?style=for-the-badge&logo=vercel&logoColor=white&labelColor=2B2018)](https://socialcoach-app.vercel.app)
-[![Paper](https://img.shields.io/badge/Paper-arXiv%202606.04155-B31B1B?style=for-the-badge&logo=arxiv&logoColor=white&labelColor=2B2018)](https://arxiv.org/abs/2606.04155)
+[![在线体验](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E4%BD%93%E9%AA%8C-Live-49814C?style=for-the-badge&labelColor=261D16)](https://socialcoach.aurax.live)
+[![阅读论文](https://img.shields.io/badge/%E8%AE%BA%E6%96%87-arXiv-AD411C?style=for-the-badge&labelColor=261D16)](https://arxiv.org/abs/2606.04155)
+[![Apache 2.0 开源许可证](https://img.shields.io/badge/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF-Apache%202.0-00656A?style=for-the-badge&labelColor=261D16)](LICENSE)
+
+[English](README.md) · [简体中文](README.zh-CN.md)
 
 </div>
 
-你早就知道，开口应该先问一句，而不是直接指责。你也知道要沉住气——直到经理叹了口气，你还是让步了。问题从来不是“不知道”；**真正缺的是压力下的重复练习。** 每一本书、每一门课、每一个技巧帖都在卖“知道”，而大多数“AI 角色扮演”应用只停在聊天。
+---
 
-SocialCoach 给你的是另一半：不会把胜利拱手让给你的角色，以及一个练完之后会引用你自己原话的教练——它会告诉你，你是**不知道该怎么接**，还是**知道却没有顶住**。每天三分钟。
+[练什么](#你可以练什么) · [怎么练](#如何开始一场练习) · [核心功能](#核心功能) · [本地运行](#快速开始) · [部署](#部署) · [研究](#研究)
+
+## 你可以练什么
+
+和老板谈一次加薪，向朋友说明自己的边界，处理家里的分歧。SocialCoach 让你先练一遍，看清自己的话带来了什么反应，再试着说得更好。
+
+| 你想练习… | 可以从这些情境开始 |
+|---|---|
+| 表达诉求 | 和老板谈加薪、给同事反馈、拒绝临时加班 |
+| 设立边界 | 请朋友还钱、和室友商量访客规则 |
+| 处理分歧 | 和伴侣分担家务、与父母讨论职业选择 |
+| 建立连接 | 欢迎新同事、支持遇到困难的朋友、加入一场交谈 |
+
+从覆盖 **7 类生活情境的 46 个场景**中选择，跟随个性化推荐练习，也可以描述你自己的处境。界面与练习内容均支持**中文和英文**。
+
+## 如何开始一场练习
+
+1. **选一场对话。** 选择想练的技能，或带来你真正需要面对的情境，了解自己的角色和这次想达成的目标。
+2. **进入对练。** 对方有自己的诉求、顾虑和底线，会追问、提出异议，也会坚持立场。
+3. **复盘，再试一次。** 看教练如何结合你的原话给出反馈，尝试另一种回应，把收获带进下一次练习。
 
 <table align="center">
 <tr>
-<td align="center" width="33%"><img src="docs/screenshots/screenshot-01-home-zh.png" width="260" alt="首页：今日练习，以及为什么给你安排这一场"></td>
-<td align="center" width="33%"><img src="docs/screenshots/screenshot-02-pushback-zh.png" width="260" alt="练习中：礼貌的回应没有换来让步，经理继续施压"></td>
-<td align="center" width="33%"><img src="docs/screenshots/screenshot-03-evidence-debrief-zh.png" width="260" alt="复盘：先引用你的原话，再给判决、依据和下一步"></td>
+<th width="33%">1 · 找到适合的练习</th>
+<th width="33%">2 · 进入情境对话</th>
+<th width="33%">3 · 看懂自己的表现</th>
 </tr>
 <tr>
-<td align="center"><sub>不是又一条建议，而是第一次实战。</sub></td>
-<td align="center"><sub>礼貌，没有换来同意。</sub></td>
-<td align="center"><sub>先看你说了什么，再下判断。</sub></td>
+<td><a href="docs/screenshots/screenshot-01-home-zh.png"><img src="docs/screenshots/screenshot-01-home-zh.png" width="260" alt="首页推荐拒绝临时加班的练习，并说明它为什么适合当前目标"></a></td>
+<td><a href="docs/screenshots/screenshot-02-pushback-zh.png"><img src="docs/screenshots/screenshot-02-pushback-zh.png" width="260" alt="在对练中回应经理的要求和进一步追问"></a></td>
+<td><a href="docs/screenshots/screenshot-03-evidence-debrief-zh.png"><img src="docs/screenshots/screenshot-03-evidence-debrief-zh.png" width="260" alt="复盘引用用户原话，解释表达的问题，并给出更清楚的边界表达建议"></a></td>
+</tr>
+<tr>
+<td><sub>根据你的目标，安排下一场练习。</sub></td>
+<td><sub>在来回交谈中练习回应与协商。</sub></td>
+<td><sub>从自己的原话里找到改进方向。</sub></td>
 </tr>
 </table>
 
+<p align="center"><a href="https://socialcoach.aurax.live"><strong>开始一场对话 →</strong></a></p>
+
 ## 核心功能
 
-- **会还击的角色。** 46 个双语场景，覆盖这些对话真正发生的七类情境：职场、家庭、友情、恋爱、校园、公共/陌生人、社交场合。每个角色都有自己的目标，也有没告诉你的隐情；回合数固定，**你真的会练输。**
-- **引用你原话的复盘。** 报告里的每一条判断都引用你真正说过的话。先有证据，再下判断——不是凭感觉打分。
-- **诊断，不是评分。** 它区分“不知道该怎么做”和“知道却在压力下退缩”，因为这两种情况的改法完全不同。
-- **有出处的建议。** 建议来自 42 条策略和 30 个有来源依据的案例与教学示例，不是现场编出来的。
-- **苏格拉底式收尾。** 两个反思问题，教练会根据你真正写下的回答继续回应。
-- **彩排你真实要面对的对话。** 描述你即将面对的那场谈话，约 15 秒生成一个完整打标的专属场景——你的经理、你的姐姐、你的房东，带着他们真实的反对意见上场。
-- **自动安排明天的练习。** 5 项 CASEL 能力 × 34 项社交技能 × 7 类情境组成技能地图，决定你下一步练什么，以及成长雷达图。
-- **不用注册，没有数据库。** 一切都在你的设备上，随时可以导出成 JSON。
+- **有真实反应的对练。** 角色根据自己的立场回应，对话能否推进取决于具体交流，礼貌本身不会让对方自动同意。也可以开启限时应答，练习压力下的表达。
+- **基于原话的反馈。** 复盘先引用你说过的话，再给评价，帮助分清“不知道怎么说”和“知道却没做到”。沟通表现和对话结果分开看，即使对方最终拒绝，也能看见你做得好的地方。
+- **适合你的练习路径。** 根据目标、练习记录和 34 项技能的熟练度估计推荐场景；也可以直接探索场景库，或为自己的真实处境生成专属练习。
+- **有出处的指导。** 42 条策略与 30 个案例支持教练反馈和反思，内容附来源，教学示例明确标注。
+- **看见长期变化。** 回看对话、跟随教练反思，并从不同场次的原话中识别自己反复出现的沟通模式。
+- **按自己的方式使用。** 无需注册，练习记录可导出。支持自带模型与自部署，移动优先界面可以安装为 PWA。
+
+## 快速开始
+
+直接使用可[打开 SocialCoach](https://socialcoach.aurax.live)。本地运行需要 **Node.js 22+**、**pnpm 11**，以及 Anthropic 或 OpenAI 兼容模型服务的凭证。
+
+```bash
+git clone https://github.com/GeminiLight/SocialCoach.git
+cd SocialCoach/app
+pnpm install
+cp .env.example .env.local
+```
+
+启动前编辑 `.env.local`：
+
+| 变量 | 填写内容 |
+|---|---|
+| `LLM_PROVIDER` | `anthropic` 或 `openai` |
+| `LLM_API_KEY` | 模型服务的 API key |
+| `LLM_BASE_URL` | 网关地址；使用供应商默认地址时留空 |
+| `LLM_FAST_MODEL` | 供应商提供的模型 ID，用于对话和简短教练任务 |
+| `LLM_SMART_MODEL` | 供应商提供的模型 ID，用于复盘；可以与上一项相同 |
+
+```bash
+pnpm dev
+```
+
+打开 **[localhost:3000](http://localhost:3000)**。完整配置见 [`.env.example`](app/.env.example)。
 
 <details>
-<summary><b>全部页面</b></summary>
+<summary><strong>在应用中使用自己的模型</strong></summary>
 
-<br/>
+在**设置 → 模型**中配置 Anthropic 或 OpenAI 兼容服务。凭证保存在你的浏览器中，由浏览器直接调用模型供应商。自定义端点需要允许浏览器跨域请求（CORS）。
 
-| 路由 | 说明 |
+部署时设置 `LLM_REQUIRE_BYOK=true`，可以要求访问者使用自己的凭证。模型调用消耗访问者自己的额度；托管费用取决于部署方式。
+
+如果 OpenAI 兼容端点要求 `max_completion_tokens`，设置 `LLM_OPENAI_TOKEN_PARAM=max_completion_tokens`；默认值为 `max_tokens`。
+
+</details>
+
+## 部署
+
+| 方式 | 配置入口 |
 |---|---|
-| `/onboarding` | 60 秒：选择 3–5 个目标技能 → 常见情境 → 一句话介绍自己 |
-| `/` | 今日练习，包含*为什么给你安排这一场*、连续练习天数和能力雷达 |
-| `/arena` | 全部场景，可按情境 / 技能 / 难度筛选 |
-| `/practice/[id]` | 简报 → 实时对话 → 复盘报告（同一路由，三个阶段） |
-| `/rehearse` | 描述一场真实、即将发生的对话 → 约 15 秒生成完整打标的专属场景 |
-| `/progress` | 雷达图、逐项技能熟练度、时间线、反思日志 |
-| `/learn` | 可阅读的策略与案例库 |
-| `/settings` | 语言、模型路由、导出 / 重置数据 |
+| **Docker Compose** | 使用 [`app/compose.yaml`](app/compose.yaml)，包含单实例应用、Caddy 反向代理和自动 HTTPS。 |
+| **Vercel** | 项目根目录设为 `app`，配置上面的模型变量，并检查当前部署的函数时长限制是否支持较长的复盘请求。 |
+| **[ModelScope 创空间](https://modelscope.cn/studios/GeminiLight/SocialCoach)** | 使用仓库根目录的 [`Dockerfile`](Dockerfile)，服务端口为 7860，通过创空间 Secrets 配置凭证。详见[部署记录](wiki/specs/spec-modelscope-deployment.md)。 |
+
+<details>
+<summary><strong>Docker Compose 操作步骤与运行说明</strong></summary>
+
+从仓库根目录执行：
+
+```bash
+cd app
+cp .env.production.example .env.production
+```
+
+编辑 `.env.production`，填入模型凭证与限流配置。将 `Caddyfile` 中的 `example.com` 换成你的域名，将域名解析到服务器，并确保 80、443 端口可访问。然后启动：
+
+```bash
+docker compose up -d --build
+```
+
+Dockerfile 已将 Next.js 静态资源复制到 standalone 构建目录；Caddy 配置了 `flush_interval -1`，支持流式响应。
+
+[`lib/rate-limit.ts`](app/src/lib/rate-limit.ts) 提供每 IP 和每次部署的调用限额。计数保存在内存里，重启会清零，不同实例之间不共享。Compose 部署保持一个应用实例；扩容时需要改用共享限流。
+
+</details>
+
+## 数据与隐私
+
+个人档案、练习记录和成长数据保存在浏览器中，可从设置页导出。调用模型时，相关对话上下文会发送给配置的模型供应商：使用部署方凭证时经过应用服务器，自带凭证时由浏览器直接发送。
+
+<details>
+<summary><strong>使用统计、产品反馈与语音输入</strong></summary>
+
+- **使用统计：** 部署方配置统计服务且设置中开启统计时，应用会通过随机设备 ID 上报场景、时长、结果等元数据，不含对话正文。你可以在设置中关闭。
+- **产品反馈：** 你主动提交的反馈及可选联系方式，会发送到团队配置的飞书表格。
+- **语音输入：** 浏览器的语音识别服务可能将音频发送给其供应商进行转录。
+
+核心练习功能无需账号系统或数据库；反馈与统计是可选集成，配置见 [`.env.example`](app/.env.example)。
 
 </details>
 
 ## 架构
 
 ```mermaid
-%%{init: {'themeVariables': {'fontFamily': "Georgia,'Iowan Old Style',serif"}}}%%
 flowchart LR
-  P["Profile · Goals<br/>Proficiency · History"] --> S["Prescription<br/><i>/api/schedule</i>"]
-  S --> R["Corpus retrieval<br/>tag filter + semantic score"]
-  R --> A["Adaptation<br/>personalized briefing"]
-  A --> D["Immersive practice<br/><i>/api/roleplay</i>"]
-  D --> T["Diagnosis + attribution<br/><i>/api/assess</i>"]
-  T --> K["Knowledge + Socratic<br/>reflection"]
-  K --> U["Bounded proficiency<br/>delta"]
-  U -.-> P
+  P[目标与练习记录] --> S[个性化排程]
+  S --> R[情境对练]
+  R --> F[反馈与反思]
+  F --> P
+  C[策略、案例与场景] --> S
+  C --> F
 ```
 
-你不会为了填满练习位而拿到一个不相关的场景：当没有完美匹配时，约束会按固定顺序逐步放松，而真正重要的那一个——你这次要来练的技能——永远不会放松。
+排程器根据练习处方检索合适的场景，再生成个性化简报。服务端与浏览器端的模型调用共用同一套任务逻辑。
 
-语料和技能地图在 [`app/src/data/`](app/src/data)；六条 LLM 路由在 [`app/src/app/api/`](app/src/app/api)。
+| 模块 | 源码位置 |
+|---|---|
+| 场景、策略、案例与技能分类 | [`app/src/data/`](app/src/data) |
+| 排程、对练、评估与反思 | [`app/src/lib/tasks/`](app/src/lib/tasks) |
+| 服务端 API | [`app/src/app/api/`](app/src/app/api) |
+| 本地学习者状态 | [`app/src/store/`](app/src/store) |
 
-## 快速开始
+**技术栈：** Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Zustand · Framer Motion · Zod · Anthropic 与 OpenAI SDK。
 
-```bash
-git clone https://github.com/GeminiLight/SocialCoach.git
-cd SocialCoach/app
-
-cp .env.example .env.local     # 填入 LLM_API_KEY
-pnpm install
-pnpm dev                       # → http://localhost:3000
-```
-
-## 部署
-
-**ModelScope 创空间：** [打开公开体验](https://modelscope.cn/studios/GeminiLight/SocialCoach)。仓库根目录的 `Dockerfile` 会构建 `app/` 并在 7860 端口启动；通过创空间 Secrets 配置模型凭证。部署记录见 [`wiki/specs/spec-modelscope-deployment.md`](wiki/specs/spec-modelscope-deployment.md)。
-
-**自托管（推荐）：** 一台小机器、Docker Compose、自动 TLS。香港或新加坡的机器能同时覆盖中国大陆和全球其他地区，不需要 ICP 备案，也离国内模型端点更近。
-
-```bash
-cd app
-cp .env.production.example .env.production   # 填入 key 和限流配置
-$EDITOR Caddyfile                            # 把 example.com 换成你的域名
-docker compose up -d --build
-```
-
-有两件容易做错、但这里已经处理好的事：`.next/standalone` 不会包含 `public/` 和 `.next/static`，所以 Dockerfile 显式复制了它们；Caddy 默认会缓冲代理响应，这会破坏流式对话，所以设置了 `flush_interval -1`。
-
-公开 URL + 服务端 key 等于一个开放的 LLM 代理，所以 [`lib/rate-limit.ts`](app/src/lib/rate-limit.ts) 同时限制每 IP 每小时和每次部署每天的调用量——后者才是真正保护账单的数字。限流状态在内存里，所以只跑一个实例。设置 `LLM_REQUIRE_BYOK=true` 可以让每个访问者自带 key，部署方完全不花钱。
-
-构建大约需要 2 GB 内存；如果机器只有 1 GB，建议在别处构建镜像再推过去。
-
-**Vercel** 也可以直接使用——Node runtime API routes，**没有数据库、没有认证、无需配置任何东西。** 把项目的 Root Directory 设为 `app`，加上 `LLM_API_KEY` 即可。注意 `/api/assess` 可能跑很久（对快速模型约 40 秒），而 Hobby 计划函数上限是 60 秒；另外内存限流在 serverless 多实例之间不共享。
-
-<details>
-<summary><b>模型供应商与路由</b></summary>
-
-<br/>
-
-同时支持 Anthropic 和 OpenAI；`openai` 也覆盖任何 OpenAI 兼容端点——vLLM、Ollama、OpenRouter、LiteLLM、DeepSeek。两套 SDK 都封装在 [`app/src/lib/llm.ts`](app/src/lib/llm.ts) 的一个适配器后面；路由处理器看不到具体供应商。
-
-快速模型负责角色扮演回合、提示、排程和场景生成；聪明模型负责写复盘。
-
-```env
-LLM_PROVIDER=anthropic         # anthropic | openai
-LLM_API_KEY=
-LLM_BASE_URL=                  # 自定义端点，例如 http://localhost:11434/v1
-LLM_FAST_MODEL=claude-sonnet-5
-LLM_SMART_MODEL=claude-opus-5
-```
-
-学习者也可以自带凭证（设置 → 模型）。这些凭证只存在浏览器里，页面直接调用模型供应商，所以学习者的 key 永远不会到服务器——这也是 `http://localhost:11434/v1` 这类本地端点可用的原因，因为此时 `localhost` 是*他自己的*。`LLM_REQUIRE_BYOK=true` 会让自带 key 成为唯一路径，这样公开部署的运营成本为零。
-
-供应商原生环境变量仍然可以作为回退（`ANTHROPIC_API_KEY`、`ANTHROPIC_AUTH_TOKEN`、`ANTHROPIC_BASE_URL`、`OPENAI_API_KEY`、`OPENAI_BASE_URL`）。较新的 OpenAI 模型需要 `max_completion_tokens`，而大多数兼容服务器只认识 `max_tokens`（默认值）——可以用 `LLM_OPENAI_TOKEN_PARAM=max_completion_tokens` 切换。
-
-</details>
-
-## 技术栈
-
-Next.js 16 App Router · React 19 · TypeScript · Tailwind v4 · Zustand（持久化）· Framer Motion · Zod · Anthropic SDK。
-
-移动优先 PWA（manifest + service worker）。界面支持简体中文和英文；所有模型输出都跟随学习者的语言。
-
-## 设计
-
-“**温暖纸张 · 编辑排版**”——一本翻旧了的沟通平装书，页边留着教练批注。纸白底、墨色字、赭石色只留给最重要的那个动作，每项 CASEL 能力有自己的色相。没有紫色渐变，没有玻璃拟态。
-
-标志性瞬间：目标进度像墨迹在纸上慢慢填满；报告像一份带批注的手稿，先划出你自己的原话；能力成长在五边形雷达上展开。完整设计说明见 [`app/.impeccable.md`](app/.impeccable.md)。
-
-## 参与贡献
-
-欢迎提 Issue 和 PR。最容易参与的地方是语料：场景、策略和案例都在 [`app/src/data/corpus/`](app/src/data/corpus) 里，是带 `source` 字段的、类型化的双语对象——新增一条，它就会像其他内容一样被打标、检索和排程。
-
-## 友链
-
-- [LinuxDo 社区](https://linux.do) —— 一个关于 Linux、开源与 AI 构建者的社区。
-
-## 许可证
-
-Copyright 2026 SocialCoach contributors.
-
-SocialCoach 使用 [Apache License 2.0](LICENSE) 许可。
-
-第三方材料保留各自的许可证和权利；对书籍、论文及其他来源的引用不代表对这些作品重新授权。
-
-## 免责声明
-
-> [!IMPORTANT]
-> 仅用于低风险练习和反思——**不用于**临床评估、诊断或招聘决策。熟练度数字是模型估计值，界面中已明确标注。练习数据留在你的设备上。
+**设计：** 温暖纸张、编辑式排版，以及像教练页边批注一样的反馈。详见[设计说明](app/.impeccable.md)与[系统架构](wiki/02-system-architecture.md)。
 
 ## 研究
 
-这是论文研究系统的部署版本。论文把练习排程建模为冷启动、受检索约束的序列决策问题，构建了排程器和教练共同读取的“理论 → 实践”语料，并区分*acquisition*缺陷（不知道这一步）与*performance*缺陷（知道，但在压力下做不出来）——复盘正是建立在这个区分上。论文还覆盖了 App 无法展示的部分：用 trajectory-level GRPO 和 rubric-judge 成对偏好训练的排程策略、针对基线的合成冷启动评测，以及用户研究。
+SocialCoach 基于 Wang 等人的论文 [*SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice*](https://arxiv.org/abs/2606.04155)（2026）。
 
-**[阅读论文 →](https://arxiv.org/abs/2606.04155)**
+论文研究如何基于可溯源的“理论 → 实践”语料，提供个性化练习排程与教练指导，并包含策略训练、合成评测与用户研究。本仓库提供实际部署的应用；当前实现与内置语料在仓库中单独说明。
+
+<details>
+<summary><strong>引用论文</strong></summary>
 
 ```bibtex
 @article{wang2026socialcoach,
   title   = {SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice},
-  author  = {Wang, Tianfu and Xiong, Max and Lei, Yuxuan and Lian, Jianxun and Zhu, Hongyuan
-             and Hu, Zhengyu and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
+  author  = {Wang, Tianfu and Xiong, Max and Lian, Jianxun and Zhu, Hongyuan
+             and Hu, Zhengyu and Lei, Yuxuan and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
              and Yuan, Nicholas Jing and Zhang, Qi},
   journal = {arXiv preprint arXiv:2606.04155},
   year    = {2026}
 }
 ```
+
+</details>
+
+## 参与贡献
+
+欢迎提交问题反馈、翻译和改进。报告 bug 时，请附上复现步骤、浏览器与模型配置，并去除 API key 和私人对话。
+
+语料贡献从 [`app/src/data/corpus/`](app/src/data/corpus) 开始：内容保持中英双语，提供 `source`，并明确标注教学示例。参与开发前请阅读 [`AGENTS.md`](AGENTS.md) 与 [`app/AGENTS.md`](app/AGENTS.md)。
+
+## 友链
+
+[LinuxDo 社区](https://linux.do) — 一个关于 Linux、开源与 AI 构建者的社区。
+
+## 许可证
+
+Copyright 2026 SocialCoach contributors. 本项目采用 [Apache 2.0](LICENSE) 许可。第三方材料保留各自的许可证和权利。
+
+SocialCoach 用于日常练习与反思。熟练度分数是模型估计，不用于临床评估或招聘决策。

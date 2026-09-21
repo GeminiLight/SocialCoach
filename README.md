@@ -5,180 +5,212 @@
   <img src="docs/banner.svg" width="860" alt="SocialCoach — Say the thing you&#8217;ve been not saying. 想说的话，说出来。">
 </picture>
 
-**[Try it live](https://socialcoach-app.vercel.app)** · [Quick start](#quick-start) · [Key features](#key-features) · [Architecture](#architecture) · [Paper](https://arxiv.org/abs/2606.04155)
+**Your personal EQ coach.**
 
-[![Live](https://img.shields.io/badge/Live-Try%20it-4A6B5A?style=for-the-badge&logo=vercel&logoColor=white&labelColor=2B2018)](https://socialcoach-app.vercel.app)
-[![Paper](https://img.shields.io/badge/Paper-arXiv%202606.04155-B31B1B?style=for-the-badge&logo=arxiv&logoColor=white&labelColor=2B2018)](https://arxiv.org/abs/2606.04155)
+Build social skills and learn to handle conflict through realistic role-play and personalized feedback.
 
-**[English](README.md) · [简体中文](README.zh-CN.md)**
+[![Try SocialCoach](https://img.shields.io/badge/Live-Try%20it-49814C?style=for-the-badge&labelColor=261D16)](https://socialcoach.aurax.live)
+[![Read the paper](https://img.shields.io/badge/Paper-arXiv-AD411C?style=for-the-badge&labelColor=261D16)](https://arxiv.org/abs/2606.04155)
+[![Apache 2.0 license](https://img.shields.io/badge/License-Apache%202.0-00656A?style=for-the-badge&labelColor=261D16)](LICENSE)
+
+[English](README.md) · [简体中文](README.zh-CN.md)
 
 </div>
 
-You already know you should open with a question instead of an accusation. You know it right up until your manager sighs — and then you fold. Knowing was never the bottleneck; **reps under pressure are.** Every book, course and tips thread sells you the knowing, and most "AI role-play" apps stop at the chat.
+---
 
-SocialCoach gives you the other half: characters who won't hand you the win, and a coach who tells you afterwards — quoting your own words — whether you didn't know the move, or knew it and couldn't land it. Three minutes a day.
+[Practice](#what-you-can-practice) · [How it works](#how-it-works) · [Features](#key-features) · [Quick start](#quick-start) · [Deployment](#deployment) · [Research](#research)
+
+## What you can practice
+
+A conversation with your manager. A boundary with a friend. A disagreement at home. SocialCoach gives you a place to rehearse, see how your words land, and try again.
+
+| When you want to… | Practice with… |
+|---|---|
+| Speak up at work | Asking for a raise, giving feedback, or declining extra hours |
+| Set a boundary | Asking a friend to repay you or agreeing on rules with a roommate |
+| Work through conflict | Sharing responsibilities with a partner or discussing career choices with family |
+| Connect with people | Welcoming a new colleague, supporting a friend, or joining a conversation |
+
+Choose from **46 scenarios across 7 areas of life**, follow a personalized recommendation, or describe your own situation. The interface and practice content are available in **English and Simplified Chinese**.
+
+## How it works
+
+1. **Choose a conversation.** Pick a skill or bring a situation you actually need to handle. Read your role and what you want to achieve.
+2. **Practice the exchange.** Talk to characters with their own goals, concerns, and limits. They can disagree, ask questions, and hold their position.
+3. **Review and try again.** See feedback tied to your actual words, consider another way to respond, and carry that lesson into your next attempt.
 
 <table align="center">
 <tr>
-<td align="center" width="33%"><img src="docs/screenshots/screenshot-01-home-zh.png" width="260" alt="Home: today's practice, and why it was picked for you"></td>
-<td align="center" width="33%"><img src="docs/screenshots/screenshot-02-pushback-zh.png" width="260" alt="Mid-practice: a polite reply, and the manager pushes harder"></td>
-<td align="center" width="33%"><img src="docs/screenshots/screenshot-03-evidence-debrief-zh.png" width="260" alt="Debrief: your own line quoted first, then the verdict, the source, the next move"></td>
+<th width="33%">1 · Your next practice</th>
+<th width="33%">2 · The conversation</th>
+<th width="33%">3 · Your feedback</th>
 </tr>
 <tr>
-<td align="center"><sub>Not another tip. A first rep.</sub></td>
-<td align="center"><sub>Being polite didn't get a yes.</sub></td>
-<td align="center"><sub>It shows what you said before it judges.</sub></td>
+<td><a href="docs/screenshots/screenshot-01-home-en.png"><img src="docs/screenshots/screenshot-01-home-en.png" width="260" alt="A personalized recommendation to practice declining extra hours, with an explanation of why it fits"></a></td>
+<td><a href="docs/screenshots/screenshot-02-pushback-en.png"><img src="docs/screenshots/screenshot-02-pushback-en.png" width="260" alt="A practice conversation with a manager who challenges the learner's response"></a></td>
+<td><a href="docs/screenshots/screenshot-03-evidence-debrief-en.png"><img src="docs/screenshots/screenshot-03-evidence-debrief-en.png" width="260" alt="Feedback quoting the learner's words and suggesting a clearer way to set a boundary"></a></td>
+</tr>
+<tr>
+<td><sub>A scenario matched to your goals.</sub></td>
+<td><sub>Room to respond, disagree, and retry.</sub></td>
+<td><sub>Your words, the feedback, the next step.</sub></td>
 </tr>
 </table>
 
+<p align="center"><a href="https://socialcoach.aurax.live"><strong>Try a conversation →</strong></a></p>
+
 ## Key features
 
-- **Characters who push back.** 46 bilingual scenarios across the seven places these conversations actually happen — work, family, friendship, romance, school, strangers, social occasions. Every character has their own objective and something they aren't telling you, you get a fixed number of turns, and **you can lose.**
-- **A debrief that quotes you.** Every point in the report cites the line you actually said. Evidence before judgment — never a vibe score.
-- **Diagnosis, not a grade.** It separates *didn't know the move* from *knew it and folded under pressure*, because the fix for those two is completely different.
-- **Advice with sources.** Suggestions arrive attached to a strategy or case retrieved from a corpus of 42 strategies and 30 source-grounded cases and labelled teaching illustrations — not invented on the spot.
-- **A Socratic close.** Two reflection questions, and the coach responds to what you actually answered.
-- **Rehearse your real conversation.** Describe the one you actually have coming up and get a custom, fully tagged scenario in about 15 seconds — your manager, your sister, your landlord, with their real objections in their mouths.
-- **It picks tomorrow's practice for you.** A skill map of 5 CASEL competencies × 34 social skills × 7 context types drives what you're served next and the radar that tracks your growth.
-- **No sign-up, no database.** Everything lives on your device and exports as JSON whenever you want it.
+- **Realistic role-play.** Characters respond from their own perspective. Progress depends on how the conversation develops; politeness alone does not guarantee agreement. Optional timed replies add practice under pressure.
+- **Feedback grounded in your words.** The debrief quotes what you said before evaluating it, then identifies whether you need a new strategy or more practice applying one. Communication quality and the outcome of the conversation are assessed separately, so a thoughtful response can still count even when the other person says no.
+- **Personalized practice.** Recommendations draw on your goals, practice history, and estimated proficiency across 34 skills. Rehearse a situation from your own life or explore the scenario library.
+- **Guidance with sources.** A library of 42 strategies and 30 cases supports coaching and reflection. Entries include their sources, and teaching examples are labelled.
+- **A view of your progress.** Revisit past conversations, reflect with the coach, and look for recurring patterns backed by quotes from different sessions.
+- **Practice on your terms.** No account required. Export your practice history, use your own model, or self-host the app. The mobile-first interface can be installed as a PWA.
+
+## Quick start
+
+To try the hosted app, [open SocialCoach](https://socialcoach.aurax.live). To run it locally, use **Node.js 22+**, **pnpm 11**, and credentials for an Anthropic or OpenAI-compatible model provider.
+
+```bash
+git clone https://github.com/GeminiLight/SocialCoach.git
+cd SocialCoach/app
+pnpm install
+cp .env.example .env.local
+```
+
+Edit `.env.local` before starting:
+
+| Variable | What to set |
+|---|---|
+| `LLM_PROVIDER` | `anthropic` or `openai` |
+| `LLM_API_KEY` | Your provider's API key |
+| `LLM_BASE_URL` | Your gateway's endpoint, or leave empty for the provider default |
+| `LLM_FAST_MODEL` | A model ID available from your provider, for conversations and short coaching tasks |
+| `LLM_SMART_MODEL` | A model ID available from your provider, for debriefs; this can be the same model |
+
+```bash
+pnpm dev
+```
+
+Open **[localhost:3000](http://localhost:3000)**. See [`.env.example`](app/.env.example) for all configuration options.
 
 <details>
-<summary><b>Every screen</b></summary>
+<summary><strong>Use your own model from the app</strong></summary>
 
-<br/>
+In **Settings → Model**, configure an Anthropic or OpenAI-compatible provider. These credentials stay in your browser, which calls your provider directly. Custom endpoints must allow browser requests (CORS).
 
-| Route | What it is |
+Set `LLM_REQUIRE_BYOK=true` to require visitors to bring their own credentials. Model requests then use each visitor's provider account; hosting costs still depend on your deployment.
+
+For OpenAI-compatible endpoints that require `max_completion_tokens`, set `LLM_OPENAI_TOKEN_PARAM=max_completion_tokens`. The default is `max_tokens`.
+
+</details>
+
+## Deployment
+
+| Option | Setup |
 |---|---|
-| `/onboarding` | 60 seconds: pick 3–5 target skills → common contexts → one line about yourself |
-| `/` | Today's practice with *why this was picked for you*, streak, competency radar |
-| `/arena` | Every scenario, filterable by context / skill / difficulty |
-| `/practice/[id]` | Briefing → live dialogue → debrief report (one route, three phases) |
-| `/rehearse` | Describe a real upcoming conversation → a custom, fully tagged scenario in ~15s |
-| `/progress` | Radar, per-skill proficiency, timeline, reflection journal |
-| `/learn` | The corpus as a readable library of strategies and cases |
-| `/settings` | Language, model routing, export / reset your data |
+| **Docker Compose** | Use [`app/compose.yaml`](app/compose.yaml) for a single app instance with Caddy and automatic HTTPS. |
+| **Vercel** | Set the project root to `app` and configure the model variables above. Check your deployment's function duration limits for longer debrief requests. |
+| **[ModelScope](https://modelscope.cn/studios/GeminiLight/SocialCoach)** | Use the repository-root [`Dockerfile`](Dockerfile), which serves on port 7860. Configure credentials through Studio Secrets. See the [deployment guide](wiki/specs/spec-modelscope-deployment.md). |
+
+<details>
+<summary><strong>Docker Compose setup and operating notes</strong></summary>
+
+From the repository root:
+
+```bash
+cd app
+cp .env.production.example .env.production
+```
+
+Edit `.env.production` with your model credentials and rate limits. Replace `example.com` in `Caddyfile` with your domain, point its DNS to the host, and make ports 80 and 443 reachable. Then run:
+
+```bash
+docker compose up -d --build
+```
+
+The Dockerfiles include Next.js static assets in the standalone build. The Caddy configuration sets `flush_interval -1` for streaming responses.
+
+[`lib/rate-limit.ts`](app/src/lib/rate-limit.ts) limits model calls per IP and per deployment. Counters are in memory: they reset on restart and are not shared across instances. Keep the Compose deployment to one app instance; use shared rate limiting if you scale beyond it.
+
+</details>
+
+## Data and privacy
+
+Your profile, practice history, and progress are stored in your browser and can be exported from Settings. Model requests send the relevant conversation context to the configured model provider, through the app server or directly when using your own credentials.
+
+<details>
+<summary><strong>Usage statistics, feedback, and voice input</strong></summary>
+
+- **Usage statistics:** when configured by the deployment and enabled in Settings, the app sends metadata such as scenario, duration, and outcome under a random device ID. These events exclude conversation text. You can disable them in Settings.
+- **Product feedback:** feedback you choose to submit, including any optional contact details, is sent to the team's configured Feishu table.
+- **Voice input:** your browser's speech-recognition service may send audio to its provider for transcription.
+
+The core practice app needs no account system or database. Feedback and usage statistics are optional integrations; configuration is documented in [`.env.example`](app/.env.example).
 
 </details>
 
 ## Architecture
 
 ```mermaid
-%%{init: {'themeVariables': {'fontFamily': "Georgia,'Iowan Old Style',serif"}}}%%
 flowchart LR
-  P["Profile · Goals<br/>Proficiency · History"] --> S["Prescription<br/><i>/api/schedule</i>"]
-  S --> R["Corpus retrieval<br/>tag filter + semantic score"]
-  R --> A["Adaptation<br/>personalized briefing"]
-  A --> D["Immersive practice<br/><i>/api/roleplay</i>"]
-  D --> T["Diagnosis + attribution<br/><i>/api/assess</i>"]
-  T --> K["Knowledge + Socratic<br/>reflection"]
-  K --> U["Bounded proficiency<br/>delta"]
-  U -.-> P
+  P[Goals and practice history] --> S[Personalized scheduling]
+  S --> R[Role-play]
+  R --> F[Feedback and reflection]
+  F --> P
+  C[Strategies, cases and scenarios] --> S
+  C --> F
 ```
 
-You never get handed something off-target just to fill the slot: when nothing matches perfectly, the requirements loosen in a fixed order, and the one that matters — the skill you came to work on — never loosens at all.
+The scheduler turns a practice prescription into a matching corpus scenario and personalized briefing. Shared task logic powers both server-side and browser-side model calls.
 
-The corpus and the skill map live in [`app/src/data/`](app/src/data); the six LLM routes are in [`app/src/app/api/`](app/src/app/api).
+| Area | Source |
+|---|---|
+| Scenarios, strategies, cases, and skill taxonomy | [`app/src/data/`](app/src/data) |
+| Scheduling, role-play, assessment, and reflection | [`app/src/lib/tasks/`](app/src/lib/tasks) |
+| Server API routes | [`app/src/app/api/`](app/src/app/api) |
+| Local learner state | [`app/src/store/`](app/src/store) |
 
-## Quick start
+**Stack:** Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Zustand · Framer Motion · Zod · Anthropic and OpenAI SDKs.
 
-```bash
-git clone https://github.com/GeminiLight/SocialCoach.git
-cd SocialCoach/app
-
-cp .env.example .env.local     # add LLM_API_KEY
-pnpm install
-pnpm dev                       # → http://localhost:3000
-```
-
-## Deployment
-
-**ModelScope Studio:** [Open the public demo](https://modelscope.cn/studios/GeminiLight/SocialCoach). The repository-root `Dockerfile` builds `app/` and serves on port 7860; configure model credentials through Studio Secrets. See the [deployment record](wiki/specs/spec-modelscope-deployment.md).
-
-**Self-hosted (recommended):** one small box, Docker Compose, automatic TLS. A Hong Kong or Singapore host reaches both mainland China and the rest of the world, needs no ICP filing, and sits close to domestic model endpoints.
-
-```bash
-cd app
-cp .env.production.example .env.production   # fill in the key and the rate limits
-$EDITOR Caddyfile                            # replace example.com with your domain
-docker compose up -d --build
-```
-
-Two things that are easy to get wrong and are already handled: `.next/standalone` omits `public/` and `.next/static`, so the Dockerfile copies them explicitly; and Caddy buffers proxied responses by default, which would destroy the streamed dialogue, so `flush_interval -1` is set.
-
-Because a public URL with a server-side key is an open LLM proxy, [`lib/rate-limit.ts`](app/src/lib/rate-limit.ts) caps calls per IP per hour and — the number that actually protects the bill — per deployment per day. Rate-limit state is in memory, so run a single instance. Set `LLM_REQUIRE_BYOK=true` to make every visitor bring their own key and spend nothing at all.
-
-The build needs ~2 GB of RAM; on a 1 GB box build the image elsewhere and push it.
-
-**Vercel** also works as-is — Node-runtime API routes, **no database, no auth, nothing to provision.** Set the project's Root Directory to `app` and add `LLM_API_KEY`. Note that `/api/assess` can run for a while (~40 s against a fast model) and Hobby caps functions at 60 s, and that in-memory rate limiting leaks across serverless instances.
-
-<details>
-<summary><b>Providers and model routing</b></summary>
-
-<br/>
-
-Anthropic and OpenAI are both supported, and `openai` covers any OpenAI-compatible endpoint — vLLM, Ollama, OpenRouter, LiteLLM, DeepSeek. Both SDKs sit behind one adapter in [`app/src/lib/llm.ts`](app/src/lib/llm.ts); the route handlers never see a provider.
-
-A fast model handles role-play turns, hints, scheduling and scenario generation; a smart model writes the debrief.
-
-```env
-LLM_PROVIDER=anthropic         # anthropic | openai
-LLM_API_KEY=
-LLM_BASE_URL=                  # custom endpoint, e.g. http://localhost:11434/v1
-LLM_FAST_MODEL=claude-sonnet-5
-LLM_SMART_MODEL=claude-opus-5
-```
-
-Learners can also bring their own credentials (Settings → 模型). Those are stored only in their browser and the page calls the provider directly, so a learner's key never reaches the server — which is also what makes a local endpoint like `http://localhost:11434/v1` usable, since `localhost` is then *theirs*. `LLM_REQUIRE_BYOK=true` makes that the only path, so a public deployment costs nothing to run.
-
-Provider-native variables still work as fallbacks (`ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_BASE_URL`, `OPENAI_API_KEY`, `OPENAI_BASE_URL`). Newer OpenAI models want `max_completion_tokens` while most compatible servers only know `max_tokens` (the default) — switch with `LLM_OPENAI_TOKEN_PARAM=max_completion_tokens`.
-
-</details>
-
-## Tech stack
-
-Next.js 16 App Router · React 19 · TypeScript · Tailwind v4 · Zustand (persisted) · Framer Motion · Zod · Anthropic SDK.
-
-Mobile-first PWA (manifest + service worker). UI in Simplified Chinese and English; every model output follows the learner's language.
-
-## Design
-
-"**Warm paper · editorial**" — a well-thumbed communication paperback with a coach's margin notes. Paper-white ground, ink text, ochre for the one action that matters, a hue per CASEL competency. No purple gradients, no glassmorphism.
-
-Signature moments: objective progress fills in like ink on paper; the report reads like an annotated manuscript that underlines your own words; competency growth blooms across a pentagon radar. Full brief in [`app/.impeccable.md`](app/.impeccable.md).
-
-## Contributing
-
-Issues and PRs welcome. The corpus is the easiest place to help: scenarios, strategies and cases live in [`app/src/data/corpus/`](app/src/data/corpus) as typed, bilingual objects with a `source` field — add one and it gets tagged, retrieved and scheduled like everything else.
-
-## Friends
-
-- [LinuxDo Community](https://linux.do) — a community for Linux, open source, and AI builders.
-
-## License
-
-Copyright 2026 SocialCoach contributors.
-
-SocialCoach is licensed under the [Apache License 2.0](LICENSE).
-Third-party materials retain their respective licenses and rights; references to books, papers, and other sources do not relicense those works.
-
-## Disclaimer
-
-> [!IMPORTANT]
-> For low-stakes practice and reflection only — **not** clinical assessment, diagnosis, or hiring decisions. Proficiency numbers are model estimates and are labeled as such in the UI. Practice data stays on your device.
+**Design:** warm paper, editorial typography, and feedback that reads like a coach's margin notes. See the [design brief](app/.impeccable.md) and [system architecture](wiki/02-system-architecture.md).
 
 ## Research
 
-This is the deployed version of a research system. The paper frames practice scheduling as cold-start, retrieval-constrained sequential decision making, builds the theory-to-practice corpus that both the scheduler and the coach read from, and separates *acquisition* deficits (you didn't know the move) from *performance* deficits (you knew it and couldn't land it under pressure) — the distinction the debrief is built on. It also covers what an app can't show you: a scheduling policy trained with trajectory-level GRPO on rubric-judge pairwise preferences, a synthetic cold-start evaluation against baselines, and human studies.
+SocialCoach builds on [*SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice*](https://arxiv.org/abs/2606.04155) (Wang et al., 2026).
 
-**[Read the paper →](https://arxiv.org/abs/2606.04155)**
+The paper studies personalized practice scheduling and tutoring with a traceable theory-to-practice corpus. It also covers policy training, synthetic evaluations, and human studies. This repository contains the deployed application; its implementation and bundled corpus are documented here separately from the research experiments.
+
+<details>
+<summary><strong>Cite the paper</strong></summary>
 
 ```bibtex
 @article{wang2026socialcoach,
   title   = {SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice},
-  author  = {Wang, Tianfu and Xiong, Max and Lei, Yuxuan and Lian, Jianxun and Zhu, Hongyuan
-             and Hu, Zhengyu and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
+  author  = {Wang, Tianfu and Xiong, Max and Lian, Jianxun and Zhu, Hongyuan
+             and Hu, Zhengyu and Lei, Yuxuan and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
              and Yuan, Nicholas Jing and Zhang, Qi},
   journal = {arXiv preprint arXiv:2606.04155},
   year    = {2026}
 }
 ```
+
+</details>
+
+## Contributing
+
+Bug reports, translations, and contributions are welcome. For bugs, include reproduction steps, your browser, and model configuration without API keys or private conversations.
+
+For corpus contributions, start in [`app/src/data/corpus/`](app/src/data/corpus). Keep entries bilingual, provide a `source`, and label teaching examples. For development, read [`AGENTS.md`](AGENTS.md) and [`app/AGENTS.md`](app/AGENTS.md).
+
+## Friends
+
+[LinuxDo Community](https://linux.do) — a community for Linux, open source, and AI builders.
+
+## License
+
+Copyright 2026 SocialCoach contributors. Licensed under [Apache 2.0](LICENSE). Third-party materials retain their respective licenses and rights.
+
+SocialCoach is for everyday practice and reflection. Proficiency scores are model estimates, not clinical assessments or measures for hiring decisions.

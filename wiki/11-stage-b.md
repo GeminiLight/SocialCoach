@@ -62,30 +62,35 @@
 
 ## B3: README 结构
 
-按 LobeChat / Open WebUI / Dify 的实际章节命名重排（三者均无 `Why` / `Screens` 这类散文式标题）：
+2026-09-21 按用户确认的 “Your personal EQ coach” 定位重排中英 README；原有品牌主句和 banner 保留。目标是先说明产品、展示练习，再提供开发与部署信息。
 
 ```
-banner → 导航链接行 → 徽章 → pitch 段落
-Key features（全文最大一节，8 条）
-  └ <details> Every screen（路由表折叠）
-Architecture（mermaid 流程图）
-Quick start
-Deployment
-Tech stack
-Design
-Contributing
-Disclaimer（GitHub 原生 [!IMPORTANT] 告示块）
-Research（论文 + BibTeX，压到最后）
+banner → EQ coach 定位 + 一句用途 → 体验 / 论文 / Apache 2.0 徽章 → 语言切换
+章节导航
+What you can practice（四类用途 + 真实语料场景）
+How it works（三步体验 + 同语言截图 + 体验入口）
+Key features（六条，区分沟通表现与对话结果）
+Quick start（环境要求、模型配置表、自带模型折叠说明）
+Deployment（部署方式表、Compose 折叠步骤）
+Data and privacy（本地记录、模型调用、可选统计与反馈）
+Architecture（简化数据流 + 源码入口 + 技术栈与设计）
+Research（论文说明 + 折叠 BibTeX）
+Contributing → Friends → License / 使用边界
 ```
 
 | 决策点 | 选择 | 原因 |
 |---|---|---|
-| 论文内容位置 | 压到最后的 `Research` 一节 | 用户明确要求整体从产品角度出发；`Paper → product` 对照表是研究复现清单，读者是审稿人不是用户，已删除 |
-| 徽章数量 | 2 个（Live + arXiv），`for-the-badge` 大号样式，统一深墨底 `#2B2018` | 12 个小徽章分散重点；技术栈信息在 `Tech stack` 段落里已有 |
-| 章节名 emoji | **不加** | 三个参考项目都加，但与 banner 的编辑感排版打架，且违反设计反参考。破例需显式决定 |
-| 图标卡片阵列 | **不排** | 设计反参考明确禁止「同尺寸图标卡片阵列」，即使它是 README 变好看最常用的手段 |
-| Star History 图 | 暂不加 | 新仓库 star 少，空图表反而露怯 |
-| `app/README.md` | 已删除 | 44 行里 30 行与根 README 重复，两份必然漂移。历史在 `bae956f` |
+| 首屏定位 | `Your personal EQ coach.` + 用户认可的用途句 | 第一屏先让读者知道是什么，不要求读者从痛点长段落里归纳产品 |
+| 品牌主句 | 保留 banner 中的原句 | 本轮只调整 README 的信息顺序，不改四处同源主句 |
+| 体验入口 | `socialcoach.aurax.live` 为主，ModelScope 入口放部署表 | 与仓库 About 域名一致；已验证当前跳转 |
+| 徽章 | 用户确认采用在线体验 / 论文 / Apache 2.0 三枚统一 `for-the-badge` 徽章，删除重复文字入口 | 覆盖试用、研究与开源许可；色值从 `globals.css` 的 ink / moss / accent-deep / teal 脚本换算 |
+| 产品截图 | 英文页用英文截图，中文页用中文截图；可点击查看原图 | 与页面语言一致，小屏可放大查看；素材仍为 2026-09-08 版本，刷新见 backlog |
+| 阻力表述 | 保留角色立场和真实异议，强调练习与反馈 | 阻力是训练机制，不把沟通包装成打败对方 |
+| 技术细节 | 架构后移，部署细节折叠 | 读者可以先理解体验，再选择本地运行或贡献代码 |
+| 隐私与成本 | 区分本地持久化、模型传输、可选统计与反馈；自带 key 只转移模型费用 | 清除“一切都在设备上”“运营成本为零”等过度承诺 |
+| 章节视觉 | 保留简洁标题、真实截图、原有明暗 banner | 不增加图标卡片阵列、装饰 emoji 或 Star History |
+
+验证与未完成事项见 [README 评审](./reviews/review-2026-09-21-readme.md)。
 
 ---
 

@@ -43,11 +43,11 @@
 |---|---|---|---|
 | B1 | 核心定位陈述（敌人是「建议」；知道≠做到；A/B 客户分层） | ✅ | → [00-product-proposal](./00-product-proposal.md#产品定位) |
 | B2 | 主句定稿并三处对齐 | ✅ | README / `layout.tsx` / `manifest.webmanifest` |
-| B3 | README 按开源产品惯例重排 | ✅ | Key features / Architecture / Quick start / Deployment / Tech stack / Design / Contributing / Disclaimer / Research |
+| B3 | README 按开源产品惯例重排 | ✅ | 2026-09-21 中英同步精修：EQ coach 定位、具体场景、三步体验、同语言截图、配置表、折叠部署与数据说明 → [评审](./reviews/review-2026-09-21-readme.md) |
 | B4 | 品牌 banner（明暗双版 SVG，色值由 `globals.css` OKLCH 精确换算） | ✅ | `docs/banner.svg` / `banner-dark.svg` |
 | B5 | 产品截图（首页 / 对话中 / 复盘） | ✅ | 2026-09-08 用 `site/scripts/screenshots.mjs` 对线上正式版自动拍摄，中英各三张，存 `docs/screenshots/` 与 `site/assets/`；README pitch 下方已嵌入 |
 | B6 | LICENSE 文件与 README 章节 | ✅ | 2026-09-09 用户选定 Apache-2.0；根目录加入官方 LICENSE 全文，README 增加许可及第三方材料说明 |
-| B7 | Live 站点地址替换 README 占位符 | ✅ | 2026-09-08 两处指向 `https://socialcoach-app.vercel.app`（curl 验证），仓库 homepage 字段同步 |
+| B7 | Live 站点地址替换 README 占位符 | ✅ | 2026-09-21 README 入口统一为 `https://socialcoach.aurax.live`，已验证跳转至当前 Vercel 站点；保留 ModelScope 备用入口 |
 | B8 | wiki 文档体系 | 🚧 | 本次建立 |
 | B9 | 官网（`site/`：一页式双语静态站，首屏与末节都指向论文） | ✅ | 2026-09-08 上线 `https://tianfuwang.tech/SocialCoach/`（GitHub Pages，Actions 来源，账号自定义域）；含 JSON-LD / hreflang / sitemap / `llms.txt` / OG 图 / 真实截图 → [11-stage-b](./11-stage-b.md#b9-官网) |
 | B10 | ModelScope 公开体验入口 | ✅ | 2026-09-09 `GeminiLight/SocialCoach`；免费 CPU Docker 创空间，Apache-2.0；页面与线上对话 / 复盘流式验证通过 → [部署记录](./specs/spec-modelscope-deployment.md) |
