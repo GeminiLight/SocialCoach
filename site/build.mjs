@@ -8,7 +8,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync, rmSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { pick, site, meta, nav, hero, marquee, gap, how, trust, privacy, faq, research, footer } from "./content.mjs";
+import { pick, site, meta, nav, hero, marquee, gap, how, learning, trust, privacy, faq, research, footer } from "./content.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
@@ -361,6 +361,9 @@ html:not([data-theme]) .theme .i-auto,html[data-theme="light"] .theme .i-sun,htm
 @media (min-width:64rem){.step{grid-template-columns:3.5rem 1fr 240px;column-gap:2rem;align-items:start}.step .art{grid-column:3;grid-row:1;justify-content:flex-end}.step .phone{width:220px;height:320px}}
 
 /* trust */
+.learning-note{margin-top:1.5rem;color:var(--ink-2);max-width:var(--measure)}
+.learning-source{margin-top:.5rem;font-size:.95rem;color:var(--accent-deep)}
+.learning-source a{display:inline-flex;align-items:center;gap:.35rem;text-underline-offset:.2em}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem 1rem;margin-top:.5rem}
 @media (min-width:48rem){.stats{grid-template-columns:repeat(5,1fr)}}
 .stat .icon{width:22px;height:22px;color:var(--accent-deep);margin-bottom:.6rem}
@@ -452,6 +455,7 @@ const jsonLd = (p) => {
     url: site.arxivUrl,
     sameAs: [site.pdfUrl],
     datePublished: research.datePublished,
+    dateModified: research.dateModified,
     inLanguage: "en",
     publisher: { "@type": "Organization", name: "arXiv" },
     description: pick(research.lead, "en"),
@@ -529,6 +533,7 @@ ${mark(30, "m-nav")}
 </a>
 <nav class="nav-links" aria-label="${l === "zh" ? "页面导航" : "Site"}">
 <a href="#how">${esc(pick(nav.how, l))}</a>
+<a href="#learning">${esc(pick(nav.learning, l))}</a>
 <a href="#trust">${esc(pick(nav.trust, l))}</a>
 <a href="#privacy">${esc(pick(nav.privacy, l))}</a>
 <a href="#faq">${esc(pick(nav.faq, l))}</a>
@@ -643,6 +648,22 @@ const howHtml = (p) => {
 </li>`;
     })
     .join("")}</ol>
+</div>
+</section>`;
+};
+
+const learningHtml = (p) => {
+  const l = p.lang;
+  return `<section class="section" id="learning">
+<div class="wrap">
+<div class="section-head reveal">
+<p class="eyebrow num"><span class="no">${learning.no}</span>${esc(pick(learning.eyebrow, l))}</p>
+<h2>${esc(pick(learning.title, l))}</h2>
+<p class="lead">${esc(pick(learning.lead, l))}</p>
+</div>
+<div class="cards">${learning.examples.map((c, i) => `<div class="card reveal" data-d="${i}">${icon(c.icon, 30)}<h3>${esc(pick(c.title, l))}</h3><p>${esc(pick(c.body, l))}</p></div>`).join("")}</div>
+<p class="learning-note">${esc(pick(learning.note, l))}</p>
+<p class="learning-source"><a href="${learning.sourceUrl}">${esc(pick(learning.source, l))} ${arrow}</a></p>
 </div>
 </section>`;
 };
@@ -775,6 +796,7 @@ ${heroHtml(p)}
 ${marqueeHtml(p)}
 ${gapHtml(p)}
 ${howHtml(p)}
+${learningHtml(p)}
 ${trustHtml(p)}
 ${privacyHtml(p)}
 ${faqHtml(p)}
@@ -831,6 +853,7 @@ writeFileSync(
 ## What it is
 
 - An AI practice partner for difficult real-life conversations. Characters have goals of their own, a hidden motive, a turn limit and a failure state; they do not yield because the learner is polite.
+- An AI tool for practicing social skills within social and emotional learning (SEL). Its 34-skill map uses the five CASEL competencies; it is an individual practice tool, not a certified school curriculum. Framework: ${learning.sourceUrl}
 - Every debrief point quotes the learner's own words first, then separates an acquisition deficit (did not know the move) from a performance deficit (knew it, could not execute under pressure), then cites a source.
 - Corpus shipped in the product: 46 bilingual scenarios, 42 strategies, 30 cases; every strategy and case carries a source. Teaching illustrations are labelled.
 - No account, no user database. Practice history stays on the device and can be exported. Bring-your-own-key and self-hosting are supported.

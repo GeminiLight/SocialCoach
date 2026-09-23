@@ -49,7 +49,7 @@
 | B6 | LICENSE 文件与 README 章节 | ✅ | 2026-09-09 用户选定 Apache-2.0；根目录加入官方 LICENSE 全文，README 增加许可及第三方材料说明 |
 | B7 | Live 站点地址替换 README 占位符 | ✅ | 2026-09-21 README 入口统一为 `https://socialcoach.aurax.live`，已验证跳转至当前 Vercel 站点；保留 ModelScope 备用入口 |
 | B8 | wiki 文档体系 | 🚧 | 本次建立 |
-| B9 | 官网（`site/`：一页式双语静态站，首屏与末节都指向论文） | ✅ | 2026-09-08 上线 `https://tianfuwang.tech/SocialCoach/`（GitHub Pages，Actions 来源，账号自定义域）；含 JSON-LD / hreflang / sitemap / `llms.txt` / OG 图 / 真实截图 → [11-stage-b](./11-stage-b.md#b9-官网) |
+| B9 | 官网（`site/`：一页式双语静态站，首屏与末节都指向论文） | ✅ | 2026-09-08 上线 `https://tianfuwang.tech/SocialCoach/`（GitHub Pages，Actions 来源，账号自定义域）；含 JSON-LD / hreflang / sitemap / `llms.txt` / OG 图 / 真实截图；2026-09-23 补充 SEL 能力与个人对练边界 → [11-stage-b](./11-stage-b.md#b9-官网) |
 | B10 | ModelScope 公开体验入口 | ✅ | 2026-09-09 `GeminiLight/SocialCoach`；免费 CPU Docker 创空间，Apache-2.0；页面与线上对话 / 复盘流式验证通过 → [部署记录](./specs/spec-modelscope-deployment.md) |
 
 | B11 | 用户反馈 → 飞书 | ✅ | 双部署真实提交通过；2026-09-17 本人 Base 可管理权限已添加并读回确认 → [反馈方案](./archive/specs/spec-user-feedback.md) |
@@ -60,11 +60,11 @@
 | # | 功能 | 状态 | 备注 |
 |---|---|---|---|
 | C1 | 语料落地页 SSG（`corpus` 118 条 × 双语 = 236 页，独立 `generateMetadata`） | 📋 | 当前 8/8 路由 `use client`，爬虫拿到空壳 |
-| C2 | `sitemap.ts` / `robots.ts` / `metadataBase` | 📋 | 全缺 |
-| C3 | 动态 OG 图（`opengraph-image.tsx`） | 📋 | 全缺 |
-| C4 | JSON-LD：`SoftwareApplication` + `ScholarlyArticle` | 📋 | 论文是 GEO 资产 |
-| C5 | `llms.txt` 与 LLM 可引用结构 | 📋 | GPTBot / ClaudeBot / PerplexityBot 基本不渲染 JS |
-| C6 | hreflang（zh / en） | 📋 | 现无 i18n 路由 |
+| C2 | `app/` 的 `sitemap.ts` / `robots.ts` / `metadataBase` | 📋 | 官网已有静态 sitemap 和 robots |
+| C3 | `app/` 的动态 OG 图（`opengraph-image.tsx`） | 📋 | 官网已有静态 OG 图 |
+| C4 | `app/` 的 JSON-LD：`SoftwareApplication` + `ScholarlyArticle` | 📋 | 官网已有产品与 arXiv 预印本结构化数据 |
+| C5 | `app/` 的 `llms.txt` 与可直接读取的语料结构 | 📋 | 官网已有产品和论文摘要；应用内语料待开放 |
+| C6 | `app/` 的 hreflang（zh / en） | 📋 | 官网已有双语 hreflang，应用内需 i18n 路由方案 |
 
 ## 里程碑
 

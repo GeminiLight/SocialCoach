@@ -1,7 +1,7 @@
 // Shoots the three product screenshots against a live deployment, phone-sized
 // (390×844 @3x = 1170×2532), light theme, driving Chrome over the DevTools protocol.
 //
-//   node site/scripts/screenshots.mjs [--base=https://socialcoach-app.vercel.app] [--lang=zh] [--out=docs/screenshots]
+//   node site/scripts/screenshots.mjs [--base=https://socialcoach.aurax.live] [--lang=zh] [--out=docs/screenshots]
 //
 // Flow: seed a demo profile → home (today's pick + "why this one") → start →
 // briefing → chat: one soft reply, the character pushes back → one clear
@@ -13,7 +13,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const opt = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v = "true"] = a.replace(/^--/, "").split("="); return [k, v]; }));
-const BASE = (opt.base || "https://socialcoach-app.vercel.app").replace(/\/$/, "");
+const BASE = (opt.base || "https://socialcoach.aurax.live").replace(/\/$/, "");
 const LANG = opt.lang || "zh";
 const OUT = opt.out || "docs/screenshots";
 const CHROME = process.env.CHROME || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";

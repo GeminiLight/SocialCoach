@@ -21,7 +21,7 @@ open site/dist/index.html          # 或 npx serve site/dist
 
 用 GitHub Pages 的 **GitHub Actions** 来源，不需要 `gh-pages` 分支：仓库 Settings → Pages → Source 选 "GitHub Actions"，之后每次改 `site/` 推送即发布。绑自有域名后 `configure-pages` 会把域名传给构建，canonical、hreflang、sitemap 自动跟随。
 
-本地构建默认以 `https://geminilight.github.io/SocialCoach` 为站点地址，用 `SITE_URL=https://example.com node site/build.mjs` 覆盖。
+本地构建默认以 `https://tianfuwang.tech/SocialCoach` 为站点地址，用 `SITE_URL=https://example.com node site/build.mjs` 覆盖。线上应用入口由 `content.mjs` 的 `site.appUrl` 配置。
 
 同一份 `dist/` 也可以直接丢给 Vercel / Cloudflare Pages / 任何静态托管，页面内全部是相对路径。
 
@@ -39,7 +39,8 @@ open site/dist/index.html          # 或 npx serve site/dist
 
 ## 边界
 
-- 不写「开源」，仓库尚无 LICENSE。
+- 仓库已有 Apache 2.0 `LICENSE`；对外可准确描述为开源。
 - 不写用户数、留存、好评等没有口径的数字。
+- SEL 使用 CASEL 的标准术语与五类能力；说明 SocialCoach 是个人练习工具，不声称是认证学校课程或具有已验证的学习成效。
 - 论文与线上产品是两个版本：论文的 43,170 条研究语料不是产品内置规模；页面「研究」一节和 `llms.txt` 都明确了这条边界。
 - 主句改动仍遵守三处同源（`README.md` / `layout.tsx` / `manifest.webmanifest`），这里的 `hero.h1` 是第四处，改主句时一起改。

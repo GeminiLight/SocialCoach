@@ -1,28 +1,28 @@
-<!-- Last verified: 2026-09-03 | Current stage: B -->
+<!-- Last verified: 2026-09-23 | Current stage: B -->
 
 # Stage C — 可索引化与 GEO
 
-> 未开工。本文件是执行前的规格，不是已完成记录。诊断于 2026-09-03。
+> 应用内语料落地页尚未开工；下列 C1–C6 指 `app/`，不重复计算已上线的 `site/` 官网。
 
 ## 问题陈述
 
-**当前 SEO / GEO 表面积为零。**
+**官网已有可索引入口，应用内语料仍缺可索引页面。** `site/` 的中英静态页已提供正文、canonical、hreflang、sitemap、OG 图、论文与产品结构化数据；2026-09-23 补充了 AI 社交技能练习与 SEL 的准确说明。以下缺口限定于 `app/`：
 
 ```
 8 / 8 页面路由全是 "use client"      爬虫拿到的是空壳
 零 generateMetadata                  所有页面共用同一个 title
 缺 sitemap.ts  robots.ts  metadataBase
-缺 OG 图  JSON-LD  hreflang(zh/en)
+app/ 缺 OG 图  JSON-LD  hreflang(zh/en)
 ```
 
-Googlebot 能渲染 JS，但 **GPTBot / ClaudeBot / PerplexityBot 基本不渲染**——它们抓到空 `<body>`。今天任何人问 AI「有没有练社交沟通的 App」，本产品在物理上不可能被提到。
+应用首页依赖客户端状态，原始 HTML 缺少可读正文。不同爬虫对 JavaScript 的处理不同，因此不能把应用内交互页当作稳定的内容入口；官网目前承担产品与论文的公开介绍，C 阶段再让语料页可直接读取。
 
 ## 两张未启用的资产
 
 | 资产 | 内容 |
 |---|---|
 | **语料 = 236 个现成落地页** | `src/data/corpus/` 里 118 条内容（46 场景 + 42 理论 + 30 案例）× 中英。场景标题本身就是高意图长尾搜索词（「如何跟老板谈加薪」、「how to decline extra work」），**搜这些词的人和晚上 11 点打开 App 的人是同一批**（A 类客户）。内容已写完，只是索引不到 |
-| **论文 = GEO 资产** | 「可引用的权威性」是 LLM 引用谁的核心排序信号，消费级 App 买不到同行评议论文。配 `ScholarlyArticle` + `SoftwareApplication` 与 `llms.txt` 可占住「AI 被问到社交技能训练时引用谁」 |
+| **论文 = 可核验的研究来源** | 当前是 arXiv 预印本，官网已链接原文并提供 `ScholarlyArticle`、`SoftwareApplication` 结构化数据与 `llms.txt`。这些有助于机器理解产品与论文的关系，但不能保证搜索排名或 AI 引用 |
 
 ## 功能汇总
 

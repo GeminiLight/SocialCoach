@@ -3,8 +3,7 @@
 //
 // Product facts come from wiki/00-product-proposal.md and README.md; the hero
 // copy is the approved header from the marketing workspace. Do not add claims
-// that are not defensible from the repo (no user counts, no "first", no
-// "open source" until a LICENSE exists).
+// that are not defensible from the repo (no user counts or "first" claims).
 
 export const L = (zh, en) => ({ zh, en });
 export const pick = (v, lang) => (v && typeof v === "object" && "zh" in v ? v[lang] : v);
@@ -13,7 +12,7 @@ export const site = {
   // Where the built site lives. GitHub Actions overrides this with whatever
   // configure-pages reports; the account's Pages domain makes that this URL.
   defaultUrl: "https://tianfuwang.tech/SocialCoach",
-  appUrl: "https://socialcoach-app.vercel.app",
+  appUrl: "https://socialcoach.aurax.live",
   repoUrl: "https://github.com/GeminiLight/SocialCoach",
   arxivId: "2606.04155",
   arxivUrl: "https://arxiv.org/abs/2606.04155",
@@ -26,17 +25,18 @@ export const site = {
 
 export const meta = {
   title: L(
-    "SocialCoach — 想说的话，说出来。",
-    "SocialCoach — Say the thing you’ve been not saying.",
+    "SocialCoach — AI 社交技能训练与社交情绪学习",
+    "SocialCoach — AI Social Skills Practice & SEL",
   ),
   description: L(
-    "面向真实困难对话的 AI 社交技能陪练。和有自己目标、不会轻易让步的角色练几轮；复盘引用你刚才说过的话，判断你是还不会，还是会但在压力下没做到。无需注册。来自同名研究 arXiv:2606.04155。",
-    "Rehearse difficult conversations against AI characters who push back, then get a debrief that quotes what you actually said and tells you whether you didn't know the move or couldn't land it under pressure. No account. From the research paper arXiv:2606.04155.",
+    "SocialCoach 是面向社交与情绪学习（SEL）的 AI 社交技能练习工具。与有自己目标的角色对练困难对话，获得引用你原话的个性化反馈。覆盖沟通、情绪调节与冲突处理；无需注册。",
+    "SocialCoach is an AI learning tool for social skills and social and emotional learning (SEL). Practice difficult conversations through realistic role-play and get personalized feedback grounded in your own words. No account required.",
   ),
 };
 
 export const nav = {
   how: L("流程", "Flow"),
+  learning: L("社交技能", "Social skills"),
   trust: L("依据", "Sources"),
   privacy: L("隐私", "Privacy"),
   faq: L("常见问题", "FAQ"),
@@ -168,8 +168,41 @@ export const how = {
   ],
 };
 
-export const trust = {
+export const learning = {
   no: "03",
+  eyebrow: L("社交与情绪学习 · SEL", "Social and emotional learning · SEL"),
+  title: L("用 AI 练习社交与情绪能力", "AI social skills practice for social and emotional learning"),
+  lead: L(
+    "社交与情绪学习（SEL）不只关乎知道什么是好的沟通，也关乎在被拒绝、误解或催促时还能做出来。SocialCoach 把 34 项社交技能组织在 CASEL 的五类能力下，让你在有来有回的对话里练习，并根据自己的原话复盘。",
+    "Social and emotional learning (SEL) includes applying social and emotional skills when a conversation gets difficult. SocialCoach organizes 34 social skills around the five CASEL competencies, then lets you practice them in conversations with pushback and review your own words.",
+  ),
+  examples: [
+    {
+      icon: "gauge",
+      title: L("管理情绪与压力", "Manage emotions under pressure"),
+      body: L("被追问时放慢节奏，说清自己的感受与底线。", "Slow down when challenged, then name your feelings and boundaries."),
+    },
+    {
+      icon: "radar",
+      title: L("理解对方的立场", "Understand another perspective"),
+      body: L("先准确复述对方的顾虑，再表达自己的请求。", "Restate the other person's concern before making your request."),
+    },
+    {
+      icon: "pushback",
+      title: L("沟通并处理冲突", "Communicate through conflict"),
+      body: L("面对不同意的回应，继续协商具体的下一步。", "Keep negotiating a concrete next step when the other person disagrees."),
+    },
+  ],
+  note: L(
+    "技能分类参考 CASEL 的社交与情绪学习框架。SocialCoach 是个人对练工具，不是经过认证的学校课程。",
+    "The skill map draws on CASEL's social and emotional learning framework. SocialCoach is an individual practice tool, not a certified school curriculum.",
+  ),
+  source: L("了解 CASEL 的 SEL 框架", "Explore CASEL's SEL framework"),
+  sourceUrl: "https://casel.org/what-is-sel/",
+};
+
+export const trust = {
+  no: "04",
   eyebrow: L("语料与出处", "Corpus and sources"),
   title: L("判断有证据，建议有出处", "Evidence before judgment, sources before advice"),
   stats: [
@@ -197,7 +230,7 @@ export const trust = {
 };
 
 export const privacy = {
-  no: "04",
+  no: "05",
   eyebrow: L("数据与部署", "Data and deployment"),
   title: L("数据留在你手里", "Your data stays yours"),
   cards: [
@@ -229,7 +262,7 @@ export const privacy = {
 };
 
 export const faq = {
-  no: "05",
+  no: "06",
   eyebrow: L("问答", "Questions"),
   title: L("常见问题", "Frequently asked questions"),
   items: [
@@ -272,17 +305,17 @@ export const faq = {
 };
 
 export const research = {
-  no: "06",
+  no: "07",
   eyebrow: L("研究", "Research"),
   title: L("这个产品来自一篇论文", "The paper behind the product"),
   paperTitle: "SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice",
   authors: [
     { name: "Tianfu Wang", aff: 1 },
     { name: "Max Xiong", aff: 2 },
-    { name: "Yuxuan Lei", aff: 3 },
     { name: "Jianxun Lian", aff: 4 },
     { name: "Hongyuan Zhu", aff: 3 },
     { name: "Zhengyu Hu", aff: 1 },
+    { name: "Yuxuan Lei", aff: 3 },
     { name: "Linxiao Gong", aff: 1 },
     { name: "Dapeng Hu", aff: 3 },
     { name: "Xiaofang Li", aff: 3 },
@@ -297,7 +330,8 @@ export const research = {
     "Microsoft Research Asia",
   ],
   venue: L("预印本 · cs.HC · 2026", "Preprint · cs.HC · 2026"),
-  datePublished: "2026-08-16",
+  datePublished: "2026-06-02",
+  dateModified: "2026-08-16",
   lead: L(
     "论文把「下一次该练什么」定义为一个冷启动、受检索约束的序列决策问题：给定学习者画像、模拟的熟练度状态和练习历史，策略先写出一份结构化处方，再由语料检索把它实现出来。语料本身是一个可追溯的「理论到实践」知识框架，排程和反思式辅导都从这里读取。产品里的每一次复盘所依赖的「不会」与「会但没做到」的区分，也来自这里。",
     "The paper frames “what to practise next” as cold-start, retrieval-constrained sequential decision making: given a learner profile, a simulated proficiency state and the practice history, a policy writes a structured prescription that corpus retrieval then realises. The corpus itself is a traceable theory-to-practice framework that both the scheduler and the reflective tutor read from. The distinction every debrief in the app rests on, not knowing the move versus failing to execute it, comes from here too.",
@@ -337,8 +371,8 @@ export const research = {
   copied: L("已复制", "Copied"),
   bibtex: `@article{wang2026socialcoach,
   title   = {SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice},
-  author  = {Wang, Tianfu and Xiong, Max and Lei, Yuxuan and Lian, Jianxun and Zhu, Hongyuan
-             and Hu, Zhengyu and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
+  author  = {Wang, Tianfu and Xiong, Max and Lian, Jianxun and Zhu, Hongyuan and Hu, Zhengyu
+             and Lei, Yuxuan and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
              and Yuan, Nicholas Jing and Zhang, Qi},
   journal = {arXiv preprint arXiv:2606.04155},
   year    = {2026}

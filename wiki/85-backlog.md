@@ -17,7 +17,7 @@
 - [ ] **34 个场景里只有 17 个有 `hidden`（底牌）。** 没有底牌的场景会跳过揭示屏，直接进报告——机制只在一半场景里生效。补另外 17 个属于扩语料，按项目约束需要用户点头
 
 - [x] 缺 `LICENSE` 文件。2026-09-09 用户选定 Apache-2.0，已加入官方许可全文及 README License 一节，注明第三方材料保留各自权利。
-- [ ] 8/8 页面路由 `use client`，零可索引性。→ [12-stage-c.md](./12-stage-c.md)
+- [ ] `app/` 的 8/8 页面路由为 `use client`，原始 HTML 缺少可读正文；官网 `site/` 已有可索引的双语产品与论文介绍，但语料落地页仍待建设。→ [12-stage-c.md](./12-stage-c.md)
 - [ ] `docs/PRODUCT.md` 已被 [00-product-proposal.md](./00-product-proposal.md) 取代。保留作历史，但需在文件头加一行指向 wiki，避免 Agent 读到过时定位
 - [ ] 无任何自动化测试。语料的类型正确性（`skills` / `context` / `competencies` 是否为合法 id）目前只靠 TS 编译和运行时校验
 - [x] 2026-09-09 `app/scripts/check-avatars.ts` 已同步新版 `portraitFor`，验证保存、改名稳定性与旧种子回退；全量 `tsc --noEmit` 通过。

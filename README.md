@@ -34,6 +34,10 @@ A conversation with your manager. A boundary with a friend. A disagreement at ho
 
 Choose from **46 scenarios across 7 areas of life**, follow a personalized recommendation, or describe your own situation. The interface and practice content are available in **English and Simplified Chinese**.
 
+## Social skills and social and emotional learning (SEL)
+
+SocialCoach is an AI learning tool focused on practicing social skills, one part of social and emotional learning (SEL). Its 34-skill map draws on the [five CASEL competencies](https://casel.org/what-is-sel/): self-awareness, self-management, social awareness, relationship skills, and responsible decision-making. You can rehearse a difficult conversation, then review feedback grounded in what you actually said. It is an individual practice tool, not a certified school curriculum or a clinical assessment. The [bilingual website](https://tianfuwang.tech/SocialCoach/) explains how the skills map to practice.
+
 ## How it works
 
 1. **Choose a conversation.** Pick a skill or bring a situation you actually need to handle. Read your role and what you want to achieve.
