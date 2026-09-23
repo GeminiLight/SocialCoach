@@ -45,7 +45,7 @@
 | B2 | 主句定稿并三处对齐 | ✅ | README / `layout.tsx` / `manifest.webmanifest` |
 | B3 | README 按开源产品惯例重排 | ✅ | 2026-09-21 中英同步精修：EQ coach 定位、具体场景、三步体验、同语言截图、配置表、折叠部署与数据说明 → [评审](./reviews/review-2026-09-21-readme.md) |
 | B4 | 品牌 banner（明暗双版 SVG，色值由 `globals.css` OKLCH 精确换算） | ✅ | `docs/banner.svg` / `banner-dark.svg` |
-| B5 | 产品截图（首页 / 对话中 / 复盘） | ✅ | 2026-09-08 用 `site/scripts/screenshots.mjs` 对线上正式版自动拍摄，中英各三张，存 `docs/screenshots/` 与 `site/assets/`；README pitch 下方已嵌入 |
+| B5 | 产品截图（首页 / 场景目录 / 对话中 / 复盘 / 今日推荐） | ✅ | `site/scripts/screenshots.mjs` 对线上正式版自动拍摄，中英各五张，存 `docs/screenshots/` 与 `site/assets/`；官网四步流程各配对应截图 |
 | B6 | LICENSE 文件与 README 章节 | ✅ | 2026-09-09 用户选定 Apache-2.0；根目录加入官方 LICENSE 全文，README 增加许可及第三方材料说明 |
 | B7 | Live 站点地址替换 README 占位符 | ✅ | 2026-09-21 README 入口统一为 `https://socialcoach.aurax.live`，已验证跳转至当前 Vercel 站点；保留 ModelScope 备用入口 |
 | B8 | wiki 文档体系 | 🚧 | 本次建立 |

@@ -12,7 +12,9 @@ export const site = {
   // Where the built site lives. GitHub Actions overrides this with whatever
   // configure-pages reports; the account's Pages domain makes that this URL.
   defaultUrl: "https://tianfuwang.tech/SocialCoach",
+  // Geo-aware share URL redirects to a platform homepage and drops subpaths.
   appUrl: "https://socialcoach.aurax.live",
+  appDeepUrl: "https://socialcoach-ai.vercel.app",
   repoUrl: "https://github.com/GeminiLight/SocialCoach",
   arxivId: "2606.04155",
   arxivUrl: "https://arxiv.org/abs/2606.04155",
@@ -129,10 +131,13 @@ export const how = {
   no: "02",
   eyebrow: L("流程", "Flow"),
   title: L("一次训练，四步", "One round, four steps"),
+  openScreenshot: L("打开完整产品截图", "Open full product screenshot"),
   steps: [
     {
+      id: "choose",
       icon: "scene",
       title: L("选一场对话", "Pick a conversation"),
+      screenshotAlt: L("场景目录：从 46 个双语情境中选择要练的对话", "Scenario collection: choose a conversation from 46 bilingual situations"),
       body: L(
         "46 个双语场景，覆盖职场、家庭、朋友、亲密关系、学校、陌生人和社交场合。也可以描述你明天那场真实对话，约 15 秒生成一个定制场景。",
         "46 bilingual scenarios across work, family, friendship, romance, school, strangers and social occasions. Or describe the real conversation you have coming up and get a custom scenario in about 15 seconds.",
@@ -159,8 +164,10 @@ export const how = {
       screenshotAlt: L("复盘报告：引用原话、归因、出处和下一步", "Debrief report: quoted line, attribution, source and next move"),
     },
     {
+      id: "next",
       icon: "radar",
       title: L("下一次练什么，它替你选", "It picks tomorrow's practice"),
+      screenshotAlt: L("今日推荐：展示推荐场景及为什么适合这次练习", "Today's pick: a recommended scenario and why it fits this practice"),
       body: L(
         "5 项 CASEL 能力 × 34 项社交技能 × 7 类情境的技能图谱，根据这次结果安排下一次训练，并用雷达记录变化。",
         "A skill map of 5 CASEL competencies × 34 social skills × 7 context types decides what you're served next, and a radar tracks the change.",

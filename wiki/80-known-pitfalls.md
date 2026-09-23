@@ -90,6 +90,12 @@
 
 ## 构建 / 部署
 
+### 地域分流短域名不保留深链接
+- **现象：** `https://socialcoach.aurax.live/arena?q=...` 返回 302，但跳转目标是 `https://socialcoach-ai.vercel.app/`，场景路径和查询丢失；官网「练这一场」会落到应用首页。
+- **原因：** Cloudflare 的两条地域分流 Single Redirects 均指向固定平台首页，原设计用于分享入口，不传递原请求的路径或查询参数。中国大陆分支跳往 ModelScope 创空间，也不能简单拼接 Next.js 的 `/arena` 路径。
+- **解决方案：** 官网首页继续使用品牌分享域名；场景目录和专题页等深链接直接使用 Vercel 正式域名，截图脚本默认同样使用 Vercel 域名。
+- **教训：** 验证分享域名时不能只测根路径的 200；有深链接 CTA 时要实测带路径和查询参数的最终落点。
+
 ### GitHub Pages 返回 HTTP 的 `base_url`
 - **现象：** 官网通过 HTTPS 正常打开，GitHub Pages 的构建步骤却输出 `http://tianfuwang.tech/SocialCoach`；线上 HTML 的 canonical / hreflang 被 Pages 改写为 HTTPS，而 sitemap、OG URL 和 JSON-LD 仍是 HTTP。
 - **原因：** 仓库 Pages 的 `https_enforced` 为 `false`，`actions/configure-pages` 返回 HTTP `base_url`。尝试通过 Pages API 开启强制 HTTPS 时返回「The certificate does not exist yet」，因此不能依赖该设置来修正构建地址。

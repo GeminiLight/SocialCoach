@@ -28,15 +28,19 @@ open site/dist/index.html          # 或 npx serve site/dist
 
 ## 产品截图
 
-三处截图位，文件存在才渲染，不存在就退回图标或雷达（不出现占位框）。命名沿用 `marketing/03-asset-plan.md`：
+首屏及四步流程的截图位，文件存在才渲染，不存在就退回图标或雷达（不出现占位框）：
 
 | 文件 | 出现位置 |
 |---|---|
 | `screenshot-01-home-{zh,en}.png` | 首屏手机框，叠在淡化的雷达上 |
+| `screenshot-04-arena-{zh,en}.png` | 「选一场对话」右侧：真实场景目录 |
 | `screenshot-02-pushback-{zh,en}.png` | 「对方会反驳」一步右侧 |
 | `screenshot-03-evidence-debrief-{zh,en}.png` | 「复盘先引用你的原话」一步右侧；同时次要 CTA 变成「先看一次真实复盘」 |
+| `screenshot-05-next-{zh,en}.png` | 「下一次练什么」右侧：今日推荐与理由 |
 
-重拍：`node site/scripts/screenshots.mjs --lang=zh`（再跑一次 `--lang=en`）。脚本用 DevTools 协议驱动本机 Chrome，对 `--base`（默认线上正式版）种一个演示档案，走首页 → 对练两轮 → 复盘，输出到 `docs/screenshots/`（全页原图在 `raw/`，不入库）。复盘取滚到「可以更好的」那一帧（脚本里叫 `03b`），把它改名为 `screenshot-03-evidence-debrief-*.png`，再把三张拷到 `assets/`。每跑一次约四五次模型调用，演示名字和台词写在脚本顶部。
+重拍场景目录：`node site/scripts/screenshots.mjs --arena-only --lang=zh`（英文用 `--lang=en`），不调用模型。重拍今日推荐：`--home-only`，会调用一次排程模型。完整流程仍用 `node site/scripts/screenshots.mjs --lang=zh`（再跑一次英文）。脚本用 DevTools 协议驱动本机 Chrome，默认对 Vercel 正式应用种一个演示档案，输出到 `docs/screenshots/`（全页原图在 `raw/`，不入库）；官网图片再拷到 `site/assets/`。
+
+`site.appUrl` 是按地域分流的分享入口，适合首页按钮；该 302 跳转不保留子路径和查询。场景目录及专题页的深链接因此使用 `site.appDeepUrl` 直达 Vercel，保证 `/arena?q=...` 能打开对应场景。
 
 ## 边界
 

@@ -1,7 +1,9 @@
-// Shoots the three product screenshots against a live deployment, phone-sized
+// Captures real product screens against a live deployment, phone-sized
 // (390×844 @3x = 1170×2532), light theme, driving Chrome over the DevTools protocol.
 //
-//   node site/scripts/screenshots.mjs [--base=https://socialcoach.aurax.live] [--lang=zh] [--out=docs/screenshots]
+//   node site/scripts/screenshots.mjs [--base=https://socialcoach-ai.vercel.app] [--lang=zh] [--out=docs/screenshots]
+//   node site/scripts/screenshots.mjs --arena-only --lang=zh --out=docs/screenshots
+//   node site/scripts/screenshots.mjs --home-only --lang=zh --out=docs/screenshots
 //
 // Flow: seed a demo profile → home (today's pick + "why this one") → start →
 // briefing → chat: one soft reply, the character pushes back → one clear
@@ -13,7 +15,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const opt = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v = "true"] = a.replace(/^--/, "").split("="); return [k, v]; }));
-const BASE = (opt.base || "https://socialcoach.aurax.live").replace(/\/$/, "");
+const BASE = (opt.base || "https://socialcoach-ai.vercel.app").replace(/\/$/, "");
 const LANG = opt.lang || "zh";
 const OUT = opt.out || "docs/screenshots";
 const CHROME = process.env.CHROME || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
@@ -162,10 +164,19 @@ try {
   await goto(`${BASE}/onboarding`);
   await evaluate(`localStorage.setItem("socialcoach.v1", ${JSON.stringify(JSON.stringify({ state: { profile, proficiency }, version: 0 }))}); "ok"`);
 
+  if (opt["arena-only"]) {
+    // The catalogue is public product UI; this path does not call a model.
+    await goto(`${BASE}/arena`);
+    await waitFor(`document.querySelector("#catalog-title") && document.querySelectorAll("#catalog-title + div").length`, "scenario catalogue", 30000);
+    await ev(`(() => { document.querySelector("#catalog-title").scrollIntoView({block:"start"}); window.scrollBy(0,-24); return true; })()`);
+    await sleep(700);
+    await shot(`screenshot-04-arena-${LANG}`);
+    await shot(`screenshot-04-arena-${LANG}`, { full: true });
+  } else {
   // 01 · home: today's pick, reason expanded.
   await goto(`${BASE}/`);
   await waitFor(`$("button", ${JSON.stringify(S.start)})`, "today card", 240000);
-  for (let i = 0; i < 3 && !(await ev(`body().includes(${JSON.stringify(S.wantTitle)})`)); i++) {
+  for (let i = 0; !opt["home-only"] && i < 3 && !(await ev(`body().includes(${JSON.stringify(S.wantTitle)})`)); i++) {
     log("today's pick is not the overtime scene; asking for another");
     const before = await ev(`body()`);
     if (!(await click(`(${JSON.stringify(S.another)}).map(t => $("button", t)).find(Boolean)`))) break;
@@ -176,9 +187,15 @@ try {
   await sleep(900);
   await evaluate(`window.scrollTo(0, 0); "ok"`);
   await sleep(300);
+
+  if (opt["home-only"]) {
+    await ev(`(() => { document.querySelector(".today-feature").scrollIntoView({block:"start"}); window.scrollBy(0,-24); return true; })()`);
+    await sleep(500);
+    await shot(`screenshot-05-next-${LANG}`);
+    await shot(`screenshot-05-next-${LANG}`, { full: true });
+  } else {
   await shot(`screenshot-01-home-${LANG}`);
   await shot(`screenshot-01-home-${LANG}`, { full: true });
-
   // Start → briefing → enter.
   await click(`$("button", ${JSON.stringify(S.start)})`);
   await waitFor(`location.pathname.startsWith("/practice/")`, "practice route", 30000);
@@ -227,6 +244,8 @@ try {
   await sleep(500);
   await shot(`screenshot-03b-evidence-scrolled-${LANG}`);
   log("done. practice url:", await ev(`location.href`));
+  }
+  }
 } catch (e) {
   console.error("FAILED:", e.message);
   try { await shot(`failure-${LANG}`); await shot(`failure-${LANG}`, { full: true }); } catch {}

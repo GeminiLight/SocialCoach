@@ -42,7 +42,7 @@ const pairUrls = (p) => p.guide
 
 // Optional real-product screenshots. Named per marketing/03-asset-plan.md; the
 // block only renders when the file exists, so nothing ships as a placeholder.
-const SHOT_NAMES = { 1: "screenshot-01-home", 2: "screenshot-02-pushback", 3: "screenshot-03-evidence-debrief" };
+const SHOT_NAMES = { 1: "screenshot-01-home", 2: "screenshot-02-pushback", 3: "screenshot-03-evidence-debrief", 4: "screenshot-04-arena", 5: "screenshot-05-next" };
 const shot = (n, lang) => {
   const file = `${SHOT_NAMES[n]}-${lang}.png`;
   return existsSync(join(here, "assets", file)) ? `assets/${file}` : null;
@@ -381,8 +381,8 @@ html:not([data-theme]) .theme .i-auto,html[data-theme="light"] .theme .i-sun,htm
 .step .art{grid-column:2;display:flex;justify-content:flex-start}
 .step .glyph{width:96px;height:96px;border-radius:var(--radius);background:var(--paper-deep);border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-2)}
 .step .glyph .icon{width:44px;height:44px}
-.step .phone{width:200px;height:300px;aspect-ratio:auto;padding:6px 6px 0;border-radius:26px 26px 0 0;border-bottom:0;overflow:hidden;-webkit-mask-image:linear-gradient(#000 62%,transparent);mask-image:linear-gradient(#000 62%,transparent);box-shadow:none}.step .phone img{border-radius:20px 20px 0 0;height:auto}.step .phone::after{width:38%;height:14px;top:6px;border-radius:0 0 9px 9px}
-@media (min-width:64rem){.step{grid-template-columns:3.5rem 1fr 240px;column-gap:2rem;align-items:start}.step .art{grid-column:3;grid-row:1;justify-content:flex-end}.step .phone{width:220px;height:320px}}
+.step .phone{width:min(240px,62vw);height:340px;aspect-ratio:auto;padding:6px 6px 0;border-radius:26px 26px 0 0;border-bottom:0;overflow:hidden;-webkit-mask-image:linear-gradient(#000 68%,transparent);mask-image:linear-gradient(#000 68%,transparent);box-shadow:none}.step .phone a{display:block;width:100%;height:100%}.step .phone img{border-radius:20px 20px 0 0;height:auto}.step .phone::after{width:38%;height:14px;top:6px;border-radius:0 0 9px 9px}
+@media (min-width:64rem){.step{grid-template-columns:3.5rem 1fr 280px;column-gap:2rem;align-items:start}.step .art{grid-column:3;grid-row:1;justify-content:flex-end}.step .phone{width:260px;height:380px}}
 
 /* trust */
 .learning-note{margin-top:1.5rem;color:var(--ink-2);max-width:var(--measure)}
@@ -664,7 +664,7 @@ const marqueeHtml = (p) => {
   const row = (items, rev) => `<div class="track${rev ? " rev" : ""}" style="--dur:${Math.round(items.length * 3.4)}s"><ul class="row">${items.map(chip).join("")}</ul><ul class="row" aria-hidden="true">${items.map(chip).join("")}</ul></div>`;
   const eyebrow = pick(marquee.eyebrow, l).replace("{n}", SCENARIOS.length).replace("{c}", contexts.size);
   return `<section class="marquee" aria-label="${esc(pick(marquee.aria, l))}">
-<div class="wrap marquee-head"><p class="eyebrow">${esc(eyebrow)}</p><a href="${site.appUrl}/arena">${esc(pick(marquee.all, l))} ${arrow}</a></div>
+<div class="wrap marquee-head"><p class="eyebrow">${esc(eyebrow)}</p><a href="${site.appDeepUrl}/arena">${esc(pick(marquee.all, l))} ${arrow}</a></div>
 <div class="viewport">${row(rows[0], false)}${row(rows[1], true)}</div>
 </section>`;
 };
@@ -691,8 +691,7 @@ const gapHtml = (p) => {
 
 const howHtml = (p) => {
   const l = p.lang;
-  const s2 = shot(2, l);
-  const s3 = shot(3, l);
+  const stepShots = { choose: shot(4, l), pushback: shot(2, l), debrief: shot(3, l), next: shot(5, l) };
   return `<section class="section" id="how">
 <div class="wrap">
 <div class="section-head reveal">
@@ -701,9 +700,9 @@ const howHtml = (p) => {
 </div>
 <ol class="steps">${how.steps
     .map((s, i) => {
-      const img = s.id === "debrief" ? s3 : s.id === "pushback" ? s2 : null;
+      const img = stepShots[s.id] || null;
       const art = img
-        ? `<figure class="phone"><img src="${p.rel}${img}" alt="${esc(pick(s.screenshotAlt, l))}" width="1170" height="2532" loading="lazy"></figure>`
+        ? `<figure class="phone"><a href="${p.rel}${img}" target="_blank" rel="noopener" aria-label="${esc(pick(how.openScreenshot, l))}：${esc(pick(s.screenshotAlt, l))}"><img src="${p.rel}${img}" alt="${esc(pick(s.screenshotAlt, l))}" width="1170" height="2532" loading="lazy"></a></figure>`
         : `<div class="glyph">${icon(s.icon, 44)}</div>`;
       return `<li class="step reveal"${s.id ? ` id="${s.id}"` : ""}>
 <span class="num" aria-hidden="true">0${i + 1}</span>
@@ -755,7 +754,7 @@ const guidePage = (p) => {
   const g = p.guide;
   const s = guideScenarios.get(g.id);
   const corpusUrl = `${site.repoUrl}/blob/main/app/src/data/corpus/${g.corpusFile}`;
-  const practiceUrl = `${site.appUrl}/arena?q=${encodeURIComponent(s.title.en)}`;
+  const practiceUrl = `${site.appDeepUrl}/arena?q=${encodeURIComponent(s.title.en)}`;
   return `<!doctype html>
 <html lang="${p.htmlLang}">
 <head>
