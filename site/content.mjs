@@ -42,6 +42,7 @@ export const nav = {
   faq: L("常见问题", "FAQ"),
   research: L("论文", "Paper"),
   cta: L("练一场对话", "Rehearse your conversation"),
+  ctaShort: L("开始练习", "Practice"),
   langAria: L("语言", "Language"),
   themeAria: L("切换外观", "Toggle appearance"),
   themeNames: L(["跟随系统", "浅色", "深色"], ["System", "Light", "Dark"]),

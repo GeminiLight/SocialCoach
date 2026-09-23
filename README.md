@@ -32,6 +32,8 @@ A conversation with your manager. A boundary with a friend. A disagreement at ho
 | Work through conflict | Sharing responsibilities with a partner or discussing career choices with family |
 | Connect with people | Welcoming a new colleague, supporting a friend, or joining a conversation |
 
+Preview five bilingual practice scenarios: [asking for a raise](https://tianfuwang.tech/SocialCoach/en/guides/salary-raise/), [declining extra hours](https://tianfuwang.tech/SocialCoach/en/guides/declining-extra-hours/), [being called out in a meeting](https://tianfuwang.tech/SocialCoach/en/guides/meeting-tension/), [sharing chores with a partner](https://tianfuwang.tech/SocialCoach/en/guides/spouse-chores/), and [asking a friend to repay a loan](https://tianfuwang.tech/SocialCoach/en/guides/friend-borrowed-money/). Each preview leads to the corresponding role-play in the app.
+
 Choose from **46 scenarios across 7 areas of life**, follow a personalized recommendation, or describe your own situation. The interface and practice content are available in **English and Simplified Chinese**.
 
 ## Social skills and social and emotional learning (SEL)

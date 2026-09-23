@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync, rmSyn
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { pick, site, meta, nav, hero, marquee, gap, how, learning, trust, privacy, faq, research, footer } from "./content.mjs";
+import { guides, guideCopy } from "./guides.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
@@ -25,6 +26,19 @@ const pages = [
   { lang: "en", htmlLang: "en", dir: "en", rel: "../", url: `${SITE_URL}/en/`, other: "../" },
 ];
 const urlOf = (lang) => pages.find((p) => p.lang === lang).url;
+const guideUrl = (id, lang) => `${SITE_URL}/${lang === "en" ? "en/" : ""}guides/${id}/`;
+const guidePages = guides.flatMap((guide) => ["zh", "en"].map((lang) => ({
+  lang, htmlLang: lang === "zh" ? "zh-CN" : "en", guide,
+  dir: `${lang === "en" ? "en/" : ""}guides/${guide.id}`,
+  rel: lang === "en" ? "../../../" : "../../",
+  url: guideUrl(guide.id, lang),
+  other: guideUrl(guide.id, lang === "zh" ? "en" : "zh"),
+  homeUrl: urlOf(lang),
+})));
+const allPages = [...pages, ...guidePages];
+const pairUrls = (p) => p.guide
+  ? { zh: guideUrl(p.guide.id, "zh"), en: guideUrl(p.guide.id, "en") }
+  : { zh: urlOf("zh"), en: urlOf("en") };
 
 // Optional real-product screenshots. Named per marketing/03-asset-plan.md; the
 // block only renders when the file exists, so nothing ships as a placeholder.
@@ -60,11 +74,19 @@ const SCENARIOS = readdirSync(corpusDir)
         const id = b.match(/^\s*id: "([^"]+)"/)?.[1];
         const t = b.match(/\n\s*title: L\("((?:[^"\\]|\\.)*)", "((?:[^"\\]|\\.)*)"\)/);
         const context = b.match(/\n\s*context: "([a-z-]+)"/)?.[1];
-        return id && t && context ? { id, title: { zh: t[1], en: t[2] }, context } : null;
+        const hook = b.match(/\n\s*hook: L\("((?:[^"\\]|\\.)*)", "((?:[^"\\]|\\.)*)"\)/);
+        const source = b.match(/\n\s*source: "([^"]+)"/)?.[1];
+        return id && t && hook && context && source ? { id, file: f, title: { zh: t[1], en: t[2] }, hook: { zh: hook[1], en: hook[2] }, context, source } : null;
       })
       .filter(Boolean),
   );
 if (SCENARIOS.length < 20) console.warn(`warn: only ${SCENARIOS.length} scenarios parsed from the corpus`);
+const guideScenarios = new Map(guides.map((g) => {
+  const scenario = SCENARIOS.find((s) => s.id === g.id);
+  if (!scenario) throw new Error(`Guide ${g.id} has no matching source-backed scenario`);
+  if (scenario.file !== g.corpusFile) throw new Error(`Guide ${g.id} points to ${g.corpusFile}, but lives in ${scenario.file}`);
+  return [g.id, scenario];
+}));
 
 /* ---------------------------------- SVG ---------------------------------- */
 
@@ -264,6 +286,8 @@ html.js .reveal[data-d="1"]{transition-delay:.08s}html.js .reveal[data-d="2"]{tr
 .theme .icon{width:18px;height:18px;display:none}
 html:not([data-theme]) .theme .i-auto,html[data-theme="light"] .theme .i-sun,html[data-theme="dark"] .theme .i-moon{display:block}
 @media (max-width:40rem){.nav .wrap{gap:.5rem;min-height:56px}.brand .word,.brand .zh{display:none}.nav .btn-sm{padding:.5rem .8rem;font-size:.88rem;white-space:nowrap}.seg .icon{display:none}.seg a{padding:.4rem .5rem}}
+.nav .btn-sm .short{display:none}
+@media (max-width:40rem){.nav .btn-sm .long{display:none}.nav .btn-sm .short{display:inline}}
 @media (min-width:64rem){.nav-links{display:flex}}
 
 /* buttons */
@@ -384,6 +408,30 @@ html:not([data-theme]) .theme .i-auto,html[data-theme="light"] .theme .i-sun,htm
 .card h3{font-size:1.15rem;margin-bottom:.6rem}
 .card p{color:var(--ink-2);font-size:1rem}
 
+/* public practice previews */
+.guide-card{display:block;text-decoration:none}
+.guide-card .guide-context{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;margin-bottom:.7rem}
+.guide-card .guide-link{display:inline-flex;gap:.4rem;align-items:center;color:var(--accent-deep);font-weight:600;font-size:.92rem;margin-top:1rem}
+.guide-hero{padding:clamp(52px,7vw,90px) 0 clamp(35px,5vw,64px)}
+.guide-hero h1{font-size:clamp(2.1rem,4.8vw,3.9rem);max-width:21ch;margin:.65rem 0 1.2rem}
+.guide-hero .lead{max-width:67ch}
+.guide-meta{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;color:var(--ink-3);font-size:.9rem;margin-bottom:1.5rem}
+.guide-layout{display:grid;gap:2rem;padding-bottom:clamp(56px,8vw,100px)}
+@media (min-width:64rem){.guide-layout{grid-template-columns:minmax(0,1.65fr) minmax(240px,.75fr);gap:5rem}}
+.guide-article{max-width:68ch}
+.guide-article section{padding:1.7rem 0;border-top:1px solid var(--line)}
+.guide-article section:last-child{border-bottom:1px solid var(--line)}
+.guide-article h2{font-size:1.4rem;margin-bottom:.7rem}
+.guide-article p{color:var(--ink-2)}
+.guide-article ol{padding-left:1.5rem;margin:.8rem 0 0;color:var(--ink-2)}
+.guide-article li{padding-left:.25rem;margin:.4rem 0}
+.guide-side{align-self:start;padding:1.5rem;background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+.guide-side p{color:var(--ink-2);font-size:.94rem;margin:1rem 0}
+.guide-side .btn{margin-top:.6rem}
+.guide-source{margin-top:1.2rem;padding:1.2rem;background:var(--paper-deep);border:1px solid var(--line);border-radius:var(--radius-sm);font-size:.92rem;color:var(--ink-2)}
+.guide-source p+p{margin-top:.5rem}
+.guide-source a{text-underline-offset:.2em}
+
 /* faq */
 .faq{display:grid;gap:0 3rem}
 @media (min-width:64rem){.faq{grid-template-columns:1fr 1fr}}
@@ -441,6 +489,17 @@ pre{margin:0;padding:1rem 1.1rem;background:var(--card);border:1px solid var(--l
 
 const jsonLd = (p) => {
   const l = p.lang;
+  if (p.guide) return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${p.url}#webpage`,
+    url: p.url,
+    name: pick(p.guide.title, l),
+    description: pick(p.guide.description, l),
+    inLanguage: p.htmlLang,
+    isPartOf: { "@id": `${SITE_URL}/#site` },
+    about: { "@id": `${SITE_URL}/#app` },
+  });
   const article = {
     "@type": "ScholarlyArticle",
     "@id": `${site.arxivUrl}#article`,
@@ -485,6 +544,9 @@ const jsonLd = (p) => {
 
 const head = (p) => {
   const l = p.lang;
+  const title = p.guide ? `${pick(p.guide.title, l)} | SocialCoach` : pick(meta.title, l);
+  const description = p.guide ? pick(p.guide.description, l) : pick(meta.description, l);
+  const alternate = pairUrls(p);
   const og = `${SITE_URL}/assets/og-${l}.png`;
   const hasOg = existsSync(join(here, "assets", `og-${l}.png`));
   const citation = [
@@ -496,26 +558,26 @@ const head = (p) => {
   ].join("\n");
   return `<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(pick(meta.title, l))}</title>
-<meta name="description" content="${esc(pick(meta.description, l))}">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${p.url}">
-<link rel="alternate" hreflang="zh-CN" href="${urlOf("zh")}">
-<link rel="alternate" hreflang="en" href="${urlOf("en")}">
-<link rel="alternate" hreflang="x-default" href="${urlOf("zh")}">
+<link rel="alternate" hreflang="zh-CN" href="${alternate.zh}">
+<link rel="alternate" hreflang="en" href="${alternate.en}">
+<link rel="alternate" hreflang="x-default" href="${alternate.zh}">
 <link rel="icon" href="${p.rel}assets/icon.svg" type="image/svg+xml">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf6f1">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#211c18">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SocialCoach">
-<meta property="og:title" content="${esc(pick(meta.title, l))}">
-<meta property="og:description" content="${esc(pick(meta.description, l))}">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${p.url}">
 <meta property="og:locale" content="${l === "zh" ? "zh_CN" : "en_US"}">
 <meta property="og:locale:alternate" content="${l === "zh" ? "en_US" : "zh_CN"}">
 ${hasOg ? `<meta property="og:image" content="${og}">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="${og}">` : `<meta name="twitter:card" content="summary">`}
-<meta name="twitter:title" content="${esc(pick(meta.title, l))}">
-<meta name="twitter:description" content="${esc(pick(meta.description, l))}">
-${citation}
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}">
+${p.guide ? "" : citation}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
@@ -525,28 +587,30 @@ ${citation}
 
 const navHtml = (p) => {
   const l = p.lang;
+  const home = p.homeUrl || p.rel || "./";
+  const section = p.guide ? p.homeUrl : "";
+  const self = p.guide ? p.url : (p.rel || "./");
   return `<header class="nav">
 <div class="wrap">
-<a class="brand" href="${p.rel || "./"}" aria-label="SocialCoach">
+<a class="brand" href="${home}" aria-label="SocialCoach">
 ${mark(30, "m-nav")}
 <span><span class="word">SocialCoach</span>${l === "zh" ? '<span class="zh" style="display:block">情商练习场</span>' : ""}</span>
 </a>
 <nav class="nav-links" aria-label="${l === "zh" ? "页面导航" : "Site"}">
-<a href="#how">${esc(pick(nav.how, l))}</a>
-<a href="#learning">${esc(pick(nav.learning, l))}</a>
-<a href="#trust">${esc(pick(nav.trust, l))}</a>
-<a href="#privacy">${esc(pick(nav.privacy, l))}</a>
-<a href="#faq">${esc(pick(nav.faq, l))}</a>
-<a href="#research">${esc(pick(nav.research, l))}</a>
+<a href="${section}#how">${esc(pick(nav.how, l))}</a>
+<a href="${section}#learning">${esc(pick(nav.learning, l))}</a>
+<a href="${section}#guides">${esc(pick(guideCopy.eyebrow, l))}</a>
+<a href="${section}#trust">${esc(pick(nav.trust, l))}</a>
+<a href="${section}#research">${esc(pick(nav.research, l))}</a>
 </nav>
 <div class="ctrl">
 <nav class="seg" aria-label="${esc(pick(nav.langAria, l))}">
 ${icon("globe", 15)}
-<a href="${l === "zh" ? (p.rel || "./") : p.other}" lang="zh-CN" hreflang="zh-CN"${l === "zh" ? ' class="on" aria-current="page"' : ""}>中</a>
-<a href="${l === "en" ? "./" : p.other}" lang="en" hreflang="en"${l === "en" ? ' class="on" aria-current="page"' : ""}>EN</a>
+<a href="${l === "zh" ? self : p.other}" lang="zh-CN" hreflang="zh-CN"${l === "zh" ? ' class="on" aria-current="page"' : ""}>中</a>
+<a href="${l === "en" ? self : p.other}" lang="en" hreflang="en"${l === "en" ? ' class="on" aria-current="page"' : ""}>EN</a>
 </nav>
 <button class="theme" type="button" data-theme-toggle aria-label="${esc(pick(nav.themeAria, l))}" data-names="${esc(pick(nav.themeNames, l).join("|"))}">${icon("auto", 18).replace('class="icon"', 'class="icon i-auto"')}${icon("sun", 18).replace('class="icon"', 'class="icon i-sun"')}${icon("moon", 18).replace('class="icon"', 'class="icon i-moon"')}</button>
-<a class="btn btn-primary btn-sm" href="${site.appUrl}">${esc(pick(nav.cta, l))}</a>
+<a class="btn btn-primary btn-sm" href="${site.appUrl}" aria-label="${esc(pick(nav.cta, l))}"><span class="long">${esc(pick(nav.cta, l))}</span><span class="short">${esc(pick(nav.ctaShort, l))}</span></a>
 </div>
 </div>
 </header>`;
@@ -668,6 +732,65 @@ const learningHtml = (p) => {
 </section>`;
 };
 
+const guidesHtml = (p, excludeId = null) => {
+  const l = p.lang;
+  const items = guides.filter((g) => g.id !== excludeId);
+  return `<section class="section guide-more" id="guides">
+<div class="wrap">
+<div class="section-head">
+<p class="eyebrow">${esc(pick(guideCopy.eyebrow, l))}</p>
+<h2>${esc(pick(excludeId ? guideCopy.more : guideCopy.indexTitle, l))}</h2>
+${excludeId ? "" : `<p class="lead">${esc(pick(guideCopy.indexLead, l))}</p>`}
+</div>
+<div class="cards">${items.map((g) => {
+    const s = guideScenarios.get(g.id);
+    return `<a class="card guide-card" href="${guideUrl(g.id, l)}"><p class="guide-context">${esc(pick(CONTEXT_NAMES[s.context], l))}</p><h3>${esc(pick(g.title, l))}</h3><p>${esc(pick(s.hook, l))}</p><span class="guide-link">${esc(pick(guideCopy.read, l))} ${arrow}</span></a>`;
+  }).join("")}</div>
+</div>
+</section>`;
+};
+
+const guidePage = (p) => {
+  const l = p.lang;
+  const g = p.guide;
+  const s = guideScenarios.get(g.id);
+  const corpusUrl = `${site.repoUrl}/blob/main/app/src/data/corpus/${g.corpusFile}`;
+  const practiceUrl = `${site.appUrl}/arena?q=${encodeURIComponent(s.title.en)}`;
+  return `<!doctype html>
+<html lang="${p.htmlLang}">
+<head>
+<script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("sc-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+${head(p)}
+</head>
+<body>
+<a class="skip" href="#main">${esc(pick(nav.skip, l))}</a>
+${navHtml(p)}
+<main id="main">
+<header class="guide-hero"><div class="wrap">
+<p class="eyebrow">${esc(pick(guideCopy.eyebrow, l))}</p>
+<h1>${esc(pick(g.title, l))}</h1>
+<div class="guide-meta"><span>${esc(pick(CONTEXT_NAMES[s.context], l))}</span><span>${esc(pick(guideCopy.fictional, l))}</span></div>
+<p class="lead">${esc(pick(g.description, l))}</p>
+<div class="ctas"><a class="btn btn-primary" href="${practiceUrl}">${esc(pick(guideCopy.start, l))} ${arrow}</a><a class="btn btn-ghost" href="${p.homeUrl}#guides">${esc(pick(guideCopy.back, l))}</a></div>
+</div></header>
+<div class="wrap guide-layout">
+<article class="guide-article">
+<section><h2>${esc(pick(guideCopy.situation, l))}</h2><p>${esc(pick(s.hook, l))}</p></section>
+<section><h2>${esc(pick(guideCopy.pressure, l))}</h2><p>${esc(pick(g.pressure, l))}</p></section>
+<section><h2>${esc(pick(guideCopy.goal, l))}</h2><ol>${g.goals.map((goal) => `<li>${esc(pick(goal, l))}</li>`).join("")}</ol></section>
+<section><h2>${esc(pick(guideCopy.reflect, l))}</h2><p>${esc(pick(g.reflect, l))}</p></section>
+<section><h2>${esc(pick(guideCopy.process, l))}</h2><p>${esc(pick(guideCopy.processBody, l))}</p></section>
+<div class="guide-source"><p><strong>${esc(pick(guideCopy.source, l))}:</strong> ${esc(s.source)}</p><p>${esc(pick(guideCopy.sourceNote, l))}</p><p><a href="${corpusUrl}">${esc(pick(guideCopy.corpus, l))} ${arrow}</a></p></div>
+</article>
+<aside class="guide-side"><p class="eyebrow">${esc(pick(guideCopy.scenario, l))}</p><h2>${esc(pick(s.title, l))}</h2><p>${esc(pick(s.hook, l))}</p><a class="btn btn-primary" href="${practiceUrl}">${esc(pick(guideCopy.start, l))} ${arrow}</a></aside>
+</div>
+${guidesHtml(p, g.id)}
+</main>
+${footerHtml(p)}
+</body>
+</html>`;
+};
+
 const trustHtml = (p) => {
   const l = p.lang;
   return `<section class="section" id="trust">
@@ -761,7 +884,7 @@ const footerHtml = (p) => {
 <div class="wrap">
 <div class="top">
 <div>
-<a class="brand" href="${p.rel || "./"}" aria-label="SocialCoach">${mark(30, "m-foot")}<span><span class="word">SocialCoach</span>${l === "zh" ? '<span class="zh" style="display:block">情商练习场</span>' : ""}</span></a>
+<a class="brand" href="${p.homeUrl || p.rel || "./"}" aria-label="SocialCoach">${mark(30, "m-foot")}<span><span class="word">SocialCoach</span>${l === "zh" ? '<span class="zh" style="display:block">情商练习场</span>' : ""}</span></a>
 <p class="tag">${esc(pick(footer.tagline, l))}</p>
 </div>
 <nav aria-label="${l === "zh" ? "页脚链接" : "Footer"}">
@@ -797,6 +920,7 @@ ${marqueeHtml(p)}
 ${gapHtml(p)}
 ${howHtml(p)}
 ${learningHtml(p)}
+${guidesHtml(p)}
 ${trustHtml(p)}
 ${privacyHtml(p)}
 ${faqHtml(p)}
@@ -815,6 +939,10 @@ mkdirSync(join(out, "assets"), { recursive: true });
 mkdirSync(join(out, "paper"), { recursive: true });
 
 for (const p of pages) writeFileSync(join(out, p.dir, "index.html"), page(p));
+for (const p of guidePages) {
+  mkdirSync(join(out, p.dir), { recursive: true });
+  writeFileSync(join(out, p.dir, "index.html"), guidePage(p));
+}
 
 for (const f of readdirSync(join(here, "assets"))) copyFileSync(join(here, "assets", f), join(out, "assets", f));
 
@@ -829,15 +957,15 @@ writeFileSync(
   `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`,
 );
 
-const alt = pages
-  .map((q) => `    <xhtml:link rel="alternate" hreflang="${q.htmlLang}" href="${q.url}"/>`)
-  .concat([`    <xhtml:link rel="alternate" hreflang="x-default" href="${urlOf("zh")}"/>`])
-  .join("\n");
 writeFileSync(
   join(out, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${pages.map((q) => `  <url>\n    <loc>${q.url}</loc>\n${alt}\n  </url>`).join("\n")}
+${allPages.map((q) => {
+    const pair = pairUrls(q);
+    const alt = [`    <xhtml:link rel="alternate" hreflang="zh-CN" href="${pair.zh}"/>`, `    <xhtml:link rel="alternate" hreflang="en" href="${pair.en}"/>`, `    <xhtml:link rel="alternate" hreflang="x-default" href="${pair.zh}"/>`].join("\n");
+    return `  <url>\n    <loc>${q.url}</loc>\n${alt}\n  </url>`;
+  }).join("\n")}
 </urlset>
 `,
 );
@@ -866,6 +994,10 @@ writeFileSync(
 - Site (en): ${urlOf("en")}
 - Code: ${site.repoUrl}
 
+## Practice scenarios
+
+${guides.map((g) => `- ${pick(g.title, "en")}: ${guideUrl(g.id, "en")} (中文: ${guideUrl(g.id, "zh")})`).join("\n")}
+
 ## Research
 
 - Paper: ${research.paperTitle}. arXiv:${site.arxivId} (cs.HC, 2026). ${site.arxivUrl}
@@ -875,7 +1007,7 @@ writeFileSync(
 
 writeFileSync(
   join(out, "404.html"),
-  `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>404 · SocialCoach</title><meta name="robots" content="noindex"><style>${css}</style></head><body><main class="wrap" style="padding:20vh 0"><p class="eyebrow">404</p><h1 style="font-size:2rem;margin:.5rem 0 1rem">这一页不存在。</h1><p class="lead">This page does not exist.</p><p style="margin-top:1.5rem"><a class="btn btn-ghost" href="/">SocialCoach</a></p></main></body></html>`,
+  `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>404 · SocialCoach</title><meta name="robots" content="noindex"><style>${css}</style></head><body><main class="wrap" style="padding:20vh 0"><p class="eyebrow">404</p><h1 style="font-size:2rem;margin:.5rem 0 1rem">这一页不存在。</h1><p class="lead">This page does not exist.</p><p style="margin-top:1.5rem"><a class="btn btn-ghost" href="${SITE_URL}/">SocialCoach</a></p></main></body></html>`,
 );
 
-console.log(`built → ${out}\n  ${urlOf("zh")}\n  ${urlOf("en")}`);
+console.log(`built ${allPages.length} pages → ${out}`);

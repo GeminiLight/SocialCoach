@@ -17,8 +17,8 @@
 - [ ] **34 个场景里只有 17 个有 `hidden`（底牌）。** 没有底牌的场景会跳过揭示屏，直接进报告——机制只在一半场景里生效。补另外 17 个属于扩语料，按项目约束需要用户点头
 
 - [x] 缺 `LICENSE` 文件。2026-09-09 用户选定 Apache-2.0，已加入官方许可全文及 README License 一节，注明第三方材料保留各自权利。
-- [ ] `app/` 的 8/8 页面路由为 `use client`，原始 HTML 缺少可读正文；官网 `site/` 已有可索引的双语产品与论文介绍，但语料落地页仍待建设。→ [12-stage-c.md](./12-stage-c.md)
-- [ ] 2026-09-23 SEO 复核：域名根目录的 `robots.txt` 仅指向个人站点 sitemap，该 sitemap 不含 SocialCoach；官网子路径的 sitemap 已有中英两页，但应在 Search Console 提交，或纳入根站点的 sitemap / robots，并用 Search Console 核对实际收录与搜索查询。
+- [ ] `app/` 的 8/8 页面路由为 `use client`，原始 HTML 缺少可读正文；官网 `site/` 已有可索引的双语产品与论文介绍，以及 5 个双语场景预览（共 12 页），完整语料落地页仍待建设。→ [12-stage-c.md](./12-stage-c.md)
+- [ ] 2026-09-23 SEO 复核：域名根目录的 `robots.txt` 仅指向个人站点 sitemap，该 sitemap 不含 SocialCoach；官网子路径 sitemap 已扩充至 12 页。个人站点 [PR #14](https://github.com/GeminiLight/geminilight.github.io/pull/14) 增加第二条 Sitemap 指令，但私有仓库 CI 因 GitHub 账户付款 / Actions 额度问题未启动，按该仓库规则暂不合并。之后仍需在 Search Console 核对实际收录与搜索查询。
 - [ ] 2026-09-23 HTTP 版官网仍返回 200。Pages API 开启 `https_enforced` 因证书不存在被拒绝；构建里的绝对 URL 已统一为 HTTPS，后续仍应在域名托管层配置 HTTP → HTTPS 重定向或修复 Pages 证书配置。
 - [ ] 2026-09-23 arXiv 摘要页与 v2 PDF 首页的作者顺序不一致；官网和 README 按 PDF 排列，论文提交者需核对上游元数据。→ [80-known-pitfalls.md](./80-known-pitfalls.md#arxiv-摘要页与-pdf-首页的作者顺序不同)
 - [ ] `docs/PRODUCT.md` 已被 [00-product-proposal.md](./00-product-proposal.md) 取代。保留作历史，但需在文件头加一行指向 wiki，避免 Agent 读到过时定位

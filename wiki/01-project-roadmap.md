@@ -49,7 +49,7 @@
 | B6 | LICENSE 文件与 README 章节 | ✅ | 2026-09-09 用户选定 Apache-2.0；根目录加入官方 LICENSE 全文，README 增加许可及第三方材料说明 |
 | B7 | Live 站点地址替换 README 占位符 | ✅ | 2026-09-21 README 入口统一为 `https://socialcoach.aurax.live`，已验证跳转至当前 Vercel 站点；保留 ModelScope 备用入口 |
 | B8 | wiki 文档体系 | 🚧 | 本次建立 |
-| B9 | 官网（`site/`：一页式双语静态站，首屏与末节都指向论文） | ✅ | 2026-09-08 上线 `https://tianfuwang.tech/SocialCoach/`（GitHub Pages，Actions 来源，账号自定义域）；含 JSON-LD / hreflang / sitemap / `llms.txt` / OG 图 / 真实截图；2026-09-23 补充 SEL 能力与个人对练边界 → [11-stage-b](./11-stage-b.md#b9-官网) |
+| B9 | 官网（`site/`：双语静态站，首页首屏与末节指向论文） | ✅ | 2026-09-08 上线 `https://tianfuwang.tech/SocialCoach/`（GitHub Pages，Actions 来源，账号自定义域）；含 JSON-LD / hreflang / sitemap / `llms.txt` / OG 图 / 真实截图；2026-09-23 补充 SEL 说明及五个双语场景练习预览 → [11-stage-b](./11-stage-b.md#b9-官网) |
 | B10 | ModelScope 公开体验入口 | ✅ | 2026-09-09 `GeminiLight/SocialCoach`；免费 CPU Docker 创空间，Apache-2.0；页面与线上对话 / 复盘流式验证通过 → [部署记录](./specs/spec-modelscope-deployment.md) |
 
 | B11 | 用户反馈 → 飞书 | ✅ | 双部署真实提交通过；2026-09-17 本人 Base 可管理权限已添加并读回确认 → [反馈方案](./archive/specs/spec-user-feedback.md) |
