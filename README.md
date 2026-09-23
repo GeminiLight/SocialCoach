@@ -211,6 +211,15 @@ Bug reports, translations, and contributions are welcome. For bugs, include repr
 
 For corpus contributions, start in [`app/src/data/corpus/`](app/src/data/corpus). Keep entries bilingual, provide a `source`, and label teaching examples. For development, read [`AGENTS.md`](AGENTS.md) and [`app/AGENTS.md`](app/AGENTS.md).
 
+## Star history
+
+<a href="https://www.star-history.com/?repos=GeminiLight%2FSocialCoach&amp;type=date&amp;legend=bottom-right">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=GeminiLight/SocialCoach&amp;type=date&amp;theme=dark&amp;legend=bottom-right">
+    <img src="https://api.star-history.com/chart?repos=GeminiLight/SocialCoach&amp;type=date&amp;legend=bottom-right" alt="GitHub star history for GeminiLight/SocialCoach" width="800">
+  </picture>
+</a>
+
 ## Friends
 
 [LinuxDo Community](https://linux.do) — a community for Linux, open source, and AI builders.

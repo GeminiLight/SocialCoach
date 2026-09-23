@@ -211,6 +211,15 @@ SocialCoach 基于 Wang 等人的论文 [*SocialCoach: Personalized Social Skill
 
 语料贡献从 [`app/src/data/corpus/`](app/src/data/corpus) 开始：内容保持中英双语，提供 `source`，并明确标注教学示例。参与开发前请阅读 [`AGENTS.md`](AGENTS.md) 与 [`app/AGENTS.md`](app/AGENTS.md)。
 
+## Star 趋势
+
+<a href="https://www.star-history.com/?repos=GeminiLight%2FSocialCoach&amp;type=date&amp;legend=bottom-right">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=GeminiLight/SocialCoach&amp;type=date&amp;theme=dark&amp;legend=bottom-right">
+    <img src="https://api.star-history.com/chart?repos=GeminiLight/SocialCoach&amp;type=date&amp;legend=bottom-right" alt="GeminiLight/SocialCoach 的 GitHub Star 趋势" width="800">
+  </picture>
+</a>
+
 ## 友链
 
 [LinuxDo 社区](https://linux.do) — 一个关于 Linux、开源与 AI 构建者的社区。
