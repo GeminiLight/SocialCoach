@@ -18,6 +18,9 @@
 
 - [x] 缺 `LICENSE` 文件。2026-09-09 用户选定 Apache-2.0，已加入官方许可全文及 README License 一节，注明第三方材料保留各自权利。
 - [ ] `app/` 的 8/8 页面路由为 `use client`，原始 HTML 缺少可读正文；官网 `site/` 已有可索引的双语产品与论文介绍，但语料落地页仍待建设。→ [12-stage-c.md](./12-stage-c.md)
+- [ ] 2026-09-23 SEO 复核：域名根目录的 `robots.txt` 仅指向个人站点 sitemap，该 sitemap 不含 SocialCoach；官网子路径的 sitemap 已有中英两页，但应在 Search Console 提交，或纳入根站点的 sitemap / robots，并用 Search Console 核对实际收录与搜索查询。
+- [ ] 2026-09-23 HTTP 版官网仍返回 200。Pages API 开启 `https_enforced` 因证书不存在被拒绝；构建里的绝对 URL 已统一为 HTTPS，后续仍应在域名托管层配置 HTTP → HTTPS 重定向或修复 Pages 证书配置。
+- [ ] 2026-09-23 arXiv 摘要页与 v2 PDF 首页的作者顺序不一致；官网和 README 按 PDF 排列，论文提交者需核对上游元数据。→ [80-known-pitfalls.md](./80-known-pitfalls.md#arxiv-摘要页与-pdf-首页的作者顺序不同)
 - [ ] `docs/PRODUCT.md` 已被 [00-product-proposal.md](./00-product-proposal.md) 取代。保留作历史，但需在文件头加一行指向 wiki，避免 Agent 读到过时定位
 - [ ] 无任何自动化测试。语料的类型正确性（`skills` / `context` / `competencies` 是否为合法 id）目前只靠 TS 编译和运行时校验
 - [x] 2026-09-09 `app/scripts/check-avatars.ts` 已同步新版 `portraitFor`，验证保存、改名稳定性与旧种子回退；全量 `tsc --noEmit` 通过。
@@ -26,7 +29,7 @@
 
 - [x] 官网上线（2026-09-08，`https://tianfuwang.tech/SocialCoach/`）。仍待决定：是否绑独立域名（官网主域 + 产品子域），以及 Pages 的 HTTPS 强制开关（当前 `https_enforced: false`）
 - [x] 产品截图放 `docs/screenshots/` 与 `site/assets/`，中英各三张（2026-09-08）
-- [x] 仓库 homepage 字段改为 `socialcoach-app.vercel.app`（2026-09-08）
+- [x] 仓库 homepage 字段 2026-09-08 指向当时的应用域名；2026-09-23 改为可抓取的双语官网 `https://tianfuwang.tech/SocialCoach/`，README 在线体验徽章仍直达应用。
 - [ ] 英文版官网的三张截图是英文界面，但演示对话里的学习者名字是 Sam；中文版是小周。若要统一，重跑 `site/scripts/screenshots.mjs` 改 `profile.name`
 - [ ] `/learn` 详情栏在条目短时下方仍有大片空白。真正的解法是填入相关内容（引用该理论的案例、可练这个技能的场景），属于功能而非打磨
 - [ ] 情境筛选 chip 用的是 `taxonomy` 里的 emoji `glyph`，与编辑感排版有张力，是否保留待定
