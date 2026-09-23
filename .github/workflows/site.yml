@@ -2,8 +2,8 @@
 #
 # One-time setup: Settings → Pages → Build and deployment → Source: "GitHub Actions".
 # No gh-pages branch is involved; the source stays on main next to the code.
-# On a custom domain, configure-pages reports it as base_url and the build picks
-# it up, so canonical / hreflang / sitemap URLs stay correct without edits.
+# On a custom domain, configure-pages reports base_url. Normalize its scheme to
+# HTTPS: Pages can report http even when the public site is served over HTTPS.
 
 name: site
 
@@ -53,9 +53,11 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
       - if: steps.check.outputs.enabled == 'true'
-        run: node site/build.mjs
+        run: |
+          site_base="$PAGES_BASE_URL"
+          SITE_URL="https://${site_base#*://}" node site/build.mjs
         env:
-          SITE_URL: ${{ steps.pages.outputs.base_url }}
+          PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
       - if: steps.check.outputs.enabled == 'true'
         uses: actions/upload-pages-artifact@v3
         with:

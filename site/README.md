@@ -19,7 +19,7 @@ open site/dist/index.html          # 或 npx serve site/dist
 
 ## 部署
 
-用 GitHub Pages 的 **GitHub Actions** 来源，不需要 `gh-pages` 分支：仓库 Settings → Pages → Source 选 "GitHub Actions"，之后每次改 `site/` 推送即发布。绑自有域名后 `configure-pages` 会把域名传给构建，canonical、hreflang、sitemap 自动跟随。
+用 GitHub Pages 的 **GitHub Actions** 来源，不需要 `gh-pages` 分支：仓库 Settings → Pages → Source 选 "GitHub Actions"，之后每次改 `site/` 推送即发布。绑自有域名后 `configure-pages` 会把域名传给构建；工作流统一把它转成 HTTPS，使 canonical、hreflang、sitemap、OG 和 JSON-LD 使用同一地址。
 
 本地构建默认以 `https://tianfuwang.tech/SocialCoach` 为站点地址，用 `SITE_URL=https://example.com node site/build.mjs` 覆盖。线上应用入口由 `content.mjs` 的 `site.appUrl` 配置。
 

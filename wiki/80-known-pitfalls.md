@@ -90,6 +90,12 @@
 
 ## 构建 / 部署
 
+### GitHub Pages 返回 HTTP 的 `base_url`
+- **现象：** 官网通过 HTTPS 正常打开，GitHub Pages 的构建步骤却输出 `http://tianfuwang.tech/SocialCoach`；线上 HTML 的 canonical / hreflang 被 Pages 改写为 HTTPS，而 sitemap、OG URL 和 JSON-LD 仍是 HTTP。
+- **原因：** 仓库 Pages 的 `https_enforced` 为 `false`，`actions/configure-pages` 返回 HTTP `base_url`。尝试通过 Pages API 开启强制 HTTPS 时返回「The certificate does not exist yet」，因此不能依赖该设置来修正构建地址。
+- **解决方案：** 站点工作流使用 Pages 返回的域名与路径，但在传给 `site/build.mjs` 前将协议统一为 HTTPS；发布后核对生成的 sitemap、OG 和 JSON-LD。
+- **教训：** 构建成功、页面可通过 HTTPS 访问，不代表生成的绝对 URL 一致；要检查线上最终产物，而不只看 canonical。
+
 ### ModelScope 通过 `su` 启动容器用户
 - **现象：** Docker 镜像构建成功，创空间却进入 `DeployFailed`；运行日志显示 `su next -c ...` 和 `This account is not available`（2026-09-09 实测）。
 - **原因：** Alpine 的 `adduser -S` 默认给系统用户设置不可登录的 shell；魔搭的启动包装器通过 `su` 执行命令，因此 Node 尚未启动就退出。
