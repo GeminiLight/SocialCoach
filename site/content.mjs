@@ -309,13 +309,14 @@ export const research = {
   eyebrow: L("研究", "Research"),
   title: L("这个产品来自一篇论文", "The paper behind the product"),
   paperTitle: "SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice",
+  // Follow the arXiv v2 PDF title page; the arXiv abstract metadata lists a different order.
   authors: [
     { name: "Tianfu Wang", aff: 1 },
     { name: "Max Xiong", aff: 2 },
+    { name: "Yuxuan Lei", aff: 3 },
     { name: "Jianxun Lian", aff: 4 },
     { name: "Hongyuan Zhu", aff: 3 },
     { name: "Zhengyu Hu", aff: 1 },
-    { name: "Yuxuan Lei", aff: 3 },
     { name: "Linxiao Gong", aff: 1 },
     { name: "Dapeng Hu", aff: 3 },
     { name: "Xiaofang Li", aff: 3 },
@@ -371,8 +372,8 @@ export const research = {
   copied: L("已复制", "Copied"),
   bibtex: `@article{wang2026socialcoach,
   title   = {SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice},
-  author  = {Wang, Tianfu and Xiong, Max and Lian, Jianxun and Zhu, Hongyuan and Hu, Zhengyu
-             and Lei, Yuxuan and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
+  author  = {Wang, Tianfu and Xiong, Max and Lei, Yuxuan and Lian, Jianxun and Zhu, Hongyuan
+             and Hu, Zhengyu and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
              and Yuan, Nicholas Jing and Zhang, Qi},
   journal = {arXiv preprint arXiv:2606.04155},
   year    = {2026}

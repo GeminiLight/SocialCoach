@@ -4,6 +4,14 @@
 
 > 单点问题记这里；同一模块连续 3+ 相关 bug 时新建 `81-postmortem-{topic}.md`。
 
+## 论文与对外资料
+
+### arXiv 摘要页与 PDF 首页的作者顺序不同
+- **现象：** arXiv:2606.04155v2 摘要页列出 Tianfu Wang、Max Xiong、Jianxun Lian、Hongyuan Zhu、Zhengyu Hu、Yuxuan Lei；同一版本 [PDF 首页](https://arxiv.org/pdf/2606.04155)及仓库 `docs/social-coach-paper.pdf` 列出 Tianfu Wang、Max Xiong、Yuxuan Lei、Jianxun Lian、Hongyuan Zhu、Zhengyu Hu。
+- **原因：** 提交元数据与论文正文未同步；具体由谁或何时改动未核实。
+- **解决方案：** 官网作者列表、JSON-LD、引文元数据及中英 README 的 BibTeX 均按 PDF 首页排列；arXiv 摘要页需由论文提交者另行核对更正。
+- **教训：** 对外引用论文前同时核对摘要页和当前 PDF 首页，遇到冲突要显式记录来源选择。
+
 ## API 集成
 
 ### 网关不支持 `output_config.format`

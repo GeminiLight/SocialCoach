@@ -193,8 +193,8 @@ SocialCoach 基于 Wang 等人的论文 [*SocialCoach: Personalized Social Skill
 ```bibtex
 @article{wang2026socialcoach,
   title   = {SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice},
-  author  = {Wang, Tianfu and Xiong, Max and Lian, Jianxun and Zhu, Hongyuan
-             and Hu, Zhengyu and Lei, Yuxuan and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
+  author  = {Wang, Tianfu and Xiong, Max and Lei, Yuxuan and Lian, Jianxun
+             and Zhu, Hongyuan and Hu, Zhengyu and Gong, Linxiao and Hu, Dapeng and Li, Xiaofang and Tsai, Peiting
              and Yuan, Nicholas Jing and Zhang, Qi},
   journal = {arXiv preprint arXiv:2606.04155},
   year    = {2026}
