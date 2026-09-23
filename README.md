@@ -15,6 +15,10 @@ Build social skills and learn to handle conflict through realistic role-play and
 
 [English](README.md) · [简体中文](README.zh-CN.md)
 
+https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
+
+<sub>55 seconds: the advice you already know, the moment you fold, and what practice changes.</sub>
+
 </div>
 
 ---
