@@ -17,7 +17,7 @@ const scenario = z.string().regex(/^[a-z0-9-]{1,80}$/);
 const outcome = z.enum(["success", "partial", "failure"]);
 const origin = z.enum(["scheduled", "arena", "rehearse"]);
 
-export const TASKS = ["schedule", "roleplay", "hint", "assess", "reflect", "rehearse", "pattern"] as const;
+export const TASKS = ["schedule", "roleplay", "hint", "assess", "reflect", "debrief-chat", "rehearse", "pattern"] as const;
 
 export const eventSchema = z.discriminatedUnion("name", [
   /**

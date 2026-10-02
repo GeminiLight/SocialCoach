@@ -1,0 +1,962 @@
+[
+  {
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 43,
+      "incomplete": 1,
+      "passes": 16,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 16,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">证据</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>参考依据</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p><span class=\"text-ink-2\">对等的自我暴露建立亲密</span><br>Arthur Aron et al. (1997) · The Experimental Generation of Interpersonal Closeness</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"text-ink-2\">对等的自我暴露建立亲密</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2) > .text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">证据</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>参考依据</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "lifecycle": {
+      "effectiveLaunch": {
+        "browserLaunched": true,
+        "engine": "chrome",
+        "launchHash": 11677035664275012000
+      },
+      "launched": false,
+      "relaunchedBrowser": false,
+      "restartedBackground": false,
+      "restoreStatus": "not_configured",
+      "reused": true,
+      "saveStatus": "not_attempted"
+    },
+    "url": "http://localhost:3107/practice/debrief-assistant-check",
+    "violations": []
+  },
+  {
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 43,
+      "incomplete": 1,
+      "passes": 16,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 16,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">证据</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>参考依据</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p><span class=\"text-ink-2\">对等的自我暴露建立亲密</span><br>Arthur Aron et al. (1997) · The Experimental Generation of Interpersonal Closeness</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"text-ink-2\">对等的自我暴露建立亲密</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2) > .text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">证据</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>参考依据</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "lifecycle": {
+      "effectiveLaunch": {
+        "browserLaunched": true,
+        "engine": "chrome",
+        "launchHash": 11677035664275012000
+      },
+      "launched": false,
+      "relaunchedBrowser": false,
+      "restartedBackground": false,
+      "restoreStatus": "not_configured",
+      "reused": true,
+      "saveStatus": "not_attempted"
+    },
+    "url": "http://localhost:3107/practice/debrief-assistant-check",
+    "violations": []
+  },
+  {
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 43,
+      "incomplete": 1,
+      "passes": 16,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 16,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">证据</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>参考依据</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p><span class=\"text-ink-2\">对等的自我暴露建立亲密</span><br>Arthur Aron et al. (1997) · The Experimental Generation of Interpersonal Closeness</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"text-ink-2\">对等的自我暴露建立亲密</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2) > .text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">证据</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>参考依据</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "lifecycle": {
+      "effectiveLaunch": {
+        "browserLaunched": true,
+        "engine": "chrome",
+        "launchHash": 11677035664275012000
+      },
+      "launched": false,
+      "relaunchedBrowser": false,
+      "restartedBackground": false,
+      "restoreStatus": "not_configured",
+      "reused": true,
+      "saveStatus": "not_attempted"
+    },
+    "url": "http://localhost:3107/practice/debrief-assistant-check",
+    "violations": []
+  },
+  {
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 43,
+      "incomplete": 1,
+      "passes": 16,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 16,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">证据</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>参考依据</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p><span class=\"text-ink-2\">对等的自我暴露建立亲密</span><br>Arthur Aron et al. (1997) · The Experimental Generation of Interpersonal Closeness</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"text-ink-2\">对等的自我暴露建立亲密</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2) > .text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">证据</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>参考依据</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "lifecycle": {
+      "effectiveLaunch": {
+        "browserLaunched": true,
+        "engine": "chrome",
+        "launchHash": 11677035664275012000
+      },
+      "launched": false,
+      "relaunchedBrowser": false,
+      "restartedBackground": false,
+      "restoreStatus": "not_configured",
+      "reused": true,
+      "saveStatus": "not_attempted"
+    },
+    "url": "http://localhost:3107/practice/debrief-assistant-check",
+    "violations": []
+  },
+  {
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 43,
+      "incomplete": 1,
+      "passes": 16,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 16,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">Evidence</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>Sources</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p><span class=\"text-ink-2\">Reciprocal Self-Disclosure Builds Closeness</span><br>Arthur Aron et al. (1997) · The Experimental Generation of Interpersonal Closeness</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"text-ink-2\">Reciprocal Self-Disclosure Builds Closeness</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2) > .text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">Evidence</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>Sources</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "lifecycle": {
+      "effectiveLaunch": {
+        "browserLaunched": true,
+        "engine": "chrome",
+        "launchHash": 11677035664275012000
+      },
+      "launched": false,
+      "relaunchedBrowser": false,
+      "restartedBackground": false,
+      "restoreStatus": "not_configured",
+      "reused": true,
+      "saveStatus": "not_attempted"
+    },
+    "url": "http://localhost:3107/practice/debrief-assistant-check",
+    "violations": []
+  },
+  {
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 43,
+      "incomplete": 1,
+      "passes": 16,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 16,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">Evidence</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>Sources</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p><span class=\"text-ink-2\">Reciprocal Self-Disclosure Builds Closeness</span><br>Arthur Aron et al. (1997) · The Experimental Generation of Interpersonal Closeness</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"text-ink-2\">Reciprocal Self-Disclosure Builds Closeness</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2) > .text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">Evidence</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>Sources</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "lifecycle": {
+      "effectiveLaunch": {
+        "browserLaunched": true,
+        "engine": "chrome",
+        "launchHash": 11677035664275012000
+      },
+      "launched": false,
+      "relaunchedBrowser": false,
+      "restartedBackground": false,
+      "restoreStatus": "not_configured",
+      "reused": true,
+      "saveStatus": "not_attempted"
+    },
+    "url": "http://localhost:3107/practice/debrief-assistant-check",
+    "violations": []
+  },
+  {
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 43,
+      "incomplete": 1,
+      "passes": 16,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 16,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">Evidence</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>Sources</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p><span class=\"text-ink-2\">Reciprocal Self-Disclosure Builds Closeness</span><br>Arthur Aron et al. (1997) · The Experimental Generation of Interpersonal Closeness</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"text-ink-2\">Reciprocal Self-Disclosure Builds Closeness</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2) > .text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">Evidence</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>Sources</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "lifecycle": {
+      "effectiveLaunch": {
+        "browserLaunched": true,
+        "engine": "chrome",
+        "launchHash": 11677035664275012000
+      },
+      "launched": false,
+      "relaunchedBrowser": false,
+      "restartedBackground": false,
+      "restoreStatus": "not_configured",
+      "reused": true,
+      "saveStatus": "not_attempted"
+    },
+    "url": "http://localhost:3107/practice/debrief-assistant-check",
+    "violations": []
+  },
+  {
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 43,
+      "incomplete": 1,
+      "passes": 16,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 16,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">Evidence</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>Sources</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p><span class=\"text-ink-2\">Reciprocal Self-Disclosure Builds Closeness</span><br>Arthur Aron et al. (1997) · The Experimental Generation of Interpersonal Closeness</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2)"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"text-ink-2\">Reciprocal Self-Disclosure Builds Closeness</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(1) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(2) > .text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<span class=\"eyebrow mr-2\">Evidence</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mr-2.eyebrow"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我刚来这里的时候，也有点不知道该怎么开口。”</span>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .text-ink-2 > .mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p class=\"whitespace-pre-wrap\">自我暴露是分享一点真实的自己，让对话有来有往。先从低风险的小经历开始，看看对方是否愿意分享，再决定要不要深入。</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .whitespace-pre-wrap"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<p>Sources</p>",
+            "target": [
+              ".gap-3.flex-col:nth-child(2) > .break-words.text-\\[14px\\].gap-3 > .border-t.pt-3.border-line > p:nth-child(1)"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "lifecycle": {
+      "effectiveLaunch": {
+        "browserLaunched": true,
+        "engine": "chrome",
+        "launchHash": 11677035664275012000
+      },
+      "launched": false,
+      "relaunchedBrowser": false,
+      "restartedBackground": false,
+      "restoreStatus": "not_configured",
+      "reused": true,
+      "saveStatus": "not_attempted"
+    },
+    "url": "http://localhost:3107/practice/debrief-assistant-check",
+    "violations": []
+  }
+]

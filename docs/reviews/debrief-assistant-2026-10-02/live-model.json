@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-02T08:27:03.343Z",
+  "syntheticOnly": true,
+  "results": [
+    {
+      "lang": "zh",
+      "question": "复盘说到自我暴露，我不熟悉这个概念。能解释一下，在这次聊天里我具体该怎么用吗？",
+      "ms": 12963,
+      "history": 0,
+      "reply": {
+        "evidence": "我刚来这里的时候，也有点不知道该怎么开口。",
+        "answer": "自我暴露（self-disclosure）指的是主动分享一点关于自己的真实信息——感受、经历、小尴尬。Arthur Aron 的研究发现，亲密感是靠「逐步升级、相互对等」的自我暴露建立的：一方分享一点真实的自己，再邀请对方分享同一层次的内容，交替进行。只有一方追问像审讯，只有一方倾诉像独白，两边都藏着话就只剩寒暄。\n\n在这次聊天里，你其实已经在用了。「我刚来这里的时候，也有点不知道该怎么开口」是一句低风险的真实分享——承认了一点小小的局促，而不是装作游刃有余。这给 Elena 留了接话的空间：她可以回应「我也是」，也可以顺势聊起各自的经历。要注意两点：一是它只是开头，接下来最好再补一个具体一点的小事（比如「我刚来的时候连附近的超市都找不到」），让话题有抓手；二是对等——分享之后把球抛回给她，比如问她「你来这边之后有什么不适应的吗」。另外要说明：转录里没有显示 Elena 的回应，所以这句话实际效果如何我们并不知道，只能说这种措辞会邀请对方回应。\n\n使用时的限度：从低风险的分享开始，跟着对方的开放程度逐步加深，不要第一次见面就跳到很私密的话题，那会让对方有压力。",
+        "example": "比如冷场时可以说：「说实话我有点紧张，刚才在想聊什么好——你来之前有没有也做点心理建设？」先真实地分享自己的小状态，再用一个轻松的问题邀请她讲同一层次的内容。",
+        "sources": [
+          {
+            "kind": "theory",
+            "id": "aron-self-disclosure"
+          }
+        ]
+      }
+    },
+    {
+      "lang": "zh",
+      "question": "如果对方只回了一个词，还需要继续分享吗？我担心显得话太多。",
+      "ms": 14649,
+      "history": 1,
+      "reply": {
+        "evidence": "我刚来这里的时候，也有点不知道该怎么开口。",
+        "answer": "对方只回一个词时，不用立刻再分享一大段。对等原则说的是「交替、同步」：她这轮开放得少，你可以放慢节奏，先用轻松的问题邀请她多说一点，而不是自己一路往前冲。担心显得话太多是合理的——单方面倾诉在研究里被称为「独白」，正是要避免的一端。\n\n但也不能完全停止分享。如果她回一个词你就收住，气氛可能更僵。更好的做法是：简短回应她的词（表示听到了），再补一个非常轻的观察或小分享，把门槛降低。比如她说「还好」，你可以说「嗯，刚来的时候我也只会说还好，其实那时候连路都认不全」——一句就够，然后又把球抛回去：「你呢，最近有没有什么让你觉得『诶，还不错』的事？」\n\n限度在于：连续两三次对方都只给一两个字，可能说明她累了、或者今晚话题不对味，这时候不必硬撑着填满沉默，可以承认一下状态（「今天聊得有点费劲，要不我们先点菜？」），给彼此一个喘息。另外，转录里没有显示她的实际反应，一个词的原因我们并不确定——可能是性格，也可能只是还在观察你，先别下结论。",
+        "example": "如果她只回了「还行」，可以说：「『还行』这个词我熟，我刚来那阵子天天就靠它撑场子——你是还没遇到什么好玩的事，还是已经有故事只是不打算今天讲？」轻松地接住，同时邀请她多说一点，而不是逼问。",
+        "sources": [
+          {
+            "kind": "theory",
+            "id": "aron-self-disclosure"
+          }
+        ]
+      }
+    },
+    {
+      "lang": "en",
+      "question": "Does my wording prove that I am introverted? Please explain what we can and cannot conclude from this practice.",
+      "ms": 7324,
+      "history": 2,
+      "reply": {
+        "evidence": "我刚来这里的时候，也有点不知道该怎么开口。",
+        "answer": "No — one line on one date cannot prove you are introverted. Your sentence shows that in that moment you admitted a bit of awkwardness instead of pretending to be smooth. That is a situational choice, not a personality verdict. Plenty of extroverted people feel nervous on first dates, and many introverts handle small talk comfortably. Personality is a stable pattern across many situations, and we only have a few seconds of one conversation here.\n\nWhat we can conclude: you chose a low-risk, honest share, which fits the reciprocal self-disclosure approach (start with something real, then invite the other person to match it). What we cannot conclude: whether you are introverted, whether Elena felt more at ease (the transcript doesn't show her reaction), or how you typically behave socially. Also, naming nervousness isn't proof of shyness — it's often just a social skill, a way to make the moment feel human. So treat the report's feedback as describing that one move, not diagnosing you.",
+        "example": "",
+        "sources": [
+          {
+            "kind": "theory",
+            "id": "aron-self-disclosure"
+          }
+        ]
+      }
+    }
+  ],
+  "invalidInputStatus": 400
+}

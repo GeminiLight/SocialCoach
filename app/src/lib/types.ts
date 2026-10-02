@@ -117,6 +117,22 @@ export interface Reflection {
   coachReply?: string;
 }
 
+export interface DebriefReply {
+  /** Verified, contiguous learner words; empty only when there are no spoken learner turns. */
+  evidence: string;
+  answer: string;
+  /** A proposed line, never part of the actual practice transcript. */
+  example: string;
+  sources: { kind: "theory" | "case"; id: string }[];
+}
+
+export interface DebriefExchange {
+  id: string;
+  question: string;
+  reply: DebriefReply;
+  at: number;
+}
+
 export type SessionStatus = "briefing" | "active" | "ended" | "assessed";
 
 export interface Session {
@@ -136,6 +152,8 @@ export interface Session {
   endedAt?: number;
   report?: Report;
   reflections: Reflection[];
+  /** Separate from the simulation and scoring; included in local exports. */
+  debriefChat?: DebriefExchange[];
   origin: "scheduled" | "arena" | "rehearse";
   /** The other side's position after each learner turn. Drives the meter and, later, the turn map. */
   stanceTrail?: number[];

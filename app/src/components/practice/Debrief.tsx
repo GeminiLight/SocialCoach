@@ -8,6 +8,7 @@ import { Bookmark, ChevronDown, RotateCcw, Share2, Send } from "lucide-react";
 import { BottomBar, Button, IconButton, Marginalia, Stages, Stars, Spinner, useToast } from "@/components/ui";
 import { SkillTag, Level } from "@/components/SkillBits";
 import { CaseBody, TheoryBody } from "@/components/Knowledge";
+import { DebriefAssistant, type DebriefAssistantHandle } from "./DebriefAssistant";
 import { useApp, useLang } from "@/store/useApp";
 import { t, tList } from "@/lib/i18n";
 import { assessStream, reflectStream } from "@/lib/client-api";
@@ -285,6 +286,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
   const goals = useApp((s) => s.profile?.goals ?? []);
   const sc = session.scenario;
   const [showTranscript, setShowTranscript] = useState(false);
+  const assistant = useRef<DebriefAssistantHandle>(null);
   const theories = (report.knowledge?.theoryIds ?? []).map(theoryById).filter(Boolean);
   const cases = (report.knowledge?.caseIds ?? []).map(caseById).filter(Boolean);
   const strengths = (report.strengths ?? []).filter((s) => s && s.behavior && skillIds.has(s.skill));
@@ -346,6 +348,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
               { id: "review-alternatives", label: "rp_alternatives" as const, show: alternatives.length > 0 },
               { id: "review-reflect", label: "rp_reflect" as const, show: questions.length > 0 },
             ].filter((item) => item.show).map((item) => <a key={item.id} href={`#${item.id}`} className="press shrink-0 inline-flex items-center justify-center rounded-full px-3 min-h-11 text-[13px] text-ink-2 hover:bg-inset">{t(lang, item.label)}</a>)}
+            <button onClick={() => assistant.current?.ask()} className="press shrink-0 inline-flex items-center justify-center rounded-full px-3 min-h-11 text-[13px] text-teal hover:bg-teal-soft">{t(lang, "da_title")}</button>
           </nav>
         )}
 
@@ -420,11 +423,13 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         {!streaming && (theories.length > 0 || cases.length > 0) && (
           <Section title={t(lang, "rp_knowledge")} sub={report.knowledge?.whyThis}>
             <div className="flex flex-col gap-3">
-              {theories.map((th) => th && <KnowledgeCard key={th.id} kind="theory" title={th.title[lang]} source={`${th.source.book} · ${th.source.author}`} saved={bookmarks.includes(th.id)} onSave={() => toggleBookmark(th.id)}><TheoryBody t={th} /></KnowledgeCard>)}
-              {cases.map((c) => c && <KnowledgeCard key={c.id} kind="case" title={c.title[lang]} source={`${c.source.book} · ${c.source.author}`} saved={bookmarks.includes(c.id)} onSave={() => toggleBookmark(c.id)}><CaseBody c={c} /></KnowledgeCard>)}
+              {theories.map((th) => th && <KnowledgeCard key={th.id} kind="theory" title={th.title[lang]} source={`${th.source.book} · ${th.source.author}`} saved={bookmarks.includes(th.id)} onSave={() => toggleBookmark(th.id)} onAsk={() => assistant.current?.ask(t(lang, "da_knowledge_question", { title: th.title[lang] }))}><TheoryBody t={th} /></KnowledgeCard>)}
+              {cases.map((c) => c && <KnowledgeCard key={c.id} kind="case" title={c.title[lang]} source={`${c.source.book} · ${c.source.author}`} saved={bookmarks.includes(c.id)} onSave={() => toggleBookmark(c.id)} onAsk={() => assistant.current?.ask(t(lang, "da_knowledge_question", { title: c.title[lang] }))}><CaseBody c={c} /></KnowledgeCard>)}
             </div>
           </Section>
         )}
+
+        {!streaming && session.report && <DebriefAssistant key={session.id} session={session} ref={assistant} />}
 
         {!streaming && questions.length > 0 && (
           <Section id="review-reflect" title={t(lang, "rp_reflect")} sub={t(lang, "rp_reflect_sub")}>
@@ -526,12 +531,12 @@ function Quote({ text, good, session }: { text?: string; good?: boolean; session
   );
 }
 
-function KnowledgeCard({ kind, title, source, saved, onSave, children }: { kind: "theory" | "case"; title: string; source: string; saved: boolean; onSave: () => void; children: React.ReactNode }) {
+function KnowledgeCard({ kind, title, source, saved, onSave, onAsk, children }: { kind: "theory" | "case"; title: string; source: string; saved: boolean; onSave: () => void; onAsk: () => void; children: React.ReactNode }) {
   const lang = useLang();
   const [open, setOpen] = useState(false);
   return (
     <div className="card overflow-hidden">
-      <button onClick={() => setOpen((o) => !o)} className="press w-full text-left p-4 flex flex-col gap-1.5">
+      <button aria-expanded={open} onClick={() => setOpen((o) => !o)} className="press w-full text-left p-4 flex flex-col gap-1.5">
         <div className="flex items-center justify-between">
           <span className={clsx("eyebrow", kind === "theory" ? "text-teal" : "text-accent-deep")}>{t(lang, kind === "theory" ? "rp_theory" : "rp_case")}</span>
           <ChevronDown size={16} className={clsx("text-ink-3 transition-transform", open && "rotate-180")} />
@@ -541,11 +546,14 @@ function KnowledgeCard({ kind, title, source, saved, onSave, children }: { kind:
       </button>
       <div className="grid transition-[grid-template-rows] duration-300" style={{ gridTemplateRows: open ? "1fr" : "0fr" }}>
         <div className="overflow-hidden">
-          <div className="px-4 pb-4 flex flex-col gap-3">
+          <div hidden={!open} className={clsx("px-4 pb-4 flex-col gap-3", open && "flex")}>
             {children}
-            <button onClick={onSave} className={clsx("press self-start h-8 px-3 rounded-full border text-[12px] font-medium inline-flex items-center gap-1.5", saved ? "bg-ink text-paper border-ink" : "border-line-strong")}>
+            <div className="flex flex-wrap gap-2">
+            <button onClick={onSave} className={clsx("press self-start min-h-11 px-3 rounded-full border text-[12px] font-medium inline-flex items-center gap-1.5", saved ? "bg-ink text-paper border-ink" : "border-line-strong")}>
               <Bookmark size={13} fill={saved ? "currentColor" : "none"} />{saved ? t(lang, "ln_bookmarked") : t(lang, "ln_bookmark")}
             </button>
+            <button onClick={onAsk} className="press min-h-11 px-3 rounded-full bg-teal-soft text-teal text-[12px] font-medium">{t(lang, "da_ask_knowledge")}</button>
+            </div>
           </div>
         </div>
       </div>

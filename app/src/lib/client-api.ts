@@ -10,6 +10,9 @@ import { runRehearse } from "./tasks/rehearse";
 import { runHint } from "./tasks/hint";
 import { runRoleplay } from "./tasks/roleplay";
 import { runReflect } from "./tasks/reflect";
+import { runDebriefChat } from "./tasks/debrief-chat";
+import type { DebriefChatInput } from "./debrief-chat";
+import type { DebriefReply } from "./types";
 import { runAssess } from "./tasks/assess";
 import { runPattern } from "./tasks/pattern";
 import type { AssessInput, PatternInput, PatternResult, ReflectInput, ScheduleInput, TurnInput } from "./tasks/types";
@@ -94,6 +97,16 @@ export interface ScheduleResult {
   prescription?: Prescription;
   adaptation: Adaptation;
   retrieval?: RetrievalTrace;
+}
+
+export async function debriefChat(body: DebriefChatInput, signal?: AbortSignal): Promise<DebriefReply> {
+  const o = own();
+  return watched("debrief-chat", !!o, async () => {
+    signal?.throwIfAborted();
+    const reply = o ? await runDebriefChat(body, o.llm, o.fast) : await post<DebriefReply>("/api/debrief-chat", body, signal);
+    signal?.throwIfAborted();
+    return reply;
+  });
 }
 
 export function schedule(body: {

@@ -29,6 +29,8 @@
 
 ## 改进想法
 
+- [x] 2026-10-02 本次练习的复盘 AI 助手：知识点解释、如何应用与连续追问；引用本次原话、已有知识来源、问答保存在设备；38 项 UI 与 23 项任务检查通过。→ [方案](./archive/specs/spec-debrief-assistant.md)
+
 - [x] 官网上线（2026-09-08，`https://tianfuwang.tech/SocialCoach/`）。仍待决定：是否绑独立域名（官网主域 + 产品子域），以及 Pages 的 HTTPS 强制开关（当前 `https_enforced: false`）
 - [x] 产品截图放 `docs/screenshots/` 与 `site/assets/`，中英各三张（2026-09-08）
 - [x] 仓库 homepage 字段 2026-09-08 指向当时的应用域名；2026-09-23 改为可抓取的双语官网 `https://tianfuwang.tech/SocialCoach/`，README 在线体验徽章仍直达应用。

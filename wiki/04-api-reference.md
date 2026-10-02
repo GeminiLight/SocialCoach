@@ -184,6 +184,18 @@
 
 ---
 
+### `POST /api/debrief-chat`
+
+围绕本次报告的多轮复盘咨询，部署与 BYOK 共用 `runDebriefChat()`。与固定反思题 `/api/reflect` 并存。
+
+**请求：** `{lang, practice:{title,background,roles:[{name,role,learner}]}, transcript:[{role:"learner"|"npc",name,text}], report:{verdict,summary,nextStep,strengths:[{evidence,behavior}],weaknesses:[{evidence,behavior,whyItMatters}],alternatives:[{original,better,why}],knowledge:{theoryIds,caseIds}}, history:[{question,answer}], question}`。
+
+`buildDebriefInput()` 排除 NPC 私有设定、教练提示和评分字段。最多六组历史、100 条转录、1000 字符问题、160 KB 请求；Zod 白名单剥离额外字段。既有速率限制适用。
+
+**响应：** `{evidence:string, answer:string, example:string, sources:[{kind:"theory"|"case",id:string}]}`。`example` 可为空；非空内容在 UI 明确标为示范，不进入真实转录。sources 只能来自本次检索，展示作者 / 书名 / 链接取自本地语料。有用户发言时 evidence 必须是连续真实原话；零发言时必须为空且只作概念指导。来源与引文不合规返回 502；请求不合规 400 / 超大 413。不呈现未验证的模型文本。
+
+服务端时限 60 秒、fast 模型、2400 输出 token；客户端 55 秒后显示重试，问题保留。`Session.debriefChat?` 只在设备保存完成问答，不更新报告 / 熟练度。AI 的语义解释仍须核对，校验不是对所有建议正确性的保证。参考 [方案](./archive/specs/spec-debrief-assistant.md)。
+
 ## 生成
 
 ### `POST /api/rehearse`

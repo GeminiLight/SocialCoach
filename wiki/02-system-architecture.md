@@ -153,7 +153,7 @@ interface Session {                      // 一轮练习的完整快照，存在
   prescription?; adaptation?; retrieval?;
   messages: ChatMessage[]; objectiveDone: boolean[];
   status: "briefing"|"active"|"ended"|"assessed";
-  report?: Report; reflections: Reflection[];
+  report?: Report; reflections: Reflection[]; debriefChat?: DebriefExchange[];
   origin: "scheduled" | "arena" | "rehearse";
   stanceTrail?: number[]; revealedAtTurn?: number;
   timed?: boolean;                       // 限时应答：进入场景时从 settings 快照
@@ -193,6 +193,12 @@ type ChatRole = "learner" | "npc" | "coach" | "event";   // event = 房间里发
 
 `useApp.storageIssue` 为不持久化的启动读取状态。读取失败后仍结束 UI 等待，但 storage adapter 阻止初始化、语言切换等操作覆盖原始字节。`AppProviders` 展示双语 `StorageRecovery`，暂停通常的重定向、模型弹窗及访问统计。JSON 无法解析时可以原样下载 `socialcoach-recovery.json`；提供下载后才开放显式确认重置，取消保留原档案。存储访问被拒绝时只提供说明和重试。重试成功解除写入保护。没有新增持久化字段、账号、服务端档案或导入接口；这也不等于已完成全量导入 / 合并恢复。根因见 [练习连续性复盘](./81-postmortem-practice-continuity.md)。
 
+### 本次练习的复盘助手（2026-10-02）
+
+`DebriefAssistant` 在单场报告里独立维护问答，知识卡片 / 阅读导航可预填或聚焦问题。`Session.debriefChat?` 保存成功的完整 `{id, question, reply, at}`，与 NPC 转录和评分分离，随既有导出进入文件。输入草稿是 `socialcoach.draft.{sessionId}.debrief`，既有重置清理覆盖该前缀。
+
+`buildDebriefInput()` 显式构建公开场景 + 双方转录 + 报告文字结论 + 最近六组问答，不传隐藏设定或评分字段。共享 `runDebriefChat()` 校验请求、检索双语知识，调用 fast 模型的 `jsonCall()`，验证原话与来源后返回 JSON；部署路径 `/api/debrief-chat` 和浏览器 BYOK 共用校验。没有新增服务端练习存储。界面原子写入完整问答，卸载 / 停止 / 超时保护迟到回写。细节见 [方案](./archive/specs/spec-debrief-assistant.md)。
+
 ## API 路由概览
 
 > 完整契约见 [04-api-reference.md](./04-api-reference.md)。
@@ -203,6 +209,7 @@ type ChatRole = "learner" | "npc" | "coach" | "event";   // event = 房间里发
 | POST | `/api/roleplay` | NPC 对话回合 | fast | 文本流 | 60 |
 | POST | `/api/assess` | 复盘报告 | **smart** | 文本流 + `@@final` | 180 |
 | POST | `/api/reflect` | 反思回应 | fast | 文本流 | 30 |
+| POST | `/api/debrief-chat` | 本次练习的多轮知识咨询 | fast | 经引文 / 来源校验的 JSON | 60 |
 | POST | `/api/hint` | 对话中提示 | fast | JSON | 30 |
 | POST | `/api/rehearse` | 生成自定义场景 | fast | JSON | 120 |
 | POST | `/api/track` | 匿名使用统计 → 飞书月表 | — | 202 | 30 |
