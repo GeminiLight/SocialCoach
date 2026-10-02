@@ -104,3 +104,10 @@
 - 浏览器检查使用独立会话，并拦截可选统计；合成模型请求不写入用户档案。没有发送产品反馈或测试统计，不清空历史记录。发布前的 168 个布局组合、88 次扫描、12 项中断回归、14 项 store 检查、19 项策略检查及工程验证见两份评审，不视为完整线上实体设备验收。
 
 [本次发布证据](../../docs/reviews/release-2026-10-02/README.md)；体验与剩余工作见 [成熟度评审](../reviews/review-2026-10-01-product-maturity.md)和 [中断恢复评审](../reviews/review-2026-10-01-practice-recovery.md)。
+
+## 复盘助手更新（2026-10-02）
+
+- GitHub `89163d6`，Vercel 生产部署 `dpl_Cmre25CciEBqQogA3PgQVMgVWHYi` Ready；ModelScope `7b676ca` 显式重建后 Running。`app/src` / `app/public` 共 106 个文件逐个哈希一致。
+- 新增本次练习的多轮复盘咨询、知识卡片入口、本地问答与导出，部署和 BYOK 共用原话 / 来源校验。23 项任务、38 项浏览器检查、既有关键旅程和真实模型样本通过。
+- 两端新助手 API 合成请求均返回 200 且原话 / 来源有效；Vercel 浏览器资源确认包含新接口。国内仍通过凭证后端执行，未重复公共 iframe 浏览器验收，上一节的连接限制不因此视为解决。
+- [交付评审](../reviews/review-2026-10-02-debrief-assistant.md)与 [验证材料](../../docs/reviews/debrief-assistant-2026-10-02/README.md)。

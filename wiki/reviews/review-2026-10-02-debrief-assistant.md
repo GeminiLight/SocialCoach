@@ -18,7 +18,14 @@
 - 既有 `check-product-ux.ts` 关键旅程（`UX_SKIP_MATRIX=1`）通过，含欢迎、旧档案、知识连接、重练、对话草稿 / 重试、目录状态与暂停键盘路径；未重复全页面矩阵。
 - 原有练习策略：19 项检查通过，涵盖全部 46 个语料场景的核心匹配与评估边界。
 - 真实模型：三问连续样本通过；本地耗时约 7–15 秒，原话和来源经过共享任务核验。最终样本明确说没有后续反应时无法断定效果；人格问题没有诊断结论。
-- lint、TypeScript 和正式构建通过。最终发布状态将在下方记录。
+- lint、TypeScript 和正式构建通过；wiki 审计 0 high / medium，仅保留既有来源记录缺少日期标记的 info。
+
+## 发布
+
+- GitHub 应用提交 `89163d6e99b95b5b3b96c9782ad38ef51131572e`，main 自动生产部署 `dpl_Cmre25CciEBqQogA3PgQVMgVWHYi`，Ready；正式别名 `socialcoach-ai.vercel.app` / `socialcoach-app.vercel.app`。
+- ModelScope master `7b676ca`，显式重建后 Running；`app/src` 100 文件、`app/public` 6 文件与发布源码逐个哈希一致。免费硬件与既有设置沿用。
+- 两端 `/api/debrief-chat` 合成请求均为 200，引用原话和 `aron-self-disclosure` 来源已核对。Vercel `/practice/deploy-check` 引用的浏览器资源中确认存在新助手接口。没有写入真实用户练习档案、统计内容或测试反馈。
+- 线上样本见 `online-vercel.json` 与 `online-modelscope.json`。国内检查通过带凭证的后端地址执行；本轮未重新验收魔搭公共 iframe 的浏览器连接，上一轮的本机连接限制仍需后续复核。
 
 ## 后续建议
 

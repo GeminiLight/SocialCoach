@@ -5,5 +5,6 @@
 - `assistant-{zh|en}-{light|dark}-{360|1440}.png`：本次报告的助手、原话、明确标注的示范、来源和输入区域。模型回复在 UI 回归中模拟，截图不作为模型准确率证据。
 - `accessibility.json`：8 次助手区域的 WCAG 自动扫描；0 violation，仍有需要人工核验的 incomplete 项，不能等同全量无障碍认证。
 - `live-model.json`：真实部署模型的三次合成问答，涵盖自我暴露的解释与用法、对方简短回应的后续问题、一次练习不能证明人格特征。只代表本轮样本。
+- `online-vercel.json` / `online-modelscope.json`：发布后两端真实模型接口返回 200、原话与来源验证。Vercel 同时检查浏览器资源中的新接口；ModelScope 是凭证后端冒烟，未声称完成公共 iframe 浏览器复核。
 
 可重复脚本在 `app/scripts/check-debrief-assistant{,-browser,-live}.ts`。浏览器脚本包含刷新草稿 / 问答恢复、失败重试、停止 / 离开后的迟到回复、键盘提交、导出和界面组合；模型脚本必须显式指定 localhost 地址，避免向真实站点注入合成档案。
