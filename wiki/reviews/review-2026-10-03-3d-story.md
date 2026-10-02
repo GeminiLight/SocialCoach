@@ -16,7 +16,7 @@
 - 93 项饭局检查通过；修改文件 ESLint、TypeScript 和 Next 正式构建通过。
 - 三桌各 12 回合的真实模型调用，共 36 轮；逐条阅读 [合成用户长对话转录](../../docs/reviews/3d-story-2026-10-03/model-transcripts.md)。涵盖拒绝、追问、指定人物、条件交换、反悔与纠正、核对承诺。
 - 浏览器用真实模型完成隐私剧情：第六轮刷新恢复历史与对象，第八轮暂停，延长到 14 轮，第九轮继续原问题。390×844 下检查输入区、对象选择与继续按钮；桌面与正式构建检查默认时长、同桌换开局和双语。
-- 所检查页面无浏览器 error / warn。截图：[手机第七轮](../../docs/reviews/3d-story-2026-10-03/mobile-turn-07.png)、[八轮暂停](../../docs/reviews/3d-story-2026-10-03/segment-complete.png)、[第九轮续聊](../../docs/reviews/3d-story-2026-10-03/continued-turn-09.png)。
+- 所检查页面无浏览器 error / warn。截图：[手机第七轮](../../docs/reviews/3d-story-2026-10-03/mobile-turn-07.png)、[八轮暂停](../../docs/reviews/3d-story-2026-10-03/segment-complete.png)、[第九轮续聊](../../docs/reviews/3d-story-2026-10-03/continued-turn-09.png)、[正式构建剧情选择](../../docs/reviews/3d-story-2026-10-03/production-story-picker.png)。
 
 ## 局限
 
@@ -24,4 +24,7 @@
 
 ## 发布
 
-本地正式构建预览 `http://localhost:4330/3d`；主站与国内镜像发布记录将在平台完成后补充。
+- 主仓库运行代码 `67690c73e31fc187b19872e9b4125be91ca49698` 已推送到 `main`；本地正式构建预览 `http://localhost:4330/3d`。
+- Vercel 部署 `dpl_HWsScEwB3swmK3cLn55X3dbCwc6c` 为 `READY` / production，已绑定 `socialcoach-ai.vercel.app` 和 `socialcoach-app.vercel.app`。
+- ModelScope 主站镜像提交 `89e575de`；九个运行文件与主仓库逐一校验一致。构建产物 `363578-89e575de-2026-10-03-02-52-17` 成功，新实例于 2026-10-03 02:53:01（北京时间）创建，状态 `Running`。免费 CPU 配置未变更。
+- 公网浏览器本轮访问仍超时，线上视觉验收待网络恢复；上述交互证据来自本地服务与正式构建，不把平台发布状态当作线上视觉验收。
