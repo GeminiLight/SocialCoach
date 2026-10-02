@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-10-02 | Current stage: B -->
+<!-- Last verified: 2026-10-03 | Current stage: B -->
 
 # Backlog
 
@@ -28,6 +28,8 @@
 - [x] 2026-09-09 `app/scripts/check-avatars.ts` 已同步新版 `portraitFor`，验证保存、改名稳定性与旧种子回退；全量 `tsc --noEmit` 通过。
 
 ## 改进想法
+
+- [x] 2026-10-03 中英文 README 顶部增加香港科技大学（广州）与中国科学技术大学的官方横版校名 Logo，链接到各校官网；素材本地保存并记录[出处](../docs/logos/README.md)，保留原始图形与色彩，港科广深色模式切换官方白色版。
 
 - [x] 2026-10-02 本次练习的复盘 AI 助手：知识点解释、如何应用与连续追问；引用本次原话、已有知识来源、问答保存在设备；38 项 UI 与 23 项任务检查通过。→ [方案](./archive/specs/spec-debrief-assistant.md)
 

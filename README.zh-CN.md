@@ -15,6 +15,19 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md)
 
+<p align="center">
+  <a href="https://www.hkust-gz.edu.cn/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/logos/hkust-guangzhou-dark.png">
+      <img src="docs/logos/hkust-guangzhou.svg" width="300" alt="香港科技大学（广州） · The Hong Kong University of Science and Technology (Guangzhou)">
+    </picture>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.ustc.edu.cn/">
+    <img src="docs/logos/ustc.svg" width="300" alt="中国科学技术大学 · University of Science and Technology of China">
+  </a>
+</p>
+
 </div>
 
 ---
