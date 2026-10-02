@@ -2,14 +2,14 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { parseDinnerInput, runDinner } from '../../src/features/dinner/lib/director';
 import { scenarios } from '../../src/features/dinner/lib/content';
-import { opening, scriptedReply } from '../../src/features/dinner/lib/engine';
+import { opening, scriptedReply, renderedCue } from '../../src/features/dinner/lib/engine';
 import { createWorld, roomContext } from '../../src/features/dinner/lib/room';
 import { createDrama, syncDrama, chooseDrama, dinnerContext } from '../../src/features/dinner/lib/drama';
 import type { ChatOpts, LLM } from '../../src/lib/llm-core';
 
 const scene=scenarios[0];
 const input={scenarioId:'work',lang:'zh',text:'我用茶敬您',history:[opening(scene,'zh')]};
-const reply=scriptedReply(scene,input.text,1,'zh');
+const reply={...scriptedReply(scene,input.text,1,'zh'),replyTo:input.text};
 function model(answer:unknown, capture?:(o:ChatOpts)=>void):LLM {
   return {chatText:async o=>{capture?.(o);return '```json\n'+JSON.stringify(answer)+'\n```';},chatStream:()=>{throw new Error('Unexpected stream');}};
 }
@@ -17,7 +17,7 @@ function model(answer:unknown, capture?:(o:ChatOpts)=>void):LLM {
 test('3D uses the shared JSON task and selected fast model, with no SDK structured format',async()=>{
   let captured:ChatOpts|undefined;
   const signal=new AbortController().signal;
-  assert.deepEqual(await runDinner(input,model(reply,o=>{captured=o;}),'my-fast-model',signal),reply);
+  assert.deepEqual(await runDinner(input,model(reply,o=>{captured=o;}),'my-fast-model',signal),{...reply,cue:renderedCue(reply,scene,'zh')});
   assert.equal(captured?.model,'my-fast-model');assert.equal(captured?.signal,signal);
   assert.equal('output_config' in captured!,false);assert.equal('response_format' in captured!,false);
   assert.ok(captured?.messages[0].content.includes(input.text));

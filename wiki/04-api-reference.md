@@ -269,9 +269,11 @@ JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: stri
 
 ### `POST /api/dinner/direct`
 
-请求 `{scenarioId: "work"|"family"|"school", lang: "zh"|"en", text, history, room?, dinner?}`。`text` 非空且最多 500 字；`history` 为 1–7 条 NPC / 用户交替记录，起止为 NPC，NPC id 必须属于该桌。房间与事件使用 `features/dinner/lib/room.ts` / `drama.ts` 的 schema，禁止未知演员、未来事件或与事件不匹配的动作。正文最多 24 KiB（检查实际字节，不只信任请求头）。
+请求 `{scenarioId: "work"|"family"|"school", variantId?, maxTurns?, targetId?, lang: "zh"|"en", text, history, room?, dinner?, heard?}`。`text` 非空且最多 500 字；`history` 为 1–47 条 NPC / 用户交替记录，起止为 NPC。`maxTurns` 默认 12，上限 24（兼容旧四回合），达到预算后客户端先延长再请求。`variantId` 是当前桌的两个原创开局之一；`targetId` 指定当前回复人，不赋予其替别人承诺的权限。历史保留话题、原话、空间 / 动作证据及用户开口前实际听到的 `heard:{speakerId,text,cue?}`，不得剥掉这些字段或截断成最后四轮。角色、开局、话题与事件交叉校验。正文最多 192 KiB（检查实际字节，不只信任请求头）。
 
-返回 `{speakerId,text,cue,reactions:[{characterId,emotion,gesture}]}`，恰好包含当前桌三名角色的反应。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。无分数 / 隐藏动机。
+返回 `{replyTo,speakerId,text,cue,reactions:[{characterId,emotion,gesture}],story?:{topic,event?}}`，恰好包含当前桌三名角色的反应。`replyTo` 是当前输入的 1–120 字符原文片段，由任务层核验，用来发现错答上一句，不显示为用户评价。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。`cue` 从实际支持的动作派生，模型编造的吃饭 / 手机操作不进入舞台说明。`story.event` 只能是当前开局允许、未出现且未被拒绝的动作插曲；不再在固定回合自动播放。无分数 / 隐藏动机。
+
+模型输入把完整历史放在前面，单独的 `current_player_turn` 放在最后；各开局事实分离，防止相亲线混入工作变动。回复角色、引文或事件校验失败时最多修复一次，仍失败则返回错误，绝不提交无效回合或静默换成内置剧情。
 
 错误：400 输入 / 状态无效；413 过长；429 沿用主站限流；503 部署无密钥或强制 BYOK；模型错误沿用 `fail()`，无剧本静默替代。服务器请求 30 秒取消、路由 `maxDuration=40`；客户端 35 秒取消，草稿保留。响应 `Cache-Control: no-store`。
 

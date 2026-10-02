@@ -60,6 +60,9 @@ export const scenarios: Scenario[] = [
 ];
 
 export const ui = {
+  practiceLength:l('练习长度','Practice length'), chooseOpening:l('从哪件事开始','Choose the opening'), newStory:l('开一局新的','Start a new dinner'),
+  speakTo:l('对谁说','Speak to'),wholeTable:l('这一桌','The table'),audibleToTable:l('同桌的人也听得见','The others can hear you too'),
+  extendDinner:l('继续聊 · 加 {n} 回合','Keep talking · {n} more turns'),heardBefore:l('开口前听到的话','What you heard before speaking'),
   navLabel: l('主导航', 'Main navigation'), categoryLabel: l('饭局类型', 'Dinner categories'), conversationLabel: l('饭桌对话', 'Table conversation'),
   switchLanguage: l('Switch to English', '切换为中文'), documentTitle: l('SocialCoach — 饭局里的那句话', 'SocialCoach — Dinner rehearsal'),
   tableBrief: l('这一桌', 'Table brief'), backToTable: l('回到饭桌', 'Back to the table'),
@@ -78,7 +81,7 @@ export const ui = {
   movementAbout:l('第一人称置身饭桌，第三人称能看到你的角色。起身后可用 WASD、点击空地或方向按钮移动。走向人物时会持续关注 TA；拖动镜头可自由环顾，点击关注按钮可恢复。主位人物留在座位上，其他人只在接受招呼后走过来；你走远时，TA 会回座。','First person puts you at the table; third person shows your character. Stand up and move with WASD, the floor or directional buttons. Walking over keeps your attention on that person. Drag to look freely, or use the attention button to resume. The person at the head stays seated. Others may accept an invitation, approach, and return to their seats when you move away.'),
   phoneAction:l('递手机','Offers a phone'),photoAction:l('准备合照','Prepares a photo'),momentLabel:l('饭局插曲','At this table'), pauseMoment:l('暂停这段','Pause this moment'), resumeMoment:l('继续这段','Resume this moment'), momentPaused:l('已暂停，你可以慢慢想','Paused. Take your time.'), momentWaiting:l('全桌等你回应，也可以直接开口','The table is waiting. You can also speak freely.'), momentNudge:l('桌上安静下来，目光仍停在你身上','The table goes quiet. They are still looking at you.'), momentMoving:l('正在走近，抵达后完成动作','Walking over. The action happens on arrival.'), cancelAction:l('取消走近','Cancel the approach'), momentDone:l('你可以继续开口','You can speak now'), momentTyping:l('输入时，场景节奏暂缓','The moment pauses while you type.'), actionLog:l('你做过的动作','Your actions at the table'), actionSaid:l('随后，桌上回应','The table’s response'), eventEvidence:l('发言时的饭局事件','Dinner moment when you spoke'), calendarShort:l('三','WED'),familyGlyph:l('福','JOY'),trophyGlyph:l('Ⅰ','Ⅰ'),calendarDay:l('周三 · 上线窗口','Wednesday · Launch window'), phoneCard:l('介绍对象 · 照片','An introduction · Photo'), photoScreen:l('全员合照','Team photo'), familyWish:l('团圆','Together'), trophyLabel:l('团队一等奖','Team · First prize'),
   needPrompt: l('给我一点提示', 'Need a starting line?'), finished: l('这一桌的话，先说到这里。', 'Let’s leave this dinner here.'),
-  shortFormat: l('4 回合，不用注册。', '4 turns. No signup.'),
+  shortFormat: l('默认 12 回合，可继续聊。', '12 turns by default. Extend when needed.'),
   subtitle: l('你的情商练习场', 'Your social rehearsal space'), edition: l('饭局体验', 'Dinner edition'),
   scenes: l('换一桌', 'Choose a table'), recap: l('本局记录', 'This conversation'), about: l('体验说明', 'About this experience'),
   eyebrow: l('有些话，得在这张桌上说。', 'Some things have to be said at this table.'),
@@ -88,7 +91,7 @@ export const ui = {
   sceneHint: l('拖动看看这桌人 · 点击人物查看关系', 'Drag to look around · Select a person to meet them'),
   speaking: l('正在说话', 'Speaking'), watching: l('在看着你', 'Watching you'), seat: l('你的座位', 'Your seat'),
   turn: l('回合', 'Turn'), demo: l('内置剧情', 'Scripted rehearsal'), live: l('模型导演', 'AI director'),
-  modeDetail: l('自由回答会匹配剧情分支；接入模型后可生成新的回应。', 'Free text selects a story branch. Connect a model to generate new replies.'),
+  modeDetail: l('内置演练会跟随话题，但理解范围有限。接入模型后，角色会结合整段对话回应。', 'Built-in rehearsal follows topics with limited understanding. A connected model responds using the full conversation.'),
   sceneLoading:l('正在布置饭桌…','Preparing the table…'),
   replyKeyHint:l('Enter 开口 · Shift + Enter 换行','Enter to speak · Shift + Enter for a new line'),
   voiceStart:l('语音输入','Voice input'),voiceStop:l('停止语音输入','Stop voice input'),voiceCancel:l('取消收音','Cancel listening'),

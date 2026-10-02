@@ -661,6 +661,18 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dinner-experience .scene-choice-top { display:flex; justify-content:space-between; align-items:center; color:var(--dinner-accent); font-size:11px; margin-bottom:7px; }
 .dinner-experience .scene-choice strong { font-family:var(--dinner-font-display); font-size:18px; font-weight:500; }
 .dinner-experience .scene-choice p { margin:8px 0 0; font-size:12px; color:var(--dinner-ink-secondary); }
+.dinner-experience .dinner-length { display:flex; gap:6px; flex-wrap:wrap; flex-shrink:0; }
+.dinner-experience .dinner-length button { min-height:44px; padding:8px 12px; border:1px solid var(--dinner-line); border-radius:var(--dinner-radius-sm); font-size:12px; color:var(--dinner-ink-secondary); }
+.dinner-experience .dinner-length button[aria-pressed="true"],.dinner-experience .dinner-story-choice[aria-pressed="true"] { border-color:var(--dinner-accent); background:var(--dinner-surface-raised); color:var(--dinner-ink); }
+.dinner-experience .dinner-story-picker { border:0; margin:24px 0 16px; padding:0; display:grid; gap:10px; }
+.dinner-experience .dinner-story-picker legend { font-size:12px; color:var(--dinner-ink-secondary); margin-bottom:12px; }
+.dinner-experience .dinner-story-choice { text-align:left; padding:14px 16px; border:1px solid var(--dinner-line); border-radius:var(--dinner-radius-sm); }
+.dinner-experience .dinner-story-choice strong { display:block; font-size:15px; font-weight:500; margin-bottom:6px; }
+.dinner-experience .dinner-story-choice span { font-size:12px; line-height:1.7; color:var(--dinner-ink-secondary); }
+.dinner-experience .dinner-recipient { display:flex; align-items:center; gap:8px; margin-bottom:8px; font-size:11px; color:var(--dinner-ink-secondary); }
+.dinner-experience .dinner-recipient select { min-height:36px; max-width:160px; padding:4px 26px 4px 10px; border:1px solid var(--dinner-line); border-radius:var(--dinner-radius-sm); background:var(--dinner-surface); color:var(--dinner-ink); font:inherit; }
+.dinner-experience .dinner-recipient small { font-size:10px; }
+.dinner-experience .dinner-finish-actions { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
 .dinner-experience .switch-note { font-size:12px; color:var(--dinner-ink-secondary); margin:20px 0 0; }
 .dinner-experience .switch-note p { margin:0; }
 .dinner-experience .modal-actions { margin-top:22px; display:flex; justify-content:flex-end; gap:18px; }

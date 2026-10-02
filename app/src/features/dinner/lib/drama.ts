@@ -1,6 +1,7 @@
 import {z} from 'zod';
 import {l,pick,ui,type L,type Lang,type Scenario} from './content';
 import {distance,PLAYER_HOME,type World} from './room';
+import {MAX_DINNER_TURNS} from './story';
 export const EventIdSchema=z.enum(['work-toast','work-deadline','family-toast','family-phone','school-toast','school-photo']);
 export const ChoiceIdSchema=z.enum(['join','tea','hold','calendar','conditions','confirm','accept','decline','ally','group','credit','outside']);
 export type EventId=z.infer<typeof EventIdSchema>;
@@ -29,7 +30,7 @@ export const dinnerEvents:DinnerEvent[]=[
  {id:'credit',label:l('抬手，先谈贡献','Raise a hand to discuss credit'),icon:'hand',line:l('先说也行。不过汇报和联络都是我做的，这部分别漏了。','We can talk first. But I handled the presentation and the contacts. Don’t leave that out.'),cue:l('你抬手示意先停一下。手机降下来，阿凯转向你，奖杯留在原处。','You raise a hand. The phone lowers; Kai turns toward you. The trophy stays where it is.')},
  {id:'outside',label:l('摆手，暂不入镜','Stay out of the photo'),icon:'hand',line:l('你不拍，我还是会发。对那个文案有意见，现在就说。','If you won’t join, I’ll still post it. If you disagree with the caption, say so now.'),cue:l('你摆手没有跟上。许学长收住拍照的动作，小月看向你。','You wave it off. Xu pauses before taking the photo; Yue looks at you.')}]}
 ];
-const RecordSchema=z.object({eventId:EventIdSchema,choice:ChoiceIdSchema,turn:z.number().int().min(0).max(4),posture:z.enum(['seated','standing']),zone:z.enum(['table','side','door'])});
+const RecordSchema=z.object({eventId:EventIdSchema,choice:ChoiceIdSchema,turn:z.number().int().min(0).max(MAX_DINNER_TURNS),posture:z.enum(['seated','standing']),zone:z.enum(['table','side','door']),silent:z.boolean().optional()});
 export const DramaSaveSchema=z.object({active:EventIdSchema.optional(),phase:z.enum(['waiting','reacting','settled']),elapsed:z.number().finite().min(0).max(30),responseAt:z.number().finite().min(0).max(30).optional(),choice:ChoiceIdSchema.optional(),pending:ChoiceIdSchema.optional(),seen:z.array(EventIdSchema).max(2),records:z.array(RecordSchema).max(2),paused:z.boolean(),inventory:z.enum(['none','glass','tea','phone'])}).superRefine((s,c)=>{
   if(new Set(s.seen).size!==s.seen.length||new Set(s.records.map(r=>r.eventId)).size!==s.records.length)c.addIssue({code:'custom',message:'Duplicate dinner event'});
   if(s.active&&!s.seen.includes(s.active))c.addIssue({code:'custom',message:'Active event must have started'});
@@ -45,9 +46,10 @@ export function validDinnerContext(context:DinnerContext,scene:Scenario['id']){c
 export const createDrama=(saved?:Drama):Drama=>saved?structuredClone(saved):{phase:'settled',elapsed:0,seen:[],records:[],paused:false,inventory:'none'};
 export const snapshotDrama=(d:Drama):Drama=>structuredClone(d);
 export const activeEvent=(d:Drama)=>dinnerEvents.find(e=>e.id===d.active);
-export function syncDrama(d:Drama,scene:Scenario,turn:number,started:boolean,complete:boolean){
+export function syncDrama(d:Drama,scene:Scenario,turn:number,started:boolean,complete:boolean,options:{openingEvent?:EventId|null;requestedEvent?:EventId}={}){
   if(!started||complete||d.phase!=='settled')return;
-  const next=dinnerEvents.find(e=>e.scene===scene.id&&e.turn<=turn&&!d.seen.includes(e.id));if(!next)return;
+  const id=turn===0?(options.openingEvent===undefined?dinnerEvents.find(e=>e.scene===scene.id&&e.turn===0)?.id:options.openingEvent):options.requestedEvent;
+  const next=dinnerEvents.find(e=>e.id===id&&e.scene===scene.id&&e.turn<=turn&&!d.seen.includes(e.id));if(!next)return;
   d.active=next.id;d.seen.push(next.id);d.elapsed=0;d.phase='waiting';d.choice=undefined;d.pending=undefined;d.responseAt=undefined;d.paused=false;
 }
 export function stepDrama(d:Drama,dt:number,paused:boolean){if(paused||d.paused||d.pending||d.phase==='settled')return;d.elapsed=Math.min(30,d.elapsed+Math.min(.05,Math.max(0,dt)));if(d.phase==='reacting'&&d.elapsed>=4.6)d.phase='settled';}
@@ -62,12 +64,12 @@ export function chooseDrama(d:Drama,id:ChoiceId,world:World,turn:number){
   const event=activeEvent(d);if(!event||d.phase!=='waiting'||d.choice||!event.choices.some(c=>c.id===id)||!readyForChoice(d,id,world))return false;
   d.choice=id;d.pending=undefined;d.phase='reacting';d.responseAt=d.elapsed;d.elapsed=0;d.paused=false;
   if(id==='join')d.inventory='glass';else if(id==='tea')d.inventory='tea';else if(id==='calendar'||id==='accept')d.inventory='phone';else if(id==='conditions'&&distance(world.player,PLAYER_HOME)<1.2)d.inventory='none';
-  const r=Math.hypot(world.player.x,world.player.z);d.records.push({eventId:event.id,choice:id,turn,posture:world.player.seated?'seated':'standing',zone:world.player.seated||r<4.2?'table':world.player.z>4.6?'door':'side'});return true;
+  const r=Math.hypot(world.player.x,world.player.z);d.records.push({eventId:event.id,choice:id,turn,silent:true,posture:world.player.seated?'seated':'standing',zone:world.player.seated||r<4.2?'table':world.player.z>4.6?'door':'side'});return true;
 }
 export function settleForSpeech(d:Drama){d.phase='settled';d.pending=undefined;d.choice=undefined;d.responseAt=undefined;d.elapsed=0;}
 export function dinnerContext(d:Drama):DinnerContext|undefined{return d.active?{eventId:d.active,phase:d.phase,choice:d.choice,previous:structuredClone(d.records)}:undefined;}
-export function eventDialogue(d:Drama,lang:Lang){const event=activeEvent(d);if(!event||d.phase==='settled'&&!d.choice)return;const choice=event.choices.find(c=>c.id===d.choice);return {speaker:event.scene==='family'&&d.choice==='ally'?2:event.speaker,text:pick(choice?.line??(d.elapsed>=12?event.nudge:event.line),lang),cue:pick(choice?.cue??event.cue,lang)};}
-export function actionEvidence(record:Drama['records'][number],lang:Lang){const event=dinnerEvents.find(e=>e.id===record.eventId)!,choice=event.choices.find(c=>c.id===record.choice)!;return {title:pick(event.title,lang),action:pick(choice.label,lang),reply:pick(choice.line,lang),cue:pick(choice.cue,lang),speaker:event.scene==='family'&&choice.id==='ally'?2:event.speaker};}
+export function eventDialogue(d:Drama,lang:Lang){const event=activeEvent(d);if(!event||d.phase==='settled'&&!d.choice||d.records.some(r=>r.eventId===d.active&&r.choice===d.choice&&r.silent))return;const choice=event.choices.find(c=>c.id===d.choice);return {speaker:event.scene==='family'&&d.choice==='ally'?2:event.speaker,text:pick(choice?.line??event.line,lang),cue:pick(choice?.cue??event.cue,lang)};}
+export function actionEvidence(record:Drama['records'][number],lang:Lang){const event=dinnerEvents.find(e=>e.id===record.eventId)!,choice=event.choices.find(c=>c.id===record.choice)!;return {title:pick(event.title,lang),action:pick(choice.label,lang),reply:record.silent?undefined:pick(choice.line,lang),cue:pick(choice.cue,lang),speaker:event.scene==='family'&&choice.id==='ally'?2:event.speaker};}
 const ease=(v:number)=>{const t=Math.max(0,Math.min(1,v));return t*t*(3-2*t);};
 export function actorBeat(d:Drama,index:number,scene:Scenario['id']){
   const event=activeEvent(d),toast=event?.kind==='toast'&&d.phase!=='settled';

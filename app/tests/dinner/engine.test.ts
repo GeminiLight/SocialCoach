@@ -18,8 +18,8 @@ test('polite refusal does not remove NPC resistance on the first turn',()=>{
 test('bridge actions and yielding lead to different concrete consequences',()=>{
   const scene=scenarios[0];assert.notEqual(scriptedReply(scene,'我用茶敬您，项目我扛住',4,'zh').text,scriptedReply(scene,'好吧我喝了',4,'zh').text);
 });
-test('supporting characters take turns, rather than the lead speaking every round',()=>{
-  const scene=scenarios[0];assert.equal(scriptedReply(scene,'我不喝',2,'zh').speakerId,'lin');assert.equal(scriptedReply(scene,'我不喝',3,'zh').speakerId,'zhou');
+test('supporting characters answer when addressed, without mechanical turn rotation',()=>{
+  const scene=scenarios[0];for(const turn of [2,3,5,12]){assert.equal(scriptedReply(scene,'我不喝',turn,'zh').speakerId,'chen');assert.equal(scriptedReply(scene,'林姐，需求是什么？',turn,'zh').speakerId,'lin');assert.equal(scriptedReply(scene,'小周，测试还缺什么？',turn,'zh').speakerId,'zhou');}
 });
 test('English boundaries and bridge proposals choose appropriate branches',()=>{
   assert.equal(detectIntent('I don’t drink'),'boundary');assert.equal(detectIntent('Let me toast you with tea'),'bridge');assert.equal(detectIntent('Fine, I will do it'),'unclear');assert.equal(detectIntent("Fine, I'll drink"),'yield');
@@ -48,8 +48,8 @@ test('an irritated lead keeps the same resistance when closing a dinner',()=>{
 });
 test('a physical choice is acknowledged once instead of repeated on later turns',()=>{
   const scene=scenarios[0],world=createWorld(scene),drama=createDrama();syncDrama(drama,scene,0,true,false);chooseDrama(drama,'tea',world,0);const context=dinnerContext(drama);
-  assert.match(scriptedReply(scene,'用茶敬您',1,'zh',undefined,context).text,/茶端来了/);
-  assert.doesNotMatch(scriptedReply(scene,'项目交付我负责',2,'zh',undefined,context).text,/茶端来了/);
+  assert.match(scriptedReply(scene,'嗯',1,'zh',undefined,context).text,/用茶回应/);
+  assert.doesNotMatch(scriptedReply(scene,'项目交付我负责',2,'zh',undefined,context).text,/用茶回应/);
 });
 
 test('tea proposals are not treated as consent to drink wine',()=>{
@@ -75,11 +75,11 @@ test('unclear replies do not invent agreement, previous delays, tea or a private
 test('deadline action replies belong to the teammate and do not pretend to be the client',()=>{
   const scene=scenarios[0],world=createWorld(scene),d=createDrama();
   d.active='work-deadline';d.seen=['work-deadline'];d.phase='waiting';chooseDrama(d,'calendar',world,2);
-  const reply=scriptedReply(scene,'测试还要时间',3,'zh',undefined,dinnerContext(d));
+  const reply=scriptedReply(scene,'小周，测试还要时间',3,'zh',undefined,dinnerContext(d));
   assert.equal(reply.speakerId,'zhou');assert.match(reply.text,/给我也看|测试/);
   assert.doesNotMatch(reply.text,/手机上的日程我看到了|怎么落实|问题还没说完/);
   const last=scriptedReply(scene,'今天先确认需求，测试过了再约上线',4,'zh',undefined,{...dinnerContext(d)!,choice:undefined,phase:'settled'});
-  assert.match(last.text,/周三|明早/);assert.doesNotMatch(last.text,/杯|酒/);assert.equal(last.reactions[0].emotion,'pressing');
+  assert.match(last.text,/范围|清单|测试|确认/);assert.doesNotMatch(last.text,/杯|酒/);assert.equal(last.reactions[0].emotion,'pressing');
 });
 
 test('a project proposal or family bridge does not invent tea or a private-talk offer',()=>{

@@ -11,9 +11,9 @@ export async function POST(req: Request) {
   const lang=req.headers.get('accept-language')?.startsWith('en')?'en':'zh';
   const tooLarge=pick({zh:'这次饭局资料过长，暂时无法提交。',en:'The dinner context is too long to submit.'},lang);
   try {
-    if (Number(req.headers.get('content-length')) > 24_576) throw new LLMError(tooLarge, 413);
+    if (Number(req.headers.get('content-length')) > 196_608) throw new LLMError(tooLarge, 413);
     const raw = await req.text();
-    if (new TextEncoder().encode(raw).length > 24_576) throw new LLMError(tooLarge, 413);
+    if (new TextEncoder().encode(raw).length > 196_608) throw new LLMError(tooLarge, 413);
     let input: unknown;
     try { input = JSON.parse(raw); } catch { throw new LLMError(pick({zh:'提交内容无法读取，请再试一次。',en:'The submission could not be read. Please try again.'},lang), 400); }
     const body = parseDinnerInput(input);
