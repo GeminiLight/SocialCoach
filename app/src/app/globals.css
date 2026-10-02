@@ -496,9 +496,9 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   --dinner-scene-skinShadow: oklch(.65 .064 39);
   --dinner-scene-skinWarm: oklch(.745 .077 45);
   --dinner-scene-skinMature: oklch(.72 .068 44);
-  --dinner-scene-sclera: oklch(.86 .023 75);
+  --dinner-scene-sclera: oklch(.81 .028 75);
   --dinner-scene-lip: oklch(.62 .073 30);
-  --dinner-scene-iris: oklch(.29 .033 55);
+  --dinner-scene-iris: oklch(.39 .050 55);
   --dinner-scene-hair: oklch(.245 .026 51);
   --dinner-scene-hairHighlight: oklch(.38 .032 53);
   --dinner-scene-mouth: oklch(.36 .041 30);

@@ -1,4 +1,4 @@
-import { BufferGeometry, Float32BufferAttribute, Vector3, CatmullRomCurve3, TubeGeometry, SphereGeometry, Matrix4, Quaternion, Color, CanvasTexture, SRGBColorSpace, ShapeUtils, Vector2 } from 'three';
+import { BufferGeometry, Float32BufferAttribute, Vector3, CatmullRomCurve3, TubeGeometry, SphereGeometry, Matrix4, Quaternion, Color, CanvasTexture, SRGBColorSpace, DataTexture, RepeatWrapping, ShapeUtils, Vector2 } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 export type V3 = [number, number, number];
@@ -49,9 +49,11 @@ export function skinPigment(geometry:BufferGeometry,base:string,shadow:string,wa
   const position=geometry.getAttribute('position'),colors:number[]=[],skin=new Color(base),shade=new Color(shadow),cheek=new Color(warm),color=new Color();
   for(let i=0;i<position.count;i++){
     const x=position.getX(i),y=position.getY(i),z=position.getZ(i),front=Math.max(0,Math.min(1,z/.2));
-    const warmth=Math.exp(-((Math.abs(x)-.16)**2/.003+(y+.075)**2/.003))*.13*front;
+    const warmth=Math.exp(-((Math.abs(x)-.16)**2/.003+(y+.075)**2/.003))*.11*front;
     const lower=Math.max(0,-y-.16)*.2,variation=(Math.sin(x*57+y*31)*Math.sin(y*43+z*29)+1)*.003;
-    color.copy(skin).lerp(shade,Math.min(.08,lower+variation)).lerp(cheek,warmth);colors.push(color.r,color.g,color.b);
+    const lipWidth=Math.max(0,1-(x/.072)**2),seam=-.190+.004*(x/.072)**2;
+    const vermilion=Math.exp(-(((y-seam)/(.008*Math.sqrt(lipWidth)+.0001))**2))*lipWidth*.36*front;
+    color.copy(skin).lerp(shade,Math.min(.06,lower+variation)).lerp(cheek,warmth+vermilion);colors.push(color.r,color.g,color.b);
   }
   geometry.setAttribute('color',new Float32BufferAttribute(colors,3));return geometry;
 }
@@ -68,16 +70,22 @@ const features:Record<string,{width:number;jaw:number;eye:number;nose:number;mou
 };
 export function faceFeatures(id:string){return features[id]??{width:1,jaw:1,eye:.105,nose:1,mouth:1,brow:0,part:0};}
 const faceProfile:Ring[] = [
-  [-.355,.045,.085,.03],[-.336,.105,.139,.026],[-.29,.173,.174,.016],
-  [-.225,.22,.199,.009],[-.15,.25,.215,.003],[-.07,.27,.229,0],
-  [.025,.272,.238,-.003],[.125,.259,.242,-.008],[.225,.242,.227,-.015],
-  [.31,.202,.189,-.02],[.373,.132,.132,-.023],[.402,.025,.03,-.024],
+  // The nape continues into the collar; there is no detached cylinder under the jaw.
+  [-.64,.139,.111,-.048],[-.52,.122,.106,-.051],[-.42,.116,.107,-.048],
+  [-.353,.13,.137,-.027],[-.305,.166,.168,-.006],[-.24,.214,.184,-.008],
+  [-.15,.248,.204,-.010],[-.07,.267,.219,-.009],
+  [.025,.261,.231,-.009],[.125,.246,.237,-.013],[.225,.236,.222,-.018],
+  [.31,.201,.187,-.023],[.373,.128,.129,-.025],[.402,.022,.026,-.026],
 ];
 function portraitProfile(id:string):Ring[] {
   const f=faceFeatures(id);
-  return faceProfile.map(([y,w,d,z])=>[y,w*f.width*(y<-.2?f.jaw:1),d,z]);
+  const feminine=['lin','aunt','mom','yue'].includes(id);
+  const profile=feminine?[
+    [-.74,.23,.22,.015],[-.60,.18,.205,.02],[-.50,.128,.13,-.012],...faceProfile.slice(2),
+  ] as Ring[]:faceProfile;
+  return profile.map(([y,w,d,z])=>[y,w*f.width*(y<-.2?f.jaw:1),d,z]);
 }
-function sampleProfile(rings:Ring[],y:number):Ring {
+export function profileAt(rings:Ring[],y:number):Ring {
   let i=rings.findIndex((r,n)=>n<rings.length-1&&y>=r[0]&&y<=rings[n+1][0]);
   if(i<0)i=y<rings[0][0]?0:rings.length-2;
   const a=rings[Math.max(0,i-1)],b=rings[i],c=rings[i+1],d=rings[Math.min(rings.length-1,i+2)];
@@ -90,22 +98,27 @@ function sampleProfile(rings:Ring[],y:number):Ring {
 }
 function sculptFace(id:string,x:number,y:number,z:number) {
   const f=faceFeatures(id);
-  const orbit=Math.exp(-((Math.abs(x)-f.eye)**2/.0019+(y-.025)**2/.0014))*.011;
-  const cheek=Math.exp(-((Math.abs(x)-.16)**2/.004+(y+.08)**2/.004))*.009;
-  const muzzle=Math.exp(-(x*x/.005+(y+.195)**2/.004))*.003;
-  // Nose and cheeks belong to one continuous surface: no stacked nose primitives.
-  const bridge=Math.exp(-(x*x/.0007+(y+.025)**2/.011))*.022*f.nose;
-  const tip=Math.exp(-(x*x/.001+(y+.093)**2/.00085))*.035*f.nose;
-  const wings=Math.exp(-((Math.abs(x)-.034*f.nose)**2/.00024+(y+.117)**2/.00032))*.011;
-  return z-orbit+cheek+muzzle+bridge+tip+wings;
+  const orbit=Math.exp(-((Math.abs(x)-f.eye)**2/.0022+(y-.025)**2/.0015))*.009;
+  const brow=Math.exp(-((Math.abs(x)-f.eye)**2/.003+(y-.083)**2/.0008))*.004;
+  const cheek=Math.exp(-((Math.abs(x)-.16)**2/.003+(y+.061)**2/.0025))*.004;
+  const muzzle=Math.exp(-(x*x/.005+(y+.18)**2/.003))*.012;
+  const chin=Math.exp(-(x*x/.006+(y+.29)**2/.0015))*.005;
+  const bridge=Math.exp(-(x*x/.00085+(y+.004)**2/.013))*.029*f.nose;
+  const tip=Math.exp(-(x*x/.0009+(y+.092)**2/.0011))*.047*f.nose;
+  const wings=Math.exp(-((Math.abs(x)-.033*f.nose)**2/.00022+(y+.113)**2/.00032))*.017;
+  const philtrum=Math.exp(-(x*x/.00013+(y+.151)**2/.00055))*.005;
+  const chinFold=Math.exp(-(x*x/.004+(y+.226)**2/.0004))*.002;
+  const lipArc=Math.max(0,1-(x/(.072*f.mouth))**2),seam=-.190+.004*(x/(.072*f.mouth))**2;
+  const lips=lipArc*(Math.exp(-((y-seam-.006)**2)/.000055)*.004+Math.exp(-((y-seam+.008)**2)/.00006)*.005);
+  return z-orbit+brow+cheek+muzzle+chin+bridge+tip+wings-philtrum-chinFold+lips;
 }
 /** Shared by the skin, eyelids, eyebrows and lips so detail follows the cheek surface. */
 export function faceSurface(id:string,x:number,y:number) {
-  const [,w,d,z=0]=sampleProfile(portraitProfile(id),y);
+  const [,w,d,z=0]=profileAt(portraitProfile(id),y);
   return sculptFace(id,x,y,Math.sqrt(Math.max(0,1-(x/w)**2))*d+z);
 }
 export function faceGeometry(_mature:boolean,_feminine:boolean,id='') {
-  return silhouette(portraitProfile(id),96,(x,y,z)=>sculptFace(id,x,y,z),8);
+  return silhouette(portraitProfile(id),160,(x,y,z)=>sculptFace(id,x,y,z),12);
 }
 export function curveGeometry(points:V3[],radius=.006,segments=16) {
   return new TubeGeometry(new CatmullRomCurve3(points.map(p=>new Vector3(...p))),segments,radius,5,false);
@@ -115,7 +128,7 @@ export function polygonGeometry(points:V3[]) {
   const indices:number[]=[];for(let i=1;i<points.length-1;i++)indices.push(0,i,i+1);geometry.setIndex(indices);geometry.computeVertexNormals();return geometry;
 }
 export function clothSurface(rings:Ring[],x:number,y:number) {
-  const [,width,depth,z=0]=sampleProfile(rings,y);
+  const [,width,depth,z=0]=profileAt(rings,y);
   return z+Math.sqrt(Math.max(0,1-(x/width)**2))*depth;
 }
 /** Triangulate concave lapels, then subdivide and drape every vertex onto the torso. */
@@ -170,6 +183,43 @@ export function eyeGeometry(width:number,height:number,id='',centerX=0,centerY=.
   }
   const g=new BufferGeometry();g.setAttribute('position',new Float32BufferAttribute(vertices,3));g.setAttribute('uv',new Float32BufferAttribute(uv,2));g.setIndex(indices);g.computeVertexNormals();return g;
 }
+
+export function browGeometry(id:string,side:number) {
+  const positions:number[]=[],indices:number[]=[],f=faceFeatures(id),origin=faceSurface(id,side*f.eye,.023);
+  for(let i=0;i<=28;i++)for(let edge=0;edge<2;edge++){
+    const u=i/14-1,x=u*.048,y=.061+(1-u*u)*.009+(edge-.5)*.0065*Math.sqrt(Math.max(0,1-u*u));
+    positions.push(x,y,faceSurface(id,side*f.eye+x,.023+y)-origin+.0014);
+  }
+  for(let i=0;i<28;i++){const a=i*2;indices.push(a,a+2,a+1,a+1,a+2,a+3);}
+  const g=new BufferGeometry();g.setAttribute('position',new Float32BufferAttribute(positions,3));g.setIndex(indices);g.computeVertexNormals();return g;
+}
+
+/** Fine strands follow the scalp UVs, with a broad part and irregular strand widths. */
+export function hairTexture(base:string,highlight:string) {
+  const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=512;
+  const c=canvas.getContext('2d')!;c.fillStyle=base;c.fillRect(0,0,1024,512);
+  c.strokeStyle=highlight;
+  for(let i=-32;i<300;i++){
+    const x=i*4.1,curl=Math.sin(i*2.17)*9;
+    c.globalAlpha=.14+.14*(.5+.5*Math.sin(i*6.71));c.lineWidth=.45+(i%3+3)%3*.35;
+    c.beginPath();c.moveTo(x,0);c.bezierCurveTo(x-28,150,x+curl+25,350,x+curl,512);c.stroke();
+  }
+  const texture=new CanvasTexture(canvas);texture.colorSpace=SRGBColorSpace;texture.anisotropy=4;return texture;
+}
+
+/** Scalar height data only; the skin pigment continues to come from CSS. */
+export function skinDetailTexture() {
+  const size=512,data=new Uint8Array(size*size*4);
+  let state=4179;
+  for(let i=0;i<size*size;i++){
+    state=(Math.imul(state,1664525)+1013904223)>>>0;
+    const height=120+(state>>>28);
+    data.set([height,height,height,255],i*4);
+  }
+  const texture=new DataTexture(data,size,size);texture.wrapS=texture.wrapT=RepeatWrapping;
+  texture.needsUpdate=true;return texture;
+}
+
 /** Painted locally; pupils move under the fixed almond aperture, never over the lids. */
 export function eyeTexture(p:{sclera:string;skinShadow:string;iris:string;dark:string;porcelain:string}) {
   const canvas=document.createElement('canvas');canvas.width=512;canvas.height=224;
@@ -180,7 +230,7 @@ export function eyeTexture(p:{sclera:string;skinShadow:string;iris:string;dark:s
   c.fillStyle=iris;c.beginPath();c.arc(256,114,94,0,Math.PI*2);c.fill();
   c.strokeStyle=p.porcelain;c.globalAlpha=.08;c.lineWidth=1.4;
   for(let i=0;i<64;i++){const a=i*Math.PI/32;c.beginPath();c.moveTo(256+Math.cos(a)*47,114+Math.sin(a)*47);c.lineTo(256+Math.cos(a)*88,114+Math.sin(a)*88);c.stroke();}
-  c.globalAlpha=1;c.fillStyle=p.dark;c.beginPath();c.arc(256,114,43,0,Math.PI*2);c.fill();
+  c.globalAlpha=1;c.fillStyle=p.dark;c.beginPath();c.arc(256,114,34,0,Math.PI*2);c.fill();
   // A broad lid shadow avoids the bright white, staring doll-eye effect.
   const shade=c.createLinearGradient(0,0,0,224);shade.addColorStop(0,p.skinShadow);shade.addColorStop(.55,'transparent');shade.addColorStop(1,'transparent');
   c.globalAlpha=.42;c.fillStyle=shade;c.fillRect(0,0,512,224);c.globalAlpha=.72;
@@ -189,7 +239,7 @@ export function eyeTexture(p:{sclera:string;skinShadow:string;iris:string;dark:s
   const texture=new CanvasTexture(canvas);texture.colorSpace=SRGBColorSpace;texture.anisotropy=4;return texture;
 }
 export function scalpGeometry(bob:boolean,swept:boolean,mature:boolean,id='') {
-  const positions:number[]=[],indices:number[]=[],segments=80,rows=28,f=faceFeatures(id);
+  const positions:number[]=[],indices:number[]=[],uv:number[]=[],segments=96,rows=40,f=faceFeatures(id);
   for(let i=0;i<=rows;i++)for(let j=0;j<=segments;j++){
     const a=j/segments*Math.PI*2,front=Math.cos(a),side=Math.abs(Math.sin(a));
     const blend=Math.max(0,Math.min(1,(front-.18)/.58)),transition=blend*blend*(3-2*blend);
@@ -200,29 +250,23 @@ export function scalpGeometry(bob:boolean,swept:boolean,mature:boolean,id='') {
     // A swept crown with broad carved locks, not a hemispherical helmet or wire strands.
     const sweep=Math.sin(a+.65)*Math.sin(theta)*(swept?.025:.008);
     const locks=Math.sin(a*(bob?13:17)+theta*(swept?5:2))*.0025*Math.sin(theta);
-    const width=(.281*f.width+(bob?.017:.006))+locks;
-    const x=Math.sin(a)*Math.pow(Math.sin(theta),.88)*width+Math.sin(theta*.9)*f.part*.22;
     const y=Math.cos(theta)*.428+.010+sweep;
-    let z=Math.cos(a)*Math.pow(Math.sin(theta),.92)*(.293+locks)-.016-(bob&&front<.2?.014*i/rows:0);
+    const [,sw,sd,so=0]=profileAt(portraitProfile(id),Math.min(y,.373));
+    const crown=y>.373?Math.sqrt(Math.max(0,(.438-y)/(.438-.373))):1;
+    const volume=bob?.018:.008;
+    const x=Math.sin(a)*(sw+volume+locks)*crown;
+    let z=Math.cos(a)*(sd+volume+locks)*crown+so;
     if(front>.15&&y<.395&&y>-.30)z=Math.max(z,faceSurface(id,x,y)+.008);
     positions.push(x,y,z);
+    uv.push(j/segments,i/rows);
   }
   for(let i=0;i<rows;i++)for(let j=0;j<segments;j++){const a=i*(segments+1)+j,b=a+segments+1;indices.push(a,b,a+1,a+1,b,b+1);}
-  const g=new BufferGeometry();g.setAttribute('position',new Float32BufferAttribute(positions,3));g.setIndex(indices);g.computeVertexNormals();smoothWrapNormals(g,segments,rows+1,true);return g;
+  const g=new BufferGeometry();g.setAttribute('position',new Float32BufferAttribute(positions,3));g.setAttribute('uv',new Float32BufferAttribute(uv,2));g.setIndex(indices);g.computeVertexNormals();smoothWrapNormals(g,segments,rows+1,true);return g;
 }
-export function hairPigment(geometry:BufferGeometry,base:string,highlight:string) {
-  const vertices=geometry.getAttribute('position'),colors:number[]=[],dark=new Color(base),light=new Color(highlight),c=new Color();
-  for(let i=0;i<vertices.count;i++){
-    const x=vertices.getX(i),y=vertices.getY(i),z=vertices.getZ(i);
-    const sweep=.5+.5*Math.sin(Math.atan2(x,z+.02)*17+y*8);
-    c.copy(dark).lerp(light,.045+sweep*.085+Math.max(0,y)*.10);colors.push(c.r,c.g,c.b);
-  }
-  geometry.setAttribute('color',new Float32BufferAttribute(colors,3));return geometry;
-}
-function ellipsoid(position:V3,scale:V3) {const g=new SphereGeometry(1,12,8);g.applyMatrix4(new Matrix4().compose(new Vector3(...position),new Quaternion(),new Vector3(...scale)));return g;}
+function ellipsoid(position:V3,scale:V3) {const g=new SphereGeometry(1,24,16);g.applyMatrix4(new Matrix4().compose(new Vector3(...position),new Quaternion(),new Vector3(...scale)));return g;}
 /** Fingers are continuous tapered tubes with phalange bends; merge once per pose. */
 export function handGeometry(pose:'relaxed'|'cup'|'stem'|'phone'|'open',side=1) {
-  const parts:BufferGeometry[]=[ellipsoid([0,-.07,.015],[.061,.087,.032]),ellipsoid([0,-.005,.007],[.037,.052,.028])];
+  const parts:BufferGeometry[]=[ellipsoid([0,-.07,.015],[.061,.087,.032]),ellipsoid([0,-.005,.007],[.047,.068,.033])];
   for(let i=0;i<4;i++){
     const x=(.046-i*.029)*side,length=[.113,.14,.132,.102][i];
     let points:V3[];

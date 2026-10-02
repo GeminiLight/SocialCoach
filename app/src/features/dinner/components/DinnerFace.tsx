@@ -1,8 +1,9 @@
 import { useEffect, useMemo, type RefObject } from 'react';
-import { DoubleSide, type Group, type Mesh, type Texture } from 'three';
+import { DoubleSide, MeshStandardMaterial, SkinnedMesh, type Group, type Mesh, type Texture } from 'three';
 import type { Character, Emotion } from '../lib/content';
 import type { Palette } from '../lib/palette';
-import { curveGeometry, eyeGeometry, eyeTexture, faceFeatures, faceGeometry, faceSurface, hairPigment, scalpGeometry, skinPigment, type V3 } from '../lib/avatar';
+import { curveGeometry, eyeGeometry, eyeTexture, faceFeatures, faceGeometry, faceSurface, scalpGeometry, skinPigment, browGeometry, hairTexture, skinDetailTexture, type V3 } from '../lib/avatar';
+import { bindPortrait, portraitRig, headCenter, headPivot, portraitScale, bindRestPose } from '../lib/anatomy';
 
 function Contour({points,color,radius=.003,opacity=1}:{points:V3[];color:string;radius?:number;opacity?:number}) {
   const key=JSON.stringify(points);
@@ -14,24 +15,38 @@ function SoftForm({position,scale,color}:{position:V3;scale:V3;color:string}) {
   return <mesh position={position} scale={scale}><sphereGeometry args={[1,28,20]}/><meshStandardMaterial color={color} roughness={.82}/></mesh>;
 }
 
-type Props={character:Character;p:Palette;emotion:Emotion;eyes:RefObject<(Group|null)[]>;pupils:RefObject<Texture|null>;mouth:RefObject<Mesh>;lowerLip:RefObject<Group>;brows:RefObject<(Group|null)[]>};
+type Props={character:Character;p:Palette;emotion:Emotion;head:RefObject<Group>;eyes:RefObject<(Group|null)[]>;pupils:RefObject<Texture|null>;mouth:RefObject<Mesh>;lowerLip:RefObject<Group>;brows:RefObject<(Group|null)[]>};
 
 /** Soft, continuous portrait sculpture. Small features follow the same skin surface. */
-export function DinnerFace({character,p,emotion,eyes,pupils:pupilsRef,mouth,lowerLip,brows}:Props) {
+export function DinnerFace({character,p,emotion,head,eyes,pupils:pupilsRef,mouth,lowerLip,brows}:Props) {
   const {id}=character;
   const mature=['chen','aunt','mom','dad'].includes(id),older=['aunt','mom','dad'].includes(id),feminine=character.hair==='bob';
   const skin=older?p.skinMature:feminine?p.skin:p.skinWarm,feature=faceFeatures(id);
   const hair=id==='dad'?p.hairGray:p.hair;
-  const geometry=useMemo(()=>skinPigment(faceGeometry(mature,feminine,id),skin,p.skinShadow,p.lip),[mature,feminine,id,skin,p.skinShadow,p.lip]);
-  const scalp=useMemo(()=>hairPigment(scalpGeometry(feminine,character.hair==='swept',mature,id),hair,p.hairHighlight),[feminine,character.hair,mature,id,hair,p.hairHighlight]);
+  const geometry=useMemo(()=>bindPortrait(skinPigment(faceGeometry(mature,feminine,id),skin,p.skinShadow,p.lip)),[mature,feminine,id,skin,p.skinShadow,p.lip]);
+  const rig=useMemo(()=>portraitRig(),[]);
+  const skinDetail=useMemo(()=>skinDetailTexture(),[]);
+  const skinMesh=useMemo(()=>{
+    const mesh=new SkinnedMesh(geometry,new MeshStandardMaterial({vertexColors:true,roughness:.76,bumpMap:skinDetail,bumpScale:.00022}));
+    bindRestPose(mesh,rig.skeleton);mesh.castShadow=true;mesh.frustumCulled=false;return mesh;
+  },[geometry,rig,skinDetail]);
+  const eyebrow=useMemo(()=>[-1,1].map(side=>browGeometry(id,side)),[id]);
+  const strands=useMemo(()=>hairTexture(hair,p.hairHighlight),[hair,p.hairHighlight]);
+  const scalp=useMemo(()=>scalpGeometry(feminine,character.hair==='swept',mature,id),[feminine,character.hair,mature,id]);
   const iris=useMemo(()=>eyeTexture(p),[p]);
-  const eyeHeight=older?.018:.022,eyeWidth=feminine?.054:.052,eyeY=.023;
+  const eyeHeight=older?.017:.020,eyeWidth=feminine?.057:.055,eyeY=.023;
   const apertures=useMemo(()=>[-1,1].map(side=>eyeGeometry(eyeWidth,eyeHeight,id,side*feature.eye,eyeY)),[eyeWidth,eyeHeight,id,feature.eye]);
   useEffect(()=>{pupilsRef.current=iris;return()=>{pupilsRef.current=null;iris.dispose();};},[iris,pupilsRef]);
   useEffect(()=>()=>{geometry.dispose();scalp.dispose();apertures.forEach(g=>g.dispose());},[geometry,scalp,apertures]);
+  useEffect(()=>()=>{skinMesh.material.dispose();},[skinMesh]);
+  useEffect(()=>()=>{rig.skeleton.dispose();skinDetail.dispose();},[rig,skinDetail]);
+  useEffect(()=>()=>{eyebrow.forEach(g=>g.dispose());strands.dispose();},[eyebrow,strands]);
   const surface=(x:number,y:number,lift=.0025):V3=>[x,y,faceSurface(id,x,y)+lift];
   return <>
-    <mesh geometry={geometry} castShadow><meshStandardMaterial vertexColors roughness={.82}/></mesh>
+    <primitive object={skinMesh}/>
+    <primitive object={rig.root}>
+    <primitive object={rig.head} ref={head}>
+    <group position={[0,headCenter-headPivot,.01]} scale={portraitScale}>
     {[-1,1].map(side=><group key={side} position={[side*(.267*feature.width),-.041,-.017]} rotation={[0,side*.12,side*-.08]}>
       <SoftForm position={[0,0,0]} scale={[.032,.067,.036]} color={skin}/>
       <SoftForm position={[side*.009,.004,.031]} scale={[.012,.037,.004]} color={p.skinShadow}/>
@@ -46,12 +61,12 @@ export function DinnerFace({character,p,emotion,eyes,pupils:pupilsRef,mouth,lowe
       return <group key={side} position={[x,eyeY,origin]}>
         <group ref={el=>{eyes.current[i]=el;}}>
           <mesh geometry={apertures[i]}><meshStandardMaterial map={iris} roughness={.55}/></mesh>
-          <Contour color={p.skinShadow} radius={feminine?.0028:.0024} points={rim.map(r=>point(r.x,r.arc*eyeHeight))}/>
-          <Contour color={skin} radius={.0038} points={rim.map(r=>point(r.x,-r.arc*eyeHeight*.72,.004))}/>
+          <Contour color={p.skinShadow} radius={.0014} points={rim.map(r=>point(r.x,r.arc*eyeHeight))}/>
+          <Contour color={skin} radius={.0017} points={rim.map(r=>point(r.x,-r.arc*eyeHeight*.72,.004))}/>
         </group>
-        <Contour color={p.skinShadow} opacity={.20} radius={.0015} points={[-.040,-.020,0,.020,.040].map(u=>point(u,.032+(1-(u/.045)**2)*.006,.0018))}/>
+        <Contour color={p.skinShadow} opacity={.27} radius={.0012} points={[-.042,-.021,0,.021,.042].map(u=>point(u,.030+(1-(u/.045)**2)*.007,.0015))}/>
         <group ref={el=>{brows.current[i]=el;}} position={[0,feature.brow,0]} rotation={[0,0,browAngle]}>
-          <Contour color={hair} radius={feminine?.0039:.0052} points={[-.048,-.026,0,.024,.045].map((u,j)=>point(u,[.063,.07,.072,.068,.061][j],.0025))}/>
+          <mesh geometry={eyebrow[i]}><meshStandardMaterial color={hair} roughness={.9}/></mesh>
         </group>
         {older&&<Contour color={p.skinShadow} opacity={.16} radius={.0014} points={[-.033,-.015,.008,.03].map(u=>point(u,-.025-(1-(u/.045)**2)*.008,.002))}/>}
         {character.glasses&&<>
@@ -62,12 +77,12 @@ export function DinnerFace({character,p,emotion,eyes,pupils:pupilsRef,mouth,lowe
     })}
     {character.glasses&&<Contour color={p.brass} radius={.003} points={[[-.043,.052,.26],[0,.057,.274],[.043,.052,.26]]}/>}
     {/* Tiny recessed nostril marks; all volume is in the continuous face. */}
-    {[-1,1].map(side=><Contour key={side} color={p.skinShadow} radius={.0017} opacity={.5} points={[surface(side*.018,-.130),surface(side*.026,-.132),surface(side*.033,-.128)]}/>)}
-    <group scale={[feature.mouth,1,1]}>
-      <mesh ref={mouth} position={surface(0,-.203,.003)} scale={[.051,.0018,.002]}><sphereGeometry args={[1,32,12]}/><meshStandardMaterial color={p.mouth} roughness={1}/></mesh>
-      <Contour color={p.lip} radius={.0028} opacity={.66} points={[[-.052,-.201],[-.025,-.197],[-.011,-.197],[0,-.199],[.012,-.197],[.027,-.198],[.052,-.201]].map(([x,y])=>surface(x,y))}/>
-      <group ref={lowerLip}><Contour color={p.lip} radius={.0036} opacity={.5} points={[[-.048,-.206],[-.025,-.212],[0,-.214],[.025,-.212],[.048,-.206]].map(([x,y])=>surface(x,y))}/></group>
+    {[-1,1].map(side=><Contour key={side} color={p.skinShadow} radius={.0015} opacity={.42} points={[surface(side*.017,-.128),surface(side*.025,-.131),surface(side*.032,-.127)]}/>)}
+    <mesh ref={mouth} position={surface(0,-.190,.0035)} scale={[.046*feature.mouth,.0018,.001]}><sphereGeometry args={[1,32,12]}/><meshStandardMaterial color={p.mouth} roughness={1}/></mesh>
+    <group ref={lowerLip}><Contour color={p.mouth} radius={.00075} opacity={.60} points={[-1,-.75,-.5,-.25,0,.25,.5,.75,1].map(u=>surface(u*.067*feature.mouth,-.190+.004*u*u,.0018))}/></group>
+    <mesh geometry={scalp} castShadow><meshStandardMaterial map={strands} bumpMap={strands} bumpScale={.003} roughness={.72} side={DoubleSide}/></mesh>
     </group>
-    <mesh geometry={scalp} castShadow><meshStandardMaterial vertexColors roughness={.8} side={DoubleSide}/></mesh>
+    </primitive>
+    </primitive>
   </>;
 }

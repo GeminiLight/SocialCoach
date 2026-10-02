@@ -8,7 +8,7 @@ test('all portrait surfaces have finite positions and normals within a small geo
   for(const c of cast){
     const mature=['chen','aunt','mom','dad'].includes(c.id);
     for(const g of [faceGeometry(mature,c.hair==='bob',c.id),scalpGeometry(c.hair==='bob',c.hair==='swept',mature,c.id)]){
-      assert.ok(g.getAttribute('position').count<10000,c.id);
+      assert.ok(g.getAttribute('position').count<32000,c.id);
       for(const name of ['position','normal'])assert.ok(Array.from(g.getAttribute(name).array).every(Number.isFinite),`${c.id}: ${name}`);
       g.dispose();
     }
@@ -17,9 +17,9 @@ test('all portrait surfaces have finite positions and normals within a small geo
 test('front skin seam has continuous lighting rather than a split down the nose',()=>{
   for(const c of cast){
     const g=faceGeometry(false,c.hair==='bob',c.id),normal=g.getAttribute('normal');
-    // 96 radial segments plus a duplicate UV seam, then the two cap vertices.
-    for(let first=0;first<normal.count-2;first+=97){
-      for(const read of ['getX','getY','getZ'] as const)assert.ok(Math.abs(normal[read](first)-normal[read](first+96))<1e-6,c.id);
+    // 160 radial segments plus a duplicate UV seam, then the two cap vertices.
+    for(let first=0;first<normal.count-2;first+=161){
+      for(const read of ['getX','getY','getZ'] as const)assert.ok(Math.abs(normal[read](first)-normal[read](first+160))<1e-6,c.id);
     }
     g.dispose();
   }

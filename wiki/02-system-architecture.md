@@ -251,6 +251,8 @@ pnpm lint
 
 `directDinner()` → 已配置 BYOK：浏览器 `runDinner()` / `makeByokLLM()`；否则 `/api/dinner/direct` → `runDinner()` / `serverLLM`。任务层共用 `jsonCall()`、严格场景 / 事件校验，单次请求支持取消。复用主站 `health` 和限流，无新密钥、账号或服务端存储。详情见 [3D 接入说明](./archive/specs/spec-3d-integration.md)。
 
+人物显示由 `avatar.ts` 生成面部 / 发型 / 手部，`anatomy.ts` 生成连续衣身、裤腿和静止骨骼绑定。衣身曲面仅在资源创建时提取，每帧只更新骨骼变换；`DinnerFace` 的颈部下端固定，眼睛与发型跟随头部骨骼。手与物件共用手腕坐标。全部仍在按需加载的 WebGL 模块内，不改变对话、存档、API 或模型数据流。姿态重建与连接问题见 [人物几何复盘](./81-postmortem-character-geometry.md)。
+
 ### 维护归属
 
 自 2026-10-03 起，主仓库是 3D 版本的唯一开发主线；后续人物精修、场景、交互和问题修复均先在主站 `/3d` 交付。独立仓库 [SocialCoach-3D](https://github.com/GeminiLight/SocialCoach-3D) 保留为可单独运行的演示原型，允许落后，不阻塞主站发布。
