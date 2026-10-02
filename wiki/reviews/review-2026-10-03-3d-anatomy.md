@@ -23,4 +23,7 @@
 
 ## 发布
 
-正式本地预览已更新；远端部署状态待发布后记录。
+- 主仓库运行代码 `9ea6fa6b` 已推送；本地正式预览为 `http://localhost:4322/3d`。
+- Vercel 部署 `dpl_79vZrrXEG6826e8hWhxaQr8PACTB` 为 `READY`，已绑定 `socialcoach-ai.vercel.app` / `socialcoach-app.vercel.app`。
+- ModelScope 主站镜像提交 `a2ff7b3d`，六个运行文件与主仓库逐一校验一致。构建产物 `363578-a2ff7b3d-2026-10-03-02-07-14` 成功；新实例于 2026-10-03 02:07:59（北京时间）创建，状态 `Running`，启动日志确认 Next 已就绪。免费 CPU 配置未变更。
+- 公网浏览器访问本次超时，线上视觉验收仍待网络恢复；上述截图和交互验收来自相同代码的本地正式构建，不把部署平台状态当作线上视觉验收。
