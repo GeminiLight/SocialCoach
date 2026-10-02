@@ -1,0 +1,12 @@
+{
+  "id": "dpl_DZUF4DWEc43nDPr4ectrY96GGidV",
+  "status": "READY",
+  "target": "production",
+  "application_commit": "adaae5c2bdaa0a61d9508767d09b841a48fe95be",
+  "url": "https://socialcoach-d808vvonh-geminilights-projects.vercel.app",
+  "aliases": [
+    "https://socialcoach-ai.vercel.app",
+    "https://socialcoach-app.vercel.app"
+  ],
+  "verification": "Vercel CLI deployment list and inspect; not browser or model verification"
+}

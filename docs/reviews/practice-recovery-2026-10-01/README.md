@@ -1,6 +1,6 @@
 # 第二轮评审证据 · 2026-10-01 至 10-02
 
-对应 [完整评审](../../../wiki/reviews/review-2026-10-01-practice-recovery.md)与 [根因复盘](../../../wiki/81-postmortem-practice-continuity.md)。全部浏览器画面来自 localhost:3101 正式构建、一次性 Chromium 会话和合成档案。错误响应由测试控制，台词中的测试标记是夹具，不是真实用户或 NPC 表现。没有向外部反馈 / 统计服务提交内容，没有发布。
+对应 [完整评审](../../../wiki/reviews/review-2026-10-01-practice-recovery.md)与 [根因复盘](../../../wiki/81-postmortem-practice-continuity.md)。全部浏览器画面来自 localhost:3101 正式构建、一次性 Chromium 会话和合成档案。错误响应由测试控制，台词中的测试标记是夹具，不是真实用户或 NPC 表现。没有向外部反馈 / 统计服务提交内容，截图与回归阶段没有发布；2026-10-02 用户随后授权双平台部署，见 [发布记录](../../../wiki/specs/spec-modelscope-deployment.md#体验精修与中断恢复更新2026-10-02)。
 
 ## 准备失败与回复中断
 

@@ -1,0 +1,32 @@
+{
+  "studio_status": "Running",
+  "pages": {
+    "/": 200,
+    "/arena": 200,
+    "/settings": 200,
+    "/api/health": 200
+  },
+  "streams": {
+    "/api/roleplay": {
+      "read_blocks": 55,
+      "first_block_s": 2.59,
+      "total_s": 4.69
+    },
+    "/api/assess": {
+      "read_blocks": 4,
+      "first_block_s": 33.18,
+      "total_s": 33.18
+    }
+  },
+  "health": {
+    "serverKey": true,
+    "requireByok": false
+  },
+  "referenced_assets_200": 15,
+  "report": {
+    "scoringVersion": 2,
+    "stars": 2,
+    "ratings": 1,
+    "title_quote_present": false
+  }
+}

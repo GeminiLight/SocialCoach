@@ -1,0 +1,10 @@
+{
+  "public_html_accessible_with_browser_headers": true,
+  "javascript_resources": 14,
+  "release_markers": {
+    "socialcoach-recovery.json": true,
+    "pr_reply_interrupted": true,
+    "pr_silence_interrupted": true
+  },
+  "standard_chromium_embed_verified": false
+}
