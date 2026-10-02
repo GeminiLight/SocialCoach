@@ -20,4 +20,8 @@
 
 ## 发布
 
-本轮主仓库与既有 Vercel / ModelScope 发布正在进行。部署编号、运行状态和线上浏览器结果将在完成后补记。
+- 主仓库 `main`：功能提交 `8791f44ef0a227163b3a7aec926f6fc9e04319a8` 已推送。独立 `SocialCoach-3D@60cd20a` 仓库及本地原型保留。
+- Vercel：生产部署 `dpl_8fiTijQ7VLWweUYKmiNyKJX8b6Mt` 状态 `READY`，对应上述功能提交；生产别名包含 `socialcoach-ai.vercel.app`。入口：[SocialCoach 3D](https://socialcoach-ai.vercel.app/3d)。
+- ModelScope：同步提交 `70ce67e` 已推送到既有 Studio，部署状态与 runtime 均为 `Running`；构建日志确认 `/3d` 与 `/api/dinner/direct`，运行日志确认 `Ready`。继续使用原免费 Docker 硬件与模型配置。入口：[国内主站](https://modelscope.cn/studios/GeminiLight/SocialCoach?mode=full)。
+- 正式构建实际场景截图：`docs/reviews/3d-integration-2026-10-03/production-scene.png`。本地 standalone 的主站入口和 3D 页面验收完成。
+- 线上浏览器访问 Vercel 多次超时；当前网络直接请求 ModelScope 应用域名出现 TLS EOF。未据此修改证书、代理或平台配置；线上状态由平台发布结果与构建 / 运行日志确认，线上浏览器交互仍待可访问网络复核。
