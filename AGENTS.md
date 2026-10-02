@@ -8,6 +8,13 @@ SocialCoach —— LLM 社交技能教练。应用在 `app/`（Next.js），仓�
 2. 动 `app/` 里的代码前，读 `app/AGENTS.md` —— Next.js 16 与训练数据差异较大，该文件由 `next dev` 自动维护。
 3. 不要一次加载 `wiki/archive/`、`wiki/refs/`、`wiki/reviews/`。
 
+## 3D 版本维护
+
+- **主仓库是唯一开发主线。** 3D 饭局的功能、人物、交互与修复优先在 `app/src/features/dinner/` 和主站 `/3d` 完成、验证和发布。
+- `GeminiLight/SocialCoach-3D` 保留为独立演示原型，只接受从主仓库到独立仓库的可选同步。允许版本落后，不以两边一致作为主站交付条件。
+- 仅在适配成本低时同步可复用的场景、人物、素材或纯逻辑；不为同步复制主站的 Next.js、模型 / BYOK、存储和发布集成，也不维护两套平行实现。
+- 同步时记录主仓库来源提交和实际同步范围，在独立仓库运行相应检查；需要大量适配或独立维护时，保留其已验证版本。未经新需求，不引入自动双向同步或共享包重构。
+
 ## Wiki
 
 架构 / 数据流改动再读 `wiki/02-system-architecture.md` 与当前 stage；API 改动读 `wiki/04-api-reference.md`；UI 改动读 `wiki/03-design-principle.md`；修 bug 先扫 `wiki/80-known-pitfalls.md`。

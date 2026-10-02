@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-10-02 | Current stage: B -->
+<!-- Last verified: 2026-10-03 | Current stage: B -->
 
 # 系统架构
 
@@ -250,3 +250,9 @@ pnpm lint
 `app/src/features/dinner` 从独立原型导入，`/3d` 的客户端动态加载 WebGL，无额外服务 / iframe。`DinnerEntry` 仅引用静态截图，不加载 Three.js；公告设备标记与饭局存档独立于 Zustand 主档案。3D 的颜色和选择器有前缀，返回主站不改变纸面样式。
 
 `directDinner()` → 已配置 BYOK：浏览器 `runDinner()` / `makeByokLLM()`；否则 `/api/dinner/direct` → `runDinner()` / `serverLLM`。任务层共用 `jsonCall()`、严格场景 / 事件校验，单次请求支持取消。复用主站 `health` 和限流，无新密钥、账号或服务端存储。详情见 [3D 接入说明](./archive/specs/spec-3d-integration.md)。
+
+### 维护归属
+
+自 2026-10-03 起，主仓库是 3D 版本的唯一开发主线；后续人物精修、场景、交互和问题修复均先在主站 `/3d` 交付。独立仓库 [SocialCoach-3D](https://github.com/GeminiLight/SocialCoach-3D) 保留为可单独运行的演示原型，允许落后，不阻塞主站发布。
+
+同步只从主仓库流向独立仓库，并以低适配成本为前提。可复用的场景、人物、素材和纯逻辑可以按需同步；Next.js 路由、模型 / BYOK、存储及发布集成继续由主站维护。每次同步需记录来源提交与实际范围，并在独立运行环境完成相关检查。若需要大量适配、重复修复或持续独立验证，则保留独立版的已验证版本；暂不引入自动双向同步或共享包重构。执行约定见根目录 [AGENTS.md](../AGENTS.md)。
