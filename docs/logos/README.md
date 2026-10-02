@@ -8,6 +8,6 @@ The root English and Chinese READMEs display these official horizontal universit
 | `hkust-guangzhou-dark.png` | [HKUST(GZ) Chinese homepage header](https://www.hkust-gz.edu.cn/zh/wp-content/themes/hkust-gz-official-cn-0917/images/logo-zhcn-white-2x.png?v=052810) | Official white Chinese wordmark, dark backgrounds |
 | `ustc.svg` | [USTC homepage header](https://www.ustc.edu.cn/news/images/logo.svg) | Bilingual full university name; the original artwork includes light outlines |
 
-Retrieved and visually checked on 2026-10-03. README links lead to the respective university homepages. Both READMEs place the marks in a compact, right-aligned row above the banner. Each mark is 120 px wide (the row is about 244 px wide and 23 px tall), with a single nonbreaking space between the links so the marks stay together. The HKUST(GZ) mark switches via `<picture>` when the reader prefers a dark theme.
+Retrieved and visually checked on 2026-10-03. README links lead to the respective university homepages. Both READMEs place the marks in a compact, left-aligned row above the banner. Each mark is 120 px wide (the row is about 244 px wide and 23 px tall), with a single nonbreaking space between the links so the marks stay together. The HKUST(GZ) mark switches via `<picture>` when the reader prefers a dark theme.
 
 These third-party university marks retain their respective rights and are not covered by this repository's Apache 2.0 license.
