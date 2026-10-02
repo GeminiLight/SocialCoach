@@ -40,6 +40,8 @@ Preview five bilingual practice scenarios: [asking for a raise](https://tianfuwa
 
 Choose from **46 scenarios across 7 areas of life**, follow a personalized recommendation, or describe your own situation. The interface and practice content are available in **English and Simplified Chinese**.
 
+**New: [3D dinner practice](https://socialcoach-ai.vercel.app/3d).** Take a seat in fictional work, family and school dinners, switch perspectives, move around, and respond by typing or browser voice input. The 3D entry is also on the app home page.
+
 ## Social skills and social and emotional learning (SEL)
 
 SocialCoach is an AI learning tool focused on practicing social skills, one part of social and emotional learning (SEL). Its 34-skill map draws on the [five CASEL competencies](https://casel.org/what-is-sel/): self-awareness, self-management, social awareness, relationship skills, and responsible decision-making. You can rehearse a difficult conversation, then review feedback grounded in what you actually said. It is an individual practice tool, not a certified school curriculum or a clinical assessment. The [bilingual website](https://tianfuwang.tech/SocialCoach/) explains how the skills map to practice.

@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { Check, Download, Monitor, Moon, Pencil, Sun, Trash2, ChevronRight, HardDrive, SlidersHorizontal } from "lucide-react";
 import { SkillTag } from "@/components/SkillBits";
 import { Shell } from "@/components/Shell";
+import { dinnerBackup, DINNER_SAVE_KEY, DINNER_LAUNCH_KEY } from "@/features/dinner/storage";
 import { Button, Chip, Page, SectionTitle, Sheet, Switch, useToast } from "@/components/ui";
 import { isReady, STORAGE_KEY, useByok } from "@/lib/byok";
 import { stopSpeaking, unlockSpeech } from "@/lib/speech";
@@ -48,7 +49,7 @@ export default function Settings() {
     const blob = new Blob(
       [
         JSON.stringify(
-          { profile, proficiency, sessions, customScenarios, bookmarks, practiceDays, avatar: { seed: settings.avatarSeed, portrait: settings.avatarPortrait }, exportedAt: new Date().toISOString() },
+          { profile, proficiency, sessions, customScenarios, bookmarks, practiceDays, dinner3d: dinnerBackup(), avatar: { seed: settings.avatarSeed, portrait: settings.avatarPortrait }, exportedAt: new Date().toISOString() },
           null,
           2,
         ),
@@ -334,6 +335,8 @@ export default function Settings() {
               byok.clear();
               try {
                 localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(DINNER_SAVE_KEY);
+                localStorage.removeItem(DINNER_LAUNCH_KEY);
               } catch {}
               reset();
               setConfirm(false);

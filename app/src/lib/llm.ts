@@ -103,12 +103,13 @@ export async function chatText(o: ChatOpts): Promise<string> {
   if (PROVIDER === "openai") {
     const res = await openai().chat.completions.create(
       openaiArgs(o, SMART_MODEL, OPENAI_TOKEN_PARAM, OPENAI_DISABLE_THINKING) as unknown as OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming,
+      { signal: o.signal },
     );
     const choice = res.choices[0];
     if (choice?.message?.refusal) throw new LLMError("The model declined this request.", 422);
     return choice?.message?.content ?? "";
   }
-  const res = await anthropic().messages.create(anthropicArgs(o, SMART_MODEL));
+  const res = await anthropic().messages.create(anthropicArgs(o, SMART_MODEL), { signal: o.signal });
   if (res.stop_reason === "refusal") throw new LLMError("The model declined this request.", 422);
   return res.content
     .filter((b): b is Anthropic.TextBlock => b.type === "text")

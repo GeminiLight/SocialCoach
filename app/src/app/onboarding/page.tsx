@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics/track";
 import { AnimatePresence, motion } from "framer-motion";
@@ -9,7 +10,7 @@ import { COMPETENCIES, CONTEXTS, SKILLS, skillById, type ContextId, type Lang, t
 import { CONTEXT_HUES } from "@/data/scenario-icons";
 import { ContextIllustration } from "@/data/context-illustrations";
 import { SCENARIOS } from "@/data/corpus";
-import { t } from "@/lib/i18n";
+import { t, pick } from "@/lib/i18n";
 import { useApp, useLang } from "@/store/useApp";
 import { openModelSheet } from "@/lib/byok";
 import { BottomBar, Button, Chip } from "@/components/ui";
@@ -110,6 +111,7 @@ export default function Onboarding() {
               <h1 className="display text-[32px] sm:text-[36px] leading-[1.2] whitespace-pre-line">{t(lang, "ob_welcome_title")}</h1>
               <p className="text-[16px] text-ink-2 leading-relaxed max-w-[34ch]">{t(lang, "ob_welcome_body")}</p>
               <WelcomeScene lang={lang} />
+              <Link href="/3d" prefetch={false} className="press inline-flex min-h-11 items-center gap-2 self-start rounded-full border border-line px-4 text-[13px] text-ink-2">{pick({zh:"新体验 · 去 3D 饭桌坐坐",en:"New · Take a seat at a 3D dinner"},lang)}<ArrowRight size={15}/></Link>
             </div>
           )}
 

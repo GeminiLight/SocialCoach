@@ -1,0 +1,122 @@
+/* eslint-disable react-hooks/immutability -- Three.js cameras, meshes and the room simulation are mutable resources; React renders their separate snapshots. */
+import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { ContactShadows } from '@react-three/drei';
+import { ACESFilmicToneMapping, MathUtils, Mesh, PerspectiveCamera, Vector3 } from 'three';
+import { emotions, gestures, pick, ui, type Character, type Lang, type Scenario } from '../lib/content';
+import { getPalette } from '../lib/palette';
+import { SEATS, PLAYER_HOME, snapshot, stepWorld, focusConversation, freeLook, type World, type ViewMode, type RoomSave, type RoomEvent, type Point } from '../lib/room';
+import { l } from '../lib/content';
+import { attentionSubject, cameraPose, trackAttention, wrapAngle } from '../lib/attention';
+import {actorActionLabel,type Drama} from '../lib/drama';
+import {TableCups,ScenarioObjects,PlayerHands} from './DinnerProps';
+import {DinnerCharacter} from './DinnerCharacter';
+import {DinnerRoom,DinnerTable,DinnerChair} from './DinnerEnvironment';
+import {useDinnerSurfaces} from '../lib/surfaces';
+import type { Reply } from '../lib/engine';
+
+type SceneProps = { hudHeight:number; drama:Drama; line:string; scenario: Scenario; lang: Lang; reactions: Reply['reactions']; speakerId: string; selectedId: string | null; onSelect: (id: string) => void; reduced: boolean; started: boolean; viewReset: number; world:World; view:ViewMode; input:RefObject<Point>; paused:boolean; onWorldChange:(save:RoomSave,event:RoomEvent)=>void; onAvailability:(available:boolean)=>void };
+function ProjectLabels({ elements, world, speakerId, selectedId, view }: { elements:RefObject<(HTMLButtonElement|null)[]>; world:World; speakerId:string; selectedId:string|null; view:ViewMode }) {
+  const point=useMemo(()=>new Vector3(),[]);
+  useFrame(({camera,size})=>{
+    const occupied:{x:number;y:number;w:number;h:number}[]=[...document.querySelectorAll('.topbar,.scene-controls,.attention-control,.world-controls,.conversation')].map(el=>{const r=el.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,w:r.width,h:r.height};});
+    const cameraRight=new Vector3(1,0,0).applyQuaternion(camera.quaternion);
+    const faces=[...world.npcs,...(view==='third'?[world.player]:[])].flatMap(actor=>{
+      const center=new Vector3(actor.x,actor.seated?2.47:2.87,actor.z),projected=center.clone().project(camera);
+      if(projected.z< -1||projected.z>1)return [];
+      const side=center.clone().addScaledVector(cameraRight,.30).project(camera);
+      const top=center.clone().add(new Vector3(0,.36,0)).project(camera),bottom=center.clone().add(new Vector3(0,-.36,0)).project(camera);
+      return [{x:(projected.x*.5+.5)*size.width,y:(projected.y*-.5+.5)*size.height,w:Math.abs(side.x-projected.x)*size.width,h:Math.abs(top.y-bottom.y)*size.height*.5}];
+    });
+    const focusId=attentionSubject(world)?.id;
+    const candidates=world.npcs.map((actor,i)=>{
+      point.set(actor.x,actor.seated?3.04:3.44,actor.z).project(camera);
+      const el=elements.current[i];
+      const priority=actor.id===focusId?3:actor.id===speakerId?2:actor.id===selectedId?1:0;
+      return {el,priority,depth:point.z,x:(point.x*.5+.5)*size.width,y:(-point.y*.5+.5)*size.height,visible:point.z>-1&&point.z<1&&Math.abs(point.x)<1.03&&Math.abs(point.y)<.95};
+    }).sort((a,b)=>b.priority-a.priority||a.depth-b.depth);
+    for(const candidate of candidates){
+      const {el}=candidate;if(!el)continue;
+      const w=el.offsetWidth,h=el.offsetHeight,x=MathUtils.clamp(candidate.x,w/2+6,size.width-w/2-6);
+      const y=[0,16,32,48,64].map(offset=>candidate.y-offset).find(y=>y>h/2+80&&![...occupied,...faces].some(r=>Math.abs(r.x-x)<(r.w+w)/2+5&&Math.abs(r.y-y)<(r.h+h)/2+5));
+      const visible=candidate.visible&&y!==undefined;
+      el.style.transform=`translate(${x}px,${y??candidate.y}px) translate(-50%,-50%)`;el.style.visibility=visible?'visible':'hidden';
+      if(visible)occupied.push({x,y:y!,w,h});
+    }
+  });return null;
+}
+
+function WorldDirector({props,heading}:{props:SceneProps;heading:RefObject<number>}) {
+  const keys=useRef(new Set<string>());const last=useRef('');const elapsed=useRef(0);const revision=useRef(-1);const marker=useRef<Mesh>(null!);
+  useEffect(()=>{const down=(e:KeyboardEvent)=>{if(props.paused||e.target instanceof HTMLElement&&e.target.closest('textarea,input,select,[contenteditable=true],dialog'))return;if(['w','a','s','d'].includes(e.key.toLowerCase())){keys.current.add(e.key.toLowerCase());e.preventDefault();}};const up=(e:KeyboardEvent)=>keys.current.delete(e.key.toLowerCase());const clear=()=>{keys.current.clear();props.input.current={x:0,z:0};};window.addEventListener('keydown',down);window.addEventListener('keyup',up);window.addEventListener('blur',clear);return ()=>{window.removeEventListener('keydown',down);window.removeEventListener('keyup',up);window.removeEventListener('blur',clear);clear();};},[props.paused,props.input]);
+  useFrame((_,dt)=>{const k=keys.current;const input={x:props.input.current.x+(k.has('d')?1:0)-(k.has('a')?1:0),z:props.input.current.z+(k.has('w')?1:0)-(k.has('s')?1:0)};stepWorld(props.world,dt,input,heading.current,props.reactions,props.paused);if(!props.paused&&!props.world.player.seated&&!props.world.player.moving)props.world.player.heading=props.world.viewYaw;marker.current.visible=!!props.world.destination;if(props.world.destination)marker.current.position.set(props.world.destination.x,.016,props.world.destination.z);elapsed.current+=dt;if(elapsed.current>.2||revision.current!==props.world.revision){elapsed.current=0;const state=snapshot(props.world);const serialized=JSON.stringify(state);if(serialized!==last.current||revision.current!==props.world.revision){last.current=serialized;revision.current=props.world.revision;props.onWorldChange(state,props.world.event);}}},-2);
+  const p=useMemo(()=>getPalette(),[]);return <mesh ref={marker} rotation={[-Math.PI/2,0,0]} visible={false}><ringGeometry args={[.16,.23,32]}/><meshBasicMaterial color={p.brass} transparent opacity={.85} toneMapped={false}/></mesh>;
+}
+function CameraRig({props,heading}:{props:SceneProps;heading:RefObject<number>}) {
+  const {camera,size,gl}=useThree();
+  const drag=useRef<{x:number;y:number;originX:number;originY:number;id:number;active:boolean}|null>(null);
+  const position=useMemo(()=>new Vector3(),[]),target=useMemo(()=>new Vector3(),[]);
+  const resetSeen=useRef(props.viewReset);const framingOffset=useRef(0);const sideOffset=useRef(0);
+  useEffect(()=>{if(resetSeen.current!==props.viewReset){focusConversation(props.world);resetSeen.current=props.viewReset;}},[props.viewReset,props.world]);
+  useEffect(()=>{
+    const canvas=gl.domElement;canvas.tabIndex=0;canvas.setAttribute('aria-label',pick(ui.cameraLabel,props.lang));
+    const down=(e:PointerEvent)=>{if(e.button===0&&!props.paused)drag.current={x:e.clientX,y:e.clientY,originX:e.clientX,originY:e.clientY,id:e.pointerId,active:false};};
+    const move=(e:PointerEvent)=>{
+      const previous=drag.current;if(!previous||previous.id!==e.pointerId||props.paused)return;
+      if(!previous.active){if(Math.hypot(e.clientX-previous.originX,e.clientY-previous.originY)<5)return;previous.active=true;freeLook(props.world);}
+      props.world.viewYaw=wrapAngle(props.world.viewYaw-(e.clientX-previous.x)*.003);
+      props.world.viewPitch=MathUtils.clamp(props.world.viewPitch+(e.clientY-previous.y)*.002,-.48,.38);
+      previous.x=e.clientX;previous.y=e.clientY;
+    };
+    const up=()=>{drag.current=null;};
+    const key=(e:KeyboardEvent)=>{
+      if(props.paused)return;
+      const steps:Record<string,[number,number]>={ArrowLeft:[.1,0],ArrowRight:[-.1,0],ArrowUp:[0,.04],ArrowDown:[0,-.04]};
+      if(e.key==='Home'){focusConversation(props.world);e.preventDefault();}
+      else if(steps[e.key]){freeLook(props.world);const[yaw,pitch]=steps[e.key];props.world.viewYaw=wrapAngle(props.world.viewYaw+yaw);props.world.viewPitch=MathUtils.clamp(props.world.viewPitch+pitch,-.48,.38);e.preventDefault();}
+    };
+    canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('keydown',key);window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);window.addEventListener('blur',up);
+    return ()=>{canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('keydown',key);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',up);window.removeEventListener('blur',up);drag.current=null;};
+  },[gl,props.lang,props.world,props.paused]);
+  useFrame((_,dt)=>{
+    props.world.speakerId=props.speakerId;
+    if(!props.paused)trackAttention(props.world,dt,props.reduced);
+    heading.current=props.world.viewYaw;
+    const pose=cameraPose(props.world,props.view,size.width/size.height);
+    const perspective=camera as PerspectiveCamera;
+    perspective.fov=MathUtils.lerp(perspective.fov,pose.fov,props.reduced?1:1-Math.exp(-10*Math.min(dt,.05)));const offset=props.started?Math.min(size.height*.15,Math.max(0,props.hudHeight-190)*.45):0;framingOffset.current=MathUtils.lerp(framingOffset.current,offset,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));sideOffset.current=MathUtils.lerp(sideOffset.current,size.width/size.height<=1.25&&!props.world.player.seated?-56:0,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));perspective.setViewOffset(size.width,size.height,sideOffset.current,framingOffset.current,size.width,size.height);perspective.updateProjectionMatrix();
+    position.set(pose.position[0],pose.position[1],pose.position[2]);target.set(pose.target[0],pose.target[1],pose.target[2]);
+    camera.position.lerp(position,props.reduced?1:1-Math.exp(-14*Math.min(dt,.05)));camera.lookAt(target);
+  },-1);return null;
+}
+const playerCharacter:Character={id:'player',name:l('你','You'),role:l('玩家','Player'),description:l('你的角色','Your character'),outfit:'shirt',palette:'navy',hair:'short',glasses:false};
+
+class SceneBoundary extends Component<{ fallback: ReactNode; children: ReactNode; onError:()=>void },{ error: boolean }> {
+  state = { error: false };
+  static getDerivedStateFromError() { return { error:true }; }
+  componentDidCatch(){this.props.onError();}
+  render() { return this.state.error ? this.props.fallback : this.props.children; }
+}
+
+export default function DinnerScene(props: SceneProps) {
+  const p=useMemo(()=>getPalette(),[]);
+  const surfaces=useDinnerSurfaces(p);
+  const labels=useRef<(HTMLButtonElement|null)[]>([]);
+  const [ready,setReady]=useState(false);
+  const heading=useRef(Math.PI);
+  const fallback=<div className="scene-fallback"><p>{pick(ui.sceneFallback,props.lang)}</p><div>{props.scenario.characters.map(c=><button key={c.id} onClick={()=>props.onSelect(c.id)}>{pick(c.name,props.lang)}<small>{pick(c.role,props.lang)}</small></button>)}</div></div>;
+  return <SceneBoundary fallback={fallback} onError={()=>props.onAvailability(false)}><div className="dinner-render"><Suspense fallback={<div className="scene-loading" role="status">{pick(ui.sceneLoading,props.lang)}</div>}><Canvas role="img" aria-label={pick(ui.cameraLabel,props.lang)} shadows dpr={[1,1.65]} camera={{position:[0,2.58,3.55],fov:55,near:.1,far:60}} gl={{ antialias:true, toneMapping:ACESFilmicToneMapping, toneMappingExposure:1.12 }} fallback={null} onCreated={()=>{setReady(true);props.onAvailability(true);}}>
+    <color attach="background" args={[p.wall]} /><fog attach="fog" args={[p.wall,18,36]} />
+    <ambientLight intensity={.22} color={p.porcelain} /><hemisphereLight args={[p.porcelain,p.woodEdge,.45]} />
+    <directionalLight position={[-3,5,1]} intensity={2.35} color={p.white} castShadow shadow-mapSize={[2048,2048]} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-bias={-.0005} shadow-radius={3} />
+    <directionalLight position={[4,3,2]} intensity={.55} color={p.porcelain} />
+    <WorldDirector props={props} heading={heading}/><DinnerRoom p={p} surfaces={surfaces} world={props.world} paused={props.paused} scenario={props.scenario}/><group onClick={e=>e.stopPropagation()}><DinnerTable p={p} surfaces={surfaces}/><TableCups p={p} world={props.world} drama={props.drama} scenario={props.scenario} reactions={props.reactions}/><ScenarioObjects p={p} drama={props.drama} scenario={props.scenario} lang={props.lang} reduced={props.reduced}/></group>
+    {SEATS.map((seat,i)=><DinnerChair key={i} p={p} surfaces={surfaces} position={[seat.x,0,seat.z]} rotation={seat.heading}/>)}<DinnerChair p={p} surfaces={surfaces} position={[PLAYER_HOME.x,0,PLAYER_HOME.z]} rotation={Math.PI}/>
+    {props.scenario.characters.map((c,i)=><DinnerCharacter key={c.id} character={c} actor={props.world.npcs[i]} world={props.world} reaction={props.reactions.find(r=>r.characterId===c.id)} active={props.speakerId===c.id} onSelect={()=>props.onSelect(c.id)} p={p} surfaces={surfaces} reduced={props.reduced} drama={props.drama} index={i} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} />)}
+    {props.view==='third'&&<DinnerCharacter character={playerCharacter} actor={props.world.player} world={props.world} active={false} onSelect={()=>{}} p={p} surfaces={surfaces} reduced={props.reduced} drama={props.drama} index={3} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} player/>}
+    {props.view==='first'&&<PlayerHands p={p} drama={props.drama} lang={props.lang} scenario={props.scenario} world={props.world} hudHeight={props.hudHeight}/>}
+    <ContactShadows position={[0,.02,0]} opacity={.38} scale={14} blur={2.5} far={4.5} resolution={256} frames={1} color={p.dark} />
+    <CameraRig props={props} heading={heading}/>
+    <ProjectLabels elements={labels} world={props.world} speakerId={props.speakerId} selectedId={props.selectedId} view={props.view}/>
+  </Canvas></Suspense>{ready&&<div className="scene-labels">{props.scenario.characters.map((c,i)=>{const reaction=props.reactions.find(r=>r.characterId===c.id);const active=props.speakerId===c.id;const selected=props.selectedId===c.id;const actor=props.world.npcs[i];const eventGesture=actorActionLabel(props.drama,i,props.scenario.id,props.lang);return <button key={c.id} ref={el=>{labels.current[i]=el;}} className={`npc-label ${active?'is-speaking':''} ${selected?'is-selected':''} ${actor.seated?'':'is-standing'}`} onClick={()=>props.onSelect(c.id)} aria-pressed={selected}><span className="npc-name">{active&&<i/>}{pick(c.name,props.lang)}</span><span className="npc-state sr-only">{actor.moving?pick(ui.walking,props.lang):!actor.seated?pick(ui.standing,props.lang):active?pick(ui.speaking,props.lang):pick(emotions[reaction?.emotion??'neutral'],props.lang)}<span className="npc-gesture"><span className="label-divider">/</span>{eventGesture??pick(gestures[reaction?.gesture??'idle'],props.lang)}</span></span></button>;})}</div>}</div></SceneBoundary>;
+}

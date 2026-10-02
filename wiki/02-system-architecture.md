@@ -244,3 +244,9 @@ pnpm lint
 `practice-policy.ts` 提供引文校验、初始目标结果与有证据的提前结束判断。`scenarioBlock` 分 simulation / learner 两种视图：NPC 模拟保留私有设定；简报、提示与复盘不接收 NPC 的隐藏动机、内部立场及成功/失败模板。已说出口的信息仍从转录进入复盘，防止事后用底牌要求用户猜答案。
 
 `Report.scoringVersion=2` 区分新沟通星数与旧目标星数，旧报告不迁移、不重评分；证据不足显示「暂不评分」，不更新熟练度。匿名统计增加评分口径与评分状态，不上传引文或角色匹配理由。模型仍负责语义判断，代码只保证结构、来源匹配和分数计算，不能证明一段评价在语义上公正。边界与验证见 [通用策略方案](./archive/specs/spec-general-practice-policy.md)。
+
+## 3D 饭局（2026-10-03）
+
+`app/src/features/dinner` 从独立原型导入，`/3d` 的客户端动态加载 WebGL，无额外服务 / iframe。`DinnerEntry` 仅引用静态截图，不加载 Three.js；公告设备标记与饭局存档独立于 Zustand 主档案。3D 的颜色和选择器有前缀，返回主站不改变纸面样式。
+
+`directDinner()` → 已配置 BYOK：浏览器 `runDinner()` / `makeByokLLM()`；否则 `/api/dinner/direct` → `runDinner()` / `serverLLM`。任务层共用 `jsonCall()`、严格场景 / 事件校验，单次请求支持取消。复用主站 `health` 和限流，无新密钥、账号或服务端存储。详情见 [3D 接入说明](./archive/specs/spec-3d-integration.md)。

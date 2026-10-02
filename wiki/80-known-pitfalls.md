@@ -215,3 +215,10 @@
 - **原因：** `onRehydrateStorage` 的错误回调不一定获得 state；`state?.setHydrated()` 没有执行。persist 的普通状态修改仍可能触发保存。初次读取还是同步的，此时直接引用刚导出的 store 会遇到初始化时序问题。
 - **解决方案：** 用内存写入保护阻止失败后的保存，排入微任务设置 hydrated / storageIssue；Provider 显示恢复页。原样备份、读取重试和显式确认重置各有入口；成功重试后解除保护。SSR 不建立浏览器 adapter，保持既有首次水合边界。
 - **教训：** 异常路径必须同时检查可操作的 UI 与原始数据是否保留。该方案覆盖读取失败，不代表坏 schema、写盘配额或跨标签页并发也已解决。练习流的三个关联问题见 [连续性复盘](./81-postmortem-practice-continuity.md)。
+
+### Next CSS 优化使 3D 变成白模（2026-10-03）
+
+- **现象：** 原型导入 Next 后包厢和人物全部发白，UI 颜色正常。
+- **原因：** 优化器把 CSS 自定义属性中的 OKLCH 转成 Lab。原型只识别 `oklch()`，Three.js 不认识 `lab()`，退回白色。另需同步前缀化 JavaScript 写入的 `--hud-height`，否则手机移动控件失去定位。
+- **解法：** `palette.ts` 对 OKLCH 保留公式转换；其他浏览器支持的颜色由 1 像素 canvas 转成 sRGB。材质源仍只在 `globals.css`。HUD 写入 `--dinner-hud-height`。
+- **教训：** 导入 3D 不只检查开发构建；在目标优化器的实际 CSS 与手机布局中确认材质、变量和摄像机。

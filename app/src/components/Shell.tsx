@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
 import { Sun, Drama, Sprout, BookOpen, CircleUser, PenLine, ArrowUpRight, HardDrive } from "lucide-react";
+import { DinnerEntry } from "./DinnerEntry";
 import { BrandMark } from "./BrandMark";
 import { useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
@@ -67,6 +68,7 @@ export function NavRail() {
           );
         })}
       </ul>
+      <DinnerEntry compact />
       {/* dashed, not filled: the page's own primary action stays the only one */}
       <div className="mt-auto pt-6"><div className="hairline" /></div>
       <Link href="/rehearse" aria-current={isActive("/rehearse") ? "page" : undefined} className="press aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent-deep aria-[current=page]:border-accent mt-4 flex items-center gap-2 min-h-12 px-3 py-3 rounded-[var(--radius-sm)] border border-dashed border-line-strong text-[13px] font-medium text-ink-2 hover:bg-inset hover:border-ink-4">

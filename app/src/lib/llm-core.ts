@@ -19,6 +19,8 @@ export interface SystemPart {
 }
 
 export interface ChatOpts {
+  /** Cancels one-shot calls, including 3D page navigation and its time limit. */
+  signal?: AbortSignal;
   model?: string;
   system: string | SystemPart[];
   messages: { role: "user" | "assistant"; content: string }[];

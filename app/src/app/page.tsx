@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Check, Clock3, PenLine, RefreshCw } from "lucide-react";
+import { DinnerEntry } from "@/components/DinnerEntry";
 import { Shell } from "@/components/Shell";
 import { Button, Page, SectionTitle, Stages, Stars } from "@/components/ui";
 import { Level, SkillTag } from "@/components/SkillBits";
@@ -128,6 +129,8 @@ export default function Home() {
                 <p className="text-[12px] text-ink-3 leading-relaxed">{t(lang, "home_rehearse_steps")}</p>
               </div>
             </section>
+
+            <DinnerEntry />
 
             {/* Today card */}
             <section aria-live="polite" aria-busy={loading}>

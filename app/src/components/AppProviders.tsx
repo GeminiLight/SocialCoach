@@ -8,19 +8,22 @@ import { ModelSheet } from "./ModelSheet";
 import { FeedbackWidget } from "./Feedback";
 import { Toaster } from "./ui";
 import { trackOpen } from "@/lib/analytics/track";
+import { DinnerAnnouncement } from "./DinnerEntry";
 import { StorageRecovery } from "./StorageRecovery";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const hydrated = useApp((s) => s.hydrated);
   const storageIssue = useApp((s) => s.storageIssue);
   const profile = useApp((s) => s.profile);
+  const unfinished = useApp(s => s.sessions.some(s => s.status === "active" || s.status === "ended"));
   const settings = useApp((s) => s.settings);
   const router = useRouter();
   const path = usePathname();
   const byok = useByok();
   const lang = useLang();
   const [needsModel, setNeedsModel] = useState(false);
-  const forced = needsModel && !isReady(byok);
+  const dinner = path === "/3d";
+  const forced = needsModel && !isReady(byok) && !dinner;
 
   // Does this deployment have a model of its own? Booleans only.
   useEffect(() => {
@@ -38,8 +41,8 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!hydrated || storageIssue) return;
-    if (!profile && path !== "/onboarding") router.replace("/onboarding");
-  }, [hydrated, storageIssue, profile, path, router]);
+    if (!profile && path !== "/onboarding" && !dinner) router.replace("/onboarding");
+  }, [hydrated, storageIssue, profile, path, dinner, router]);
 
   useEffect(() => {
     // Follow the resolved language, not just an explicit choice: before
@@ -69,12 +72,13 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="sheet">
+    <div className={dinner ? "sheet sheet-immersive" : "sheet"}>
       {hydrated ? storageIssue ? <StorageRecovery issue={storageIssue} /> : children : <div className="min-h-dvh" />}
       {/* One instance for the whole app. `forced` has nothing to fall back on,
           so it cannot be dismissed until it works. */}
       <ModelSheet open={hydrated && !storageIssue && (forced || byok.sheetOpen)} onClose={byok.closeSheet} forced={forced} />
-      {hydrated && !storageIssue && <FeedbackWidget />}
+      {hydrated && !storageIssue && !dinner && <FeedbackWidget />}
+      <DinnerAnnouncement enabled={hydrated && !storageIssue && !!profile && path === "/" && !forced && !byok.sheetOpen && !unfinished} />
       <Toaster />
     </div>
     </MotionConfig>

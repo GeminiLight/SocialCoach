@@ -14,6 +14,7 @@
 | POST | `/api/reflect` | 反思回应 | fast | 文本流 | 30 | A |
 | POST | `/api/hint` | 对话中提示 | fast | JSON | 30 | A |
 | POST | `/api/rehearse` | 从真实处境生成场景 | fast | JSON | 120 | A |
+| POST | `/api/dinner/direct` | 3D 饭桌模型回合 | fast | JSON | 40 | A23 |
 | POST | `/api/pattern` | 跨场次的反复模式 | smart | JSON | 60 | B |
 
 **全局约定**
@@ -263,3 +264,15 @@ JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: stri
 - `/api/schedule` 核心候选为空或所有角色与用户明确背景冲突时返回 422，提示调整偏好/使用排练。角色匹配模型输出不完整返回 502，不随机换场景。
 - `/api/track` 的 `debrief_view` 可新增 `scoring_version: 2`、`rated: boolean`；无版本的旧客户端继续接受。飞书新增「评分口径」「评分状态」两列，分别标识沟通表现/目标达成、已评分/证据不足。历史未标口径行按旧目标星数解释，不能混合比较。
 - 引文、评分理由、档案与聊天内容不进入统计事件，严格 schema 继续拒绝多余字段。
+
+## 3D 饭桌
+
+### `POST /api/dinner/direct`
+
+请求 `{scenarioId: "work"|"family"|"school", lang: "zh"|"en", text, history, room?, dinner?}`。`text` 非空且最多 500 字；`history` 为 1–7 条 NPC / 用户交替记录，起止为 NPC，NPC id 必须属于该桌。房间与事件使用 `features/dinner/lib/room.ts` / `drama.ts` 的 schema，禁止未知演员、未来事件或与事件不匹配的动作。正文最多 24 KiB（检查实际字节，不只信任请求头）。
+
+返回 `{speakerId,text,cue,reactions:[{characterId,emotion,gesture}]}`，恰好包含当前桌三名角色的反应。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。无分数 / 隐藏动机。
+
+错误：400 输入 / 状态无效；413 过长；429 沿用主站限流；503 部署无密钥或强制 BYOK；模型错误沿用 `fail()`，无剧本静默替代。服务器请求 30 秒取消、路由 `maxDuration=40`；客户端 35 秒取消，草稿保留。响应 `Cache-Control: no-store`。
+
+BYOK 在浏览器运行同一任务，密钥不发送到此路由。可用性复用 `/api/health` 的 `serverKey` / `requireByok`，无新增公开配置端点。

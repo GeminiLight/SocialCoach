@@ -113,13 +113,14 @@ export function makeByokLLM(c: ByokConfig): LLM {
         const oa = await openaiClient(c);
         const res = await oa.chat.completions.create(
           openaiArgs(o, c.smartModel, c.tokenParam) as Parameters<typeof oa.chat.completions.create>[0] & { stream?: false },
+          { signal: o.signal },
         );
         const choice = "choices" in res ? res.choices[0] : undefined;
         if (choice?.message?.refusal) throw new LLMError("模型拒绝了这个请求", 422);
         return choice?.message?.content ?? "";
       }
       const an = await anthropicClient(c);
-      const res = await an.messages.create(anthropicArgs(o, c.smartModel));
+      const res = await an.messages.create(anthropicArgs(o, c.smartModel), { signal: o.signal });
       if (res.stop_reason === "refusal") throw new LLMError("模型拒绝了这个请求", 422);
       return res.content
         .filter((b) => b.type === "text")
