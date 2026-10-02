@@ -1,5 +1,7 @@
 <div align="center">
 
+<p align="right"><a href="https://www.hkust-gz.edu.cn/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/logos/hkust-guangzhou-dark.png"><img src="docs/logos/hkust-guangzhou.svg" width="120" alt="The Hong Kong University of Science and Technology (Guangzhou) · 香港科技大学（广州）"></picture></a>&nbsp;<a href="https://www.ustc.edu.cn/"><img src="docs/logos/ustc.svg" width="120" alt="University of Science and Technology of China · 中国科学技术大学"></a></p>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/banner-dark.svg">
   <img src="docs/banner.svg" width="860" alt="SocialCoach — Say the thing you&#8217;ve been not saying. 想说的话，说出来。">
@@ -14,19 +16,6 @@ Build social skills and learn to handle conflict through realistic role-play and
 [![Apache 2.0 license](https://img.shields.io/badge/License-Apache%202.0-00656A?style=for-the-badge&labelColor=261D16)](LICENSE)
 
 [English](README.md) · [简体中文](README.zh-CN.md)
-
-<p align="center">
-  <a href="https://www.hkust-gz.edu.cn/">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/logos/hkust-guangzhou-dark.png">
-      <img src="docs/logos/hkust-guangzhou.svg" width="300" alt="The Hong Kong University of Science and Technology (Guangzhou) · 香港科技大学（广州）">
-    </picture>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://www.ustc.edu.cn/">
-    <img src="docs/logos/ustc.svg" width="300" alt="University of Science and Technology of China · 中国科学技术大学">
-  </a>
-</p>
 
 https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
 
