@@ -48,7 +48,7 @@ export default function Progress() {
     <Shell>
       <Page className="pt-4 flex flex-col gap-8 lg:pt-9 lg:grid lg:grid-cols-2 lg:gap-x-0 lg:gap-y-12">
         <header className="lg:col-span-2 border-b border-line pb-6 lg:pb-8">
-          <p className="eyebrow text-accent mb-3">{t(lang, "pg_title")}</p>
+          <p className="eyebrow text-accent-deep mb-3">{t(lang, "pg_title")}</p>
           <h1 className="display text-[28px] sm:text-[32px] lg:text-[38px] leading-snug text-balance">{t(lang, "pg_heading")}</h1>
           <p className="mt-3 text-[14px] text-ink-3 leading-relaxed">{t(lang, "pg_intro")}</p>
         </header>
@@ -176,7 +176,7 @@ export default function Progress() {
                 <Radar values={vals} lang={lang} size={300} />
               </div>
               <p className="text-[12px] leading-relaxed text-ink-3 border-t border-line pt-3">
-                {t(lang, done.length === 0 ? "pg_baseline" : "pg_estimate")}
+                {t(lang, done.length === 0 ? Object.keys(proficiency).length ? "pg_baseline" : "pg_no_baseline" : "pg_estimate")}
               </p>
               {Object.values(vals).some((v) => v == null) && (
                 <p className="mt-1.5 text-[12px] leading-relaxed text-ink-3">{t(lang, "pg_missing")}</p>

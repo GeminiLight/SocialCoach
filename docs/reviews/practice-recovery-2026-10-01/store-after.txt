@@ -1,0 +1,7 @@
+PASS failed storage presents recovery instead of a blank screen
+PASS unreadable raw backup is not overwritten by initialization or UI choices
+PASS read retries can recover when storage is repaired or reallowed
+PASS first report applies its single bounded update
+PASS the same report cannot raise proficiency twice
+PASS a late report for a missing session cannot alter practice history
+PASS a late report cannot assess an active conversation

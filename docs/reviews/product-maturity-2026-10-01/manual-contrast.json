@@ -1,0 +1,242 @@
+[
+  {
+    "background": [
+      250,
+      246,
+      241
+    ],
+    "foreground": [
+      113,
+      103,
+      95
+    ],
+    "name": "chart-value",
+    "ratio": 5.13,
+    "theme": "light"
+  },
+  {
+    "background": [
+      250,
+      246,
+      241
+    ],
+    "foreground": [
+      80,
+      69,
+      61
+    ],
+    "name": "chart-label",
+    "ratio": 8.64,
+    "theme": "light"
+  },
+  {
+    "background": [
+      255,
+      228,
+      213
+    ],
+    "foreground": [
+      80,
+      69,
+      61
+    ],
+    "name": "quote",
+    "ratio": 7.66,
+    "theme": "light"
+  },
+  {
+    "background": [
+      216,
+      239,
+      216
+    ],
+    "foreground": [
+      80,
+      69,
+      61
+    ],
+    "name": "good-quote",
+    "ratio": 7.64,
+    "theme": "light"
+  },
+  {
+    "background": [
+      254,
+      252,
+      249
+    ],
+    "foreground": [
+      113,
+      103,
+      95
+    ],
+    "name": "step-count",
+    "ratio": 5.39,
+    "theme": "light"
+  },
+  {
+    "background": [
+      254,
+      252,
+      249
+    ],
+    "foreground": [
+      38,
+      29,
+      22
+    ],
+    "name": "npc-bubble",
+    "ratio": 16.15,
+    "theme": "light"
+  },
+  {
+    "background": [
+      227,
+      238,
+      218
+    ],
+    "foreground": [
+      80,
+      69,
+      61
+    ],
+    "name": "cover-name",
+    "ratio": 7.75,
+    "theme": "light"
+  },
+  {
+    "background": [
+      217,
+      228,
+      208
+    ],
+    "foreground": [
+      38,
+      29,
+      22
+    ],
+    "name": "cover-quote",
+    "ratio": 12.57,
+    "theme": "light"
+  },
+  {
+    "background": [
+      27,
+      22,
+      18
+    ],
+    "foreground": [
+      150,
+      143,
+      136
+    ],
+    "name": "chart-value",
+    "ratio": 5.62,
+    "theme": "dark"
+  },
+  {
+    "background": [
+      27,
+      22,
+      18
+    ],
+    "foreground": [
+      195,
+      189,
+      181
+    ],
+    "name": "chart-label",
+    "ratio": 9.63,
+    "theme": "dark"
+  },
+  {
+    "background": [
+      73,
+      40,
+      25
+    ],
+    "foreground": [
+      195,
+      189,
+      181
+    ],
+    "name": "quote",
+    "ratio": 7.04,
+    "theme": "dark"
+  },
+  {
+    "background": [
+      25,
+      45,
+      26
+    ],
+    "foreground": [
+      195,
+      189,
+      181
+    ],
+    "name": "good-quote",
+    "ratio": 7.87,
+    "theme": "dark"
+  },
+  {
+    "background": [
+      35,
+      30,
+      25
+    ],
+    "foreground": [
+      150,
+      143,
+      136
+    ],
+    "name": "step-count",
+    "ratio": 5.18,
+    "theme": "dark"
+  },
+  {
+    "background": [
+      35,
+      30,
+      25
+    ],
+    "foreground": [
+      238,
+      233,
+      225
+    ],
+    "name": "npc-bubble",
+    "ratio": 13.67,
+    "theme": "dark"
+  },
+  {
+    "background": [
+      30,
+      36,
+      23
+    ],
+    "foreground": [
+      195,
+      189,
+      181
+    ],
+    "name": "cover-name",
+    "ratio": 8.54,
+    "theme": "dark"
+  },
+  {
+    "background": [
+      36,
+      44,
+      29
+    ],
+    "foreground": [
+      238,
+      233,
+      225
+    ],
+    "name": "cover-quote",
+    "ratio": 11.96,
+    "theme": "dark"
+  }
+]

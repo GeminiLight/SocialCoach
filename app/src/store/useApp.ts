@@ -45,6 +45,8 @@ export const PATIENCE_OPTIONS: readonly Patience[] = [10, 15, 20];
 
 interface AppState {
   hydrated: boolean;
+  /** Read failures are shown before practice; the unreadable bytes stay intact. */
+  storageIssue: "unreadable" | "unavailable" | null;
   /** In-memory onboarding choice, shared with global dialogs. */
   onboardingLang: Lang | undefined;
   profile: Profile | null;
@@ -95,6 +97,7 @@ export const todayKey = (d = new Date()) => {
 
 const initial = {
   hydrated: false,
+  storageIssue: null,
   onboardingLang: undefined as Lang | undefined,
   profile: null,
   proficiency: {},
@@ -110,11 +113,23 @@ const initial = {
   settings: { tts: true },
 };
 
+// A failed read must not be followed by an initialization write that destroys
+// the only recoverable copy. This flag is intentionally not persisted.
+let storageBlocked = false;
+const appStorage = createJSONStorage(() => {
+  if (typeof window === "undefined") throw new Error("Browser storage is not available during server rendering.");
+  return {
+    getItem: (name: string) => localStorage.getItem(name),
+    setItem: (name: string, value: string) => { if (!storageBlocked) localStorage.setItem(name, value); },
+    removeItem: (name: string) => localStorage.removeItem(name),
+  };
+});
+
 export const useApp = create<AppState>()(
   persist(
     (set) => ({
       ...initial,
-      setHydrated: () => set({ hydrated: true }),
+      setHydrated: () => set({ hydrated: true, storageIssue: null }),
       setProfile: (profile) => set({ profile }),
       updateProfile: (p) => set((s) => ({ profile: s.profile ? { ...s.profile, ...p } : s.profile })),
       setLang: (lang) => set((s) => ({ onboardingLang: lang, profile: s.profile ? { ...s.profile, lang } : s.profile })),
@@ -154,6 +169,9 @@ export const useApp = create<AppState>()(
         set((s) => {
           const prof = { ...s.proficiency };
           const sess = s.sessions.find((x) => x.id === id);
+          // Only an ended, unassessed scene may apply a report. Late or repeated
+          // model completions must never change proficiency/history again.
+          if (!sess || sess.status !== "ended" || sess.report) return s;
           const allowed = new Set<SkillId>([...(s.profile?.goals ?? []), ...(sess?.scenario.skills ?? [])]);
           for (const [k, v] of Object.entries(report.deltas)) {
             const key = k as SkillId;
@@ -179,6 +197,7 @@ export const useApp = create<AppState>()(
       setSettings: (p) => set((s) => ({ settings: { ...s.settings, ...p } })),
       setPatternInsight: (result, from) => set({ patternInsight: { result, from, at: Date.now() } }),
       reset: () => {
+        storageBlocked = false;
         try {
           // Clear only this app's tab state, including unsent practice drafts.
           for (const key of Object.keys(sessionStorage)) {
@@ -192,7 +211,7 @@ export const useApp = create<AppState>()(
     }),
     {
       name: "socialcoach.v1",
-      storage: createJSONStorage(() => localStorage),
+      storage: appStorage,
       partialize: (s) => ({
         profile: s.profile,
         proficiency: s.proficiency,
@@ -209,7 +228,16 @@ export const useApp = create<AppState>()(
         // call on every visit to Growth, which is what caching it prevents.
         patternInsight: s.patternInsight,
       }),
-      onRehydrateStorage: () => (state) => state?.setHydrated(),
+      onRehydrateStorage: () => (state, error) => {
+        if (error) {
+          storageBlocked = true;
+          // Initial hydration can fail before the exported store is assigned.
+          queueMicrotask(() => useApp.setState({ hydrated: true, storageIssue: error instanceof SyntaxError ? "unreadable" : "unavailable" }));
+          return;
+        }
+        storageBlocked = false;
+        state?.setHydrated();
+      },
     },
   ),
 );

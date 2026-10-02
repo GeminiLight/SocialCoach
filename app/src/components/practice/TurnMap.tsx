@@ -67,11 +67,11 @@ export function TurnMap({ session, lang, className }: { session: Session; lang: 
 
   return (
     <div className={clsx("flex flex-col gap-3", className)}>
-      <ol className="flex items-end gap-1.5" aria-label={t(lang, "rp_map_label")}>
+      <ol className="flex items-end gap-1.5 overflow-x-auto pb-2" aria-label={t(lang, "rp_map_label")}>
         {turns.map((x) => {
           const active = open === x.n;
           return (
-            <li key={x.n} className="flex-1 min-w-0">
+            <li key={x.n} className="flex-1 min-w-11">
               <button
                 type="button"
                 onClick={() => setOpen(active ? null : x.n)}
@@ -106,7 +106,7 @@ export function TurnMap({ session, lang, className }: { session: Session; lang: 
                 <span
                   className={clsx(
                     "text-[10px] num text-center leading-none pt-0.5 transition-colors",
-                    active ? "text-ink font-semibold" : "text-ink-4 group-hover:text-ink-3",
+                    active ? "text-ink font-semibold" : "text-ink-3",
                   )}
                 >
                   {x.n}
@@ -121,7 +121,7 @@ export function TurnMap({ session, lang, className }: { session: Session; lang: 
         <div className="dotted pt-3 flex flex-col gap-1.5">
           <p className="eyebrow">
             {t(lang, "rp_map_turn", { n: sel.n })} · {t(lang, KIND_KEY[sel.kind])}
-            {sel.kind !== "hold" && <span className="num text-ink-4 ml-1.5">{sel.delta > 0 ? "+" : ""}{sel.delta}</span>}
+            {sel.kind !== "hold" && <span className="num text-ink-3 ml-1.5">{sel.delta > 0 ? "+" : ""}{sel.delta}</span>}
           </p>
           <p className={clsx("text-[14px] leading-relaxed text-ink-2", sel.silent && "italic text-ink-3")}>{sel.silent ? sel.said : sel.said ? `“${sel.said}”` : t(lang, "rp_map_no_line")}</p>
         </div>

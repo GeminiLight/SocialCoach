@@ -1,0 +1,23 @@
+FAIL unreadable storage presents recovery instead of a blank screen: Expected values to be strictly equal:
+
+false !== true
+
+PASS unreadable raw backup is not overwritten by initialization
+PASS first report applies its single bounded update
+FAIL the same report cannot raise proficiency twice: Expected values to be strictly equal:
+
+2.4 !== 2.2
+
+FAIL a late report for a missing session cannot alter practice history: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   '2026-10-01'
++ ]
+- []
+
+FAIL a late report cannot assess an active conversation: Expected values to be strictly equal:
++ actual - expected
+
++ 'assessed'
+- 'active'

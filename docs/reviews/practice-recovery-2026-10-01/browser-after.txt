@@ -1,0 +1,13 @@
+PASS failed role adaptation keeps the start button disabled
+PASS an interrupted reply is absent from the durable transcript
+PASS retry restores the learner's words and leaves no incomplete NPC answer
+PASS refresh offers recovery for a learner message with no reply
+PASS a pending unanswered turn cannot accept another learner message
+PASS refresh after an unanswered silence explains its own recovery
+PASS silence recovery removes the unanswered event and unlocks input
+PASS the final-turn pause prevents extra input
+PASS refresh during the final pause does not reopen the scene
+PASS streaming text stays visible without becoming durable evidence
+PASS leaving aborts the reply and late chunks cannot enter the transcript
+PASS a paused unfinished reply offers recovery on return
+Artifacts: /tmp/socialcoach-recovery-final

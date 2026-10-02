@@ -26,7 +26,7 @@ import { clockMarks, PatiencePicker, useReplyClock, type ClockStage } from "./Re
 export function Chat({ session }: { session: Session }) {
   const lang = useLang();
   const router = useRouter();
-  const { profile, settings, setSettings, appendMessage, updateLastNpc, updateSession } = useApp();
+  const { profile, settings, setSettings, appendMessage, updateSession } = useApp();
   const sc = session.scenario;
   const npcs = useMemo(() => npcsOf(sc, session.learnerCharacterId), [sc, session.learnerCharacterId]);
   const npcIds = useMemo(() => npcs.map((c) => c.id), [npcs]);
@@ -37,8 +37,13 @@ export function Chat({ session }: { session: Session }) {
   const followLatest = useRef(true);
   const [busy, setBusy] = useState(false);
   const [ending, setEnding] = useState(false);
+  const [streamingMessages, setStreamingMessages] = useState<ChatMessage[]>([]);
+  const displayMessages = [...session.messages, ...streamingMessages];
+  const lastDurable = lastSpoken(session.messages);
+  const unanswered = lastDurable?.role === "learner" || lastDurable?.role === "event";
   const [speaking, setSpeaking] = useState<string | null>(null);
-  const [err, setErr] = useState<{ text: string; from: "send" | "lapse" | "other" } | null>(null);
+  const [err, setErr] = useState<{ text: string; from: "send" | "lapse" | "other" } | null>(() =>
+    unanswered ? { text: t(lang, lastDurable.role === "learner" ? "pr_reply_interrupted" : "pr_silence_interrupted"), from: lastDurable.role === "learner" ? "send" : "lapse" } : null);
   const [hintBusy, setHintBusy] = useState(false);
   const [endOpen, setEndOpen] = useState(false);
   const [clockOpen, setClockOpen] = useState(false);
@@ -58,6 +63,10 @@ export function Chat({ session }: { session: Session }) {
   const recRef = useRef<{ stop: () => void } | null>(null);
   const spokenRef = useRef<Set<string>>(new Set());
   const busyRef = useRef(false);
+  const endingRef = useRef(false);
+  const request = useRef<AbortController | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const needsRecovery = unanswered && !busy;
 
   const learnerTurns = session.messages.filter((m) => m.role === "learner").length;
   const remaining = Math.max(0, sc.maxTurns - learnerTurns);
@@ -82,7 +91,7 @@ export function Chat({ session }: { session: Session }) {
   useEffect(() => {
     const list = listRef.current;
     if (list && followLatest.current) list.scrollTop = list.scrollHeight;
-  }, [session.messages, busy, note, err]);
+  }, [session.messages, streamingMessages, busy, note, err]);
 
   useEffect(() => {
     const list = listRef.current;
@@ -123,6 +132,8 @@ export function Chat({ session }: { session: Session }) {
   // ── fix: leaving mid-sentence used to keep talking, and the mic could stay open ──
   useEffect(
     () => () => {
+      request.current?.abort();
+      if (closeTimer.current) clearTimeout(closeTimer.current);
       stopSpeaking();
       try {
         recRef.current?.stop();
@@ -161,6 +172,12 @@ export function Chat({ session }: { session: Session }) {
 
   const finish = useCallback(
     (objectiveDone: boolean[], outcome: "success" | "partial" | "failure", by: "engine" | "cap" | "silence" | "user", noteText?: string) => {
+      const current = useApp.getState().sessions.find((x) => x.id === session.id);
+      if (!current || current.status !== "active") return;
+      request.current?.abort();
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+      endingRef.current = true;
+      setEnding(true);
       const endedAt = Date.now();
       updateSession(session.id, { objectiveDone, outcome, outcomeNote: noteText, status: "ended", endedAt });
       const live = useApp.getState().sessions.find((x) => x.id === session.id) ?? session;
@@ -182,6 +199,20 @@ export function Chat({ session }: { session: Session }) {
     [session, sc, updateSession],
   );
 
+  // A refresh during the final reading pause must finish the already answered
+  // scene, rather than reopening its last turn. This runs only on mount.
+  useEffect(() => {
+    if (lastSpoken(session.messages)?.role !== "npc") return;
+    if (session.closure || learnerTurns >= sc.maxTurns || silenceStreak(session.messages) >= 2) {
+      let live = true;
+      queueMicrotask(() => {
+        if (live) finish(session.objectiveDone, goalOutcome(session.objectiveDone), session.closure ? "engine" : learnerTurns >= sc.maxTurns ? "cap" : "silence");
+      });
+      return () => { live = false; };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   /**
    * One exchange: the other side answers whatever now ends the transcript — a
    * line of the learner's, or a silence they left. `silence` is the streak the
@@ -192,24 +223,29 @@ export function Chat({ session }: { session: Session }) {
     async (history: ChatMessage[], from: "send" | "lapse", silence = 0) => {
       setBusy(true);
       busyRef.current = true;
+      const controller = new AbortController();
+      request.current = controller;
       const ids: string[] = [];
       try {
         const full = await roleplayStream(
           { scenario: sc, learnerCharacterId: session.learnerCharacterId, messages: history, lang, learnerName },
           (acc) => {
+            if (controller.signal.aborted) return;
             const parsed = parseRoleplay(acc, npcIds);
-            parsed.utterances.forEach((u, i) => {
+            setStreamingMessages(parsed.utterances.map((u, i) => {
               if (!ids[i]) ids[i] = uid();
-              updateLastNpc(session.id, u.text, u.characterId, ids[i]);
-            });
+              return { id: ids[i], role: "npc", text: u.text, characterId: u.characterId, ts: Date.now() };
+            }));
             setSpeaking(parsed.utterances.at(-1)?.characterId ?? null);
           },
+          controller.signal,
         );
+        if (controller.signal.aborted || useApp.getState().sessions.find((s) => s.id === session.id)?.status !== "active") return;
         const parsed = parseRoleplay(full, npcIds);
-        if (parsed.error) throw new Error(parsed.error);
-        parsed.utterances.forEach((u, i) => {
+        if (parsed.error !== null || !parsed.utterances.length) throw new Error(parsed.error || t(lang, "pr_reply_interrupted"));
+        const replies: ChatMessage[] = parsed.utterances.map((u, i) => {
           if (!ids[i]) ids[i] = uid();
-          updateLastNpc(session.id, u.text, u.characterId, ids[i]);
+          return { id: ids[i], role: "npc", text: u.text, characterId: u.characterId, ts: Date.now() };
         });
         const meta = parsed.meta;
         const done = meta?.objectives?.length === sc.objectives.length ? meta.objectives : session.objectiveDone;
@@ -217,33 +253,31 @@ export function Chat({ session }: { session: Session }) {
           try { navigator.vibrate(12); } catch {}
         }
         // A silence is not a turn: they did not speak, which is the point.
-        const turnsUsed = learnerTurns + (from === "send" ? 1 : 0);
+        const turnsUsed = history.filter((m) => m.role === "learner").length;
         // After a lapse the transcript already says what happened where the
         // learner's line should have been; a second aside would say it twice.
         if (meta?.note && from === "send") setNote(meta.note);
         // One trail entry per move the other side answered — a line or a silence —
         // so the turn map stays aligned with the transcript. A turn whose meta
         // carried no stance repeats the last one: nothing reported, nothing moved.
+        const closure = supportedClosure(meta, history, parsed.utterances.map((u) => u.text));
         updateSession(session.id, (s0) => {
           const prev = s0.stanceTrail ?? [];
-          return { stanceTrail: [...prev, typeof meta?.stance === "number" ? meta.stance : (prev.at(-1) ?? 20)] };
+          return { messages: [...s0.messages, ...replies], objectiveDone: done,
+            stanceTrail: [...prev, typeof meta?.stance === "number" ? meta.stance : (prev.at(-1) ?? 20)],
+            ...(meta?.revealed && !s0.revealedAtTurn ? { revealedAtTurn: Math.max(1, turnsUsed) } : {}),
+            ...(closure ? { closure } : {}) };
         });
-        // The flag marks the turn it happened; the first one to claim it wins.
-        if (meta?.revealed && !session.revealedAtTurn) {
-          updateSession(session.id, { revealedAtTurn: Math.max(1, turnsUsed) });
-        }
-        const closure = supportedClosure(meta, history, parsed.utterances.map((u) => u.text));
         if (closure || turnsUsed >= sc.maxTurns || silence >= 2) {
           const outcome = goalOutcome(done);
-          if (closure) updateSession(session.id, { closure });
+          endingRef.current = true;
           setEnding(true);
           const by = silence >= 2 ? "silence" : closure ? "engine" : "cap";
           // brief pause so the last line can be read
-          setTimeout(() => finish(done, outcome, by, meta?.note), 1400);
-        } else {
-          updateSession(session.id, { objectiveDone: done });
+          closeTimer.current = setTimeout(() => finish(done, outcome, by, meta?.note), 1400);
         }
       } catch (e) {
+        if (controller.signal.aborted) return;
         if (from === "lapse") {
           // The silence never got its answer; a record of it with no reaction
           // would read as if the other side had let it pass.
@@ -251,18 +285,24 @@ export function Chat({ session }: { session: Session }) {
         }
         setErr({ text: e instanceof Error ? e.message : t(lang, "pr_error"), from });
       } finally {
-        setBusy(false);
-        busyRef.current = false;
-        setSpeaking(null);
+        if (!controller.signal.aborted) {
+          setStreamingMessages([]);
+          setBusy(false);
+          busyRef.current = false;
+          setSpeaking(null);
+          request.current = null;
+        }
       }
     },
-    [session, sc, lang, learnerName, npcIds, updateLastNpc, updateSession, learnerTurns, finish],
+    [session, sc, lang, learnerName, npcIds, updateSession, finish],
   );
 
   const send = useCallback(
     async (textRaw: string) => {
       const text = textRaw.trim();
-      if (!text || busyRef.current) return;
+      const live = useApp.getState().sessions.find((s) => s.id === session.id);
+      const last = live && lastSpoken(live.messages);
+      if (!text || busyRef.current || endingRef.current || !live || live.status !== "active" || live.closure || live.messages.filter((m) => m.role === "learner").length >= sc.maxTurns || last?.role === "learner" || last?.role === "event") return;
       setErr(null);
       setNote(null);
       setFloor(false);
@@ -272,9 +312,9 @@ export function Chat({ session }: { session: Session }) {
       if (taRef.current) taRef.current.style.height = "auto";
       const learnerMsg: ChatMessage = { id: uid(), role: "learner", text, ts: Date.now() };
       appendMessage(session.id, learnerMsg);
-      await advance([...session.messages, learnerMsg], "send");
+      await advance([...live.messages, learnerMsg], "send");
     },
-    [session, appendMessage, advance, setInput],
+    [session, sc.maxTurns, appendMessage, advance, setInput],
   );
 
   /* ── replies on the clock ──
@@ -290,7 +330,7 @@ export function Chat({ session }: { session: Session }) {
   const speakerName = speaker?.name[lang] ?? "";
 
   const lapse = useCallback(() => {
-    if (busyRef.current) return;
+    if (busyRef.current || endingRef.current || useApp.getState().sessions.find((s) => s.id === session.id)?.status !== "active") return;
     const msgs = useApp.getState().sessions.find((x) => x.id === session.id)?.messages ?? session.messages;
     const streak = silenceStreak(msgs) + 1;
     if (streak >= 2 && !msgs.some((m) => m.role === "learner")) {
@@ -318,7 +358,7 @@ export function Chat({ session }: { session: Session }) {
     budgetMs: patience * 1000,
     armed,
     // Sheets, the mic and a hint on its way are not the learner's thinking.
-    paused: endOpen || clockOpen || voiceNotice || hintBusy || listening,
+    paused: endOpen || clockOpen || voiceNotice || hintBusy || listening || !!err || needsRecovery,
     turnKey: armed ? last.id : null,
     waitForSpeech: settings.tts,
     onStage,
@@ -343,7 +383,9 @@ export function Chat({ session }: { session: Session }) {
     setHintBusy(true);
     try {
       const { hint } = await hintApi({ scenario: sc, learnerCharacterId: session.learnerCharacterId, messages: session.messages, lang, learnerName });
-      appendMessage(session.id, { id: uid(), role: "coach", text: hint, ts: Date.now(), kind: "hint" });
+      if (useApp.getState().sessions.find((s) => s.id === session.id)?.status === "active") {
+        appendMessage(session.id, { id: uid(), role: "coach", text: hint, ts: Date.now(), kind: "hint" });
+      }
     } catch (e) {
       setErr({ text: e instanceof Error ? e.message : t(lang, "error_generic"), from: "other" });
     } finally {
@@ -410,7 +452,9 @@ export function Chat({ session }: { session: Session }) {
         updateSession(session.id, (s) => ({ messages: s.messages.filter((m) => m.id !== lastLine.id && !(m.role === "npc" && m.text === "")) }));
         setInput(lastLine.text);
       }
-    } else if (clock.stage === 3) {
+    } else if (err?.from === "lapse") {
+      const last = lastSpoken(session.messages);
+      if (last?.role === "event") updateSession(session.id, (s) => ({ messages: s.messages.filter((m) => m.id !== last.id) }));
       // The silence never got its answer; give the same line a fresh clock.
       clock.restart();
     }
@@ -467,7 +511,7 @@ export function Chat({ session }: { session: Session }) {
         }}
         className="chat-transcript flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-5 lg:px-6 lg:py-7 flex flex-col gap-5">
         <p className="text-center text-[12px] text-ink-3 px-6 pb-3 leading-relaxed">{sc.hook[lang]}</p>
-        {session.messages.map((m, i) => {
+        {displayMessages.map((m, i) => {
           if (m.role === "coach") {
             return (
               <motion.div key={m.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="bubble-coach px-3.5 py-2.5 text-[13.5px] leading-relaxed flex gap-2 self-stretch">
@@ -493,7 +537,7 @@ export function Chat({ session }: { session: Session }) {
             );
           }
           const c = sc.characters.find((x) => x.id === m.characterId) ?? npcs[0];
-          const prevSame = session.messages[i - 1]?.role === "npc" && session.messages[i - 1]?.characterId === m.characterId;
+          const prevSame = displayMessages[i - 1]?.role === "npc" && displayMessages[i - 1]?.characterId === m.characterId;
           return (
             <motion.div key={m.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }} className="self-start max-w-[86%] flex gap-2 items-end">
               <span className={clsx("shrink-0", prevSame && "invisible")}><Avatar name={c?.name[lang] ?? "?"} hue={c?.hue ?? 40} size={32} /></span>
@@ -504,7 +548,7 @@ export function Chat({ session }: { session: Session }) {
             </motion.div>
           );
         })}
-        {busy && !session.messages.some((m) => m.role === "npc" && m.text === "" ) && (
+        {busy && streamingMessages.length === 0 && (
           <div className="self-start flex gap-2 items-end">
             <Avatar name={npcs[0]?.name[lang] ?? "?"} hue={npcs[0]?.hue ?? 40} size={32} />
             <div className="bubble-npc px-4 py-3"><Spinner /></div>
@@ -559,7 +603,7 @@ export function Chat({ session }: { session: Session }) {
         </div>
         {voiceNote && <p className="text-[12px] text-ink-3 px-1 pb-1.5">{voiceNote}</p>}
         <div className="flex items-end gap-2">
-          <button onClick={askHint} disabled={busy || hintBusy} aria-label={t(lang, "pr_hint")} title={t(lang, "pr_hint")} className="press h-11 w-11 shrink-0 rounded-full border border-line-strong inline-flex items-center justify-center text-ink-2 disabled:opacity-40">
+          <button onClick={askHint} disabled={busy || hintBusy || ending || needsRecovery} aria-label={t(lang, "pr_hint")} title={t(lang, "pr_hint")} className="press h-11 w-11 shrink-0 rounded-full border border-line-strong inline-flex items-center justify-center text-ink-2 disabled:opacity-40">
             {hintBusy ? <Spinner /> : <Lightbulb size={19} />}
           </button>
           <div className={clsx("flex-1 min-w-0 flex items-end gap-1 writing-field border bg-card pl-3 pr-1 py-1", listening || attention >= 2 ? "border-accent" : "border-line focus-within:border-ink")}>
@@ -573,16 +617,16 @@ export function Chat({ session }: { session: Session }) {
               aria-describedby="composer-hint"
               placeholder={listening ? t(lang, "pr_listening") : t(lang, "pr_input_ph")}
               className="flex-1 min-w-0 bg-transparent outline-none text-base leading-[1.5] py-2.5 max-h-[132px] placeholder:text-ink-3"
-              disabled={busy}
+              disabled={busy || ending || needsRecovery}
               enterKeyHint="send"
             />
             {voiceSupported && (
-              <button onClick={toggleVoice} aria-label={t(lang, "pr_voice")} className={clsx("press h-11 w-11 rounded-full inline-flex items-center justify-center shrink-0", listening ? "bg-accent text-accent-ink" : "text-ink-3")}>
+              <button onClick={toggleVoice} disabled={busy || ending || needsRecovery} aria-label={t(lang, "pr_voice")} className={clsx("press h-11 w-11 rounded-full inline-flex items-center justify-center shrink-0", listening ? "bg-accent text-accent-ink" : "text-ink-3")}>
                 {listening ? <MicOff size={17} /> : <Mic size={17} />}
               </button>
             )}
           </div>
-          <button onClick={() => send(input)} disabled={!input.trim() || busy} aria-label={t(lang, "rp_send")} className="press h-11 w-11 shrink-0 rounded-full bg-ink text-paper inline-flex items-center justify-center disabled:opacity-30">
+          <button onClick={() => send(input)} disabled={!input.trim() || busy || ending || needsRecovery} aria-label={t(lang, "rp_send")} className="press h-11 w-11 shrink-0 rounded-full bg-ink text-paper inline-flex items-center justify-center disabled:opacity-30">
             <ArrowUp size={20} />
           </button>
         </div>

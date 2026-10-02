@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-09-03 | Current stage: B -->
+<!-- Last verified: 2026-10-02 | Current stage: B -->
 
 # 系统架构
 
@@ -169,11 +169,29 @@ type ChatRole = "learner" | "npc" | "coach" | "event";   // event = 房间里发
 
 ### 练习输入与目录返回（2026-09-21）
 
-`useSessionDraft(sessionId)` 同步写入 `sessionStorage["socialcoach.draft.<id>"]`，刷新或当前标签页返回时恢复；空文本 / 发送时删除。网络失败的已发送内容仍在本地转录中，点击重试会恢复到输入框。`PracticePage` 按 session id 给组件设置 key，避免切换场次复用草稿状态。存储权限不足时保留内存输入并提示未保存。
+`useSessionDraft(sessionId)` 同步写入 `sessionStorage["socialcoach.draft.<id>"]`，刷新或当前标签页返回时恢复；空文本 / 发送时删除。网络失败的已发送内容仍在本地转录中，点击重试会移回输入框，用户确认后再次发送。`PracticePage` 按 session id 给组件设置 key，避免切换场次复用草稿状态。存储权限不足时保留内存输入并提示未保存。
 
 `/arena` 的搜索、情境、技能、难度、练习记录筛选及展示数量由 URL 查询参数驱动，使用原生 `history.replaceState` 更新而不增加每次输入的返回栈。`arena-location.ts` 在标签页记住最近目录地址，简报返回时恢复；读取只接受 `/arena` 或 `/arena?...`。`useApp.reset()` 删除这两类标签页数据及原有排练草稿，不清理其他应用的键。
 
 以上是浏览器交互状态，不加入导出档案，不新增 API、账号或服务端练习存储。`PracticeJourney` 只负责路径导航说明，不改变会话状态机。
+
+### 首次进入与知识连接练习（2026-10-01）
+
+`/onboarding` 提供两条快速路径：建立最小本地 Profile（空名字 / 近况、清晰沟通方向、不限情境、所选语言）后进入 `/rehearse` 或 `/arena`；熟练度保持空。完整四项设置流程仍可用。进入档案后的欢迎页重定向由该页管理，内存 ref 保存当次目标地址，避免全局 Provider 抢先跳回首页。既有用户直接打开欢迎页仍回到首页。没有新增持久化字段或迁移。
+
+首页不再挂载即调用 schedule；用户请求推荐后才调用既有 API。`active` 和 `ended` 场次均可续接。复盘重练继续用 `buildSession()` 创建独立场次，复制既有适配，不覆盖原转录或报告。
+
+`/learn` 以知识条目与场景的共享主技能数量、场景难度排序，展示最多三个已有语料场景；点选经 `buildSession(scene, "arena", lang)` 进入既有准备流程，来源留在场景快照中。关联是本地确定性计算，不新增模型调用或来源。准备页返回仍按 Arena 来源处理。
+
+`LanguagePicker` 统一欢迎与设置的语言选择；反馈的手机入口回到设置与复盘，已有提交 API 与隐私边界不变。
+
+### 练习中断与档案读取恢复（2026-10-02）
+
+`Chat.streamingMessages` 只在当前组件预览流式台词。响应完成、没有 `@@error` 且存在 NPC 台词后，一次 `updateSession` 同时写入完整回复、目标、立场轨迹及经引文验证的收尾。临时台词不进入 localStorage、朗读或复盘证据。卸载与结束会中止请求并清除收尾计时器；回调也校验 abort 和场次状态，避免迟到写入。BYOK 的底层任务可能继续运行，但中止后其结果不能写回练习记录。
+
+刷新后若最后一条非教练记录仍是 learner / event，视为尚未完成的交互：暂停计时与新发言，提供恢复入口。重试恢复用户原话，或移除未得到反应的沉默事件。最终回复已达到回合 / 沉默上限或存在验证后的 closure 时立即锁定输入；阅读停顿中的刷新也会结束已完成场景。`applyReport()` 仅接受存在、状态为 ended 且未有 report 的场次，复盘和熟练度更新只应用一次。
+
+`useApp.storageIssue` 为不持久化的启动读取状态。读取失败后仍结束 UI 等待，但 storage adapter 阻止初始化、语言切换等操作覆盖原始字节。`AppProviders` 展示双语 `StorageRecovery`，暂停通常的重定向、模型弹窗及访问统计。JSON 无法解析时可以原样下载 `socialcoach-recovery.json`；提供下载后才开放显式确认重置，取消保留原档案。存储访问被拒绝时只提供说明和重试。重试成功解除写入保护。没有新增持久化字段、账号、服务端档案或导入接口；这也不等于已完成全量导入 / 合并恢复。根因见 [练习连续性复盘](./81-postmortem-practice-continuity.md)。
 
 ## API 路由概览
 

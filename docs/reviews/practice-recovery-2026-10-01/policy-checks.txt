@@ -1,0 +1,14 @@
+PASS private NPC information is isolated from briefings, hints and assessments
+PASS every corpus scene preserves core skills/context even with repeats
+PASS no lexical matches or empty goal list cannot manufacture success
+PASS bare failure / success / ended flags cannot terminate a conversation
+PASS mutual deferral can close with no original goals achieved
+PASS fabricated, stale, missing, and wrong-speaker closure quotes are rejected
+PASS an NPC may explicitly withdraw without learner agreement
+PASS protocol requires actual booleans and preserves closure
+PASS a malformed stage note never becomes an object in the UI
+PASS good communication can earn three stars despite zero goal attainment
+PASS getting all goals does not rescue poor communication
+PASS invented evidence, duplicate ratings, and unpracticed skills cannot inflate scores
+PASS outcome fallback is independent of quality; legacy stars are marked in history
+practice policy: 19 checks passed, including all 46 corpus scenes

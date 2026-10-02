@@ -1,0 +1,7 @@
+FAIL failed role adaptation keeps the start button disabled
+FAIL an interrupted reply is absent from the durable transcript
+FAIL retry restores the learner's words and leaves no incomplete NPC answer
+FAIL refresh offers recovery for a learner message with no reply
+FAIL a pending unanswered turn cannot accept another learner message
+FAIL the final-turn pause prevents extra input
+Artifacts: /tmp/socialcoach-recovery-before

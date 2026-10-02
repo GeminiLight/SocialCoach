@@ -57,6 +57,7 @@ export function Briefing({ session }: { session: Session }) {
   // scene itself takes a snapshot, so the mid-scene toggle touches only itself.
   const timed = !!settings.timed;
   const enter = () => {
+    if (adapting) return;
     const startedAt = Date.now();
     updateSession(session.id, { status: "active", startedAt, timed });
     track({ name: "session_start", ts: startedAt, session: session.id, scenario: sc.custom ? "custom" : sc.id, origin: session.origin, context: sc.context, difficulty: sc.difficulty, timed, wait_s: shownAt.current ? Math.max(0, Math.round((startedAt - shownAt.current) / 1000)) : 0 });
@@ -143,13 +144,13 @@ export function Briefing({ session }: { session: Session }) {
         <span className="eyebrow">{t(lang, "pr_objectives")}</span>
         <ObjectiveList items={objectives} />
         <ClockRow timed={timed} seconds={settings.patience ?? DEFAULT_PATIENCE} onChange={(v) => setSettings({ timed: v })} />
-        <Button block size="lg" variant="primary" onClick={enter} disabled={adapting && !err} className="mt-1">
+        <Button block size="lg" variant="primary" onClick={enter} disabled={adapting} className="mt-1">
           {t(lang, "pr_enter")} <ArrowRight size={18} />
         </Button>
       </Marginalia>
 
       <BottomBar className="px-5 pb-safe pb-6 pt-4 lg:hidden">
-        <Button block size="lg" variant="primary" onClick={enter} disabled={adapting && !err}>
+        <Button block size="lg" variant="primary" onClick={enter} disabled={adapting}>
           {t(lang, "pr_enter")} <ArrowRight size={18} />
         </Button>
       </BottomBar>

@@ -8,9 +8,11 @@ import { ModelSheet } from "./ModelSheet";
 import { FeedbackWidget } from "./Feedback";
 import { Toaster } from "./ui";
 import { trackOpen } from "@/lib/analytics/track";
+import { StorageRecovery } from "./StorageRecovery";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const hydrated = useApp((s) => s.hydrated);
+  const storageIssue = useApp((s) => s.storageIssue);
   const profile = useApp((s) => s.profile);
   const settings = useApp((s) => s.settings);
   const router = useRouter();
@@ -35,10 +37,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!hydrated) return;
+    if (!hydrated || storageIssue) return;
     if (!profile && path !== "/onboarding") router.replace("/onboarding");
-    if (profile && path === "/onboarding") router.replace("/");
-  }, [hydrated, profile, path, router]);
+  }, [hydrated, storageIssue, profile, path, router]);
 
   useEffect(() => {
     // Follow the resolved language, not just an explicit choice: before
@@ -57,8 +58,8 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
 
   // Once per day, profile or not; the flag separates visitors from learners.
   useEffect(() => {
-    if (hydrated) trackOpen(!!profile);
-  }, [hydrated, profile]);
+    if (hydrated && !storageIssue) trackOpen(!!profile);
+  }, [hydrated, storageIssue, profile]);
 
   useEffect(() => {
     if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
@@ -69,11 +70,11 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <MotionConfig reducedMotion="user">
     <div className="sheet">
-      {hydrated ? children : <div className="min-h-dvh" />}
+      {hydrated ? storageIssue ? <StorageRecovery issue={storageIssue} /> : children : <div className="min-h-dvh" />}
       {/* One instance for the whole app. `forced` has nothing to fall back on,
           so it cannot be dismissed until it works. */}
-      <ModelSheet open={hydrated && (forced || byok.sheetOpen)} onClose={byok.closeSheet} forced={forced} />
-      {hydrated && <FeedbackWidget />}
+      <ModelSheet open={hydrated && !storageIssue && (forced || byok.sheetOpen)} onClose={byok.closeSheet} forced={forced} />
+      {hydrated && !storageIssue && <FeedbackWidget />}
       <Toaster />
     </div>
     </MotionConfig>

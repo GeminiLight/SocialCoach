@@ -30,7 +30,7 @@ export default function Home() {
     [sessions, todaySessionId, todayDate, today],
   );
   const streak = computeStreak(practiceDays);
-  const unfinished = sessions.find((s) => s.id !== todaySessionId && s.status === "active");
+  const unfinished = sessions.find((s) => s.status === "active" || s.status === "ended");
   /** Last session's verdict, to fill today's wait with something worth reading. */
   const lastVerdict = useMemo(() => {
     const last = sessions.find((x) => x.status === "assessed" && x.report?.verdict && x.report.verdictEvidence);
@@ -71,12 +71,6 @@ export default function Home() {
     pruneSessions();
   }, [pruneSessions]);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- kick off an async request on mount
-    if (profile && !todaySession && !loading && !error) void planToday();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile, todaySession]);
-
   if (!profile) return null;
   const recent = sessions.filter((s) => s.status === "assessed").slice(0, 3);
 
@@ -106,19 +100,44 @@ export default function Home() {
             {unfinished && (
               <Link
                 href={`/practice/${unfinished.id}`}
-                className="press flex items-center gap-3 rounded-[var(--radius-sm)] border border-line px-4 py-3 hover:bg-inset"
+                className="press flex flex-wrap items-center gap-3 rounded-[var(--radius-sm)] border border-line-strong bg-card px-4 py-4 hover:bg-inset"
               >
                 <Clock3 size={18} className="text-accent-deep shrink-0" />
                 <span className="min-w-0 flex-1">
-                  <span className="block text-[11px] text-ink-3">{t(lang, "home_resume")}</span>
+                  <span className="block text-[12px] text-ink-3">{t(lang, unfinished.status === "ended" ? "home_resume_review" : "home_resume")}</span>
                   <span className="block text-[14px] font-medium truncate">{unfinished.scenario.title[lang]}</span>
                 </span>
-                <ArrowRight size={16} />
+                <span className="inline-flex items-center justify-center gap-2 min-h-11 px-4 rounded-full bg-action text-accent-ink text-[13px] font-semibold">
+                  {t(lang, unfinished.status === "ended" ? "home_review_action" : "home_resume_action")}<ArrowRight size={16} />
+                </span>
               </Link>
             )}
 
+            <section className="rehearsal-invitation rounded-[var(--radius)] p-5 lg:p-7 flex flex-col gap-5">
+              <div className="flex items-start gap-3">
+                <PenLine size={21} className="text-accent-deep shrink-0 mt-1" aria-hidden />
+                <div className="min-w-0">
+                  <h2 className="display text-[23px] lg:text-[26px] leading-snug">{t(lang, "home_rehearse_title")}</h2>
+                  <p className="text-[14px] text-ink-2 mt-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_rehearse_sub")}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <Link href="/rehearse" className={`press inline-flex items-center justify-center gap-3 min-h-12 px-5 rounded-full text-[14px] font-semibold ${unfinished ? "bg-card border border-line-strong" : "bg-action text-accent-ink hover:bg-action-hover"}`}>
+                  {t(lang, "home_rehearse_action")}<ArrowRight size={17} aria-hidden />
+                </Link>
+                <p className="text-[12px] text-ink-3 leading-relaxed">{t(lang, "home_rehearse_steps")}</p>
+              </div>
+            </section>
+
             {/* Today card */}
             <section aria-live="polite" aria-busy={loading}>
+              {!todaySession && !loading && !error && (
+                <div className="py-5 border-y border-line flex flex-col gap-3">
+                  <h2 className="display text-[20px]">{t(lang, "home_plan_title")}</h2>
+                  <p className="text-[13px] text-ink-3 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_plan_body")}</p>
+                  <Button variant="secondary" onClick={planToday} className="self-start"><RefreshCw size={16} />{t(lang, "home_plan_action")}</Button>
+                </div>
+              )}
               {loading && (
                 <div className="card p-6 lg:p-8 min-h-80 flex flex-col justify-center gap-7">
                   <Stages title={t(lang, "home_scheduling")} steps={tList(lang, "home_scheduling_steps")} slowAfterMs={25000} />
@@ -151,7 +170,7 @@ export default function Home() {
                   </Button>
                 </div>
               )}
-              {todaySession && !loading && (
+              {todaySession && todaySession.id !== unfinished?.id && !loading && (
                 <TodayCard session={todaySession} onStart={() => router.push(`/practice/${todaySession.id}`)} onSwap={planToday} />
               )}
             </section>
@@ -167,16 +186,6 @@ export default function Home() {
               </section>
             )}
 
-            <Link href="/rehearse" className="press group flex items-start gap-4 rounded-[var(--radius)] border border-line p-5 lg:p-6 hover:bg-paper-deep">
-              <span className="h-11 w-11 rounded-xl bg-card border border-line flex items-center justify-center shrink-0">
-                <PenLine size={20} className="text-accent-deep" aria-hidden />
-              </span>
-              <div className="flex-1">
-                <h2 className="display text-[19px] leading-snug">{t(lang, "home_rehearse_title")}</h2>
-                <p className="text-[13px] text-ink-2 mt-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_rehearse_sub")}</p>
-              </div>
-              <ArrowUpRight size={18} className="mt-1 text-ink-3 shrink-0 group-hover:text-accent-deep" />
-            </Link>
           </div>
 
           {/* the margin: what you are working on, and what you have already done */}
@@ -186,7 +195,7 @@ export default function Home() {
             <section className="flex flex-col gap-3">
               <SectionTitle
                 right={
-                  <Link href="/progress" className="press min-h-11 inline-flex items-center text-[12px] text-action">
+                  <Link href="/progress" className="press min-h-11 min-w-11 inline-flex items-center text-[12px] text-action">
                     {t(lang, "nav_progress")} →
                   </Link>
                 }
@@ -257,7 +266,7 @@ function TodayCard({ session, onStart, onSwap }: { session: ReturnType<typeof bu
     <motion.article
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
       className="today-feature card overflow-hidden lg:grid lg:grid-cols-[minmax(0,1fr)_32%] lg:min-h-[380px]"
     >
       <div className="relative h-36 bg-paper-deep lg:order-2 lg:h-auto lg:border-l lg:border-line">
@@ -307,7 +316,7 @@ function TodayCard({ session, onStart, onSwap }: { session: ReturnType<typeof bu
         )}
         <div className="flex flex-col gap-2 pt-1 lg:max-w-[440px]">
           <div className="flex gap-2">
-            <Button block size="lg" variant={done ? "secondary" : "primary"} onClick={onStart}>
+            <Button block size="lg" variant="secondary" onClick={onStart}>
               {done ? t(lang, "home_view_report") : active ? t(lang, "home_continue") : t(lang, "home_start")}
               <ArrowRight size={18} />
             </Button>

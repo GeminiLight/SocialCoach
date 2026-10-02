@@ -1,0 +1,29 @@
+PASS recovery zh/light/360 has no overflow and preserves raw data
+PASS recovery has no automatic accessibility violations
+PASS recovery zh/light/768 has no overflow and preserves raw data
+PASS recovery zh/light/1024 has no overflow and preserves raw data
+PASS recovery zh/light/1440 has no overflow and preserves raw data
+PASS recovery has no automatic accessibility violations
+PASS recovery zh/dark/360 has no overflow and preserves raw data
+PASS recovery has no automatic accessibility violations
+PASS recovery zh/dark/768 has no overflow and preserves raw data
+PASS recovery zh/dark/1024 has no overflow and preserves raw data
+PASS recovery zh/dark/1440 has no overflow and preserves raw data
+PASS recovery has no automatic accessibility violations
+PASS recovery en/light/360 has no overflow and preserves raw data
+PASS recovery has no automatic accessibility violations
+PASS recovery en/light/768 has no overflow and preserves raw data
+PASS recovery en/light/1024 has no overflow and preserves raw data
+PASS recovery en/light/1440 has no overflow and preserves raw data
+PASS recovery has no automatic accessibility violations
+PASS recovery en/dark/360 has no overflow and preserves raw data
+PASS recovery has no automatic accessibility violations
+PASS recovery en/dark/768 has no overflow and preserves raw data
+PASS recovery en/dark/1024 has no overflow and preserves raw data
+PASS recovery en/dark/1440 has no overflow and preserves raw data
+PASS recovery has no automatic accessibility violations
+PASS restart remains disabled until the raw backup is offered
+PASS download preserves the exact unreadable bytes
+PASS cancelling reset preserves the original records
+PASS confirmed restart returns to onboarding with a readable empty profile
+Artifacts: /tmp/socialcoach-storage-final

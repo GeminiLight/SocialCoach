@@ -1,0 +1,208 @@
+PASS welcome zh/light/360 no overflow
+PASS welcome controls have adequate touch targets
+PASS welcome has no automatic accessibility violations
+PASS quick start goes straight to rehearsal without invented ratings
+PASS welcome zh/light/1440 no overflow
+PASS welcome controls have adequate touch targets
+PASS welcome has no automatic accessibility violations
+PASS quick start goes straight to rehearsal without invented ratings
+PASS welcome zh/dark/360 no overflow
+PASS welcome controls have adequate touch targets
+PASS welcome has no automatic accessibility violations
+PASS quick start goes straight to rehearsal without invented ratings
+PASS welcome zh/dark/1440 no overflow
+PASS welcome controls have adequate touch targets
+PASS welcome has no automatic accessibility violations
+PASS quick start goes straight to rehearsal without invented ratings
+PASS welcome en/light/360 no overflow
+PASS welcome controls have adequate touch targets
+PASS welcome has no automatic accessibility violations
+PASS quick start goes straight to rehearsal without invented ratings
+PASS welcome en/light/1440 no overflow
+PASS welcome controls have adequate touch targets
+PASS welcome has no automatic accessibility violations
+PASS quick start goes straight to rehearsal without invented ratings
+PASS welcome en/dark/360 no overflow
+PASS welcome controls have adequate touch targets
+PASS welcome has no automatic accessibility violations
+PASS quick start goes straight to rehearsal without invented ratings
+PASS welcome en/dark/1440 no overflow
+PASS welcome controls have adequate touch targets
+PASS welcome has no automatic accessibility violations
+PASS quick start goes straight to rehearsal without invented ratings
+PASS ready-made scene path bypasses profile forms
+PASS collapsed skill groups contain no visible or keyboard-accessible controls
+PASS guided step focuses its heading
+PASS guided onboarding preserves explicit self-rating
+PASS legacy history and preferences unchanged on /
+PASS legacy history and preferences unchanged on /progress
+PASS legacy history and preferences unchanged on /practice/ux-review
+PASS legacy report renders
+PASS legacy history and preferences unchanged on /practice/ux-chat
+PASS old active chat remains resumable
+PASS legacy history and preferences unchanged on /settings
+PASS legacy history and preferences unchanged on /
+PASS knowledge leads to a sourced, ready-to-prepare practice
+PASS repeat starts a fresh conversation and preserves the original debrief
+PASS draft saved immediately
+PASS draft restored after refresh
+PASS drafts isolated per practice
+PASS sent draft cleared; failed message retained
+PASS retry restores editable draft
+PASS catalog starts with twelve rows
+PASS show more reveals twelve more
+PASS filter resets page size in URL
+PASS return preserves collection filters
+PASS empty results offer recovery
+PASS incoming reply does not interrupt reading history
+PASS jump returns to latest message
+PASS eight-turn map keeps adequate targets within the phone
+PASS Escape closes pause sheet and returns focus
+PASS keyboard focus is visible
+PASS erase clears app drafts and collection state only
+PASS home zh/light/360 no horizontal overflow
+PASS arena zh/light/360 no horizontal overflow
+PASS rehearse zh/light/360 no horizontal overflow
+PASS learn zh/light/360 no horizontal overflow
+PASS progress zh/light/360 no horizontal overflow
+PASS settings zh/light/360 no horizontal overflow
+PASS briefing zh/light/360 no horizontal overflow
+PASS chat zh/light/360 no horizontal overflow
+PASS review zh/light/360 no horizontal overflow
+PASS home zh/light/768 no horizontal overflow
+PASS arena zh/light/768 no horizontal overflow
+PASS rehearse zh/light/768 no horizontal overflow
+PASS learn zh/light/768 no horizontal overflow
+PASS progress zh/light/768 no horizontal overflow
+PASS settings zh/light/768 no horizontal overflow
+PASS briefing zh/light/768 no horizontal overflow
+PASS chat zh/light/768 no horizontal overflow
+PASS review zh/light/768 no horizontal overflow
+PASS home zh/light/1024 no horizontal overflow
+PASS arena zh/light/1024 no horizontal overflow
+PASS rehearse zh/light/1024 no horizontal overflow
+PASS learn zh/light/1024 no horizontal overflow
+PASS progress zh/light/1024 no horizontal overflow
+PASS settings zh/light/1024 no horizontal overflow
+PASS briefing zh/light/1024 no horizontal overflow
+PASS chat zh/light/1024 no horizontal overflow
+PASS review zh/light/1024 no horizontal overflow
+PASS home zh/light/1440 no horizontal overflow
+PASS arena zh/light/1440 no horizontal overflow
+PASS rehearse zh/light/1440 no horizontal overflow
+PASS learn zh/light/1440 no horizontal overflow
+PASS progress zh/light/1440 no horizontal overflow
+PASS settings zh/light/1440 no horizontal overflow
+PASS briefing zh/light/1440 no horizontal overflow
+PASS chat zh/light/1440 no horizontal overflow
+PASS review zh/light/1440 no horizontal overflow
+PASS home zh/dark/360 no horizontal overflow
+PASS arena zh/dark/360 no horizontal overflow
+PASS rehearse zh/dark/360 no horizontal overflow
+PASS learn zh/dark/360 no horizontal overflow
+PASS progress zh/dark/360 no horizontal overflow
+PASS settings zh/dark/360 no horizontal overflow
+PASS briefing zh/dark/360 no horizontal overflow
+PASS chat zh/dark/360 no horizontal overflow
+PASS review zh/dark/360 no horizontal overflow
+PASS home zh/dark/768 no horizontal overflow
+PASS arena zh/dark/768 no horizontal overflow
+PASS rehearse zh/dark/768 no horizontal overflow
+PASS learn zh/dark/768 no horizontal overflow
+PASS progress zh/dark/768 no horizontal overflow
+PASS settings zh/dark/768 no horizontal overflow
+PASS briefing zh/dark/768 no horizontal overflow
+PASS chat zh/dark/768 no horizontal overflow
+PASS review zh/dark/768 no horizontal overflow
+PASS home zh/dark/1024 no horizontal overflow
+PASS arena zh/dark/1024 no horizontal overflow
+PASS rehearse zh/dark/1024 no horizontal overflow
+PASS learn zh/dark/1024 no horizontal overflow
+PASS progress zh/dark/1024 no horizontal overflow
+PASS settings zh/dark/1024 no horizontal overflow
+PASS briefing zh/dark/1024 no horizontal overflow
+PASS chat zh/dark/1024 no horizontal overflow
+PASS review zh/dark/1024 no horizontal overflow
+PASS home zh/dark/1440 no horizontal overflow
+PASS arena zh/dark/1440 no horizontal overflow
+PASS rehearse zh/dark/1440 no horizontal overflow
+PASS learn zh/dark/1440 no horizontal overflow
+PASS progress zh/dark/1440 no horizontal overflow
+PASS settings zh/dark/1440 no horizontal overflow
+PASS briefing zh/dark/1440 no horizontal overflow
+PASS chat zh/dark/1440 no horizontal overflow
+PASS review zh/dark/1440 no horizontal overflow
+PASS home en/light/360 no horizontal overflow
+PASS arena en/light/360 no horizontal overflow
+PASS rehearse en/light/360 no horizontal overflow
+PASS learn en/light/360 no horizontal overflow
+PASS progress en/light/360 no horizontal overflow
+PASS settings en/light/360 no horizontal overflow
+PASS briefing en/light/360 no horizontal overflow
+PASS chat en/light/360 no horizontal overflow
+PASS review en/light/360 no horizontal overflow
+PASS home en/light/768 no horizontal overflow
+PASS arena en/light/768 no horizontal overflow
+PASS rehearse en/light/768 no horizontal overflow
+PASS learn en/light/768 no horizontal overflow
+PASS progress en/light/768 no horizontal overflow
+PASS settings en/light/768 no horizontal overflow
+PASS briefing en/light/768 no horizontal overflow
+PASS chat en/light/768 no horizontal overflow
+PASS review en/light/768 no horizontal overflow
+PASS home en/light/1024 no horizontal overflow
+PASS arena en/light/1024 no horizontal overflow
+PASS rehearse en/light/1024 no horizontal overflow
+PASS learn en/light/1024 no horizontal overflow
+PASS progress en/light/1024 no horizontal overflow
+PASS settings en/light/1024 no horizontal overflow
+PASS briefing en/light/1024 no horizontal overflow
+PASS chat en/light/1024 no horizontal overflow
+PASS review en/light/1024 no horizontal overflow
+PASS home en/light/1440 no horizontal overflow
+PASS arena en/light/1440 no horizontal overflow
+PASS rehearse en/light/1440 no horizontal overflow
+PASS learn en/light/1440 no horizontal overflow
+PASS progress en/light/1440 no horizontal overflow
+PASS settings en/light/1440 no horizontal overflow
+PASS briefing en/light/1440 no horizontal overflow
+PASS chat en/light/1440 no horizontal overflow
+PASS review en/light/1440 no horizontal overflow
+PASS home en/dark/360 no horizontal overflow
+PASS arena en/dark/360 no horizontal overflow
+PASS rehearse en/dark/360 no horizontal overflow
+PASS learn en/dark/360 no horizontal overflow
+PASS progress en/dark/360 no horizontal overflow
+PASS settings en/dark/360 no horizontal overflow
+PASS briefing en/dark/360 no horizontal overflow
+PASS chat en/dark/360 no horizontal overflow
+PASS review en/dark/360 no horizontal overflow
+PASS home en/dark/768 no horizontal overflow
+PASS arena en/dark/768 no horizontal overflow
+PASS rehearse en/dark/768 no horizontal overflow
+PASS learn en/dark/768 no horizontal overflow
+PASS progress en/dark/768 no horizontal overflow
+PASS settings en/dark/768 no horizontal overflow
+PASS briefing en/dark/768 no horizontal overflow
+PASS chat en/dark/768 no horizontal overflow
+PASS review en/dark/768 no horizontal overflow
+PASS home en/dark/1024 no horizontal overflow
+PASS arena en/dark/1024 no horizontal overflow
+PASS rehearse en/dark/1024 no horizontal overflow
+PASS learn en/dark/1024 no horizontal overflow
+PASS progress en/dark/1024 no horizontal overflow
+PASS settings en/dark/1024 no horizontal overflow
+PASS briefing en/dark/1024 no horizontal overflow
+PASS chat en/dark/1024 no horizontal overflow
+PASS review en/dark/1024 no horizontal overflow
+PASS home en/dark/1440 no horizontal overflow
+PASS arena en/dark/1440 no horizontal overflow
+PASS rehearse en/dark/1440 no horizontal overflow
+PASS learn en/dark/1440 no horizontal overflow
+PASS progress en/dark/1440 no horizontal overflow
+PASS settings en/dark/1440 no horizontal overflow
+PASS briefing en/dark/1440 no horizontal overflow
+PASS chat en/dark/1440 no horizontal overflow
+PASS review en/dark/1440 no horizontal overflow
+PASS accessibility scans have no automatic violations
+Artifacts: /tmp/socialcoach-matrix-final

@@ -72,6 +72,11 @@ async function main() {
     assert.equal(parsed.meta?.ended, false);
     assert.deepEqual(parsed.meta?.closure, closed.closure);
   });
+  check("a malformed stage note never becomes an object in the UI", () => {
+    const parsed = parseRoleplay(`@@meta\n${JSON.stringify({ ...closed, note: { unexpected: true } })}\n@@npc\n${npc.text}`, ["npc"]);
+    assert.equal(parsed.meta?.note, undefined);
+    assert.equal(parsed.utterances[0].text, npc.text);
+  });
   const skill = base.skills[0];
   const raw: Partial<Report> = {
     stars: 0, outcome: "failure", verdictEvidence: learner.text, verdict: "你保留了判断空间。", summary: "有待确认的信息。",

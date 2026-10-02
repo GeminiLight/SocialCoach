@@ -112,7 +112,7 @@ export function FeedbackWidget() {
   }
 
   return <>
-    {!path.startsWith("/practice/") && <FeedbackButton className="fixed z-30 right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] lg:right-6 lg:bottom-6" />}
+    {!path.startsWith("/practice/") && path !== "/onboarding" && <div className="hidden lg:block fixed z-30 right-6 bottom-6"><FeedbackButton /></div>}
     <Sheet open={open} onClose={dismiss} title={pick(copy.title, lang)} footer={!sent && <><p className="mb-3 text-[12px] leading-relaxed text-ink-3">{pick(copy.consent, lang)}</p><Button form="socialcoach-feedback-form" type="submit" block disabled={busy || (!category && !rating) || available === false} aria-busy={busy}><Send size={16} />{pick(copy[busy ? "sending" : "send"], lang)}</Button></>}>
       {sent ? <div role="status" className="py-8 text-center flex flex-col items-center gap-4">
         <CheckCircle2 size={40} className="text-moss" />

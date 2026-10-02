@@ -304,7 +304,7 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
         ended: j.ended === true,
         closure: j.closure,
         outcome: j.outcome === "success" || j.outcome === "partial" || j.outcome === "failure" ? j.outcome : null,
-        note: j.note,
+        note: typeof j.note === "string" ? j.note : undefined,
         // A model that omits the field, or answers with prose, must not move the meter.
         stance: Number.isFinite(st) ? Math.max(0, Math.min(100, Math.round(st))) : undefined,
         revealed: j.revealed === true,

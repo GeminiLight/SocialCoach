@@ -1,0 +1,3048 @@
+[
+  {
+    "group": "usual",
+    "name": "welcome",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 1,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<button class=\"press min-h-11 text-[13px] text-ink-2 rounded-full\">先设置我的练习目标</button>",
+            "target": [
+              ".text-\\[13px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<p class=\"text-[11px] text-ink-3 text-center\">无需注册 · 档案留在此设备 · 目标随时可改</p>",
+            "target": [
+              ".text-\\[11px\\]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "welcome",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "welcome",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 1,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<button class=\"press min-h-11 text-[13px] text-ink-2 rounded-full\">先设置我的练习目标</button>",
+            "target": [
+              ".text-\\[13px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<p class=\"text-[11px] text-ink-3 text-center\">无需注册 · 档案留在此设备 · 目标随时可改</p>",
+            "target": [
+              ".text-\\[11px\\]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "welcome",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "welcome",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 1,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<button class=\"press min-h-11 text-[13px] text-ink-2 rounded-full\">Set my practice goals first</button>",
+            "target": [
+              ".text-\\[13px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<p class=\"text-[11px] text-ink-3 text-center\">No sign-up · History on this device · Goals can change anytime</p>",
+            "target": [
+              ".text-\\[11px\\]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "welcome",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "welcome",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 1,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<button class=\"press min-h-11 text-[13px] text-ink-2 rounded-full\">Set my practice goals first</button>",
+            "target": [
+              ".text-\\[13px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<p class=\"text-[11px] text-ink-3 text-center\">No sign-up · History on this device · Goals can change anytime</p>",
+            "target": [
+              ".text-\\[11px\\]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "welcome",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "home",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 0,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "arena",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 34,
+      "incomplete": 0,
+      "passes": 26,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "rehearse",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 0,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "learn",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 1,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 4,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(10) > .p-4.gap-2\\.5.text-left > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-aron-self-disclosure\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-specific-gratitude\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-amplification-ally\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "progress",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 6,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"150\" y=\"14\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">自我认知</text>",
+            "target": [
+              "text[y=\"14\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"261\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">自我管理</text>",
+            "target": [
+              "text[x=\"261\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"227.58765330260644\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">社会认知</text>",
+            "target": [
+              "text[x=\"227.58765330260644\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">人际技能</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"267.79024325749305\" font-size=\"11\" fill=\"var(--ink-3)\" class=\"num\">2.0</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"267.79024325749305\"][font-size=\"11\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"39\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">负责任决策</text>",
+            "target": [
+              "text[x=\"39\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "settings",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 0,
+      "passes": 22,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "briefing",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "chat",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 0,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "review",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 34,
+      "incomplete": 1,
+      "passes": 26,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 4,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content",
+            "html": "<span class=\"text-[10px] num text-center leading-none pt-0.5 transition-colors text-ink-3\">8</span>",
+            "target": [
+              "button[aria-label=\"第 8 回合 · 对方更愿意了\"] > .leading-none.pt-0\\.5.transition-colors"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-good\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-good"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<button class=\"press min-w-0 [&amp;&gt;svg]:shrink-0 inline-flex items-center justify-center gap-2 font-semibold rounded-full select-none text-center leading-snug h-14 px-6 text-base bg-transparent text-ink-2 hover:bg-inset shrink-0\">回到今日</button>",
+            "target": [
+              ".bg-transparent"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "home",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 3,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"eyebrow text-ink-2 truncate\">你的经理</span>",
+            "target": [
+              ".eyebrow.truncate.text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"text-[12px] text-ink-2 truncate\">Michael</span>",
+            "target": [
+              ".truncate.text-ink-2.text-\\[12px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"underline decoration-[2.5px] underline-offset-[5px] [text-decoration-skip-ink:none]\" style=\"text-decoration-color: var(--scene-color);\">嘿，还没走吧？</span>",
+            "target": [
+              ".leading-\\[var\\(--rule\\)\\] > .underline.decoration-\\[2\\.5px\\].underline-offset-\\[5px\\]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "arena",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 0,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "rehearse",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 0,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "learn",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 1,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(28) > .p-4.gap-2\\.5[aria-controls=\"knowledge-reading\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].text-ink-3"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(29) > .p-4.gap-2\\.5[aria-controls=\"knowledge-reading\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].text-ink-3"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "progress",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 6,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"150\" y=\"14\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">自我认知</text>",
+            "target": [
+              "text[y=\"14\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"261\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">自我管理</text>",
+            "target": [
+              "text[x=\"261\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"227.58765330260644\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">社会认知</text>",
+            "target": [
+              "text[x=\"227.58765330260644\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">人际技能</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"267.79024325749305\" font-size=\"11\" fill=\"var(--ink-3)\" class=\"num\">2.0</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"267.79024325749305\"][font-size=\"11\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"39\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">负责任决策</text>",
+            "target": [
+              "text[x=\"39\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "settings",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 0,
+      "passes": 22,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "briefing",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "chat",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 1,
+      "passes": 21,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 1,
+        "nodes": [
+          {
+            "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+            "html": "<div class=\"bubble-npc px-4 py-2.5 text-[15px] leading-relaxed whitespace-pre-wrap\">嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？</div>",
+            "target": [
+              ".bubble-npc"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "review",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 1,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-good\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-good"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "home",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 0,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "arena",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 34,
+      "incomplete": 0,
+      "passes": 26,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "rehearse",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 0,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "learn",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 1,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 4,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(10) > .p-4.gap-2\\.5.text-left > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-aron-self-disclosure\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-specific-gratitude\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-amplification-ally\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "progress",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 6,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"150\" y=\"14\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">自我认知</text>",
+            "target": [
+              "text[y=\"14\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"261\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">自我管理</text>",
+            "target": [
+              "text[x=\"261\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"227.58765330260644\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">社会认知</text>",
+            "target": [
+              "text[x=\"227.58765330260644\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">人际技能</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"267.79024325749305\" font-size=\"11\" fill=\"var(--ink-3)\" class=\"num\">2.0</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"267.79024325749305\"][font-size=\"11\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"39\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">负责任决策</text>",
+            "target": [
+              "text[x=\"39\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "settings",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 0,
+      "passes": 22,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "briefing",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "chat",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 0,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "review",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 34,
+      "incomplete": 1,
+      "passes": 26,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 4,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content",
+            "html": "<span class=\"text-[10px] num text-center leading-none pt-0.5 transition-colors text-ink-3\">8</span>",
+            "target": [
+              "button[aria-label=\"第 8 回合 · 对方更愿意了\"] > .leading-none.pt-0\\.5.transition-colors"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-good\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-good"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<button class=\"press min-w-0 [&amp;&gt;svg]:shrink-0 inline-flex items-center justify-center gap-2 font-semibold rounded-full select-none text-center leading-snug h-14 px-6 text-base bg-transparent text-ink-2 hover:bg-inset shrink-0\">回到今日</button>",
+            "target": [
+              ".bg-transparent"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "home",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 3,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"eyebrow text-ink-2 truncate\">你的经理</span>",
+            "target": [
+              ".eyebrow.truncate.text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"text-[12px] text-ink-2 truncate\">Michael</span>",
+            "target": [
+              ".truncate.text-ink-2.text-\\[12px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"underline decoration-[2.5px] underline-offset-[5px] [text-decoration-skip-ink:none]\" style=\"text-decoration-color: var(--scene-color);\">嘿，还没走吧？</span>",
+            "target": [
+              ".leading-\\[var\\(--rule\\)\\] > .underline.decoration-\\[2\\.5px\\].underline-offset-\\[5px\\]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "arena",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 0,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "rehearse",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 0,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "learn",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 1,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(28) > .p-4.gap-2\\.5[aria-controls=\"knowledge-reading\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].text-ink-3"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 步做法</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(29) > .p-4.gap-2\\.5[aria-controls=\"knowledge-reading\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].text-ink-3"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "progress",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 6,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"150\" y=\"14\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">自我认知</text>",
+            "target": [
+              "text[y=\"14\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"261\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">自我管理</text>",
+            "target": [
+              "text[x=\"261\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"227.58765330260644\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">社会认知</text>",
+            "target": [
+              "text[x=\"227.58765330260644\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">人际技能</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"267.79024325749305\" font-size=\"11\" fill=\"var(--ink-3)\" class=\"num\">2.0</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"267.79024325749305\"][font-size=\"11\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"39\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">负责任决策</text>",
+            "target": [
+              "text[x=\"39\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "settings",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 0,
+      "passes": 22,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "briefing",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "chat",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 1,
+      "passes": 21,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 1,
+        "nodes": [
+          {
+            "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+            "html": "<div class=\"bubble-npc px-4 py-2.5 text-[15px] leading-relaxed whitespace-pre-wrap\">嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？</div>",
+            "target": [
+              ".bubble-npc"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "review",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 1,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-good\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-good"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "home",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 0,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "arena",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 34,
+      "incomplete": 0,
+      "passes": 26,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "rehearse",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 0,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "learn",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 1,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 4,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(10) > .p-4.gap-2\\.5.text-left > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-aron-self-disclosure\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-specific-gratitude\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-amplification-ally\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "progress",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 7,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Unable to determine contrast ratio",
+            "html": "<p class=\"text-[12px] text-ink-3 num\">Today · 1 min</p>",
+            "target": [
+              ".card-link > .flex-1.min-w-0 > .text-\\[12px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"150\" y=\"14\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Aware</text>",
+            "target": [
+              "text[y=\"14\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"261\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Manage</text>",
+            "target": [
+              "text[x=\"261\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"227.58765330260644\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Empathy</text>",
+            "target": [
+              "text[x=\"227.58765330260644\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Relate</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"267.79024325749305\" font-size=\"11\" fill=\"var(--ink-3)\" class=\"num\">2.0</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"267.79024325749305\"][font-size=\"11\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"39\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Decide</text>",
+            "target": [
+              "text[x=\"39\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "settings",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 0,
+      "passes": 22,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "briefing",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "chat",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 0,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "review",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 34,
+      "incomplete": 1,
+      "passes": 26,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 4,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content",
+            "html": "<span class=\"text-[10px] num text-center leading-none pt-0.5 transition-colors text-ink-3\">8</span>",
+            "target": [
+              "button[aria-label=\"Turn 8 · more willing\"] > .leading-none.pt-0\\.5.transition-colors"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-good\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-good"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<button class=\"press min-w-0 [&amp;&gt;svg]:shrink-0 inline-flex items-center justify-center gap-2 font-semibold rounded-full select-none text-center leading-snug h-14 px-6 text-base bg-transparent text-ink-2 hover:bg-inset shrink-0\">Back to today</button>",
+            "target": [
+              ".bg-transparent"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "home",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 3,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"eyebrow text-ink-2 truncate\">Your manager</span>",
+            "target": [
+              ".eyebrow.truncate.text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"text-[12px] text-ink-2 truncate\">Michael</span>",
+            "target": [
+              ".truncate.text-ink-2.text-\\[12px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"underline decoration-[2.5px] underline-offset-[5px] [text-decoration-skip-ink:none]\" style=\"text-decoration-color: var(--scene-color);\">Hey, still here?</span>",
+            "target": [
+              ".leading-\\[var\\(--rule\\)\\] > .underline.decoration-\\[2\\.5px\\].underline-offset-\\[5px\\]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "arena",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 0,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "rehearse",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 0,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "learn",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 1,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(28) > .p-4.gap-2\\.5[aria-controls=\"knowledge-reading\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].text-ink-3"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(29) > .p-4.gap-2\\.5[aria-controls=\"knowledge-reading\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].text-ink-3"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "progress",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 6,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"150\" y=\"14\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Aware</text>",
+            "target": [
+              "text[y=\"14\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"261\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Manage</text>",
+            "target": [
+              "text[x=\"261\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"227.58765330260644\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Empathy</text>",
+            "target": [
+              "text[x=\"227.58765330260644\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Relate</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"267.79024325749305\" font-size=\"11\" fill=\"var(--ink-3)\" class=\"num\">2.0</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"267.79024325749305\"][font-size=\"11\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"39\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Decide</text>",
+            "target": [
+              "text[x=\"39\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "settings",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 0,
+      "passes": 22,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "briefing",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "chat",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 1,
+      "passes": 21,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 1,
+        "nodes": [
+          {
+            "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+            "html": "<div class=\"bubble-npc px-4 py-2.5 text-[15px] leading-relaxed whitespace-pre-wrap\">嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？</div>",
+            "target": [
+              ".bubble-npc"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "review",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 1,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-good\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-good"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "home",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 0,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "arena",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 34,
+      "incomplete": 0,
+      "passes": 26,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "rehearse",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 0,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "learn",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 1,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 4,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(10) > .p-4.gap-2\\.5.text-left > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-aron-self-disclosure\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-specific-gratitude\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              "button[aria-controls=\"knowledge-amplification-ally\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].shrink-0"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "progress",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 7,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Unable to determine contrast ratio",
+            "html": "<p class=\"text-[12px] text-ink-3 num\">Today · 1 min</p>",
+            "target": [
+              ".card-link > .flex-1.min-w-0 > .text-\\[12px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"150\" y=\"14\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Aware</text>",
+            "target": [
+              "text[y=\"14\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"261\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Manage</text>",
+            "target": [
+              "text[x=\"261\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"227.58765330260644\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Empathy</text>",
+            "target": [
+              "text[x=\"227.58765330260644\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Relate</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"267.79024325749305\" font-size=\"11\" fill=\"var(--ink-3)\" class=\"num\">2.0</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"267.79024325749305\"][font-size=\"11\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"39\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Decide</text>",
+            "target": [
+              "text[x=\"39\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "settings",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 0,
+      "passes": 22,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "briefing",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "chat",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 0,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "review",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 34,
+      "incomplete": 1,
+      "passes": 26,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 4,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content",
+            "html": "<span class=\"text-[10px] num text-center leading-none pt-0.5 transition-colors text-ink-3\">8</span>",
+            "target": [
+              "button[aria-label=\"Turn 8 · more willing\"] > .leading-none.pt-0\\.5.transition-colors"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-good\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-good"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<button class=\"press min-w-0 [&amp;&gt;svg]:shrink-0 inline-flex items-center justify-center gap-2 font-semibold rounded-full select-none text-center leading-snug h-14 px-6 text-base bg-transparent text-ink-2 hover:bg-inset shrink-0\">Back to today</button>",
+            "target": [
+              ".bg-transparent"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "home",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 3,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"eyebrow text-ink-2 truncate\">Your manager</span>",
+            "target": [
+              ".eyebrow.truncate.text-ink-2"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"text-[12px] text-ink-2 truncate\">Michael</span>",
+            "target": [
+              ".truncate.text-ink-2.text-\\[12px\\]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"underline decoration-[2.5px] underline-offset-[5px] [text-decoration-skip-ink:none]\" style=\"text-decoration-color: var(--scene-color);\">Hey, still here?</span>",
+            "target": [
+              ".leading-\\[var\\(--rule\\)\\] > .underline.decoration-\\[2\\.5px\\].underline-offset-\\[5px\\]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "arena",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 0,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "rehearse",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 36,
+      "incomplete": 0,
+      "passes": 24,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "learn",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 1,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(28) > .p-4.gap-2\\.5[aria-controls=\"knowledge-reading\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].text-ink-3"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span class=\"text-[11px] text-ink-3 num shrink-0\">3 steps</span>",
+            "target": [
+              ".card.card-link.overflow-hidden:nth-child(29) > .p-4.gap-2\\.5[aria-controls=\"knowledge-reading\"] > .items-baseline.justify-between.w-full > .num.text-\\[11px\\].text-ink-3"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "progress",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 37,
+      "incomplete": 1,
+      "passes": 23,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 6,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"150\" y=\"14\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Aware</text>",
+            "target": [
+              "text[y=\"14\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"261\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Manage</text>",
+            "target": [
+              "text[x=\"261\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"227.58765330260644\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Empathy</text>",
+            "target": [
+              "text[x=\"227.58765330260644\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"252.79024325749305\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Relate</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"252.79024325749305\"][font-size=\"12\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"72.41234669739356\" y=\"267.79024325749305\" font-size=\"11\" fill=\"var(--ink-3)\" class=\"num\">2.0</text>",
+            "target": [
+              "text[x=\"72.41234669739356\"][y=\"267.79024325749305\"][font-size=\"11\"]"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+            "html": "<text x=\"39\" y=\"105.20975674250695\" font-size=\"12\" fill=\"var(--ink-2)\" font-weight=\"600\">Decide</text>",
+            "target": [
+              "text[x=\"39\"][y=\"105.20975674250695\"][font-size=\"12\"]"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "settings",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 0,
+      "passes": 22,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "briefing",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 41,
+      "incomplete": 0,
+      "passes": 19,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "chat",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 38,
+      "incomplete": 1,
+      "passes": 21,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 1,
+        "nodes": [
+          {
+            "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+            "html": "<div class=\"bubble-npc px-4 py-2.5 text-[15px] leading-relaxed whitespace-pre-wrap\">嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？</div>",
+            "target": [
+              ".bubble-npc"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "usual",
+    "name": "review",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 35,
+      "incomplete": 1,
+      "passes": 25,
+      "violations": 0
+    },
+    "incomplete": [
+      {
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodeCount": 2,
+        "nodes": [
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-quote\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-quote"
+            ]
+          },
+          {
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+            "html": "<span class=\"mark-good\">“我今晚已有安排，无法留下。”</span>",
+            "target": [
+              ".mark-good"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "violations": []
+  },
+  {
+    "group": "storage-recovery",
+    "lang": "zh",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 42,
+      "incomplete": 0,
+      "passes": 18,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "storage-recovery",
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 42,
+      "incomplete": 0,
+      "passes": 18,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "storage-recovery",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 42,
+      "incomplete": 0,
+      "passes": 18,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "storage-recovery",
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 42,
+      "incomplete": 0,
+      "passes": 18,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "storage-recovery",
+    "lang": "en",
+    "theme": "light",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 42,
+      "incomplete": 0,
+      "passes": 18,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "storage-recovery",
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 42,
+      "incomplete": 0,
+      "passes": 18,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "storage-recovery",
+    "lang": "en",
+    "theme": "dark",
+    "width": 360,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 42,
+      "incomplete": 0,
+      "passes": 18,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  },
+  {
+    "group": "storage-recovery",
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "axeVersion": "4.12.1",
+    "counts": {
+      "inapplicable": 42,
+      "incomplete": 0,
+      "passes": 18,
+      "violations": 0
+    },
+    "incomplete": [],
+    "violations": []
+  }
+]

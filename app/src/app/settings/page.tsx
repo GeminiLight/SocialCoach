@@ -10,10 +10,12 @@ import { stopSpeaking, unlockSpeech } from "@/lib/speech";
 import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
 import { t, pick } from "@/lib/i18n";
 import { clockMarks, PatiencePicker } from "@/components/practice/ReplyClock";
-import { COMPETENCIES, SKILLS, type Lang, type SkillId } from "@/data/taxonomy";
+import { COMPETENCIES, SKILLS, type SkillId } from "@/data/taxonomy";
 import { compColor } from "@/lib/format";
 import { AvatarFigure, learnerSeed } from "@/data/avatars";
 import { AvatarPicker } from "@/components/AvatarPicker";
+import { LanguagePicker } from "@/components/LanguagePicker";
+import { FeedbackButton } from "@/components/Feedback";
 
 export default function Settings() {
   const lang = useLang();
@@ -86,7 +88,7 @@ export default function Settings() {
                     setBio(profile.bio);
                     setEdit(true);
                   }}
-                  className="press text-[13px] text-action min-h-11"
+                  className="press text-[13px] text-action min-h-11 min-w-11"
                 >
                   {t(lang, "st_edit")}
                 </button>
@@ -119,7 +121,7 @@ export default function Settings() {
           <section className="flex flex-col gap-3">
             <SectionTitle
               right={
-                <button onClick={() => setGoalsOpen(true)} className="press text-[13px] text-action min-h-11">
+                <button onClick={() => setGoalsOpen(true)} className="press text-[13px] text-action min-h-11 min-w-11">
                   {t(lang, "st_edit")}
                 </button>
               }
@@ -137,21 +139,7 @@ export default function Settings() {
             <SectionTitle>{t(lang, "st_prefs")}</SectionTitle>
             <div className="card divide-y divide-line">
               <Row label={t(lang, "st_language")}>
-                <div className="inline-flex rounded-full border border-line p-0.5 text-[12px] font-medium">
-                  {(["zh", "en"] as Lang[]).map((l) => (
-                    <button
-                      key={l}
-                      aria-pressed={lang === l}
-                      onClick={() => setLang(l)}
-                      className={clsx(
-                        "press px-3 min-h-11 rounded-full inline-flex items-center gap-1.5",
-                        lang === l ? "bg-ink text-paper" : "text-ink-3",
-                      )}
-                    >
-                      {l === "zh" ? "中文" : "English"}
-                    </button>
-                  ))}
-                </div>
+                <LanguagePicker lang={lang} onChange={setLang} />
               </Row>
               <Row label={t(lang, "st_theme")}>
                 <div className="inline-flex rounded-full border border-line p-0.5 text-[12px] font-medium">
@@ -250,6 +238,7 @@ export default function Settings() {
 
           <section className="flex flex-col gap-2">
             <SectionTitle>{t(lang, "st_about")}</SectionTitle>
+            <FeedbackButton className="self-start mb-2" />
             <p className="text-[13px] text-ink-3 leading-relaxed lg:max-w-[var(--measure)]">{t(lang, "st_about_body")}</p>
             <a
               className="text-[13px] text-teal underline underline-offset-2"

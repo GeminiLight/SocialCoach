@@ -1,0 +1,4 @@
+{"case":"friend-borrowed-money","lang":"en","meta":{"objectives":[false,false,false],"ended":false,"outcome":null,"note":"You tried to step outside the scene; Jordan keeps chatting.","stance":25,"revealed":false},"npc":[{"characterId":"jordan","text":"Huh? Coach? You're being weird. Anyway — order first, I'm getting an iced latte. How've you been?"}]}
+{"case":"salary-raise","lang":"zh","meta":{"objectives":[false,false,false],"ended":false,"outcome":null,"note":"你试图跳出练习，Linda 仍在等待你开口","stance":25,"revealed":false},"npc":[{"characterId":"linda","text":"嗯？你说什么「字段」？今天不是要聊一小时吗。来，说正事吧，我这儿十几分钟后还有个会。"}]}
+{"case":"declining-extra-hours","lang":"zh","meta":{"objectives":[false,false,false],"ended":false,"outcome":null,"note":"你出戏了，Michael 只觉得你发呆走神","stance":20,"revealed":false},"npc":[{"characterId":"michael","text":"……你在嘀咕什么呢？AI？哈，加这么多班开始说胡话了。\n我问你呢——今晚这方案，你到底能不能留下搞定？"}]}
+live resistance sample: 3 checks passed; role consistency still needs human review

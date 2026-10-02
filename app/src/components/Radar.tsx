@@ -91,7 +91,7 @@ export function Radar({
               <text x={Math.max(size * 0.13, Math.min(size * 0.87, p[0]))} y={p[1] - 4} fontSize={12} fill="var(--ink-2)" fontWeight={600}>
                 {lang === "zh" ? c.name[lang] : c.short[lang]}
               </text>
-              <text x={Math.max(size * 0.13, Math.min(size * 0.87, p[0]))} y={p[1] + 11} fontSize={11} fill={compColor(c.id)} className="num">
+              <text x={Math.max(size * 0.13, Math.min(size * 0.87, p[0]))} y={p[1] + 11} fontSize={11} fill="var(--ink-3)" className="num">
                 {v == null ? "–" : v.toFixed(1)}
               </text>
             </g>

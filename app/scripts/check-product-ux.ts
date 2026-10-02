@@ -29,7 +29,7 @@ function open(path: string, settleFades = true) {
   browser(["open", base + path]);
   wait("document.querySelector('h1') !== null");
   // Wait for finite entry fades before measuring contrast or taking evidence.
-  if (settleFades) wait("Array.from(document.querySelectorAll('[style]')).filter(e => e.style.opacity && e.getClientRects().length).every(e => Number(getComputedStyle(e).opacity) >= 0.999)");
+  if (settleFades) wait("Array.from(document.querySelectorAll('[style]')).filter(e => e.style.opacity && e.style.transform && e.getClientRects().length).every(e => Number(getComputedStyle(e).opacity) >= 0.999)");
 }
 function check(name: string, condition: unknown) { assert(condition, name); console.log(`PASS ${name}`); }
 const sc = scenarioById("declining-extra-hours")!;
@@ -45,7 +45,8 @@ const chat = { ...briefing, id: "ux-chat", status: "active", timed: false,
   messages: [{ id: "opening", role: "npc", characterId: sc.opening.characterId, text: sc.opening.text.zh, ts: now }],
 };
 const review = { ...chat, id: "ux-review", status: "assessed", revealSeen: true,
-  messages: [...chat.messages, { id: "learner", role: "learner", text: quote, ts: now }],
+  messages: [...chat.messages, ...Array.from({ length: 8 }, (_, i) => ({ id: `learner-${i}`, role: "learner", text: quote, ts: now + i }))],
+  stanceTrail: [25, 30, 20, 40, 40, 50, 55, 65],
   report: { scoringVersion: 2, stars: 2, outcome: "partial", verdictEvidence: quote,
     verdict: "你说清了边界，也给对方留出了讨论空间。", summary: `${quote}你没有用反复道歉削弱自己的决定。`,
     ratings: [{ skill: "communication", level: 2, evidence: quote, reason: "限制明确。" }],
@@ -65,7 +66,56 @@ try {
   browser(["network", "route", "**/api/roleplay", "--abort"]);
   browser(["network", "route", "**/api/schedule", "--abort"]);
   browser(["network", "route", "**/api/track", "--body", "{}"]);
-  browser(["open", base]);
+  browser(["open", base + "/onboarding"]);
+  wait("location.pathname === '/onboarding' && document.querySelector('h1') !== null");
+  const visitor = { ...state, profile: null, proficiency: {}, sessions: [], todaySessionId: null, todayDate: null };
+  const onboardingScans: unknown[] = [];
+  for (const lang of ["zh", "en"] as const) {
+    for (const theme of ["light", "dark"]) {
+      for (const width of [360, 1440]) {
+        const empty = { ...visitor, settings: { ...state.settings, theme } };
+        evaluate(`localStorage.setItem('socialcoach.v1', ${JSON.stringify(JSON.stringify({ state: empty, version: 0 }))}); true`);
+        browser(["set", "viewport", String(width), "900"]);
+        open("/onboarding");
+        browser(["find", "role", "button", "click", "--name", lang === "zh" ? "中文" : "English", "--exact"]);
+        wait("!document.getAnimations().some(a => a.playState === 'running' && a.effect.getTiming().iterations !== Infinity)");
+        check(`welcome ${lang}/${theme}/${width} no overflow`, evaluate("document.documentElement.scrollWidth <= innerWidth"));
+        check("welcome controls have adequate touch targets", evaluate("Array.from(document.querySelectorAll('main button')).every(e => e.getBoundingClientRect().height >= 44)"));
+        browser(["screenshot", join(artifacts, `welcome-${lang}-${theme}-${width}.png`)]);
+        const scan = browser(["a11y", "--tags", "wcag2a,wcag2aa"]);
+        onboardingScans.push({ name: "welcome", lang, theme, width, ...scan });
+        check("welcome has no automatic accessibility violations", scan.counts.violations === 0);
+        browser(["find", "role", "button", "click", "--name", lang === "zh" ? "排练我的对话" : "Rehearse my conversation", "--exact"]);
+        wait("location.pathname === '/rehearse' && document.querySelector('textarea') !== null");
+        const saved = JSON.parse(evaluate("localStorage.getItem('socialcoach.v1')")).state;
+        check("quick start goes straight to rehearsal without invented ratings", saved.profile.lang === lang && saved.profile.goals.includes("communication") && Object.keys(saved.proficiency).length === 0);
+      }
+    }
+  }
+  evaluate(`localStorage.setItem('socialcoach.v1', ${JSON.stringify(JSON.stringify({ state: visitor, version: 0 }))}); true`);
+  open("/onboarding");
+  browser(["find", "role", "button", "click", "--name", "中文", "--exact"]);
+  browser(["find", "role", "button", "click", "--name", "先选一个现成场景", "--exact"]);
+  wait("location.pathname === '/arena' && document.querySelector('input[type=search]') !== null");
+  check("ready-made scene path bypasses profile forms", JSON.parse(evaluate("localStorage.getItem('socialcoach.v1')")).state.profile !== null);
+  evaluate(`localStorage.setItem('socialcoach.v1', ${JSON.stringify(JSON.stringify({ state: visitor, version: 0 }))}); true`);
+  open("/onboarding");
+  browser(["find", "role", "button", "click", "--name", "中文", "--exact"]);
+  browser(["find", "role", "button", "click", "--name", "先设置我的练习目标", "--exact"]);
+  wait("document.querySelector('button[aria-controls=onboarding-relationship-skills]') !== null");
+  check("collapsed skill groups contain no visible or keyboard-accessible controls", evaluate("Array.from(document.querySelectorAll('[id^=onboarding-][hidden] button')).every(e => e.getClientRects().length === 0)"));
+  wait("document.activeElement.tagName === 'H1'");
+  check("guided step focuses its heading", true);
+  browser(["find", "role", "button", "click", "--name", "清晰沟通", "--exact"]);
+  browser(["find", "role", "button", "click", "--name", "下一步", "--exact"]);
+  wait("document.querySelector('input[type=range]') !== null");
+  browser(["find", "role", "button", "click", "--name", "下一步", "--exact"]);
+  wait("document.querySelector('h1')?.innerText === '这些对话通常发生在哪里？'");
+  browser(["find", "role", "button", "click", "--name", "下一步", "--exact"]);
+  wait("document.querySelector('textarea') !== null");
+  browser(["find", "role", "button", "click", "--name", "进入今日练习", "--exact"]);
+  wait("location.pathname === '/'");
+  check("guided onboarding preserves explicit self-rating", JSON.parse(evaluate("localStorage.getItem('socialcoach.v1')")).state.proficiency.communication === 2.5);
   // The deployed v0 envelope predates quality ratings and closure evidence.
   // Loading new screens must not rewrite an old report or lose an active chat.
   const legacyReport = { ...review.report };
@@ -87,6 +137,17 @@ try {
     if (path === "/practice/ux-review") check("legacy report renders", evaluate(`document.body.innerText.includes(${JSON.stringify(legacyReport.verdict)})`));
     if (path === "/practice/ux-chat") check("old active chat remains resumable", evaluate(`!!document.querySelector('textarea') && document.body.innerText.includes(${JSON.stringify(quote)})`));
   }
+  evaluate(`localStorage.setItem('socialcoach.v1', ${JSON.stringify(JSON.stringify({ state, version: 0 }))}); true`);
+  open("/learn");
+  browser(["click", "#knowledge-reading li:first-child .notebook-row"]);
+  wait("location.pathname.startsWith('/practice/') && document.querySelector('h1') !== null");
+  const fromKnowledge = JSON.parse(evaluate("localStorage.getItem('socialcoach.v1')")).state.sessions[0];
+  check("knowledge leads to a sourced, ready-to-prepare practice", fromKnowledge.origin === "arena" && fromKnowledge.status === "briefing" && !!fromKnowledge.scenario.source);
+  open("/practice/ux-review");
+  browser(["find", "role", "button", "click", "--name", "再练一次", "--exact"]);
+  wait("location.pathname.startsWith('/practice/') && !location.pathname.endsWith('/ux-review')");
+  const repeated = JSON.parse(evaluate("localStorage.getItem('socialcoach.v1')")).state.sessions;
+  check("repeat starts a fresh conversation and preserves the original debrief", repeated[0].id !== review.id && repeated[0].status === "briefing" && JSON.stringify(repeated.find((s: { id: string }) => s.id === review.id).report) === JSON.stringify(review.report));
   evaluate(`localStorage.setItem('socialcoach.v1', ${JSON.stringify(JSON.stringify({ state, version: 0 }))}); true`);
   open("/practice/ux-chat");
   browser(["fill", "textarea", "这是一段还没发送的草稿。"]);
@@ -137,6 +198,8 @@ try {
   wait("!document.querySelector('textarea').disabled");
 
   browser(["set", "viewport", "390", "844"]);
+  open("/practice/ux-review");
+  check("eight-turn map keeps adequate targets within the phone", evaluate("Array.from(document.querySelectorAll('button[aria-label^=第]')).every(e => e.getBoundingClientRect().width >= 44) && document.documentElement.scrollWidth <= innerWidth"));
   open("/practice/ux-chat");
   browser(["click", "button[aria-label='暂停或结束练习']"]);
   browser(["press", "Escape"]);
@@ -151,7 +214,7 @@ try {
   evaluate(`localStorage.setItem('socialcoach.v1', ${JSON.stringify(JSON.stringify({ state, version: 0 }))}); true`);
   open("/");
 
-  const scans: unknown[] = [];
+  const scans: unknown[] = [...onboardingScans];
   let violations = 0;
   for (const lang of (process.env.UX_SKIP_MATRIX ? [] : ["zh", "en"])) {
     evaluate(`(() => { const s = JSON.parse(localStorage.getItem('socialcoach.v1')); s.state.profile.lang = '${lang}'; localStorage.setItem('socialcoach.v1', JSON.stringify(s)); return true; })()`);
@@ -159,7 +222,7 @@ try {
       evaluate(`(() => { const s = JSON.parse(localStorage.getItem('socialcoach.v1')); s.state.settings.theme = '${theme}'; localStorage.setItem('socialcoach.v1', JSON.stringify(s)); return true; })()`);
       for (const width of [360, 768, 1024, 1440]) {
         browser(["set", "viewport", String(width), "900"]);
-        for (const [name, path] of [["home", "/"], ["arena", "/arena"], ["briefing", "/practice/ux-briefing"], ["chat", "/practice/ux-chat"], ["review", "/practice/ux-review"]]) {
+        for (const [name, path] of [["home", "/"], ["arena", "/arena"], ["rehearse", "/rehearse"], ["learn", "/learn"], ["progress", "/progress"], ["settings", "/settings"], ["briefing", "/practice/ux-briefing"], ["chat", "/practice/ux-chat"], ["review", "/practice/ux-review"]]) {
           open(path);
           check(`${name} ${lang}/${theme}/${width} no horizontal overflow`, evaluate("document.documentElement.scrollWidth <= innerWidth"));
           if (width === 360 || width === 1440) {

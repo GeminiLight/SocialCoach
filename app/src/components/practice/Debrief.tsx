@@ -30,6 +30,7 @@ export function Debrief({ session }: { session: Session }) {
   const [err, setErr] = useState<string | null>(null);
   const [partial, setPartial] = useState<Partial<Report> | null>(null);
   const inflight = useRef(false);
+  const restarting = useRef(false);
   const sc = session.scenario;
   const report = session.report;
 
@@ -71,6 +72,8 @@ export function Debrief({ session }: { session: Session }) {
   }, [session.status]);
 
   const again = () => {
+    if (restarting.current) return;
+    restarting.current = true;
     const s = buildSession(sc, session.origin, lang, session.adaptation ? { adaptation: session.adaptation } : undefined);
     addSession(s);
     router.push(`/practice/${s.id}`);
@@ -308,12 +311,12 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
   };
 
   return (
-    <div className="min-h-dvh pt-safe pb-36 lg:pb-12 lg:mx-auto lg:w-full lg:max-w-[var(--focus-max)] lg:px-6">
+    <div className="min-h-dvh pt-safe pb-48 lg:pb-12 lg:mx-auto lg:w-full lg:max-w-[var(--focus-max)] lg:px-6">
       <div className="px-3 lg:px-0 mb-6">
         <PracticeJourney phase={2} onBack={() => router.push("/")} actions={<IconButton label={t(lang, "rp_share")} onClick={share} disabled={streaming}><Share2 size={18} /></IconButton>} />
       </div>
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_var(--margin-w)] lg:gap-x-10 lg:items-start">
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="px-5 flex flex-col gap-9 lg:px-0">
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }} className="px-5 flex flex-col gap-9 lg:px-0">
         <header className="flex flex-col gap-3">
           <p className="eyebrow">{t(lang, "rp_title")} · {sc.title[lang]}</p>
           {/* The verdict carries the first screen. Stars and a tally are a score,
@@ -350,6 +353,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
           <section className="bg-slab text-slab-ink rounded-[var(--radius)] p-6 flex flex-col gap-3">
             <h2 className="eyebrow text-slab-ink">{t(lang, "rp_next_step")}</h2>
             <p className="display text-[20px] leading-relaxed">{report.nextStep}</p>
+            <p className="text-[13px] leading-relaxed">{t(lang, "rp_repeat_note")}</p>
           </section>
         )}
 
@@ -468,9 +472,9 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
           </section>
         )}
         {!streaming && (
-          <BottomBar className="px-5 pb-safe pb-6 pt-4 flex gap-2 lg:px-0 lg:pb-0">
-            <Button block size="lg" variant="ink" onClick={() => router.push("/")}>{t(lang, "rp_back_home")}</Button>
-            <Button size="lg" variant="secondary" onClick={onAgain} className="px-4" aria-label={t(lang, "rp_practice_again")}><RotateCcw size={18} /></Button>
+          <BottomBar className="px-5 pb-safe pb-6 pt-4 flex flex-col sm:flex-row gap-2 lg:px-0 lg:pb-0">
+            <Button block size="lg" onClick={onAgain}><RotateCcw size={18} />{t(lang, "rp_practice_again")}</Button>
+            <Button size="lg" variant="ghost" onClick={() => router.push("/")} className="shrink-0">{t(lang, "rp_back_home")}</Button>
           </BottomBar>
         )}
       </motion.div>

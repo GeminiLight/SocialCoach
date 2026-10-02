@@ -1,26 +1,37 @@
 "use client";
-import { useState } from "react";
-import Link from "next/link";
-import { ArrowUpRight, Bookmark, ChevronDown, Search, X } from "lucide-react";
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, Bookmark, ChevronDown, Search, X } from "lucide-react";
 import { clsx } from "clsx";
 import { Shell } from "@/components/Shell";
 import { Chip, Empty, Page } from "@/components/ui";
 import { SkillTag } from "@/components/SkillBits";
-import { CASES, THEORIES } from "@/data/corpus";
-import type { Case, Theory } from "@/data/corpus/types";
+import { CASES, SCENARIOS, THEORIES } from "@/data/corpus";
+import type { Case, Scenario, Theory } from "@/data/corpus/types";
 import { skillById, type Lang } from "@/data/taxonomy";
 import { useApp, useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
 import { useIsDesktop } from "@/lib/use-media";
 import { CaseBody, TheoryBody } from "@/components/Knowledge";
+import { buildSession } from "@/lib/session-utils";
+import { ScenarioCover } from "@/components/ScenarioCover";
 
 export default function Learn() {
   const lang = useLang();
-  const { bookmarks, toggleBookmark, profile } = useApp();
+  const router = useRouter();
+  const starting = useRef(false);
+  const { bookmarks, toggleBookmark, profile, addSession } = useApp();
   const desktop = useIsDesktop();
   const [tab, setTab] = useState<"theories" | "cases" | "saved">("theories");
   const [q, setQ] = useState("");
   const [open, setOpen] = useState<string | null>(null);
+  const start = (scene: Scenario) => {
+    if (starting.current) return;
+    starting.current = true;
+    const session = buildSession(scene, "arena", lang);
+    addSession(session);
+    router.push(`/practice/${session.id}`);
+  };
 
   const match = (hay: string[]) => !q.trim() || hay.join(" ").toLowerCase().includes(q.trim().toLowerCase());
   const theories = THEORIES.filter((x) =>
@@ -84,7 +95,7 @@ export default function Learn() {
                 type="button"
                 onClick={() => setQ("")}
                 aria-label={t(lang, "ln_clear")}
-                className="press h-11 w-8 shrink-0 inline-flex items-center justify-center"
+                className="press h-11 w-11 shrink-0 inline-flex items-center justify-center"
               >
                 <X size={16} />
               </button>
@@ -92,14 +103,14 @@ export default function Learn() {
           </label>
           <div className="grid grid-cols-3 gap-1.5 shrink-0 [&>button]:px-2 [&>button]:text-[12px] [&>button]:justify-center">
             <Chip active={tab === "theories"} onClick={() => setTab("theories")}>
-              {t(lang, "ln_theories")} <span className="num opacity-70">{THEORIES.length}</span>
+              {t(lang, "ln_theories")} <span className="num">{THEORIES.length}</span>
             </Chip>
             <Chip active={tab === "cases"} onClick={() => setTab("cases")}>
-              {t(lang, "ln_cases")} <span className="num opacity-70">{CASES.length}</span>
+              {t(lang, "ln_cases")} <span className="num">{CASES.length}</span>
             </Chip>
             <Chip active={tab === "saved"} onClick={() => setTab("saved")}>
               <Bookmark size={14} />
-              {t(lang, "ln_saved")} {bookmarks.length > 0 && <span className="num opacity-70">{bookmarks.length}</span>}
+              {t(lang, "ln_saved")} {bookmarks.length > 0 && <span className="num">{bookmarks.length}</span>}
             </Chip>
           </div>
 
@@ -125,7 +136,7 @@ export default function Learn() {
           )}
 
           <ul className="flex flex-col gap-2 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
-            {items.map((it, i) => {
+            {items.map((it) => {
               const isTheory = "principle" in it;
               const isOpen = open === it.id;
               const isSelected = selected?.id === it.id;
@@ -133,8 +144,7 @@ export default function Learn() {
               return (
                 <li
                   key={it.id}
-                  className={clsx("card card-link overflow-hidden rise shrink-0", isSelected && "knowledge-selected")}
-                  style={{ "--i": Math.min(i, 8) } as React.CSSProperties}
+                  className={clsx("card card-link overflow-hidden shrink-0", isSelected && "knowledge-selected")}
                 >
                   <button
                     aria-expanded={desktop ? undefined : isOpen}
@@ -181,7 +191,7 @@ export default function Learn() {
                   >
                     <div className="overflow-hidden">
                       <div className="px-4 pb-4 flex flex-col gap-4">
-                        <ItemBody it={it} lang={lang} saved={saved} onSave={() => toggleBookmark(it.id)} />
+                        <ItemBody it={it} lang={lang} saved={saved} onSave={() => toggleBookmark(it.id)} onPractice={start} />
                       </div>
                     </div>
                   </div>
@@ -208,7 +218,7 @@ export default function Learn() {
               <h2 className="display text-[26px] leading-tight">{selected.title[lang]}</h2>
             </header>
             <div className="flex flex-col gap-4">
-              <ItemBody it={selected} lang={lang} saved={bookmarks.includes(selected.id)} onSave={() => toggleBookmark(selected.id)} />
+              <ItemBody it={selected} lang={lang} saved={bookmarks.includes(selected.id)} onSave={() => toggleBookmark(selected.id)} onPractice={start} />
             </div>
           </article>
         )}
@@ -218,8 +228,12 @@ export default function Learn() {
 }
 
 /** The body of a theory or case — same content in the phone accordion and the desktop pane. */
-function ItemBody({ it, lang, saved, onSave }: { it: Theory | Case; lang: Lang; saved: boolean; onSave: () => void }) {
+function ItemBody({ it, lang, saved, onSave, onPractice }: { it: Theory | Case; lang: Lang; saved: boolean; onSave: () => void; onPractice: (scene: Scenario) => void }) {
   const isTheory = "principle" in it;
+  const related = SCENARIOS.map((scene) => ({ scene, overlap: it.skills.filter((skill) => scene.skills.includes(skill)).length }))
+    .filter(({ overlap }) => overlap > 0)
+    .sort((a, b) => b.overlap - a.overlap || a.scene.difficulty - b.scene.difficulty)
+    .slice(0, 3);
   return (
     <>
       {isTheory ? <TheoryBody t={it as Theory} /> : <CaseBody c={it as Case} />}
@@ -231,26 +245,33 @@ function ItemBody({ it, lang, saved, onSave }: { it: Theory | Case; lang: Lang; 
           <SkillTag key={k} id={k} lang={lang} small />
         ))}
       </div>
+      <button aria-pressed={saved} onClick={onSave}
+        className={clsx("press self-start min-h-11 px-3.5 rounded-full border text-[13px] font-medium inline-flex items-center gap-1.5", saved ? "bg-ink text-paper border-ink" : "border-line-strong")}>
+        <Bookmark size={14} fill={saved ? "currentColor" : "none"} />
+        {saved ? t(lang, "ln_bookmarked") : t(lang, "ln_bookmark")}
+      </button>
+      {related.length > 0 && (
+        <section className="mt-3 pt-5 border-t border-line flex flex-col gap-3">
+          <h3 className="display text-[20px] leading-snug">{t(lang, "ln_related_practice")}</h3>
+          <p className="text-[13px] text-ink-3 leading-relaxed">{t(lang, "ln_related_reason")}</p>
+          <ul>
+            {related.map(({ scene }) => (
+              <li key={scene.id}>
+                <button onClick={() => onPractice(scene)} className="notebook-row press w-full flex items-start gap-3 py-4 text-left" aria-label={`${scene.title[lang]} · ${t(lang, "ln_scene_prepare")}`}>
+                  <ScenarioCover scenario={scene} size={44} />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[14px] font-semibold leading-snug">{scene.title[lang]}</span>
+                    <span className="block mt-1 text-[12px] text-ink-3 leading-relaxed">{scene.hook[lang]}</span>
+                    <span className="block mt-2 text-[12px] text-ink-3 num">{scene.minutes} {t(lang, "min")} · {t(lang, `diff_${scene.difficulty}` as "diff_1")}</span>
+                  </span>
+                  <ArrowRight size={16} className="text-accent-deep shrink-0 mt-1" aria-hidden />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
-      <div className="flex flex-wrap items-center gap-2 pt-2">
-        <button
-          aria-pressed={saved}
-          onClick={onSave}
-          className={clsx(
-            "press min-h-11 px-3.5 rounded-full border text-[13px] font-medium inline-flex items-center gap-1.5",
-            saved ? "bg-ink text-paper border-ink" : "border-line-strong",
-          )}
-        >
-          <Bookmark size={14} fill={saved ? "currentColor" : "none"} />
-          {saved ? t(lang, "ln_bookmarked") : t(lang, "ln_bookmark")}
-        </button>
-        <Link
-          href={`/arena?skill=${it.skills[0]}`}
-          className="press min-h-11 px-3.5 rounded-full bg-accent-soft text-accent-deep text-[13px] font-medium inline-flex items-center"
-        >
-          {t(lang, "ln_practice_this")} <ArrowUpRight size={15} className="ml-2" aria-hidden />
-        </Link>
-      </div>
     </>
   );
 }

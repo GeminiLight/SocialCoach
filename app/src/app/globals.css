@@ -372,7 +372,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ink fill for objective boxes */
 @keyframes inkfill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-.inkfill { transform-origin: left; animation: inkfill 600ms var(--ease-expo) forwards; }
+.inkfill { transform-origin: left; animation: inkfill 280ms var(--ease-expo) forwards; }
 
 /* staged loader */
 @keyframes sweep { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
@@ -380,10 +380,10 @@ a { color: inherit; text-decoration: none; }
 
 /* entrance */
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.rise { animation: rise 520ms var(--ease-expo) both; animation-delay: calc(var(--i, 0) * 60ms); }
+.rise { animation: rise 240ms var(--ease-expo) both; animation-delay: calc(min(var(--i, 0), 3) * 40ms); }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; }
 }
 
 /* safe areas */
@@ -391,7 +391,7 @@ a { color: inherit; text-decoration: none; }
 .pt-safe { padding-top: max(8px, env(safe-area-inset-top)); }
 
 /* range input */
-input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; }
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; background: transparent; }
 input[type="range"]::-webkit-slider-runnable-track { height: 4px; background: var(--line-strong); border-radius: 999px; }
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9px; border-radius: 999px; background: var(--card); border: 2px solid var(--ink); box-shadow: 0 1px 2px oklch(0 0 0 / 0.15); }
 input[type="range"]::-moz-range-track { height: 4px; background: var(--line-strong); border-radius: 999px; }

@@ -289,7 +289,7 @@ export function SectionTitle({ children, right, className }: { children: ReactNo
 /* ───────────── Page transition wrapper ───────────── */
 export function Page({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <motion.main initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }} className={clsx("px-5 md:px-8 lg:px-10", className)}>
+    <motion.main initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }} className={clsx("px-5 md:px-8 lg:px-10", className)}>
       {children}
     </motion.main>
   );
