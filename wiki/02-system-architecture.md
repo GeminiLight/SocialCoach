@@ -254,6 +254,8 @@ pnpm lint
 
 `app/src/features/dinner` 从独立原型导入，`/3d` 的客户端动态加载 WebGL，无额外服务 / iframe。`DinnerEntry` 仅引用静态截图，不加载 Three.js；公告设备标记与饭局存档独立于 Zustand 主档案。3D 的颜色和选择器有前缀，返回主站不改变纸面样式。
 
+同日性能更新：进入 `/3d` 后界面与场景并行下载，BYOK 导演到发送时动态加载。`StaticFurniture` 只合并不可变的同材质陈设；人物、透明物件与交互对象保持独立。标签用观察器维护布局缓存；场景暂停 / 隐藏时按需绘制，动画可变状态只在实际 UI 阶段变化时生成 React 快照。`roomUiKey` 忽略收敛误差，`saveScheduler` 合并空间 / 动画写入，文字与转录立即写入，离开 / 隐藏时读取精确当前状态。像素比按持续帧率自动调整，不简化人物几何。见 [性能验收](./reviews/review-2026-10-03-3d-performance.md)。
+
 人物身份由场景 `content.ts` 指定，`cast.ts` 按稳定角色 ID 提供九人的脸型、年龄表现、头发、体型与动作细节；不再从 bob 发型推断身体形状。服装 / 发型 / 色板与场景人物一致，体型缩放覆盖骨架和附件，眼高同时供视线与标签投影使用。仅影响呈现，不增加存档字段或模型事实。
 
 `directDinner()` → 已配置 BYOK：浏览器 `runDinner()` / `makeByokLLM()`；否则 `/api/dinner/direct` → `runDinner()` / `serverLLM`。任务层共用 `jsonCall()`、严格场景 / 事件校验，单次请求支持取消。复用主站 `health` 和限流，无新密钥、账号或服务端存储。详情见 [3D 接入说明](./archive/specs/spec-3d-integration.md)。
@@ -263,6 +265,8 @@ pnpm lint
 2026-10-03 剧情连续性更新：`story.ts` 管理六种开局、各自事实 / 人物利益、话题、事件资格与回合预算；`dialogue.ts` 提供明确标识的离线演练，依据话题和历史而非回合索引。默认 12 回合，可选 8 / 12 / 18，续聊增加最多 6 回合，总上限 24。v1 存档增加可选剧情 / 目标人物与长度字段，保留旧转录；满预算恢复时归一化为已暂停。
 
 `director.ts` 收到完整已答历史后，将尚未回答的 `current_player_turn` 单独置于模型输入末尾；当前引文、角色与事件通过校验后才原子提交问答。剧情事实按开局隔离。除了开局动作，`drama.ts` 只接受显式的剧情事件邀请；新物理动作只产生动作证据与动画，不再覆盖模型台词或捏造一段角色答复。旧存档中真正展示过的动作插话作为 `heard` 保留。服务端与 BYOK 共用该任务，无服务端会话存储。见 [剧情方案](./archive/specs/spec-3d-story-continuity.md) 与 [连续性复盘](./81-postmortem-dinner-continuity.md)。
+
+模型历史投影保留所有原话、主句 / 旁人插话、当时空间与动作身份，移除重复的动画 / 存档元数据；完整当前动作记录仍作为 `observedActions` 提供。模型输出不再要求会被覆盖的 `cue`，显示旁白统一由校验后的动作派生；HTTP 回复和设备存档继续含原有 `cue` 字段。此减量不截断历史或改变 NPC 阻力。
 
 同日阅读体验更新：`ConversationHistory` 用 `transcript.ts` 将现有 messages / actions 重建为完整时间顺序，保留开场与旧 `heard` 插话，不新增存储副本。`SpokenLine` 只限制现场阅读高度，完整原话仍在历史和导出中；新生成台词在共用 `runDinner` 校验长度并最多重写一次，旧 SaveSchema 长度兼容不变。
 

@@ -87,6 +87,7 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
   const wristRotation=useMemo(()=>({parent:new Quaternion(),target:new Quaternion(),euler:new Euler()}),[]);
   const eyes=useRef<(Group|null)[]>([]),relaxedHand=useRef<Group>(null!),cupHand=useRef<Group>(null!),phoneHand=useRef<Group>(null!),openHand=useRef<Group>(null!),leftRelaxed=useRef<Group>(null!);
   const appearance=castAppearance(character.id),feminine=appearance.feminine;
+  const features=useMemo(()=>faceFeatures(character.id),[character.id]);
   const rig=useMemo(()=>garmentRig(feminine),[feminine]);
   const garment=useMemo(()=>{
     const material=new MeshStandardMaterial({color:p[character.palette],roughness:.86,bumpMap:surfaces.fabric,bumpScale:.0015});
@@ -175,7 +176,7 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
     heldProps.current.quaternion.copy(wristRotation.parent).invert().multiply(wristRotation.target);
     mouth.current.scale.y=.0018+pose.speech*.0055*appearance.energy;
     lowerLip.current.position.y=-pose.speech*.004*appearance.energy;
-    brows.current.forEach((brow,i)=>{if(brow)brow.position.y=faceFeatures(character.id).brow+pose.emphasis*(i===0?.003:.002);});
+    brows.current.forEach((brow,i)=>{if(brow)brow.position.y=features.brow+pose.emphasis*(i===0?.003:.002);});
     relaxedHand.current.visible=!glass.current?.visible&&!phone.current.visible;
     cupHand.current.visible=!!glass.current?.visible;phoneHand.current.visible=phone.current.visible;
     openHand.current.visible=player&&own.palm>.02;leftRelaxed.current.visible=!openHand.current.visible;

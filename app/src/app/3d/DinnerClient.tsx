@@ -16,7 +16,12 @@ function Loading() {
   const lang = useLang();
   return <div className="grid min-h-dvh place-content-center gap-4 text-center" role="status"><p>{pick(copy.loading, lang)}</p><Link href="/" className="press min-h-11 text-[13px] text-ink-3">{pick(copy.home, lang)}</Link></div>;
 }
-const DinnerApp = dynamic(() => import('@/features/dinner/DinnerApp'), { ssr: false, loading: Loading });
+const DinnerApp = dynamic(() => {
+  // Only after entering /3d: fetch the renderer alongside the UI, avoiding a
+  // second download waterfall. The scene boundary handles its loading failure.
+  void import('@/features/dinner/components/DinnerScene').catch(()=>{});
+  return import('@/features/dinner/DinnerApp');
+}, { ssr: false, loading: Loading });
 class DinnerBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }

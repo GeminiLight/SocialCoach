@@ -7,13 +7,14 @@ import {useCanUseModel} from '@/lib/model-access';
 import {ModelAccessNotice} from '@/components/ModelAccessNotice';
 import {M} from '@/lib/model-copy';
 import {DINNER_SAVE_KEY} from './storage';
+import {createSaveScheduler} from './lib/saveScheduler';
 import {directDinner} from './lib/client';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { ArrowRight, ArrowUp, ArrowDown, ArrowLeft, Footprints, Wine, Coffee, Hand, Smartphone, Pause, Play, Eye, EyeOff, Check, CircleHelp, Crosshair, Download, Lightbulb, Maximize, MessageSquare, Mic, Minimize, RotateCcw, Square, SwitchCamera, Users, Volume2, VolumeX, X } from 'lucide-react';
 import { emotions, gestures, pick, scenarios, ui, type Lang, type Scenario } from './lib/content';
 import { opening, SaveSchema, type Message, type Save } from './lib/engine';
 import { createWorld, snapshot, roomContext, eventText, standPlayer, walkPlayer, goHome, goNear, inviteNpc, focusConversation, focusPerson, freeLook, type Point, type ViewMode, type RoomSave, type RoomEvent, type RoomContext, operateLift, distance, PLAYER_HOME } from './lib/room';
-import {activeEvent,createDrama,snapshotDrama,syncDrama,stepDrama,readyForChoice,choiceDestination,chooseDrama,settleForSpeech,dinnerContext,eventDialogue,actionEvidence,actorBeat,actorActionLabel,type ChoiceId} from './lib/drama';
+import {activeEvent,createDrama,snapshotDrama,dramaUiKey,syncDrama,stepDrama,readyForChoice,choiceDestination,chooseDrama,settleForSpeech,dinnerContext,eventDialogue,actionEvidence,actorBeat,actorActionLabel,type ChoiceId} from './lib/drama';
 import { DEFAULT_DINNER_TURNS, MAX_DINNER_TURNS, variants, variantFor, storyScenario, nextDinnerLimit, storyHint, topicLabels, type VariantId } from './lib/story';
 import { shouldSubmitReply } from './lib/input';
 import { useSpeechInput } from './lib/useSpeechInput';
@@ -80,6 +81,8 @@ export default function App() {
   const input=useRef<HTMLTextAreaElement>(null);
   const sending=useRef(false);
   const controller=useRef<AbortController|null>(null);
+  const saveScheduler=useMemo(()=>createSaveScheduler(),[]);
+  const durableFields=useRef<unknown[]>([]);
   const speech=useSpeechInput(lang,scenarioId,model&&started&&!complete&&!busy&&!modal&&!modelSheetOpen&&!corrupt,setDraft);
   const speechIssue=speech.notice&&!['ready','editing','cancelled','limit'].includes(speech.notice);
   const t=(key:keyof typeof ui)=>pick(ui[key],lang);
@@ -116,18 +119,28 @@ export default function App() {
     setDinner(snapshotDrama(drama));
   }
   useEffect(()=>{
+    if(complete&&drama.pending){const frame=requestAnimationFrame(()=>{drama.pending=undefined;stopApproach();});return()=>cancelAnimationFrame(frame);}
+    if(!started||complete||modal||modelSheetOpen||corrupt)return;
     let frame=0,previous=0,since=0,last='';
     const tick=(now:number)=>{const dt=previous?(now-previous)/1000:0;previous=now;if(!busy)syncDrama(drama,scenario,turn,started,complete,{openingEvent:variant.openingEvent??null,requestedEvent:latestNPC.story?.event});if(complete&&drama.pending){drama.pending=undefined;stopApproach();}stepDrama(drama,dt,!!modal||modelSheetOpen||!started||!!corrupt||document.hidden||complete);
       if(drama.pending&&!modal&&!busy&&!corrupt&&!complete){if(drama.pending==='accept'&&(drama.inventory==='glass'||drama.inventory==='tea')&&distance(world.player,PLAYER_HOME)<1.2){drama.inventory='none';goNear(world,scenario.characters[1].id);}if(readyForChoice(drama,drama.pending,world)){const pending=drama.pending;stopApproach();chooseDrama(drama,pending,world,turn);if(pending==='inspect')setModal('evidence');if(sound&&(pending==='join'||pending==='tea'))clink();}else if(!world.player.path.length&&!world.player.moving){drama.pending=undefined;}}
-      since+=dt;if(since>.15){since=0;const current=JSON.stringify(drama);if(current!==last){last=current;setDinner(snapshotDrama(drama));}}frame=requestAnimationFrame(tick);};frame=requestAnimationFrame(tick);return ()=>cancelAnimationFrame(frame);
-  },[drama,scenario,turn,started,complete,modal,modelSheetOpen,busy,corrupt,draft,world,sound,speech.active,stopApproach,variant.openingEvent,latestNPC.story?.event]);
+      since+=dt;if(since>.15){since=0;const current=dramaUiKey(drama,scenarioId);if(current!==last){last=current;setDinner(snapshotDrama(drama));}}frame=requestAnimationFrame(tick);};
+    const visibility=()=>{cancelAnimationFrame(frame);previous=0;if(!document.hidden)frame=requestAnimationFrame(tick);};
+    document.addEventListener('visibilitychange',visibility);visibility();
+    return ()=>{cancelAnimationFrame(frame);document.removeEventListener('visibilitychange',visibility);};
+  },[drama,scenario,scenarioId,turn,started,complete,modal,modelSheetOpen,busy,corrupt,world,sound,stopApproach,variant.openingEvent,latestNPC.story?.event]);
   function stepFromButton(direction:Point){const yaw=world.viewYaw;explore(()=>walkPlayer(world,{x:world.player.x+(-Math.cos(yaw)*direction.x+Math.sin(yaw)*direction.z)*.7,z:world.player.z+(Math.sin(yaw)*direction.x+Math.cos(yaw)*direction.z)*.7}));}
   const directions=[{key:'forward',x:0,z:1,icon:ArrowUp},{key:'left',x:-1,z:0,icon:ArrowLeft},{key:'backward',x:0,z:-1,icon:ArrowDown},{key:'right',x:1,z:0,icon:ArrowRight}] as const;
 
   useEffect(()=>{const url=new URL(window.location.href);if(url.searchParams.has('scene')){url.searchParams.delete('scene');window.history.replaceState(null,'',url.pathname+url.search+url.hash);}},[]);
   useEffect(()=>{const query=matchMedia('(prefers-reduced-motion: reduce)');const change=()=>setReduced(query.matches);query.addEventListener('change',change);return ()=>query.removeEventListener('change',change);},[]);
-  // eslint-disable-next-line react-hooks/set-state-in-effect -- Reflect the result of the device storage write, including denied storage.
-  useEffect(()=>{if(corrupt)return;const save:Save={version:1,scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room,dinner};try {localStorage.setItem(SAVE_KEY,JSON.stringify(save));setStorageError(false);}catch {setStorageError(true);}},[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room,dinner,corrupt]);
+  useEffect(()=>{
+    if(corrupt){saveScheduler.cancel();return;}
+    const fields=[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view];
+    const urgent=fields.some((value,index)=>value!==durableFields.current[index]);durableFields.current=fields;
+    saveScheduler.request(()=>{const save:Save={version:1,scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room:snapshot(world),dinner:snapshotDrama(drama)};try {localStorage.setItem(SAVE_KEY,JSON.stringify(save));setStorageError(false);}catch {setStorageError(true);}},urgent);
+  },[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room,dinner,corrupt,world,drama,saveScheduler]);
+  useEffect(()=>{const flush=()=>saveScheduler.flush();const hidden=()=>{if(document.hidden)flush();};window.addEventListener('pagehide',flush);document.addEventListener('visibilitychange',hidden);return()=>{flush();saveScheduler.cancel();window.removeEventListener('pagehide',flush);document.removeEventListener('visibilitychange',hidden);};},[saveScheduler]);
   useEffect(()=>()=>{controller.current?.abort();void toggleRoom(false);},[]);
   useEffect(()=>{if(started&&seated&&!modal&&!complete&&!busy&&matchMedia('(pointer: fine)').matches)input.current?.focus({preventScroll:true});},[started,seated,modal,complete,busy]);
   useEffect(()=>{

@@ -6,8 +6,7 @@ class DinnerRequestError extends Error {
   constructor(message: string, public status: number, public modelIssue?: ModelIssue | null) { super(message); }
 }
 import { byokConfig } from '@/lib/byok';
-import { makeByokLLM } from '@/lib/llm-client';
-import { runDinner, type DinnerInput } from './director';
+import type { DinnerInput } from './director';
 import { scenarios } from './content';
 import { validateReply } from './engine';
 
@@ -15,7 +14,11 @@ export async function directDinner(input: DinnerInput, signal: AbortSignal) {
   const own = byokConfig();
   return withModelAccess(input.lang, async () => {
   // Credentials travel directly to the chosen provider, just like the main app.
-  if (own) return runDinner(input, makeByokLLM(own), own.fastModel.trim(), signal);
+  if (own) {
+    const [{runDinner},{makeByokLLM}]=await Promise.all([import('./director'),import('@/lib/llm-client')]);
+    signal.throwIfAborted();
+    return runDinner(input, makeByokLLM(own), own.fastModel.trim(), signal);
+  }
   const response = await fetch('/api/dinner/direct', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(input), signal,

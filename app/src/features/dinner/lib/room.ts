@@ -30,6 +30,10 @@ export function snapshot(world:World):RoomSave {
   const pose=(a:Actor)=>({x:a.x,z:a.z,heading:angle(a.heading),seated:a.seated});
   return {...(world.layout.kind==='dinner'?{}:{space:world.layout.kind}),...(world.lift?{lift:{openness:world.lift.openness,target:world.lift.target}}:{}),player:pose(world.player),npcs:world.npcs.map(a=>({...pose(a),id:a.id})),attention:{mode:world.attentionMode,characterId:world.attentionMode==='person'?world.lookTarget??undefined:undefined,yaw:angle(world.viewYaw),pitch:world.viewPitch}};
 }
+/** Ignore sub-millimetre / sub-milliradian settling in the UI; saves still use exact state. */
+export function roomUiKey(state:RoomSave) {
+  return JSON.stringify(state,(key,value)=>{if(typeof value!=='number')return value;const rounded=Math.round(value*1000)/1000;return (key==='heading'||key==='yaw')&&Math.abs(rounded)>=3.142?3.142:rounded;});
+}
 export function roomContext(world:World):RoomContext {
   const p=world.player;const near=[...world.npcs].sort((a,b)=>distance(p,a)-distance(p,b))[0];
   return {...(world.layout.kind==='dinner'?{}:{space:world.layout.kind}),...(world.lift?{liftDoors:world.lift.openness>=1?'open' as const:world.lift.openness<=0?'closed' as const:world.lift.target==='open'?'opening' as const:'closing' as const}:{}),posture:p.seated?'seated':'standing',zone:zoneFor(world.layout,p),nearbyCharacterId:distance(p,near)<2.1?near.id:undefined,invitedCharacterId:world.npcs.find(n=>n.intent==='invited'||n.intent==='approach')?.id,npcs:world.npcs.map(n=>({characterId:n.id,posture:n.seated?'seated':n.moving?'walking':'standing'}))};

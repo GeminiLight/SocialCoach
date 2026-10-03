@@ -1,32 +1,60 @@
 /* eslint-disable react-hooks/immutability -- Three.js cameras, meshes and the room simulation are mutable resources; React renders their separate snapshots. */
-import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { Component, memo, Suspense, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { ContactShadows } from '@react-three/drei';
 import { ACESFilmicToneMapping, MathUtils, Mesh, PerspectiveCamera, Vector3 } from 'three';
 import { emotions, gestures, pick, ui, type Character, type Lang, type Scenario } from '../lib/content';
 import { getPalette } from '../lib/palette';
-import { SEATS, PLAYER_HOME, snapshot, stepWorld, focusConversation, freeLook, type World, type ViewMode, type RoomSave, type RoomEvent, type Point } from '../lib/room';
+import { SEATS, PLAYER_HOME, snapshot, roomUiKey, stepWorld, focusConversation, freeLook, type World, type ViewMode, type RoomSave, type RoomEvent, type Point } from '../lib/room';
 import { l } from '../lib/content';
 import { attentionSubject, eyeHeight, cameraPose, trackAttention, wrapAngle } from '../lib/attention';
 import {actorActionLabel,type Drama} from '../lib/drama';
 import {TableCups,ScenarioObjects,PlayerHands} from './DinnerProps';
 import {DinnerCharacter} from './DinnerCharacter';
 import {DinnerRoom,DinnerTable,DinnerChair} from './DinnerEnvironment';
+import {StaticFurniture} from './StaticFurniture';
+import {RenderBudget} from './RenderBudget';
 import {ElevatorEnvironment,OfficeEnvironment} from './PlaceEnvironment';
 import {useDinnerSurfaces} from '../lib/surfaces';
 import type { Reply } from '../lib/engine';
 
 type SceneProps = { hudHeight:number; drama:Drama; line:string; speaking:boolean; scenario: Scenario; lang: Lang; reactions: Reply['reactions']; speakerId: string; selectedId: string | null; onSelect: (id: string) => void; onEvidence:()=>void; reduced: boolean; started: boolean; viewReset: number; world:World; view:ViewMode; input:RefObject<Point>; paused:boolean; onWorldChange:(save:RoomSave,event:RoomEvent)=>void; onAvailability:(available:boolean)=>void };
 function ProjectLabels({ elements, world, speakerId, selectedId, view }: { elements:RefObject<(HTMLButtonElement|null)[]>; world:World; speakerId:string; selectedId:string|null; view:ViewMode }) {
-  const point=useMemo(()=>new Vector3(),[]);
-  useFrame(({camera,size})=>{
-    const occupied:{x:number;y:number;w:number;h:number}[]=[...document.querySelectorAll('.topbar,.scene-controls,.attention-control,.world-controls,.conversation')].map(el=>{const r=el.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,w:r.width,h:r.height};});
-    const cameraRight=new Vector3(1,0,0).applyQuaternion(camera.quaternion);
+  const {invalidate}=useThree();
+  const vectors=useMemo(()=>({point:new Vector3(),right:new Vector3(),center:new Vector3(),projected:new Vector3(),side:new Vector3(),top:new Vector3(),bottom:new Vector3()}),[]);
+  const layout=useRef({dirty:true,occupied:[] as {x:number;y:number;w:number;h:number}[],dimensions:new Map<Element,{w:number;h:number}>(),observed:new Set<Element>()});
+  const resize=useRef<ResizeObserver|null>(null),elapsed=useRef(0);
+  useEffect(()=>{
+    const dirty=()=>{layout.current.dirty=true;invalidate();};
+    resize.current=new ResizeObserver(dirty);
+    const mutation=new MutationObserver(dirty);
+    const shell=document.querySelector('.dinner-experience .app-shell');
+    if(shell)mutation.observe(shell,{childList:true,subtree:true});
+    window.addEventListener('resize',dirty);dirty();
+    return()=>{resize.current?.disconnect();mutation.disconnect();window.removeEventListener('resize',dirty);};
+  },[invalidate]);
+  useFrame(({camera,size},dt)=>{
+    elapsed.current+=dt;
+    if(elapsed.current<1/30&&!layout.current.dirty)return;
+    elapsed.current=0;
+    const cache=layout.current;
+    if(cache.dirty){
+      const overlays=[...document.querySelectorAll('.dinner-experience .topbar,.dinner-experience .scene-controls,.dinner-experience .attention-control,.dinner-experience .world-controls,.dinner-experience .conversation')];
+      const current=new Set([...overlays,...elements.current.filter((el):el is HTMLButtonElement=>!!el)]);
+      for(const el of cache.observed)if(!current.has(el)){resize.current?.unobserve(el);cache.observed.delete(el);cache.dimensions.delete(el);}
+      for(const el of current)if(!cache.observed.has(el)){resize.current?.observe(el);cache.observed.add(el);}
+      cache.occupied=overlays.map(el=>{const r=el.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,w:r.width,h:r.height};});
+      for(const el of elements.current)if(el)cache.dimensions.set(el,{w:el.offsetWidth,h:el.offsetHeight});
+      cache.dirty=false;
+    }
+    const occupied=[...cache.occupied];
+    const {point,right,center,projected,side,top,bottom}=vectors;
+    const cameraRight=right.set(1,0,0).applyQuaternion(camera.quaternion);
     const faces=[...world.npcs,...(view==='third'?[world.player]:[])].flatMap(actor=>{
-      const center=new Vector3(actor.x,eyeHeight(actor),actor.z),projected=center.clone().project(camera);
+      center.set(actor.x,eyeHeight(actor),actor.z);projected.copy(center).project(camera);
       if(projected.z< -1||projected.z>1)return [];
-      const side=center.clone().addScaledVector(cameraRight,.30).project(camera);
-      const top=center.clone().add(new Vector3(0,.36,0)).project(camera),bottom=center.clone().add(new Vector3(0,-.36,0)).project(camera);
+      side.copy(center).addScaledVector(cameraRight,.30).project(camera);
+      top.copy(center);top.y+=.36;top.project(camera);bottom.copy(center);bottom.y-=.36;bottom.project(camera);
       return [{x:(projected.x*.5+.5)*size.width,y:(projected.y*-.5+.5)*size.height,w:Math.abs(side.x-projected.x)*size.width,h:Math.abs(top.y-bottom.y)*size.height*.5}];
     });
     const focusId=attentionSubject(world)?.id;
@@ -38,10 +66,12 @@ function ProjectLabels({ elements, world, speakerId, selectedId, view }: { eleme
     }).sort((a,b)=>b.priority-a.priority||a.depth-b.depth);
     for(const candidate of candidates){
       const {el}=candidate;if(!el)continue;
-      const w=el.offsetWidth,h=el.offsetHeight,x=MathUtils.clamp(candidate.x,w/2+6,size.width-w/2-6);
+      const dimensions=cache.dimensions.get(el);if(!dimensions){cache.dirty=true;invalidate();continue;}
+      const {w,h}=dimensions,x=MathUtils.clamp(candidate.x,w/2+6,size.width-w/2-6);
       const y=[0,16,32,48,64].map(offset=>candidate.y-offset).find(y=>y>h/2+80&&![...occupied,...faces].some(r=>Math.abs(r.x-x)<(r.w+w)/2+5&&Math.abs(r.y-y)<(r.h+h)/2+5));
       const visible=candidate.visible&&y!==undefined;
-      el.style.transform=`translate(${x}px,${y??candidate.y}px) translate(-50%,-50%)`;el.style.visibility=visible?'visible':'hidden';
+      const transform=`translate(${x.toFixed(1)}px,${(y??candidate.y).toFixed(1)}px) translate(-50%,-50%)`,visibility=visible?'visible':'hidden';
+      if(el.style.transform!==transform)el.style.transform=transform;if(el.style.visibility!==visibility)el.style.visibility=visibility;
       if(visible)occupied.push({x,y:y!,w,h});
     }
   });return null;
@@ -50,11 +80,11 @@ function ProjectLabels({ elements, world, speakerId, selectedId, view }: { eleme
 function WorldDirector({props,heading}:{props:SceneProps;heading:RefObject<number>}) {
   const keys=useRef(new Set<string>());const last=useRef('');const elapsed=useRef(0);const revision=useRef(-1);const marker=useRef<Mesh>(null!);
   useEffect(()=>{const down=(e:KeyboardEvent)=>{if(props.paused||e.target instanceof HTMLElement&&e.target.closest('textarea,input,select,[contenteditable=true],dialog'))return;if(['w','a','s','d'].includes(e.key.toLowerCase())){keys.current.add(e.key.toLowerCase());e.preventDefault();}};const up=(e:KeyboardEvent)=>keys.current.delete(e.key.toLowerCase());const clear=()=>{keys.current.clear();props.input.current={x:0,z:0};};window.addEventListener('keydown',down);window.addEventListener('keyup',up);window.addEventListener('blur',clear);return ()=>{window.removeEventListener('keydown',down);window.removeEventListener('keyup',up);window.removeEventListener('blur',clear);clear();};},[props.paused,props.input]);
-  useFrame((_,dt)=>{const k=keys.current;const input={x:props.input.current.x+(k.has('d')?1:0)-(k.has('a')?1:0),z:props.input.current.z+(k.has('w')?1:0)-(k.has('s')?1:0)};stepWorld(props.world,dt,input,heading.current,props.reactions,props.paused);if(!props.paused&&!props.world.player.seated&&!props.world.player.moving)props.world.player.heading=props.world.viewYaw;marker.current.visible=!!props.world.destination;if(props.world.destination)marker.current.position.set(props.world.destination.x,.016,props.world.destination.z);elapsed.current+=dt;if(elapsed.current>.2||revision.current!==props.world.revision){elapsed.current=0;const state=snapshot(props.world);const serialized=JSON.stringify(state);if(serialized!==last.current||revision.current!==props.world.revision){last.current=serialized;revision.current=props.world.revision;props.onWorldChange(state,props.world.event);}}},-2);
+  useFrame((_,dt)=>{const k=keys.current;const input={x:props.input.current.x+(k.has('d')?1:0)-(k.has('a')?1:0),z:props.input.current.z+(k.has('w')?1:0)-(k.has('s')?1:0)};stepWorld(props.world,dt,input,heading.current,props.reactions,props.paused);if(!props.paused&&!props.world.player.seated&&!props.world.player.moving)props.world.player.heading=props.world.viewYaw;marker.current.visible=!!props.world.destination;if(props.world.destination)marker.current.position.set(props.world.destination.x,.016,props.world.destination.z);elapsed.current+=dt;if(elapsed.current>.2||revision.current!==props.world.revision){elapsed.current=0;const state=snapshot(props.world);const serialized=roomUiKey(state);if(serialized!==last.current||revision.current!==props.world.revision){last.current=serialized;revision.current=props.world.revision;props.onWorldChange(state,props.world.event);}}},-2);
   const p=useMemo(()=>getPalette(),[]);return <mesh ref={marker} rotation={[-Math.PI/2,0,0]} visible={false}><ringGeometry args={[.16,.23,32]}/><meshBasicMaterial color={p.brass} transparent opacity={.85} toneMapped={false}/></mesh>;
 }
 function CameraRig({props,heading}:{props:SceneProps;heading:RefObject<number>}) {
-  const {camera,size,gl}=useThree();
+  const {camera,size,gl,invalidate}=useThree();
   const drag=useRef<{x:number;y:number;originX:number;originY:number;id:number;active:boolean}|null>(null);
   const position=useMemo(()=>new Vector3(),[]),target=useMemo(()=>new Vector3(),[]);
   const resetSeen=useRef(props.viewReset);const framingOffset=useRef(0);const sideOffset=useRef(0);
@@ -88,9 +118,13 @@ function CameraRig({props,heading}:{props:SceneProps;heading:RefObject<number>})
     perspective.fov=MathUtils.lerp(perspective.fov,pose.fov,props.reduced?1:1-Math.exp(-10*Math.min(dt,.05)));const offset=props.started?Math.min(size.height*(props.scenario.space?.22:.15),Math.max(0,props.hudHeight-190)*.45+(props.scenario.space&&props.view==='first'?(size.width>600?40:20):0)):0;framingOffset.current=MathUtils.lerp(framingOffset.current,offset,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));sideOffset.current=MathUtils.lerp(sideOffset.current,size.width/size.height<=1.25&&!props.world.player.seated?-56:0,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));perspective.setViewOffset(size.width,size.height,sideOffset.current,framingOffset.current,size.width,size.height);perspective.updateProjectionMatrix();
     position.set(props.scenario.space?MathUtils.clamp(pose.position[0],-5.6,5.6):pose.position[0],pose.position[1],props.scenario.space?Math.max(-4.1,pose.position[2]):pose.position[2]);target.set(pose.target[0],pose.target[1],pose.target[2]);
     camera.position.lerp(position,props.reduced?1:1-Math.exp(-14*Math.min(dt,.05)));camera.lookAt(target);
+    if(props.paused&&(camera.position.distanceToSquared(position)>1e-7||Math.abs(perspective.fov-pose.fov)>.001||Math.abs(framingOffset.current-offset)>.01))invalidate();
   },-1);return null;
 }
 const playerCharacter:Character={id:'player',name:l('你','You'),role:l('玩家','Player'),description:l('你的角色','Your character'),outfit:'shirt',palette:'navy',hair:'short',glasses:false};
+const Chairs=memo(function Chairs({p,surfaces}:{p:ReturnType<typeof getPalette>;surfaces:ReturnType<typeof useDinnerSurfaces>}) {
+  return <StaticFurniture>{SEATS.map((seat,i)=><DinnerChair key={i} p={p} surfaces={surfaces} position={[seat.x,0,seat.z]} rotation={seat.heading}/>)}<DinnerChair p={p} surfaces={surfaces} position={[PLAYER_HOME.x,0,PLAYER_HOME.z]} rotation={Math.PI}/></StaticFurniture>;
+});
 
 class SceneBoundary extends Component<{ fallback: ReactNode; children: ReactNode; onError:()=>void },{ error: boolean }> {
   state = { error: false };
@@ -101,21 +135,25 @@ class SceneBoundary extends Component<{ fallback: ReactNode; children: ReactNode
 
 export default function DinnerScene(props: SceneProps) {
   const p=useMemo(()=>getPalette(),[]);
-  const surfaces=useDinnerSurfaces(p);
+  const surfaces=useDinnerSurfaces(p,props.scenario.space?'none':props.scenario.id==='family'?'family':'landscape');
   const labels=useRef<(HTMLButtonElement|null)[]>([]);
   const [ready,setReady]=useState(false);
   const heading=useRef(Math.PI);
+  const [visible,setVisible]=useState(()=>!document.hidden);
+  const [dpr,setDpr]=useState(()=>Math.min(window.devicePixelRatio||1,window.innerWidth<=600?1.25:1.5));
+  useEffect(()=>{const change=()=>setVisible(!document.hidden);document.addEventListener('visibilitychange',change);return()=>document.removeEventListener('visibilitychange',change);},[]);
   const fallback=<div className="scene-fallback"><p>{pick(ui.sceneFallback,props.lang)}</p><div>{props.scenario.characters.map(c=><button key={c.id} onClick={()=>props.onSelect(c.id)}>{pick(c.name,props.lang)}<small>{pick(c.role,props.lang)}</small></button>)}</div></div>;
-  return <SceneBoundary fallback={fallback} onError={()=>props.onAvailability(false)}><div className="dinner-render"><Suspense fallback={<div className="scene-loading" role="status">{pick(ui.sceneLoading,props.lang)}</div>}><Canvas role="img" aria-label={pick(ui.cameraLabel,props.lang)} shadows dpr={[1,1.65]} camera={{position:[0,2.58,3.55],fov:55,near:.1,far:60}} gl={{ antialias:true, toneMapping:ACESFilmicToneMapping, toneMappingExposure:1.12 }} fallback={null} onCreated={()=>{setReady(true);props.onAvailability(true);}}>
+  return <SceneBoundary fallback={fallback} onError={()=>props.onAvailability(false)}><div className="dinner-render"><Suspense fallback={<div className="scene-loading" role="status">{pick(ui.sceneLoading,props.lang)}</div>}><Canvas role="img" aria-label={pick(ui.cameraLabel,props.lang)} frameloop={!props.paused&&visible?'always':'demand'} shadows dpr={dpr} camera={{position:[0,2.58,3.55],fov:55,near:.1,far:60}} gl={{ antialias:true, toneMapping:ACESFilmicToneMapping, toneMappingExposure:1.12 }} fallback={null} onCreated={()=>{setReady(true);props.onAvailability(true);}}>
     <color attach="background" args={[props.scenario.space?p.officeWall:p.wall]} /><fog attach="fog" args={[props.scenario.space?p.officeWall:p.wall,18,36]} />
     <ambientLight intensity={props.scenario.space?.62:.35} color={p.porcelain} /><hemisphereLight args={[p.porcelain,p.woodEdge,.65]} />
     <directionalLight position={[-3,5,1]} intensity={1.65} color={p.white} castShadow shadow-mapSize={[2048,2048]} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-bias={-.0005} shadow-normalBias={.018} shadow-radius={5} />
     <directionalLight position={[4,3,2]} intensity={.75} color={p.porcelain} />
     <directionalLight position={[0,3.5,6]} intensity={.65} color={p.porcelain} />
     <WorldDirector props={props} heading={heading}/>
+    <RenderBudget active={!props.paused&&visible} onChange={setDpr}/>
     {props.scenario.space==='elevator'?<ElevatorEnvironment p={p} world={props.world} lang={props.lang} paused={props.paused}/>:props.scenario.space==='office'?<OfficeEnvironment p={p} world={props.world} lang={props.lang} paused={props.paused} scenario={props.scenario} onEvidence={props.onEvidence}/>:<>
     <DinnerRoom p={p} surfaces={surfaces} world={props.world} paused={props.paused} scenario={props.scenario}/><group onClick={e=>e.stopPropagation()}><DinnerTable p={p} surfaces={surfaces}/><TableCups p={p} world={props.world} drama={props.drama} scenario={props.scenario} reactions={props.reactions} line={props.line} paused={props.paused}/><ScenarioObjects p={p} drama={props.drama} scenario={props.scenario} lang={props.lang} reduced={props.reduced}/></group>
-    {SEATS.map((seat,i)=><DinnerChair key={i} p={p} surfaces={surfaces} position={[seat.x,0,seat.z]} rotation={seat.heading}/>)}<DinnerChair p={p} surfaces={surfaces} position={[PLAYER_HOME.x,0,PLAYER_HOME.z]} rotation={Math.PI}/></>}
+    <Chairs p={p} surfaces={surfaces}/></>}
 
     {props.scenario.characters.map((c,i)=><DinnerCharacter key={c.id} character={c} actor={props.world.npcs[i]} world={props.world} reaction={props.reactions.find(r=>r.characterId===c.id)} active={props.speaking&&props.speakerId===c.id} onSelect={()=>props.onSelect(c.id)} p={p} surfaces={surfaces} reduced={props.reduced} drama={props.drama} index={i} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} />)}
     {props.view==='third'&&<DinnerCharacter character={playerCharacter} actor={props.world.player} world={props.world} active={false} onSelect={()=>{}} p={p} surfaces={surfaces} reduced={props.reduced} drama={props.drama} index={3} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} player/>}

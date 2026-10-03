@@ -55,6 +55,13 @@ export type DinnerContext=z.infer<typeof DinnerContextSchema>;
 export function validDinnerContext(context:DinnerContext,scene:Scenario['id']){const event=dinnerEvents.find(e=>e.id===context.eventId)!;return event.scene===scene&&!(context.phase==='waiting'&&context.choice)&&!(context.phase==='reacting'&&!context.choice)&&(!context.choice||event.choices.some(c=>c.id===context.choice)&&context.previous.some(r=>r.eventId===context.eventId&&r.choice===context.choice))&&context.previous.every(r=>dinnerEvents.some(e=>e.id===r.eventId&&e.scene===scene&&e.choices.some(c=>c.id===r.choice)))&&new Set(context.previous.map(r=>r.eventId)).size===context.previous.length;}
 export const createDrama=(saved?:Drama):Drama=>saved?structuredClone(saved):{phase:'settled',elapsed:0,seen:[],records:[],paused:false,inventory:'none'};
 export const snapshotDrama=(d:Drama):Drama=>structuredClone(d);
+/** Animation time stays mutable; React only needs actual controls / label changes. */
+export function dramaUiKey(d:Drama,scene:Scenario['id']) {
+  const pose=d.phase==='reacting'?(d.elapsed<.8?'raising':d.elapsed<2.5?'holding':'lowering'):d.elapsed>=12?'waiting-long':'waiting';
+  const labels=[0,1,2].map(index=>{const beat=actorBeat(d,index,scene);return [beat.raise>.25,beat.phone>.2];});
+  const {elapsed:ignored,...state}=d;void ignored;
+  return JSON.stringify([state,pose,labels]);
+}
 export const activeEvent=(d:Drama)=>dinnerEvents.find(e=>e.id===d.active);
 export function syncDrama(d:Drama,scene:Scenario,turn:number,started:boolean,complete:boolean,options:{openingEvent?:EventId|null;requestedEvent?:EventId}={}){
   if(!started||complete||d.phase!=='settled')return;

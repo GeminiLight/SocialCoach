@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
 import { Group, Vector2 } from 'three';
@@ -7,6 +7,7 @@ import type { Palette } from '../lib/palette';
 import type { DinnerSurfaces } from '../lib/surfaces';
 import { PLAYER_HOME, SEATS, walkPlayer, type World } from '../lib/room';
 import { Cup } from './DinnerProps';
+import {StaticFurniture} from './StaticFurniture';
 
 type V=[number,number,number];
 type Materials={p:Palette;surfaces:DinnerSurfaces};
@@ -58,8 +59,8 @@ function ServingPlate({p,x,z,r=.39,food}: {p:Palette;x:number;z:number;r?:number
 
   </group>;
 }
-export function DinnerTable({p,surfaces}:Materials){
-  return <group>
+export const DinnerTable=memo(function DinnerTable({p,surfaces}:Materials){
+  return <StaticFurniture><group>
     <Disc at={[0,.76,0]} r={.65} height={1.45} color={p.woodEdge} map={surfaces.wood}/>
     <Disc at={[0,1.59,0]} r={2.65} height={.20} color={p.wood} map={surfaces.wood}/>
     <Disc at={[0,1.492,0]} r={2.657} height={.026} color={p.brass} metal={.5}/>
@@ -78,9 +79,9 @@ export function DinnerTable({p,surfaces}:Materials){
       <mesh position={[.22,.17,0]} rotation={[0,0,-.70]}><cylinderGeometry args={[.026,.064,.24,12]}/><meshStandardMaterial color={p.ceramic} roughness={.2}/></mesh>
     </group>
     <group position={[1.69,1.70,-.89]}><mesh position={[0,.20,0]} castShadow><cylinderGeometry args={[.10,.115,.4,24]}/><meshPhysicalMaterial color={p.bottle} roughness={.15} clearcoat={.7}/></mesh><mesh position={[0,.47,0]}><cylinderGeometry args={[.039,.057,.20,16]}/><meshStandardMaterial color={p.bottle} roughness={.18}/></mesh><Disc at={[0,.58,0]} r={.044} height={.04} color={p.brass} metal={.6}/><Block at={[0,.22,.105]} size={[.12,.20,.009]} color={p.napkin} radius={.002}/></group>
-  </group>;
-}
-export function DinnerRoom({p,surfaces,world,paused,scenario}:Materials&{world:World;paused:boolean;scenario:Scenario}){
+  </group></StaticFurniture>;
+});
+export const DinnerRoom=memo(function DinnerRoom({p,surfaces,world,paused,scenario}:Materials&{world:World;paused:boolean;scenario:Scenario}){
   const back=useRef<Group>(null!),front=useRef<Group>(null!);
   useFrame(({camera})=>{back.current.visible=camera.position.z>-5.2;front.current.visible=camera.position.z<6.3;});
   return <group>
@@ -90,7 +91,7 @@ export function DinnerRoom({p,surfaces,world,paused,scenario}:Materials&{world:W
     {Array.from({length:11},(_,i)=><mesh key={i} position={[-6+i*1.2,.001,.55]} rotation={[-Math.PI/2,0,0]}><planeGeometry args={[.006,11.5]}/><meshStandardMaterial color={p.woodEdge} roughness={1}/></mesh>)}
     {[[0,3,-5.2,0],[0,3,6.3,Math.PI],[-6.6,3,.55,Math.PI/2],[6.6,3,.55,-Math.PI/2]].map(([x,y,z,a],i)=><mesh key={i} position={[x,y,z]} rotation={[0,a,0]} onClick={e=>e.stopPropagation()} receiveShadow><planeGeometry args={[i<2?13.2:11.5,6]}/><meshStandardMaterial map={surfaces.wall} roughness={.97}/></mesh>)}
     <mesh position={[0,6,.55]} rotation={[Math.PI/2,0,0]}><planeGeometry args={[13.2,11.5]}/><meshStandardMaterial color={p.wallInset} roughness={1}/></mesh>
-    <group ref={back}>
+    <group ref={back}><StaticFurniture>
       <Block at={[0,1,-5.04]} size={[13.2,2,.12]} color={p.woodEdge} map={surfaces.wood}/>
       {Array.from({length:32},(_,i)=><Block key={i} at={[-6.18+i*.40,1.03,-4.94]} size={[.026,1.85,.024]} color={p.wood} radius={.005}/>)}
       <Block at={[0,2.035,-4.94]} size={[13.2,.07,.1]} color={p.wood} map={surfaces.wood}/>
@@ -99,9 +100,9 @@ export function DinnerRoom({p,surfaces,world,paused,scenario}:Materials&{world:W
       {[-3.73,3.73].map(x=><group key={x} position={[x,3.6,-5.03]}><Block size={[1.20,2.45,.09]} color={p.woodEdge}/><Block at={[0,0,.06]} size={[1.06,2.30,.035]} color={p.wallInset}/>{Array.from({length:9},(_,i)=><Block key={i} at={[-.48+i*.12,0,.10]} size={[.025,2.24,.035]} color={p.wood}/>)}</group>)}
       {[-2.76,2.76].map(x=><group key={x} position={[x,3.57,-4.83]}><Block size={[.08,.72,.065]} color={p.brass}/><mesh><cylinderGeometry args={[.16,.16,.56,24,1,true]}/><meshStandardMaterial color={p.porcelain} emissive={p.light} emissiveIntensity={.5} side={2}/></mesh>{[-.29,.29].map(y=><Disc key={y} at={[0,y,0]} r={.165} height={.018} color={p.brass} metal={.4}/>)}<pointLight position={[0,0,.35]} color={p.light} intensity={6} distance={4} decay={2}/></group>)}
       <Block at={[0,5.8,-4.94]} size={[13.2,.15,.22]} color={p.wood}/>
-    </group>
+    </StaticFurniture></group>
     <group ref={front} position={[2.8,0,6.17]}><Block at={[0,1.57,0]} size={[1.65,3.2,.13]} color={p.woodEdge} map={surfaces.wood}/><Block at={[0,1.55,-.09]} size={[1.38,2.97,.04]} color={p.wood} map={surfaces.wood}/><Block at={[-.49,1.43,-.135]} size={[.035,.26,.035]} color={p.brass}/><Block at={[-.43,1.43,-.17]} size={[.16,.03,.03]} color={p.brass}/></group>
-    <group position={[0,5.24,0]}>
+    <StaticFurniture><group position={[0,5.24,0]}>
       <mesh position={[0,.35,0]}><cylinderGeometry args={[.018,.018,.8,10]}/><meshStandardMaterial color={p.brass}/></mesh>
       <mesh castShadow><cylinderGeometry args={[.72,1.05,.46,48,1,true]}/><meshStandardMaterial map={surfaces.fabric} roughness={.85} side={2}/></mesh>
       {[-.232,.232].map((y,i)=><mesh key={y} position={[0,y,0]} rotation={[Math.PI/2,0,0]}><torusGeometry args={[i?.72:1.05,.018,8,48]}/><meshStandardMaterial color={p.brass} metalness={.4} roughness={.35}/></mesh>)}
@@ -109,5 +110,6 @@ export function DinnerRoom({p,surfaces,world,paused,scenario}:Materials&{world:W
     </group>
     <group position={[-4.75,0,-3.45]}><mesh position={[0,.35,0]} castShadow><cylinderGeometry args={[.36,.27,.70,32]}/><meshStandardMaterial color={p.ceramic} roughness={.3}/></mesh><Disc at={[0,.71,0]} r={.34} height={.022} color={p.woodEdge}/>{Array.from({length:8},(_,i)=><group key={i} rotation={[0,i*2.399,0]}><mesh position={[.16,1.28,0]} rotation={[0,0,-.18]}><cylinderGeometry args={[.013,.023,1.55,8]}/><meshStandardMaterial color={p.stem}/></mesh>{[0,1,2].map(j=><Ellipsoid key={j} at={[.23+j*.08,1.45+j*.2,0]} size={[.14,.31,.024]} color={p.leaf} rotation={[0,0,-.35-j*.18]}/>)}</group>)}</group>
     <group position={[4.85,0,-3.8]}><Block at={[0,.83,0]} size={[1.2,1.55,.64]} color={p.woodEdge} map={surfaces.wood}/><Block at={[0,1.63,0]} size={[1.30,.09,.74]} color={p.wood} map={surfaces.wood}/>{[-.28,.28].map(x=><group key={x}><Block at={[x,.85,.33]} size={[.51,1.30,.02]} color={p.wood} map={surfaces.wood}/><Block at={[x,.99,.355]} size={[.16,.019,.022]} color={p.brass} radius={.004}/></group>)}{scenario.id==='school'?<group position={[.04,1.69,0]}><Block at={[0,.27,0]} size={[.43,.52,.30]} color={p.navy} radius={.06}/><Block at={[0,.17,.164]} size={[.32,.24,.04]} color={p.sage} radius={.025}/><mesh position={[0,.55,0]}><torusGeometry args={[.085,.014,8,20,Math.PI]}/><meshStandardMaterial color={p.navy}/></mesh></group>:scenario.id==='work'?<group position={[0,1.69,0]} rotation={[0,.14,0]}><Block at={[0,.08,0]} size={[.68,.13,.46]} color={p.dark} radius={.025}/><Block at={[0,.15,0]} size={[.31,.012,.12]} color={p.brass} radius={.002}/><Block at={[.01,.14,.20]} size={[.12,.024,.025]} color={p.brass} radius={.004}/></group>:<><Cup position={[-.20,1.77,.05]} palette={p}/><Cup position={[.15,1.77,.05]} palette={p}/></>}<Block at={[0,1.70,-.15]} size={[.74,.035,.35]} color={p.woodEdge}/></group>
+    </StaticFurniture>
   </group>;
-}
+});
