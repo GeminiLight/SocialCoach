@@ -1,0 +1,180 @@
+[
+  {
+    "site": "Vercel",
+    "pages": {
+      "3d": 200
+    },
+    "turns": [
+      {
+        "status": 200,
+        "ms": 6169,
+        "learner": "陈总，我今晚开车，不喝酒。我举茶敬林姐，交付条件我们另谈。",
+        "reply": {
+          "speakerId": "chen",
+          "text": "开车啊，行，这杯不强求。茶也举得起来，林总看见的是心意。不过你话说一半，交付条件另谈？周三这个日子客户等着呢。",
+          "cue": "陈总点了点头。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "nod"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "replyTo": "我举茶敬林姐，交付条件我们另谈",
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶我喝了。那周三到底交付到哪一步，你现在能给个数吗？"
+          }
+        }
+      },
+      {
+        "status": 200,
+        "ms": 5731,
+        "learner": "林姐，我们现在只谈条件，未通过的测试还没修好。您需要确认哪部分范围？",
+        "reply": {
+          "speakerId": "lin",
+          "text": "我要能跟客户汇报的：两项没过的测试，周三到底修不修？修，我押哪项先过？不修，我范围里就不写它。",
+          "cue": "林姐朝你倾身。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "pressing",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "fold"
+            }
+          ],
+          "story": {
+            "topic": "scope",
+            "beat": "risk"
+          },
+          "replyTo": "您需要确认哪部分范围？",
+          "interjection": {
+            "speakerId": "zhou",
+            "text": "退款回调那项，明早能出复测结果。批量导入的我得再核一遍。"
+          }
+        }
+      }
+    ],
+    "health": {
+      "status": 200,
+      "serverKey": true,
+      "requireByok": false
+    },
+    "assets": {
+      "count": 16,
+      "all200": true
+    }
+  },
+  {
+    "site": "ModelScope dedicated API",
+    "pages": {
+      "3d": 200
+    },
+    "turns": [
+      {
+        "status": 200,
+        "ms": 3982,
+        "learner": "陈总，我今晚开车，不喝酒。我举茶敬林姐，交付条件我们另谈。",
+        "reply": {
+          "speakerId": "chen",
+          "text": "开车？行，那就以茶代酒，心意到了。林总，他这杯茶你收。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "nod"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast",
+            "beat": "respect"
+          },
+          "replyTo": "我举茶敬林姐",
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶我喝。不过周三上线，到底包含哪些，今晚得说清。"
+          }
+        }
+      },
+      {
+        "status": 200,
+        "ms": 4086,
+        "learner": "林姐，我们现在只谈条件，未通过的测试还没修好。您需要确认哪部分范围？",
+        "reply": {
+          "speakerId": "lin",
+          "text": "要能汇报的东西：周三上线包含哪些模块，两个没过的测试算不算在内。你先划范围。",
+          "cue": "林姐朝你倾身。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "pressing",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "fold"
+            }
+          ],
+          "story": {
+            "topic": "scope",
+            "beat": "bridge"
+          },
+          "replyTo": "您需要确认哪部分范围？",
+          "interjection": {
+            "speakerId": "zhou",
+            "text": "退款回调超时和导入权限这两项，复测没过，我不能签。"
+          }
+        }
+      }
+    ],
+    "health": {
+      "status": 200,
+      "serverKey": true,
+      "requireByok": false
+    },
+    "assets": {
+      "count": 16,
+      "all200": true
+    }
+  }
+]

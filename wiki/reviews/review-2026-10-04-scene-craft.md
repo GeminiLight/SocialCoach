@@ -38,4 +38,10 @@
 
 ## 发布
 
-待记录主站与国内镜像的已验证提交、平台状态和资源检查。
+GitHub 应用提交 `63eec9b`。Vercel 生产部署 `dpl_EipWu2kxcdiVbGY2LfSYUnUfXHg1` Ready，提交 SHA 对应；正式别名 `socialcoach-ai.vercel.app` / `socialcoach-app.vercel.app` 指向该部署。
+
+国内镜像 `8423a4e` 按既有白名单同步主站当前源码，`app/src` / `app/public` 共 226 文件逐个 SHA256 一致；原空间 README / 配置不改。显式重建后 Running，构建日志包含来源提交与成功标记、镜像 `363578-8423a4eb-2026-10-04-02-28-45`，继续使用原免费 CPU。
+
+两端 `/3d`、health 均 200，分别 16 个 HTML 引用 CSS / JS 全部 200；两端各连续两次合成 3D 请求均返回有效引用、角色与三人反应。国内使用平台专用认证 API 地址，不能等同于公共 iframe 浏览器测试。没有发送反馈 / 统计测试，也没有清空站点档案。具体请求和回复见 [线上核对](../../docs/reviews/scene-craft-2026-10-04/release-check.json)。
+
+用户已有本地 `http://localhost:4362/3d` 更新到最终正式构建，重启只替换应用文件；浏览器本地训练存储没有被访问或迁移。浏览器测试连接在发布后仍超时，网页连续试玩缺口继续保留。
