@@ -3,6 +3,8 @@ import type { Lang, SkillId } from "@/data/taxonomy";
 import type { Adaptation, ChatMessage, Prescription, Profile, Proficiency, Report, RetrievalTrace, RoleplayMeta } from "./types";
 import { parsePartialJSON } from "./partial-json";
 import { byokConfig } from "./byok";
+import { withModelAccess } from "./model-access";
+import { readModelFailure, type ModelIssue } from "./model-status";
 import { makeByokLLM } from "./llm-client";
 import type { LLM } from "./llm-core";
 import { runSchedule } from "./tasks/schedule";
@@ -39,7 +41,7 @@ type Task = Extract<TrackEvent, { name: "api_error" }>["task"];
 
 /** A failed call, with the number analytics needs and the message the learner sees. */
 export class ApiError extends Error {
-  constructor(message: string, public readonly status: number, public readonly kind: "http" | "network" | "stream") {
+  constructor(message: string, public readonly status: number, public readonly kind: "http" | "network" | "stream", public readonly modelIssue?: ModelIssue | null) {
     super(message);
   }
 }
@@ -57,9 +59,9 @@ function reportFailure(task: Task, e: unknown, byok: boolean) {
 }
 
 /** Run a task and record its failure before rethrowing it unchanged. */
-async function watched<T>(task: Task, byok: boolean, run: () => Promise<T>): Promise<T> {
+async function watched<T>(task: Task, byok: boolean, lang: Lang, run: () => Promise<T>): Promise<T> {
   try {
-    return await run();
+    return await withModelAccess(lang, run);
   } catch (e) {
     reportFailure(task, e, byok);
     throw e;
@@ -84,10 +86,13 @@ async function post<T>(url: string, body: unknown, signal?: AbortSignal): Promis
   const res = await safeFetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal }, (body as { lang?: Lang })?.lang);
   if (!res.ok) {
     let msg = res.statusText;
+    let issue: ModelIssue | null | undefined;
     try {
-      msg = ((await res.json()) as { error?: string }).error ?? msg;
+      const failure = readModelFailure(JSON.stringify(await res.json()));
+      msg = failure.error || msg;
+      issue = failure.modelIssue;
     } catch {}
-    throw new ApiError(msg, res.status, "http");
+    throw new ApiError(msg, res.status, "http", issue);
   }
   return (await res.json()) as T;
 }
@@ -101,7 +106,7 @@ export interface ScheduleResult {
 
 export async function debriefChat(body: DebriefChatInput, signal?: AbortSignal): Promise<DebriefReply> {
   const o = own();
-  return watched("debrief-chat", !!o, async () => {
+  return watched("debrief-chat", !!o, body.lang, async () => {
     signal?.throwIfAborted();
     const reply = o ? await runDebriefChat(body, o.llm, o.fast) : await post<DebriefReply>("/api/debrief-chat", body, signal);
     signal?.throwIfAborted();
@@ -118,7 +123,7 @@ export function schedule(body: {
   scenario?: Scenario;
 }, signal?: AbortSignal) {
   const o = own();
-  return watched("schedule", !!o, () => (o ? runSchedule(body as ScheduleInput, o.llm, o.fast) : post<ScheduleResult>("/api/schedule", body, signal)));
+  return watched("schedule", !!o, body.lang, () => (o ? runSchedule(body as ScheduleInput, o.llm, o.fast) : post<ScheduleResult>("/api/schedule", body, signal)));
 }
 
 /**
@@ -130,7 +135,7 @@ export async function assessStream(
   onPartial: (p: Partial<Report>) => void,
 ): Promise<Report> {
   const o = own();
-  return watched("assess", !!o, async () => {
+  return watched("assess", !!o, body.lang, async () => {
     if (o) {
       let acc = "";
       return runAssess(body as AssessInput, o.llm, o.smart, (d) => {
@@ -147,7 +152,7 @@ export async function assessStream(
     });
     const FIN = "\n@@final\n";
     const err = full.indexOf(ERR);
-    if (err !== -1) throw new ApiError(full.slice(err + ERR.length).trim(), 200, "stream");
+    if (err !== -1) throw streamFailure(full.slice(err + ERR.length).trim());
     const fin = full.indexOf(FIN);
     if (fin === -1) throw new ApiError("Assessment ended unexpectedly.", 200, "stream");
     return JSON.parse(full.slice(fin + FIN.length)) as Report;
@@ -156,21 +161,25 @@ export async function assessStream(
 
 export function hint(body: TurnInput) {
   const o = own();
-  return watched("hint", !!o, () => (o ? runHint(body, o.llm, o.fast) : post<{ hint: string }>("/api/hint", body)));
+  return watched("hint", !!o, body.lang, () => (o ? runHint(body, o.llm, o.fast) : post<{ hint: string }>("/api/hint", body)));
 }
 
 export function rehearse(body: { description: string; lang: Lang; profile?: Partial<Profile> }) {
   const o = own();
-  return watched("rehearse", !!o, () => (o ? runRehearse(body, o.llm, o.fast) : post<{ scenario: Scenario }>("/api/rehearse", body)));
+  return watched("rehearse", !!o, body.lang, () => (o ? runRehearse(body, o.llm, o.fast) : post<{ scenario: Scenario }>("/api/rehearse", body)));
 }
 
 /** The habit across several sessions. Uses the smart model: it reads more and matters more. */
 export function pattern(body: PatternInput) {
   const o = own();
-  return watched("pattern", !!o, () => (o ? runPattern(body, o.llm, o.smart) : post<PatternResult>("/api/pattern", body)));
+  return watched("pattern", !!o, body.lang, () => (o ? runPattern(body, o.llm, o.smart) : post<PatternResult>("/api/pattern", body)));
 }
 
 const ERR = "\n@@error\n";
+function streamFailure(raw: string) {
+  const failure = readModelFailure(raw);
+  return new ApiError(failure.error, failure.status, "stream", failure.modelIssue);
+}
 
 /**
  * One exchange of the simulation. `onText` receives the accumulated protocol
@@ -179,7 +188,7 @@ const ERR = "\n@@error\n";
  */
 export async function roleplayStream(body: TurnInput, onText: (full: string) => void, signal?: AbortSignal): Promise<string> {
   const o = own();
-  return watched("roleplay", !!o, async () => {
+  return watched("roleplay", !!o, body.lang, async () => {
     if (o) {
       let acc = "";
       return runRoleplay(body, o.llm, o.fast, (d) => {
@@ -188,8 +197,8 @@ export async function roleplayStream(body: TurnInput, onText: (full: string) => 
       });
     }
     const full = await streamText("/api/roleplay", body, onText, signal);
-    // The caller reads `@@error` out of the protocol; the count belongs here.
-    if (full.includes(ERR)) reportFailure("roleplay", new ApiError("stream", 200, "stream"), false);
+    // Read errors before reporting success, including HTTP 200 streams.
+    if (full.includes(ERR)) throw streamFailure(full.slice(full.indexOf(ERR) + ERR.length).trim());
     return full;
   });
 }
@@ -197,7 +206,7 @@ export async function roleplayStream(body: TurnInput, onText: (full: string) => 
 /** The coach's reply to a reflection answer. */
 export async function reflectStream(body: ReflectInput, onText: (full: string) => void): Promise<string> {
   const o = own();
-  return watched("reflect", !!o, async () => {
+  return watched("reflect", !!o, body.lang, async () => {
     if (o) {
       let acc = "";
       return runReflect(body, o.llm, o.fast, (d) => {
@@ -207,7 +216,7 @@ export async function reflectStream(body: ReflectInput, onText: (full: string) =
     }
     const full = await streamText("/api/reflect", body, onText);
     const err = full.indexOf(ERR);
-    if (err !== -1) throw new ApiError(full.slice(err + ERR.length).trim(), 200, "stream");
+    if (err !== -1) throw streamFailure(full.slice(err + ERR.length).trim());
     return full;
   });
 }
@@ -217,10 +226,13 @@ export async function streamText(url: string, body: unknown, onText: (full: stri
   const res = await safeFetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal }, (body as { lang?: Lang })?.lang);
   if (!res.ok || !res.body) {
     let msg = res.statusText;
+    let issue: ModelIssue | null | undefined;
     try {
-      msg = ((await res.json()) as { error?: string }).error ?? msg;
+      const failure = readModelFailure(JSON.stringify(await res.json()));
+      msg = failure.error || msg;
+      issue = failure.modelIssue;
     } catch {}
-    throw new ApiError(msg, res.status, "http");
+    throw new ApiError(msg, res.status, "http", issue);
   }
   const reader = res.body.getReader();
   const dec = new TextDecoder();
@@ -303,7 +315,7 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
     cur.text += line + "\n";
   }
   flush();
-  if (errBuf) out.error = errBuf.join("\n").trim();
+  if (errBuf) out.error = readModelFailure(errBuf.join("\n").trim()).error;
   if (metaBuf) {
     const raw2 = metaBuf.join("\n").trim().replace(/^```(?:json)?/i, "").replace(/```$/, "");
     const a = raw2.indexOf("{");

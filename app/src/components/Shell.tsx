@@ -1,4 +1,5 @@
 "use client";
+import { ModelAccessNotice } from "./ModelAccessNotice";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
@@ -87,7 +88,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
     <div className="lg:grid lg:grid-cols-[var(--rail-w)_1fr]">
       <a href="#main-content" className="skip-link">{t(lang, "skip_content")}</a>
       <NavRail />
-      <div id="main-content" tabIndex={-1} className="pb-28 pt-safe min-w-0 lg:pb-16 lg:mx-auto lg:w-full lg:max-w-[var(--content-max)]">{children}</div>
+      <div id="main-content" tabIndex={-1} className="pb-28 pt-safe min-w-0 lg:pb-16 lg:mx-auto lg:w-full lg:max-w-[var(--content-max)]"><ModelAccessNotice className="mx-5 mt-4 lg:mx-10" />{children}</div>
       <TabBar />
     </div>
   );

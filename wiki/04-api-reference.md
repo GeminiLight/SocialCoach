@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-09-03 | Current stage: B -->
+<!-- Last verified: 2026-10-03 | Current stage: B -->
 
 # API 参考
 
@@ -8,6 +8,7 @@
 
 | 方法 | 路径 | 用途 | 模型 | 返回形态 | maxDuration | 引入阶段 |
 |---|---|---|---|---|---|---|
+| GET | `/api/health` | 模型连接的免费元数据检查 | — | JSON | 默认 | A24 |
 | POST | `/api/schedule` | 处方 → 角色相容性 → 受约束检索 → 简报适配 | fast | JSON | 120 | A |
 | POST | `/api/roleplay` | NPC 对话回合 | fast | 文本流（自定义协议） | 60 | A |
 | POST | `/api/assess` | 复盘报告 | smart | 文本流 + `@@final` JSON | 180 | A |
@@ -21,10 +22,22 @@
 
 - 所有路由都是 Node runtime，无鉴权（本产品无账号体系）。
 - `lang` 由 `asLang()` 收敛：只有 `"en"` 判为英文，其余一律 `"zh"`。
-- 错误统一走 `fail(e)` → `{ "error": "<message>" }`，状态码由 `toHttpError()` 映射。
-- 三条流式路由的错误在流内以 `\n@@error\n<message>` 追加，HTTP 状态码仍是 200 —— **客户端必须解析流尾，不能只看状态码**。
+- 错误统一走 `fail(e)` → `{ "error": "<message>", "modelIssue": "<category>" | null }`，状态码由 `toHttpError()` 映射。
+- 三条流式路由的错误在流内以 `\n@@error\n{"error":"…","status":401,"modelIssue":"credentials"}` 追加，HTTP 状态码仍是 200 —— **客户端必须解析流尾，不能只看状态码**。
 
 ---
+
+## 模型连接
+
+### `GET /api/health`
+
+返回 `{serverKey:boolean, requireByok:boolean, state:"available"|"unverified"|"unavailable", issue?:ModelIssue}`，只返回安全状态，不返回密钥、地址或服务商原始错误。`ModelIssue` 为 `setup|credentials|quota|model|rate_limit|service|network`。缺少部署密钥 / 强制 BYOK 返回 unavailable/setup。
+
+通过服务商认证的 `GET /models`，必要时 `GET /models/{id}` 验证 fast / smart 名称和别名；总时限 5 秒、零重试，只读取元数据。绝不退回生成调用。服务不支持元数据、CORS、超时等返回 unverified，允许用户在实际练习中确认；明确认证、额度或限流失败才返回 unavailable。此检查不保证余额或生成权限。
+
+同一进程缓存 120 秒、合并并发检查；实际模型失败在进程内保留 120 秒，浏览器另有独立的即时失败状态。单用户限流不写入全站观察。`?retry=1` 可显式重新免费检查，不自动重试付费生成。Vercel 实例间不共享内存观察。
+
+HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如格式 / 引文校验，不因此禁用模型。新版客户端兼容旧版纯文本 `@@error`。方案和验收见 [模型连接](./archive/specs/spec-model-availability.md)。
 
 ## 排程
 
@@ -277,4 +290,4 @@ JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: stri
 
 错误：400 输入 / 状态无效；413 过长；429 沿用主站限流；503 部署无密钥或强制 BYOK；模型错误沿用 `fail()`，无剧本静默替代。服务器请求 30 秒取消、路由 `maxDuration=40`；客户端 35 秒取消，草稿保留。响应 `Cache-Control: no-store`。
 
-BYOK 在浏览器运行同一任务，密钥不发送到此路由。可用性复用 `/api/health` 的 `serverKey` / `requireByok`，无新增公开配置端点。
+BYOK 在浏览器运行同一任务，密钥不发送到此路由。可用性复用 `/api/health` 的连接状态与浏览器统一的运行时失败状态，无新增公开配置端点。

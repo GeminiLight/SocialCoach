@@ -177,7 +177,7 @@ export default function Rehearse() {
                       <Stages title={t(lang, "rh_generating")} steps={tList(lang, "rh_gen_steps")} slowAfterMs={40000} />
                     </div>
                   ) : (
-                    <Button type="submit" block size="lg" disabled={text.trim().length < 8}>
+                    <Button requiresModel type="submit" block size="lg" disabled={text.trim().length < 8}>
                       {t(lang, "rh_generate")}
                       <ArrowRight size={18} />
                     </Button>
@@ -292,7 +292,7 @@ export default function Rehearse() {
                 </div>
               </div>
             </div>
-            <Button block size="lg" onClick={() => start(preview)}>
+            <Button requiresModel block size="lg" onClick={() => start(preview)}>
               {t(lang, "home_start")}
             </Button>
             <Button block variant="ghost" onClick={() => setPreview(null)}>

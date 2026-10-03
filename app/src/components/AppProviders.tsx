@@ -1,9 +1,10 @@
 "use client";
 import { MotionConfig } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useApp, useLang } from "@/store/useApp";
-import { isReady, useByok } from "@/lib/byok";
+import { useByok } from "@/lib/byok";
+import { refreshModelAccess, syncModelConfiguration, useCanUseModel } from "@/lib/model-access";
 import { ModelSheet } from "./ModelSheet";
 import { FeedbackWidget } from "./Feedback";
 import { Toaster } from "./ui";
@@ -21,23 +22,20 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const byok = useByok();
   const lang = useLang();
-  const [needsModel, setNeedsModel] = useState(false);
   const dinner = path === "/3d";
-  const forced = needsModel && !isReady(byok) && !dinner;
+  const canUseModel = useCanUseModel();
 
-  // Does this deployment have a model of its own? Booleans only.
   useEffect(() => {
-    let live = true;
-    fetch("/api/health")
-      .then((r) => r.json())
-      .then((h: { serverKey?: boolean; requireByok?: boolean }) => {
-        if (live) setNeedsModel(!h.serverKey || !!h.requireByok);
-      })
-      .catch(() => {});
-    return () => {
-      live = false;
-    };
-  }, []);
+    if (!byok.hydrated) return;
+    syncModelConfiguration();
+    void refreshModelAccess();
+    return useByok.subscribe((next, previous) => {
+      if (["enabled", "provider", "baseUrl", "apiKey", "fastModel", "smartModel", "tokenParam"].some(key => next[key as keyof typeof next] !== previous[key as keyof typeof previous])) {
+        syncModelConfiguration();
+        void refreshModelAccess();
+      }
+    });
+  }, [byok.hydrated]);
 
   useEffect(() => {
     if (!hydrated || storageIssue) return;
@@ -74,11 +72,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     <MotionConfig reducedMotion="user">
     <div className={dinner ? "sheet sheet-immersive" : "sheet"}>
       {hydrated ? storageIssue ? <StorageRecovery issue={storageIssue} /> : children : <div className="min-h-dvh" />}
-      {/* One instance for the whole app. `forced` has nothing to fall back on,
-          so it cannot be dismissed until it works. */}
-      <ModelSheet open={hydrated && !storageIssue && (forced || byok.sheetOpen)} onClose={byok.closeSheet} forced={forced} />
+      <ModelSheet open={hydrated && !storageIssue && byok.sheetOpen} onClose={byok.closeSheet} />
       {hydrated && !storageIssue && !dinner && <FeedbackWidget />}
-      <DinnerAnnouncement enabled={hydrated && !storageIssue && !!profile && path === "/" && !forced && !byok.sheetOpen && !unfinished} />
+      <DinnerAnnouncement enabled={hydrated && !storageIssue && !!profile && path === "/" && canUseModel && !byok.sheetOpen && !unfinished} />
       <Toaster />
     </div>
     </MotionConfig>

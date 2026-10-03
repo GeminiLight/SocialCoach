@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
+import { modelIssue, type ModelIssue, type ModelMetadata } from "./model-status";
 import {
   anthropicArgs,
   extractJSON,
@@ -73,13 +74,8 @@ let _openai: OpenAI | null = null;
 export const hasServerCredential = () => !!API_KEY;
 
 function requireKey() {
-  if (API_KEY) return API_KEY;
-  throw new LLMError(
-    PROVIDER === "openai"
-      ? "No OpenAI credential. Set LLM_API_KEY or OPENAI_API_KEY."
-      : "No Anthropic credential. Set LLM_API_KEY, ANTHROPIC_API_KEY or ANTHROPIC_AUTH_TOKEN.",
-    500,
-  );
+  if (API_KEY && !["1", "true"].includes(process.env.LLM_REQUIRE_BYOK ?? "")) return API_KEY;
+  throw new LLMError("Connect a model to continue.", 503, false, "setup");
 }
 
 function anthropic(): Anthropic {
@@ -90,6 +86,18 @@ function anthropic(): Anthropic {
 function openai(): OpenAI {
   if (!_openai) _openai = new OpenAI({ apiKey: requireKey(), baseURL: BASE_URL, maxRetries: 2, timeout: 120_000 });
   return _openai;
+}
+
+/** A bounded, free metadata check. No message or completion is generated. */
+export function serverModelMetadata(): ModelMetadata {
+  const options = { timeout: 5_000, maxRetries: 0, signal: AbortSignal.timeout(5_000) };
+  return PROVIDER === "openai" ? {
+    list: async () => ({ ids: (await openai().models.list(options)).data.map(m => m.id) }),
+    retrieve: id => openai().models.retrieve(id, options),
+  } : {
+    list: async () => { const r = await anthropic().models.list({ limit: 100 }, options); return { ids: r.data.map(m => m.id), more: r.has_more }; },
+    retrieve: id => anthropic().models.retrieve(id, {}, options),
+  };
 }
 
 /* ───────────────────────────── The server LLM ─────────────────────────────
@@ -171,7 +179,7 @@ function providerMessage(e: unknown): string | null {
   return typeof msg === "string" && msg.trim() ? msg.trim() : null;
 }
 
-export function toHttpError(e: unknown): { status: number; message: string } {
+function httpError(e: unknown): { status: number; message: string } {
   if (e instanceof LLMError) return { status: e.status, message: e.message };
   const provider = providerMessage(e);
   if (e instanceof Anthropic.AuthenticationError || e instanceof OpenAI.AuthenticationError) return { status: 401, message: provider ?? "LLM credentials are invalid." };
@@ -179,4 +187,11 @@ export function toHttpError(e: unknown): { status: number; message: string } {
   if (e instanceof Anthropic.APIConnectionError || e instanceof OpenAI.APIConnectionError) return { status: 503, message: `Could not reach the model${BASE_URL ? ` at ${BASE_URL}` : ""}.` };
   if (e instanceof Anthropic.APIError || e instanceof OpenAI.APIError) return { status: e.status ?? 502, message: provider ?? e.message };
   return { status: 500, message: e instanceof Error ? e.message : "Unknown error" };
+}
+
+export function toHttpError(e: unknown): { status: number; message: string; modelIssue?: ModelIssue } {
+  const result = httpError(e);
+  const issue = modelIssue(e) ?? ((e instanceof Anthropic.APIError || e instanceof OpenAI.APIError) && e.status === 400 ? "model" : undefined);
+  // Model errors expose only a safe category. Provider payloads can echo keys.
+  return { ...result, message: issue ? `Model connection: ${issue}.` : result.message.replaceAll(API_KEY || "\u0000", "[redacted]"), modelIssue: issue };
 }

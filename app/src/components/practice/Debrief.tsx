@@ -1,4 +1,7 @@
 "use client";
+import { useCanUseModel } from "@/lib/model-access";
+import { M } from "@/lib/model-copy";
+import { pick } from "@/lib/i18n";
 import { FeedbackPrompt } from "@/components/Feedback";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -26,6 +29,7 @@ const skillIds = new Set(SKILLS.map((s) => s.id));
 
 export function Debrief({ session }: { session: Session }) {
   const lang = useLang();
+  const canUseModel = useCanUseModel();
   const router = useRouter();
   const { profile, applyReport, addSession, updateSession } = useApp();
   const [err, setErr] = useState<string | null>(null);
@@ -36,7 +40,7 @@ export function Debrief({ session }: { session: Session }) {
   const report = session.report;
 
   const run = useCallback(async () => {
-    if (!profile || inflight.current) return;
+    if (!canUseModel || !profile || inflight.current) return;
     inflight.current = true;
     try {
       const final = await assessStream(
@@ -64,13 +68,13 @@ export function Debrief({ session }: { session: Session }) {
     } finally {
       inflight.current = false;
     }
-  }, [profile, sc, session, lang, applyReport]);
+  }, [profile, sc, session, lang, applyReport, canUseModel]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- kick off an async request on mount
-    if (session.status === "ended" && !report) void run();
+    if (canUseModel && session.status === "ended" && !report) void run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.status]);
+  }, [session.status, canUseModel]);
 
   const again = () => {
     if (restarting.current) return;
@@ -98,7 +102,7 @@ export function Debrief({ session }: { session: Session }) {
         characters={withHidden}
         outcomeKey={outcomeKey}
         objectivesMet={n}
-        ready={!!report || hasPartial}
+        ready={!!report || hasPartial || !canUseModel}
         err={err}
         onRetry={() => { setErr(null); void run(); }}
         onDone={() => updateSession(session.id, { revealSeen: true })}
@@ -122,10 +126,10 @@ export function Debrief({ session }: { session: Session }) {
               {err ? (
                 <div className="flex flex-col gap-3">
                   <p className="text-[14px] text-danger">{err}</p>
-                  <Button variant="secondary" onClick={() => { setErr(null); void run(); }}>{t(lang, "retry")}</Button>
+                  <Button requiresModel variant="secondary" onClick={() => { setErr(null); void run(); }}>{t(lang, "retry")}</Button>
                 </div>
               ) : (
-                <Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} slowAfterMs={60000} />
+                canUseModel ? <Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} slowAfterMs={60000} /> : <p className="text-[14px] text-ink-3">{pick(M.pending, lang)}</p>
               )}
             </div>
           </div>
@@ -228,7 +232,7 @@ function HiddenReveal({
         {err ? (
           <div className="flex flex-col gap-2">
             <p className="text-[13px] text-danger">{err}</p>
-            <Button block variant="secondary" onClick={onRetry}>{t(lang, "retry")}</Button>
+            <Button requiresModel block variant="secondary" onClick={onRetry}>{t(lang, "retry")}</Button>
           </div>
         ) : (
           <Button block size="lg" variant="ink" onClick={onDone} disabled={!ready}>
@@ -478,7 +482,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
         {!streaming && (
           <BottomBar className="px-5 pb-safe pb-6 pt-4 flex flex-col sm:flex-row gap-2 lg:px-0 lg:pb-0">
-            <Button block size="lg" onClick={onAgain}><RotateCcw size={18} />{t(lang, "rp_practice_again")}</Button>
+            <Button requiresModel block size="lg" onClick={onAgain}><RotateCcw size={18} />{t(lang, "rp_practice_again")}</Button>
             <Button size="lg" variant="ghost" onClick={() => router.push("/")} className="shrink-0">{t(lang, "rp_back_home")}</Button>
           </BottomBar>
         )}
@@ -563,6 +567,7 @@ function KnowledgeCard({ kind, title, source, saved, onSave, onAsk, children }: 
 
 function ReflectItem({ session, question, idx, addReflection, updateReflection, summary }: { session: Session; question: string; idx: number; addReflection: (id: string, r: { question: string; answer: string }) => void; updateReflection: (id: string, idx: number, patch: { coachReply?: string }) => void; summary: string }) {
   const lang = useLang();
+  const canUseModel = useCanUseModel();
   const existing = useMemo(() => session.reflections.find((r) => r.question === question), [session.reflections, question]);
   const rIdx = session.reflections.findIndex((r) => r.question === question);
   const [text, setText] = useState(existing?.answer ?? "");
@@ -572,7 +577,7 @@ function ReflectItem({ session, question, idx, addReflection, updateReflection, 
 
   const submit = async () => {
     const answer = text.trim();
-    if (!answer || busy) return;
+    if (!answer || busy || !canUseModel) return;
     setBusy(true);
     let index = rIdx;
     if (index === -1) {
@@ -604,7 +609,7 @@ function ReflectItem({ session, question, idx, addReflection, updateReflection, 
         <>
           <div className="flex items-end gap-2">
             <textarea aria-label={question} value={text} onChange={(e) => setText(e.target.value)} rows={2} placeholder={t(lang, "rp_reflect_ph")} className="flex-1 px-3.5 py-2.5 rounded-2xl bg-card border border-line text-[14px] leading-relaxed placeholder:text-ink-3 focus:border-ink transition-colors" disabled={busy} />
-            <button onClick={submit} disabled={!text.trim() || busy} aria-label={t(lang, "rp_send")} className="press h-11 w-11 shrink-0 rounded-full bg-ink text-paper inline-flex items-center justify-center disabled:opacity-30">
+            <button onClick={submit} disabled={!text.trim() || busy || !canUseModel} aria-label={t(lang, "rp_send")} className="press h-11 w-11 shrink-0 rounded-full bg-ink text-paper inline-flex items-center justify-center disabled:opacity-30">
               {busy && !reply ? <Spinner /> : <Send size={16} />}
             </button>
           </div>

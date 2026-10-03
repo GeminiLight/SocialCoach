@@ -138,7 +138,7 @@ export default function Home() {
                 <div className="py-5 border-y border-line flex flex-col gap-3">
                   <h2 className="display text-[20px]">{t(lang, "home_plan_title")}</h2>
                   <p className="text-[13px] text-ink-3 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_plan_body")}</p>
-                  <Button variant="secondary" onClick={planToday} className="self-start"><RefreshCw size={16} />{t(lang, "home_plan_action")}</Button>
+                  <Button requiresModel variant="secondary" onClick={planToday} className="self-start"><RefreshCw size={16} />{t(lang, "home_plan_action")}</Button>
                 </div>
               )}
               {loading && (
@@ -167,7 +167,7 @@ export default function Home() {
                 <div className="card p-5 flex flex-col gap-3">
                   {todaySession && <p className="text-[14px] text-ink-2">{t(lang, "home_swap_error")}</p>}
                   <p className="text-[14px] text-danger">{error}</p>
-                  <Button variant="secondary" onClick={planToday}>
+                  <Button requiresModel variant="secondary" onClick={planToday}>
                     <RefreshCw size={16} />
                     {t(lang, "retry")}
                   </Button>
@@ -319,12 +319,12 @@ function TodayCard({ session, onStart, onSwap }: { session: ReturnType<typeof bu
         )}
         <div className="flex flex-col gap-2 pt-1 lg:max-w-[440px]">
           <div className="flex gap-2">
-            <Button block size="lg" variant="secondary" onClick={onStart}>
+            <Button requiresModel={session.status === "briefing" || session.status === "active"} block size="lg" variant="secondary" onClick={onStart}>
               {done ? t(lang, "home_view_report") : active ? t(lang, "home_continue") : t(lang, "home_start")}
               <ArrowRight size={18} />
             </Button>
             {!active && !done && (
-              <Button
+              <Button requiresModel
                 size="lg"
                 variant="ghost"
                 onClick={onSwap}
@@ -337,7 +337,7 @@ function TodayCard({ session, onStart, onSwap }: { session: ReturnType<typeof bu
             )}
           </div>
           {done && (
-            <Button block size="md" variant="ghost" onClick={onSwap} className="text-ink-2">
+            <Button requiresModel block size="md" variant="ghost" onClick={onSwap} className="text-ink-2">
               <RefreshCw size={16} />
               {t(lang, "home_another")}
             </Button>

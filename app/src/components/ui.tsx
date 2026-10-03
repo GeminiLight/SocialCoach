@@ -7,6 +7,9 @@ import { AvatarFigure } from "@/data/avatars";
 import { isReady, openModelSheet, useByok } from "@/lib/byok";
 import { useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
+import { useCanUseModel } from "@/lib/model-access";
+import { M } from "@/lib/model-copy";
+import { pick } from "@/lib/i18n";
 import { X } from "lucide-react";
 
 /* ───────────── Button ───────────── */
@@ -16,8 +19,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   block?: boolean;
+  requiresModel?: boolean;
 }
-export function Button({ variant = "primary", size = "md", loading, block, className, children, disabled, ...rest }: ButtonProps) {
+export function Button({ variant = "primary", size = "md", loading, block, className, children, disabled, requiresModel, ...rest }: ButtonProps) {
+  const canUseModel = useCanUseModel();
+  const lang = useLang();
+  const blocked = requiresModel && !canUseModel;
   const base = "press min-w-0 [&>svg]:shrink-0 inline-flex items-center justify-center gap-2 font-semibold rounded-full select-none text-center leading-snug";
   const sizes = { sm: "min-h-11 px-4 text-[13px]", md: "h-12 px-5 text-[15px]", lg: "h-14 px-6 text-base" }[size];
   const variants: Record<Variant, string> = {
@@ -28,7 +35,7 @@ export function Button({ variant = "primary", size = "md", loading, block, class
     danger: "bg-danger-soft text-danger hover:opacity-90",
   };
   return (
-    <button className={clsx(base, sizes, variants[variant], block && "w-full", className)} disabled={disabled || loading} aria-busy={loading || undefined} {...rest}>
+    <button className={clsx(base, sizes, variants[variant], block && "w-full", className)} disabled={disabled || loading || blocked} title={blocked ? pick(M.disabled, lang) : rest.title} aria-busy={loading || undefined} {...rest}>
       {loading && <Spinner />}
       {children}
     </button>

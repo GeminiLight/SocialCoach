@@ -1,4 +1,5 @@
 "use client";
+import { ModelAccessNotice } from "@/components/ModelAccessNotice";
 import type { ReactNode } from "react";
 import { ArrowLeft, Check } from "lucide-react";
 import { clsx } from "clsx";
@@ -15,6 +16,7 @@ export function PracticeJourney({ phase, onBack, backLabel, actions }: {
 }) {
   const lang = useLang();
   return (
+    <>
     <div className="practice-journey flex items-center gap-2 py-2 border-b border-line">
       <IconButton label={backLabel ?? t(lang, "pr_back_workspace")} onClick={onBack}><ArrowLeft size={19} /></IconButton>
       <span className="hidden lg:block display text-[15px] pr-6">SocialCoach</span>
@@ -31,5 +33,7 @@ export function PracticeJourney({ phase, onBack, backLabel, actions }: {
       </ol>
       <div className="flex items-center justify-end min-w-2 lg:min-w-11">{actions}</div>
     </div>
+    <ModelAccessNotice className="mt-3" />
+    </>
   );
 }

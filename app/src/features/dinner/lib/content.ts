@@ -134,7 +134,7 @@ export const ui = {
   aboutTitle: l('不只听见话，也看见局面。', 'Hear the words. See the room.'),
   aboutBody: l('SocialCoach 的一个独立 3D 原型。一间包厢、一张圆桌、三位各有立场的同桌人。你开口后，人物会接话、全桌举杯、递手机或准备合照；你的动作会改变接下来的追问。他们不会因为你客气，就立刻让步。', 'An independent 3D SocialCoach prototype. One room, one round table, three people with their own positions. The table raises cups, passes a phone or prepares a group photo. Your actions change the questions that follow. Politeness alone won’t make them back down.'),
   source: l('剧情出处', 'Story source'), sourceDetail: l('三个场景均为本原型原创的虚构剧情，用于检验交互体验；不作为真实案例或研究结论。', 'All three scenes are original fiction for testing the interaction. They are not real cases or research findings.'),
-  modelAbout: l('配置模型后，自由输入由模型生成全桌反应。未配置时使用内置剧情分支，每轮均会明确显示模式。', 'With a model connected, free text generates reactions across the table. Otherwise, built-in branches run the story. The active mode is always shown.'),
+  modelAbout: l('接入模型后，可以自由对话；连接不可用时，仍可探索场景、查看已有记录。', 'Connect a model for free-form conversation. When it is unavailable, you can still explore the scene and view saved conversations.'),
   privacyAbout: l('没有账号。练习记录只保存在你的浏览器。使用模型时，本局对话、虚拟包厢的位置和姿态、饭局事件及已完成动作会发送给配置的模型服务。', 'No account. Your rehearsal stays in your browser. In AI mode, the conversation, virtual room position and posture, dinner moments and completed actions go to the configured model provider.'),
   footer: l('想说的话，说出来。', 'Say the thing you’ve been not saying.'),
 };

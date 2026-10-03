@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     let input: unknown;
     try { input = JSON.parse(raw); } catch { throw new LLMError(pick({zh:'提交内容无法读取，请再试一次。',en:'The submission could not be read. Please try again.'},lang), 400); }
     const body = parseDinnerInput(input);
-    if (!hasServerCredential() || process.env.LLM_REQUIRE_BYOK === 'true') throw new LLMError(pick({zh:'请先在 SocialCoach 的模型设置中接入自己的模型。',en:'Connect your model in SocialCoach settings to continue.'},body.lang), 503);
+    if (!hasServerCredential() || ['1','true'].includes(process.env.LLM_REQUIRE_BYOK ?? '')) throw new LLMError(pick({zh:'请先在 SocialCoach 的模型设置中接入自己的模型。',en:'Connect your model in SocialCoach settings to continue.'},body.lang), 503, false, 'setup');
     checkRateLimit(req);
     const signal = AbortSignal.any([req.signal, AbortSignal.timeout(30_000)]);
     const reply = await runDinner(body, serverLLM, FAST_MODEL, signal);

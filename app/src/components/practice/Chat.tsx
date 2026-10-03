@@ -1,4 +1,5 @@
 "use client";
+import { useCanUseModel } from "@/lib/model-access";
 import { FeedbackButton } from "@/components/Feedback";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -25,6 +26,7 @@ import { clockMarks, PatiencePicker, useReplyClock, type ClockStage } from "./Re
 
 export function Chat({ session }: { session: Session }) {
   const lang = useLang();
+  const canUseModel = useCanUseModel();
   const router = useRouter();
   const { profile, settings, setSettings, appendMessage, updateSession } = useApp();
   const sc = session.scenario;
@@ -302,7 +304,7 @@ export function Chat({ session }: { session: Session }) {
       const text = textRaw.trim();
       const live = useApp.getState().sessions.find((s) => s.id === session.id);
       const last = live && lastSpoken(live.messages);
-      if (!text || busyRef.current || endingRef.current || !live || live.status !== "active" || live.closure || live.messages.filter((m) => m.role === "learner").length >= sc.maxTurns || last?.role === "learner" || last?.role === "event") return;
+      if (!canUseModel || !text || busyRef.current || endingRef.current || !live || live.status !== "active" || live.closure || live.messages.filter((m) => m.role === "learner").length >= sc.maxTurns || last?.role === "learner" || last?.role === "event") return;
       setErr(null);
       setNote(null);
       setFloor(false);
@@ -314,7 +316,7 @@ export function Chat({ session }: { session: Session }) {
       appendMessage(session.id, learnerMsg);
       await advance([...live.messages, learnerMsg], "send");
     },
-    [session, sc.maxTurns, appendMessage, advance, setInput],
+    [session, sc.maxTurns, appendMessage, advance, setInput, canUseModel],
   );
 
   /* ── replies on the clock ──
@@ -358,7 +360,7 @@ export function Chat({ session }: { session: Session }) {
     budgetMs: patience * 1000,
     armed,
     // Sheets, the mic and a hint on its way are not the learner's thinking.
-    paused: endOpen || clockOpen || voiceNotice || hintBusy || listening || !!err || needsRecovery,
+    paused: !canUseModel || endOpen || clockOpen || voiceNotice || hintBusy || listening || !!err || needsRecovery,
     turnKey: armed ? last.id : null,
     waitForSpeech: settings.tts,
     onStage,
@@ -379,6 +381,7 @@ export function Chat({ session }: { session: Session }) {
   const marks = clockMarks(patience);
 
   const askHint = async () => {
+    if (!canUseModel) return;
     if (hintBusy || busy) return;
     setHintBusy(true);
     try {
@@ -562,7 +565,7 @@ export function Chat({ session }: { session: Session }) {
         {err && (
           <div role="alert" className="self-stretch flex flex-wrap items-center justify-between gap-2 text-[13px] text-danger bg-danger-soft rounded-[var(--radius-sm)] px-4 py-2">
             {err.text}
-            <button onClick={retry} className="press min-h-11 px-2 underline font-medium">{t(lang, err.from === "send" ? "retry" : "pr_resume_dialogue")}</button>
+            <button onClick={retry} disabled={!canUseModel} className="press min-h-11 px-2 underline font-medium">{t(lang, err.from === "send" ? "retry" : "pr_resume_dialogue")}</button>
           </div>
         )}
       </div>
@@ -603,7 +606,7 @@ export function Chat({ session }: { session: Session }) {
         </div>
         {voiceNote && <p className="text-[12px] text-ink-3 px-1 pb-1.5">{voiceNote}</p>}
         <div className="flex items-end gap-2">
-          <button onClick={askHint} disabled={busy || hintBusy || ending || needsRecovery} aria-label={t(lang, "pr_hint")} title={t(lang, "pr_hint")} className="press h-11 w-11 shrink-0 rounded-full border border-line-strong inline-flex items-center justify-center text-ink-2 disabled:opacity-40">
+          <button onClick={askHint} disabled={!canUseModel || busy || hintBusy || ending || needsRecovery} aria-label={t(lang, "pr_hint")} title={t(lang, "pr_hint")} className="press h-11 w-11 shrink-0 rounded-full border border-line-strong inline-flex items-center justify-center text-ink-2 disabled:opacity-40">
             {hintBusy ? <Spinner /> : <Lightbulb size={19} />}
           </button>
           <div className={clsx("flex-1 min-w-0 flex items-end gap-1 writing-field border bg-card pl-3 pr-1 py-1", listening || attention >= 2 ? "border-accent" : "border-line focus-within:border-ink")}>
@@ -626,7 +629,7 @@ export function Chat({ session }: { session: Session }) {
               </button>
             )}
           </div>
-          <button onClick={() => send(input)} disabled={!input.trim() || busy || ending || needsRecovery} aria-label={t(lang, "rp_send")} className="press h-11 w-11 shrink-0 rounded-full bg-ink text-paper inline-flex items-center justify-center disabled:opacity-30">
+          <button onClick={() => send(input)} disabled={!canUseModel || !input.trim() || busy || ending || needsRecovery} aria-label={t(lang, "rp_send")} className="press h-11 w-11 shrink-0 rounded-full bg-ink text-paper inline-flex items-center justify-center disabled:opacity-30">
             <ArrowUp size={20} />
           </button>
         </div>

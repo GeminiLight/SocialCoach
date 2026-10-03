@@ -1,5 +1,8 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useCanUseModel } from "@/lib/model-access";
+import { M } from "@/lib/model-copy";
+import { pick } from "@/lib/i18n";
 import { track } from "@/lib/analytics/track";
 import { motion } from "framer-motion";
 import { RefreshCw } from "lucide-react";
@@ -50,6 +53,7 @@ function toInput(s: Session): PatternSession {
  */
 export function PatternCard() {
   const lang = useLang();
+  const canUseModel = useCanUseModel();
   const { sessions, profile, patternInsight, setPatternInsight } = useApp();
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -62,7 +66,7 @@ export function PatternCard() {
   const enough = done.length >= MIN_SESSIONS;
 
   const run = useCallback(async () => {
-    if (inflight.current || !profile) return;
+    if (!canUseModel || inflight.current || !profile) return;
     inflight.current = true;
     setBusy(true);
     setErr(null);
@@ -76,14 +80,14 @@ export function PatternCard() {
       setBusy(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lang, profile, done.length, setPatternInsight]);
+  }, [lang, profile, done.length, setPatternInsight, canUseModel]);
 
   // Read it once when there is new material, then leave it alone.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- kick off an async request on mount
-    if (enough && stale && !busy && !err) void run();
+    if (canUseModel && enough && stale && !busy && !err) void run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enough, stale]);
+  }, [enough, stale, canUseModel]);
 
   // Seen, or honestly "nothing recurs yet" — once per visit either way.
   const seen = useRef(false);
@@ -117,7 +121,7 @@ export function PatternCard() {
           <button
             type="button"
             onClick={() => void run()}
-            disabled={busy}
+            disabled={busy || !canUseModel}
             aria-label={t(lang, "pg_pattern_again")}
             className="press shrink-0 text-slab-ink/60 hover:text-slab-ink disabled:opacity-40"
           >
@@ -126,10 +130,10 @@ export function PatternCard() {
         )}
       </div>
 
-      {err ? (
+      {!canUseModel && !cached ? <p className="text-[14px] text-slab-ink/70">{pick(M.pending, lang)}</p> : err ? (
         <div className="flex flex-col gap-3 items-start">
           <p className="text-[14px] leading-relaxed">{err}</p>
-          <Button variant="secondary" size="sm" onClick={() => { setErr(null); void run(); }}>{t(lang, "retry")}</Button>
+          <Button requiresModel variant="secondary" size="sm" onClick={() => { setErr(null); void run(); }}>{t(lang, "retry")}</Button>
         </div>
       ) : busy || !cached ? (
         <p className="inline-flex items-center gap-2 text-[14px] text-slab-ink/70"><Spinner />{t(lang, "pg_pattern_reading")}</p>

@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { toHttpError } from "./llm";
 import type { Lang } from "@/data/taxonomy";
+import { observeServerFailure } from "./server-model-observation";
 
 export function fail(e: unknown) {
-  const { status, message } = toHttpError(e);
+  const { status, message, modelIssue } = toHttpError(e);
+  observeServerFailure(modelIssue);
   console.error("[api]", status, message);
-  return NextResponse.json({ error: message }, { status });
+  return NextResponse.json({ error: message, modelIssue: modelIssue ?? null }, { status });
 }
 
 export const asLang = (v: unknown): Lang => (v === "en" ? "en" : "zh");
@@ -16,7 +18,7 @@ export const asLang = (v: unknown): Lang => (v === "en" ? "en" : "zh");
  * With `final`, the task's resolved value is appended as
  * `\n@@final\n<json>` — the authoritative result, since the streamed text is
  * only the model's raw output. Failures mid-stream are appended as
- * `\n@@error\n<message>` because headers have already been sent.
+ * `\n@@error\n<{error,status,modelIssue}>` because headers have already been sent.
  */
 export function taskStream<T>(run: (onDelta: (d: string) => void) => Promise<T>, opts: { final?: boolean } = {}) {
   const enc = new TextEncoder();
@@ -26,9 +28,10 @@ export function taskStream<T>(run: (onDelta: (d: string) => void) => Promise<T>,
         const result = await run((d) => controller.enqueue(enc.encode(d)));
         if (opts.final) controller.enqueue(enc.encode(`\n@@final\n${JSON.stringify(result)}`));
       } catch (e) {
-        const { status, message } = toHttpError(e);
+        const { status, message, modelIssue } = toHttpError(e);
+        observeServerFailure(modelIssue);
         console.error("[api]", status, message);
-        controller.enqueue(enc.encode(`\n@@error\n${message}`));
+        controller.enqueue(enc.encode(`\n@@error\n${JSON.stringify({ error: message, status, modelIssue: modelIssue ?? null })}`));
       } finally {
         controller.close();
       }

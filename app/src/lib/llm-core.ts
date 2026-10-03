@@ -8,6 +8,7 @@
  * from these functions, so the two paths cannot drift.
  */
 import { fixUnescapedQuotes, parsePartialJSON } from "./partial-json";
+import type { ModelIssue } from "./model-status";
 
 export type Provider = "anthropic" | "openai";
 export type TokenParam = "max_tokens" | "max_completion_tokens";
@@ -94,7 +95,7 @@ export function openaiArgs(o: ChatOpts, fallbackModel: string, tokenParam: Token
 }
 
 export class LLMError extends Error {
-  constructor(message: string, public status = 502, public retryable = false) {
+  constructor(message: string, public status = 502, public retryable = false, public modelIssue?: ModelIssue) {
     super(message);
   }
 }

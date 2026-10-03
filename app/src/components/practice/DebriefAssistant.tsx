@@ -1,11 +1,12 @@
 "use client";
 
+import { useCanUseModel } from "@/lib/model-access";
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
 import { ArrowUp, MessageCircle, Square } from "lucide-react";
 import { CASES, THEORIES } from "@/data/corpus";
 import { Button, Spinner } from "@/components/ui";
 import { useApp, useLang } from "@/store/useApp";
-import { ApiError, debriefChat } from "@/lib/client-api";
+import { debriefChat } from "@/lib/client-api";
 import { buildDebriefInput, DEBRIEF_QUESTION_LIMIT } from "@/lib/debrief-chat";
 import { uid } from "@/lib/format";
 import { t, pick } from "@/lib/i18n";
@@ -16,6 +17,7 @@ export interface DebriefAssistantHandle { ask: (question?: string) => void }
 
 export function DebriefAssistant({ session, ref }: { session: Session; ref?: Ref<DebriefAssistantHandle> }) {
   const lang = useLang();
+  const canUseModel = useCanUseModel();
   const [text, setText] = useSessionDraft(`${session.id}.debrief`);
   const [pending, setPending] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -48,7 +50,7 @@ export function DebriefAssistant({ session, ref }: { session: Session; ref?: Ref
 
   async function submit() {
     const question = text.trim();
-    if (!question || question.length > DEBRIEF_QUESTION_LIMIT || request.current) return;
+    if (!canUseModel || !question || question.length > DEBRIEF_QUESTION_LIMIT || request.current) return;
     const current = useApp.getState().sessions.find(s => s.id === session.id);
     if (!current?.report || current.status !== "assessed") return;
     const controller = new AbortController();
@@ -65,7 +67,7 @@ export function DebriefAssistant({ session, ref }: { session: Session; ref?: Ref
     } catch (e) {
       if (request.current !== controller) return;
       if (timedOut) setError(t(lang, "da_timeout"));
-      else if (!controller.signal.aborted) setError(e instanceof ApiError ? e.message : t(lang, "da_error"));
+      else if (!controller.signal.aborted) setError(e instanceof Error ? e.message : t(lang, "da_error"));
     } finally {
       window.clearTimeout(timeout);
       if (request.current === controller) { request.current = null; setPending(null); }
@@ -95,7 +97,7 @@ export function DebriefAssistant({ session, ref }: { session: Session; ref?: Ref
         </div>
       )}
       {pending && <p role="status" className="flex items-center gap-2 text-[13px] text-ink-3"><Spinner />{t(lang, "da_busy")}</p>}
-      {error && <div role="alert" className="rounded-2xl bg-danger-soft p-3 text-[13px] text-danger leading-relaxed"><p>{error}</p><button onClick={submit} className="press min-h-11 underline underline-offset-4">{t(lang, "da_retry")}</button></div>}
+      {error && <div role="alert" className="rounded-2xl bg-danger-soft p-3 text-[13px] text-danger leading-relaxed"><p>{error}</p><button onClick={submit} disabled={!canUseModel} className="press min-h-11 underline underline-offset-4">{t(lang, "da_retry")}</button></div>}
       <form onSubmit={e => { e.preventDefault(); void submit(); }} className="flex flex-col gap-2">
         <label htmlFor="debrief-question" className="sr-only">{t(lang, "da_input")}</label>
         <div className="rounded-2xl bg-paper border border-line-strong focus-within:border-teal transition-colors p-3 flex flex-col gap-2">
@@ -104,7 +106,7 @@ export function DebriefAssistant({ session, ref }: { session: Session; ref?: Ref
           }} />
           <div className="flex items-center justify-between gap-3">
             <span className="num text-[11px] text-ink-3" aria-live={text.length >= DEBRIEF_QUESTION_LIMIT ? "polite" : "off"}>{text.length} / {DEBRIEF_QUESTION_LIMIT}</span>
-            {pending ? <Button key="stop" type="button" size="sm" variant="ghost" onClick={stop}><Square size={13} />{t(lang, "da_stop")}</Button> : <Button key="send" type="submit" size="sm" disabled={!text.trim() || text.length > DEBRIEF_QUESTION_LIMIT}><ArrowUp size={15} />{t(lang, "da_send")}</Button>}
+            {pending ? <Button key="stop" type="button" size="sm" variant="ghost" onClick={stop}><Square size={13} />{t(lang, "da_stop")}</Button> : <Button requiresModel key="send" type="submit" size="sm" disabled={!text.trim() || text.length > DEBRIEF_QUESTION_LIMIT}><ArrowUp size={15} />{t(lang, "da_send")}</Button>}
           </div>
         </div>
         <p className="text-[11px] text-ink-3 leading-relaxed">{t(lang, "da_note")}</p>

@@ -10,6 +10,7 @@ import { SkillTag } from "@/components/SkillBits";
 import { ScenarioCover } from "@/components/ScenarioCover";
 import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
 import { t, tList } from "@/lib/i18n";
+import { useCanUseModel } from "@/lib/model-access";
 import { schedule } from "@/lib/client-api";
 import { historyFor, npcsOf } from "@/lib/session-utils";
 import { track } from "@/lib/analytics/track";
@@ -21,6 +22,7 @@ import { arenaReturnPath } from "@/lib/arena-location";
 
 export function Briefing({ session }: { session: Session }) {
   const lang = useLang();
+  const canUseModel = useCanUseModel();
   const router = useRouter();
   const { profile, proficiency, sessions, updateSession, settings, setSettings } = useApp();
   const [err, setErr] = useState<string | null>(null);
@@ -39,14 +41,14 @@ export function Briefing({ session }: { session: Session }) {
   }, [session.id]);
 
   useEffect(() => {
-    if (!adapting || !profile || inflight.current) return;
+    if (!canUseModel || !adapting || !profile || inflight.current) return;
     inflight.current = true;
     schedule({ profile, proficiency, history: historyFor(sessions, lang), lang, scenario: sc })
       .then((res) => updateSession(session.id, { adaptation: res.adaptation, learnerCharacterId: res.adaptation.learnerCharacterId }))
       .catch((e) => setErr(e instanceof Error ? e.message : t(lang, "error_generic")))
       .finally(() => { inflight.current = false; });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [adapting, profile, attempt]);
+  }, [adapting, profile, attempt, canUseModel]);
 
   const learner = sc.characters.find((c) => c.id === session.learnerCharacterId);
   const npcs = npcsOf(sc, session.learnerCharacterId);
@@ -57,7 +59,7 @@ export function Briefing({ session }: { session: Session }) {
   // scene itself takes a snapshot, so the mid-scene toggle touches only itself.
   const timed = !!settings.timed;
   const enter = () => {
-    if (adapting) return;
+    if (adapting || !canUseModel) return;
     const startedAt = Date.now();
     updateSession(session.id, { status: "active", startedAt, timed });
     track({ name: "session_start", ts: startedAt, session: session.id, scenario: sc.custom ? "custom" : sc.id, origin: session.origin, context: sc.context, difficulty: sc.difficulty, timed, wait_s: shownAt.current ? Math.max(0, Math.round((startedAt - shownAt.current) / 1000)) : 0 });
@@ -87,14 +89,14 @@ export function Briefing({ session }: { session: Session }) {
           <div className="flex flex-wrap gap-1.5 mt-1">{sc.skills.map((k) => <SkillTag key={k} id={k} lang={lang} small />)}</div>
         </header>
 
-        {adapting && !err ? (
+        {adapting && !err && canUseModel ? (
           <div className="card p-5"><Stages title={t(lang, "pr_preparing")} steps={tList(lang, "home_scheduling_steps").slice(3)} slowAfterMs={25000} /></div>
         ) : (
           <>
             <p className="text-[16px] leading-relaxed text-ink">{session.adaptation?.briefing ?? sc.background[lang]}</p>
             {err && <div role="alert" className="rounded-[var(--radius)] bg-danger-soft p-4 flex flex-col gap-2">
               <p className="text-[13px] text-danger">{err}</p>
-              <Button variant="secondary" onClick={() => { setErr(null); setAttempt((v) => v + 1); }}>{t(lang, "pr_preparation_retry")}</Button>
+              <Button requiresModel variant="secondary" onClick={() => { setErr(null); setAttempt((v) => v + 1); }}>{t(lang, "pr_preparation_retry")}</Button>
             </div>}
           </>
         )}
@@ -144,13 +146,13 @@ export function Briefing({ session }: { session: Session }) {
         <span className="eyebrow">{t(lang, "pr_objectives")}</span>
         <ObjectiveList items={objectives} />
         <ClockRow timed={timed} seconds={settings.patience ?? DEFAULT_PATIENCE} onChange={(v) => setSettings({ timed: v })} />
-        <Button block size="lg" variant="primary" onClick={enter} disabled={adapting} className="mt-1">
+        <Button requiresModel block size="lg" variant="primary" onClick={enter} disabled={adapting} className="mt-1">
           {t(lang, "pr_enter")} <ArrowRight size={18} />
         </Button>
       </Marginalia>
 
       <BottomBar className="px-5 pb-safe pb-6 pt-4 lg:hidden">
-        <Button block size="lg" variant="primary" onClick={enter} disabled={adapting}>
+        <Button requiresModel block size="lg" variant="primary" onClick={enter} disabled={adapting}>
           {t(lang, "pr_enter")} <ArrowRight size={18} />
         </Button>
       </BottomBar>

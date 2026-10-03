@@ -6,6 +6,8 @@ import { SkillTag } from "@/components/SkillBits";
 import { Shell } from "@/components/Shell";
 import { dinnerBackup, DINNER_SAVE_KEY, DINNER_LAUNCH_KEY } from "@/features/dinner/storage";
 import { Button, Chip, Page, SectionTitle, Sheet, Switch, useToast } from "@/components/ui";
+import { useModelAccess } from "@/lib/model-access";
+import { M } from "@/lib/model-copy";
 import { isReady, STORAGE_KEY, useByok } from "@/lib/byok";
 import { stopSpeaking, unlockSpeech } from "@/lib/speech";
 import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
@@ -20,6 +22,7 @@ import { FeedbackButton } from "@/components/Feedback";
 
 export default function Settings() {
   const lang = useLang();
+  const modelAccess = useModelAccess();
   const {
     profile,
     proficiency,
@@ -199,7 +202,7 @@ export default function Settings() {
                   {ownModel ? `${t(lang, "st_model_own")} · ${byok.fastModel}` : t(lang, "st_model_default")}
                 </span>
                 <span className="text-[12px] text-ink-3 leading-snug">
-                  {ownModel ? t(lang, "st_model_local") : t(lang, "st_model_row_hint")}
+                  {modelAccess.state === "available" ? pick(M.connected, lang) : modelAccess.state === "unverified" ? pick(M.unknown, lang) : modelAccess.state === "checking" ? pick(M.checking, lang) : pick(M.pending, lang)}
                 </span>
               </span>
               <ChevronRight size={16} className="text-ink-4 shrink-0" />

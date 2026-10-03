@@ -58,14 +58,14 @@ export function checkRateLimit(req: Request) {
 
   globalHits = prune(globalHits, DAY, now);
   if (GLOBAL_DAILY && globalHits.length >= GLOBAL_DAILY) {
-    throw new LLMError("今天的共享额度用完了。在设置 → 模型里填自己的 key 可以继续，密钥只存在你的设备上。", 429);
+    throw new LLMError("今天的共享额度用完了。在设置 → 模型里填自己的 key 可以继续，密钥只存在你的设备上。", 429, false, "quota");
   }
 
   const key = clientKey(req);
   const mine = prune(hits.get(key) ?? [], HOUR, now);
   if (PER_IP && mine.length >= PER_IP) {
     hits.set(key, mine);
-    throw new LLMError("你这一小时用得有点多。稍后再试，或在设置 → 模型里填自己的 key。", 429);
+    throw new LLMError("你这一小时用得有点多。稍后再试，或在设置 → 模型里填自己的 key。", 429, false, "rate_limit");
   }
 
   mine.push(now);

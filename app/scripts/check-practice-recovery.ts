@@ -47,6 +47,7 @@ const seed = (data = state) => evaluate(`localStorage.setItem('socialcoach.v1', 
 const partial = `@@meta\n${JSON.stringify({ objectives: sc.objectives.map(() => false), stance: 30, ended: false })}\n@@${sc.opening.characterId}\nHALF_REPLY_MUST_NOT_BECOME_EVIDENCE\n@@error\nSynthetic stream interrupted`;
 try {
   browser(["open", "about:blank"]);
+  browser(["network", "route", "**/api/health*", "--body", '{"state":"available","serverKey":true,"requireByok":false}']);
   browser(["network", "route", "**/api/track", "--body", "{}"]);
   browser(["network", "route", "**/api/feedback", "--body", '{"available":false}']);
   browser(["network", "route", "**/api/assess", "--abort"]);
