@@ -47,3 +47,5 @@ ModelScope 按既有白名单单向同步至 `fca06a0`，`app/src` / `app/public
 [测量摘要](../../docs/reviews/3d-recipient-stability-2026-10-04.json)
 
 ![人物选择后的实际桌面界面](../../docs/screenshots/3d-recipient-stability.jpg)
+
+补充修复已发布：GitHub 应用提交 `7cb0ebf`，Vercel 生产部署 `dpl_AD68zjDf9PqdmEHXVHhm5MRCivnn` Ready，正式别名已关联；ModelScope `128d487` 重建后 Running，镜像标签 `363578-128d4873-2026-10-04-00-37-26` 与成功日志均匹配。两端 `/3d` 返回 200，各两份 CSS 确认提示占位恒定、焦点只切换可见性；国内使用专用认证 API 核对。当前本地 `localhost:4362/3d` 也已换成修复后的正式构建。线上资源核对不等于公共浏览器 / 实体手机交互验收，未发送线上模型、反馈或统计测试。

@@ -8,7 +8,7 @@
 
 - 空间：[GeminiLight/SocialCoach](https://modelscope.cn/studios/GeminiLight/SocialCoach)。公开，Apache-2.0，免费 `platform/2v-cpu-16g-mem`。
 - 应用 host：`https://geminilight-socialcoach.ms.show`。自动化 API 检查使用平台提示的专用地址 `https://studio-geminilight-socialcoach.api-inference.modelscope.net`，该地址需要 ModelScope Bearer token，不能当作无需认证的普通分享链接。
-- 空间 Git：`https://modelscope.cn/studios/GeminiLight/SocialCoach.git`，分支 `master`，当前应用部署提交 `fca06a0`（2026-10-04，3D 操作收敛，对应 GitHub 应用提交 `9cb2fd9`）。通过独立克隆同步应用必需文件，未将本地 Git 历史、环境变量或其他文档上传。
+- 空间 Git：`https://modelscope.cn/studios/GeminiLight/SocialCoach.git`，分支 `master`，当前应用部署提交 `128d487`（2026-10-04，3D 对象选择 / 编辑焦点稳定，对应 GitHub 应用提交 `7cb0ebf`）。通过独立克隆同步应用必需文件，未将本地 Git 历史、环境变量或其他文档上传。
 - 同步步骤（本机钥匙串已有推送凭证）：克隆空间仓库；`rsync -a --delete` 主仓库的 `app/src/`、`app/public/`，复制 `app/` 下的 `next.config.ts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`postcss.config.mjs`、`tsconfig.json`、`next-env.d.ts`，以及根目录 `Dockerfile`、`.dockerignore`、`LICENSE`；不带 `app/scripts`、`.env*`、`AGENTS.md`、eslint 配置；空间自己的 `README.md`（含卡片 frontmatter）不动。提交后 `git push origin master`。**推送不会自动重建**：2026-09-10 推送 `ceee413` 后 25 分钟空间仍在跑旧构建。重建走 OpenAPI：`POST https://modelscope.cn/openapi/v1/studios/GeminiLight/SocialCoach/deploy`，`Authorization: Bearer <token>`，token 就是本机 git 钥匙串里 modelscope.cn 的密码（`printf 'protocol=https\nhost=modelscope.cn\n\n' | git credential fill`），不要落盘。状态用 `GET …/studios/GeminiLight/SocialCoach`（Building → Running），日志 `GET …/logs/build` 与 `…/logs/run`。
 - 环境变量：非敏感配置在明文变量 `GET/POST/PUT …/variables`（`{"key","value"}`），敏感值在 `…/secrets`（只回 key）。空间现有布局：`LLM_API_KEY`、`FEEDBACK_FEISHU_APP_SECRET` 是 secret，其余 LLM / 限流 / 飞书 app id、base token、table id、`FEEDBACK_DEPLOYMENT=ModelScope` 都是明文变量。完整端点见本机 skill `~/.claude/skills/modelscope-studio`。
 - 统计：2026-09-10 通过 API 加明文变量 `ANALYTICS_FEISHU_TABLE_PREFIX=events`（复用已有 `FEEDBACK_FEISHU_*`）并触发重建；没有它 `/api/track` 报不可用，客户端不发。
@@ -125,3 +125,5 @@
 - ModelScope `fca06a0`，`app/src` / `app/public` 共 223 文件与主仓库逐个一致，按既有配置显式重建后 Running。构建日志包含该提交、成功标记及镜像标签 `363578-fca06a0b-2026-10-04-00-15-12`。
 - 两端 `/3d` 均返回 200，各两份 CSS 包含新操作样式，首页预览 JPG 字节与主仓库一致。没有发送线上模型、反馈或统计测试请求，也未改动空间配置。
 - 165 项检查、lint、生产构建通过；本地正式构建实际检查 364×696 中文、320×568 英文和 1280×720 桌面，以及走动松手停止、开关门、历史、草稿与对象保留。线上浏览器打开超时，本轮不宣称公共入口画面或实体手机验收完成。详见 [操作收敛评审](../reviews/review-2026-10-04-3d-controls.md)。
+
+同日补充 `7cb0ebf` / ModelScope `128d487`：修复焦点提示撑高 HUD 的 19px 跳动，24 次分组实际测量在人物 / 焦点切换后均保持坐标和尺寸不变。Vercel `dpl_AD68zjDf9PqdmEHXVHhm5MRCivnn` Ready、正式别名已关联；国内 Running，构建日志包含该提交、成功标记与 `363578-128d4873-2026-10-04-00-37-26`。仅同步 `globals.css`，223 份应用源码 / 素材逐个一致；两端 `/3d` 及 CSS 中的固定占位 / 可见性规则已核对。没有更改空间配置或发送线上测试请求，实际浏览器交互证明仍来自本地正式构建。见 [验收补充](../reviews/review-2026-10-04-3d-controls.md#人物选择的布局稳定性同日补充)。
