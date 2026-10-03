@@ -62,4 +62,6 @@ Skill evolution: no update needed。现有入口层级、短屏复核和浮层�
 
 ## 发布
 
-待本轮主站部署完成后补充来源提交与平台状态。
+- 功能提交 [`943ba76`](https://github.com/GeminiLight/SocialCoach/commit/943ba764863f3b2cc8a54753eee0827cba51c069)，已推送主仓库 `main`。
+- Vercel 生产部署 `dpl_6ePWYayStwZLVyeixTUKxrVEEkKB` 为 `READY`；部署列表的来源 SHA 精确匹配上述提交，绑定 `socialcoach-ai.vercel.app` 与现有别名。[主站首页](https://socialcoach-ai.vercel.app/)。
+- 视觉与操作证据来自本地正式构建；线上生产发布状态由部署平台确认。
