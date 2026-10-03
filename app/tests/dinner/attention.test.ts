@@ -28,3 +28,7 @@ test('third-person camera leaves a clear view of the approached face beside the 
 test('conversation follows a new speaker but a chosen person keeps priority',()=>{
   const world=createWorld(scene);world.speakerId=scene.characters[1].id;trackAttention(world,.05,true);assert.equal(attentionSubject(world)?.id,scene.characters[1].id);focusPerson(world,scene.characters[0].id);world.speakerId=scene.characters[2].id;trackAttention(world,.05,true);assert.equal(attentionSubject(world)?.id,scene.characters[0].id);
 });
+
+test('non-dinner opening speakers can be framed before play without moving characters or advancing time',()=>{
+ for(const scene of scenarios.filter(s=>s.space))for(const speaker of scene.characters){const world=createWorld(scene),poses=world.npcs.map(n=>({x:n.x,z:n.z,seated:n.seated}));world.speakerId=speaker.id;trackAttention(world,0,true);assert.equal(world.clock,0);assert.deepEqual(world.npcs.map(n=>({x:n.x,z:n.z,seated:n.seated})),poses);const subject=attentionSubject(world)!;for(const aspect of [1280/720,390/844]){const pose=cameraPose(world,'first',aspect),camera=new PerspectiveCamera(pose.fov,aspect,.1,60);camera.position.set(...pose.position as [number,number,number]);camera.lookAt(...pose.target as [number,number,number]);camera.updateMatrixWorld();const face=new Vector3(subject.x,playerEyeHeight(subject),subject.z).project(camera);assert.ok(Math.abs(face.x)<.05&&Math.abs(face.y)<.15,`Opening face ${speaker.id}: ${face.toArray()}`);}}
+});

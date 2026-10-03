@@ -23,7 +23,7 @@ export function oklchToHex(value: string) {
 }
 export function getPalette() {
   const style = getComputedStyle(document.documentElement);
-  const names = ['wall', 'wallInset', 'wood', 'woodEdge', 'floor', 'chair', 'brass', 'porcelain', 'ceramic', 'tea', 'bottle', 'napkin', 'skin', 'skinWarm', 'skinMature', 'skinShadow', 'sclera', 'lip', 'iris', 'hair', 'hairHighlight', 'mouth', 'hairGray', 'clothHighlight', 'navy', 'sage', 'wine', 'charcoal', 'denim', 'oat', 'terracotta', 'teal', 'white', 'leaf', 'stem', 'food', 'green', 'red', 'rice', 'dark', 'light', 'art'] as const;
+  const names = ['officeWall','officeFloor','floorJoint','steel','steelSeam','window','screen','marker','wall', 'wallInset', 'wood', 'woodEdge', 'floor', 'chair', 'brass', 'porcelain', 'ceramic', 'tea', 'bottle', 'napkin', 'skin', 'skinWarm', 'skinMature', 'skinShadow', 'sclera', 'lip', 'iris', 'hair', 'hairHighlight', 'mouth', 'hairGray', 'clothHighlight', 'navy', 'sage', 'wine', 'charcoal', 'denim', 'oat', 'terracotta', 'teal', 'white', 'leaf', 'stem', 'food', 'green', 'red', 'rice', 'dark', 'light', 'art'] as const;
   return Object.fromEntries(names.map(n => [n, oklchToHex(style.getPropertyValue('--dinner-scene-' + n))])) as Record<typeof names[number], string>;
 }
 export type Palette = ReturnType<typeof getPalette>;

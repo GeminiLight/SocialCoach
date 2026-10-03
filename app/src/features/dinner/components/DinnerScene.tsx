@@ -12,10 +12,11 @@ import {actorActionLabel,type Drama} from '../lib/drama';
 import {TableCups,ScenarioObjects,PlayerHands} from './DinnerProps';
 import {DinnerCharacter} from './DinnerCharacter';
 import {DinnerRoom,DinnerTable,DinnerChair} from './DinnerEnvironment';
+import {ElevatorEnvironment,OfficeEnvironment} from './PlaceEnvironment';
 import {useDinnerSurfaces} from '../lib/surfaces';
 import type { Reply } from '../lib/engine';
 
-type SceneProps = { hudHeight:number; drama:Drama; line:string; speaking:boolean; scenario: Scenario; lang: Lang; reactions: Reply['reactions']; speakerId: string; selectedId: string | null; onSelect: (id: string) => void; reduced: boolean; started: boolean; viewReset: number; world:World; view:ViewMode; input:RefObject<Point>; paused:boolean; onWorldChange:(save:RoomSave,event:RoomEvent)=>void; onAvailability:(available:boolean)=>void };
+type SceneProps = { hudHeight:number; drama:Drama; line:string; speaking:boolean; scenario: Scenario; lang: Lang; reactions: Reply['reactions']; speakerId: string; selectedId: string | null; onSelect: (id: string) => void; onEvidence:()=>void; reduced: boolean; started: boolean; viewReset: number; world:World; view:ViewMode; input:RefObject<Point>; paused:boolean; onWorldChange:(save:RoomSave,event:RoomEvent)=>void; onAvailability:(available:boolean)=>void };
 function ProjectLabels({ elements, world, speakerId, selectedId, view }: { elements:RefObject<(HTMLButtonElement|null)[]>; world:World; speakerId:string; selectedId:string|null; view:ViewMode }) {
   const point=useMemo(()=>new Vector3(),[]);
   useFrame(({camera,size})=>{
@@ -80,12 +81,12 @@ function CameraRig({props,heading}:{props:SceneProps;heading:RefObject<number>})
   },[gl,props.lang,props.world,props.paused]);
   useFrame((_,dt)=>{
     props.world.speakerId=props.speakerId;
-    if(!props.paused)trackAttention(props.world,dt,props.reduced);
+    if(!props.paused||!props.started)trackAttention(props.world,dt,props.reduced);
     heading.current=props.world.viewYaw;
     const pose=cameraPose(props.world,props.view,size.width/size.height);
     const perspective=camera as PerspectiveCamera;
-    perspective.fov=MathUtils.lerp(perspective.fov,pose.fov,props.reduced?1:1-Math.exp(-10*Math.min(dt,.05)));const offset=props.started?Math.min(size.height*.15,Math.max(0,props.hudHeight-190)*.45):0;framingOffset.current=MathUtils.lerp(framingOffset.current,offset,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));sideOffset.current=MathUtils.lerp(sideOffset.current,size.width/size.height<=1.25&&!props.world.player.seated?-56:0,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));perspective.setViewOffset(size.width,size.height,sideOffset.current,framingOffset.current,size.width,size.height);perspective.updateProjectionMatrix();
-    position.set(pose.position[0],pose.position[1],pose.position[2]);target.set(pose.target[0],pose.target[1],pose.target[2]);
+    perspective.fov=MathUtils.lerp(perspective.fov,pose.fov,props.reduced?1:1-Math.exp(-10*Math.min(dt,.05)));const offset=props.started?Math.min(size.height*(props.scenario.space?.22:.15),Math.max(0,props.hudHeight-190)*.45+(props.scenario.space&&props.view==='first'?(size.width>600?40:20):0)):0;framingOffset.current=MathUtils.lerp(framingOffset.current,offset,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));sideOffset.current=MathUtils.lerp(sideOffset.current,size.width/size.height<=1.25&&!props.world.player.seated?-56:0,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));perspective.setViewOffset(size.width,size.height,sideOffset.current,framingOffset.current,size.width,size.height);perspective.updateProjectionMatrix();
+    position.set(props.scenario.space?MathUtils.clamp(pose.position[0],-5.6,5.6):pose.position[0],pose.position[1],props.scenario.space?Math.max(-4.1,pose.position[2]):pose.position[2]);target.set(pose.target[0],pose.target[1],pose.target[2]);
     camera.position.lerp(position,props.reduced?1:1-Math.exp(-14*Math.min(dt,.05)));camera.lookAt(target);
   },-1);return null;
 }
@@ -106,13 +107,16 @@ export default function DinnerScene(props: SceneProps) {
   const heading=useRef(Math.PI);
   const fallback=<div className="scene-fallback"><p>{pick(ui.sceneFallback,props.lang)}</p><div>{props.scenario.characters.map(c=><button key={c.id} onClick={()=>props.onSelect(c.id)}>{pick(c.name,props.lang)}<small>{pick(c.role,props.lang)}</small></button>)}</div></div>;
   return <SceneBoundary fallback={fallback} onError={()=>props.onAvailability(false)}><div className="dinner-render"><Suspense fallback={<div className="scene-loading" role="status">{pick(ui.sceneLoading,props.lang)}</div>}><Canvas role="img" aria-label={pick(ui.cameraLabel,props.lang)} shadows dpr={[1,1.65]} camera={{position:[0,2.58,3.55],fov:55,near:.1,far:60}} gl={{ antialias:true, toneMapping:ACESFilmicToneMapping, toneMappingExposure:1.12 }} fallback={null} onCreated={()=>{setReady(true);props.onAvailability(true);}}>
-    <color attach="background" args={[p.wall]} /><fog attach="fog" args={[p.wall,18,36]} />
-    <ambientLight intensity={.35} color={p.porcelain} /><hemisphereLight args={[p.porcelain,p.woodEdge,.65]} />
+    <color attach="background" args={[props.scenario.space?p.officeWall:p.wall]} /><fog attach="fog" args={[props.scenario.space?p.officeWall:p.wall,18,36]} />
+    <ambientLight intensity={props.scenario.space?.62:.35} color={p.porcelain} /><hemisphereLight args={[p.porcelain,p.woodEdge,.65]} />
     <directionalLight position={[-3,5,1]} intensity={1.65} color={p.white} castShadow shadow-mapSize={[2048,2048]} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-bias={-.0005} shadow-normalBias={.018} shadow-radius={5} />
     <directionalLight position={[4,3,2]} intensity={.75} color={p.porcelain} />
     <directionalLight position={[0,3.5,6]} intensity={.65} color={p.porcelain} />
-    <WorldDirector props={props} heading={heading}/><DinnerRoom p={p} surfaces={surfaces} world={props.world} paused={props.paused} scenario={props.scenario}/><group onClick={e=>e.stopPropagation()}><DinnerTable p={p} surfaces={surfaces}/><TableCups p={p} world={props.world} drama={props.drama} scenario={props.scenario} reactions={props.reactions} line={props.line} paused={props.paused}/><ScenarioObjects p={p} drama={props.drama} scenario={props.scenario} lang={props.lang} reduced={props.reduced}/></group>
-    {SEATS.map((seat,i)=><DinnerChair key={i} p={p} surfaces={surfaces} position={[seat.x,0,seat.z]} rotation={seat.heading}/>)}<DinnerChair p={p} surfaces={surfaces} position={[PLAYER_HOME.x,0,PLAYER_HOME.z]} rotation={Math.PI}/>
+    <WorldDirector props={props} heading={heading}/>
+    {props.scenario.space==='elevator'?<ElevatorEnvironment p={p} world={props.world} lang={props.lang} paused={props.paused}/>:props.scenario.space==='office'?<OfficeEnvironment p={p} world={props.world} lang={props.lang} paused={props.paused} scenario={props.scenario} onEvidence={props.onEvidence}/>:<>
+    <DinnerRoom p={p} surfaces={surfaces} world={props.world} paused={props.paused} scenario={props.scenario}/><group onClick={e=>e.stopPropagation()}><DinnerTable p={p} surfaces={surfaces}/><TableCups p={p} world={props.world} drama={props.drama} scenario={props.scenario} reactions={props.reactions} line={props.line} paused={props.paused}/><ScenarioObjects p={p} drama={props.drama} scenario={props.scenario} lang={props.lang} reduced={props.reduced}/></group>
+    {SEATS.map((seat,i)=><DinnerChair key={i} p={p} surfaces={surfaces} position={[seat.x,0,seat.z]} rotation={seat.heading}/>)}<DinnerChair p={p} surfaces={surfaces} position={[PLAYER_HOME.x,0,PLAYER_HOME.z]} rotation={Math.PI}/></>}
+
     {props.scenario.characters.map((c,i)=><DinnerCharacter key={c.id} character={c} actor={props.world.npcs[i]} world={props.world} reaction={props.reactions.find(r=>r.characterId===c.id)} active={props.speaking&&props.speakerId===c.id} onSelect={()=>props.onSelect(c.id)} p={p} surfaces={surfaces} reduced={props.reduced} drama={props.drama} index={i} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} />)}
     {props.view==='third'&&<DinnerCharacter character={playerCharacter} actor={props.world.player} world={props.world} active={false} onSelect={()=>{}} p={p} surfaces={surfaces} reduced={props.reduced} drama={props.drama} index={3} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} player/>}
     {props.view==='first'&&<PlayerHands p={p} drama={props.drama} lang={props.lang} scenario={props.scenario} world={props.world} hudHeight={props.hudHeight}/>}

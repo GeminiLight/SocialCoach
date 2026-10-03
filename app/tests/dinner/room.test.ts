@@ -34,7 +34,7 @@ test('an annoyed NPC refuses an invitation, while another can approach and retur
   goHome(world);run(world,20);assert.equal(world.npcs[2].seated,true);assert.equal(distance(world.npcs[2],world.npcs[2].home),0);
 });
 test('departing never makes the seated cast follow, including the pressing lead in every scene',()=>{
-  for(const scenario of scenarios){const world=createWorld(scenario),before=snapshot(world).npcs;walkPlayer(world,{x:3.8,z:4.75});run(world,25);assert.deepEqual(snapshot(world).npcs,before);inviteNpc(world,scenario.characters[0].id,'neutral');run(world,10);assert.equal(world.event.key,'stays');assert.deepEqual(snapshot(world).npcs,before);}
+  for(const scenario of scenarios.filter(s=>!s.space)){const world=createWorld(scenario),before=snapshot(world).npcs;walkPlayer(world,{x:3.8,z:4.75});run(world,25);assert.deepEqual(snapshot(world).npcs,before);inviteNpc(world,scenario.characters[0].id,'neutral');run(world,10);assert.equal(world.event.key,'stays');assert.deepEqual(snapshot(world).npcs,before);}
 });
 test('walking over stops beside each chair at a social distance with no furniture crossings',()=>{
   for(const character of scene.characters){const world=createWorld(scene),npc=world.npcs.find(n=>n.id===character.id)!;goNear(world,character.id);assert.ok(world.player.path.length);assert.equal(world.lookTarget,character.id);run(world,25);const range=distance(world.player,npc);assert.ok(range>1.35&&range<2.2,`Range ${range} for ${character.id}`);const relative=Math.atan2(world.player.x-npc.x,world.player.z-npc.z)-npc.homeHeading;assert.ok(Math.abs(Math.atan2(Math.sin(relative),Math.cos(relative)))<Math.PI*.6,'Do not stop behind the person');assert.equal(npc.seated,true);}
@@ -56,7 +56,7 @@ test('view and spatial evidence restore without breaking older saves or acceptin
   const context=roomContext(world);assert.equal(SaveSchema.safeParse({...save,messages:[...save.messages,{role:'user',text:'我不喝酒',room:{...context,nearbyCharacterId:'fake-person'}},opening(scene,'zh')]}).success,false);
 });
 test('standing is acknowledged in visible cues without appending a report to every spoken line',()=>{
-  for(const scenario of scenarios)for(const lang of ['zh','en'] as const)for(let turn=1;turn<=4;turn++)for(const text of ['不喝','用茶敬您','那我喝','闭嘴','hello']){
+  for(const scenario of scenarios.filter(s=>!s.space))for(const lang of ['zh','en'] as const)for(let turn=1;turn<=4;turn++)for(const text of ['不喝','用茶敬您','那我喝','闭嘴','hello']){
     const world=createWorld(scenario);world.player.seated=false;world.player.x=4.5;world.player.z=3;
     const reply=scriptedReply(scenario,text,turn,lang,roomContext(world)),seated=scriptedReply(scenario,text,turn,lang);
     assert.doesNotThrow(()=>validateReply(reply,scenario));assert.match(reply.cue,lang==='zh'?/你在包厢另一侧回答/:/You answer from across the room/);

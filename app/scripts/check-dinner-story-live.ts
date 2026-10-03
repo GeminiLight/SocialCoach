@@ -59,7 +59,7 @@ const fixtures={
 async function main(){
  if(!hasServerCredential())throw Error('No configured provider');
  const selected=process.argv[2];const results:unknown[]=[];
- for(const scene of scenarios.filter(s=>!selected||s.id===selected)){
+ for(const scene of scenarios.filter((s):s is typeof s & {id:'work'|'family'|'school'}=>!s.space&&(!selected||s.id===selected))){
   const variant=variantFor(scene.id),history:Message[]=[opening(scene,'zh',variant.id)];
   const drama=createDrama(),world=createWorld(scene);syncDrama(drama,scene,0,true,false);
   for(const [i,text] of fixtures[scene.id].entries()){

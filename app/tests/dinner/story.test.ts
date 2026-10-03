@@ -30,13 +30,13 @@ test('driving boundary, follow-up and named teammate stay connected past turn fo
  }
  assert.equal(history.length,13);assert.equal(history.at(-1)?.story?.topic,'scope');
 });
-test('all six openings have bilingual 18-turn trajectories with retained topic and no foreign actors',()=>{
+test('all ten openings have bilingual 18-turn trajectories with retained topic and no foreign actors',()=>{
  for(const variant of variants)for(const lang of ['zh','en'] as const){
   const scene=storyScenario(scenarios.find(s=>s.id===variant.scene)!,variant),history:Message[]=[opening(scene,lang,variant.id)];
   assert.equal(history[0].text,variant.opening[lang]);
   for(let n=1;n<=18;n++){
    const topic=history.at(-1)?.story?.topic??variant.topic;
-   const text=storyHint(topic,lang)[n%2];const targetId=scene.characters[n%3].id;
+   const text=storyHint(topic,lang,scene)[n%2];const targetId=scene.characters[n%3].id;
    const result=scriptedReply(scene,text,n,lang,undefined,undefined,{history,variantId:variant.id,targetId});
    assert.equal(result.speakerId,targetId);assert.equal(result.reactions.length,3);
    history.push({role:'user',text,targetId},{role:'npc',...result});
@@ -76,9 +76,10 @@ test('third-person mentions are not mistaken for an addressee; explicit selectio
  assert.equal(addressedCharacter(base,'我跟小周一起做的，陈总您听我说'),undefined);
  assert.equal(addressedCharacter(base,'林姐，您希望先验收哪一项？'),'lin');
  assert.equal(addressedCharacter(base,'小周说要测试','chen'),'chen');
+ const office=scenarios.find(s=>s.id==='office')!;assert.equal(addressedCharacter(office,'He, what remains undecided?'),'he');assert.equal(addressedCharacter(office,'Mr. He, what remains undecided?'),'he');assert.equal(addressedCharacter(office,'He keeps interrupting me.'),undefined);
 });
 test('closing instructions follow selected length, never assume four turns',()=>{
- assert.match(dinnerPrompt(parseDinnerInput(request(3,12))),/Do not close the dinner prematurely/);
+ assert.match(dinnerPrompt(parseDinnerInput(request(3,12))),/Do not close the scene prematurely/);
  assert.match(dinnerPrompt(parseDinnerInput(request(11,12))),/natural pause/);
  assert.doesNotMatch(dinnerPrompt(parseDinnerInput(request(4,18))),/turn 5 of 4/);
 });

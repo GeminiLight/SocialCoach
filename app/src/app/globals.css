@@ -540,6 +540,14 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   --dinner-scene-rice: oklch(.85 .045 85);
   --dinner-scene-dark: oklch(.18 .013 65);
   --dinner-scene-light: oklch(.93 .059 81);
+  --dinner-scene-officeWall: oklch(.85 .012 90);
+  --dinner-scene-officeFloor: oklch(.67 .015 87);
+  --dinner-scene-floorJoint: oklch(.54 .012 88);
+  --dinner-scene-steel: oklch(.68 .012 240);
+  --dinner-scene-steelSeam: oklch(.43 .011 240);
+  --dinner-scene-window: oklch(.88 .035 225);
+  --dinner-scene-screen: oklch(.29 .028 235);
+  --dinner-scene-marker: oklch(.44 .055 200);
   --dinner-scene-art: oklch(.42 .03 152);
 }
 .dinner-experience * { box-sizing:border-box; }
@@ -916,3 +924,10 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   .dinner-experience .history-navigation {padding-bottom:2px;}
   .dinner-experience .history-footer {padding-top:4px;padding-bottom:8px;}
 }
+
+/* Physical controls have the same keyboard and touch affordance as movement controls. */
+.dinner-experience .place-controls { display:flex; flex-wrap:wrap; gap:6px; max-width:220px; }
+.dinner-experience .place-controls button { min-height:44px; padding:8px 12px; border:1px solid var(--dinner-line); border-radius:var(--dinner-radius-sm); background:var(--dinner-scrim-top); font-size:12px; }
+.dinner-experience .place-status { color:var(--dinner-ink); background:var(--dinner-paper); padding:4px 8px; border-radius:var(--dinner-radius-sm); font-size:11px; line-height:1.55; max-width:220px; }
+.dinner-experience .scene-picker { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.dinner-experience .scene-choice:last-child { grid-column:auto; }

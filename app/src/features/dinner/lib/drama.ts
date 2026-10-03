@@ -1,13 +1,14 @@
 import {z} from 'zod';
 import {l,pick,ui,type L,type Lang,type Scenario} from './content';
-import {distance,PLAYER_HOME,type World} from './room';
+import {distance,PLAYER_HOME,roomContext,ZoneSchema,setLiftDoor,type World} from './room';
+import {liftPanelFor,OFFICE_BOARD} from './spaces';
 import {MAX_DINNER_TURNS} from './story';
-export const EventIdSchema=z.enum(['work-toast','work-deadline','family-toast','family-phone','school-toast','school-photo']);
-export const ChoiceIdSchema=z.enum(['join','tea','hold','calendar','conditions','confirm','accept','decline','ally','group','credit','outside']);
+export const EventIdSchema=z.enum(['work-toast','work-deadline','family-toast','family-phone','school-toast','school-photo','elevator-door','office-task','office-floor']);
+export const ChoiceIdSchema=z.enum(['join','tea','hold','calendar','conditions','confirm','accept','decline','ally','group','credit','outside','hold-door','release-door','step-aside','inspect','request','board']);
 export type EventId=z.infer<typeof EventIdSchema>;
 export type ChoiceId=z.infer<typeof ChoiceIdSchema>;
 type Choice={id:ChoiceId;label:L;movingLabel?:L;cupLabel?:L;line:L;cue:L;icon:'glass'|'tea'|'hand'|'phone'|'people'};
-export type DinnerEvent={id:EventId;scene:Scenario['id'];turn:number;speaker:number;title:L;line:L;cue:L;nudge:L;choices:Choice[];kind:'toast'|'calendar'|'phone'|'photo'};
+export type DinnerEvent={id:EventId;scene:Scenario['id'];turn:number;speaker:number;title:L;line:L;cue:L;nudge:L;choices:Choice[];kind:'toast'|'calendar'|'phone'|'photo'|'lift'|'document'};
 const toastChoices=(scene:Scenario['id']):Choice[]=>[
   {id:'join',label:l('举杯跟上','Raise your glass'),movingLabel:l('回桌边，举杯跟上','Return to the table & raise your glass'),icon:'glass',line:scene==='work'?l('杯子举起来了就别光做样子。林总还看着呢。','Now your glass is up, don’t just make a gesture. Ms. Lin is watching.'):scene==='family'?l('这杯祝你今年有个好消息。联系方式我还是给你留着。','Here’s to good news this year. I’m still keeping that contact for you.'):l('这杯敬完，合照我就发了。带队这部分，你们都看见了。','After this toast, I’ll post the photo. You all saw what my leadership did.'),cue:l('杯子陆续抬起。你的杯子也进入了这一桌的视线。','Glasses rise one by one. Your glass joins the table’s attention.')},
   {id:'tea',label:l('用茶回应','Toast with tea'),movingLabel:l('回桌边，用茶回应','Return to the table & toast with tea'),icon:'tea',line:scene==='work'?l('茶也端来了？可我给你倒的这杯，真就一口不喝？','Tea as well? But not even one sip of the glass I poured you?'):scene==='family'?l('茶也行。可我说的这位，你还没听呢。','Tea is fine. But you haven’t heard about this person yet.'):l('喝茶也行。等会儿拍照，奖杯还放我这边。','Tea is fine. When we take the photo, the trophy stays by me.'),cue:l('你端起茶杯。同桌人放慢动作，有人看了一眼主位。','You lift your tea. The others slow down; someone glances toward the head of the table.')},
@@ -29,8 +30,17 @@ export const dinnerEvents:DinnerEvent[]=[
  {id:'group',label:l('示意大家一起入镜','Bring everyone into the photo'),movingLabel:l('回桌边，大家一起入镜','Return to the table & join the team photo'),icon:'people',line:l('照片可以一起拍。朋友圈怎么写，我带队这部分也不能省。','We can all be in the photo. But my leadership still needs to be in the caption.'),cue:l('你示意把镜头转向全桌。许学长把奖杯让到桌心，队友抬头入镜。','You gesture for a whole-table photo. Xu moves the trophy to the center; your teammates look up.')},
  {id:'credit',label:l('抬手，先谈贡献','Raise a hand to discuss credit'),icon:'hand',line:l('先说也行。不过汇报和联络都是我做的，这部分别漏了。','We can talk first. But I handled the presentation and the contacts. Don’t leave that out.'),cue:l('你抬手示意先停一下。手机降下来，阿凯转向你，奖杯留在原处。','You raise a hand. The phone lowers; Kai turns toward you. The trophy stays where it is.')},
  {id:'outside',label:l('摆手，暂不入镜','Stay out of the photo'),icon:'hand',line:l('你不拍，我还是会发。对那个文案有意见，现在就说。','If you won’t join, I’ll still post it. If you disagree with the caption, say so now.'),cue:l('你摆手没有跟上。许学长收住拍照的动作，小月看向你。','You wave it off. Xu pauses before taking the photo; Yue looks at you.')}]}
+,
+ {id:'elevator-door',scene:'elevator',turn:0,speaker:0,kind:'lift',title:l('电梯停着，话还没说完','The elevator is stopped'),line:l('电梯停在本层，你可以留在走廊继续说。','The elevator is stopped here. You can keep talking in the lobby.'),cue:l('电梯停在 12 楼，门口没有倒计时。','The car is stopped on floor 12. There is no countdown.'),nudge:l('按钮只控制门，不会替你回答问题。','The buttons control the doors, not your answer.'),choices:[
+ {id:'hold-door',label:l('按开门键','Press Open'),movingLabel:l('走到按钮旁，按开门键','Walk to the panel & press Open'),icon:'hand',line:l('',''),cue:l('你按下开门键；电梯继续停在本层。','You press Open; the elevator remains on this floor.')},
+ {id:'release-door',label:l('按关门键','Press Close'),movingLabel:l('走到按钮旁，按关门键','Walk to the panel & press Close'),icon:'hand',line:l('',''),cue:l('你按下关门键；门口有人时，门会重新打开。','You press Close; the doors reopen if someone is in the doorway.')},
+ {id:'step-aside',label:l('走到走廊旁','Step aside'),movingLabel:l('走到走廊旁','Step aside'),icon:'people',line:l('',''),cue:l('你站到走廊旁，其他人仍能听见。','You stand to one side of the corridor. The others can still hear you.')}]},
+ ...(['office-task','office-floor'] as const).map(id=>({id,scene:'office' as const,turn:0,speaker:id==='office-task'?0:1,kind:'document' as const,title:id==='office-task'?l('三项任务，还没分给谁','Three tasks, still unassigned'):l('你的发言，被接走了','Your speaking slot was interrupted'),line:l('可以先看资料，也可以直接把话接回来。','Read the notes or speak directly.'),cue:id==='office-task'?l('任务资料放在你的工位上，白板留着讨论的位置。','The task notes are at your workstation; the board is available for discussion.'):l('会议资料放在工位上，白板上的方案仍待决定。','Meeting notes are at the workstation. The proposal is still undecided.'),nudge:l('查看资料不等于接任务，举手也不会自动获得发言权。','Reading is not taking the task. Raising a hand does not automatically grant the floor.'),choices:[
+ {id:'inspect' as const,label:l('查看现场资料','Read the notes'),movingLabel:l('回工位，查看资料','Return to your workstation & read'),icon:'phone' as const,line:l('',''),cue:l('你打开开局资料，内容仍是未确认的版本。','You read the opening notes; they remain unconfirmed.')},
+ {id:'request' as const,label:l('抬手示意，准备开口','Raise a hand'),icon:'hand' as const,line:l('',''),cue:l('你抬手示意准备开口。别人是否让出发言权，还需要说清楚。','You raise a hand to speak. Whether others give you the floor remains unresolved.')},
+ {id:'board' as const,label:l('走到白板旁','Walk to the whiteboard'),movingLabel:l('走到白板旁','Walk to the whiteboard'),icon:'people' as const,line:l('',''),cue:l('你走到白板旁。资料与分工没有因此改变。','You stand beside the board. The notes and assignments have not changed.')}] })),
 ];
-const RecordSchema=z.object({eventId:EventIdSchema,choice:ChoiceIdSchema,turn:z.number().int().min(0).max(MAX_DINNER_TURNS),posture:z.enum(['seated','standing']),zone:z.enum(['table','side','door']),silent:z.boolean().optional()});
+const RecordSchema=z.object({eventId:EventIdSchema,choice:ChoiceIdSchema,turn:z.number().int().min(0).max(MAX_DINNER_TURNS),posture:z.enum(['seated','standing']),zone:ZoneSchema,silent:z.boolean().optional()}).refine(r=>{const scene=dinnerEvents.find(e=>e.id===r.eventId)!.scene;return scene==='elevator'?r.posture==='standing'&&['lobby','cabin','door'].includes(r.zone):scene==='office'?['desk','board','side','door'].includes(r.zone):['table','side','door'].includes(r.zone);},'Action position belongs to another room');
 export const DramaSaveSchema=z.object({active:EventIdSchema.optional(),phase:z.enum(['waiting','reacting','settled']),elapsed:z.number().finite().min(0).max(30),responseAt:z.number().finite().min(0).max(30).optional(),choice:ChoiceIdSchema.optional(),pending:ChoiceIdSchema.optional(),seen:z.array(EventIdSchema).max(2),records:z.array(RecordSchema).max(2),paused:z.boolean(),inventory:z.enum(['none','glass','tea','phone'])}).superRefine((s,c)=>{
   if(new Set(s.seen).size!==s.seen.length||new Set(s.records.map(r=>r.eventId)).size!==s.records.length)c.addIssue({code:'custom',message:'Duplicate dinner event'});
   if(s.active&&!s.seen.includes(s.active))c.addIssue({code:'custom',message:'Active event must have started'});
@@ -53,7 +63,15 @@ export function syncDrama(d:Drama,scene:Scenario,turn:number,started:boolean,com
   d.active=next.id;d.seen.push(next.id);d.elapsed=0;d.phase='waiting';d.choice=undefined;d.pending=undefined;d.responseAt=undefined;d.paused=false;
 }
 export function stepDrama(d:Drama,dt:number,paused:boolean){if(paused||d.paused||d.phase==='settled')return;d.elapsed=Math.min(30,d.elapsed+Math.min(.05,Math.max(0,dt)));if(d.phase==='reacting'&&d.elapsed>=4.6)d.phase='settled';}
+export function choiceDestination(id:ChoiceId,world:World){
+ if(id==='hold-door'||id==='release-door')return liftPanelFor(world.player);
+ if(id==='step-aside')return {x:-3.3,z:2.65};
+ if(id==='board')return OFFICE_BOARD;
+ if(id==='inspect')return world.player.home;
+}
 export function readyForChoice(d:Drama,id:ChoiceId,world:World){
+  const destination=choiceDestination(id,world);if(destination)return distance(world.player,destination)<.4;
+
   if((id==='join'||id==='tea')&&d.inventory==='none')return distance(world.player,PLAYER_HOME)<1.2;
   if(id==='calendar'&&(d.inventory==='glass'||d.inventory==='tea'))return distance(world.player,PLAYER_HOME)<1.2;
   if(id==='group')return distance(world.player,PLAYER_HOME)<1.2;
@@ -64,7 +82,8 @@ export function chooseDrama(d:Drama,id:ChoiceId,world:World,turn:number){
   const event=activeEvent(d);if(!event||d.phase!=='waiting'||d.choice||!event.choices.some(c=>c.id===id)||!readyForChoice(d,id,world))return false;
   d.choice=id;d.pending=undefined;d.phase='reacting';d.responseAt=d.elapsed;d.elapsed=0;d.paused=false;
   if(id==='join')d.inventory='glass';else if(id==='tea')d.inventory='tea';else if(id==='calendar'||id==='accept')d.inventory='phone';else if(id==='conditions'&&distance(world.player,PLAYER_HOME)<1.2)d.inventory='none';
-  const r=Math.hypot(world.player.x,world.player.z);d.records.push({eventId:event.id,choice:id,turn,silent:true,posture:world.player.seated?'seated':'standing',zone:world.player.seated||r<4.2?'table':world.player.z>4.6?'door':'side'});return true;
+  if(id==='hold-door'||id==='release-door')setLiftDoor(world,id==='hold-door'?'open':'closed');
+  d.records.push({eventId:event.id,choice:id,turn,silent:true,posture:world.player.seated?'seated':'standing',zone:roomContext(world).zone});return true;
 }
 export function settleForSpeech(d:Drama){d.phase='settled';d.pending=undefined;d.choice=undefined;d.responseAt=undefined;d.elapsed=0;}
 export function dinnerContext(d:Drama):DinnerContext|undefined{return d.active?{eventId:d.active,phase:d.phase,choice:d.choice,previous:structuredClone(d.records)}:undefined;}
@@ -85,9 +104,9 @@ export function actorBeat(d:Drama,index:number,scene:Scenario['id']){
   const sip=toast&&d.phase==='reacting'&&d.choice!=='hold'?Math.sin(Math.PI*ease((d.elapsed-1.6-index*.15)/1.1))*.55:0;
   const phone=event?.kind==='phone'&&index===1&&d.phase!=='settled'?(d.choice?ease((d.elapsed+(d.responseAt??1))/.7)*(1-ease((d.elapsed-.45)/.7)):ease(d.elapsed/.7)):event?.kind==='photo'&&index===0&&d.phase!=='settled'?(d.choice==='group'?1-ease((d.elapsed-2.5)/.8):d.choice?1-ease(d.elapsed/.7):ease(d.elapsed/.7)):0;
   const gaze=toast&&d.phase==='waiting'&&index>0&&d.elapsed<2.4?0:event?.kind==='phone'&&d.choice==='ally'?2:event?.kind==='photo'&&d.choice==='group'?0:-1;
-  return {raise,sip,phone,gaze,glass:scene!=='family'&&index===0};
+  return {raise,sip,phone,gaze,glass:(scene==='work'||scene==='school')&&index===0};
 }
-export function playerBeat(d:Drama){const raising=d.phase==='reacting'&&(d.choice==='join'||d.choice==='tea');return {raise:raising?ease(d.elapsed/.65)*(1-ease((d.elapsed-3)/.9)):0,palm:d.phase==='reacting'&&['hold','conditions','decline','credit','outside'].includes(d.choice??'')?ease(d.elapsed/.5)*(1-ease((d.elapsed-2.5)/.7)):0,phone:d.inventory==='phone'?d.phase==='reacting'?ease(d.elapsed/.8):.25:0};}
+export function playerBeat(d:Drama){const raising=d.phase==='reacting'&&(d.choice==='join'||d.choice==='tea');return {raise:raising?ease(d.elapsed/.65)*(1-ease((d.elapsed-3)/.9)):0,palm:d.phase==='reacting'&&['hold','conditions','decline','credit','outside','request','hold-door','release-door'].includes(d.choice??'')?ease(d.elapsed/.5)*(1-ease((d.elapsed-2.5)/.7)):0,phone:d.inventory==='phone'?d.phase==='reacting'?ease(d.elapsed/.8):.25:0};}
 export function trophyPosition(d:Drama){if(d.records.some(r=>r.eventId==='school-photo'&&r.choice==='group'))return {x:0,z:0};return {x:0,z:d.active?-1.85:-.75};}
 
 export function actorActionLabel(d:Drama,index:number,scene:Scenario['id'],lang:Lang){const beat=actorBeat(d,index,scene);return beat.phone>.2?pick(ui[d.active==='school-photo'?'photoAction':'phoneAction'],lang):undefined;}

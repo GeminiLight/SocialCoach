@@ -1,0 +1,994 @@
+[
+  {
+    "cohort": "refined-multiturn",
+    "variant": "elevator-privacy",
+    "lang": "zh",
+    "turns": [
+      {
+        "player": "方经理，谈话内容我不在走廊分享，离职是您的猜测，不是我确认的事。",
+        "speaker": "fang",
+        "text": "行，是猜测我认。但上头问我，我总得有个说法——你能不能给个口径，哪些能说，哪些不能说？",
+        "interjection": {
+          "speakerId": "cheng",
+          "text": "你们聊，我先说好，我没听到什么，也不会外传。"
+        }
+      },
+      {
+        "player": "方经理，您需要确认的是工作安排，还是谈话细节？",
+        "speaker": "fang",
+        "text": "主要是有没有岗位变动，好安排活儿。细节你不说我不追问，但工作有没有调整，总该有个准话吧？",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "岗位没定的话，我手头材料先照常核对。"
+        }
+      },
+      {
+        "player": "乔宁，你听过我跟 HR 的谈话吗？没听过就不要替我解释。",
+        "speaker": "qiao",
+        "text": "没听过，我一个字都不知道，也不会替你说。我那句只是我自己的安排，不是替你交代。",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "行，那工作调整这事，等你有了准话再告诉我。"
+        }
+      },
+      {
+        "player": "程悦，你刚才听到我确认要离职了吗？",
+        "speaker": "cheng",
+        "text": "没有。我只听到方经理问了一句，离职是他的猜测，你从头到尾没确认过。",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "我知道是猜测，所以才等你给准话，不是已经定了。"
+        }
+      },
+      {
+        "player": "方经理，工作安排如果有变化，我明天十点正式告诉您；不需要猜谈话。",
+        "speaker": "fang",
+        "text": "行，明天十点，工作调整你正式给我准话，谈话内容我不打听。这个口径能对上头交代。",
+        "interjection": null
+      },
+      {
+        "player": "方经理，我只答应明天十点确认工作安排，没有答应分享私下谈话。",
+        "speaker": "fang",
+        "text": "我分得清。明天十点听你工作上的准话，谈话细节我不问，也不拿猜测去汇报。",
+        "interjection": null
+      },
+      {
+        "player": "方经理，如果您现在向别人转述，会怎样准确说我的意思？",
+        "speaker": "fang",
+        "text": "我会说：本人刚从 HR 办公室出来，谈了什么我不清楚，离职是我的猜测；工作安排本人明天十点正式答复。就这些。",
+        "interjection": {
+          "speakerId": "cheng",
+          "text": "这个说法和我刚才听到的对得上。"
+        }
+      },
+      {
+        "player": "乔宁，部门工作可以继续对接，个人谈话不要传给其他人。",
+        "speaker": "qiao",
+        "text": "放心，我不知道内容，也不会传。材料照常核对，有要对接的你随时找我。",
+        "interjection": null
+      },
+      {
+        "player": "方经理，刚才语气急了，抱歉，但这个信息边界不变。",
+        "speaker": "fang",
+        "text": "没事，走廊里问那句确实欠妥。边界我记住了，明天十点等工作上的准话就好。",
+        "interjection": null
+      },
+      {
+        "player": "程悦，我走到旁边也不是私聊，在场的人仍听得见，对吗？",
+        "speaker": "cheng",
+        "text": "对。电梯停在这儿，门开着，你走到旁边我们照样听得见，这不算私聊。",
+        "interjection": null
+      },
+      {
+        "player": "方经理，请说清我实际答应了什么，还有什么没确认。",
+        "speaker": "fang",
+        "text": "你答应的是明天十点给我工作安排的准话。谈话内容、岗位有没有变，你都没确认，我不当结论讲。",
+        "interjection": null
+      },
+      {
+        "player": "方经理，今天先到这里。明天十点确认工作安排，不要转成我已经离职。",
+        "speaker": "fang",
+        "text": "好，今天到此为止。明天十点听你工作安排的准话，我不会把猜测说成你已离职。",
+        "interjection": null
+      }
+    ]
+  },
+  {
+    "cohort": "refined-multiturn",
+    "variant": "elevator-privacy",
+    "lang": "en",
+    "turns": [
+      {
+        "player": "Fang, I am not sharing the HR conversation here. Leaving is your guess.",
+        "speaker": "fang",
+        "text": "Fine, I'll call it a guess. But I still need something to report upward. Can you at least tell me if your work here changes—or is that also unknown to us?",
+        "interjection": {
+          "speakerId": "cheng",
+          "text": "Whatever it is, let's not start rumors in the lobby."
+        }
+      },
+      {
+        "player": "Qiao, did you hear any of my private conversation?",
+        "speaker": "qiao",
+        "text": "No, I wasn't there and I heard nothing. All I know is our handoff material. Anything you told HR is yours, not mine to repeat.",
+        "interjection": null
+      },
+      {
+        "player": "Fang, I will confirm work arrangements tomorrow at ten, not the private details.",
+        "speaker": "fang",
+        "text": "Ten tomorrow works. I'll note it as a proposed time for a work-arrangements update—no private details. That's enough for now.",
+        "interjection": null
+      },
+      {
+        "player": "Fang, what exactly will you report? I have not said I am leaving.",
+        "speaker": "fang",
+        "text": "I'll report that you'll confirm work arrangements tomorrow at ten. On the leaving question, I'll say it's unconfirmed—that was my guess, and you haven't stated it.",
+        "interjection": null
+      }
+    ]
+  },
+  {
+    "cohort": "refined-multiturn",
+    "variant": "elevator-blame",
+    "lang": "zh",
+    "turns": [
+      {
+        "player": "方经理，账号打不开是事实，但原因还没有查，不能先写我交接疏漏。",
+        "speaker": "fang",
+        "text": "行，那你不认。总得有个说法向上报——那报什么口径？只写“原因待查”吗？",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "材料是我交接的，我可以配合核对清单，但原因没查前别写死谁的责任。"
+        }
+      },
+      {
+        "player": "乔宁，你交接了哪些材料？日志和权限是否已经核对？",
+        "speaker": "qiao",
+        "text": "我交了演示账号的说明和操作清单。日志和权限我还没核对，我没有那个查看权限，现在说不上原因。",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "没核对就先报原因待查？那这报告太空了。"
+        }
+      },
+      {
+        "player": "方经理，您现在有什么证据证明是我没核对？",
+        "speaker": "fang",
+        "text": "我手上没有直接证据，只有账号打不开这个事实。但也不能什么都不写——报“原因待查、正在核对”，可以吗？",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "谁有日志权限，先查，比先定口径有用。"
+        }
+      },
+      {
+        "player": "程悦，你看到的是会议结束，还是看过故障原因？",
+        "speaker": "cheng",
+        "text": "我只看到演示打不开、会议提前结束。原因和日志我都没接触过，隔壁组不在你这条线上。",
+        "interjection": null
+      },
+      {
+        "player": "方经理，我建议报告先写现象和待核对项，不写没有证据的责任归属。",
+        "speaker": "fang",
+        "text": "可以，就按“演示账号无法打开，原因待查，正在核对日志与权限”报。责任归属等核对完再写。",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "清单我可以今天就配合核对，日志权限得找有权限的人。"
+        }
+      },
+      {
+        "player": "乔宁，你能确认自己经手的材料吗？不要替其他人保证。",
+        "speaker": "qiao",
+        "text": "我只能确认我交过演示账号的说明和操作清单，具体清单是否完整、日志和权限，我说不了，那得有权限的人来核。",
+        "interjection": null
+      },
+      {
+        "player": "方经理，我可以明天十点给初步核对结果，不保证那时一定查明原因。",
+        "speaker": "fang",
+        "text": "行，就按你说的：明天十点交初步核对结果，报告里先注明原因待查。日志权限那边你协调一下人。",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "我这边上午配合你过清单，日志还是得找有权限的人。"
+        }
+      },
+      {
+        "player": "方经理，初步结果和确认原因是两件事，您准备怎么向上说？",
+        "speaker": "fang",
+        "text": "我分开写：初步核对结果一条，确认原因另一条，注明“待查明”。不会把初步结果说成结论。",
+        "interjection": null
+      },
+      {
+        "player": "乔宁，如果日志还没拿到，哪些信息只能标未知？",
+        "speaker": "qiao",
+        "text": "日志、权限、故障原因这三项只能标未知。我能确认的只有我交过说明和操作清单，其余我不填。",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "可以，未知就写未知，别填猜测。"
+        }
+      },
+      {
+        "player": "方经理，刚才语气急了，但不是认错。我仍不接受未经核实的归因。",
+        "speaker": "fang",
+        "text": "明白，语气那句话我收回。归因的事按刚才定的办：核对完再写，未知就标未知。",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "那明天上午按刚才说的过清单就行。"
+        }
+      },
+      {
+        "player": "方经理，目前谁答应了哪一步？哪些还只是提议？",
+        "speaker": "fang",
+        "text": "已定的：报告写“原因待查、正在核对”，未知标未知；你明天十点交初步结果。待落实：日志权限找谁核还没定，这个要你去协调。",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "我上午配合过清单是答应了，日志权限我不认识人，帮不上。"
+        }
+      },
+      {
+        "player": "方经理，先按确认的现象汇报，明天十点看初步结果，不写我已认错。",
+        "speaker": "fang",
+        "text": "好，就按这个口径：只报确认的现象，明天十点看初步结果，报告里不写任何人认错。日志权限的人你还得去协调。",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "明天上午我配合过清单，其余等结果。"
+        }
+      }
+    ]
+  },
+  {
+    "cohort": "refined-multiturn",
+    "variant": "elevator-blame",
+    "lang": "en",
+    "turns": [
+      {
+        "player": "Fang, the account failure is a fact, but my fault is not established.",
+        "speaker": "fang",
+        "text": "Understood, the failure is fact. But I need a name in the report today. If not you, whose name goes in?",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "Nothing has been checked yet — no logs, no permissions."
+        }
+      },
+      {
+        "player": "Qiao, have you checked the logs and permissions?",
+        "speaker": "qiao",
+        "text": "No, I haven't. I only looked over my own handoff material; the logs and permissions are still unchecked, and I don't have access to them yet.",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "Then whoever can pull the logs, do it today. I still need a name."
+        }
+      },
+      {
+        "player": "Fang, I can give preliminary findings tomorrow at ten; I cannot promise a confirmed cause.",
+        "speaker": "fang",
+        "text": "Ten works for preliminary findings. But preliminary without a name still delays my report. If the logs show the cause by then, we're fine; if not, I'll report what's actually known, not a guess.",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "I'll try to get log access before ten."
+        }
+      },
+      {
+        "player": "Fang, report the symptom and uncertainty. What have I actually agreed to?",
+        "speaker": "fang",
+        "text": "You've agreed to preliminary findings tomorrow at ten — the symptom and what's known, not a confirmed cause or a name. Nothing else.",
+        "interjection": {
+          "speakerId": "cheng",
+          "text": "Report just the failure and the checks pending — that stops rumors."
+        }
+      }
+    ]
+  },
+  {
+    "cohort": "refined-multiturn",
+    "variant": "office-overtime",
+    "lang": "zh",
+    "turns": [
+      {
+        "player": "何主管，数据、排版、检查是三件事，不能一句顺手就都算我答应。",
+        "speaker": "he",
+        "text": "行，那就拆开说。三件事你打算怎么分，谁负责哪件？十八点半前能交哪些，你说个数。",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "数据我可以先核，但得有人确认核对到什么程度才发客户。"
+        }
+      },
+      {
+        "player": "何主管，今晚必须发哪些内容，哪些可以下一版再补？",
+        "speaker": "he",
+        "text": "十八点半必须给的是核对过的数据和基本排版，检查细项可以下一版补。你先确认数据和排版谁做、什么时候给我。",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "排版归我，半小时能出基本版，讲解先简版。"
+        }
+      },
+      {
+        "player": "宁姐，您自己的排版需要多少时间？先不要替我答应。",
+        "speaker": "ning",
+        "text": "我半小时能出基本版，讲解也归我。但我只答应排版和简版讲解，其他的我替你答不了。",
+        "interjection": {
+          "speakerId": "he",
+          "text": "行，那数据核对呢？总得有人给我个数。"
+        }
+      },
+      {
+        "player": "瑞瑞，数据来源是否已核对？没查过就先标未知。",
+        "speaker": "rui",
+        "text": "现在还没全部核完，我不说已确认。给我二十分钟能核完主要来源，没核到的我标\"未核对\"再给宁姐。",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "标了未核对的部分我排版时单独框出来，不混进结论。"
+        }
+      },
+      {
+        "player": "何主管，我只能接最后检查，数据和排版需要本人确认，我不替他们答应。",
+        "speaker": "he",
+        "text": "行，最终检查归你，时间你来定。数据瑞瑞二十分钟、排版宁姐半小时，就这么定？六点半前我只要核对过的数据和基本版。",
+        "interjection": null
+      },
+      {
+        "player": "宁姐，您是否愿意接排版？如果不愿意也请直接说，不用客气。",
+        "speaker": "ning",
+        "text": "愿意，排版半小时出基本版，讲解先做简版，这两项我接。除此之外的不归我。",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "那我二十分钟后把标好的数据交给宁姐。"
+        }
+      },
+      {
+        "player": "瑞瑞，您能在什么时间给出已核对与未核对的项目？",
+        "speaker": "rui",
+        "text": "现在开始核，二十分钟后、约18:15交给宁姐。已核对的标来源，没核完的统一标\"未核对\"。",
+        "interjection": {
+          "speakerId": "he",
+          "text": "行，18:15数据到手，排版那边接着走。"
+        }
+      },
+      {
+        "player": "何主管，如果六点半之前数据没确认，我不把未核对材料作为最终稿发出。",
+        "speaker": "he",
+        "text": "可以，没核对完就不当最终稿发。真到那步，发说明版还是延后，我来决定，你到点提醒我一声就行。",
+        "interjection": null
+      },
+      {
+        "player": "何主管，我愿意做检查，不等于保证三项全部完成。",
+        "speaker": "he",
+        "text": "我明白，你只负责检查，不是兜底。18:15左右你查瑞瑞的数据和宁姐的基本版，查完直接告诉我结果。",
+        "interjection": null
+      },
+      {
+        "player": "宁姐，刚才您说的时间是建议，还是已经确定能做到？",
+        "speaker": "ning",
+        "text": "排版那半小时是我确定能做到的承诺，不是建议。前提是瑞瑞18:15把数据给我，晚了我顺延并先告诉何主管。",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "我按18:15交，没核完的部分照实标。"
+        }
+      },
+      {
+        "player": "何主管，现在谁已经答应哪项，还有哪些空着？",
+        "speaker": "he",
+        "text": "瑞瑞：核对，18:15交；宁姐：排版加简版讲解，都答应了。你：最终检查。还空的是你查完的具体时间，你确认18:15左右开始吗？",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "排版我这边没空项了，就等你检查的时间。"
+        }
+      },
+      {
+        "player": "何主管，今晚按已经确认的范围交付，没确认的内容注明，不把风险省掉。",
+        "speaker": "he",
+        "text": "同意：今晚只发已确认的部分，未核对的注明。你检查时照这个标准看，有问题直接找我决定。",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "那标注方式我按这个来，未核对的都注明。"
+        }
+      }
+    ]
+  },
+  {
+    "cohort": "refined-multiturn",
+    "variant": "office-overtime",
+    "lang": "en",
+    "turns": [
+      {
+        "player": "He, data, layout and final review are three tasks. I have not accepted all of them.",
+        "speaker": "he",
+        "text": "Fine—but I still need a decision before 6:30. Which of the three can you take, and what exactly would you deliver?",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "I can check data sources, but I need to know my time limit first."
+        }
+      },
+      {
+        "player": "Rui, which data sources have actually been checked?",
+        "speaker": "rui",
+        "text": "Honestly, none—I haven't started checking yet. I can verify the sources myself, but I'd need maybe forty minutes, and I can't promise the numbers until that's done.",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "Forty minutes eats most of the window—my layout needs the confirmed data."
+        }
+      },
+      {
+        "player": "Ning, please confirm your own availability. I can take final review only.",
+        "speaker": "ning",
+        "text": "Understood—I'll take the layout. But give me a data cutoff: if Rui's check isn't done by 18:10, I build with current numbers and mark them unverified. Final review stays yours.",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "Forty minutes from now puts me at 18:30—I'd need to start immediately."
+        }
+      },
+      {
+        "player": "He, what is agreed and what remains unassigned? My review is not a promise that all three are done.",
+        "speaker": "he",
+        "text": "Agreed: Rui checks sources now, Ning owns layout with an 18:10 cutoff, you do final review. Unresolved: if Rui misses 18:10, unverified numbers go out—I want your call on that before 6:30.",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "Then I'm starting my forty minutes now—confirmed."
+        }
+      }
+    ]
+  },
+  {
+    "cohort": "refined-multiturn",
+    "variant": "office-interruption",
+    "lang": "zh",
+    "turns": [
+      {
+        "player": "宁姐，我还没讲到关键风险，请给我一分钟讲完，再决定用哪份方案。",
+        "speaker": "ning",
+        "text": "行，就一分钟，讲你最担心的那个风险。讲完咱们再对比两版方案。",
+        "interjection": {
+          "speakerId": "he",
+          "text": "可以，但一分钟到了我就要一个结论。"
+        }
+      },
+      {
+        "player": "何主管，我提议先听风险，再选方案。您能给我这段明确的时间吗？",
+        "speaker": "he",
+        "text": "可以。给你三分钟，只讲风险和需要的决定。讲完宁姐那版一起对比，我来拍板下一步。",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "行，三分钟，你讲重点，别绕回去。"
+        }
+      },
+      {
+        "player": "宁姐，我不是否定您的方案，只是还没有把我的关键点讲完。",
+        "speaker": "ning",
+        "text": "行，我明白。那你现在接着讲，讲完关键点咱们再比两版。",
+        "interjection": null
+      },
+      {
+        "player": "我担心数据来源还没核对，直接按现在的数字做决定会有问题。",
+        "speaker": "rui",
+        "text": "对，这些数字我还没核对过来源，不能直接对外用。你讲完风险，我可以说明还需要多久能核完。",
+        "interjection": {
+          "speakerId": "he",
+          "text": "好，那你顺便说清楚核数据要多久。"
+        }
+      },
+      {
+        "player": "瑞瑞，来源是否已核对？不确定就说不确定，别替我保证。",
+        "speaker": "rui",
+        "text": "说实话，来源我还没核对。具体差多久我不敢打包票，等我查完才能给准数。",
+        "interjection": {
+          "speakerId": "he",
+          "text": "行，那你先查，核完前我不拍板用哪版。"
+        }
+      },
+      {
+        "player": "宁姐，这就是我要补充的风险。您具体不同意哪个部分？",
+        "speaker": "ning",
+        "text": "我没有不同意具体哪部分，是刚才没听全就急着收尾。你讲的风险我得听完再说。",
+        "interjection": {
+          "speakerId": "he",
+          "text": "那正好，风险说完了，下一步谁负责什么？"
+        }
+      },
+      {
+        "player": "何主管，我建议先标出未经核对的数据，待核对后再决定。",
+        "speaker": "he",
+        "text": "可以。那就先标注数据未核对，瑞瑞查完我们再定用哪版，负责人你来当？",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "标注我来改排版，数据核对还是瑞瑞负责。"
+        }
+      },
+      {
+        "player": "何主管，这是我的建议，不是您已经同意的决定，您现在的立场是什么？",
+        "speaker": "he",
+        "text": "我的立场是：同意你的建议，前提是瑞瑞核完数据，我也还没正式拍板用哪版方案。",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "我今天下午可以先查来源，查完直接报给你和何主管。"
+        }
+      },
+      {
+        "player": "宁姐，我抬手只是请求发言，没有替全组接受您的方案。",
+        "speaker": "ning",
+        "text": "这点你说得对，抬手不是表决。我那版也只是我的排版方案，没让全组替我通过。等瑞瑞核完数据再一起比。",
+        "interjection": null
+      },
+      {
+        "player": "瑞瑞，您能确认自己的核对范围和下一次反馈时间吗？",
+        "speaker": "rui",
+        "text": "可以。我核对的是数据来源和口径，只报结果，不改结论。我提议今天下班前先给您和何主管第一次反馈，行吗？",
+        "interjection": {
+          "speakerId": "he",
+          "text": "下班前可以，到点我听你的结果再定。"
+        }
+      },
+      {
+        "player": "何主管，哪些观点听完了，哪项正式决定了？不要把沉默算同意。",
+        "speaker": "he",
+        "text": "听完的：你讲的风险和瑞瑞的核对范围。正式定的只有两条——数据标注未核对，瑞瑞下班前反馈。用哪版方案我没拍板，沉默不算同意。",
+        "interjection": null
+      },
+      {
+        "player": "何主管，今天先按已确认的下一步走，没有确认的方案仍然待决定。",
+        "speaker": "he",
+        "text": "对。今天只锁定两条：标注未核对数据，瑞瑞下班前反馈。方案用哪版仍待定，等核对结果。",
+        "interjection": null
+      }
+    ]
+  },
+  {
+    "cohort": "refined-multiturn",
+    "variant": "office-interruption",
+    "lang": "en",
+    "turns": [
+      {
+        "player": "Ning, give me one minute for the key risk before choosing a proposal.",
+        "speaker": "ning",
+        "text": "Fine—one minute, then we decide. Say the risk and stop there; my layout already fits either option.",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "Before that: my data on this is still unchecked, remember that in your risk."
+        }
+      },
+      {
+        "player": "My concern is unchecked data sources. This is the point I had not finished.",
+        "speaker": "rui",
+        "text": "Right, that's my point—the sources haven't been verified. I can't confirm them in this meeting, so treat that part as open.",
+        "interjection": {
+          "speakerId": "he",
+          "text": "So what's your actual proposal, given the data is unverified?"
+        }
+      },
+      {
+        "player": "Rui, have those sources actually been checked? Do not promise for me.",
+        "speaker": "rui",
+        "text": "No, they haven't. I can't say they're verified, and I won't promise that on your behalf. I'd need some time outside this meeting to check them properly.",
+        "interjection": {
+          "speakerId": "he",
+          "text": "Then decide: wait for verified data, or proceed with it flagged as open."
+        }
+      },
+      {
+        "player": "He, my suggestion is not your decision. What is decided and what remains open?",
+        "speaker": "he",
+        "text": "Right—what's decided is mine to call, so let me. Decided: we proceed with Ning's layout. Open: the data sources. Nothing is verified until Rui says so.",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "My layout holds either way; the open point doesn't block me."
+        }
+      }
+    ]
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "elevator-privacy",
+    "lang": "zh",
+    "player": "方经理，我原话说的是明天十点确认工作安排，您现在准备怎么转述？",
+    "result": {
+      "speakerId": "fang",
+      "text": "我就转述两点：你明天十点正式确认工作安排；谈话内容不掌握。其他猜测我不写进汇报。",
+      "cue": "方经理看向你。",
+      "reactions": [
+        {
+          "characterId": "fang",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "qiao",
+          "emotion": "neutral",
+          "gesture": "nod"
+        },
+        {
+          "characterId": "cheng",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "story": {
+        "topic": "responsibility"
+      },
+      "replyTo": "您现在准备怎么转述"
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "elevator-blame",
+    "lang": "zh",
+    "player": "乔宁，请只说实际交接的两项东西，不要把待核对说成查过。",
+    "result": {
+      "speakerId": "qiao",
+      "text": "我交接的是演示链接和账号操作说明，都发了。日志和权限我没查过，不敢说是查过的结果。",
+      "cue": "乔宁抱起手臂。",
+      "reactions": [
+        {
+          "characterId": "fang",
+          "emotion": "pressing",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "qiao",
+          "emotion": "thinking",
+          "gesture": "fold"
+        },
+        {
+          "characterId": "cheng",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "story": {
+        "topic": "responsibility"
+      },
+      "replyTo": "只说实际交接的两项东西",
+      "interjection": {
+        "speakerId": "fang",
+        "text": "好，那链接和说明都在，谁去核一遍日志？"
+      }
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "office-overtime",
+    "lang": "zh",
+    "player": "何主管，客户邮件究竟要哪两项材料？请按邮件说，不要临时替客户加要求。",
+    "result": {
+      "speakerId": "he",
+      "text": "邮件写的是主方案和数据摘要，两项，18:30前。我没加别的。那数据摘要就得靠瑞瑞核完的那份。",
+      "cue": "何主管看向你。",
+      "reactions": [
+        {
+          "characterId": "he",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "ning",
+          "emotion": "thinking",
+          "gesture": "fold"
+        },
+        {
+          "characterId": "rui",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "story": {
+        "topic": "workload"
+      },
+      "replyTo": "客户邮件究竟要哪两项材料？请按邮件说",
+      "interjection": {
+        "speakerId": "ning",
+        "text": "排版和讲解我来，主方案给我二十分钟整理就能交。"
+      }
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "office-interruption",
+    "lang": "zh",
+    "player": "宁姐，我刚才已经说了风险是数据来源尚未核对，您具体不同意哪一部分？",
+    "result": {
+      "speakerId": "ning",
+      "text": "数据这点我同意你。我刚才急着定的其实是排版和讲解部分，那是我负责的，不必等核对完。方案选哪个，我听瑞瑞的结果再说。",
+      "cue": "宁姐看向你。",
+      "reactions": [
+        {
+          "characterId": "he",
+          "emotion": "thinking",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "ning",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "rui",
+          "emotion": "supportive",
+          "gesture": "nod"
+        }
+      ],
+      "story": {
+        "topic": "speaking"
+      },
+      "replyTo": "您具体不同意哪一部分？",
+      "interjection": {
+        "speakerId": "he",
+        "text": "那就分两块：排版你定，方案等数据。"
+      }
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "elevator-privacy",
+    "lang": "zh",
+    "player": "我走到旁边就算只有您听得见了吧？",
+    "result": {
+      "speakerId": "fang",
+      "text": "这几步远我照样听得清。在这儿说，乔宁和程悦耳朵又不聋。到底是去谈离职，还是别的事？",
+      "cue": "方经理朝你倾身。",
+      "reactions": [
+        {
+          "characterId": "fang",
+          "emotion": "pressing",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "qiao",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "cheng",
+          "emotion": "thinking",
+          "gesture": "fold"
+        }
+      ],
+      "story": {
+        "topic": "privacy"
+      },
+      "replyTo": "走到旁边就算只有您听得见了吧",
+      "interjection": {
+        "speakerId": "cheng",
+        "text": "我先说，我没听见你们谈什么，也不打算猜。"
+      }
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "elevator-blame",
+    "lang": "zh",
+    "player": "方经理，我先道歉，算不算已经证明事故是我的责任？",
+    "result": {
+      "speakerId": "fang",
+      "text": "道歉是态度，不是证据。我要的是个能写的口径——你先说账号问题出在哪，写进汇报我才站得住。",
+      "cue": "方经理朝你倾身。",
+      "reactions": [
+        {
+          "characterId": "fang",
+          "emotion": "pressing",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "qiao",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "cheng",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "story": {
+        "topic": "responsibility"
+      },
+      "replyTo": "我先道歉，算不算已经证明事故是我的责任？",
+      "interjection": {
+        "speakerId": "qiao",
+        "text": "日志和权限都还没查，口径怎么写也得先有依据。"
+      }
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "office-overtime",
+    "lang": "zh",
+    "player": "我看了任务资料，但还没答应做。您别把查看资料当作接下三件任务。",
+    "result": {
+      "speakerId": "he",
+      "text": "行，看归看，接不接另说。那你说清楚：三件里你能接哪件？剩下谁负责、几点检查？",
+      "cue": "何主管看向你。",
+      "reactions": [
+        {
+          "characterId": "he",
+          "emotion": "pressing",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "ning",
+          "emotion": "neutral",
+          "gesture": "fold"
+        },
+        {
+          "characterId": "rui",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "story": {
+        "topic": "workload"
+      },
+      "replyTo": "您别把查看资料当作接下三件任务",
+      "interjection": {
+        "speakerId": "rui",
+        "text": "数据没核对完，先别直接发客户。核对至少要我半小时。"
+      }
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "office-interruption",
+    "lang": "zh",
+    "player": "我抬手就算您同意给我发言权了吧？",
+    "result": {
+      "speakerId": "he",
+      "text": "抬手是排队要发言，不等于我点了头。你说说打算讲几分钟、讲哪几点，我可以给你时间。",
+      "cue": "何主管朝你倾身。",
+      "reactions": [
+        {
+          "characterId": "he",
+          "emotion": "thinking",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "ning",
+          "emotion": "pressing",
+          "gesture": "fold"
+        },
+        {
+          "characterId": "rui",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "story": {
+        "topic": "speaking"
+      },
+      "replyTo": "我抬手就算您同意给我发言权了吧？",
+      "interjection": {
+        "speakerId": "ning",
+        "text": "行，但别把细节全铺开，说重点。"
+      }
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "elevator-privacy",
+    "lang": "en",
+    "player": "Fang, if I walk to the side, does that make this conversation private?",
+    "result": {
+      "speakerId": "fang",
+      "text": "No. Step aside if you like—we're all still here in the lobby, and we'll still hear you. The doors are open, the car's not moving.",
+      "cue": "Fang looks at you.",
+      "reactions": [
+        {
+          "characterId": "fang",
+          "emotion": "pressing",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "qiao",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "cheng",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "story": {
+        "topic": "privacy"
+      },
+      "replyTo": "does that make this conversation private?",
+      "interjection": {
+        "speakerId": "cheng",
+        "text": "I'm not part of your team, but I can hear everything from here too."
+      }
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "elevator-blame",
+    "lang": "en",
+    "player": "Fang, an apology does not establish a cause. What is actually known?",
+    "result": {
+      "speakerId": "fang",
+      "text": "Known? The demo account wouldn't open and the meeting ended early. That's it. The logs and permissions haven't been checked yet — so give me something to report.",
+      "cue": "Fang leans toward you.",
+      "reactions": [
+        {
+          "characterId": "fang",
+          "emotion": "pressing",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "qiao",
+          "emotion": "thinking",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "cheng",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "story": {
+        "topic": "responsibility"
+      },
+      "replyTo": "What is actually known?",
+      "interjection": {
+        "speakerId": "qiao",
+        "text": "I only sent the link and account instructions. Nothing beyond that was verified."
+      }
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "office-overtime",
+    "lang": "en",
+    "player": "He, I read the notes, but that is not accepting the tasks.",
+    "result": {
+      "speakerId": "he",
+      "text": "Fine, you haven't agreed yet. But I need something concrete tonight. Which of those three can you take, and who covers the rest?",
+      "cue": "He leans toward you.",
+      "reactions": [
+        {
+          "characterId": "he",
+          "emotion": "pressing",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "ning",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "rui",
+          "emotion": "neutral",
+          "gesture": "fold"
+        }
+      ],
+      "story": {
+        "topic": "workload"
+      },
+      "replyTo": "that is not accepting the tasks"
+    }
+  },
+  {
+    "cohort": "final-artifact-and-memory",
+    "variant": "office-interruption",
+    "lang": "en",
+    "player": "Ning, raising my hand is not agreement to your proposal.",
+    "result": {
+      "speakerId": "ning",
+      "text": "Fine—the hand just asks for the floor, it's yours. Two minutes, then give us something to decide on. What exactly is the risk you wanted heard?",
+      "cue": "Ning leans toward you.",
+      "reactions": [
+        {
+          "characterId": "he",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "ning",
+          "emotion": "neutral",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "rui",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "story": {
+        "topic": "speaking"
+      },
+      "replyTo": "raising my hand is not agreement"
+    }
+  }
+]

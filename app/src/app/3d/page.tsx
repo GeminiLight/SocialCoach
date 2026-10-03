@@ -3,7 +3,7 @@ import { DinnerClient } from './DinnerClient';
 
 export const metadata: Metadata = {
   title: 'SocialCoach · 3D',
-  description: '坐进职场、家庭与学校的饭桌，练习在压力下开口。A seat at a fictional dinner table, and a chance to practise your response.',
+  description: '走进饭桌、电梯口与办公室，练习在压力下开口。Step into a dinner, elevator lobby or office and practise your response under pressure.',
 };
 
 export default function DinnerPage() { return <DinnerClient />; }

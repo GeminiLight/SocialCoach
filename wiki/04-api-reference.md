@@ -15,7 +15,7 @@
 | POST | `/api/reflect` | 反思回应 | fast | 文本流 | 30 | A |
 | POST | `/api/hint` | 对话中提示 | fast | JSON | 30 | A |
 | POST | `/api/rehearse` | 从真实处境生成场景 | fast | JSON | 120 | A |
-| POST | `/api/dinner/direct` | 3D 饭桌模型回合 | fast | JSON | 40 | A23 |
+| POST | `/api/dinner/direct` | 3D 实景模型回合 | fast | JSON | 40 | A23 |
 | POST | `/api/pattern` | 跨场次的反复模式 | smart | JSON | 60 | B |
 
 **全局约定**
@@ -278,15 +278,17 @@ JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: stri
 - `/api/track` 的 `debrief_view` 可新增 `scoring_version: 2`、`rated: boolean`；无版本的旧客户端继续接受。飞书新增「评分口径」「评分状态」两列，分别标识沟通表现/目标达成、已评分/证据不足。历史未标口径行按旧目标星数解释，不能混合比较。
 - 引文、评分理由、档案与聊天内容不进入统计事件，严格 schema 继续拒绝多余字段。
 
-## 3D 饭桌
+## 3D 实景
 
 ### `POST /api/dinner/direct`
 
-请求 `{scenarioId: "work"|"family"|"school", variantId?, maxTurns?, targetId?, lang: "zh"|"en", text, history, room?, dinner?, heard?}`。`text` 非空且最多 500 字；`history` 为 1–47 条 NPC / 用户交替记录，起止为 NPC。`maxTurns` 默认 12，上限 24（兼容旧四回合），达到预算后客户端先延长再请求。`variantId` 是当前桌的两个原创开局之一；`targetId` 指定当前回复人，不赋予其替别人承诺的权限。历史保留话题、原话、空间 / 动作证据及用户开口前实际听到的 `heard:{speakerId,text,cue?}`，不得剥掉这些字段或截断成最后四轮。角色、开局、话题与事件交叉校验。正文最多 192 KiB（检查实际字节，不只信任请求头）。
+请求 `{scenarioId: "work"|"family"|"school"|"elevator"|"office", variantId?, maxTurns?, targetId?, lang: "zh"|"en", text, history, room?, dinner?, heard?}`。`text` 非空且最多 500 字；`history` 为 1–47 条 NPC / 用户交替记录，起止为 NPC。`maxTurns` 默认 12，上限 24（兼容旧四回合），达到预算后客户端先延长再请求。`variantId` 是当前场景的两个原创开局之一；`targetId` 指定当前回复人，不赋予其替别人承诺的权限。历史保留话题、原话、空间 / 动作证据及用户开口前实际听到的 `heard:{speakerId,text,cue?}`，不得剥掉这些字段或截断成最后四轮。角色、开局、话题与事件交叉校验。正文最多 192 KiB（检查实际字节，不只信任请求头）。
 
-返回 `{replyTo,speakerId,text,cue,reactions:[{characterId,emotion,gesture}],story?:{topic,event?},interjection?:{speakerId,text}}`，恰好包含当前桌三名角色的反应。`replyTo` 是当前输入的 1–120 字符原文片段，由任务层核验，用来发现错答上一句，不显示为用户评价。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。`cue` 从实际支持的动作派生，模型编造的吃饭 / 手机操作不进入舞台说明。`story.event` 只能是当前开局允许、未出现且未被拒绝的动作插曲；不再在固定回合自动播放。可选 `interjection` 是另一名同桌 NPC 在主回复之后的一句可听见插话，必须不同于主回复人，不能跨桌或替他人承诺。中文最多 45 字符；英文最多 25 词 / 160 字符。该字段嵌入同一个 NPC message，存档 / 完整历史 / 下一次请求都保留原话，不消耗额外玩家回合。无分数 / 隐藏动机。
+返回 `{replyTo,speakerId,text,cue,reactions:[{characterId,emotion,gesture}],story?:{topic,event?},interjection?:{speakerId,text}}`，恰好包含当前场景三名角色的反应。`replyTo` 是当前输入的 1–120 字符原文片段，由任务层核验，用来发现错答上一句，不显示为用户评价。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。`cue` 从实际支持的动作派生，模型编造的吃饭 / 手机操作不进入舞台说明。`story.event` 只能是当前开局允许、未出现且未被拒绝的动作插曲；不再在固定回合自动播放。可选 `interjection` 是另一名在场 NPC 在主回复之后的一句可听见插话，必须不同于主回复人，不能跨场景或替他人承诺。中文最多 45 字符；英文最多 25 词 / 160 字符。该字段嵌入同一个 NPC message，存档 / 完整历史 / 下一次请求都保留原话，不消耗额外玩家回合。无分数 / 隐藏动机。
 
-模型同时接收六种可查阅的原创开局资料和只包含玩家既有原话的 `playerEvidence`，帮助区分 NPC 建议与玩家决定。拒绝、时间、个人信息的语义仍由模型理解，不能把结构校验宣称为语义保证。模型输入把完整历史放在前面，单独的 `current_player_turn` 放在最后；各开局事实分离，防止相亲线混入工作变动。新生成台词要求 1–2 个短句，中文目标 25–70 字符、硬上限 120；英文目标 15–35 词、上限 60 词且 400 字符。旧转录仍按原长度读取，不截断原话。回复角色、引文、长度或事件校验失败时最多修复一次，仍失败则返回错误，绝不提交无效回合或静默换成内置剧情。
+模型同时接收十种可查阅的原创开局资料和只包含玩家既有原话的 `playerEvidence`，帮助区分 NPC 建议与玩家决定。拒绝、时间、个人信息的语义仍由模型理解，不能把结构校验宣称为语义保证。模型输入把完整历史放在前面，单独的 `current_player_turn` 放在最后；各开局事实分离，防止相亲线混入工作变动。新生成台词要求 1–2 个短句，中文目标 25–70 字符、硬上限 120；英文目标 15–35 词、上限 60 词且 400 字符。旧转录仍按原长度读取，不截断原话。回复角色、引文、长度或事件校验失败时最多修复一次，仍失败则返回错误，绝不提交无效回合或静默换成内置剧情。
+
+新增空间：`elevator-privacy/elevator-blame` 与 `office-overtime/office-interruption`，各自独立资料、角色与话题；`responsibility` 和 `speaking` 新增话题。办公室、电梯口拒绝 `toast` 动作，禁止饭局道具。空间证据 `room` 新增可选 `space:"dinner"|"elevator"|"office"`、`liftDoors:"open"|"opening"|"closing"|"closed"`；`zone` 允许 `lobby/cabin/desk/board`，并与场景交叉校验。现场事件新增 `elevator-door/office-task/office-floor`；动作 `hold-door/release-door/step-aside/inspect/request/board`。它们只有实际抵达后才写入动作记录，保持 `silent:true`，不生成自动同意台词。门仍停在同层，不把关门当作私聊。客户端 v1 档案的 `room.space` 与 `room.lift:{openness,target}` 是可选扩展；旧饭桌不需要这些字段。
 
 错误：400 输入 / 状态无效；413 过长；429 沿用主站限流；503 部署无密钥或强制 BYOK；模型错误沿用 `fail()`，无剧本静默替代。服务器请求 30 秒取消、路由 `maxDuration=40`；客户端 35 秒取消，草稿保留。响应 `Cache-Control: no-store`。
 

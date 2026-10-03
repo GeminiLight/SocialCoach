@@ -9,6 +9,7 @@ const questions={
  work:{zh:'小周，两项测试如果明早还没通过，我们能怎样汇报？别替别人保证。',en:'Zhou, if both tests still fail tomorrow, what can we report without promising for anyone else?'},
  family:{zh:'妈妈，看照片不等于答应见面。您准备怎样跟大姨说清楚？',en:'Mom, looking at a photo does not mean agreeing to meet. What will you tell Aunt?'},
  school:{zh:'许学长，文案谁来改、谁来核对？没确认的部分不能当作大家都同意。',en:'Xu, who edits and checks the caption? Unconfirmed wording is not everyone’s agreement.'},
+ elevator:{zh:'方经理，您没有听过 HR 谈话，凭什么说是在谈离职？',en:'Fang, you heard no HR conversation. Why claim I am leaving?'},office:{zh:'何主管，三项还没分工，您希望先确认哪一项？',en:'He, the three tasks are unassigned. Which should we confirm first?'},
 };
 
 async function main(){

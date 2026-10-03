@@ -19,6 +19,12 @@ export const castAppearances:Record<string,CastAppearance>={
   senior:person({energy:1.1,restTilt:0.005,age:'young',build:[1.01,1.06,.98],face:{width:1.005,jaw:1.10,cheek:.95,eye:.107,nose:1.0,mouth:1.03,brow:-.001,part:-.04,eyeHeight:.021},hair:{fringe:.165,nape:-.06,volume:.025,sweep:.028,wave:.006}}),
   yue:person({energy:0.9,restTilt:-0.014,feminine:true,age:'young',build:[.89,.96,.90],skin:'skin',face:{width:.90,jaw:.88,cheek:1.06,eye:.098,nose:.86,mouth:.98,brow:.008,part:-.034,eyeWidth:.058,eyeHeight:.023},hair:{fringe:.22,nape:-.10,volume:.016,sweep:.014,tail:'pony'}}),
   kai:person({energy:0.7,restTilt:0.011,age:'young',build:[.98,1.01,1.01],face:{width:1.0,jaw:1.02,cheek:1.02,eye:.105,nose:.94,mouth:.96,brow:.002,part:.018,eyeHeight:.019},hair:{fringe:.145,nape:-.06,volume:.023,sweep:.004,wave:.005},glasses:'round'}),
+  fang:person({feminine:true,age:'adult',build:[.94,1.06,.93],skin:'skin',energy:.79,face:{width:.94,jaw:.98,cheek:1.01,eye:.102,nose:.95,brow:.005,part:.035,eyeHeight:.019},hair:{fringe:.235,nape:-.29,volume:.021,sweep:.015},glasses:'metal'}),
+  qiao:person({age:'adult',build:[1.07,1.09,1.03],skin:'skinWarm',energy:.62,face:{width:1.06,jaw:1.14,cheek:.97,eye:.111,nose:1.08,mouth:1.03,part:-.012},hair:{fringe:.23,nape:-.035,volume:.008,sweep:.004}}),
+  cheng:person({feminine:true,age:'young',build:[.88,1.01,.89],skin:'skinWarm',energy:.83,face:{width:.89,jaw:.91,cheek:.98,eye:.097,nose:.88,mouth:.94,part:-.028,eyeHeight:.021},hair:{fringe:.24,nape:-.10,volume:.014,sweep:.02,tail:'bun'}}),
+  he:person({age:'mature',build:[1.06,1.02,1.08],skin:'skinMature',hairPigment:'hairGray',energy:.74,face:{width:1.03,jaw:1.08,cheek:1.06,eye:.108,nose:1.06,mouth:1.02,brow:-.003,eyeHeight:.016},hair:{fringe:.22,nape:-.04,volume:.012,sweep:.01},glasses:'rectangle'}),
+  ning:person({feminine:true,age:'adult',build:[.97,.99,.99],skin:'skin',energy:.92,restTilt:-.011,face:{width:.98,jaw:.95,cheek:1.07,eye:.104,nose:.96,mouth:1.04,part:.036,eyeHeight:.018},hair:{fringe:.24,nape:-.27,volume:.036,sweep:.026,wave:.006}}),
+  rui:person({age:'young',build:[.90,1.07,.92],skin:'skinWarm',energy:.68,face:{width:.92,jaw:.97,cheek:1.0,eye:.102,nose:.93,mouth:.95,part:.015,eyeHeight:.02},hair:{fringe:.15,nape:-.06,volume:.02,sweep:.006,wave:.004}}),
 };
 export const castAppearance=(id:string)=>castAppearances[id]??base;
 /** Torso scaling is around the hips; chair and foot anchors remain unchanged. */
