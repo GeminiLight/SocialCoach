@@ -13,7 +13,7 @@ const cases=[
  {id:'school-workload',scene:'school',lines:['学长，要不奖杯也给我，我一个人扛三份活总得有点奖赏吧。','说正经的，我能接演示，海报和答辩我不接。','小月，海报你现在有没有时间做？可以拒绝，我不替你答应。','阿凯，你能接演示测试的哪一部分？','许学长，现在只确认了我做演示。没人答应的工作，别就这么算安排好了。']},
 ] as const;
 async function main(){
- const endpoint=process.argv[2]??'http://localhost:4340';
+ const endpoint=process.argv[2]??'http://localhost:3000';
  const label=(process.argv[3]??'live').replace(/[^a-z0-9_-]/gi,'-');
  type Turn={player:string;status:number;ms:number;reply:Reply & {error?:string}};
  const out:{variant:string;turns:Turn[]}[]=[];
