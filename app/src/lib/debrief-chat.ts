@@ -2,6 +2,7 @@ import { z } from "zod";
 import { pick } from "./i18n";
 import type { Lang } from "@/data/taxonomy";
 import type { Session } from "./types";
+import {SceneContextSchema,validateSceneContext} from './scene-context';
 
 export const DEBRIEF_QUESTION_LIMIT = 1000;
 export const DEBRIEF_HISTORY_LIMIT = 6;
@@ -10,6 +11,7 @@ const evidenceItem = z.object({ evidence: text(4000), behavior: text(2000) });
 
 /** A deliberately public view. No NPC hidden/personality/stance or scoring fields. */
 export const debriefInputSchema = z.object({
+  sceneContext:SceneContextSchema.optional(),
   lang: z.enum(["zh", "en"]),
   practice: z.object({ title: text(1000), background: text(8000), roles: z.array(z.object({ name: text(200), role: text(500), learner: z.boolean() })).max(12) }),
   transcript: z.array(z.object({ role: z.enum(["learner", "npc"]), name: text(200), text: text(8000) })).max(100),
@@ -28,6 +30,7 @@ export function buildDebriefInput(session: Session, question: string, lang: Lang
   const s = session.scenario;
   const report = session.report!;
   return {
+    ...(session.sceneContext?{sceneContext:validateSceneContext(session.sceneContext,session.messages)}:{}),
     lang, question,
     practice: { title: pick(s.title, lang), background: pick(s.background, lang), roles: s.characters.map(c => ({ name: pick(c.name, lang), role: pick(c.role, lang), learner: c.id === session.learnerCharacterId })) },
     transcript: session.messages.filter(m => m.role === "learner" || m.role === "npc").map(m => ({

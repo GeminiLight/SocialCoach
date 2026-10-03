@@ -6,6 +6,7 @@
 import type { Scenario } from "@/data/corpus/types";
 import type { Lang, SkillId } from "@/data/taxonomy";
 import type { Adaptation, ChatMessage, Prescription, Profile, Proficiency, RetrievalTrace } from "@/lib/types";
+import type {SceneContext} from '../scene-context';
 
 export interface HistoryItem {
   scenarioId: string;
@@ -60,6 +61,7 @@ export interface ReflectInput {
 }
 
 export interface AssessInput extends TurnInput {
+  sceneContext?: SceneContext;
   goals: SkillId[];
   objectiveDone?: boolean[];
   outcome?: string;

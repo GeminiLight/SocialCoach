@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/immutability -- Three.js cameras, meshes and the room simulation are mutable resources; React renders their separate snapshots. */
 'use client';
 import Link from 'next/link';
-import {useLang} from '@/store/useApp';
+import {useApp,useLang} from '@/store/useApp';
+import {useRouter} from 'next/navigation';
 import {useByok,openModelSheet} from '@/lib/byok';
 import {useCanUseModel} from '@/lib/model-access';
 import {ModelAccessNotice} from '@/components/ModelAccessNotice';
@@ -10,11 +11,11 @@ import {DINNER_SAVE_KEY} from './storage';
 import {createSaveScheduler} from './lib/saveScheduler';
 import {directDinner} from './lib/client';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { ArrowRight, ArrowUp, ArrowDown, ArrowLeft, Footprints, Wine, Coffee, Hand, Smartphone, Pause, Play, Eye, EyeOff, Check, CircleHelp, Crosshair, Download, Lightbulb, Maximize, MessageSquare, Mic, Minimize, RotateCcw, Square, SwitchCamera, Users, Volume2, VolumeX, X } from 'lucide-react';
+import { ArrowRight, ArrowUp, ArrowDown, ArrowLeft, Footprints, Wine, Coffee, Hand, Smartphone, Pause, Play, Eye, EyeOff, Check, CircleHelp, Crosshair, Download, Lightbulb, Maximize, MessageSquare, Mic, Minimize, Square, SwitchCamera, Users, Volume2, VolumeX, X } from 'lucide-react';
 import { emotions, gestures, pick, scenarios, ui, type Lang, type Scenario } from './lib/content';
 import { opening, SaveSchema, type Message, type Save } from './lib/engine';
 import { createWorld, snapshot, roomContext, eventText, standPlayer, walkPlayer, goHome, goNear, inviteNpc, focusConversation, focusPerson, freeLook, type Point, type ViewMode, type RoomSave, type RoomEvent, type RoomContext, operateLift, distance, PLAYER_HOME } from './lib/room';
-import {activeEvent,createDrama,snapshotDrama,dramaUiKey,syncDrama,stepDrama,readyForChoice,choiceDestination,chooseDrama,settleForSpeech,dinnerContext,eventDialogue,actionEvidence,actorBeat,actorActionLabel,type ChoiceId} from './lib/drama';
+import {activeEvent,createDrama,snapshotDrama,dramaUiKey,syncDrama,stepDrama,readyForChoice,choiceDestination,chooseDrama,settleForSpeech,dinnerContext,eventDialogue,actorBeat,actorActionLabel,type ChoiceId} from './lib/drama';
 import { DEFAULT_DINNER_TURNS, MAX_DINNER_TURNS, variants, variantFor, storyScenario, nextDinnerLimit, storyHint, topicLabels, type VariantId } from './lib/story';
 import { shouldSubmitReply } from './lib/input';
 import { useSpeechInput } from './lib/useSpeechInput';
@@ -23,6 +24,7 @@ import { Modal } from './components/Modal';
 import { RecipientPicker } from './components/RecipientPicker';
 import { SpokenLine } from './components/SpokenLine';
 import { ConversationHistory } from './components/ConversationHistory';
+import {DinnerReviewEntry} from './components/DinnerReviewEntry';
 import { clink, toggleRoom } from './lib/sound';
 import {useDinnerPlayback} from './lib/useDinnerPlayback';
 import {tableEvidence} from './lib/tableEvidence';
@@ -31,16 +33,30 @@ const SAVE_KEY=DINNER_SAVE_KEY;
 const speechCopy:Record<SpeechNotice,keyof typeof ui>={ready:'voiceReady',editing:'voiceEditing',cancelled:'voiceCancelled',limit:'voiceLimit',unsupported:'voiceUnsupported',permission:'voicePermission',microphone:'voiceMicrophone',network:'voiceNetwork',language:'voiceLanguage',empty:'voiceEmpty',unavailable:'voiceUnavailable'};
 
 function requestedScene(){if(typeof window==='undefined')return;const id=new URLSearchParams(window.location.search).get('scene');return scenarios.find(s=>s.id===id)?.id;}
-function initial() {
+function readInitial() {
   try { const raw=localStorage.getItem(SAVE_KEY); if(raw){const parsed=JSON.parse(raw);const result=SaveSchema.safeParse(parsed);if(result.success){if(!('maxTurns' in parsed)&&result.data.complete)result.data.maxTurns=Math.max(4,result.data.messages.filter(m=>m.role==='user').length);return { save:result.data,corrupt:null };}return {save:null,corrupt:raw};} } catch { try { const raw=localStorage.getItem(SAVE_KEY); if(raw)return {save:null,corrupt:raw}; } catch { /* storage can be disabled */ } }
   return {save:null,corrupt:null};
+}
+function requestedOpening(){const id=requestedScene();if(!id)return;const raw=new URLSearchParams(window.location.search).get('opening');return variants.find(v=>v.scene===id&&v.id===raw)?.id;}
+function freshRequest(){return !!requestedScene()&&new URLSearchParams(window.location.search).get('restart')==='1';}
+function initial(lang:Lang){
+  const existing=readInitial();if(existing.corrupt||!freshRequest())return existing;
+  const id=requestedScene()!,variant=variantFor(id,requestedOpening());const scene=storyScenario(scenarios.find(s=>s.id===id)!,variant);
+  return {save:SaveSchema.parse({version:1,scenarioId:id,variantId:variant.id,messages:[opening(scene,lang,variant.id)],started:false,complete:false,lang,draft:''}),corrupt:null};
 }
 function download(data:unknown,name:string) { const blob=new Blob([typeof data==='string'?data:JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000); }
 
 export default function App() {
   const mainLang=useLang();
+  const router=useRouter();
+  const [openingReview,setOpeningReview]=useState(false);
+  const [reviewError,setReviewError]=useState(false);
+  const reviewRequest=useRef(false);
+  const reviewGeneration=useRef(0);
   const model=useCanUseModel();
-  const [boot]=useState(initial);
+  const [boot]=useState(()=>initial(mainLang));
+  const [reviewSessionId,setReviewSessionId]=useState(boot.save?.reviewSessionId);
+  const [practiceId,setPracticeId]=useState(()=>boot.save?.practiceId??crypto.randomUUID());
   const [lang,setLang]=useState<Lang>(boot.save?.lang??mainLang);
   const [scenarioId,setScenarioId]=useState<Scenario['id']>(boot.save?.scenarioId??'work');
   const [variantId,setVariantId]=useState<VariantId>(boot.save?.variantId??variantFor(scenarioId).id);
@@ -67,13 +83,13 @@ export default function App() {
   const [storageError,setStorageError]=useState(false);
   const [corrupt,setCorrupt]=useState<string|null>(boot.corrupt);
   const [selectedId,setSelectedId]=useState<string|null>(null);
-  const [modal,setModal]=useState<'scenes'|'report'|'history'|'about'|'brief'|'evidence'|null>(()=>requestedScene()?'scenes':null);
+  const [modal,setModal]=useState<'scenes'|'report'|'history'|'about'|'brief'|'evidence'|null>(()=>requestedScene()&&!freshRequest()?'scenes':null);
   const [suggestionsOpen,setSuggestionsOpen]=useState(false);
   const [viewReset,setViewReset]=useState(0);
   const [fullscreen,setFullscreen]=useState(false);
   const shell=useRef<HTMLDivElement>(null);
   const [nextScene,setNextScene]=useState<Scenario['id']>(()=>requestedScene()??scenarioId);
-  const [nextVariant,setNextVariant]=useState<VariantId>(()=>requestedScene()?variantFor(requestedScene()!).id:variantId);
+  const [nextVariant,setNextVariant]=useState<VariantId>(()=>requestedScene()?variantFor(requestedScene()!,requestedOpening()).id:variantId);
   const [nextLength,setNextLength]=useState(maxTurns);
   const modelSheetOpen=useByok(s=>s.sheetOpen);
   const [sound,setSound]=useState(false);
@@ -132,16 +148,16 @@ export default function App() {
   function stepFromButton(direction:Point){const yaw=world.viewYaw;explore(()=>walkPlayer(world,{x:world.player.x+(-Math.cos(yaw)*direction.x+Math.sin(yaw)*direction.z)*.7,z:world.player.z+(Math.sin(yaw)*direction.x+Math.cos(yaw)*direction.z)*.7}));}
   const directions=[{key:'forward',x:0,z:1,icon:ArrowUp},{key:'left',x:-1,z:0,icon:ArrowLeft},{key:'backward',x:0,z:-1,icon:ArrowDown},{key:'right',x:1,z:0,icon:ArrowRight}] as const;
 
-  useEffect(()=>{const url=new URL(window.location.href);if(url.searchParams.has('scene')){url.searchParams.delete('scene');window.history.replaceState(null,'',url.pathname+url.search+url.hash);}},[]);
+  useEffect(()=>{const url=new URL(window.location.href);if(url.searchParams.has('scene')){for(const key of ['scene','opening','restart'])url.searchParams.delete(key);window.history.replaceState(null,'',url.pathname+url.search+url.hash);}},[]);
   useEffect(()=>{const query=matchMedia('(prefers-reduced-motion: reduce)');const change=()=>setReduced(query.matches);query.addEventListener('change',change);return ()=>query.removeEventListener('change',change);},[]);
   useEffect(()=>{
     if(corrupt){saveScheduler.cancel();return;}
-    const fields=[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view];
+    const fields=[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,reviewSessionId,practiceId];
     const urgent=fields.some((value,index)=>value!==durableFields.current[index]);durableFields.current=fields;
-    saveScheduler.request(()=>{const save:Save={version:1,scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room:snapshot(world),dinner:snapshotDrama(drama)};try {localStorage.setItem(SAVE_KEY,JSON.stringify(save));setStorageError(false);}catch {setStorageError(true);}},urgent);
-  },[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room,dinner,corrupt,world,drama,saveScheduler]);
+    saveScheduler.request(()=>{const save:Save={version:1,practiceId,reviewSessionId,scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room:snapshot(world),dinner:snapshotDrama(drama)};try {localStorage.setItem(SAVE_KEY,JSON.stringify(save));setStorageError(false);}catch {setStorageError(true);}},urgent);
+  },[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room,dinner,corrupt,world,drama,saveScheduler,reviewSessionId,practiceId]);
   useEffect(()=>{const flush=()=>saveScheduler.flush();const hidden=()=>{if(document.hidden)flush();};window.addEventListener('pagehide',flush);document.addEventListener('visibilitychange',hidden);return()=>{flush();saveScheduler.cancel();window.removeEventListener('pagehide',flush);document.removeEventListener('visibilitychange',hidden);};},[saveScheduler]);
-  useEffect(()=>()=>{controller.current?.abort();void toggleRoom(false);},[]);
+  useEffect(()=>()=>{reviewGeneration.current++;controller.current?.abort();void toggleRoom(false);},[]);
   useEffect(()=>{if(started&&seated&&!modal&&!complete&&!busy&&matchMedia('(pointer: fine)').matches)input.current?.focus({preventScroll:true});},[started,seated,modal,complete,busy]);
   useEffect(()=>{
     const field=input.current;if(!field)return;
@@ -157,12 +173,14 @@ export default function App() {
   useEffect(()=>{const change=()=>setFullscreen(!!document.fullscreenElement);document.addEventListener('fullscreenchange',change);return ()=>document.removeEventListener('fullscreenchange',change);},[]);
 
   function reset(id:Scenario['id'],storyId:VariantId=variantFor(id).id,length=DEFAULT_DINNER_TURNS) {
-    speech.cancel();const nextVariant=variantFor(id,storyId);const next=storyScenario(scenarios.find(s=>s.id===id)!,nextVariant);const nextWorld=createWorld(next);
+    setPracticeId(crypto.randomUUID());
+    reviewGeneration.current++;reviewRequest.current=false;setOpeningReview(false);speech.cancel();setReviewSessionId(undefined);setReviewError(false);const nextVariant=variantFor(id,storyId);const next=storyScenario(scenarios.find(s=>s.id===id)!,nextVariant);const nextWorld=createWorld(next);
     setWorld(nextWorld);const nextDrama=createDrama();setDrama(nextDrama);setDinner(snapshotDrama(nextDrama));updateRoom(snapshot(nextWorld),nextWorld.event);
     movementInput.current={x:0,z:0};setScenarioId(id);setVariantId(nextVariant.id);setMaxTurns(length);setTargetId(undefined);setNextScene(id);setNextVariant(nextVariant.id);setNextLength(length);
     setMessages([opening(next,lang,nextVariant.id)]);setStarted(false);setComplete(false);setDraft('');setError(null);setSelectedId(null);setSuggestionsOpen(false);setViewReset(v=>v+1);setModal(null);
   }
-  function extendDinner(){if(busy||maxTurns>=MAX_DINNER_TURNS)return;setMaxTurns(nextDinnerLimit(maxTurns));setComplete(false);setStarted(true);setError(null);setModal(null);}
+  function closeReview(next:'history'|null=null){reviewGeneration.current++;reviewRequest.current=false;setOpeningReview(false);setModal(next);}
+  function extendDinner(){if(busy||turn>=maxTurns&&maxTurns>=MAX_DINNER_TURNS)return;if(turn>=maxTurns)setMaxTurns(nextDinnerLimit(maxTurns));setComplete(false);setStarted(true);setError(null);closeReview();}
   function switchLanguage() {speech.cancel();const next=lang==='zh'?'en':'zh';setLang(next);if(!turn)setMessages([opening(scenario,next,variantId)]);}
   function exportDinner() {download({version:1,product:'SocialCoach',variantId,maxTurns,targetId,scenario:pick(scenario.title,lang),source:scenario.source,mode:'model',lang,messages,view,room,dinner,exportedAt:new Date().toISOString()},`SocialCoach-${scenarioId}-${new Date().toISOString().slice(0,10)}.json`);}
   async function submit(text=draft) {
@@ -172,9 +190,28 @@ export default function App() {
     controller.current=new AbortController();const timeout=setTimeout(()=>controller.current?.abort(),35000);
     try {
       const reply=await directDinner({scenarioId,variantId,maxTurns,targetId,lang,text:value,history:messages,room:observedRoom,dinner:observedDinner,heard},controller.current.signal);
-      setMessages(previous=>[...previous,{role:'user',text:value,room:observedRoom,dinner:observedDinner,heard,targetId},{role:'npc',speakerId:reply.speakerId,text:reply.text,cue:reply.cue,reactions:reply.reactions,story:reply.story,interjection:reply.interjection,mode:'model'}]);setDraft('');settleForSpeech(drama);setDinner(snapshotDrama(drama));
+      setReviewSessionId(undefined);setMessages(previous=>[...previous,{role:'user',text:value,room:observedRoom,dinner:observedDinner,heard,targetId},{role:'npc',speakerId:reply.speakerId,text:reply.text,cue:reply.cue,reactions:reply.reactions,story:reply.story,interjection:reply.interjection,mode:'model'}]);setDraft('');settleForSpeech(drama);setDinner(snapshotDrama(drama));
       if(turn+1>=maxTurns)setComplete(true);
     } catch(e) { if(!controller.current?.signal.aborted||document.contains(shell.current)){setDraft(value);setError(e instanceof Error&&e.name!=='AbortError'?e.message:t('error'));} } finally {clearTimeout(timeout);sending.current=false;setBusy(false);controller.current=null;}
+  }
+  async function openReview(){
+    if(!turn||busy||corrupt||reviewRequest.current)return;
+    const generation=++reviewGeneration.current;
+    speech.cancel();reviewRequest.current=true;setOpeningReview(true);setReviewError(false);
+    const save:Save={version:1,practiceId,scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room:snapshot(world),dinner:snapshotDrama(drama)};
+    try{
+      const {buildDinnerReview,matchesDinnerReview}=await import('./lib/review');
+      if(generation!==reviewGeneration.current)return;
+      const store=useApp.getState();const cached=store.sessions.find(s=>s.id===reviewSessionId);
+      const session=cached&&matchesDinnerReview(cached,save)?cached:buildDinnerReview(save,crypto.randomUUID());
+      setReviewSessionId(session.id);
+      if(session!==cached)store.addSession(session);
+      store.setLang(lang);setComplete(true);
+      saveScheduler.request(()=>localStorage.setItem(SAVE_KEY,JSON.stringify({...save,complete:true,reviewSessionId:session.id})),true);
+      if(document.fullscreenElement)await document.exitFullscreen().catch(()=>{});
+      if(generation!==reviewGeneration.current)return;
+      router.push(`/practice/${session.id}`);
+    }catch{if(generation===reviewGeneration.current)setReviewError(true);}finally{if(generation===reviewGeneration.current){reviewRequest.current=false;setOpeningReview(false);}}
   }
   async function soundToggle(){try{await toggleRoom(!sound);setSound(!sound);}catch{setSound(false);}}
 
@@ -217,7 +254,7 @@ export default function App() {
           {dinner.phase==='waiting'?<><div className="moment-action-row"><div className="moment-actions" role="group" aria-label={pick(moment.title,lang)}>{moment.choices.map(choice=>{const Icon=choice.icon==='glass'?Wine:choice.icon==='tea'?Coffee:choice.icon==='phone'?Smartphone:choice.icon==='people'?Users:Hand;return <button key={choice.id} disabled={busy||!!corrupt||!!dinner.pending} onClick={()=>act(choice.id)}><Icon size={15}/>{pick(choice.cupLabel&&(dinner.inventory==='glass'||dinner.inventory==='tea')?choice.cupLabel:!readyForChoice(drama,choice.id,world)&&choice.movingLabel?choice.movingLabel:choice.label,lang)}</button>;})}</div><button className="icon-button moment-pause" aria-label={t(dinner.paused?'resumeMoment':'pauseMoment')} onClick={()=>{drama.paused=!drama.paused;setDinner(snapshotDrama(drama));}}>{dinner.paused?<Play size={14}/>:<Pause size={14}/>}</button></div><p className={`moment-note ${!dinner.pending&&!dinner.paused?'sr-only':''}`} aria-live="polite">{t(dinner.pending?'momentMoving':dinner.paused?'momentPaused':draft?'momentTyping':dinner.elapsed>=12?'momentNudge':'momentWaiting')}{dinner.pending&&<button onClick={()=>{drama.pending=undefined;stopApproach();setDinner(snapshotDrama(drama));}}>{t('cancelAction')}</button>}</p></>:<p className="moment-receipt" role="status"><Check size={14}/>{momentChoice&&pick(momentChoice.label,lang)}</p>}
         </div>}
         <ModelAccessNotice />
-        {!started?<div className="take-seat"><p><span>{t('target')}</span>{pick(scenario.goal,lang)}</p><span className="opening-length">{maxTurns} {t('turn')} · {t('canContinue')}</span><button className="primary-button" onClick={()=>setStarted(true)} disabled={!!corrupt||!model}>{t('start')}<ArrowRight size={18}/></button></div>:complete?<div className="take-seat complete-seat"><p><Check size={17}/>{t('finished')}</p><div className="dinner-finish-actions">{maxTurns<MAX_DINNER_TURNS&&<button className="primary-button" disabled={!model} onClick={extendDinner}>{t('extendDinner').replace('{n}',String(nextDinnerLimit(maxTurns)-maxTurns))}<ArrowRight size={18}/></button>}<button className="text-button" onClick={()=>setModal('report')}>{t('end')}</button></div></div>:<form className={`reply-form ${draft.length>400?'has-long-draft':''}`} onSubmit={e=>{e.preventDefault();void submit();}}>
+        {!started?<div className="take-seat"><p><span>{t('target')}</span>{pick(scenario.goal,lang)}</p><span className="opening-length">{maxTurns} {t('turn')} · {t('canContinue')}</span><button className="primary-button" onClick={()=>setStarted(true)} disabled={!!corrupt||!model}>{t('start')}<ArrowRight size={18}/></button></div>:complete?<div className="take-seat complete-seat"><p><Check size={17}/>{t('finished')}</p><div className="dinner-finish-actions">{(turn<maxTurns||maxTurns<MAX_DINNER_TURNS)&&<button className="primary-button" disabled={!model} onClick={extendDinner}>{turn<maxTurns?t('continue'):t('extendDinner').replace('{n}',String(nextDinnerLimit(maxTurns)-maxTurns))}<ArrowRight size={18}/></button>}<button className="text-button" onClick={()=>setModal('report')}>{t('end')}</button></div></div>:<form className={`reply-form ${draft.length>400?'has-long-draft':''}`} onSubmit={e=>{e.preventDefault();void submit();}}>
           <div className="reply-composer"><RecipientPicker scenario={scenario} lang={lang} value={targetId} disabled={busy} onChange={setTargetId}/><label className="sr-only" htmlFor="reply">{t('type')}</label><div className="input-wrap"><textarea id="reply" ref={input} value={draft} onFocus={speech.edit} onChange={e=>{if(speech.isActive()||speech.notice)speech.cancel();setDraft(e.target.value);}} maxLength={500} placeholder={t('placeholder')} disabled={busy} aria-describedby="voice-status" rows={1} onKeyDown={e=>{if(shouldSubmitReply({...e.nativeEvent,key:e.key,shiftKey:e.shiftKey,ctrlKey:e.ctrlKey,metaKey:e.metaKey},matchMedia('(pointer: fine)').matches)){e.preventDefault();void submit();}}}/><button className={`voice-button ${speech.active?'is-listening':''}`} type="button" disabled={!model||busy||!!corrupt||speech.phase==='stopping'} aria-label={t(speech.active?'voiceStop':'voiceStart')} aria-describedby="voice-status" aria-pressed={speech.active} onClick={()=>{if(speech.phase==='starting')speech.discardInterim();else if(speech.active)speech.stop();else {input.current?.blur();speech.start(draft);}}}>{speech.active?<Square size={16} fill="currentColor"/>:<Mic size={19}/>}</button><button className="primary-button speak-button" disabled={!model||busy||speech.active||!draft.trim()||!!corrupt} type="submit">{busy?<><span className="busy-dot"/><span className="sr-only">{t('thinking')}</span></>:t('send')}</button></div></div>
           <div className="input-meta"><span className="reply-key-hint">{t('replyKeyHint')}</span>{draft.length>400&&<span>{draft.length}/500</span>}</div>
           <div className={`voice-status ${speech.active?'is-listening':''} ${speechIssue?'has-issue':''}`} id="voice-status" data-phase={speech.phase} role={speechIssue?'alert':'status'}><div className="voice-status-line">{speech.active&&<span className="voice-level" aria-hidden="true"><i/><i/><i/></span>}<span>{speech.active?t(speech.phase==='starting'?'voiceStarting':speech.phase==='stopping'?'voiceStopping':'voiceListening'):speech.notice?t(speechCopy[speech.notice]):t('voiceHint')}</span>{speech.active&&<button type="button" className="voice-cancel" aria-label={t('voiceCancel')} onClick={speech.discardInterim}><X size={15}/></button>}</div>{speech.interim&&<p className="voice-interim"><span className="sr-only">{t('voiceInterim')}：</span>{speech.interim}</p>}</div>
@@ -233,6 +270,7 @@ export default function App() {
     {modal==='evidence'&&<Modal title={t('evidenceTitle')} lang={lang} onClose={()=>setModal(null)}><p className="evidence-context">{pick(scenario.title,lang)}</p><h3 className="table-evidence-title">{pick(evidence.title,lang)}</h3><ol className="table-evidence-lines">{evidence.lines.map((line,i)=><li key={i}>{pick(line,lang)}</li>)}</ol><p className="privacy-note">{t('evidenceAbout')}</p><p className="privacy-note">{t('evidenceFiction')}</p><div className="modal-actions"><button className="primary-button" onClick={()=>setModal(null)}>{t('backToTable')}<ArrowRight size={17}/></button></div></Modal>}
     {modal==='about'&&<Modal title={t('aboutTitle')} lang={lang} onClose={()=>setModal(null)}><div className="about-content"><p>{t('aboutBody')}</p><p>{scenario.space?pick({zh:'拖动或用方向键环顾，WASD、点击空地或方向按钮走动。走向人物会持续关注 TA；自由环顾后可恢复关注发言人。在场的人都能听见，走近不等于私下说。人物保持自己的位置，不会跟着你走。电梯停在本层，可开关门；办公室可走到白板旁、查看资料。',en:'Drag or use arrow keys to look; WASD, the floor or movement buttons to walk. Walking over keeps attention on that person. Resume speaker attention after free look. Everyone nearby can hear; walking closer is not private. People stay in place. The elevator remains on this floor with working doors; the office has a whiteboard and readable notes.'},lang):t('movementAbout')}</p><p>{t('voiceAbout')}</p><p>{t('voiceOutputAbout')}</p><div className="about-mode"><div><strong>{model?t('live'):pick(M.title,lang)}</strong><p>{t('modelAbout')}</p></div></div><h3>{t('source')}</h3><p>{t('sourceDetail')}</p><ul>{scenarios.map(s=><li key={s.id}>{pick(s.source.title,lang)}</li>)}</ul><p className="privacy-note">{t('privacyAbout')}</p></div></Modal>}
     {modal==='scenes'&&<Modal title={t('scenes')} lang={lang} onClose={()=>setModal(null)}><div className="scene-picker">{scenarios.map(s=><button className={`scene-choice ${nextScene===s.id?'chosen':''}`} aria-pressed={nextScene===s.id} key={s.id} onClick={()=>{setNextScene(s.id);setNextVariant(variantFor(s.id).id);}}><span className="scene-choice-top">{pick(s.category,lang)}<span>{nextScene===s.id&&<Check size={17}/>}</span></span><strong>{pick(s.room,lang)}</strong></button>)}</div><fieldset className="dinner-story-picker"><legend>{t('chooseOpening')}</legend>{variants.filter(v=>v.scene===nextScene).map(v=><button key={v.id} className="dinner-story-choice" aria-pressed={nextVariant===v.id} onClick={()=>setNextVariant(v.id)}><strong>{pick(v.title,lang)}</strong><span>{pick(tableEvidence[v.id].pressure,lang)}</span></button>)}</fieldset><div className="dinner-length" role="group" aria-label={t('practiceLength')}>{[8,12,18].map(n=><button key={n} aria-pressed={nextLength===n} onClick={()=>setNextLength(n)}>{n} {t('turn')}</button>)}</div>{turn>0&&<div className="switch-note"><p>{t('newDinner')}</p><button className="text-button" onClick={exportDinner}><Download size={15}/>{t('download')}</button></div>}<div className="modal-actions">{started&&!complete&&<button className="text-button" onClick={()=>setModal(null)}>{t('continue')}</button>}<button className="primary-button" onClick={()=>reset(nextScene,nextVariant,nextLength)}>{t('newStory')}<ArrowRight size={17}/></button></div></Modal>}
-    {modal==='report'&&<Modal title={t('reportTitle')} lang={lang} wide onClose={()=>setModal(null)}><p className="report-intro">{t('reportIntro')}</p>{turn===0?<p className="report-empty">{t('reportEmpty')}</p>:<div className="evidence-list">{messages.flatMap((m,i)=>m.role==='user'?[<article key={i}><span className="evidence-number">{String((i+1)/2).padStart(2,'0')}</span><div><span className="evidence-label">{t('evidence')}</span>{m.heard&&<p className="spatial-evidence">{t('heardBefore')} · {pick(scenario.characters.find(c=>c.id===m.heard!.speakerId)!.name,lang)}：“{m.heard.text}”</p>}<blockquote>“{m.text}”</blockquote>{m.targetId&&<p className="spatial-evidence">{t('speakTo')}：{pick(scenario.characters.find(c=>c.id===m.targetId)!.name,lang)}</p>}{m.room&&<p className="spatial-evidence">{t('roomEvidence')}：{roomEvidence(m.room)}</p>}{m.dinner&&(m.dinner.phase!=='settled'||m.dinner.choice)&&<p className="spatial-evidence">{t('eventEvidence')}：{pick(activeEvent({...drama,active:m.dinner.eventId})!.title,lang)}{m.dinner.choice&&` · ${actionEvidence(m.dinner.previous.find(r=>r.eventId===m.dinner!.eventId&&r.choice===m.dinner!.choice)!,lang).action}`}</p>}<span className="evidence-label">{t('after')} · {pick(scenario.characters.find(c=>c.id===messages[i+1]?.speakerId)!.name,lang)}</span><p>“{messages[i+1]?.text}”</p><p className="stage-cue">{messages[i+1]?.cue}</p><div className="reaction-recap">{messages[i+1]?.reactions?.map(r=><span key={r.characterId}>{pick(scenario.characters.find(c=>c.id===r.characterId)!.name,lang)}：{pick(gestures[r.gesture],lang)}</span>)}</div></div></article>]:[])}</div>}{dinner.records.length>0&&<section className="action-evidence" aria-label={t('actionLog')}><h3>{t('actionLog')}</h3>{dinner.records.map(record=>{const evidence=actionEvidence(record,lang);return <article key={record.eventId}><small>{evidence.title}</small><p><Hand size={14}/>{evidence.action}</p>{evidence.reply&&<><small>{t('actionSaid')} · {pick(scenario.characters[evidence.speaker].name,lang)}</small><blockquote>“{evidence.reply}”</blockquote></>}<span>{evidence.cue}</span></article>;})}</section>}<p className="report-note">{t('reportNote')}</p><div className="modal-actions report-actions"><button className="text-button" onClick={exportDinner}><Download size={16}/>{t('download')}</button>{complete&&maxTurns<MAX_DINNER_TURNS&&<button className="text-button" onClick={extendDinner}>{t('extendDinner').replace('{n}',String(nextDinnerLimit(maxTurns)-maxTurns))}</button>}{complete?<button className="primary-button" onClick={()=>reset(scenarioId,variantId)}><RotateCcw size={16}/>{t('restart')}</button>:<button className="primary-button" onClick={()=>setModal(null)}>{t('continue')}<ArrowRight size={16}/></button>}</div></Modal>}
+    {modal==='report'&&<DinnerReviewEntry lang={lang} scenario={scenario} messages={messages} complete={complete} hasReview={!!reviewSessionId} opening={openingReview} error={reviewError} onClose={()=>closeReview()} onReview={()=>void openReview()} onHistory={()=>closeReview('history')} onExport={exportDinner} onExtend={complete&&(turn<maxTurns||maxTurns<MAX_DINNER_TURNS)?extendDinner:undefined} onRestart={()=>reset(scenarioId,variantId)}/>}
+
   </div>;
 }

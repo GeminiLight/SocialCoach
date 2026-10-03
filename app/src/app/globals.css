@@ -731,6 +731,19 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dinner-experience .report-note { padding:16px 0 0; border-top:1px solid var(--dinner-line); }
 .dinner-experience .report-actions { justify-content:space-between; }
 .dinner-experience .report-empty { padding:36px 0; font-size:13px; color:var(--dinner-ink-secondary); }
+.dinner-experience .modal-review-entry .review-entry-meta {display:flex;justify-content:space-between;gap:12px;font-size:11px;color:var(--dinner-accent);}
+.dinner-experience .review-entry-intro {margin:12px 0 22px;font-size:13px;line-height:1.7;color:var(--dinner-ink-secondary);}
+.dinner-experience .review-entry-excerpt {padding:20px;border:1px solid var(--dinner-line);border-radius:var(--dinner-radius);background:var(--dinner-surface-raised);}
+.dinner-experience .review-entry-excerpt blockquote {margin:10px 0 0;font-family:var(--dinner-font-display);font-size:20px;line-height:1.65;overflow-wrap:anywhere;}
+.dinner-experience .review-entry-response {margin-top:20px;padding-top:16px;border-top:1px solid var(--dinner-line);}
+.dinner-experience .review-entry-response p {margin:8px 0 0;font-size:13px;line-height:1.7;color:var(--dinner-ink-secondary);overflow-wrap:anywhere;}
+.dinner-experience .review-entry-response small {margin-right:8px;color:var(--dinner-accent);}
+.dinner-experience .review-entry-primary {display:flex;flex-direction:column;gap:10px;margin-top:22px;}
+.dinner-experience .review-entry-primary .primary-button {justify-content:center;min-height:48px;}
+.dinner-experience .review-entry-primary p {margin:0;font-size:11px;line-height:1.6;color:var(--dinner-ink-secondary);}
+.dinner-experience .review-entry-secondary,.dinner-experience .review-entry-footer {display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:12px;}
+.dinner-experience .review-entry-footer {border-top:1px solid var(--dinner-line);padding-top:12px;}
+.dinner-experience .review-entry-error {font-size:12px;color:var(--dinner-error);line-height:1.6;}
 
 .dinner-experience .scene-loading,.dinner-experience .scene-fallback { width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--dinner-ink); font-family:var(--dinner-font-display); }
 .dinner-experience .scene-loading { font-size:23px; }

@@ -162,6 +162,7 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 | `learnerName` | `string` | — | |
 | `objectiveDone` | `boolean[]` | — | |
 | `outcome` | `string` | — | |
+| `sceneContext` | `SceneContext` | — | 3D 的公开现场记录；文字练习省略，仍走同一个任务与评分口径 |
 
 **响应：**
 
@@ -186,8 +187,13 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 | `weaknesses[].evidence` | `string` | 必须是转录里的原话 |
 | `knowledge` | `{theoryIds, caseIds, whyThis}` | 由 `retrieveKnowledge()` 检索，非模型编造 |
 | `deltas` | `Proficiency` | 有界、非负；服务端 clamp 后才发出 |
+| `sceneNotes` | `{evidence, observationId, note}[]?` | 3D 补充点评，最多三条；引文必须来自该 observationId 对应的同一次用户发言 |
 
 共享任务层会校验技能范围、引文确实来自用户（沉默事件只用于行为条目）、去重评分、过滤无证据评价/改写，并限定有证据的技能增量。引文存在不等于解释必然正确，语义公正性仍需行为评测。NPC 私有设定与预设成功/失败模板不传入复盘。
+
+`SceneContext = {kind:"3d", practiceId?:UUID, sceneId, openingId, observations:[{id,turn,learnerQuote,facts:string[]}], actions?:[{id,afterTurn,action}]}`。turn 为从 1 起的用户发言序号；afterTurn 为已完成的用户发言数，0 表示开口前。最多 24 组观察 / 动作；观察须精确匹配同一回合原话，ID 不重复，动作不能在转录之外的未来回合。仅含发言时的地点 / 坐立、明确对象和实际动作，不传镜头、NPC 私有设定、未发草稿或声音表情推断。3D 没有逐目标追踪，不传空数组冒充失败；点评仍核对真实转录。
+
+practiceId 标识设备上的同一局，继续后仍沿用、重练才更换；同局能力变化需引用新增发言，并去除已经计入的技能增量，实际值在 applyReport 后写入本地报告。取消会传递到模型任务，卸载后的结果不能写回。共享点评进一步区分最后一条 NPC 的待回答问题与用户已发生的执行问题，不因用户还没下一回合就扣分；改写只能使用原句之前已知事实，保持原有边界与承诺。
 
 ---
 
@@ -207,6 +213,8 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 **请求：** `{lang, practice:{title,background,roles:[{name,role,learner}]}, transcript:[{role:"learner"|"npc",name,text}], report:{verdict,summary,nextStep,strengths:[{evidence,behavior}],weaknesses:[{evidence,behavior,whyItMatters}],alternatives:[{original,better,why}],knowledge:{theoryIds,caseIds}}, history:[{question,answer}], question}`。
 
 `buildDebriefInput()` 排除 NPC 私有设定、教练提示和评分字段。最多六组历史、100 条转录、1000 字符问题、160 KB 请求；Zod 白名单剥离额外字段。既有速率限制适用。
+
+3D 可附同一 `sceneContext`，任务在调用前再次核对原话与观察。走近仍是公开谈话，举杯不推定饮酒 / 同意，坐立不推定逃避；问答使用真实回复判断效果，不能用 NPC 接受推定其内心感受。
 
 **响应：** `{evidence:string, answer:string, example:string, sources:[{kind:"theory"|"case",id:string}]}`。`example` 可为空；非空内容在 UI 明确标为示范，不进入真实转录。sources 只能来自本次检索，展示作者 / 书名 / 链接取自本地语料。有用户发言时 evidence 必须是连续真实原话；零发言时必须为空且只作概念指导。来源与引文不合规返回 502；请求不合规 400 / 超大 413。不呈现未验证的模型文本。
 

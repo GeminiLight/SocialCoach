@@ -6,6 +6,7 @@ import type { Scenario } from "@/data/corpus/types";
 import type { ChatMessage, Profile, Proficiency, Reflection, Report, Session } from "@/lib/types";
 import type { PatternResult } from "@/lib/tasks/types";
 import { DEVICE_KEY, OPEN_DAY_KEY } from "@/lib/analytics/keys";
+import {creditPracticeReport} from '@/lib/scene-credit';
 
 export type Theme = "system" | "light" | "dark";
 
@@ -172,8 +173,9 @@ export const useApp = create<AppState>()(
           // Only an ended, unassessed scene may apply a report. Late or repeated
           // model completions must never change proficiency/history again.
           if (!sess || sess.status !== "ended" || sess.report) return s;
+          const creditedReport=creditPracticeReport(sess,report,s.sessions);
           const allowed = new Set<SkillId>([...(s.profile?.goals ?? []), ...(sess?.scenario.skills ?? [])]);
-          for (const [k, v] of Object.entries(report.deltas)) {
+          for (const [k, v] of Object.entries(creditedReport.deltas)) {
             const key = k as SkillId;
             if (!allowed.has(key)) continue;
             const cur = prof[key] ?? 2.5;
@@ -183,7 +185,7 @@ export const useApp = create<AppState>()(
           return {
             proficiency: prof,
             practiceDays: s.practiceDays.includes(day) ? s.practiceDays : [...s.practiceDays, day],
-            sessions: s.sessions.map((x) => (x.id === id ? { ...x, report, status: "assessed", outcome: report.outcome } : x)),
+            sessions: s.sessions.map((x) => (x.id === id ? { ...x, report:creditedReport, status: "assessed", outcome: report.outcome } : x)),
           };
         }),
       addReflection: (id, r) => set((s) => ({ sessions: s.sessions.map((x) => (x.id === id ? { ...x, reflections: [...x.reflections, r] } : x)) })),

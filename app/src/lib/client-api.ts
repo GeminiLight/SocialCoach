@@ -1,6 +1,6 @@
 import type { Scenario } from "@/data/corpus/types";
-import type { Lang, SkillId } from "@/data/taxonomy";
-import type { Adaptation, ChatMessage, Prescription, Profile, Proficiency, Report, RetrievalTrace, RoleplayMeta } from "./types";
+import type { Lang } from "@/data/taxonomy";
+import type { Adaptation, Prescription, Profile, Proficiency, Report, RetrievalTrace, RoleplayMeta } from "./types";
 import { parsePartialJSON } from "./partial-json";
 import { byokConfig } from "./byok";
 import { withModelAccess } from "./model-access";
@@ -132,30 +132,34 @@ export function schedule(body: {
  * resolves with the server-sanitized final report.
  */
 export async function assessStream(
-  body: { scenario: Scenario; learnerCharacterId: string; messages: ChatMessage[]; lang: Lang; goals: SkillId[]; learnerName?: string; objectiveDone?: boolean[]; outcome?: string },
+  body: AssessInput,
   onPartial: (p: Partial<Report>) => void,
+  signal?:AbortSignal,
 ): Promise<Report> {
   const o = own();
   return watched("assess", !!o, body.lang, async () => {
+    signal?.throwIfAborted();
     if (o) {
       let acc = "";
-      return runAssess(body as AssessInput, o.llm, o.smart, (d) => {
+      return runAssess(body, o.llm, o.smart, (d) => {
+        signal?.throwIfAborted();
         acc += d;
         const p = parsePartialJSON<Report>(acc);
         if (p) onPartial(p);
-      });
+      },signal);
     }
     const full = await streamText("/api/assess", body, (acc) => {
       const cut = acc.indexOf("\n@@");
       const head = cut === -1 ? acc : acc.slice(0, cut);
       const p = parsePartialJSON<Report>(head);
       if (p) onPartial(p);
-    });
+    },signal);
     const FIN = "\n@@final\n";
     const err = full.indexOf(ERR);
     if (err !== -1) throw streamFailure(full.slice(err + ERR.length).trim());
     const fin = full.indexOf(FIN);
     if (fin === -1) throw new ApiError("Assessment ended unexpectedly.", 200, "stream");
+    signal?.throwIfAborted();
     return JSON.parse(full.slice(fin + FIN.length)) as Report;
   });
 }

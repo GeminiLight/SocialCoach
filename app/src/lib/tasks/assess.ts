@@ -1,4 +1,4 @@
-import { extractJSON, type LLM } from "@/lib/llm-core";
+import { extractJSON, LLMError, type LLM } from "@/lib/llm-core";
 import { assessSystem, pick, silenceMarker, transcriptBlock } from "@/lib/prompts";
 import { retrieveKnowledge } from "@/lib/retrieval";
 import type { Case, Scenario, Theory } from "@/data/corpus/types";
@@ -6,6 +6,7 @@ import { goalOutcome, hasQuote } from "@/lib/practice-policy";
 import type { ChatMessage, Report } from "@/lib/types";
 import { SKILLS, type Lang, type SkillId } from "@/data/taxonomy";
 import type { AssessInput } from "./types";
+import {validateSceneContext,sanitizeSceneNotes,SCENE_ASSESS_POLICY,type SceneContext} from '../scene-context';
 
 const skillIds = new Set(SKILLS.map((s) => s.id));
 
@@ -14,7 +15,7 @@ const list = <T,>(v: T[] | undefined): T[] => Array.isArray(v) ? v : [];
 const str = (v: unknown): string => typeof v === "string" ? v.trim() : "";
 const unrated = { zh: "这次对话还没有足够的原话证据支持评价。", en: "This conversation does not yet provide enough quoted evidence for an assessment." };
 
-export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theories: Theory[], cases: Case[], messages: ChatMessage[] = [], goals: SkillId[] = [], lang: Lang = "zh", objectiveDone: boolean[] = []): Report {
+export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theories: Theory[], cases: Case[], messages: ChatMessage[] = [], goals: SkillId[] = [], lang: Lang = "zh", objectiveDone: boolean[] = [], sceneContext?:SceneContext): Report {
   const spoken = messages.filter((m) => m.role === "learner").map((m) => m.text);
   const evidence = [...spoken, ...messages.filter((m) => m.role === "event" && m.kind === "silence").map((m) => silenceMarker(m.seconds ?? 0, lang))];
   const practiced = [...scenario.skills, ...(scenario.relatedSkills ?? [])];
@@ -47,6 +48,7 @@ export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theorie
   const outcome = raw.outcome === "success" || raw.outcome === "partial" || raw.outcome === "failure" ? raw.outcome : goalOutcome(objectiveDone);
   const verdictEvidence = hasQuote(raw.verdictEvidence, spoken) ? raw.verdictEvidence : undefined;
   return {
+    ...(sceneContext?{sceneNotes:sanitizeSceneNotes(raw.sceneNotes,sceneContext)}:{}),
     scoringVersion: 2, ratings, stars, outcome, verdictEvidence,
     verdict: verdictEvidence ? str(raw.verdict) : pick(unrated, lang),
     summary: verdictEvidence ? str(raw.summary) : "",
@@ -62,8 +64,11 @@ export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theorie
  * Diagnose the conversation. Validate evidence before exposing any report text.
  * The transport still supports @@final; raw, unverified assessments never flash in the UI.
  */
-export async function runAssess(input: AssessInput, llm: LLM, smartModel: string, onDelta?: (d: string) => void): Promise<Report> {
+export async function runAssess(input: AssessInput, llm: LLM, smartModel: string, onDelta?: (d: string) => void, signal?:AbortSignal): Promise<Report> {
+  signal?.throwIfAborted();
   const { scenario, learnerCharacterId, messages, goals, lang } = input;
+  let sceneContext:SceneContext|undefined;
+  try{sceneContext=validateSceneContext(input.sceneContext,messages);}catch{throw new LLMError(pick({zh:'现场记录与原话不一致，请重新打开复盘。',en:'The scene record does not match the transcript. Please reopen the debrief.'},lang),400);}
   const name = input.learnerName || pick(scenario.characters.find((c) => c.id === learnerCharacterId)!.name, lang);
   const transcript = transcriptBlock(messages, scenario, lang, name);
   const learnerText = messages.filter((m) => m.role === "learner").map((m) => m.text).join(" ");
@@ -77,20 +82,22 @@ export async function runAssess(input: AssessInput, llm: LLM, smartModel: string
   });
 
   const run = llm.chatStream({
+    signal,
     model: smartModel,
     maxTokens: 8000,
     effort: "medium",
-    system: [{ text: assessSystem(scenario, learnerCharacterId, lang, kb.theories, kb.cases, goals), cache: true }],
+    system: [{ text: assessSystem(scenario, learnerCharacterId, lang, kb.theories, kb.cases, goals)+(sceneContext?`\n\n3D OBSERVATION POLICY: ${SCENE_ASSESS_POLICY}`:''), cache: true }],
     messages: [
       {
         role: "user",
-        content: `TRANSCRIPT:\n${transcript}\n\nSimulation engine's objective tracking: ${JSON.stringify(input.objectiveDone ?? [])}; engine outcome: ${input.outcome ?? "n/a"} (verify against the transcript; you may disagree).\n\nProduce the assessment JSON. Write ratings, outcome, verdictEvidence, verdict, summary, strengths, weaknesses, alternatives, knowledge, reflectionQuestions, nextStep, deltas. Judge communication independently of the engine outcome.`,
+        content: `TRANSCRIPT:\n${transcript}\n\nSimulation engine's objective tracking: ${sceneContext?'not tracked in this 3D practice; judge the actual dialogue without assuming failure':JSON.stringify(input.objectiveDone ?? [])}; engine outcome: ${input.outcome ?? "n/a"} (verify against the transcript; you may disagree).${sceneContext?`\n\nPUBLIC SCENE OBSERVATIONS:\n${JSON.stringify(sceneContext)}`:''}\n\nProduce the assessment JSON. Write ratings, outcome, verdictEvidence, verdict, summary, strengths, weaknesses, alternatives, knowledge, reflectionQuestions, nextStep, deltas${sceneContext?', sceneNotes':''}. Judge communication independently of the engine outcome.`,
       },
     ],
   });
-  for await (const delta of run.deltas) { void delta; }
+  for await (const delta of run.deltas) { void delta; signal?.throwIfAborted(); }
+  signal?.throwIfAborted();
   if (run.refused()) throw new Error("The model declined this request.");
-  const report = sanitizeReport(extractJSON<Partial<Report>>(run.text()), scenario, kb.theories, kb.cases, messages, goals, lang, input.objectiveDone);
+  const report = sanitizeReport(extractJSON<Partial<Report>>(run.text()), scenario, kb.theories, kb.cases, messages, goals, lang, input.objectiveDone,sceneContext);
   onDelta?.(JSON.stringify(report));
   return report;
 }

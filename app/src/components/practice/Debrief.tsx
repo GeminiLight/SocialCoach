@@ -24,6 +24,7 @@ import { TurnMap } from "./TurnMap";
 import { caseById, theoryById } from "@/data/corpus";
 import { skillById, SKILLS, type SkillId } from "@/data/taxonomy";
 import { compColor } from "@/lib/format";
+import {SceneReview,sceneReviewCopy} from './SceneReview';
 
 const skillIds = new Set(SKILLS.map((s) => s.id));
 
@@ -35,13 +36,15 @@ export function Debrief({ session }: { session: Session }) {
   const [err, setErr] = useState<string | null>(null);
   const [partial, setPartial] = useState<Partial<Report> | null>(null);
   const inflight = useRef(false);
+  const assessment=useRef<AbortController|null>(null);
   const restarting = useRef(false);
   const sc = session.scenario;
   const report = session.report;
 
   const run = useCallback(async () => {
-    if (!canUseModel || !profile || inflight.current) return;
+    if (!canUseModel || (!profile&&!session.sceneContext) || inflight.current) return;
     inflight.current = true;
+    const controller=new AbortController();assessment.current=controller;
     try {
       const final = await assessStream(
         {
@@ -49,36 +52,43 @@ export function Debrief({ session }: { session: Session }) {
           learnerCharacterId: session.learnerCharacterId,
           messages: session.messages,
           lang,
-          goals: profile.goals,
-          learnerName: profile.name,
-          objectiveDone: session.objectiveDone,
+          goals: profile?.goals??sc.skills,
+          learnerName: profile?.name,
+          objectiveDone: session.sceneContext?undefined:session.objectiveDone,
           outcome: session.outcome,
+          sceneContext:session.sceneContext,
         },
-        (p) => setPartial(p),
+        (p) => {if(!controller.signal.aborted)setPartial(p);},
+        controller.signal,
       );
+      if(controller.signal.aborted)return;
       applyReport(session.id, final);
       track({ name: "debrief_view", ts: Date.now(), session: session.id, scenario: sc.custom ? "custom" : sc.id, stars: final.stars, outcome: final.outcome, scoring_version: final.scoringVersion, rated: final.scoringVersion === 2 ? !!final.ratings?.length : true });
       setPartial(null);
     } catch (e) {
+      if(controller.signal.aborted)return;
       console.error("[assess]", e);
       const raw = e instanceof Error ? e.message : "";
       const friendly = /JSON|position|Unexpected|garbled|unexpectedly/i.test(raw) ? t(lang, "rp_failed") : raw || t(lang, "error_generic");
       setErr(friendly);
       setPartial(null);
     } finally {
-      inflight.current = false;
+      if(assessment.current===controller){inflight.current=false;assessment.current=null;}
     }
   }, [profile, sc, session, lang, applyReport, canUseModel]);
+
+  useEffect(()=>()=>{assessment.current?.abort();assessment.current=null;inflight.current=false;},[session.id,lang]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- kick off an async request on mount
     if (canUseModel && session.status === "ended" && !report) void run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session.status, canUseModel]);
+  }, [session.status, canUseModel,lang]);
 
   const again = () => {
     if (restarting.current) return;
     restarting.current = true;
+    if(session.sceneContext){const c=session.sceneContext;router.push(`/3d?scene=${encodeURIComponent(c.sceneId)}&opening=${encodeURIComponent(c.openingId)}&restart=1`);return;}
     const s = buildSession(sc, session.origin, lang, session.adaptation ? { adaptation: session.adaptation } : undefined);
     addSession(s);
     router.push(`/practice/${s.id}`);
@@ -114,13 +124,14 @@ export function Debrief({ session }: { session: Session }) {
   if (!report && !hasPartial) {
     return (
       <div className="min-h-dvh pt-safe px-5 flex flex-col lg:mx-auto lg:w-full lg:max-w-[var(--focus-max)] lg:px-6">
-        <PracticeJourney phase={2} onBack={() => router.push("/")} />
+        <PracticeJourney phase={2} onBack={() => router.push(session.sceneContext?'/3d':"/")} />
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="flex-1 flex flex-col gap-8 pt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_var(--margin-w)] lg:gap-x-10 lg:items-start lg:pt-14">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col items-center text-center gap-4 lg:items-start lg:text-left">
-              <StarBurst n={n} of={sc.objectives.length} />
-              <h1 className="display text-[32px] leading-tight">{t(lang, outcomeKey)}</h1>
-              <p className="text-[14px] text-ink-3 max-w-[32ch]">{t(lang, "pr_ended_sub")}</p>
+              {session.sceneContext?<span className="eyebrow text-teal">SocialCoach · 3D</span>:<StarBurst n={n} of={sc.objectives.length} />}
+              <h1 className="display text-[32px] leading-tight">{session.sceneContext?pick(sceneReviewCopy.preparing,lang):t(lang, outcomeKey)}</h1>
+              <p className="text-[14px] text-ink-3 max-w-[32ch]">{session.sceneContext?pick(sceneReviewCopy.preparingNote,lang):t(lang, "pr_ended_sub")}</p>
+              {session.sceneContext&&<Quote text={session.messages.findLast(m=>m.role==='learner')?.text} session={session}/>}
             </div>
             <div className="card p-5">
               {err ? (
@@ -287,7 +298,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
   const router = useRouter();
   const toast = useToast((s) => s.show);
   const { proficiency, bookmarks, toggleBookmark, addReflection, updateReflection } = useApp();
-  const goals = useApp((s) => s.profile?.goals ?? []);
+  const goals = useApp((s) => s.profile?.goals) ?? session.scenario.skills;
   const sc = session.scenario;
   const [showTranscript, setShowTranscript] = useState(false);
   const assistant = useRef<DebriefAssistantHandle>(null);
@@ -319,7 +330,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
   return (
     <div className="min-h-dvh pt-safe pb-48 lg:pb-12 lg:mx-auto lg:w-full lg:max-w-[var(--focus-max)] lg:px-6">
       <div className="px-3 lg:px-0 mb-6">
-        <PracticeJourney phase={2} onBack={() => router.push("/")} actions={<IconButton label={t(lang, "rp_share")} onClick={share} disabled={streaming}><Share2 size={18} /></IconButton>} />
+        <PracticeJourney phase={2} onBack={() => router.push(session.sceneContext?'/3d':"/")} actions={<IconButton label={t(lang, "rp_share")} onClick={share} disabled={streaming}><Share2 size={18} /></IconButton>} />
       </div>
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_var(--margin-w)] lg:gap-x-10 lg:items-start">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }} className="px-5 flex flex-col gap-9 lg:px-0">
@@ -340,7 +351,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
             {rated && <Stars n={stars} of={quality ? 3 : sc.objectives.length} size={20} />}
             <span className="text-[12px] text-ink-3">{starLabel}</span>
           </div>
-          {quality && <p className="text-[12px] text-ink-3">{t(lang, "rp_stars_of", { n: session.objectiveDone.filter(Boolean).length, m: sc.objectives.length })}</p>}
+          {quality&&!session.sceneContext && <p className="text-[12px] text-ink-3">{t(lang, "rp_stars_of", { n: session.objectiveDone.filter(Boolean).length, m: sc.objectives.length })}</p>}
           {report.summary && <p className="text-[15px] leading-[1.65] text-ink-2 lg:max-w-[var(--measure)]">{report.summary}{streaming && !strengths.length && <Caret />}</p>}
         </header>
 
@@ -352,6 +363,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
               { id: "review-alternatives", label: "rp_alternatives" as const, show: alternatives.length > 0 },
               { id: "review-reflect", label: "rp_reflect" as const, show: questions.length > 0 },
             ].filter((item) => item.show).map((item) => <a key={item.id} href={`#${item.id}`} className="press shrink-0 inline-flex items-center justify-center rounded-full px-3 min-h-11 text-[13px] text-ink-2 hover:bg-inset">{t(lang, item.label)}</a>)}
+            {session.sceneContext&&<a href="#review-scene" className="press shrink-0 inline-flex items-center justify-center rounded-full px-3 min-h-11 text-[13px] text-ink-2 hover:bg-inset">{pick(sceneReviewCopy.title,lang)}</a>}
             <button onClick={() => assistant.current?.ask()} className="press shrink-0 inline-flex items-center justify-center rounded-full px-3 min-h-11 text-[13px] text-teal hover:bg-teal-soft">{t(lang, "da_title")}</button>
           </nav>
         )}
@@ -369,6 +381,8 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
             <TurnMap session={session} lang={lang} />
           </Section>
         )}
+
+        {session.sceneContext&&<SceneReview context={session.sceneContext} notes={report.sceneNotes} lang={lang}/>}
 
         {strengths.length > 0 && (
           <Section id="review-strengths" title={t(lang, "rp_strengths")}>
@@ -482,8 +496,8 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
         {!streaming && (
           <BottomBar className="px-5 pb-safe pb-6 pt-4 flex flex-col sm:flex-row gap-2 lg:px-0 lg:pb-0">
-            <Button requiresModel block size="lg" onClick={onAgain}><RotateCcw size={18} />{t(lang, "rp_practice_again")}</Button>
-            <Button size="lg" variant="ghost" onClick={() => router.push("/")} className="shrink-0">{t(lang, "rp_back_home")}</Button>
+            <Button requiresModel block size="lg" onClick={onAgain}><RotateCcw size={18} />{session.sceneContext?pick(sceneReviewCopy.repeat,lang):t(lang, "rp_practice_again")}</Button>
+            <Button size="lg" variant="ghost" onClick={() => router.push(session.sceneContext?'/3d':"/")} className="shrink-0">{session.sceneContext?pick(sceneReviewCopy.returnScene,lang):t(lang, "rp_back_home")}</Button>
           </BottomBar>
         )}
       </motion.div>

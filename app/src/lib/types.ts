@@ -1,5 +1,6 @@
 import type { ContextId, Lang, SkillId } from "@/data/taxonomy";
 import type { Scenario } from "@/data/corpus/types";
+import type {SceneContext,SceneNote} from './scene-context';
 
 export interface Profile {
   name: string;
@@ -94,6 +95,8 @@ export interface Alternative {
 }
 
 export interface Report {
+  /** Optional, quote-linked observations for an immersive practice. */
+  sceneNotes?: SceneNote[];
   /** Absent on legacy reports, whose stars counted completed objectives. */
   scoringVersion?: 2;
   ratings?: SkillRating[];
@@ -138,6 +141,8 @@ export interface DebriefExchange {
 export type SessionStatus = "briefing" | "active" | "ended" | "assessed";
 
 export interface Session {
+  /** Public per-turn evidence from a 3D practice; preserved in device exports. */
+  sceneContext?: SceneContext;
   id: string;
   scenario: Scenario;
   learnerCharacterId: string;

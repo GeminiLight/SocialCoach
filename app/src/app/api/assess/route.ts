@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     checkRateLimit(req);
     const body = (await req.json()) as AssessInput & { lang: string };
     const input = { ...body, lang: asLang(body.lang) };
-    return taskStream((onDelta) => runAssess(input, serverLLM, SMART_MODEL, onDelta), { final: true });
+    return taskStream((onDelta) => runAssess(input, serverLLM, SMART_MODEL, onDelta,req.signal), { final: true });
   } catch (e) {
     return fail(e);
   }

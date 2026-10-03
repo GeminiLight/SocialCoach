@@ -20,6 +20,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   const settings = useApp((s) => s.settings);
   const router = useRouter();
   const path = usePathname();
+  const immersiveReview=useApp(s=>s.sessions.some(session=>path===`/practice/${session.id}`&&session.sceneContext?.kind==='3d'&&(session.status==='ended'||session.status==='assessed')));
   const byok = useByok();
   const lang = useLang();
   const dinner = path === "/3d";
@@ -44,8 +45,8 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!hydrated || storageIssue) return;
-    if (!profile && path !== "/onboarding" && !dinner) router.replace("/onboarding");
-  }, [hydrated, storageIssue, profile, path, dinner, router]);
+    if (!profile && path !== "/onboarding" && !dinner&&!immersiveReview) router.replace("/onboarding");
+  }, [hydrated, storageIssue, profile, path, dinner,immersiveReview, router]);
 
   useEffect(() => {
     // Follow the resolved language, not just an explicit choice: before

@@ -9,7 +9,8 @@ export function dinnerTranscript(messages:Message[],records:Drama['records'],sce
   const lines:TranscriptLine[]=[];
   messages.forEach((message,index)=>{
     const turn=Math.ceil(index/2);
-    if(message.heard&&(message.heard.text!==messages[index-1]?.text||message.heard.speakerId!==messages[index-1]?.speakerId))lines.push({id:`heard-${index}`,turn,role:'npc',...message.heard});
+    const previous=messages[index-1];
+    if(message.heard&&!(message.heard.text===previous?.text&&message.heard.speakerId===previous?.speakerId)&&!(message.heard.text===previous?.interjection?.text&&message.heard.speakerId===previous?.interjection?.speakerId))lines.push({id:`heard-${index}`,turn,role:'npc',...message.heard});
     lines.push({id:`message-${index}`,turn,role:message.role,text:message.text,speakerId:message.speakerId,targetId:message.targetId,cue:message.cue});
     if(message.interjection)lines.push({id:`interjection-${index}`,turn,role:'npc',...message.interjection});
     if(message.role==='npc')for(const record of records.filter(r=>r.turn===turn)){
