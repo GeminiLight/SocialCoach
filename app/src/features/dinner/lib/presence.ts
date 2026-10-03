@@ -1,6 +1,6 @@
 /** Display-only timing. Never changes dialogue, world attention, or saved state. */
 export type Presence = { time:number; elapsed:number; cue:string; duration:number };
-export function createPresence():Presence {return {time:0,elapsed:0,cue:'',duration:0};}
+export function createPresence(id=''):Presence {const phase=[...id].reduce((n,c)=>n*31+c.charCodeAt(0),0)>>>0;return {time:id?(phase%490)/100:0,elapsed:0,cue:'',duration:0};}
 const smooth=(v:number)=>{const t=Math.max(0,Math.min(1,v));return t*t*(3-2*t);};
 export function advancePresence(state:Presence,{dt,line,speakerId,paused=false}:{dt:number;line:string;speakerId:string;paused?:boolean}) {
   const cue=`${speakerId}\u0000${line}`;

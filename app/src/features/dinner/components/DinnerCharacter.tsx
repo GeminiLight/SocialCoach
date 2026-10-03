@@ -5,7 +5,8 @@ import type { Character, Lang, Scenario } from '../lib/content';
 import type { Palette } from '../lib/palette';
 import type { Actor, World } from '../lib/room';
 import type { Reply } from '../lib/engine';
-import { attentionSubject, gazePose, playerEyeHeight, wrapAngle } from '../lib/attention';
+import { attentionSubject, eyeHeight, gazePose, playerEyeHeight, wrapAngle } from '../lib/attention';
+import { castAppearance } from '../lib/cast';
 import { actorBeat, playerBeat, type Drama } from '../lib/drama';
 import { silhouette, faceFeatures, curveGeometry, drapedPolygonGeometry, drapedCurveGeometry, clothSurface, type V3, type Ring } from '../lib/avatar';
 import type { DinnerSurfaces } from '../lib/surfaces';
@@ -31,27 +32,47 @@ function Panel({points,color,profile,lift=.005}:{points:V3[];color:string;profil
   return <mesh geometry={geometry} castShadow><meshStandardMaterial color={color} roughness={.9} side={DoubleSide}/></mesh>;
 }
 function Clothing({character,p}:{character:Character;p:Palette}) {
-  const feminine=character.hair==='bob',suit=character.outfit==='suit',color=p[character.palette];
+  const feminine=castAppearance(character.id).feminine,suit=character.outfit==='suit',blazer=character.outfit==='blazer',color=p[character.palette];
   const profile=jacketProfile(feminine);
   return <>
-    {suit&&<Form color={p.white} rings={[[.756,.135,.121,-.017],[.808,.112,.113,-.017],[.864,.107,.114,-.019]]}/>}
+    {(suit||blazer||character.outfit==='polo')&&<Form color={suit?p.white:color} rings={[[.756,.135,.121,-.017],[.808,.112,.113,-.017],[.864,.107,.114,-.019]]}/>}
     <group scale={[1,1.07,1]}>
-    {suit?<>
+    {suit||blazer?<>
       <Panel profile={profile} color={p.white} points={[[-.105,.80,.13],[.105,.80,.13],[.15,.58,.222],[0,.22,.238],[-.15,.58,.222]]}/>
-      <Panel profile={profile} lift={.011} color={p.wine} points={[[0,.757,.204],[.032,.718,.224],[.024,.666,.258],[.036,.30,.263],[0,.24,.265],[-.036,.30,.263],[-.024,.666,.258],[-.032,.718,.224]]}/>
+      {suit&&<Panel profile={profile} lift={.011} color={p.wine} points={[[0,.757,.204],[.032,.718,.224],[.024,.666,.258],[.036,.30,.263],[0,.24,.265],[-.036,.30,.263],[-.024,.666,.258],[-.032,.718,.224]]}/>}
       {[-1,1].map(side=><group key={side}>
-        <Panel profile={profile} lift={.010} color={p.navy} points={[[side*.135,.75,.146],[side*.34,.6,.221],[side*.242,.49,.26],[side*.29,.435,.253],[side*.042,.08,.26],[side*.135,.6,.244]]}/>
-        <Stroke profile={profile} color={p.navy} radius={.0024} points={[[side*.133,.744,.15],[side*.338,.599,.226],[side*.24,.49,.265],[side*.287,.435,.258],[side*.04,.08,.265]]}/>
-        <Panel profile={profile} lift={.016} color={p.white} points={[[side*.035,.775,.15],[side*.122,.785,.15],[side*.152,.687,.231],[side*.057,.653,.25]]}/>
+        <Panel profile={profile} lift={.010} color={color} points={[[side*.135,.75,.146],[side*.34,.6,.221],[side*.242,.49,.26],[side*.29,.435,.253],[side*.042,.08,.26],[side*.135,.6,.244]]}/>
+        <Stroke profile={profile} color={p.clothHighlight} radius={.0018} opacity={.4} points={[[side*.133,.744,.15],[side*.338,.599,.226],[side*.24,.49,.265],[side*.287,.435,.258],[side*.04,.08,.265]]}/>
+        {suit&&<Panel profile={profile} lift={.016} color={p.white} points={[[side*.035,.775,.15],[side*.122,.785,.15],[side*.152,.687,.231],[side*.057,.653,.25]]}/>}
       </group>)}
       <Stroke profile={profile} color={p.clothHighlight} radius={.003} points={[[-.28,.28,.228],[-.16,.278,.26]]}/>
-      <Panel profile={profile} lift={.012} color={p.porcelain} points={[[-.261,.283,.233],[-.248,.315,.232],[-.222,.286,.242],[-.199,.309,.245],[-.18,.281,.252]]}/>
+      {suit&&<Panel profile={profile} lift={.012} color={p.porcelain} points={[[-.261,.283,.233],[-.248,.315,.232],[-.222,.286,.242],[-.199,.309,.245],[-.18,.281,.252]]}/>}
+      {blazer&&<Oval position={[.12,.6,clothSurface(profile,.12,.6)+.024]} scale={[.024,.014,.007]} color={p.brass}/>}
       <Oval position={[.025,.02,.248]} scale={[.014,.014,.009]} color={p.woodEdge}/>
-    </>:character.outfit==='shirt'?<>
-      <Stroke profile={profile} color={p.clothHighlight} radius={.004} points={[[0,-.29,.212],[0,.19,.248],[0,.58,.232],[0,.71,.16]]}/>
-      {[-1,1].map(side=><Panel profile={profile} key={side} color={color} points={[[side*.012,.728,.144],[side*.127,.754,.133],[side*.207,.629,.206],[side*.098,.528,.256],[side*.028,.652,.203]]}/>)}
-      {[.51,.35,.19,.03,-.13].map(y=><Oval key={y} position={[.012,y,clothSurface(profile,.012,y)+.007]} scale={[.009,.009,.005]} color={p.porcelain}/>)}
-      <Stroke profile={profile} color={p.clothHighlight} radius={.0024} points={[[-.29,.41,.201],[-.16,.42,.242],[-.16,.235,.25],[-.22,.21,.239],[-.29,.24,.21],[-.29,.41,.201]]}/>
+    </>:character.outfit==='shirt'||character.outfit==='polo'?<>
+      {character.id==='senior'&&<Panel profile={profile} color={p.white} points={[[-.10,.71,0],[.1,.71,0],[.075,.22,0],[-.075,.22,0]]}/>}
+      {character.id==='senior'?[-1,1].map(side=><Stroke key={side} profile={profile} color={p.clothHighlight} radius={.003} points={[[side*.108,-.26,0],[side*.11,.28,0],[side*.12,.68,0]]}/>):<Stroke profile={profile} color={p.clothHighlight} radius={.004} points={[[0,-.29,.212],[0,.19,.248],[0,.58,.232],[0,.71,.16]]}/>}
+      {[-1,1].map(side=><Panel profile={profile} key={side} color={color} lift={.014} points={[[side*.012,.728,.144],[side*.127,.754,.133],[side*.207,.629,.206],[side*.098,.528,.256],[side*.028,.652,.203]]}/>)}
+      {(character.outfit==='polo'?[.62,.53]:[.51,.35,.19,.03,-.13]).map(y=>{const x=character.id==='senior'?.135:.012;return <Oval key={y} position={[x,y,clothSurface(profile,x,y)+.013]} scale={[.009,.009,.005]} color={p.porcelain}/>;})}
+      {character.outfit==='shirt'&&<Stroke profile={profile} color={p.clothHighlight} radius={.0024} points={[[-.29,.41,.201],[-.16,.42,.242],[-.16,.235,.25],[-.22,.21,.239],[-.29,.24,.21],[-.29,.41,.201]]}/>}
+      {character.outfit==='polo'&&[.10,.14,.18,.22].map(y=><Stroke profile={profile} key={y} color={p.white} radius={.003} opacity={.35} points={[[-.30,y,0],[0,y,0],[.30,y,0]]}/>)}
+    </>:character.outfit==='cardigan'?<>
+      <Panel profile={profile} color={p.white} points={[[-.12,.72,0],[.12,.72,0],[.075,.38,0],[.07,-.26,0],[-.07,-.26,0],[-.075,.38,0]]}/>
+      {[-1,1].map(side=><Stroke key={side} profile={profile} color={color} radius={.021} points={[[side*.125,.72,0],[side*.085,.42,0],[side*.078,.05,0],[side*.075,-.25,0]]}/>)}
+      {[.34,.14,-.06,-.24].map(y=><Oval key={y} position={[.09,y,clothSurface(profile,.09,y)+.025]} scale={[.013,.013,.006]} color={p.woodEdge}/>)}
+      {character.id==='aunt'&&<>
+        <Form color={p.oat} rings={[[.71,.166,.144,0],[.75,.153,.135,0],[.81,.128,.126,-.008]]}/>
+        <Panel profile={profile} color={p.oat} lift={.024} points={[[.08,.71,0],[.20,.61,0],[.18,.25,0],[.11,.18,0],[.08,.57,0]]}/>
+        {[.29,.36,.43,.50].map(y=><Stroke key={y} profile={profile} color={p.wine} radius={.005} points={[[.105,y,0],[.175,y+.02,0]]}/>)}
+      </>}
+    </>:character.outfit==='hoodie'?<>
+      <Form color={color} rings={[[.69,.173,.153,-.02],[.76,.190,.166,-.024],[.83,.165,.150,-.035],[.89,.12,.116,-.038]]}/>
+      {[-1,1].map(side=><Stroke key={side} profile={profile} color={p.oat} radius={.005} points={[[side*.09,.70,0],[side*.10,.50,0],[side*.09,.35,0]]}/>)}
+      <Stroke profile={profile} color={p.clothHighlight} opacity={.5} radius={.0035} points={[[-.23,.08,0],[-.18,.13,0],[.18,.13,0],[.23,.08,0],[.22,-.14,0],[-.22,-.14,0],[-.23,.08,0]]}/>
+    </>:character.outfit==='crewneck'?<>
+      <Form color={p.denim} rings={[[.71,.15,.136,-.02],[.745,.144,.132,-.02],[.78,.124,.12,-.022]]}/>
+      <Panel profile={profile} color={p.terracotta} points={[[-.11,.34,0],[.01,.34,0],[.01,.28,0],[-.11,.28,0]]}/>
+      <Panel profile={profile} color={p.denim} points={[[.03,.34,0],[.10,.34,0],[.10,.28,0],[.03,.28,0]]}/>
     </>:<>
       {[-1,1].map(side=><Stroke profile={profile} key={side} color={p.clothHighlight} radius={.002} points={[[side*.22,-.25,.166],[side*.18,.12,.219],[side*.25,.4,.2]]}/>)}
     </>}
@@ -65,7 +86,7 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
   const heldProps=useRef<Group>(null!);
   const wristRotation=useMemo(()=>({parent:new Quaternion(),target:new Quaternion(),euler:new Euler()}),[]);
   const eyes=useRef<(Group|null)[]>([]),relaxedHand=useRef<Group>(null!),cupHand=useRef<Group>(null!),phoneHand=useRef<Group>(null!),openHand=useRef<Group>(null!),leftRelaxed=useRef<Group>(null!);
-  const feminine=character.hair==='bob';
+  const appearance=castAppearance(character.id),feminine=appearance.feminine;
   const rig=useMemo(()=>garmentRig(feminine),[feminine]);
   const garment=useMemo(()=>{
     const material=new MeshStandardMaterial({color:p[character.palette],roughness:.86,bumpMap:surfaces.fabric,bumpScale:.0015});
@@ -83,8 +104,8 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
   const [hover, setHover] = useState(false);
   const rightForearm=useRef<Group>(null!);const leftForearm=useRef<Group>(null!);
   const pupils=useRef<Texture|null>(null);
-  const presence=useRef(createPresence()),posed=useRef(false),lowerLip=useRef<Group>(null!),brows=useRef<(Group|null)[]>([]);
-  useEffect(()=>{posed.current=false;},[character.id]);
+  const presence=useRef(createPresence(character.id)),posed=useRef(false),lowerLip=useRef<Group>(null!),brows=useRef<(Group|null)[]>([]);
+  useEffect(()=>{posed.current=false;presence.current=createPresence(character.id);},[character.id,actor]);
   const gesture = reaction?.gesture ?? 'idle';
   const emotion = reaction?.emotion ?? 'neutral';
 
@@ -95,7 +116,7 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
     const eventActive=!!drama.active&&drama.phase!=='settled';
     const pose=presencePose(timing,{index,active,reduced,event:eventActive});
     const t=timing.time,instant=reduced||!posed.current;posed.current=true;
-    root.current.position.set(actor.x,0,actor.z);root.current.rotation.y+=Math.atan2(Math.sin(actor.heading-root.current.rotation.y),Math.cos(actor.heading-root.current.rotation.y))*(reduced?1:1-Math.exp(-10*dt));
+    root.current.position.set(actor.x,0,actor.z);root.current.rotation.y+=Math.atan2(Math.sin(actor.heading-root.current.rotation.y),Math.cos(actor.heading-root.current.rotation.y))*(instant?1:1-Math.exp(-10*dt));
     const standAmount=actor.seated?0:1;
     torso.current.position.y=MathUtils.lerp(torso.current.position.y,1.32+standAmount*.4+(actor.moving?0:pose.breath),instant?1:1-Math.exp(-8*dt));
     [legL.current,legR.current].forEach((leg,i)=>{
@@ -109,12 +130,12 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
     const phoneAmount=player?Math.max(own.phone,drama.inventory==='phone'?.65:0):beat.phone;
     const eventTarget=beat.gaze>=0&&beat.gaze!==index?world.npcs[beat.gaze]:world.player;
     const subject=player?attentionSubject(world):eventTarget;
-    const gazeTarget=subject?{x:subject.x,z:subject.z,eye:subject===world.player?playerEyeHeight(subject):subject.seated?2.48:2.88}:{x:actor.x+Math.sin(world.viewYaw)*6,z:actor.z+Math.cos(world.viewYaw)*6,eye:playerEyeHeight(actor)+Math.tan(world.viewPitch)*6};
+    const gazeTarget=subject?{x:subject.x,z:subject.z,eye:subject===world.player?playerEyeHeight(subject):eyeHeight(subject)}:{x:actor.x+Math.sin(world.viewYaw)*6,z:actor.z+Math.cos(world.viewYaw)*6,eye:playerEyeHeight(actor)+Math.tan(world.viewPitch)*6};
     const speaker=world.npcs.find(n=>n.id===world.speakerId);
     if(!player&&!actor.moving&&speaker&&speaker!==actor&&pose.speakerAttention>0){
       const amount=pose.speakerAttention;
       gazeTarget.x=MathUtils.lerp(gazeTarget.x,speaker.x,amount);gazeTarget.z=MathUtils.lerp(gazeTarget.z,speaker.z,amount);
-      gazeTarget.eye=MathUtils.lerp(gazeTarget.eye,speaker.seated?2.48:2.88,amount);
+      gazeTarget.eye=MathUtils.lerp(gazeTarget.eye,eyeHeight(speaker),amount);
     }
     if(!player&&!actor.moving&&actor.seated&&pose.tableAttention>0){
       const amount=pose.tableAttention;
@@ -128,9 +149,9 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
     const speed = instant ? 1 : 1-Math.exp(-9*Math.min(dt,.05));
     torso.current.rotation.y=MathUtils.lerp(torso.current.rotation.y,gaze.torso,speed);
     torso.current.rotation.x = MathUtils.lerp(torso.current.rotation.x, gesture === 'lean' ? .12 : actor.seated?-.008:0, speed);
-    torso.current.rotation.z=MathUtils.lerp(torso.current.rotation.z,actor.moving||toast>.01||phoneAmount>.01?0:index===1?-.012:index===2?.009:0,speed);
+    torso.current.rotation.z=MathUtils.lerp(torso.current.rotation.z,actor.moving||toast>.01||phoneAmount>.01?0:appearance.restTilt,speed);
     head.current.rotation.y = MathUtils.lerp(head.current.rotation.y, gaze.head, speed);
-    head.current.rotation.x = MathUtils.lerp(head.current.rotation.x,gaze.pitch+(gesture==='nod'&&!reduced?Math.sin(Math.min(1,timing.elapsed/1.4)*Math.PI)*.035:emotion==='annoyed'?-.025:0)+pose.emphasis*.012,speed);
+    head.current.rotation.x = MathUtils.lerp(head.current.rotation.x,gaze.pitch+(gesture==='nod'&&!reduced?Math.sin(Math.min(1,timing.elapsed/1.4)*Math.PI)*.035:emotion==='annoyed'?-.025:0)+pose.emphasis*.012*appearance.energy,speed);
     const residual=wrapAngle(Math.atan2(gazeTarget.x-actor.x,gazeTarget.z-actor.z)-root.current.rotation.y-torso.current.rotation.y-head.current.rotation.y);
     if(pupils.current){
       pupils.current.offset.x=MathUtils.lerp(pupils.current.offset.x,MathUtils.clamp(-residual*.16,-.09,.09),speed);
@@ -152,18 +173,19 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
     rightForearm.current.getWorldQuaternion(wristRotation.parent);
     wristRotation.target.setFromEuler(wristRotation.euler.set(sip*.14,root.current.rotation.y+torso.current.rotation.y,0));
     heldProps.current.quaternion.copy(wristRotation.parent).invert().multiply(wristRotation.target);
-    mouth.current.scale.y=.0018+pose.speech*.0055;
-    lowerLip.current.position.y=-pose.speech*.004;
+    mouth.current.scale.y=.0018+pose.speech*.0055*appearance.energy;
+    lowerLip.current.position.y=-pose.speech*.004*appearance.energy;
     brows.current.forEach((brow,i)=>{if(brow)brow.position.y=faceFeatures(character.id).brow+pose.emphasis*(i===0?.003:.002);});
     relaxedHand.current.visible=!glass.current?.visible&&!phone.current.visible;
     cupHand.current.visible=!!glass.current?.visible;phoneHand.current.visible=phone.current.visible;
     openHand.current.visible=player&&own.palm>.02;leftRelaxed.current.visible=!openHand.current.visible;
   });
   useEffect(() => { document.body.style.cursor = hover ? 'pointer' : ''; return () => { document.body.style.cursor = ''; }; }, [hover]);
-  const skin=['aunt','mom','dad'].includes(character.id)?p.skinMature:character.hair==='bob'?p.skin:p.skinWarm;
+  const skin=p[appearance.skin];
   const sleeve=p[character.palette];
   const wineGlass=scenario.id!=='family'&&(player?drama.inventory==='glass':index===0);
   return <group ref={root} position={[actor.x,0,actor.z]} rotation={[0,actor.heading,0]} onClick={e=>{e.stopPropagation();if(e.delta<5&&!player)onSelect();}} onPointerOver={e=>{e.stopPropagation();setHover(true);}} onPointerOut={()=>setHover(false)}>
+    <group scale={[appearance.build[0],1,appearance.build[2]]}>
     {[-1,1].map((side,i)=><group key={side} ref={i===0?legL:legR} position={[side*.185,actor.seated?1.01:1.41,0]} rotation={[actor.seated?-Math.PI/2:0,0,0]}>
       <primitive object={trousers[i].mesh}/>
       <Stroke color={p.clothHighlight} radius={.002} points={[[0,-.06,.171],[0,-.29,.16],[0,-.62,.146]]}/>
@@ -179,7 +201,7 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
       </primitive>
       </primitive>
     </group>)}
-    <group ref={torso} position={[0,actor.seated?1.32:1.72,0]}>
+    <group ref={torso} scale={[1,appearance.build[1],1]} position={[0,actor.seated?1.32:1.72,0]}>
       <primitive object={garment}/>
       <Clothing character={character} p={p}/>
       <DinnerFace character={character} p={p} emotion={emotion} head={head} eyes={eyes} pupils={pupils} mouth={mouth} lowerLip={lowerLip} brows={brows}/>
@@ -202,6 +224,7 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
         </primitive>
       </primitive>)}
       </primitive>
+    </group>
     </group>
   </group>;
 }

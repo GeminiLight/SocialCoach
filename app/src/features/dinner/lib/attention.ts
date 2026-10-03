@@ -1,8 +1,9 @@
 import type { Actor, World, ViewMode } from './room';
+import { castEyeHeight } from './cast';
 
 export const wrapAngle=(value:number)=>Math.atan2(Math.sin(value),Math.cos(value));
 const clamp=(value:number,min:number,max:number)=>Math.max(min,Math.min(max,value));
-export const eyeHeight=(actor:Actor)=>actor.seated?2.48:2.88;
+export const eyeHeight=(actor:Actor)=>castEyeHeight(actor.id,actor.seated);
 export const playerEyeHeight=(actor:Actor)=>actor.seated?2.58:2.98;
 export function attentionSubject(world:World,speakerId=world.speakerId):Actor|undefined {
   if(world.attentionMode==='free')return;

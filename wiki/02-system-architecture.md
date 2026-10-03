@@ -249,6 +249,8 @@ pnpm lint
 
 `app/src/features/dinner` 从独立原型导入，`/3d` 的客户端动态加载 WebGL，无额外服务 / iframe。`DinnerEntry` 仅引用静态截图，不加载 Three.js；公告设备标记与饭局存档独立于 Zustand 主档案。3D 的颜色和选择器有前缀，返回主站不改变纸面样式。
 
+人物身份由场景 `content.ts` 指定，`cast.ts` 按稳定角色 ID 提供九人的脸型、年龄表现、头发、体型与动作细节；不再从 bob 发型推断身体形状。服装 / 发型 / 色板与场景人物一致，体型缩放覆盖骨架和附件，眼高同时供视线与标签投影使用。仅影响呈现，不增加存档字段或模型事实。
+
 `directDinner()` → 已配置 BYOK：浏览器 `runDinner()` / `makeByokLLM()`；否则 `/api/dinner/direct` → `runDinner()` / `serverLLM`。任务层共用 `jsonCall()`、严格场景 / 事件校验，单次请求支持取消。复用主站 `health` 和限流，无新密钥、账号或服务端存储。详情见 [3D 接入说明](./archive/specs/spec-3d-integration.md)。
 
 人物显示由 `avatar.ts` 生成面部 / 发型 / 手部，`anatomy.ts` 生成连续衣身、裤腿和静止骨骼绑定。衣身曲面仅在资源创建时提取，每帧只更新骨骼变换；`DinnerFace` 的颈部下端固定，眼睛与发型跟随头部骨骼。手与物件共用手腕坐标。全部仍在按需加载的 WebGL 模块内，不改变对话、存档、API 或模型数据流。姿态重建与连接问题见 [人物几何复盘](./81-postmortem-character-geometry.md)。

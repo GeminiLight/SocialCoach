@@ -4,7 +4,7 @@ export const l = (zh: string, en: string): L => ({ zh, en });
 export const pick = (value: L, lang: Lang) => value[lang];
 export type Emotion = 'neutral' | 'pressing' | 'annoyed' | 'thinking' | 'supportive';
 export type Gesture = 'idle' | 'toast' | 'lean' | 'fold' | 'nod';
-export type Character = { id: string; name: L; role: L; description: L; outfit: 'suit' | 'shirt' | 'dress'; palette: 'navy' | 'sage' | 'wine'; hair: 'short' | 'bob' | 'swept'; glasses: boolean; };
+export type Character = { id: string; name: L; role: L; description: L; outfit: 'suit' | 'shirt' | 'dress' | 'blazer' | 'cardigan' | 'polo' | 'crewneck' | 'hoodie'; palette: 'navy' | 'sage' | 'wine' | 'charcoal' | 'denim' | 'oat' | 'terracotta' | 'teal' | 'white'; hair: 'short' | 'bob' | 'swept' | 'bun' | 'wave' | 'crop' | 'ponytail' | 'fringe'; glasses: boolean; };
 export type Scenario = {
   id: 'work' | 'family' | 'school'; category: L; title: L; subtitle: L;
   room: L; time: string; goal: L; opening: L; openingCue: L;
@@ -21,8 +21,8 @@ export const scenarios: Scenario[] = [
     openingCue: l('陈总举着杯子，没有放下。桌上的笑声停了。', 'Mr. Chen keeps his glass raised. The laughter at the table stops.'),
     characters: [
       { id: 'chen', name: l('陈总', 'Mr. Chen'), role: l('你的领导', 'Your boss'), description: l('坐主位。刚拿下客户续约，今晚已经敬了三轮酒。', 'At the head of the table. He secured the renewal and has already led three rounds of toasts.'), outfit: 'suit', palette: 'navy', hair: 'swept', glasses: false },
-      { id: 'lin', name: l('林姐', 'Ms. Lin'), role: l('客户负责人', 'Client lead'), description: l('坐在领导旁边。更关心下周的交付，也在看你怎样接话。', 'Beside your boss. She cares about next week’s delivery and is watching your reply.'), outfit: 'dress', palette: 'wine', hair: 'bob', glasses: false },
-      { id: 'zhou', name: l('小周', 'Zhou'), role: l('同组同事', 'Your teammate'), description: l('和你一起做项目。他也没有喝酒，但暂时没有开口。', 'Worked on the project with you. He isn’t drinking either, but hasn’t spoken.'), outfit: 'shirt', palette: 'sage', hair: 'short', glasses: true },
+      { id: 'lin', name: l('林姐', 'Ms. Lin'), role: l('客户负责人', 'Client lead'), description: l('坐在领导旁边。更关心下周的交付，也在看你怎样接话。', 'Beside your boss. She cares about next week’s delivery and is watching your reply.'), outfit: 'blazer', palette: 'charcoal', hair: 'bun', glasses: false },
+      { id: 'zhou', name: l('小周', 'Zhou'), role: l('同组同事', 'Your teammate'), description: l('和你一起做项目。他也没有喝酒，但暂时没有开口。', 'Worked on the project with you. He isn’t drinking either, but hasn’t spoken.'), outfit: 'shirt', palette: 'denim', hair: 'short', glasses: true },
     ],
     suggestions: [l('陈总，这杯我用茶敬您，项目我一定扛住。', 'Mr. Chen, let me toast you with tea. You can count on me for the project.'), l('谢谢您，我今天不喝酒。茶我陪您。', 'Thank you. I’m not drinking tonight, but I’ll join you with tea.'), l('不给面子和不喝酒，是两回事吧？', 'Not drinking and disrespecting you are two different things, aren’t they?')],
     source: { title: l('原创虚构剧情：庆功宴上的劝酒', 'Original fiction: a toast at the project dinner'), type: 'original-fiction', path: 'wiki/archive/specs/spec-3d-integration.md#fiction' },
@@ -35,9 +35,9 @@ export const scenarios: Scenario[] = [
     opening: l('你表妹都订婚了。你到底还想挑到什么时候？', 'Your cousin is engaged already. How much longer are you going to be so picky?'),
     openingCue: l('大姨放下筷子。妈妈看向你，爸爸低头喝了一口茶。', 'Your aunt puts down her chopsticks. Mom looks at you. Dad takes a sip of tea.'),
     characters: [
-      { id: 'aunt', name: l('大姨', 'Aunt Mei'), role: l('热心的长辈', 'Your outspoken aunt'), description: l('张罗了这顿饭，已经替你物色了一位相亲对象。', 'Organized this dinner. She already has a date in mind for you.'), outfit: 'dress', palette: 'wine', hair: 'bob', glasses: false },
-      { id: 'mom', name: l('妈妈', 'Mom'), role: l('你的妈妈', 'Your mother'), description: l('夹在你和长辈之间，想听到一个能让大家安心的回答。', 'Caught between you and the relatives. She wants an answer that reassures everyone.'), outfit: 'shirt', palette: 'sage', hair: 'bob', glasses: false },
-      { id: 'dad', name: l('爸爸', 'Dad'), role: l('你的爸爸', 'Your father'), description: l('话不多。面前的茶已经续了三次，一直在听。', 'Quiet. His tea has been refilled three times. He’s been listening.'), outfit: 'suit', palette: 'navy', hair: 'swept', glasses: true },
+      { id: 'aunt', name: l('大姨', 'Aunt Mei'), role: l('热心的长辈', 'Your outspoken aunt'), description: l('张罗了这顿饭，已经替你物色了一位相亲对象。', 'Organized this dinner. She already has a date in mind for you.'), outfit: 'cardigan', palette: 'wine', hair: 'wave', glasses: false },
+      { id: 'mom', name: l('妈妈', 'Mom'), role: l('你的妈妈', 'Your mother'), description: l('夹在你和长辈之间，想听到一个能让大家安心的回答。', 'Caught between you and the relatives. She wants an answer that reassures everyone.'), outfit: 'cardigan', palette: 'sage', hair: 'crop', glasses: false },
+      { id: 'dad', name: l('爸爸', 'Dad'), role: l('你的爸爸', 'Your father'), description: l('话不多。面前的茶已经续了三次，一直在听。', 'Quiet. His tea has been refilled three times. He’s been listening.'), outfit: 'polo', palette: 'oat', hair: 'swept', glasses: true },
     ],
     suggestions: [l('我知道您关心我，但结婚的时间我想自己决定。', 'I know you care, but I want to decide when I get married.'), l('今天先好好吃饭，相亲的事我们私下聊。', 'Let’s enjoy dinner. We can talk about introductions privately.'), l('这是我的生活，不用拿我和表妹比。', 'This is my life. Please don’t compare me with my cousin.')],
     source: { title: l('原创虚构剧情：被全桌追问的婚事', 'Original fiction: marriage questions over dinner'), type: 'original-fiction', path: 'wiki/archive/specs/spec-3d-integration.md#fiction' },
@@ -50,9 +50,9 @@ export const scenarios: Scenario[] = [
     opening: l('这次主要还是我带得好。你们做执行也挺辛苦的。', 'My leadership really made this win happen. You all worked hard on the execution, too.'),
     openingCue: l('学长把奖杯拉到自己面前。两位队友交换了一下眼神。', 'Your senior pulls the trophy toward himself. Your teammates exchange a look.'),
     characters: [
-      { id: 'senior', name: l('许学长', 'Xu'), role: l('项目队长', 'Team captain'), description: l('负责汇报和对外联络，习惯代表整支队伍讲话。', 'Handled the presentation and external coordination. Usually speaks for the team.'), outfit: 'shirt', palette: 'navy', hair: 'swept', glasses: false },
-      { id: 'yue', name: l('小月', 'Yue'), role: l('设计队友', 'Designer'), description: l('负责设计，知道你连续熬夜写完了核心代码。', 'Led design. Knows you stayed up late to finish the core code.'), outfit: 'dress', palette: 'wine', hair: 'bob', glasses: false },
-      { id: 'kai', name: l('阿凯', 'Kai'), role: l('开发队友', 'Developer'), description: l('和你一起调试，不喜欢争执，但在等有人开口。', 'Debugged with you. Doesn’t like arguments, but is waiting for someone to speak.'), outfit: 'shirt', palette: 'sage', hair: 'short', glasses: true },
+      { id: 'senior', name: l('许学长', 'Xu'), role: l('项目队长', 'Team captain'), description: l('负责汇报和对外联络，习惯代表整支队伍讲话。', 'Handled the presentation and external coordination. Usually speaks for the team.'), outfit: 'shirt', palette: 'terracotta', hair: 'swept', glasses: false },
+      { id: 'yue', name: l('小月', 'Yue'), role: l('设计队友', 'Designer'), description: l('负责设计，知道你连续熬夜写完了核心代码。', 'Led design. Knows you stayed up late to finish the core code.'), outfit: 'crewneck', palette: 'white', hair: 'ponytail', glasses: false },
+      { id: 'kai', name: l('阿凯', 'Kai'), role: l('开发队友', 'Developer'), description: l('和你一起调试，不喜欢争执，但在等有人开口。', 'Debugged with you. Doesn’t like arguments, but is waiting for someone to speak.'), outfit: 'hoodie', palette: 'teal', hair: 'fringe', glasses: true },
     ],
     suggestions: [l('汇报确实重要，核心代码和设计也值得一起讲清楚。', 'The presentation mattered. Let’s name the code and design contributions too.'), l('我们把每个人做的部分写进总结吧。', 'Let’s put everyone’s contribution in the write-up.'), l('执行？核心代码可是我写的。', 'Execution? I wrote the core code.')],
     source: { title: l('原创虚构剧情：庆功时的贡献归属', 'Original fiction: claiming credit after a team win'), type: 'original-fiction', path: 'wiki/archive/specs/spec-3d-integration.md#fiction' },

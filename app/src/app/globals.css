@@ -507,6 +507,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   --dinner-scene-navy: oklch(.31 .033 254);
   --dinner-scene-sage: oklch(.52 .037 131);
   --dinner-scene-wine: oklch(.37 .065 24);
+  --dinner-scene-charcoal: oklch(.34 .015 255);
+  --dinner-scene-denim: oklch(.51 .051 250);
+  --dinner-scene-oat: oklch(.73 .035 78);
+  --dinner-scene-terracotta: oklch(.53 .073 42);
+  --dinner-scene-teal: oklch(.44 .045 184);
   --dinner-scene-white: oklch(.90 .017 86);
   --dinner-scene-leaf: oklch(.40 .056 135);
   --dinner-scene-stem: oklch(.30 .039 133);
@@ -634,6 +639,18 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dinner-experience .portrait-navy .portrait-body { background:var(--dinner-scene-navy); }
 .dinner-experience .portrait-wine .portrait-body { background:var(--dinner-scene-wine); }
 .dinner-experience .portrait-sage .portrait-body { background:var(--dinner-scene-sage); }
+.dinner-experience .portrait-charcoal .portrait-body { background:var(--dinner-scene-charcoal); }
+.dinner-experience .portrait-denim .portrait-body { background:var(--dinner-scene-denim); }
+.dinner-experience .portrait-oat .portrait-body { background:var(--dinner-scene-oat); }
+.dinner-experience .portrait-terracotta .portrait-body { background:var(--dinner-scene-terracotta); }
+.dinner-experience .portrait-teal .portrait-body { background:var(--dinner-scene-teal); }
+.dinner-experience .portrait-white .portrait-body { background:var(--dinner-scene-white); }
+.dinner-experience .hair-crop,.dinner-experience .hair-short { height:12px; }
+.dinner-experience .hair-wave { width:23px; height:25px; left:8px; border-radius:40%; }
+.dinner-experience .hair-bun::after { content:''; position:absolute; right:0; top:0; width:8px; height:8px; border-radius:50%; background:var(--dinner-scene-hair); }
+.dinner-experience .hair-ponytail { height:28px; clip-path:polygon(0 0,100% 0,100% 100%,75% 90%,75% 35%,30% 32%,0 60%); }
+.dinner-experience .hair-fringe { clip-path:polygon(0 0,100% 0,100% 65%,70% 70%,45% 55%,15% 75%,0 65%); }
+.dinner-experience .portrait-dad .portrait-hair { background:var(--dinner-scene-hairGray); }
 .dinner-experience .cast-details { flex:1; }
 .dinner-experience .cast-details strong { display:flex; align-items:baseline; gap:7px; font-size:12px; font-weight:500; }
 .dinner-experience .cast-details strong small { color:var(--dinner-ink-secondary); font-size:10px; font-weight:400; }

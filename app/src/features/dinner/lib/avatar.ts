@@ -1,5 +1,6 @@
 import { BufferGeometry, Float32BufferAttribute, Vector3, CatmullRomCurve3, TubeGeometry, SphereGeometry, Matrix4, Quaternion, Color, CanvasTexture, SRGBColorSpace, DataTexture, RepeatWrapping, ShapeUtils, Vector2 } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { castAppearance } from './cast';
 
 export type V3 = [number, number, number];
 export type Ring = [y: number, width: number, depth: number, z?: number];
@@ -57,18 +58,7 @@ export function skinPigment(geometry:BufferGeometry,base:string,shadow:string,wa
   }
   geometry.setAttribute('color',new Float32BufferAttribute(colors,3));return geometry;
 }
-const features:Record<string,{width:number;jaw:number;eye:number;nose:number;mouth:number;brow:number;part:number}>={
-  chen:{width:1.035,jaw:1.10,eye:.108,nose:1.10,mouth:1.07,brow:-.004,part:-.028},
-  lin:{width:.94,jaw:.96,eye:.103,nose:.91,mouth:1.04,brow:.002,part:.036},
-  zhou:{width:.965,jaw:.95,eye:.101,nose:.94,mouth:.96,brow:.004,part:.008},
-  aunt:{width:1.015,jaw:1.09,eye:.104,nose:1.02,mouth:1.03,brow:-.002,part:-.014},
-  mom:{width:.925,jaw:1.01,eye:.097,nose:.93,mouth:.96,brow:.006,part:.038},
-  dad:{width:1.02,jaw:1.05,eye:.106,nose:1.07,mouth:1.02,brow:-.003,part:-.018},
-  senior:{width:.985,jaw:1.025,eye:.106,nose:1.0,mouth:1.02,brow:-.001,part:-.03},
-  yue:{width:.915,jaw:.91,eye:.101,nose:.87,mouth:.97,brow:.006,part:-.04},
-  kai:{width:.98,jaw:.94,eye:.103,nose:.95,mouth:.98,brow:.001,part:.014},
-};
-export function faceFeatures(id:string){return features[id]??{width:1,jaw:1,eye:.105,nose:1,mouth:1,brow:0,part:0};}
+export function faceFeatures(id:string){return castAppearance(id).face;}
 const faceProfile:Ring[] = [
   // The nape continues into the collar; there is no detached cylinder under the jaw.
   [-.64,.139,.111,-.048],[-.52,.122,.106,-.051],[-.42,.116,.107,-.048],
@@ -79,11 +69,11 @@ const faceProfile:Ring[] = [
 ];
 function portraitProfile(id:string):Ring[] {
   const f=faceFeatures(id);
-  const feminine=['lin','aunt','mom','yue'].includes(id);
+  const feminine=castAppearance(id).feminine;
   const profile=feminine?[
     [-.74,.23,.22,.015],[-.60,.18,.205,.02],[-.50,.128,.13,-.012],...faceProfile.slice(2),
   ] as Ring[]:faceProfile;
-  return profile.map(([y,w,d,z])=>[y,w*f.width*(y<-.2?f.jaw:1),d,z]);
+  return profile.map(([y,w,d,z])=>[y,w*f.width*(y<-.2?f.jaw:y<.03?f.cheek:y<.31?f.temple:1),d,z]);
 }
 export function profileAt(rings:Ring[],y:number):Ring {
   let i=rings.findIndex((r,n)=>n<rings.length-1&&y>=r[0]&&y<=rings[n+1][0]);
@@ -238,22 +228,22 @@ export function eyeTexture(p:{sclera:string;skinShadow:string;iris:string;dark:s
   c.globalAlpha=.25;c.beginPath();c.arc(277,142,4,0,Math.PI*2);c.fill();
   const texture=new CanvasTexture(canvas);texture.colorSpace=SRGBColorSpace;texture.anisotropy=4;return texture;
 }
-export function scalpGeometry(bob:boolean,swept:boolean,mature:boolean,id='') {
-  const positions:number[]=[],indices:number[]=[],uv:number[]=[],segments=96,rows=40,f=faceFeatures(id);
+export function scalpGeometry(_bob:boolean,_swept:boolean,_mature:boolean,id='') {
+  const positions:number[]=[],indices:number[]=[],uv:number[]=[],segments=96,rows=40,f=faceFeatures(id),hair=castAppearance(id).hair;
   for(let i=0;i<=rows;i++)for(let j=0;j<=segments;j++){
     const a=j/segments*Math.PI*2,front=Math.cos(a),side=Math.abs(Math.sin(a));
     const blend=Math.max(0,Math.min(1,(front-.18)/.58)),transition=blend*blend*(3-2*blend);
-    const fringe=(bob?.177:mature?.218:.165)+side*.038+Math.sin(a)*f.part;
-    const nape=bob?(id==='yue'?-.28:id==='aunt'?-.22:-.31):-.08;
+    const fringe=hair.fringe+side*.038+Math.sin(a)*f.part;
+    const nape=hair.nape;
     const hem=nape+(fringe-nape)*transition;
     const theta=i/rows*Math.acos(Math.max(-.96,Math.min(.96,hem/.428)));
     // A swept crown with broad carved locks, not a hemispherical helmet or wire strands.
-    const sweep=Math.sin(a+.65)*Math.sin(theta)*(swept?.025:.008);
-    const locks=Math.sin(a*(bob?13:17)+theta*(swept?5:2))*.0025*Math.sin(theta);
+    const sweep=Math.sin(a+.65)*Math.sin(theta)*hair.sweep;
+    const locks=Math.sin(a*15+theta*4)*hair.wave*Math.sin(theta);
     const y=Math.cos(theta)*.428+.010+sweep;
     const [,sw,sd,so=0]=profileAt(portraitProfile(id),Math.min(y,.373));
     const crown=y>.373?Math.sqrt(Math.max(0,(.438-y)/(.438-.373))):1;
-    const volume=bob?.018:.008;
+    const volume=hair.volume;
     const x=Math.sin(a)*(sw+volume+locks)*crown;
     let z=Math.cos(a)*(sd+volume+locks)*crown+so;
     if(front>.15&&y<.395&&y>-.30)z=Math.max(z,faceSurface(id,x,y)+.008);

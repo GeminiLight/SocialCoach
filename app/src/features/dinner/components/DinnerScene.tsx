@@ -7,7 +7,7 @@ import { emotions, gestures, pick, ui, type Character, type Lang, type Scenario 
 import { getPalette } from '../lib/palette';
 import { SEATS, PLAYER_HOME, snapshot, stepWorld, focusConversation, freeLook, type World, type ViewMode, type RoomSave, type RoomEvent, type Point } from '../lib/room';
 import { l } from '../lib/content';
-import { attentionSubject, cameraPose, trackAttention, wrapAngle } from '../lib/attention';
+import { attentionSubject, eyeHeight, cameraPose, trackAttention, wrapAngle } from '../lib/attention';
 import {actorActionLabel,type Drama} from '../lib/drama';
 import {TableCups,ScenarioObjects,PlayerHands} from './DinnerProps';
 import {DinnerCharacter} from './DinnerCharacter';
@@ -22,7 +22,7 @@ function ProjectLabels({ elements, world, speakerId, selectedId, view }: { eleme
     const occupied:{x:number;y:number;w:number;h:number}[]=[...document.querySelectorAll('.topbar,.scene-controls,.attention-control,.world-controls,.conversation')].map(el=>{const r=el.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,w:r.width,h:r.height};});
     const cameraRight=new Vector3(1,0,0).applyQuaternion(camera.quaternion);
     const faces=[...world.npcs,...(view==='third'?[world.player]:[])].flatMap(actor=>{
-      const center=new Vector3(actor.x,actor.seated?2.47:2.87,actor.z),projected=center.clone().project(camera);
+      const center=new Vector3(actor.x,eyeHeight(actor),actor.z),projected=center.clone().project(camera);
       if(projected.z< -1||projected.z>1)return [];
       const side=center.clone().addScaledVector(cameraRight,.30).project(camera);
       const top=center.clone().add(new Vector3(0,.36,0)).project(camera),bottom=center.clone().add(new Vector3(0,-.36,0)).project(camera);
@@ -30,7 +30,7 @@ function ProjectLabels({ elements, world, speakerId, selectedId, view }: { eleme
     });
     const focusId=attentionSubject(world)?.id;
     const candidates=world.npcs.map((actor,i)=>{
-      point.set(actor.x,actor.seated?3.04:3.44,actor.z).project(camera);
+      point.set(actor.x,eyeHeight(actor)+.56,actor.z).project(camera);
       const el=elements.current[i];
       const priority=actor.id===focusId?3:actor.id===speakerId?2:actor.id===selectedId?1:0;
       return {el,priority,depth:point.z,x:(point.x*.5+.5)*size.width,y:(-point.y*.5+.5)*size.height,visible:point.z>-1&&point.z<1&&Math.abs(point.x)<1.03&&Math.abs(point.y)<.95};
