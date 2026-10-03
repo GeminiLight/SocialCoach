@@ -30,4 +30,8 @@ Skill evolution: no update needed。现有 fix-bug 流程要求视觉复现；�
 
 ## 发布
 
-主仓库优先，双平台发布后记录提交与状态。独立演示仓库不作为交付条件。
+- 主仓库来源提交：[`c73acfe`](https://github.com/GeminiLight/SocialCoach/commit/c73acfe7d4788d1666dc576bb73f433f96d81a35)。
+- Vercel 生产部署 `dpl_vZZxHw9uBmY8YfhTY395g2ssCShE` 为 `READY`，来源提交为 `c73acfe`，绑定 `socialcoach-ai.vercel.app` 等现有别名。[主站入口](https://socialcoach-ai.vercel.app/3d)。
+- ModelScope 主站镜像仓库提交 `10a3059`：同步本轮 11 个运行时文件的改动及新增选角检查，8 个纯人物 / 视线文件与主仓库逐字一致。`DinnerApp` 只同步人物头像 class，`content` 与 CSS 只应用本轮补丁；保留镜像此前验证的模型集成，没有捎带后续 A24 模型可用性改动。来源和范围同时记录在镜像 README。镜像中的 2 项选角检查通过（复用同版本本地依赖），平台 Docker 正式构建成功。
+- ModelScope 新镜像 `363578-10a30591-2026-10-03-13-05-17` 构建成功；新运行实例创建于 `2026-10-03T05:06:03Z`，平台为 `Running`，运行日志于北京时间 `13:06:44` 确认 Next `Ready`。硬件保持 `platform/2v-cpu-16g-mem`。[演示站](https://modelscope.cn/studios/GeminiLight/SocialCoach)。
+- 浏览器画面与交互验收在本地正式构建完成，线上访问仍超时；以上线上发布证据来自部署平台，截图没有当作线上截图。独立 `SocialCoach-3D` 原型仓库未同步。
