@@ -542,6 +542,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dinner-experience .scene-viewport canvas { display:block; touch-action:none; }
 .dinner-experience .dinner-render { position:relative; width:100%; height:100%; }
 .dinner-experience .cinematic-scrim { position:absolute; inset:0; pointer-events:none; background:linear-gradient(to bottom,var(--dinner-scrim-top) 0%,var(--dinner-scrim-top) 14%,var(--dinner-clear) 32%,var(--dinner-clear) 57%,var(--dinner-scrim-middle) 67%,var(--dinner-scrim-bottom) 100%); }
+.dinner-experience .cinematic-scrim::after {content:'';position:absolute;bottom:0;left:0;right:0;height:calc(var(--dinner-hud-height,300px) + 45px);pointer-events:none;background:linear-gradient(to bottom,var(--dinner-clear),var(--dinner-scene-overlay) 32px,var(--dinner-scene-overlay));}
 .dinner-experience .topbar { position:absolute; top:0; left:0; right:0; display:flex; align-items:center; gap:24px; height:82px; padding:0 30px; z-index:30; }
 .dinner-experience .brand { display:flex; align-items:center; gap:10px; margin-right:auto; min-height:44px; }
 .dinner-experience .brand-mark { width:33px; height:33px; border:1px solid var(--dinner-accent); border-radius:50%; display:grid; place-items:center; color:var(--dinner-accent); }
@@ -578,8 +579,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dinner-experience .character-popover strong { display:block; font-size:19px; font-family:var(--dinner-font-display); }
 .dinner-experience .character-popover>span { font-size:11px; color:var(--dinner-accent); }
 .dinner-experience .character-popover p { font-size:12px; margin:10px 0 0; color:var(--dinner-ink-secondary); }
-.dinner-experience .conversation { position:absolute; bottom:17px; left:50%; transform:translateX(-50%); width:min(700px,calc(100% - 48px)); z-index:25; isolation:isolate; }
-.dinner-experience .conversation::before {content:'';position:absolute;inset:-24px -24px -30px;z-index:-1;pointer-events:none;background:linear-gradient(to bottom,var(--dinner-clear),var(--dinner-scene-overlay) 28px,var(--dinner-scene-overlay));}
+.dinner-experience .conversation { position:absolute; bottom:17px; left:50%; transform:translateX(-50%); width:min(700px,calc(100% - 48px)); z-index:25; }
 .dinner-experience .dialogue { text-align:center; animation:dinner-rise 280ms var(--dinner-ease-out); max-height:220px; overflow-y:auto; padding:8px 12px 0; scrollbar-width:thin; }
 .dinner-experience .speaker-line { display:flex; justify-content:center; align-items:center; gap:8px; font-size:12px; }
 .dinner-experience .speaker-line strong { font-weight:500; color:var(--dinner-accent); }
