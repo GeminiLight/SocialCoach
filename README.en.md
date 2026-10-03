@@ -11,11 +11,12 @@
 
 Build social skills and learn to handle conflict through realistic role-play and personalized feedback.
 
+[![Enter a 3D conversation](https://img.shields.io/badge/3D-Enter%20scene-CA592E?style=for-the-badge&labelColor=261D16)](https://socialcoach-ai.vercel.app/3d)<br>
 [![Try SocialCoach](https://img.shields.io/badge/Live-Try%20it-49814C?style=for-the-badge&labelColor=261D16)](https://socialcoach.aurax.live)
 [![Read the paper](https://img.shields.io/badge/Paper-arXiv-AD411C?style=for-the-badge&labelColor=261D16)](https://arxiv.org/abs/2606.04155)
 [![Apache 2.0 license](https://img.shields.io/badge/License-Apache%202.0-00656A?style=for-the-badge&labelColor=261D16)](LICENSE)
 
-**[Try 3D scenes →](https://socialcoach-ai.vercel.app/3d)** · Dinners, elevator conversations, and office encounters.
+Dinners, elevator conversations, and office encounters.
 
 [简体中文](README.md) · [English](README.en.md)
 

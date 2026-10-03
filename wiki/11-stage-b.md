@@ -65,7 +65,7 @@
 2026-09-21 按用户确认的 “Your personal EQ coach” 定位重排中英 README；原有品牌主句和 banner 保留。目标是先说明产品、展示练习，再提供开发与部署信息。
 
 ```
-banner → EQ coach 定位 + 一句用途 → 体验 / 论文 / Apache 2.0 徽章 → 3D 直接入口 → 语言切换
+banner → EQ coach 定位 + 一句用途 → 首行 3D 徽章、次行在线体验 / 论文 / Apache 2.0 徽章 → 语言切换
 章节导航
 News（最多三条重要更新，按新到旧排列）
 3D practice（真实场景预览 + 饭桌 / 电梯口 / 办公室 + 与文字共用复盘）
