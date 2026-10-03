@@ -32,7 +32,7 @@
 
 | 日期 | 重要更新 |
 |---|---|
-| **2026-10-03** | **[SocialCoach 3D 上线](#3d-实景练习)。** 用 Blender 重建人物与五类空间，支持移动、语音输入，并与文字练习共用基于原话的复盘。 |
+| **2026-10-03** | **[SocialCoach 3D 上线](#3d-实景练习)。** 走进饭局、电梯口或办公室，用文字或语音练习难开口的对话。 |
 | **2026-09-03** | **[SocialCoach 首个版本发布](https://github.com/GeminiLight/SocialCoach/commit/bae956fc4eef36063c975fd4b980c7daf170223c)。** 个性化安排练习，在真实情境中对练，再根据自己的原话复盘。 |
 
 ## 3D 实景练习
@@ -42,10 +42,6 @@
 <p align="center"><a href="https://socialcoach-ai.vercel.app/3d"><img src="app/public/images/dinner-home-preview.jpg" width="860" alt="SocialCoach 实际渲染的 3D 职场饭桌，三位角色坐在桌子对面"></a></p>
 
 选择**职场、家庭或学校饭局**，也可以走进**电梯口或办公室**，每个场景都有独立的人物。切换第一、第三人称，起身走动，选择回应谁，用文字或浏览器语音开口。旁人可能插话，你也可以举杯、查看资料，或走到电梯按钮旁操作。
-
-人物和房间由 Blender 制作，人体、衣服与动作共用骨骼，支持表情变化，杯子随手移动。[素材来源与制作流程](app/scripts/blender/README.md)。
-
-**3D 与文字共用一套复盘：** 引用原话的评价、换一种说法、有出处的知识、反思和后续追问。3D 还补充发言对象、当时的位置与坐姿，以及实际完成的动作。看完可以回现场续聊，也能从练习历史重新查看报告。
 
 **[进入 3D 现场 →](https://socialcoach-ai.vercel.app/3d)**
 

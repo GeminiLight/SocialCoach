@@ -36,7 +36,7 @@ https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
 
 | Date | Major update |
 |---|---|
-| **2026-10-03** | **[SocialCoach in 3D](#3d-practice).** Rebuilt Blender characters and five environments, with movement, voice input, and the same evidence-based debrief as text practice. |
+| **2026-10-03** | **[SocialCoach in 3D](#3d-practice).** Step into a dinner, elevator lobby, or office and practice difficult conversations by typing or speaking. |
 | **2026-09-03** | **[First SocialCoach release](https://github.com/GeminiLight/SocialCoach/commit/bae956fc4eef36063c975fd4b980c7daf170223c).** Personalized practice scheduling, realistic role-play, and feedback grounded in your own words. |
 
 ## 3D practice
@@ -46,10 +46,6 @@ A toast from your manager. A question about leaving your job in the elevator lob
 <p align="center"><a href="https://socialcoach-ai.vercel.app/3d"><img src="app/public/images/dinner-home-preview.jpg" width="860" alt="A rendered 3D work dinner in SocialCoach, with three characters seated across the table"></a></p>
 
 Choose a **work, family, or campus dinner**, an **elevator lobby**, or an **office**, each with its own cast. Switch between first- and third-person views, move around, choose whom to address, and speak by typing or browser voice input. Characters can interject, and scene actions let you raise a cup, check materials, or walk over to the elevator controls.
-
-The cast and rooms are built in Blender, with connected body and clothing rigs, facial expressions, and cups attached to the hands. [Asset sources and production pipeline](app/scripts/blender/README.md).
-
-**Text and 3D share the same debrief:** feedback quoting your words, alternative phrasing, sourced knowledge, reflection, and follow-up coaching. The 3D report also records whom you addressed, where you stood or sat, and actions you actually completed. Return to the scene to continue, or revisit the report in your practice history.
 
 **[Enter a 3D scene →](https://socialcoach-ai.vercel.app/3d)**
 
