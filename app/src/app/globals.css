@@ -409,6 +409,25 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   background: color-mix(in oklch, var(--scene-ochre-paper) 50%, var(--paper));
   border: 1px solid color-mix(in oklch, var(--scene-ochre-color) 18%, var(--paper));
 }
+/* A real dinner scene makes the homepage invitation immediately recognizable. */
+.dinner-feature { background:var(--dinner-paper); color:var(--dinner-ink); border:1px solid var(--dinner-line); }
+.dinner-feature-preview { height:144px; background:var(--dinner-surface); }
+.dinner-feature-welcome .dinner-feature-preview { height:112px; }
+.dinner-feature-welcome .dinner-feature-content { gap:16px; }
+.dinner-feature-caption { color:var(--dinner-ink); background:var(--dinner-scene-overlay); padding:3px 7px; border-radius:var(--radius-sm); }
+.dinner-feature-tag { color:var(--dinner-accent); }
+.dinner-feature-detail { color:var(--dinner-ink-secondary); }
+.dinner-feature-action { background:var(--dinner-accent); color:var(--dinner-accent-ink); }
+.dinner-feature-action:hover { background:var(--dinner-accent-hover); }
+.dinner-feature-action:focus-visible { outline:2px solid var(--dinner-accent); outline-offset:4px; }
+.bar-fixed.onboarding-welcome-actions { position:static; transform:none; width:100%; max-width:none; border-top:0; background:none; box-shadow:none; }
+@media (min-width:1024px) {
+  .dinner-feature-preview { height:clamp(180px,20vw,260px); }
+  .dinner-feature-welcome .dinner-feature-preview { height:144px; }
+  .dinner-feature-welcome .dinner-feature-content { flex-direction:column; align-items:stretch; gap:20px; padding:20px; }
+  .dinner-feature-welcome .dinner-feature-content h2 { font-size:25px; }
+  .dinner-feature-welcome .dinner-feature-action { align-self:flex-start; }
+}
 @media (min-width: 1024px) {
   .knowledge-selected {
     background: color-mix(in oklch, var(--scene-teal-paper) 65%, var(--card));

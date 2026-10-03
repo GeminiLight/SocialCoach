@@ -96,24 +96,26 @@ export default function Home() {
             <ArrowUpRight size={16} />
           </Link>
         </header>
+        {unfinished && (
+          <Link
+            href={`/practice/${unfinished.id}`}
+            className="press flex flex-wrap items-center gap-3 rounded-[var(--radius-sm)] border border-line-strong bg-card px-4 py-4 hover:bg-inset"
+          >
+            <Clock3 size={18} className="text-accent-deep shrink-0" />
+            <span className="min-w-0 flex-1">
+              <span className="block text-[12px] text-ink-3">{t(lang, unfinished.status === "ended" ? "home_resume_review" : "home_resume")}</span>
+              <span className="block text-[14px] font-medium truncate">{unfinished.scenario.title[lang]}</span>
+            </span>
+            <span className="inline-flex items-center justify-center gap-2 min-h-11 px-4 rounded-full bg-action text-accent-ink text-[13px] font-semibold">
+              {t(lang, unfinished.status === "ended" ? "home_review_action" : "home_resume_action")}<ArrowRight size={16} />
+            </span>
+          </Link>
+        )}
+
+        <DinnerEntry />
+
         <div className="flex flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,1fr)_var(--margin-w)] xl:gap-8 xl:items-start">
           <div className="flex flex-col gap-6 min-w-0">
-            {unfinished && (
-              <Link
-                href={`/practice/${unfinished.id}`}
-                className="press flex flex-wrap items-center gap-3 rounded-[var(--radius-sm)] border border-line-strong bg-card px-4 py-4 hover:bg-inset"
-              >
-                <Clock3 size={18} className="text-accent-deep shrink-0" />
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[12px] text-ink-3">{t(lang, unfinished.status === "ended" ? "home_resume_review" : "home_resume")}</span>
-                  <span className="block text-[14px] font-medium truncate">{unfinished.scenario.title[lang]}</span>
-                </span>
-                <span className="inline-flex items-center justify-center gap-2 min-h-11 px-4 rounded-full bg-action text-accent-ink text-[13px] font-semibold">
-                  {t(lang, unfinished.status === "ended" ? "home_review_action" : "home_resume_action")}<ArrowRight size={16} />
-                </span>
-              </Link>
-            )}
-
             <section className="rehearsal-invitation rounded-[var(--radius)] p-5 lg:p-7 flex flex-col gap-5">
               <div className="flex items-start gap-3">
                 <PenLine size={21} className="text-accent-deep shrink-0 mt-1" aria-hidden />
@@ -123,14 +125,12 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <Link href="/rehearse" className={`press inline-flex items-center justify-center gap-3 min-h-12 px-5 rounded-full text-[14px] font-semibold ${unfinished ? "bg-card border border-line-strong" : "bg-action text-accent-ink hover:bg-action-hover"}`}>
+                <Link href="/rehearse" className="press inline-flex items-center justify-center gap-3 min-h-12 px-5 rounded-full text-[14px] font-semibold bg-card border border-line-strong hover:bg-inset">
                   {t(lang, "home_rehearse_action")}<ArrowRight size={17} aria-hidden />
                 </Link>
                 <p className="text-[12px] text-ink-3 leading-relaxed">{t(lang, "home_rehearse_steps")}</p>
               </div>
             </section>
-
-            <DinnerEntry />
 
             {/* Today card */}
             <section aria-live="polite" aria-busy={loading}>

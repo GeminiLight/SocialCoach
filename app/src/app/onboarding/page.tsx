@@ -1,39 +1,24 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics/track";
 import { AnimatePresence, motion } from "framer-motion";
 import { clsx } from "clsx";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import { COMPETENCIES, CONTEXTS, SKILLS, skillById, type ContextId, type Lang, type SkillId } from "@/data/taxonomy";
+import { COMPETENCIES, CONTEXTS, SKILLS, skillById, type ContextId, type SkillId } from "@/data/taxonomy";
 import { CONTEXT_HUES } from "@/data/scenario-icons";
 import { ContextIllustration } from "@/data/context-illustrations";
-import { SCENARIOS } from "@/data/corpus";
-import { t, pick } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 import { useApp, useLang } from "@/store/useApp";
 import { openModelSheet } from "@/lib/byok";
 import { BottomBar, Button, Chip } from "@/components/ui";
 import { BrandMark } from "@/components/BrandMark";
 import { LanguagePicker } from "@/components/LanguagePicker";
-import { ScenarioCover } from "@/components/ScenarioCover";
+import { DinnerEntry } from "@/components/DinnerEntry";
 import { Level } from "@/components/SkillBits";
 import { compColor, hueColor } from "@/lib/format";
 
 const STEPS = 5;
-
-/** Show the resistance the learner will meet, using an existing sourced scene. */
-function WelcomeScene({ lang }: { lang: Lang }) {
-  const scene = SCENARIOS.find((s) => s.id === "declining-extra-hours")!;
-  return (
-    <figure className="overflow-hidden rounded-[var(--radius)] border border-line">
-      <div className="relative h-36"><ScenarioCover scenario={scene} full /></div>
-      <figcaption className="px-4 py-3 text-[12px] text-ink-2 bg-card flex justify-between gap-3">
-        <span>{scene.title[lang]}</span><span className="num shrink-0">{scene.minutes} {t(lang, "min")}</span>
-      </figcaption>
-    </figure>
-  );
-}
 
 export default function Onboarding() {
   const router = useRouter();
@@ -103,15 +88,14 @@ export default function Onboarding() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -16 }}
           transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-          className="flex-1 flex flex-col px-5 pt-8 pb-56 lg:pb-8"
+          className={clsx("flex-1 flex flex-col px-5", step === 0 ? "pt-6 pb-4" : "pt-8 pb-56 lg:pb-8")}
         >
           {step === 0 && (
-            <div className="flex-1 flex flex-col justify-center gap-7">
+            <div className="flex-1 flex flex-col justify-center gap-4">
               <div className="flex items-center gap-3"><BrandMark size={44} /><span className="display text-[20px]">{t(lang, "app_name")}</span></div>
-              <h1 className="display text-[32px] sm:text-[36px] leading-[1.2] whitespace-pre-line">{t(lang, "ob_welcome_title")}</h1>
-              <p className="text-[16px] text-ink-2 leading-relaxed max-w-[34ch]">{t(lang, "ob_welcome_body")}</p>
-              <WelcomeScene lang={lang} />
-              <Link href="/3d" prefetch={false} className="press inline-flex min-h-11 items-center gap-2 self-start rounded-full border border-line px-4 text-[13px] text-ink-2">{pick({zh:"新体验 · 去 3D 饭桌坐坐",en:"New · Take a seat at a 3D dinner"},lang)}<ArrowRight size={15}/></Link>
+              <h1 className="display text-[28px] sm:text-[36px] leading-[1.2] whitespace-pre-line">{t(lang, "ob_welcome_title")}</h1>
+              <p className="text-[14px] text-ink-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "ob_welcome_body")}</p>
+              <DinnerEntry welcome />
             </div>
           )}
 
@@ -260,7 +244,7 @@ export default function Onboarding() {
         </motion.div>
       </AnimatePresence>
 
-      <BottomBar className="px-5 pb-safe pb-6 pt-3 lg:pb-8">
+      <BottomBar className={clsx("px-5 pb-safe pb-6 pt-3 lg:pb-8", step === 0 && "onboarding-welcome-actions")}>
         {step === 1 && (
           <p className={clsx("text-center text-[13px] mb-2", canNext ? "text-moss" : "text-ink-3")}>
             {goals.length === 0 ? t(lang, "ob_goals_pick_more") : t(lang, "ob_goals_ok", { n: goals.length })}
@@ -268,7 +252,7 @@ export default function Onboarding() {
         )}
         {step === 0 ? (
           <div className="flex flex-col gap-2">
-            <Button block size="lg" onClick={() => startNow("/rehearse")}>{t(lang, "ob_rehearse")}<ArrowRight size={18} /></Button>
+            <Button block size="lg" variant="secondary" onClick={() => startNow("/rehearse")}>{t(lang, "ob_rehearse")}<ArrowRight size={18} /></Button>
             <Button block variant="secondary" onClick={() => startNow("/arena")}>{t(lang, "ob_browse")}</Button>
             <button onClick={() => setStep(1)} className="press min-h-11 text-[13px] text-ink-2 rounded-full">{t(lang, "ob_personalize")}</button>
             <p className="text-[11px] text-ink-3 text-center">{t(lang, "ob_local")}</p>
