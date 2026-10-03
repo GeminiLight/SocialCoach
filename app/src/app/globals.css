@@ -400,6 +400,31 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .app-tabbar a[aria-current="page"] { box-shadow: inset 0 2px var(--ink); }
 @media (min-width: 64rem) { :root { --page-gutter: clamp(32px, 4vw, 64px); } }
 
+/* Search stays visible. Secondary filters open as one labelled group. */
+.arena-page { gap: 32px; }
+.arena-search-field:focus-within { border-color: var(--ink); outline: 2px solid var(--accent-soft); outline-offset: 2px; }
+.arena-contexts { border-bottom: 1px solid var(--line); }
+.arena-contexts .app-chip { flex-shrink: 0; padding: 0 2px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; min-height: 48px; }
+.arena-contexts .app-chip[aria-pressed="true"] { border-bottom-color: var(--ink); color: var(--ink); }
+.arena-contexts .num { font-size: 11px; font-weight: 400; color: var(--ink-3); margin-left: 2px; }
+.arena-pick { padding: 20px 0; border-block: 1px solid var(--line); }
+.arena-pick + .arena-pick { border-top: 0; }
+.arena-pick:hover { color: var(--accent-deep); }
+.arena-row:hover { background: transparent; }
+.arena-row:hover .font-semibold { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+@media (min-width: 48rem) {
+  .arena-picks { gap: 24px; }
+  .arena-picks .arena-pick { border-top: 1px solid var(--line); padding-block: 20px 24px; }
+}
+@media (max-width: 47.99rem) {
+  .arena-page { gap: 24px; }
+  .arena-header { padding-bottom: 16px; }
+  .arena-header .eyebrow { margin-bottom: 8px; }
+  .arena-header h1 + p { margin-top: 8px; font-size: 13px; }
+  .arena-rehearse { margin-top: -4px; }
+  .arena-contexts { margin-inline: calc(-1 * var(--page-gutter)); padding-inline: var(--page-gutter); }
+}
+
 /* A tinted opening page in the growth journal. */
 .growth-invitation {
   background: color-mix(in oklch, var(--scene-ochre-paper) 65%, var(--card));
