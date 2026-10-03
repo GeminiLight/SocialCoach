@@ -1,0 +1,50 @@
+{
+  "site": "vercel",
+  "checkedAt": "2026-10-03T19:43:29Z",
+  "turns": [
+    {
+      "status": 200,
+      "ms": 6135,
+      "learner": "我没有答应交完报告后帮忙。你听到的承诺是什么？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "stance": 25,
+        "revealed": false,
+        "note": "唐悦被抓包，转而淡化范围",
+        "outcome": null
+      },
+      "npc": "哎，我就是随口一提嘛，你至于这么较真吗。行行行，那就一页——第三页最麻烦，成本那块老板说得改，你帮我捋一下呗？"
+    },
+    {
+      "status": 200,
+      "ms": 3831,
+      "learner": "你给我看一下老板原始反馈吧。到底要求改的是排版还是论证？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "stance": 35,
+        "revealed": true,
+        "note": "被追问原始反馈，唐悦被迫交代",
+        "outcome": null
+      },
+      "npc": "好吧好吧……老板的原话是第三页的成本论证不成立，不是排版问题。所以可能要补数据、重新算，确实比五分钟麻烦点。你看就看这一页，能帮多少算多少？"
+    }
+  ],
+  "3dStatus": 200,
+  "health": {
+    "status": 200,
+    "serverKey": true,
+    "requireByok": false
+  },
+  "assets": {
+    "count": 16,
+    "all200": true
+  }
+}

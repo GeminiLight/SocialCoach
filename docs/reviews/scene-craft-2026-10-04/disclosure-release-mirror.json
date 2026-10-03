@@ -1,0 +1,48 @@
+{
+  "site": "mirror",
+  "checkedAt": "2026-10-03T19:52:01Z",
+  "turns": [
+    {
+      "status": 200,
+      "ms": 3956,
+      "learner": "我没有答应交完报告后帮忙。你听到的承诺是什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "stance": 30,
+        "revealed": false,
+        "note": "唐悦被逼着复述，开始露出口径不一致"
+      },
+      "npc": "我就当你点头了嘛……好吧好吧，那先说一页。第三页，成本那页，你看一眼改改就行。"
+    },
+    {
+      "status": 200,
+      "ms": 4736,
+      "learner": "你给我看一下老板原始反馈吧。到底要求改的是排版还是论证？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "stance": 35,
+        "revealed": true,
+        "note": "唐悦只好出示原始反馈，承认是论证问题"
+      },
+      "npc": "……喏，你自己看。老板就回了一句：「方案三的成本论证不成立，重做。」所以也不算排版问题啦。但你把第三页的数字顺一顺，看着像样点就行，不是什么大事。"
+    }
+  ],
+  "3dStatus": 200,
+  "health": {
+    "status": 200,
+    "serverKey": true,
+    "requireByok": false
+  },
+  "assets": {
+    "count": 16,
+    "all200": true
+  }
+}
