@@ -16,7 +16,7 @@
 [![阅读论文](https://img.shields.io/badge/%E8%AE%BA%E6%96%87-arXiv-AD411C?style=for-the-badge&labelColor=261D16)](https://arxiv.org/abs/2606.04155)
 [![Apache 2.0 开源许可证](https://img.shields.io/badge/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF-Apache%202.0-00656A?style=for-the-badge&labelColor=261D16)](LICENSE)
 
-饭桌、电梯口、办公室，换一种方式练开口。
+酒桌劝酒、电梯尬聊、下班加活——尴尬先彩排。
 
 [简体中文](README.md) · [English](README.en.md)
 
