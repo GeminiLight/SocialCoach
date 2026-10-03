@@ -6,7 +6,7 @@ import { byokError, checkByokConnection } from '../src/lib/llm-client';
 import { useByok, type ByokConfig } from '../src/lib/byok';
 import { acceptModelCheck, refreshModelAccess, syncModelConfiguration, useModelAccess, withModelAccess } from '../src/lib/model-access';
 import { clearServerObservation, observedServerHealth, observeServerFailure } from '../src/lib/server-model-observation';
-import { parseRoleplay } from '../src/lib/client-api';
+import { ApiError, parseRoleplay } from '../src/lib/client-api';
 
 async function main() {
   let checks = 0;
@@ -39,7 +39,7 @@ async function main() {
   try {
     assert.equal((await checkByokConnection(config)).state, 'available'); assert(calls.length > 0 && calls.every(c => c.startsWith('GET ') && c.endsWith('/models'))); check('connection check sends GET /models only');
     useByok.setState({ ...config, hydrated: true }); syncModelConfiguration(); acceptModelCheck({ state: 'available' });
-    await assert.rejects(() => withModelAccess('zh', async () => { throw new LLMError('bad key', 401); }), /密钥/);
+    await assert.rejects(() => withModelAccess('zh', async () => { throw new ApiError('bad key', 401, 'stream', 'credentials'); }), error => error instanceof LLMError && error.message.includes('密钥') && (error as LLMError & { kind: string }).kind === 'stream');
     assert.equal(useModelAccess.getState().issue, 'credentials');
     let generated = 0; await assert.rejects(() => withModelAccess('zh', async () => { generated++; }), /密钥/); assert.equal(generated, 0); check('auth failure blocks the next generation without fallback');
     await refreshModelAccess(true); assert.equal(useModelAccess.getState().state, 'available'); check('explicit free retry restores access');

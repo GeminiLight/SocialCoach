@@ -73,7 +73,9 @@ export async function withModelAccess<T>(lang: Lang, run: () => Promise<T>): Pro
     const issue = modelIssue(error);
     if (issue) {
       if (useModelAccess.getState().epoch === before.epoch) useModelAccess.setState({ state: "unavailable", issue });
-      throw new LLMError(modelMessage(issue, lang), (error as { status?: number })?.status ?? 503, false, issue);
+      const kind = (error as { kind?: string })?.kind;
+      const safeKind = kind === "stream" || kind === "network" || kind === "http" ? kind : issue === "network" ? "network" : "http";
+      throw Object.assign(new LLMError(modelMessage(issue, lang), (error as { status?: number })?.status ?? 503, false, issue), { kind: safeKind });
     }
     throw error;
   }

@@ -54,7 +54,8 @@ export class ApiError extends Error {
 function reportFailure(task: Task, e: unknown, byok: boolean) {
   if (e instanceof DOMException && e.name === "AbortError") return;
   const status = e instanceof ApiError ? e.status : typeof (e as { status?: unknown })?.status === "number" ? (e as { status: number }).status : 0;
-  const kind = e instanceof ApiError ? e.kind : status ? "http" : "network";
+  const transport = (e as { kind?: string })?.kind;
+  const kind = transport === "http" || transport === "network" || transport === "stream" ? transport : status ? "http" : "network";
   track({ name: "api_error", ts: Date.now(), task, kind, status: Math.max(0, Math.min(999, status)), byok });
 }
 

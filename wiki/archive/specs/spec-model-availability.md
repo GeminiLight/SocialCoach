@@ -27,3 +27,7 @@
 - [OpenAI Models API](https://developers.openai.com/api/reference/resources/models/methods/list)
 - [Anthropic Models API](https://platform.claude.com/docs/en/api/models/list)：详情支持别名解析。
 - [当前 Anthropic 模型名称](https://platform.claude.com/docs/en/models/overview)：配置空白时默认 Sonnet，已有配置不改写。
+
+## 发布
+
+2026-10-03 功能提交 `17a5c99` 已由 GitHub main 自动部署，Vercel 生产状态 Ready；入口保持 [SocialCoach](https://socialcoach-ai.vercel.app/)。本轮检查全部使用元数据或本地模拟响应，不发送线上推理请求。实体设备与兼容服务的实际生成权限仍按上面的边界处理。
