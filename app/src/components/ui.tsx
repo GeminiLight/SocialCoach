@@ -25,7 +25,7 @@ export function Button({ variant = "primary", size = "md", loading, block, class
   const canUseModel = useCanUseModel();
   const lang = useLang();
   const blocked = requiresModel && !canUseModel;
-  const base = "press min-w-0 [&>svg]:shrink-0 inline-flex items-center justify-center gap-2 font-semibold rounded-full select-none text-center leading-snug";
+  const base = "app-button press min-w-0 [&>svg]:shrink-0 inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius-sm)] select-none text-center leading-snug";
   const sizes = { sm: "min-h-11 px-4 text-[13px]", md: "h-12 px-5 text-[15px]", lg: "h-14 px-6 text-base" }[size];
   const variants: Record<Variant, string> = {
     primary: "bg-action text-accent-ink hover:bg-action-hover",
@@ -68,9 +68,9 @@ export function Chip({ active, children, onClick, className, style, small }: { a
       aria-pressed={onClick ? !!active : undefined}
       style={style}
       className={clsx(
-        "press inline-flex items-center gap-1.5 rounded-full border whitespace-nowrap",
+        "app-chip press inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border whitespace-nowrap",
         small ? (onClick ? "min-h-11 px-3 text-[12px]" : "min-h-9 px-2.5 text-[12px]") : "min-h-11 px-3.5 text-[13px] font-medium",
-        active ? "bg-ink text-paper border-ink" : "bg-card border-line text-ink-2 hover:border-line-strong",
+        active ? "bg-inset text-ink border-line-strong font-semibold" : "bg-transparent border-line text-ink-2 hover:border-line-strong",
         className,
       )}
     >
@@ -275,7 +275,6 @@ export function Toaster() {
 export function Empty({ title, body, action }: { title: string; body?: string; action?: ReactNode }) {
   return (
     <div className="py-14 px-6 text-center flex flex-col items-center gap-3">
-      <div className="h-12 w-12 rounded-full border border-dashed border-line-strong" />
       <p className="display text-[18px]">{title}</p>
       {body && <p className="text-[14px] text-ink-3 max-w-[32ch]">{body}</p>}
       {action}
@@ -296,7 +295,7 @@ export function SectionTitle({ children, right, className }: { children: ReactNo
 /* ───────────── Page transition wrapper ───────────── */
 export function Page({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <motion.main initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }} className={clsx("px-5 md:px-8 lg:px-10", className)}>
+    <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.18 }} className={clsx("app-page px-5 md:px-8 lg:px-10", className)}>
       {children}
     </motion.main>
   );

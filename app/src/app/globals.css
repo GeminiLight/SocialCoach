@@ -2,22 +2,22 @@
 
 /* ───────────── Design tokens: "warm paper" ───────────── */
 :root {
-  --paper: oklch(0.975 0.008 80);
-  --paper-deep: oklch(0.955 0.011 78);
-  --card: oklch(0.992 0.004 85);
-  --inset: oklch(0.95 0.012 78);
-  --ink: oklch(0.24 0.02 60);
+  --paper: oklch(0.984 0.006 84);
+  --paper-deep: oklch(0.959 0.007 80);
+  --card: oklch(0.997 0.003 85);
+  --inset: oklch(0.95 0.009 80);
+  --ink: oklch(0.235 0.012 65);
   --ink-2: oklch(0.4 0.02 60);
   --ink-3: oklch(0.52 0.018 62);
   --ink-4: oklch(0.7 0.014 65);
   --line: oklch(0.885 0.012 75);
   --line-strong: oklch(0.8 0.016 72);
-  --accent: oklch(0.6 0.155 40);
-  --accent-deep: oklch(0.52 0.15 38);
-  --accent-soft: oklch(0.94 0.04 48);
+  --accent: oklch(0.56 0.095 58);
+  --accent-deep: oklch(0.46 0.085 55);
+  --accent-soft: oklch(0.943 0.022 72);
   --accent-ink: oklch(0.985 0.01 70);
-  --action: var(--accent-deep);
-  --action-hover: oklch(0.46 0.14 38);
+  --action: var(--ink);
+  --action-hover: var(--ink-2);
   --overlay: oklch(0.17 0.016 60 / 0.45);
   --teal: oklch(0.46 0.08 200);
   --teal-soft: oklch(0.93 0.03 200);
@@ -76,9 +76,9 @@
   --sweep-hi: oklch(1 0 0 / 0.6);
   --edge-shadow: oklch(0.2 0.02 60 / 0.5);
 
-  --radius-sm: 10px;
-  --radius: 16px;
-  --radius-lg: 22px;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
 
   --space-xs: 4px;
   --space-sm: 8px;
@@ -94,8 +94,9 @@
 
   /* frame: every width step in the app is one of these */
   --col: 480px;        /* the phone column */
-  --rail-w: 232px;     /* desktop nav rail */
-  --content-max: 1600px; /* widest the content block gets; the paper itself fills */
+  --rail-w: 216px;     /* desktop nav rail */
+  --content-max: 1280px; /* reading workspace, even on a very wide monitor */
+  --page-gutter: 24px;
   --margin-w: 232px;   /* marginalia column */
   --measure: 62ch;     /* comfortable line length for running text */
   --form-max: 760px;
@@ -129,13 +130,12 @@
     --ink-4: oklch(0.515 0.012 68);
     --line: oklch(0.315 0.014 65);
     --line-strong: oklch(0.425 0.016 65);
-    --accent: oklch(0.70 0.145 42);
+    --accent: oklch(0.76 0.080 70);
     /* In light this is the darker, more emphatic ochre; on a dark tint it has
        to move the other way to stay emphatic. */
-    --accent-deep: oklch(0.795 0.125 46);
-    --accent-soft: oklch(0.315 0.055 44);
+    --accent-deep: oklch(0.80 0.075 72);
+    --accent-soft: oklch(0.31 0.018 68);
     --accent-ink: oklch(0.17 0.02 50);
-    --action-hover: oklch(0.84 0.10 46);
     --teal: oklch(0.715 0.085 200);
     --teal-soft: oklch(0.285 0.04 200);
     --moss: oklch(0.725 0.10 145);
@@ -165,11 +165,10 @@
   --ink-4: oklch(0.515 0.012 68);
   --line: oklch(0.315 0.014 65);
   --line-strong: oklch(0.425 0.016 65);
-  --accent: oklch(0.70 0.145 42);
-  --accent-deep: oklch(0.795 0.125 46);
-  --accent-soft: oklch(0.315 0.055 44);
+  --accent: oklch(0.76 0.080 70);
+  --accent-deep: oklch(0.80 0.075 72);
+  --accent-soft: oklch(0.31 0.018 68);
   --accent-ink: oklch(0.17 0.02 50);
-  --action-hover: oklch(0.84 0.10 46);
   --teal: oklch(0.715 0.085 200);
   --teal-soft: oklch(0.285 0.04 200);
   --moss: oklch(0.725 0.10 145);
@@ -233,13 +232,6 @@ body {
   min-height: 100dvh;
   margin: 0;
   line-height: 1.55;
-}
-/* subtle paper grain outside the app column on wide screens */
-@media (min-width: 560px) {
-  body {
-    background-image: radial-gradient(var(--grain) 0.6px, transparent 0.6px);
-    background-size: 14px 14px;
-  }
 }
 ::selection { background: var(--accent-soft); color: var(--ink); }
 * { box-sizing: border-box; }
@@ -309,7 +301,7 @@ a { color: inherit; text-decoration: none; }
 [data-tone="rose"] { --scene-color: var(--scene-rose-color); --scene-paper: var(--scene-rose-paper); }
 .scenario-cover, .scenario-tile { --scene-rule: color-mix(in oklch, var(--scene-color) 18%, var(--scene-paper)); }
 .scenario-cover { background: var(--scene-paper); }
-.scenario-tile { background: color-mix(in oklch, var(--scene-color) 8%, var(--scene-paper)); color: var(--scene-color); border-color: var(--scene-rule); }
+.scenario-tile { background: transparent; color: var(--ink-3); border-color: transparent; }
 /* The tall cover is a ruled page. `--rule` is both the line spacing of the paper
    and the line-height of the quote, and both are anchored to the bottom edge, so
    the text sits on the rules whatever its line count. The stock darkens a touch
@@ -342,7 +334,7 @@ a { color: inherit; text-decoration: none; }
 
 /* pressable */
 .press { transition: transform 120ms var(--ease-out), background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), opacity 160ms; }
-.press:active { transform: scale(0.985); }
+.press:active { transform: scale(0.995); }
 .press:disabled { opacity: 0.5; pointer-events: none; }
 
 /* underline "annotation" mark used for evidence quotes */
@@ -397,6 +389,16 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22p
 input[type="range"]::-moz-range-track { height: 4px; background: var(--line-strong); border-radius: 999px; }
 input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 999px; background: var(--card); border: 2px solid var(--ink); }
 }
+
+/* The workspace uses typography and rules for hierarchy, not decorative chrome. */
+.app-page { padding-inline: var(--page-gutter); }
+.app-model-notice { margin-inline: var(--page-gutter); }
+.app-page > header h1.display { font-size: clamp(28px, 2.65vw, 36px); line-height: 1.28; letter-spacing: -0.025em; }
+.app-page > header .eyebrow { color: var(--ink-3); letter-spacing: 0.08em; }
+.app-button { letter-spacing: 0.005em; }
+.app-nav-rail a[href="/3d"] > span:last-child { background: transparent; color: var(--ink-3); padding: 0; font-size: 11px; }
+.app-tabbar a[aria-current="page"] { box-shadow: inset 0 2px var(--ink); }
+@media (min-width: 64rem) { :root { --page-gutter: clamp(32px, 4vw, 64px); } }
 
 /* A tinted opening page in the growth journal. */
 .growth-invitation {
