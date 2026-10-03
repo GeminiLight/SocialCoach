@@ -94,7 +94,7 @@ export const ui = {
   lookHint: l('拖动环顾 · WASD / 点击地面走动', 'Drag to look · WASD / Click the floor to walk'),
   mobileLookHint:l('拖动环顾 · 起身后用方向按钮走动','Drag to look · Stand up to use movement buttons'),
   cameraLabel: l('现场视角。拖动或方向键环顾，WASD 移动，点击地面走过去，Home 看向发言人。', 'Room view. Drag or arrow keys to look; WASD to move; click the floor to walk; Home to follow the speaker.'),
-  viewMode: l('视角', 'Camera view'), firstPerson:l('第一人称','First person'),thirdPerson:l('第三人称','Third person'),
+  firstPerson:l('第一人称','First person'),thirdPerson:l('第三人称','Third person'),switchToFirstPerson:l('切换到第一人称','Switch to first person'),switchToThirdPerson:l('切换到第三人称','Switch to third person'),
   standUp:l('起身走动','Stand & explore'),returnSeat:l('回到座位','Back to your seat'), movement:l('移动你的角色','Move your character'),
   forward:l('向前走','Walk forward'),backward:l('向后走','Walk backward'),left:l('向左走','Walk left'),right:l('向右走','Walk right'),
   lookAt:l('看向 TA','Look at them'),goNear:l('走到旁边','Walk over'),invite:l('招呼过来','Call them over'),

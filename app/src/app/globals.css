@@ -766,9 +766,6 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 /* Exploration controls sit beside the scene, leaving the dialogue in the foreground. */
 .dinner-experience .mobile-look-hint {display:none;}
 
-.dinner-experience .view-switch { display:flex; gap:2px; padding:3px; background:var(--dinner-scene-overlay); border-radius:var(--dinner-radius-sm); margin-right:8px; }
-.dinner-experience .view-switch button { min-height:44px; min-width:90px; padding:0 12px; font-size:11px; color:var(--dinner-ink-secondary); border-radius:3px; }
-.dinner-experience .view-switch button[aria-pressed=true] { background:var(--dinner-surface); color:var(--dinner-ink); }
 .dinner-experience .world-controls { position:absolute; left:32px; bottom:70px; width:180px; z-index:20; }
 .dinner-experience .world-status { display:flex; align-items:center; gap:7px; color:var(--dinner-ink-secondary); font-size:10px; margin-bottom:8px; }
 .dinner-experience .explore-button { display:flex; align-items:center; justify-content:center; gap:8px; min-height:44px; width:100%; font-size:11px; background:var(--dinner-scene-overlay); border:1px solid var(--dinner-line); border-radius:var(--dinner-radius-sm); color:var(--dinner-ink); }
@@ -783,13 +780,12 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dinner-experience .roaming .dialogue { max-height:170px; }.dinner-experience .roaming .spoken-line { font-size:21px; }.dinner-experience .roaming .stage-cue { display:none; }
 .dinner-experience .movement-guide { color:var(--dinner-ink-secondary); font-size:12px; line-height:1.9; margin:22px 0; }
 .dinner-experience .evidence-list .spatial-evidence { font-size:11px!important; color:var(--dinner-accent)!important; margin:-8px 0 18px!important; }
-@media (hover:hover) and (pointer:fine) { .dinner-experience .explore-button:hover,.dinner-experience .movement-pad button:hover,.dinner-experience .person-actions button:hover { background:var(--dinner-surface-raised); }.dinner-experience .view-switch button:hover { color:var(--dinner-ink); } }
+@media (hover:hover) and (pointer:fine) { .dinner-experience .explore-button:hover,.dinner-experience .movement-pad button:hover,.dinner-experience .person-actions button:hover { background:var(--dinner-surface-raised); } }
 @media (max-width:1100px) { .dinner-experience .world-controls { bottom:calc(var(--dinner-hud-height) + 35px); width:150px; }.dinner-experience .movement-event {max-width:180px;} }
-@media (max-width:900px) { .dinner-experience .look-hint { top:165px; right:32px; }.dinner-experience .view-switch button {min-width:80px;} }
+@media (max-width:900px) { .dinner-experience .look-hint { top:165px; right:32px; } }
 @media (max-width:600px) {
   .dinner-experience .desktop-look-hint {display:none;}.dinner-experience .mobile-look-hint {display:inline;}
   .dinner-experience .scene-controls {flex-direction:row;top:113px;left:16px;right:auto;gap:0;}
-  .dinner-experience .view-switch {margin-right:5px;padding:2px;}.dinner-experience .view-switch button {min-width:88px;padding:0 10px;font-size:10px;}
   .dinner-experience .scene-controls .icon-button {background:var(--dinner-scene-overlay);border:1px solid var(--dinner-line-soft);margin-left:4px;}
   .dinner-experience .look-hint {top:174px;left:18px;right:auto;font-size:9px;}
   .dinner-experience .world-controls {left:16px;bottom:calc(var(--dinner-hud-height) + 26px);width:140px;}
@@ -798,7 +794,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   .dinner-experience .roaming .dialogue {max-height:140px;}.dinner-experience .roaming .spoken-line {font-size:18px;line-height:1.65;}.dinner-experience .roaming .reply-form {padding-top:10px;}
   .dinner-experience .character-popover {top:199px;max-height:calc(100dvh - 230px);overflow:auto;}
 }
-@media (max-height:560px) { .dinner-experience .view-switch {padding:0;}.dinner-experience .view-switch button {min-width:80px;}.dinner-experience .world-controls {left:16px;bottom:24px;width:145px;}.dinner-experience .world-status,.dinner-experience .movement-event {display:none;}.dinner-experience .movement-pad {margin-top:8px;}.dinner-experience .look-hint {display:none;}.dinner-experience .conversation {width:min(650px,calc(100% - 370px));}.dinner-experience .roaming .dialogue {max-height:90px;}.dinner-experience .roaming .spoken-line {font-size:16px;} }
+@media (max-height:560px) { .dinner-experience .world-controls {left:16px;bottom:24px;width:145px;}.dinner-experience .world-status,.dinner-experience .movement-event {display:none;}.dinner-experience .movement-pad {margin-top:8px;}.dinner-experience .look-hint {display:none;}.dinner-experience .conversation {width:min(650px,calc(100% - 370px));}.dinner-experience .roaming .dialogue {max-height:90px;}.dinner-experience .roaming .spoken-line {font-size:16px;} }
 @media (prefers-reduced-motion:reduce) { .dinner-experience {scroll-behavior:auto;} .dinner-experience *,.dinner-experience *::before,.dinner-experience *::after {animation:none!important;transition:none!important;} }
 
 /* Attention stays visible without covering the conversation or camera controls. */

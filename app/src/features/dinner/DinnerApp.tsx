@@ -9,7 +9,7 @@ import {M} from '@/lib/model-copy';
 import {DINNER_SAVE_KEY} from './storage';
 import {directDinner} from './lib/client';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { ArrowRight, ArrowUp, ArrowDown, ArrowLeft, Footprints, Wine, Coffee, Hand, Smartphone, Pause, Play, Eye, EyeOff, Check, CircleHelp, Crosshair, Download, Lightbulb, Maximize, MessageSquare, Mic, Minimize, RotateCcw, Square, Users, Volume2, VolumeX, X } from 'lucide-react';
+import { ArrowRight, ArrowUp, ArrowDown, ArrowLeft, Footprints, Wine, Coffee, Hand, Smartphone, Pause, Play, Eye, EyeOff, Check, CircleHelp, Crosshair, Download, Lightbulb, Maximize, MessageSquare, Mic, Minimize, RotateCcw, Square, SwitchCamera, Users, Volume2, VolumeX, X } from 'lucide-react';
 import { emotions, gestures, pick, scenarios, ui, type Lang, type Scenario } from './lib/content';
 import { opening, SaveSchema, type Message, type Save } from './lib/engine';
 import { createWorld, snapshot, roomContext, eventText, standPlayer, walkPlayer, goHome, goNear, inviteNpc, focusConversation, focusPerson, freeLook, type Point, type ViewMode, type RoomSave, type RoomEvent, type RoomContext, operateLift, distance, PLAYER_HOME } from './lib/room';
@@ -83,6 +83,7 @@ export default function App() {
   const speech=useSpeechInput(lang,scenarioId,model&&started&&!complete&&!busy&&!modal&&!modelSheetOpen&&!corrupt,setDraft);
   const speechIssue=speech.notice&&!['ready','editing','cancelled','limit'].includes(speech.notice);
   const t=(key:keyof typeof ui)=>pick(ui[key],lang);
+  const viewToggleLabel=`${t(view==='first'?'firstPerson':'thirdPerson')} · ${t(view==='first'?'switchToThirdPerson':'switchToFirstPerson')}`;
   const turn=messages.filter(m=>m.role==='user').length;
   const latestNPC=[...messages].reverse().find(m=>m.role==='npc')!;
   const topic=latestNPC.story?.topic??variant.topic;
@@ -183,7 +184,7 @@ export default function App() {
         <div className="topbar-tools"><button className="language-button" disabled={busy} onClick={switchLanguage} aria-label={t('switchLanguage')}>{lang==='zh'?'EN':'中'}</button><button className="icon-button fullscreen-button" onClick={()=>void fullscreenToggle()} aria-label={fullscreen?t('exitFullscreen'):t('fullscreen')}>{fullscreen?<Minimize size={18}/>:<Maximize size={18}/>}</button></div>
       </header>
       <div className="scene-context"><p><span className="room-dot"/>{pick(scenario.room,lang)}<time>{scenario.time}</time></p><h1 className="sr-only">{pick(scenario.title,lang)}</h1></div>
-      <div className="scene-controls"><div className="view-switch" role="group" aria-label={t('viewMode')}>{(['first','third'] as const).map(mode=><button key={mode} aria-pressed={view===mode} disabled={!sceneReady} onClick={()=>setView(mode)}>{t(mode==='first'?'firstPerson':'thirdPerson')}</button>)}</div><button className="icon-button" onClick={()=>setViewReset(v=>v+1)} aria-label={t('recenter')}><Crosshair size={18}/></button><button className={`icon-button ${sound?'sound-active':''}`} onClick={()=>void soundToggle()} aria-label={sound?t('soundOn'):t('quiet')} aria-pressed={sound}>{sound?<Volume2 size={18}/>:<VolumeX size={18}/>}</button></div>
+      <div className="scene-controls"><button className="icon-button view-toggle" data-view={view} disabled={!sceneReady} onClick={()=>setView(current=>current==='first'?'third':'first')} aria-label={viewToggleLabel} title={viewToggleLabel}><SwitchCamera size={18} aria-hidden="true"/></button><button className="icon-button" onClick={()=>setViewReset(v=>v+1)} aria-label={t('recenter')}><Crosshair size={18}/></button><button className={`icon-button ${sound?'sound-active':''}`} onClick={()=>void soundToggle()} aria-label={sound?t('soundOn'):t('quiet')} aria-pressed={sound}>{sound?<Volume2 size={18}/>:<VolumeX size={18}/>}</button></div>
       {sceneReady&&<button className="attention-control" data-mode={room.attention?.mode??'conversation'} data-target={attentionFree?undefined:attentionPerson.id} disabled={!!corrupt} aria-label={t(attentionFree?'resumeAttention':'enableFreeLook')} onClick={()=>explore(()=>attentionFree?focusConversation(world):freeLook(world))}>{attentionFree?<EyeOff size={15}/>:<Eye size={15}/>}<span>{attentionFree?t('freeLook'):`${t('attentionFollow')} ${pick(attentionPerson.name,lang)}`}</span><small>{t(attentionFree?'resumeShort':'freeShort')}</small></button>}
       {!started&&<span className="look-hint"><span className="desktop-look-hint">{t('lookHint')}</span><span className="mobile-look-hint">{t('mobileLookHint')}</span></span>}
       {sceneReady&&<div className={`world-controls ${seated?'at-seat':'on-foot'}`}>
