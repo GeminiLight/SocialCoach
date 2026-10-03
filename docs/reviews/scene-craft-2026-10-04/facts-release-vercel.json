@@ -1,0 +1,48 @@
+{
+  "site": "vercel",
+  "checkedAt": "2026-10-03T19:16:28Z",
+  "turns": [
+    {
+      "status": 200,
+      "ms": 26899,
+      "learner": "我没有答应交完报告后帮忙。你听到的承诺是什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "stance": 30,
+        "revealed": false,
+        "note": "唐悦被点破，试图重新拉你入场"
+      },
+      "npc": "哎呀，我不是那个意思，我是说你交完总有空吧？第三页成本那块老板说站不住，我自己实在理不顺，你扫一眼指个方向就行，很快的。"
+    },
+    {
+      "status": 200,
+      "ms": 8393,
+      "learner": "我还没结束。16:30到底是我哪件事的时间？帮忙的时间有没有约定？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "stance": 28,
+        "revealed": false,
+        "note": "唐悦承认没有时间约定，继续绕回请求"
+      },
+      "npc": "16:30是你自己报告的截止时间啊，跟我有什么关系。帮忙时间……我们没约过，我就想着你顺手。那你就现在告诉我第三页怎么改，一句话就行，我自己的报告什么时候交我还没问呢。"
+    }
+  ],
+  "3dStatus": 200,
+  "health": {
+    "status": 200,
+    "serverKey": true,
+    "requireByok": false
+  },
+  "assets": {
+    "count": 16,
+    "all200": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "site": "mirror",
+  "checkedAt": "2026-10-03T19:18:44Z",
+  "turns": [
+    {
+      "status": 200,
+      "ms": 4080,
+      "learner": "我没有答应交完报告后帮忙。你听到的承诺是什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "stance": 30,
+        "revealed": false,
+        "note": "唐悦被当场戳穿，改口但仍在试探"
+      },
+      "npc": "呃……你就说可以帮忙嘛，我没听清具体是哪句。反正交完之后抽空看一眼第三页，很快的？"
+    },
+    {
+      "status": 200,
+      "ms": 6836,
+      "learner": "我还没结束。16:30到底是我哪件事的时间？帮忙的时间有没有约定？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "stance": 38,
+        "revealed": false,
+        "note": "唐悦被问得没法再含糊，如实承认"
+      },
+      "npc": "……16:30是你自己报告的截止时间，这我当然知道。帮忙的时间我们确实没定过，行吧。那你现在到底能帮我什么？我总得跟老板交个底。"
+    }
+  ],
+  "3dStatus": 200,
+  "health": {
+    "status": 200,
+    "serverKey": true,
+    "requireByok": false
+  },
+  "assets": {
+    "count": 16,
+    "all200": true
+  }
+}
