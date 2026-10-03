@@ -261,6 +261,10 @@ pnpm lint
 
 同日阅读体验更新：`ConversationHistory` 用 `transcript.ts` 将现有 messages / actions 重建为完整时间顺序，保留开场与旧 `heard` 插话，不新增存储副本。`SpokenLine` 只限制现场阅读高度，完整原话仍在历史和导出中；新生成台词在共用 `runDinner` 校验长度并最多重写一次，旧 SaveSchema 长度兼容不变。
 
+同日沉浸体验更新：`tableEvidence.ts` 提供六份带原创出处的双语开局资料，界面可查阅，服务端与 BYOK 共用模型事实。可选 `Message.interjection` 嵌入主 NPC 回合，`transcript.ts` 在主句后原样展开，旧 v1 存档兼容；没有增加独立对话存储副本或玩家回合。`playerEvidence` 只提取已有用户原话，不生成无证据的总结。
+
+`useDinnerPlayback` / `playback.ts` 将主句和插话按序呈现为有限的说话动作，可选浏览器 SpeechSynthesis 朗读。音色由浏览器提供；无声音能力 / 报错 / 长时间未启动时继续有限字幕播放。收音立即取消本轮朗读，朗读时压低包厢环境声。打开面板 / 隐藏标签页暂停，取消与卸载清理已拥有的朗读。等待模型时保留自由探索和独立眨眼呼吸，但发送使用发言当时的空间快照。饭桌动作时间可走完视觉收尾，任何停顿都不替玩家选动作。见 [沉浸方案](./archive/specs/spec-3d-immersion.md)。
+
 ### 维护归属
 
 自 2026-10-03 起，主仓库是 3D 版本的唯一开发主线；后续人物精修、场景、交互和问题修复均先在主站 `/3d` 交付。独立仓库 [SocialCoach-3D](https://github.com/GeminiLight/SocialCoach-3D) 保留为可单独运行的演示原型，允许落后，不阻塞主站发布。

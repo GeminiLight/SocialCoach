@@ -8,6 +8,7 @@ import type {Palette} from '../lib/palette';
 import {actorBeat,playerBeat,trophyPosition,type Drama} from '../lib/drama';
 import {PLAYER_HOME,type World} from '../lib/room';
 import {DinnerHand} from './DinnerHand';
+import {advancePresence,createPresence,conversationalRaise} from '../lib/presence';
 export function Cup({position=[0,0,0],palette:p,wine=false}:{position?:[number,number,number];palette:Palette;wine?:boolean}){
  const profile=useMemo(()=> (wine?[[0,.20],[.032,.20],[.054,.22],[.079,.25],[.092,.30],[.096,.36],[.091,.367],[.088,.36],[.085,.30],[.072,.25],[.046,.225],[0,.216]]:[[.068,-.095],[.079,-.085],[.094,-.04],[.116,.089],[.115,.10],[.106,.102],[.104,.09],[.084,-.035],[.070,-.065],[0,-.066]]).map(([x,y])=>new Vector2(x,y)),[wine]);
  return <group position={position}>
@@ -26,8 +27,9 @@ function useScreen(p:Palette,kind:'calendar'|'intro'|'photo'|'family'|'trophy',l
  const t=new CanvasTexture(canvas);t.colorSpace=SRGBColorSpace;return t;},[p,kind,lang]);useEffect(()=>()=>texture.dispose(),[texture]);return texture;
 }
 export function Phone({p,kind,lang}:{p:Palette;kind:'calendar'|'intro'|'photo';lang:Lang}){const screen=useScreen(p,kind,lang);return <group scale={.74} rotation={[0,kind==='photo'?Math.PI:0,0]}><RoundedBox args={[.34,.62,.05]} radius={.018} smoothness={3} castShadow><meshStandardMaterial color={p.dark} roughness={.3} metalness={.12}/></RoundedBox><mesh position={[0,0,.027]}><planeGeometry args={[.302,.55]}/><meshBasicMaterial map={screen} toneMapped={false}/></mesh><mesh position={[0,.296,.03]}><boxGeometry args={[.08,.009,.009]}/><meshStandardMaterial color={p.dark}/></mesh><mesh position={[-.095,.22,-.028]} rotation={[0,Math.PI,0]}><circleGeometry args={[.026,18]}/><meshStandardMaterial color={p.brass} metalness={.6}/></mesh><mesh position={[-.095,.22,-.031]} rotation={[0,Math.PI,0]}><circleGeometry args={[.017,18]}/><meshStandardMaterial color={p.sage}/></mesh></group>;}
-export function TableCups({p,world,drama,scenario,reactions}:{p:Palette;world:World;drama:Drama;scenario:Scenario;reactions:{gesture:Gesture}[]}){
- const cups=useRef<(Group|null)[]>([]);useFrame(()=>{cups.current.forEach((cup,i)=>{if(cup)cup.visible=i===4?drama.inventory!=='glass':i===3?scenario.id==='family'?drama.inventory!=='glass'&&drama.inventory!=='tea':drama.inventory!=='tea':actorBeat(drama,i,scenario.id).raise<.015&&!(drama.phase==='settled'&&reactions[i]?.gesture==='toast');});});
+export function TableCups({p,world,drama,scenario,reactions,line,paused}:{p:Palette;world:World;drama:Drama;scenario:Scenario;reactions:{gesture:Gesture}[];line:string;paused:boolean}){
+ const cups=useRef<(Group|null)[]>([]),presence=useRef(createPresence());
+ useFrame((_,dt)=>{const timing=advancePresence(presence.current,{dt,line,speakerId:world.speakerId,paused:paused||document.hidden});cups.current.forEach((cup,i)=>{const raise=drama.active&&drama.phase!=='settled'?actorBeat(drama,i,scenario.id).raise:reactions[i]?.gesture==='toast'?conversationalRaise(timing.elapsed):0;if(cup)cup.visible=i===4?drama.inventory!=='glass':i===3?scenario.id==='family'?drama.inventory!=='glass'&&drama.inventory!=='tea':drama.inventory!=='tea':raise<.015;});});
  return <>{[...world.npcs,{...PLAYER_HOME,id:'player'},...(scenario.id!=='family'?[{...PLAYER_HOME,id:'player-wine'}]:[])].map((actor,i)=>{const home=i>=3?PLAYER_HOME:world.npcs[i].home,r=Math.hypot(home.x,home.z);return <group key={actor.id} ref={el=>{cups.current[i]=el;}} position={[home.x/r*2.13+(i===4?-.28:.28),scenario.id!=='family'&&(i===0||i===4)?1.70:1.79,home.z/r*2.13]}><Cup palette={p} wine={scenario.id!=='family'&&(i===0||i===4)}/></group>;})}</>;
 }
 export function ScenarioObjects({p,drama,scenario,lang,reduced}:{p:Palette;drama:Drama;scenario:Scenario;lang:Lang;reduced:boolean}){

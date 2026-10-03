@@ -7,11 +7,12 @@ import { continueScript, type ScriptContext } from './dialogue';
 import { DEFAULT_DINNER_TURNS, MAX_DINNER_TURNS, DinnerLengthSchema, VariantIdSchema, StoryBeatSchema, isSceneVariant, sceneTopics, variantFor, type StoryBeat } from './story';
 
 export const ReactionSchema = z.object({ characterId: z.string().max(30), emotion: z.enum(['neutral', 'pressing', 'annoyed', 'thinking', 'supportive']), gesture: z.enum(['idle', 'toast', 'lean', 'fold', 'nod']) });
-export const ReplySchema = z.object({ speakerId: z.string().max(30), text: z.string().min(1).max(650), cue: z.string().min(1).max(250), reactions: z.array(ReactionSchema).min(3).max(3), story:StoryBeatSchema.optional(),replyTo:z.string().min(1).max(120).optional() });
+export const InterjectionSchema=z.object({speakerId:z.string().max(30),text:z.string().trim().min(1).max(160)});
+export const ReplySchema = z.object({ speakerId: z.string().max(30), text: z.string().min(1).max(650), cue: z.string().min(1).max(250), reactions: z.array(ReactionSchema).min(3).max(3), story:StoryBeatSchema.optional(),replyTo:z.string().min(1).max(120).optional(),interjection:InterjectionSchema.optional() });
 export type Reply = z.infer<typeof ReplySchema>;
 export const HeardSchema=z.object({speakerId:z.string().max(30),text:z.string().min(1).max(650),cue:z.string().max(250).optional()});
-export type Message = { role: 'npc' | 'user'; text: string; speakerId?: string; cue?: string; mode?: 'script' | 'model'; reactions?: Reply['reactions']; room?:RoomContext; dinner?:DinnerContext; targetId?:string; heard?:z.infer<typeof HeardSchema>; story?:StoryBeat };
-export const MessageSchema = z.object({ role: z.enum(['npc', 'user']), text: z.string().min(1).max(2000), speakerId: z.string().optional(), cue: z.string().optional(), mode: z.enum(['script', 'model']).optional(), reactions: z.array(ReactionSchema).optional(), room:RoomContextSchema.optional(),dinner:DinnerContextSchema.optional(),targetId:z.string().max(30).optional(),heard:HeardSchema.optional(),story:StoryBeatSchema.optional() });
+export type Message = { role: 'npc' | 'user'; text: string; speakerId?: string; cue?: string; mode?: 'script' | 'model'; reactions?: Reply['reactions']; room?:RoomContext; dinner?:DinnerContext; targetId?:string; heard?:z.infer<typeof HeardSchema>; story?:StoryBeat;interjection?:z.infer<typeof InterjectionSchema> };
+export const MessageSchema = z.object({ role: z.enum(['npc', 'user']), text: z.string().min(1).max(2000), speakerId: z.string().optional(), cue: z.string().optional(), mode: z.enum(['script', 'model']).optional(), reactions: z.array(ReactionSchema).optional(), room:RoomContextSchema.optional(),dinner:DinnerContextSchema.optional(),targetId:z.string().max(30).optional(),heard:HeardSchema.optional(),story:StoryBeatSchema.optional(),interjection:InterjectionSchema.optional() });
 export const SaveSchema = z.object({ version: z.literal(1), maxTurns:DinnerLengthSchema.default(DEFAULT_DINNER_TURNS), variantId:VariantIdSchema.optional(), targetId:z.string().max(30).optional(), scenarioId: z.enum(['work', 'family', 'school']), messages: z.array(MessageSchema).max(MAX_DINNER_TURNS*2+1), started: z.boolean(), complete: z.boolean(), lang: z.enum(['zh', 'en']), draft: z.string().max(500),view:z.enum(['first','third']).optional(),room:RoomSaveSchema.optional(),dinner:DramaSaveSchema.optional() }).superRefine((save, ctx) => {
   const ids = scenarios.find(s => s.id === save.scenarioId)!.characters.map(c => c.id);
   if(save.variantId&&!isSceneVariant(save.scenarioId,save.variantId))ctx.addIssue({code:'custom',message:'Invalid story variant'});
@@ -26,6 +27,7 @@ export const SaveSchema = z.object({ version: z.literal(1), maxTurns:DinnerLengt
   if(save.messages.some((m,i)=>m.dinner&&(!validDinnerContext(m.dinner,save.scenarioId)||m.dinner.previous.some(r=>r.turn>Math.floor(i/2)))))ctx.addIssue({code:'custom',message:'Invalid dinner evidence'});
   if(save.dinner&&save.dinner.records.some(r=>r.turn>save.messages.filter(m=>m.role==='user').length||r.turn<dinnerEvents.find(e=>e.id===r.eventId)!.turn))ctx.addIssue({code:'custom',message:'Invalid action timing'});
   if(save.messages.some(m=>m.heard&&!ids.includes(m.heard.speakerId)))ctx.addIssue({code:'custom',message:'Invalid heard speaker'});
+  if(save.messages.some(m=>m.interjection&&(m.role!=='npc'||!ids.includes(m.interjection.speakerId)||m.interjection.speakerId===m.speakerId)))ctx.addIssue({code:'custom',message:'Invalid interjection'});
   if(save.messages.some(m=>m.room&&!validRoomCast(m.room,ids)))ctx.addIssue({code:'custom',message:'Invalid spatial evidence'});
   if (save.messages.some(m => m.reactions&&(m.reactions.length!==3||new Set(m.reactions.map(r=>r.characterId)).size!==3||m.reactions.some(r => !ids.includes(r.characterId))))) ctx.addIssue({ code: 'custom', message: 'Invalid character reaction' });
 }).transform(save=>({...save,complete:save.complete||save.messages.filter(m=>m.role==='user').length>=save.maxTurns}));
@@ -55,6 +57,7 @@ export function validateReply(data: unknown, scenario: Scenario): Reply {
   const reply = ReplySchema.parse(data);
   const ids = scenario.characters.map(c => c.id);
   if (!ids.includes(reply.speakerId) || new Set(reply.reactions.map(r => r.characterId)).size !== 3 || reply.reactions.some(r => !ids.includes(r.characterId))) throw new Error('Invalid character');
+  if(reply.interjection&&(!ids.includes(reply.interjection.speakerId)||reply.interjection.speakerId===reply.speakerId))throw new Error('The interjection must come from a different person at this table');
   if(reply.story&&!sceneTopics[scenario.id].includes(reply.story.topic))throw new Error('Invalid story topic');
   if(reply.story?.event&&dinnerEvents.find(e=>e.id===reply.story!.event)?.scene!==scenario.id)throw new Error('Invalid story event');
   return reply;

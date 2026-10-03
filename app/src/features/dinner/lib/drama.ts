@@ -52,7 +52,7 @@ export function syncDrama(d:Drama,scene:Scenario,turn:number,started:boolean,com
   const next=dinnerEvents.find(e=>e.id===id&&e.scene===scene.id&&e.turn<=turn&&!d.seen.includes(e.id));if(!next)return;
   d.active=next.id;d.seen.push(next.id);d.elapsed=0;d.phase='waiting';d.choice=undefined;d.pending=undefined;d.responseAt=undefined;d.paused=false;
 }
-export function stepDrama(d:Drama,dt:number,paused:boolean){if(paused||d.paused||d.pending||d.phase==='settled')return;d.elapsed=Math.min(30,d.elapsed+Math.min(.05,Math.max(0,dt)));if(d.phase==='reacting'&&d.elapsed>=4.6)d.phase='settled';}
+export function stepDrama(d:Drama,dt:number,paused:boolean){if(paused||d.paused||d.phase==='settled')return;d.elapsed=Math.min(30,d.elapsed+Math.min(.05,Math.max(0,dt)));if(d.phase==='reacting'&&d.elapsed>=4.6)d.phase='settled';}
 export function readyForChoice(d:Drama,id:ChoiceId,world:World){
   if((id==='join'||id==='tea')&&d.inventory==='none')return distance(world.player,PLAYER_HOME)<1.2;
   if(id==='calendar'&&(d.inventory==='glass'||d.inventory==='tea'))return distance(world.player,PLAYER_HOME)<1.2;
@@ -71,10 +71,15 @@ export function dinnerContext(d:Drama):DinnerContext|undefined{return d.active?{
 export function eventDialogue(d:Drama,lang:Lang){const event=activeEvent(d);if(!event||d.phase==='settled'&&!d.choice||d.records.some(r=>r.eventId===d.active&&r.choice===d.choice&&r.silent))return;const choice=event.choices.find(c=>c.id===d.choice);return {speaker:event.scene==='family'&&d.choice==='ally'?2:event.speaker,text:pick(choice?.line??event.line,lang),cue:pick(choice?.cue??event.cue,lang)};}
 export function actionEvidence(record:Drama['records'][number],lang:Lang){const event=dinnerEvents.find(e=>e.id===record.eventId)!,choice=event.choices.find(c=>c.id===record.choice)!;return {title:pick(event.title,lang),action:pick(choice.label,lang),reply:record.silent?undefined:pick(choice.line,lang),cue:pick(choice.cue,lang),speaker:event.scene==='family'&&choice.id==='ally'?2:event.speaker};}
 const ease=(v:number)=>{const t=Math.max(0,Math.min(1,v));return t*t*(3-2*t);};
+const waitingRaise=(elapsed:number,index:number)=>{
+ const delay=index===0?0:index===1?.65:1.45,lowerAt=index===0?8.5:index===1?5.2:6.2;
+ return ease((elapsed-delay)/.65)*(1-ease((elapsed-lowerAt)/1.1));
+};
 export function actorBeat(d:Drama,index:number,scene:Scenario['id']){
   const event=activeEvent(d),toast=event?.kind==='toast'&&d.phase!=='settled';
   const lead=index===0,delay=index===0?0:index===1?.65:1.45;
-  let raise=toast?ease((d.elapsed+(d.phase==='reacting'?(d.responseAt??2.2):0)-delay)/.65):0;
+  const initial=waitingRaise(d.responseAt??2.2,index);
+  let raise=toast?d.phase==='waiting'?waitingRaise(d.elapsed,index):d.choice==='hold'?initial:initial+(1-initial)*ease((d.elapsed-delay)/.65):0;
   if(d.phase==='reacting'&&toast){const drop=d.choice==='hold'?(lead?3:.9):d.choice==='tea'?(lead?2.4:1.8):3.1;raise*=1-ease((d.elapsed-drop)/.8);}
   if(event?.kind==='phone'&&index===2&&d.phase!=='settled')raise=.7*ease((d.elapsed+(d.phase==='reacting'?(d.responseAt??1):0))/.6)*(d.phase==='reacting'?1-ease(d.elapsed/.9):1);
   const sip=toast&&d.phase==='reacting'&&d.choice!=='hold'?Math.sin(Math.PI*ease((d.elapsed-1.6-index*.15)/1.1))*.55:0;

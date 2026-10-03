@@ -284,9 +284,9 @@ JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: stri
 
 请求 `{scenarioId: "work"|"family"|"school", variantId?, maxTurns?, targetId?, lang: "zh"|"en", text, history, room?, dinner?, heard?}`。`text` 非空且最多 500 字；`history` 为 1–47 条 NPC / 用户交替记录，起止为 NPC。`maxTurns` 默认 12，上限 24（兼容旧四回合），达到预算后客户端先延长再请求。`variantId` 是当前桌的两个原创开局之一；`targetId` 指定当前回复人，不赋予其替别人承诺的权限。历史保留话题、原话、空间 / 动作证据及用户开口前实际听到的 `heard:{speakerId,text,cue?}`，不得剥掉这些字段或截断成最后四轮。角色、开局、话题与事件交叉校验。正文最多 192 KiB（检查实际字节，不只信任请求头）。
 
-返回 `{replyTo,speakerId,text,cue,reactions:[{characterId,emotion,gesture}],story?:{topic,event?}}`，恰好包含当前桌三名角色的反应。`replyTo` 是当前输入的 1–120 字符原文片段，由任务层核验，用来发现错答上一句，不显示为用户评价。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。`cue` 从实际支持的动作派生，模型编造的吃饭 / 手机操作不进入舞台说明。`story.event` 只能是当前开局允许、未出现且未被拒绝的动作插曲；不再在固定回合自动播放。无分数 / 隐藏动机。
+返回 `{replyTo,speakerId,text,cue,reactions:[{characterId,emotion,gesture}],story?:{topic,event?},interjection?:{speakerId,text}}`，恰好包含当前桌三名角色的反应。`replyTo` 是当前输入的 1–120 字符原文片段，由任务层核验，用来发现错答上一句，不显示为用户评价。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。`cue` 从实际支持的动作派生，模型编造的吃饭 / 手机操作不进入舞台说明。`story.event` 只能是当前开局允许、未出现且未被拒绝的动作插曲；不再在固定回合自动播放。可选 `interjection` 是另一名同桌 NPC 在主回复之后的一句可听见插话，必须不同于主回复人，不能跨桌或替他人承诺。中文最多 45 字符；英文最多 25 词 / 160 字符。该字段嵌入同一个 NPC message，存档 / 完整历史 / 下一次请求都保留原话，不消耗额外玩家回合。无分数 / 隐藏动机。
 
-模型输入把完整历史放在前面，单独的 `current_player_turn` 放在最后；各开局事实分离，防止相亲线混入工作变动。新生成台词要求 1–2 个短句，中文目标 25–70 字符、硬上限 120；英文目标 15–35 词、上限 60 词且 400 字符。旧转录仍按原长度读取，不截断原话。回复角色、引文、长度或事件校验失败时最多修复一次，仍失败则返回错误，绝不提交无效回合或静默换成内置剧情。
+模型同时接收六种可查阅的原创开局资料和只包含玩家既有原话的 `playerEvidence`，帮助区分 NPC 建议与玩家决定。拒绝、时间、个人信息的语义仍由模型理解，不能把结构校验宣称为语义保证。模型输入把完整历史放在前面，单独的 `current_player_turn` 放在最后；各开局事实分离，防止相亲线混入工作变动。新生成台词要求 1–2 个短句，中文目标 25–70 字符、硬上限 120；英文目标 15–35 词、上限 60 词且 400 字符。旧转录仍按原长度读取，不截断原话。回复角色、引文、长度或事件校验失败时最多修复一次，仍失败则返回错误，绝不提交无效回合或静默换成内置剧情。
 
 错误：400 输入 / 状态无效；413 过长；429 沿用主站限流；503 部署无密钥或强制 BYOK；模型错误沿用 `fail()`，无剧本静默替代。服务器请求 30 秒取消、路由 `maxDuration=40`；客户端 35 秒取消，草稿保留。响应 `Cache-Control: no-store`。
 

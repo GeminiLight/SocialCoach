@@ -2,11 +2,13 @@ let context: AudioContext | null = null;
 let room: AudioBufferSourceNode | null = null;
 let roomGain: GainNode | null = null;
 let speechMuted = false;
+let dialogueReading = false;
 let roomRevision = 0;
 export function muteForSpeech(muted: boolean) {
   speechMuted = muted;
-  if (roomGain && context) roomGain.gain.setTargetAtTime(muted ? 0 : .11, context.currentTime, .06);
+  if (roomGain && context) roomGain.gain.setTargetAtTime(muted ? 0 : dialogueReading ? .025 : .11, context.currentTime, .06);
 }
+export function setDialogueReading(reading:boolean){dialogueReading=reading;if(roomGain&&context)roomGain.gain.setTargetAtTime(speechMuted?0:reading?.025:.11,context.currentTime,.06);}
 export async function toggleRoom(enabled: boolean) {
   const revision = ++roomRevision;
   if (!enabled) { room?.stop(); room=null; await context?.suspend(); return; }
@@ -17,7 +19,7 @@ export async function toggleRoom(enabled: boolean) {
   const data=buffer.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*.3;
   room=context.createBufferSource();room.buffer=buffer;room.loop=true;
   const filter=context.createBiquadFilter();filter.type='lowpass';filter.frequency.value=430;
-  const gain=context.createGain();roomGain=gain;gain.gain.value=speechMuted?0:.11;
+  const gain=context.createGain();roomGain=gain;gain.gain.value=speechMuted?0:dialogueReading?.025:.11;
   room.connect(filter).connect(gain).connect(context.destination);room.start();
 }
 export function clink() {

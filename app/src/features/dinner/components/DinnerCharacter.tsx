@@ -14,7 +14,7 @@ import { Cup, Phone } from './DinnerProps';
 import { DinnerHand } from './DinnerHand';
 import { DinnerFace } from './DinnerFace';
 import { garmentGeometry, garmentRig, jacketProfile, trouserGeometry, trouserRig, bindRestPose } from '../lib/anatomy';
-import { createPresence, advancePresence, presencePose } from '../lib/presence';
+import { createPresence, advancePresence, presencePose, conversationalRaise } from '../lib/presence';
 
 type Props = { character:Character; actor:Actor; world:World; reaction?:Reply['reactions'][number]; active:boolean; onSelect:()=>void; p:Palette; surfaces:DinnerSurfaces; reduced:boolean; drama:Drama; index:number; scenario:Scenario; lang:Lang; line:string; player?:boolean; paused?:boolean };
 function Form({rings,color,roughness=.85,weave}:{rings:Ring[];color:string;roughness?:number;weave?:Texture}) {
@@ -114,7 +114,7 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
     const timing=advancePresence(presence.current,{dt,line,speakerId:world.speakerId,paused:frozen});
     if(frozen&&posed.current)return;
     const eventActive=!!drama.active&&drama.phase!=='settled';
-    const pose=presencePose(timing,{index,active,reduced,event:eventActive});
+    const pose=presencePose(timing,{index,active,reduced,event:eventActive,playback:true});
     const t=timing.time,instant=reduced||!posed.current;posed.current=true;
     root.current.position.set(actor.x,0,actor.z);root.current.rotation.y+=Math.atan2(Math.sin(actor.heading-root.current.rotation.y),Math.cos(actor.heading-root.current.rotation.y))*(instant?1:1-Math.exp(-10*dt));
     const standAmount=actor.seated?0:1;
@@ -125,7 +125,7 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
     });
     [shinL.current,shinR.current].forEach(shin=>{shin.rotation.x=MathUtils.lerp(shin.rotation.x,actor.seated?Math.PI/2:0,reduced?1:1-Math.exp(-9*dt));});
     const beat=actorBeat(drama,index,scenario.id),own=playerBeat(drama);
-    const toast=player?own.raise:drama.active&&drama.phase!=='settled'?beat.raise:gesture==='toast'?1:0;
+    const toast=player?own.raise:drama.active&&drama.phase!=='settled'?beat.raise:gesture==='toast'?conversationalRaise(timing.elapsed):0;
     const sip=player?0:beat.sip;
     const phoneAmount=player?Math.max(own.phone,drama.inventory==='phone'?.65:0):beat.phone;
     const eventTarget=beat.gaze>=0&&beat.gaze!==index?world.npcs[beat.gaze]:world.player;
