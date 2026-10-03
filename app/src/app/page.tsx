@@ -77,9 +77,9 @@ export default function Home() {
 
   return (
     <Shell>
-      <Page className="pt-5 lg:pt-10 flex flex-col gap-7 lg:gap-9">
+      <Page className="home-page pt-5 lg:pt-10 flex flex-col gap-7 lg:gap-9">
         {/* header */}
-        <header className="flex flex-wrap items-end justify-between gap-4 pb-6 border-b border-line">
+        <header className="home-header flex flex-wrap items-end justify-between gap-4 pb-6 border-b border-line">
           <div>
             <p className="eyebrow text-accent-deep">
               {t(lang, greet)}
@@ -99,7 +99,7 @@ export default function Home() {
         {unfinished && (
           <Link
             href={`/practice/${unfinished.id}`}
-            className="press flex flex-wrap items-center gap-3 rounded-[var(--radius-sm)] border border-line-strong bg-card px-4 py-4 hover:bg-inset"
+            className="home-resume press flex flex-wrap items-center gap-3 rounded-[var(--radius-sm)] border border-line-strong bg-card px-4 py-4 hover:bg-inset"
           >
             <Clock3 size={18} className="text-accent-deep shrink-0" />
             <span className="min-w-0 flex-1">
@@ -112,26 +112,9 @@ export default function Home() {
           </Link>
         )}
 
-        <DinnerEntry />
 
-        <div className="flex flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,1fr)_var(--margin-w)] xl:gap-8 xl:items-start">
+        <div className="home-practice-layout flex flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,1fr)_var(--margin-w)] xl:gap-8 xl:items-start">
           <div className="flex flex-col gap-6 min-w-0">
-            <section className="rehearsal-invitation rounded-[var(--radius)] p-5 lg:p-7 flex flex-col gap-5">
-              <div className="flex items-start gap-3">
-                <PenLine size={21} className="text-accent-deep shrink-0 mt-1" aria-hidden />
-                <div className="min-w-0">
-                  <h2 className="display text-[23px] lg:text-[26px] leading-snug">{t(lang, "home_rehearse_title")}</h2>
-                  <p className="text-[14px] text-ink-2 mt-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_rehearse_sub")}</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <Link href="/rehearse" className="press inline-flex items-center justify-center gap-3 min-h-12 px-5 rounded-full text-[14px] font-semibold bg-card border border-line-strong hover:bg-inset">
-                  {t(lang, "home_rehearse_action")}<ArrowRight size={17} aria-hidden />
-                </Link>
-                <p className="text-[12px] text-ink-3 leading-relaxed">{t(lang, "home_rehearse_steps")}</p>
-              </div>
-            </section>
-
             {/* Today card */}
             <section aria-live="polite" aria-busy={loading}>
               {!todaySession && !loading && !error && (
@@ -176,6 +159,22 @@ export default function Home() {
               {todaySession && todaySession.id !== unfinished?.id && !loading && (
                 <TodayCard session={todaySession} onStart={() => router.push(`/practice/${todaySession.id}`)} onSwap={planToday} />
               )}
+            </section>
+
+            <section className="rehearsal-invitation rounded-[var(--radius)] p-5 lg:p-7 flex flex-col gap-5">
+              <div className="flex items-start gap-3">
+                <PenLine size={21} className="text-accent-deep shrink-0 mt-1" aria-hidden />
+                <div className="min-w-0">
+                  <h2 className="display text-[23px] lg:text-[26px] leading-snug">{t(lang, "home_rehearse_title")}</h2>
+                  <p className="text-[14px] text-ink-2 mt-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_rehearse_sub")}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <Link href="/rehearse" className="press inline-flex items-center justify-center gap-3 min-h-12 px-5 rounded-full text-[14px] font-semibold bg-card border border-line-strong hover:bg-inset">
+                  {t(lang, "home_rehearse_action")}<ArrowRight size={17} aria-hidden />
+                </Link>
+                <p className="text-[12px] text-ink-3 leading-relaxed">{t(lang, "home_rehearse_steps")}</p>
+              </div>
             </section>
 
             {recent[0]?.report?.nextStep && recent[0].report.verdictEvidence && (
@@ -254,6 +253,7 @@ export default function Home() {
             )}
           </aside>
         </div>
+        <DinnerEntry />
       </Page>
     </Shell>
   );
@@ -319,7 +319,7 @@ function TodayCard({ session, onStart, onSwap }: { session: ReturnType<typeof bu
         )}
         <div className="flex flex-col gap-2 pt-1 lg:max-w-[440px]">
           <div className="flex gap-2">
-            <Button requiresModel={session.status === "briefing" || session.status === "active"} block size="lg" variant="secondary" onClick={onStart}>
+            <Button requiresModel={session.status === "briefing" || session.status === "active"} block size="lg" variant={done ? "secondary" : "primary"} onClick={onStart}>
               {done ? t(lang, "home_view_report") : active ? t(lang, "home_continue") : t(lang, "home_start")}
               <ArrowRight size={18} />
             </Button>
