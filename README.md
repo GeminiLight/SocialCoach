@@ -15,6 +15,8 @@ Build social skills and learn to handle conflict through realistic role-play and
 [![Read the paper](https://img.shields.io/badge/Paper-arXiv-AD411C?style=for-the-badge&labelColor=261D16)](https://arxiv.org/abs/2606.04155)
 [![Apache 2.0 license](https://img.shields.io/badge/License-Apache%202.0-00656A?style=for-the-badge&labelColor=261D16)](LICENSE)
 
+**[Try 3D scenes →](https://socialcoach-ai.vercel.app/3d)** · Dinners, elevator conversations, and office encounters.
+
 [English](README.md) · [简体中文](README.zh-CN.md)
 
 https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
@@ -25,7 +27,29 @@ https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
 
 ---
 
-[Practice](#what-you-can-practice) · [How it works](#how-it-works) · [Features](#key-features) · [Quick start](#quick-start) · [Deployment](#deployment) · [Research](#research)
+[News](#news) · [3D practice](#3d-practice) · [Text practice](#what-you-can-practice) · [How it works](#how-it-works) · [Features](#key-features) · [Quick start](#quick-start) · [Deployment](#deployment) · [Research](#research)
+
+## News
+
+<!-- Keep only the three latest major updates, newest first. Group related changes; omit routine fixes. Keep README.zh-CN.md in sync. -->
+
+| Date | Major update |
+|---|---|
+| **2026-10-03** | **[SocialCoach in 3D](#3d-practice).** Dinner, elevator lobby, and office scenes, with movement, voice input, and the same evidence-based debrief as text practice. |
+| **2026-10-03** | **[More scenarios, more room to respond](#what-you-can-practice).** 58 text scenarios across 7 areas of life; continue the conversation and decide when to debrief. |
+| **2026-10-02** | **[Keep talking after the debrief](#key-features).** Ask the coach follow-up questions about your words, feedback, and sourced guidance; revisit the discussion later. |
+
+## 3D practice
+
+A toast from your manager. A question about leaving your job in the elevator lobby. Three more tasks before you leave the office. Practice your response with everyone else in the room.
+
+<p align="center"><a href="https://socialcoach-ai.vercel.app/3d"><img src="app/public/images/dinner-home-preview.png" width="860" alt="A rendered 3D work dinner in SocialCoach, with three characters seated across the table"></a></p>
+
+Choose a **work, family, or campus dinner**, an **elevator lobby**, or an **office**, each with its own cast. Switch between first- and third-person views, move around, choose whom to address, and speak by typing or browser voice input. Characters can interject, and scene actions let you raise a cup, check materials, or walk over to the elevator controls.
+
+**Text and 3D share the same debrief:** feedback quoting your words, alternative phrasing, sourced knowledge, reflection, and follow-up coaching. The 3D report also records whom you addressed, where you stood or sat, and actions you actually completed. Return to the scene to continue, or revisit the report in your practice history.
+
+**[Enter a 3D scene →](https://socialcoach-ai.vercel.app/3d)**
 
 ## What you can practice
 
@@ -43,8 +67,6 @@ Preview five bilingual practice scenarios: [asking for a raise](https://tianfuwa
 Choose from **58 scenarios across 7 areas of life**, follow a personalized recommendation, or describe your own situation. The interface and practice content are available in **English and Simplified Chinese**.
 
 Text practice starts with at least 12 learner turns. Continue the same conversation in eight-turn segments, keeping its history and commitments; you decide when to end and debrief.
-
-**New: [3D dinner practice](https://socialcoach-ai.vercel.app/3d).** Take a seat in fictional work, family and school dinners, switch perspectives, move around, and respond by typing or browser voice input. The 3D entry is also on the app home page.
 
 ## Social skills and social and emotional learning (SEL)
 
@@ -82,7 +104,7 @@ SocialCoach is an AI learning tool focused on practicing social skills, one part
 - **Feedback grounded in your words.** The debrief quotes what you said before evaluating it, then identifies whether you need a new strategy or more practice applying one. Communication quality and the outcome of the conversation are assessed separately, so a thoughtful response can still count even when the other person says no.
 - **Personalized practice.** Recommendations draw on your goals, practice history, and estimated proficiency across 34 skills. Rehearse a situation from your own life or explore the scenario library.
 - **Guidance with sources.** A library of 42 strategies and 30 cases supports coaching and reflection. Entries include their sources, and teaching examples are labelled.
-- **A view of your progress.** Revisit past conversations, reflect with the coach, and look for recurring patterns backed by quotes from different sessions.
+- **A view of your progress.** Ask follow-up questions about your debrief, revisit past conversations, and look for recurring patterns backed by quotes from different sessions.
 - **Practice on your terms.** No account required. Export your practice history, use your own model, or self-host the app. The mobile-first interface can be installed as a PWA.
 
 ## Quick start
@@ -186,10 +208,11 @@ The scheduler turns a practice prescription into a matching corpus scenario and 
 |---|---|
 | Scenarios, strategies, cases, and skill taxonomy | [`app/src/data/`](app/src/data) |
 | Scheduling, role-play, assessment, and reflection | [`app/src/lib/tasks/`](app/src/lib/tasks) |
+| 3D scenes, characters, movement, and interactions | [`app/src/features/dinner/`](app/src/features/dinner) |
 | Server API routes | [`app/src/app/api/`](app/src/app/api) |
 | Local learner state | [`app/src/store/`](app/src/store) |
 
-**Stack:** Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Zustand · Framer Motion · Zod · Anthropic and OpenAI SDKs.
+**Stack:** Next.js 16 · React 19 · Three.js / React Three Fiber · TypeScript · Tailwind CSS v4 · Zustand · Framer Motion · Zod · Anthropic and OpenAI SDKs.
 
 **Design:** warm paper, editorial typography, and feedback that reads like a coach's margin notes. See the [design brief](app/.impeccable.md) and [system architecture](wiki/02-system-architecture.md).
 

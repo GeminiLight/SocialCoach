@@ -15,13 +15,37 @@
 [![阅读论文](https://img.shields.io/badge/%E8%AE%BA%E6%96%87-arXiv-AD411C?style=for-the-badge&labelColor=261D16)](https://arxiv.org/abs/2606.04155)
 [![Apache 2.0 开源许可证](https://img.shields.io/badge/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF-Apache%202.0-00656A?style=for-the-badge&labelColor=261D16)](LICENSE)
 
+**[进入 3D 现场 →](https://socialcoach-ai.vercel.app/3d)** · 饭桌、电梯口、办公室，换一种方式练开口。
+
 [English](README.md) · [简体中文](README.zh-CN.md)
 
 </div>
 
 ---
 
-[练什么](#你可以练什么) · [怎么练](#如何开始一场练习) · [核心功能](#核心功能) · [本地运行](#快速开始) · [部署](#部署) · [研究](#研究)
+[News](#news) · [3D 实景练习](#3d-实景练习) · [文字练习](#你可以练什么) · [怎么练](#如何开始一场练习) · [核心功能](#核心功能) · [本地运行](#快速开始) · [部署](#部署) · [研究](#研究)
+
+## News
+
+<!-- 只保留最近三条重要更新，按新到旧排列；相关变化合并，日常修复不进入 News。与 README.md 同步维护。 -->
+
+| 日期 | 重要更新 |
+|---|---|
+| **2026-10-03** | **[SocialCoach 3D 上线](#3d-实景练习)。** 饭桌、电梯口、办公室，支持移动、语音输入，并与文字练习共用基于原话的复盘。 |
+| **2026-10-03** | **[场景更多，对话可以继续](#你可以练什么)。** 文字场景扩充到 58 个，覆盖 7 类生活情境；可以续聊，由你决定何时复盘。 |
+| **2026-10-02** | **[复盘之后，还能接着问](#核心功能)。** 围绕自己的原话、反馈和有出处的知识，向教练连续追问，之后也能回看问答。 |
+
+## 3D 实景练习
+
+饭桌上，领导突然举杯；电梯口，同事追问你是不是要离职；快下班时，三件临时任务落到桌上。先在现场练一次怎么回应。
+
+<p align="center"><a href="https://socialcoach-ai.vercel.app/3d"><img src="app/public/images/dinner-home-preview.png" width="860" alt="SocialCoach 实际渲染的 3D 职场饭桌，三位角色坐在桌子对面"></a></p>
+
+选择**职场、家庭或学校饭局**，也可以走进**电梯口或办公室**，每个场景都有独立的人物。切换第一、第三人称，起身走动，选择回应谁，用文字或浏览器语音开口。旁人可能插话，你也可以举杯、查看资料，或走到电梯按钮旁操作。
+
+**3D 与文字共用一套复盘：** 引用原话的评价、换一种说法、有出处的知识、反思和后续追问。3D 还补充发言对象、当时的位置与坐姿，以及实际完成的动作。看完可以回现场续聊，也能从练习历史重新查看报告。
+
+**[进入 3D 现场 →](https://socialcoach-ai.vercel.app/3d)**
 
 ## 你可以练什么
 
@@ -36,9 +60,9 @@
 
 先看看五个双语练习情境：[和老板谈加薪](https://tianfuwang.tech/SocialCoach/guides/salary-raise/)、[拒绝临时加班](https://tianfuwang.tech/SocialCoach/guides/declining-extra-hours/)、[会议上被同事质问](https://tianfuwang.tech/SocialCoach/guides/meeting-tension/)、[和伴侣谈家务分工](https://tianfuwang.tech/SocialCoach/guides/spouse-chores/)、[请朋友还钱](https://tianfuwang.tech/SocialCoach/guides/friend-borrowed-money/)。每页都能进入应用练对应场景。
 
-从覆盖 **7 类生活情境的 46 个场景**中选择，跟随个性化推荐练习，也可以描述你自己的处境。界面与练习内容均支持**中文和英文**。
+从覆盖 **7 类生活情境的 58 个场景**中选择，跟随个性化推荐练习，也可以描述你自己的处境。界面与练习内容均支持**中文和英文**。
 
-**新体验：[3D 饭局练习](https://socialcoach-ai.vercel.app/3d)。** 坐进职场、家庭和学校的虚构饭桌，切换视角、起身走动，用文字或浏览器语音回应。也可以从应用首页进入。
+文字练习至少从 12 个用户回合开始，可以每次增加 8 回合继续同一场对话，保留此前的内容和承诺，由你决定何时结束并复盘。
 
 ## 社交技能与社交情绪学习（SEL）
 
@@ -76,7 +100,7 @@ SocialCoach 是聚焦社交技能练习的 AI 学习工具。它参考 [CASEL �
 - **基于原话的反馈。** 复盘先引用你说过的话，再给评价，帮助分清“不知道怎么说”和“知道却没做到”。沟通表现和对话结果分开看，即使对方最终拒绝，也能看见你做得好的地方。
 - **适合你的练习路径。** 根据目标、练习记录和 34 项技能的熟练度估计推荐场景；也可以直接探索场景库，或为自己的真实处境生成专属练习。
 - **有出处的指导。** 42 条策略与 30 个案例支持教练反馈和反思，内容附来源，教学示例明确标注。
-- **看见长期变化。** 回看对话、跟随教练反思，并从不同场次的原话中识别自己反复出现的沟通模式。
+- **看见长期变化。** 围绕复盘继续向教练提问，回看对话，并从不同场次的原话中识别自己反复出现的沟通模式。
 - **按自己的方式使用。** 无需注册，练习记录可导出。支持自带模型与自部署，移动优先界面可以安装为 PWA。
 
 ## 快速开始
@@ -180,10 +204,11 @@ flowchart LR
 |---|---|
 | 场景、策略、案例与技能分类 | [`app/src/data/`](app/src/data) |
 | 排程、对练、评估与反思 | [`app/src/lib/tasks/`](app/src/lib/tasks) |
+| 3D 场景、人物、移动与现场交互 | [`app/src/features/dinner/`](app/src/features/dinner) |
 | 服务端 API | [`app/src/app/api/`](app/src/app/api) |
 | 本地学习者状态 | [`app/src/store/`](app/src/store) |
 
-**技术栈：** Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Zustand · Framer Motion · Zod · Anthropic 与 OpenAI SDK。
+**技术栈：** Next.js 16 · React 19 · Three.js / React Three Fiber · TypeScript · Tailwind CSS v4 · Zustand · Framer Motion · Zod · Anthropic 与 OpenAI SDK。
 
 **设计：** 温暖纸张、编辑式排版，以及像教练页边批注一样的反馈。详见[设计说明](app/.impeccable.md)与[系统架构](wiki/02-system-architecture.md)。
 

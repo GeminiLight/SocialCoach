@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-09-03 | Current stage: B -->
+<!-- Last verified: 2026-10-03 | Current stage: B -->
 
 # Stage B — 定位与对外物料
 
@@ -65,8 +65,10 @@
 2026-09-21 按用户确认的 “Your personal EQ coach” 定位重排中英 README；原有品牌主句和 banner 保留。目标是先说明产品、展示练习，再提供开发与部署信息。
 
 ```
-banner → EQ coach 定位 + 一句用途 → 体验 / 论文 / Apache 2.0 徽章 → 语言切换
+banner → EQ coach 定位 + 一句用途 → 体验 / 论文 / Apache 2.0 徽章 → 3D 直接入口 → 语言切换
 章节导航
+News（最多三条重要更新，按新到旧排列）
+3D practice（真实场景预览 + 饭桌 / 电梯口 / 办公室 + 与文字共用复盘）
 What you can practice（四类用途 + 真实语料场景）
 How it works（三步体验 + 同语言截图 + 体验入口）
 Key features（六条，区分沟通表现与对话结果）
@@ -91,6 +93,10 @@ Contributing → Friends → License / 使用边界
 | 章节视觉 | 保留简洁标题、真实截图、原有明暗 banner | 不增加图标卡片阵列、装饰 emoji 或 Star History |
 
 验证与未完成事项见 [README 评审](./reviews/review-2026-09-21-readme.md)。
+
+2026-10-03：中英 README 首屏加入主站 `/3d` 直接入口，章节导航后增加三条 News 与 3D 专节。场景预览复用主站实际渲染的 `app/public/images/dinner-home-preview.png`，说明饭桌 / 电梯口 / 办公室、视角 / 移动 / 语音及共用证据式复盘；保留原品牌主句与三枚徽章。同步中文版 58 个文字场景、至少 12 回合与 +8 续聊，以及两版源码入口 / 技术栈。
+
+**News 维护规则：** 只保留最近三条会改变用户体验的重要更新；同次交付的相关功能合并成一条，日常修复不单独占位。每条使用实际交付日期、简短结果和相关章节链接，中英同步；没有正式版本号时不用自造版本号。第四条重要更新加入时移出最旧的一条，完整功能状态仍由路线图记录。
 
 ---
 
