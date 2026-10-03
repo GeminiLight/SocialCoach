@@ -11,8 +11,8 @@
 
 通过真实情境对练与个性化反馈，练习社交沟通，学会处理冲突。
 
-[![进入 3D 对话](https://img.shields.io/badge/3D-%E8%BF%9B%E5%85%A5%E7%8E%B0%E5%9C%BA-CA592E?style=for-the-badge&labelColor=261D16)](https://socialcoach-ai.vercel.app/3d)<br>
 [![在线体验](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E4%BD%93%E9%AA%8C-Live-49814C?style=for-the-badge&labelColor=261D16)](https://socialcoach.aurax.live)
+[![3D 现场，立即进入](https://img.shields.io/badge/3D%E7%8E%B0%E5%9C%BA-%E7%AB%8B%E5%8D%B3%E8%BF%9B%E5%85%A5-785307?style=for-the-badge&labelColor=261D16)](https://socialcoach-ai.vercel.app/3d)
 [![阅读论文](https://img.shields.io/badge/%E8%AE%BA%E6%96%87-arXiv-AD411C?style=for-the-badge&labelColor=261D16)](https://arxiv.org/abs/2606.04155)
 [![Apache 2.0 开源许可证](https://img.shields.io/badge/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF-Apache%202.0-00656A?style=for-the-badge&labelColor=261D16)](LICENSE)
 
