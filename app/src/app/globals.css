@@ -29,15 +29,15 @@
 
   /* Scene pigments: colored stock and matching ink, never a full hue wheel. */
   --scene-clay-color: light-dark(oklch(0.47 0.115 35), oklch(0.76 0.105 35));
-  --scene-clay-paper: light-dark(oklch(0.935 0.032 35), oklch(0.255 0.030 35));
+  --scene-clay-paper: light-dark(oklch(0.961 0.012 35), oklch(0.255 0.018 35));
   --scene-ochre-color: light-dark(oklch(0.47 0.095 78), oklch(0.78 0.105 78));
-  --scene-ochre-paper: light-dark(oklch(0.945 0.042 78), oklch(0.265 0.030 78));
+  --scene-ochre-paper: light-dark(oklch(0.969 0.016 78), oklch(0.265 0.018 78));
   --scene-olive-color: light-dark(oklch(0.45 0.065 130), oklch(0.76 0.075 130));
-  --scene-olive-paper: light-dark(oklch(0.935 0.028 130), oklch(0.250 0.025 130));
+  --scene-olive-paper: light-dark(oklch(0.961 0.011 130), oklch(0.250 0.015 130));
   --scene-teal-color: light-dark(oklch(0.44 0.065 190), oklch(0.75 0.075 190));
-  --scene-teal-paper: light-dark(oklch(0.935 0.025 190), oklch(0.250 0.025 190));
+  --scene-teal-paper: light-dark(oklch(0.960 0.012 190), oklch(0.250 0.015 190));
   --scene-rose-color: light-dark(oklch(0.47 0.085 15), oklch(0.77 0.085 15));
-  --scene-rose-paper: light-dark(oklch(0.935 0.030 15), oklch(0.255 0.025 15));
+  --scene-rose-paper: light-dark(oklch(0.963 0.010 15), oklch(0.255 0.015 15));
 
   /* Portrait pigments stay physical in both themes: skin and hair never invert. */
   --avatar-skin-0: oklch(0.88 0.055 58);
@@ -352,8 +352,8 @@ a { color: inherit; text-decoration: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* chat bubbles */
-.bubble-npc { background: var(--card); border: 1px solid var(--line); border-radius: 18px 18px 18px 6px; }
-.bubble-me { background: var(--ink); color: var(--paper); border-radius: 18px 18px 6px 18px; }
+.bubble-npc { background: var(--card); border: 1px solid var(--line); border-radius: 12px 12px 12px 4px; }
+.bubble-me { background: var(--ink); color: var(--paper); border-radius: 12px 12px 4px 12px; }
 .bubble-coach { background: var(--accent-soft); border-radius: 12px; }
 
 /* typing dots */
@@ -473,12 +473,34 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 }
 @media (min-width: 1024px) {
   .knowledge-selected {
-    background: color-mix(in oklch, var(--scene-teal-paper) 65%, var(--card));
-    border-color: color-mix(in oklch, var(--scene-teal-color) 30%, var(--line));
+    background: var(--inset);
+    border-color: var(--line);
   }
 }
 
-.knowledge-principle { background: var(--scene-teal-paper); }
+/* Reading is a text index and an open page; repeated boxes are unnecessary. */
+.app-page li.card:has(> button[aria-controls^="knowledge-"]) { background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+.app-page li.card:has(> button[aria-controls^="knowledge-"]):hover { transform: none; }
+.app-page li.card > button[aria-controls^="knowledge-"] { padding: 20px 12px; border-radius: var(--radius-sm); }
+.app-page li.card > button[aria-controls^="knowledge-"][aria-current="true"] { background: var(--inset); }
+.app-page li.card > button[aria-controls^="knowledge-"] > div:first-child > svg:first-child { display: none; }
+.app-page li.card > button[aria-controls^="knowledge-"] .dotted { border-top: 0; margin-top: 0; }
+.app-page li.card > button[aria-controls^="knowledge-"] em { font-style: normal; }
+.knowledge-principle { background: transparent; border-radius: 0; border-bottom: 1px solid var(--line); padding: 0 0 20px; font-size: 16px; }
+#knowledge-reading { background: transparent; border: 0; border-left: 1px solid var(--line); border-radius: 0; padding-top: 8px; }
+.app-page [id^="knowledge-"] li > span.num { background: transparent; color: var(--ink-3); border-radius: 0; }
+.profile-paper { background: transparent; border: 0; border-block: 1px solid var(--line); border-radius: 0; padding-inline: 0; }
+.app-page div.rounded-full:has(> button[aria-pressed]),
+.app-page [role="radiogroup"].rounded-full,
+.sheet-dialog [role="group"].rounded-full { border-radius: var(--radius-sm); }
+.app-page div.rounded-full > button[aria-pressed],
+.app-page [role="radiogroup"] > button,
+.sheet-dialog [role="group"] > button[aria-pressed] { border-radius: 4px; }
+#review-assistant { border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 24px 0 0; background: transparent; }
+#review-assistant > div:first-child > span { width: 24px; height: 28px; background: transparent; color: var(--ink-3); }
+#review-assistant button { border-radius: var(--radius-sm); }
+#review-assistant form > div { border-radius: var(--radius-sm); background: var(--card); }
+#review-assistant [role="log"] p.rounded-2xl { border-radius: var(--radius-sm); }
 
 /* A contact sheet of portraits: focus and selection have separate outlines. */
 .avatar-preview { background: var(--paper-deep); border: 1px solid var(--line); }
