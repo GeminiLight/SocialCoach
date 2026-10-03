@@ -21,9 +21,10 @@ const wait = (code: string) => browser(['wait', '--fn', code]);
 const button = (name: string) => browser(['find', 'role', 'button', 'click', '--name', name, '--exact']);
 let checks = 0; const check = (name: string, condition: unknown) => { assert(condition, name); checks++; console.log(`PASS ${name}`); };
 const report = fixtureSession();
+const smartPending = { ...report, id: 'model-smart-failure', status: 'ended', report: undefined, revealSeen: true, debriefChat: undefined };
 const scenario = scenarioById('declining-extra-hours')!;
 const active = { ...buildSession(scenario, 'arena', 'zh'), id: 'model-active', status: 'active', timed: true, adaptation: { learnerCharacterId: 'you', briefing: scenario.background.zh, objectives: scenario.objectives.map(o => o.zh), focus: '', why: '' }, messages: [{ id: 'opening', role: 'npc', characterId: scenario.opening.characterId, text: scenario.opening.text.zh, ts: 1 }] };
-const state = { profile: { name: 'Connection fixture', bio: '', goals: ['communication'], contexts: [], lang: 'zh', createdAt: 1 }, sessions: [report, active], settings: { theme: 'light', telemetry: false, tts: false }, proficiency: { communication: 2 }, practiceDays: [], customScenarios: [], bookmarks: [], todaySessionId: null, todayDate: null, patternInsight: null };
+const state = { profile: { name: 'Connection fixture', bio: '', goals: ['communication'], contexts: [], lang: 'zh', createdAt: 1 }, sessions: [report, active, smartPending], settings: { theme: 'light', telemetry: false, tts: false }, proficiency: { communication: 2 }, practiceDays: [], customScenarios: [], bookmarks: [], todaySessionId: null, todayDate: null, patternInsight: null };
 const saved = () => JSON.parse(evaluate("localStorage.getItem('socialcoach.v1')")).state;
 const health = (body: object) => { browser(['network', 'unroute', '**/api/health*']); return browser(['network', 'route', '**/api/health*', '--body', JSON.stringify(body)]); };
 function open(path: string) { browser(['open', base + path]); wait("document.querySelector('h1') !== null || document.querySelector('textarea') !== null"); }
@@ -92,6 +93,15 @@ try {
   browser(['wait', '1100']);
   check('unavailable model pauses the reply clock', JSON.stringify(saved().sessions.find((s: { id: string }) => s.id === active.id).messages) === messages);
   button('重新检查'); wait("Array.from(document.querySelectorAll('[role=alert] button')).some(b=>b.textContent.trim()==='重试' && !b.disabled)"); check('free retry restores model-dependent controls', true);
+  browser(['network', 'route', '**/api/assess', '--body', '\n@@error\n'+JSON.stringify({error:'Fixture smart model unavailable',status:404,modelIssue:'model'})]);
+  open(`/practice/${smartPending.id}`); wait("document.querySelector('#model-key') !== null");
+  check('smart assessment failure opens configuration even after a working fast-model connection', evaluate("document.querySelector('dialog[open]')?.textContent.includes('默认模型暂时不可用') && document.body.innerText.includes('模型配置不可用')"));
+  const pending = saved().sessions.find((s: { id: string }) => s.id === smartPending.id);
+  check('smart-model failure preserves the completed transcript and adds no report or proficiency', JSON.stringify(pending.messages) === JSON.stringify(smartPending.messages) && !pending.report && saved().proficiency.communication===2);
+  browser(['click', 'dialog summary']); wait("document.querySelector('dialog details').open");
+  check('the same form provides a separate review-model setting', evaluate("Array.from(document.querySelectorAll('dialog label')).some(l=>l.textContent.includes('复盘模型（可选）') && l.querySelector('input'))"));
+  browser(['press', 'Escape']); wait("!document.querySelector('dialog[open]')");
+  check('smart-model failure pauses retries while the original evidence stays readable', evaluate("Array.from(document.querySelectorAll('button')).some(b=>b.textContent.trim()==='重试' && b.disabled) && document.body.innerText.includes(" + JSON.stringify(smartPending.messages.find(m=>m.role==='learner')!.text) + ")"));
   health({ state: 'unavailable', issue: 'credentials', serverKey: true, requireByok: false });
   for (const [lang, theme, width] of [['zh','light',360], ['en','dark',1440]] as const) {
     const data = saved(); data.profile.lang=lang; data.settings.theme=theme;

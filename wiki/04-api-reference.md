@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-10-03 | Current stage: B -->
+<!-- Last verified: 2026-10-04 | Current stage: B -->
 
 # API 参考
 
@@ -33,7 +33,7 @@
 
 返回 `{serverKey:boolean, requireByok:boolean, state:"available"|"unverified"|"unavailable", issue?:ModelIssue}`，只返回安全状态，不返回密钥、地址或服务商原始错误。`ModelIssue` 为 `setup|credentials|quota|model|rate_limit|service|network`。缺少部署密钥 / 强制 BYOK 返回 unavailable/setup。
 
-通过服务商认证的 `GET /models`，必要时 `GET /models/{id}` 验证 fast / smart 名称和别名；总时限 5 秒、零重试，只读取元数据。绝不退回生成调用。服务不支持元数据、CORS、超时等返回 unverified，允许用户在实际练习中确认；明确认证、额度或限流失败才返回 unavailable。此检查不保证余额或生成权限。
+通过服务商认证的 `GET /models`，必要时 `GET /models/{id}` 验证 fast / smart 两档名称和别名；总时限 5 秒、零重试，只读取元数据。绝不退回生成调用。某档未确认时继续核对另一档，不用弱模型的成功推定强模型可用，也不因弱模型未确认而跳过强模型。任一档明确认证、额度、限流或模型不存在返回 unavailable；两档均未发现明确故障但至少一档不支持元数据、CORS 或超时，返回 unverified，允许用户在实际练习中确认。此检查不保证余额或生成权限。
 
 同一进程缓存 120 秒、合并并发检查；实际模型失败在进程内保留 120 秒，浏览器另有独立的即时失败状态。单用户限流不写入全站观察。`?retry=1` 可显式重新免费检查，不自动重试付费生成。Vercel 实例间不共享内存观察。
 

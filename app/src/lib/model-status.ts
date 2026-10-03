@@ -38,6 +38,7 @@ export interface ModelMetadata {
 export async function checkModelConnection(metadata: ModelMetadata, models: string[]): Promise<ModelCheck> {
   try {
     const list = await metadata.list();
+    let unverified = false;
     for (const id of [...new Set(models.filter(Boolean))]) {
       if (list.ids.includes(id)) continue;
       try {
@@ -49,10 +50,11 @@ export async function checkModelConnection(metadata: ModelMetadata, models: stri
         if (issue === "credentials" || issue === "quota" || issue === "rate_limit") return { state: "unavailable", issue };
         const detail = error as { error?: { code?: string; type?: string; message?: string }; message?: string };
         if (issue === "model" && /model_not_found|invalid_model|model.{0,30}(not found|does not exist)/i.test(`${detail.error?.code ?? ""} ${detail.error?.type ?? ""} ${detail.error?.message ?? ""} ${detail.message ?? ""}`)) return { state: "unavailable", issue };
-        return { state: "unverified" };
+        // An inconclusive fast model must not hide a confirmed smart-model failure.
+        unverified = true;
       }
     }
-    return { state: "available" };
+    return { state: unverified ? "unverified" : "available" };
   } catch (error) {
     const issue = modelIssue(error);
     if (issue === "credentials" || issue === "quota" || issue === "rate_limit") return { state: "unavailable", issue };

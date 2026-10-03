@@ -22,6 +22,17 @@ async function main() {
   assert.equal((await checkModelConnection({ ...metadata(), retrieve: async () => { aliases++; return {}; } }, ['alias', 'alias'])).state, 'available'); assert.equal(aliases, 1); check('aliases resolve once through metadata');
   assert.equal((await checkModelConnection({ ...metadata(), retrieve: async () => { throw { status: 404 }; } }, ['alias'])).state, 'unverified');
   assert.deepEqual(await checkModelConnection({ ...metadata(), retrieve: async () => { throw { status: 404, error: { code: 'model_not_found' } }; } }, ['missing']), { state: 'unavailable', issue: 'model' }); check('missing model differs from unsupported endpoint');
+  for (const missing of ['fast', 'smart']) {
+    const pair: ModelMetadata = { list: async () => ({ ids: [missing === 'fast' ? 'smart' : 'fast'] }), retrieve: async () => { throw { status: 404, error: { code: 'model_not_found' } }; } };
+    assert.deepEqual(await checkModelConnection(pair, ['fast', 'smart']), { state: 'unavailable', issue: 'model' }); check(`${missing} model failure is detected even when the other model is available`);
+  }
+  const checked: string[] = [];
+  const mixed: ModelMetadata = { list: async () => ({ ids: [] }), retrieve: async id => { checked.push(id); throw { status: 404, ...(id === 'smart' ? { error: { code: 'model_not_found' } } : {}) }; } };
+  assert.deepEqual(await checkModelConnection(mixed, ['fast', 'smart']), { state: 'unavailable', issue: 'model' }); assert.deepEqual(checked, ['fast', 'smart']); check('an inconclusive fast check cannot hide a confirmed smart failure');
+  checked.length = 0;
+  assert.deepEqual(await checkModelConnection({ ...mixed, retrieve: async id => { checked.push(id); if (id === 'fast') throw { status: 405 }; return {}; } }, ['fast', 'smart']), { state: 'unverified' }); assert.deepEqual(checked, ['fast', 'smart']); check('both distinct model aliases are checked before returning an inconclusive result');
+  checked.length = 0;
+  assert.deepEqual(await checkModelConnection({ ...mixed, retrieve: async id => { checked.push(id); throw { status: 404 }; } }, ['fast', 'smart']), { state: 'unverified' }); assert.deepEqual(checked, ['fast', 'smart']); check('unsupported metadata for both models remains unverified without generation');
   assert.equal(modelIssue(new LLMError('Could not parse JSON', 502)), undefined);
   assert.equal(modelIssue(new LLMError('Reply failed validation', 502)), undefined);
   assert.equal(modelIssue(readModelFailure(JSON.stringify({ error: 'Task invalid', status: 502, modelIssue: null }))), undefined);
@@ -56,10 +67,25 @@ async function main() {
   }
   const original = globalThis.fetch;
   const calls: string[] = [];
-  globalThis.fetch = async (url, init) => { calls.push(`${init?.method ?? 'GET'} ${url}`); return Response.json({ data: [{ id: 'm' }], has_more: false }); };
+  const metadataFetch: typeof fetch = async (url, init) => { calls.push(`${init?.method ?? 'GET'} ${url}`); return Response.json({ data: [{ id: 'm' }], has_more: false }); };
+  globalThis.fetch = metadataFetch;
   const config: ByokConfig = { enabled: true, provider: 'openai', apiKey: 'fixture-not-a-real-key', baseUrl: 'https://fixture.invalid/v1', fastModel: 'm', smartModel: 'm', tokenParam: 'max_tokens' };
   try {
     assert.equal((await checkByokConnection(config)).state, 'available'); assert(calls.length > 0 && calls.every(c => c.startsWith('GET ') && c.endsWith('/models'))); check('connection check sends GET /models only');
+    for (const provider of ['openai', 'anthropic'] as const) {
+      for (const missing of ['fast', 'smart']) {
+        const requests: string[] = [];
+        globalThis.fetch = async (url, init) => {
+          requests.push(`${init?.method ?? 'GET'} ${url}`);
+          if (new URL(String(url)).pathname.endsWith('/models')) return Response.json({ data: [{ id: missing === 'fast' ? 'smart' : 'fast' }], has_more: false });
+          return Response.json({ error: { code: 'model_not_found', message: 'model not found' } }, { status: 404 });
+        };
+        assert.deepEqual(await checkByokConnection({ ...config, provider, fastModel: 'fast', smartModel: 'smart' }), { state: 'unavailable', issue: 'model' });
+        assert.equal(requests.length, 2); assert(requests.every(r => r.startsWith('GET '))); assert(requests[1].endsWith(`/models/${missing}`));
+      }
+      check(`${provider} metadata verifies both fast and smart configuration without inference`);
+    }
+    globalThis.fetch = metadataFetch;
     useByok.setState({ ...config, hydrated: true }); syncModelConfiguration(); acceptModelCheck({ state: 'available' });
     await assert.rejects(() => withModelAccess('zh', async () => { throw new ApiError('bad key', 401, 'stream', 'credentials'); }), error => error instanceof LLMError && error.message.includes('密钥') && (error as LLMError & { kind: string }).kind === 'stream');
     assert.equal(useModelAccess.getState().issue, 'credentials');
