@@ -257,6 +257,8 @@ pnpm lint
 
 `director.ts` 收到完整已答历史后，将尚未回答的 `current_player_turn` 单独置于模型输入末尾；当前引文、角色与事件通过校验后才原子提交问答。剧情事实按开局隔离。除了开局动作，`drama.ts` 只接受显式的剧情事件邀请；新物理动作只产生动作证据与动画，不再覆盖模型台词或捏造一段角色答复。旧存档中真正展示过的动作插话作为 `heard` 保留。服务端与 BYOK 共用该任务，无服务端会话存储。见 [剧情方案](./archive/specs/spec-3d-story-continuity.md) 与 [连续性复盘](./81-postmortem-dinner-continuity.md)。
 
+同日阅读体验更新：`ConversationHistory` 用 `transcript.ts` 将现有 messages / actions 重建为完整时间顺序，保留开场与旧 `heard` 插话，不新增存储副本。`SpokenLine` 只限制现场阅读高度，完整原话仍在历史和导出中；新生成台词在共用 `runDinner` 校验长度并最多重写一次，旧 SaveSchema 长度兼容不变。
+
 ### 维护归属
 
 自 2026-10-03 起，主仓库是 3D 版本的唯一开发主线；后续人物精修、场景、交互和问题修复均先在主站 `/3d` 交付。独立仓库 [SocialCoach-3D](https://github.com/GeminiLight/SocialCoach-3D) 保留为可单独运行的演示原型，允许落后，不阻塞主站发布。

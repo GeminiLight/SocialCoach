@@ -669,9 +669,6 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dinner-experience .dinner-story-choice { text-align:left; padding:14px 16px; border:1px solid var(--dinner-line); border-radius:var(--dinner-radius-sm); }
 .dinner-experience .dinner-story-choice strong { display:block; font-size:15px; font-weight:500; margin-bottom:6px; }
 .dinner-experience .dinner-story-choice span { font-size:12px; line-height:1.7; color:var(--dinner-ink-secondary); }
-.dinner-experience .dinner-recipient { display:flex; align-items:center; gap:8px; margin-bottom:8px; font-size:11px; color:var(--dinner-ink-secondary); }
-.dinner-experience .dinner-recipient select { min-height:36px; max-width:160px; padding:4px 26px 4px 10px; border:1px solid var(--dinner-line); border-radius:var(--dinner-radius-sm); background:var(--dinner-surface); color:var(--dinner-ink); font:inherit; }
-.dinner-experience .dinner-recipient small { font-size:10px; }
 .dinner-experience .dinner-finish-actions { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
 .dinner-experience .switch-note { font-size:12px; color:var(--dinner-ink-secondary); margin:20px 0 0; }
 .dinner-experience .switch-note p { margin:0; }
@@ -797,4 +794,70 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   .dinner-experience .brand-version {display:none;}
   .dinner-experience .brand strong {font-size:14px;}
   .dinner-experience .topbar nav .nav-button:nth-child(2) {display:none;}
+}
+
+/* Dinner dialogue: brief speech, an integrated addressee row, and verbatim history. */
+.dinner-experience .dialogue-heading {display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:44px;padding:0 2px;}
+.dinner-experience .dialogue-heading .speaker-line {justify-content:flex-start;min-width:0;}
+.dinner-experience .history-trigger {display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:4px 2px;color:var(--dinner-ink-secondary);font-size:12px;white-space:nowrap;}
+.dinner-experience .history-trigger:hover {color:var(--dinner-accent);}
+.dinner-experience .history-trigger>span {font-variant-numeric:tabular-nums;color:var(--dinner-accent);}
+.dinner-experience .conversation .dialogue {text-align:left;padding:0 2px;max-height:none;overflow:visible;}
+.dinner-experience .conversation .spoken-line {display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;font-size:21px;line-height:1.55;margin:2px 0 6px;white-space:pre-wrap;}
+.dinner-experience .conversation .stage-cue {text-align:left;margin:0;max-width:none;font-size:11px;}
+.dinner-experience .full-line-link {min-height:44px;font-size:11px;margin-top:-4px;color:var(--dinner-accent);}
+.dinner-experience .reply-composer {border:1px solid var(--dinner-line);border-radius:12px;background:var(--dinner-scene-overlay);overflow:hidden;transition:border-color 140ms var(--dinner-ease-out);}
+.dinner-experience .reply-composer:focus-within {border-color:var(--dinner-accent);}
+.dinner-experience .reply-composer .input-wrap {border:0;border-radius:0;background:none;padding-top:2px;}
+.dinner-experience .dinner-recipient {display:flex;align-items:center;gap:12px;min-width:0;margin:0 14px;padding:4px 0;border:0;border-bottom:1px solid var(--dinner-line-soft);color:var(--dinner-ink-secondary);}
+.dinner-experience .recipient-caption {font-size:11px;white-space:nowrap;}
+.dinner-experience .recipient-options {display:flex;align-items:center;gap:4px;min-width:0;flex:1;}
+.dinner-experience .recipient-option {position:relative;cursor:pointer;display:flex;align-items:center;min-height:44px;min-width:44px;justify-content:center;}
+.dinner-experience .recipient-option input {position:absolute;width:1px;height:1px;opacity:0;}
+.dinner-experience .recipient-option span {display:block;padding:6px 12px;border-radius:7px;color:var(--dinner-ink-secondary);font-size:14px;line-height:1.4;white-space:nowrap;}
+.dinner-experience .recipient-option input:checked+span {background:var(--dinner-surface);color:var(--dinner-accent);box-shadow:inset 0 0 0 1px var(--dinner-line);}
+.dinner-experience .recipient-option input:focus-visible+span {outline:2px solid var(--dinner-accent);outline-offset:2px;}
+.dinner-experience .recipient-option:hover span {color:var(--dinner-ink);}
+.dinner-experience .dinner-recipient:disabled {opacity:.55;}
+.dinner-experience .dinner-recipient:disabled label {cursor:default;}
+.dinner-experience .modal.modal-history {width:520px;max-width:calc(100vw - 32px);height:min(760px,calc(100dvh - 32px));max-height:calc(100dvh - 32px);margin:16px 16px 16px auto;padding:0;overflow:hidden;}
+.dinner-experience .modal-history[open] {display:flex;flex-direction:column;}
+.dinner-experience .modal-history>header {flex-shrink:0;margin:0;padding:20px 24px 6px;}
+.dinner-experience .modal-history h2 {font-size:22px;}
+.dinner-experience .history-navigation {padding:0 24px 12px;border-bottom:1px solid var(--dinner-line);flex-shrink:0;}
+.dinner-experience .history-navigation>span {display:block;color:var(--dinner-ink-secondary);font-size:12px;margin-bottom:5px;}
+.dinner-experience .history-navigation>div {display:flex;gap:18px;}
+.dinner-experience .history-navigation button {display:flex;align-items:center;gap:6px;min-height:44px;color:var(--dinner-accent);font-size:12px;}
+.dinner-experience .history-scroll {flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:6px 24px;scrollbar-width:thin;}
+.dinner-experience .history-lines {list-style:none;padding:0;margin:0;}
+.dinner-experience .history-line {padding:20px 0;border-bottom:1px solid var(--dinner-line-soft);}
+.dinner-experience .history-line:last-child {border-bottom:0;}
+.dinner-experience .history-line-heading {display:flex;align-items:center;gap:7px;color:var(--dinner-ink-secondary);font-size:11px;}
+.dinner-experience .history-line-heading strong {color:var(--dinner-accent);font-size:12px;font-weight:500;}
+.dinner-experience .history-line-heading small {margin-left:auto;font-size:10px;font-variant-numeric:tabular-nums;}
+.dinner-experience .history-line p {font-size:15px;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0;}
+.dinner-experience .history-user {padding-left:14px;border-left:2px solid var(--dinner-line);}
+.dinner-experience .history-user .history-line-heading strong {color:var(--dinner-ink);}
+.dinner-experience .history-cue {display:block;margin-top:7px;font-size:11px;color:var(--dinner-ink-secondary);line-height:1.6;}
+.dinner-experience .history-action p {font-size:12px;color:var(--dinner-ink-secondary);}
+.dinner-experience .history-footer {flex-shrink:0;padding:12px 24px 18px;border-top:1px solid var(--dinner-line);}
+.dinner-experience .history-footer>div {display:flex;justify-content:space-between;gap:10px;margin-bottom:6px;}
+.dinner-experience .history-footer>.primary-button {width:100%;}
+@media (max-width:600px) {
+  .dinner-experience .dialogue-heading {gap:10px;}
+  .dinner-experience .history-trigger {font-size:11px;gap:5px;}
+  .dinner-experience .conversation .spoken-line {font-size:18px;line-height:1.6;}
+  .dinner-experience .dinner-recipient {margin:0 10px;gap:8px;}
+  .dinner-experience .recipient-options {gap:1px;}
+  .dinner-experience .recipient-option span {padding:6px 8px;font-size:13px;}
+  .dinner-experience .modal.modal-history {width:100%;max-width:100%;height:92dvh;max-height:92dvh;margin:auto 0 0;border-radius:18px 18px 0 0;border-bottom:0;}
+  .dinner-experience .modal-history>header {padding:18px 20px 4px;}
+  .dinner-experience .history-navigation {padding:0 20px 6px;}
+  .dinner-experience .history-scroll {padding:0 20px;}
+  .dinner-experience .history-footer {padding:8px 20px max(12px,env(safe-area-inset-bottom));}
+}
+@media (max-height:560px) {
+  .dinner-experience .conversation .spoken-line {font-size:16px;-webkit-line-clamp:2;}
+  .dinner-experience .history-navigation {padding-bottom:2px;}
+  .dinner-experience .history-footer {padding-top:4px;padding-bottom:8px;}
 }
