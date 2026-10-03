@@ -1,6 +1,6 @@
 # ModelScope 创空间部署
 
-状态：已公开部署，ModelScope 返回 Running（2026-10-03）；Blender 人物与五类 3D 空间已更新。最新公共浏览器验收限制见文末。
+状态：已公开部署，ModelScope 返回 Running（2026-10-04）；Blender 人物、五类 3D 空间与按需展开的操作界面已更新。最新公共浏览器验收限制见文末。
 
 本地验证：隔离目录使用锁定依赖完成生产构建与 TypeScript 检查；standalone 服务在 7860 端口启动，首页、设置、场景目录、health 和 manifest 均返回 HTTP 200。云端 Docker 构建及启动均通过。
 
@@ -8,7 +8,7 @@
 
 - 空间：[GeminiLight/SocialCoach](https://modelscope.cn/studios/GeminiLight/SocialCoach)。公开，Apache-2.0，免费 `platform/2v-cpu-16g-mem`。
 - 应用 host：`https://geminilight-socialcoach.ms.show`。自动化 API 检查使用平台提示的专用地址 `https://studio-geminilight-socialcoach.api-inference.modelscope.net`，该地址需要 ModelScope Bearer token，不能当作无需认证的普通分享链接。
-- 空间 Git：`https://modelscope.cn/studios/GeminiLight/SocialCoach.git`，分支 `master`，当前应用部署提交 `307cc9e`（2026-10-03，Blender 人物与空间重建，对应 GitHub 应用提交 `5770e5c`）。通过独立克隆同步应用必需文件，未将本地 Git 历史、环境变量或其他文档上传。
+- 空间 Git：`https://modelscope.cn/studios/GeminiLight/SocialCoach.git`，分支 `master`，当前应用部署提交 `fca06a0`（2026-10-04，3D 操作收敛，对应 GitHub 应用提交 `9cb2fd9`）。通过独立克隆同步应用必需文件，未将本地 Git 历史、环境变量或其他文档上传。
 - 同步步骤（本机钥匙串已有推送凭证）：克隆空间仓库；`rsync -a --delete` 主仓库的 `app/src/`、`app/public/`，复制 `app/` 下的 `next.config.ts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`postcss.config.mjs`、`tsconfig.json`、`next-env.d.ts`，以及根目录 `Dockerfile`、`.dockerignore`、`LICENSE`；不带 `app/scripts`、`.env*`、`AGENTS.md`、eslint 配置；空间自己的 `README.md`（含卡片 frontmatter）不动。提交后 `git push origin master`。**推送不会自动重建**：2026-09-10 推送 `ceee413` 后 25 分钟空间仍在跑旧构建。重建走 OpenAPI：`POST https://modelscope.cn/openapi/v1/studios/GeminiLight/SocialCoach/deploy`，`Authorization: Bearer <token>`，token 就是本机 git 钥匙串里 modelscope.cn 的密码（`printf 'protocol=https\nhost=modelscope.cn\n\n' | git credential fill`），不要落盘。状态用 `GET …/studios/GeminiLight/SocialCoach`（Building → Running），日志 `GET …/logs/build` 与 `…/logs/run`。
 - 环境变量：非敏感配置在明文变量 `GET/POST/PUT …/variables`（`{"key","value"}`），敏感值在 `…/secrets`（只回 key）。空间现有布局：`LLM_API_KEY`、`FEEDBACK_FEISHU_APP_SECRET` 是 secret，其余 LLM / 限流 / 飞书 app id、base token、table id、`FEEDBACK_DEPLOYMENT=ModelScope` 都是明文变量。完整端点见本机 skill `~/.claude/skills/modelscope-studio`。
 - 统计：2026-09-10 通过 API 加明文变量 `ANALYTICS_FEISHU_TABLE_PREFIX=events`（复用已有 `FEEDBACK_FEISHU_*`）并触发重建；没有它 `/api/track` 报不可用，客户端不发。
@@ -118,3 +118,10 @@
 - ModelScope `307cc9e`，独立克隆按既有白名单同步，`app/src` / `app/public` 共 221 文件逐个一致。OpenAPI 显式重建后 Running；构建日志包含完整提交与 `363578-307cc9ed-2026-10-03-23-12-57` 镜像标签，构建成功。专用认证 API 的素材清单与首页 JPG 均 200 且匹配主仓库。两端各 24 个 GLB 实际下载，48 次 HTTP / SHA256 检查全部通过；资源核对记录保存在评审的测量摘要。
 - 本次没有改动免费硬件、空间公开性或环境配置。没有发送线上模型、反馈或统计测试请求。此前已授权并验证的主站功能随应用快照一并更新，不另维护 Studio 实现。
 - 发布后浏览器自动化入口连续超时，未完成线上实际画面验收；公共 host 的非浏览器请求出现 TLS EOF。素材一致、平台 Running 不代表公共浏览器入口问题已解决。本地真实网页的五类空间、视角 / 移动 / 举杯检查及 161 项回归见 [交付评审](../reviews/review-2026-10-03-3d-blender.md)，实体手机性能仍待验证。
+
+## 3D 操作收敛更新（2026-10-04）
+
+- GitHub 应用提交 `9cb2fd9`，Vercel 生产部署 `dpl_BYVQLew1uuUUwBNH7vwxS6LJSMyu` Ready；正式别名已更新。顶部常驻入口收敛为视角、历史和更多，走动摇杆与事件操作按需展开，对象选择改为单行。
+- ModelScope `fca06a0`，`app/src` / `app/public` 共 223 文件与主仓库逐个一致，按既有配置显式重建后 Running。构建日志包含该提交、成功标记及镜像标签 `363578-fca06a0b-2026-10-04-00-15-12`。
+- 两端 `/3d` 均返回 200，各两份 CSS 包含新操作样式，首页预览 JPG 字节与主仓库一致。没有发送线上模型、反馈或统计测试请求，也未改动空间配置。
+- 165 项检查、lint、生产构建通过；本地正式构建实际检查 364×696 中文、320×568 英文和 1280×720 桌面，以及走动松手停止、开关门、历史、草稿与对象保留。线上浏览器打开超时，本轮不宣称公共入口画面或实体手机验收完成。详见 [操作收敛评审](../reviews/review-2026-10-04-3d-controls.md)。

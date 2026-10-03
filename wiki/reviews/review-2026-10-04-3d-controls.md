@@ -27,3 +27,11 @@
 ![手机电梯场景](../../docs/screenshots/3d-controls-mobile.jpg)
 
 ![桌面饭局](../../docs/screenshots/3d-controls-desktop.jpg)
+
+## 发布核对
+
+主仓库应用提交 `9cb2fd9` 已推送 main。Vercel 生产部署 `dpl_BYVQLew1uuUUwBNH7vwxS6LJSMyu` 为 Ready，正式别名 `socialcoach-ai.vercel.app` / `socialcoach-app.vercel.app` 已关联；公开 `/3d` 返回 200，两份 CSS 中包含摇杆、更多设置与紧凑对象选择的新样式，首页预览 JPG 与主仓库字节一致。
+
+ModelScope 按既有白名单单向同步至 `fca06a0`，`app/src` / `app/public` 共 223 文件逐个一致。显式重建后 Running，构建日志包含该提交、成功标记与镜像标签 `363578-fca06a0b-2026-10-04-00-15-12`；专用认证 API 的 `/3d` 返回 200，两份 CSS 包含同一组新样式，首页预览 JPG 同样匹配。未更改空间配置，未发送线上模型、反馈或统计测试请求。
+
+本轮线上浏览器打开超时，未完成线上画面验收；上述画面与交互验收来自本地正式构建。平台状态与资源核对不能替代公共入口及实体手机验证。独立 3D 演示仓库本轮未同步。
