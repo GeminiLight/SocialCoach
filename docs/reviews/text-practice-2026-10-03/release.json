@@ -1,0 +1,13 @@
+{
+  "codeCommit": "3cece19a023d0c9b1be8f0ae326a47dc70c98b46",
+  "deploymentId": "dpl_592y6rAfLkAdNeADTtXzADhm9eiW",
+  "deploymentUrl": "https://socialcoach-fsqu858hk-geminilights-projects.vercel.app",
+  "state": "READY",
+  "target": "production",
+  "verifiedAliases": [
+    "socialcoach-ai.vercel.app",
+    "socialcoach-app.vercel.app"
+  ],
+  "verification": "CLI deployment metadata and alias IDs; local production UI tested separately",
+  "scope": "Vercel main app. No domestic mirror or independent 3D repository sync."
+}

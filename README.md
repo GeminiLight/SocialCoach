@@ -40,7 +40,9 @@ A conversation with your manager. A boundary with a friend. A disagreement at ho
 
 Preview five bilingual practice scenarios: [asking for a raise](https://tianfuwang.tech/SocialCoach/en/guides/salary-raise/), [declining extra hours](https://tianfuwang.tech/SocialCoach/en/guides/declining-extra-hours/), [being called out in a meeting](https://tianfuwang.tech/SocialCoach/en/guides/meeting-tension/), [sharing chores with a partner](https://tianfuwang.tech/SocialCoach/en/guides/spouse-chores/), and [asking a friend to repay a loan](https://tianfuwang.tech/SocialCoach/en/guides/friend-borrowed-money/). Each preview leads to the corresponding role-play in the app.
 
-Choose from **46 scenarios across 7 areas of life**, follow a personalized recommendation, or describe your own situation. The interface and practice content are available in **English and Simplified Chinese**.
+Choose from **58 scenarios across 7 areas of life**, follow a personalized recommendation, or describe your own situation. The interface and practice content are available in **English and Simplified Chinese**.
+
+Text practice starts with at least 12 learner turns. Continue the same conversation in eight-turn segments, keeping its history and commitments; you decide when to end and debrief.
 
 **New: [3D dinner practice](https://socialcoach-ai.vercel.app/3d).** Take a seat in fictional work, family and school dinners, switch perspectives, move around, and respond by typing or browser voice input. The 3D entry is also on the app home page.
 

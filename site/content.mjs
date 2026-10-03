@@ -137,10 +137,10 @@ export const how = {
       id: "choose",
       icon: "scene",
       title: L("选一场对话", "Pick a conversation"),
-      screenshotAlt: L("场景目录：从 46 个双语情境中选择要练的对话", "Scenario collection: choose a conversation from 46 bilingual situations"),
+      screenshotAlt: L("场景目录：按情境与技能选择要练的对话", "Scenario collection: choose a conversation by context and skill"),
       body: L(
-        "46 个双语场景，覆盖职场、家庭、朋友、亲密关系、学校、陌生人和社交场合。也可以描述你明天那场真实对话，约 15 秒生成一个定制场景。",
-        "46 bilingual scenarios across work, family, friendship, romance, school, strangers and social occasions. Or describe the real conversation you have coming up and get a custom scenario in about 15 seconds.",
+        "58 个双语场景，覆盖职场、家庭、朋友、亲密关系、学校、陌生人和社交场合。也可以描述你明天那场真实对话，约 15 秒生成一个定制场景。",
+        "58 bilingual scenarios across work, family, friendship, romance, school, strangers and social occasions. Or describe the real conversation you have coming up and get a custom scenario in about 15 seconds.",
       ),
     },
     {
@@ -149,8 +149,8 @@ export const how = {
       title: L("对方会反驳", "The other side pushes back"),
       screenshotAlt: L("对练中：经理继续施压，目标进度与剩余回合可见", "Mid-practice: the manager keeps pushing; goal progress and turns left are visible"),
       body: L(
-        "角色有自己的目标、立场，和一件没告诉你的事。回合有上限，你可能输。态度好不会让它自动让步。",
-        "Characters have an objective of their own, a position, and something they aren't telling you. Turns are limited. You can lose. Being polite doesn't make them yield.",
+        "角色有自己的目标、立场，和没说出口的顾虑。文字对练可以追问、改口或继续谈，由你决定何时复盘。态度好不会让它自动让步。",
+        "Characters have their own goals, positions and concerns they haven't voiced. In text practice, follow up, change your mind or keep talking; you decide when to debrief. Politeness doesn't buy automatic agreement.",
       ),
     },
     {
@@ -214,7 +214,7 @@ export const trust = {
   eyebrow: L("语料与出处", "Corpus and sources"),
   title: L("判断有证据，建议有出处", "Evidence before judgment, sources before advice"),
   stats: [
-    { n: "46", icon: "scene", label: L("双语场景", "bilingual scenarios") },
+    { n: "58", icon: "scene", label: L("双语场景", "bilingual scenarios") },
     { n: "42", icon: "book", label: L("策略", "strategies") },
     { n: "30", icon: "quote", label: L("案例", "cases") },
     { n: "7", icon: "pin", label: L("类生活情境", "context types") },
@@ -277,8 +277,8 @@ export const faq = {
     {
       q: L("这和直接让 ChatGPT 扮演老板有什么不同？", "How is this different from asking ChatGPT to play my manager?"),
       a: L(
-        "通用聊天模型可以演一次。SocialCoach 把训练约束固定下来：角色有独立目标和隐藏动机，不会提前泄漏答案；练习有回合上限和失败条件；结束后每条判断先引用本次对话原话，再给归因、来源和下一次训练。",
-        "A general chat model can play a role once. SocialCoach fixes the training constraints: characters have their own objective and a hidden motive and won't leak the answer; practice has a turn limit and a failure state; afterwards every point quotes the transcript first, then gives attribution, a source and the next practice.",
+        "通用聊天模型可以演一次。SocialCoach 把训练约束固定下来：角色有独立目标和隐藏动机，不会提前泄漏答案；文字练习分段可续聊，并记录未达成的目标；结束后每条判断先引用本次对话原话，再给归因、来源和下一次训练。",
+        "A general chat model can play a role once. SocialCoach fixes the training constraints: characters have their own objective and a hidden motive and won't leak the answer; text practice uses extendable segments and records unmet objectives; afterwards every point quotes the transcript first, then gives attribution, a source and the next practice.",
       ),
     },
     {

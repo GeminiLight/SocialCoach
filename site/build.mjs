@@ -53,6 +53,16 @@ const shot = (n, lang) => {
 // never drifts. It is a regex over our own TS, not a TS parser: each scenario
 // object starts at a two-space-indented brace and has title/context fields.
 const corpusDir = join(root, "app", "src", "data", "corpus");
+const bilingualField = (block, key) => {
+  const match = block.match(new RegExp(`\\n\\s*${key}: L\\(\\s*"((?:[^"\\\\]|\\\\.)*)"\\s*,\\s*"((?:[^"\\\\]|\\\\.)*)"\\s*,?\\s*\\)`));
+  return match ? { zh: JSON.parse(`"${match[1]}"`), en: JSON.parse(`"${match[2]}"`) } : null;
+};
+const practiceSources = Object.fromEntries(
+  [...readFileSync(join(corpusDir, "sources.ts"), "utf8").matchAll(/^  (\w+): \{([\s\S]*?)^  \},/gm)].map(([, key, block]) => {
+    const field = (name) => block.match(new RegExp(`${name}: "([^"]+)"`))?.[1];
+    return [key, `Original fictional practice inspired by ${field("book")} — ${field("author")}. ${field("url")}`];
+  }),
+);
 const CONTEXT_NAMES = (() => {
   const tax = readFileSync(join(root, "app", "src", "data", "taxonomy.ts"), "utf8");
   const start = tax.indexOf("export const CONTEXTS");
@@ -66,21 +76,28 @@ const CONTEXT_HUE = { workplace: "--c-clay", family: "--c-amber", friendship: "-
 const SCENARIOS = readdirSync(corpusDir)
   .filter((f) => /^scenarios-[a-z]\.ts$/.test(f))
   .sort()
-  .flatMap((f) =>
-    readFileSync(join(corpusDir, f), "utf8")
+  .flatMap((f) => {
+    const text = readFileSync(join(corpusDir, f), "utf8");
+    const authoredSource = text.match(/const original = \(id: string\) => `([^`]+)`;/)?.[1];
+    return text
       .split(/\n  \{\n/)
       .slice(1)
       .map((b) => {
         const id = b.match(/^\s*id: "([^"]+)"/)?.[1];
-        const t = b.match(/\n\s*title: L\("((?:[^"\\]|\\.)*)", "((?:[^"\\]|\\.)*)"\)/);
+        const title = bilingualField(b, "title");
         const context = b.match(/\n\s*context: "([a-z-]+)"/)?.[1];
-        const hook = b.match(/\n\s*hook: L\("((?:[^"\\]|\\.)*)", "((?:[^"\\]|\\.)*)"\)/);
-        const source = b.match(/\n\s*source: "([^"]+)"/)?.[1];
-        return id && t && hook && context && source ? { id, file: f, title: { zh: t[1], en: t[2] }, hook: { zh: hook[1], en: hook[2] }, context, source } : null;
+        const hook = bilingualField(b, "hook");
+        const authoredId = b.match(/\n\s*source: original\("([^"]+)"\)/)?.[1];
+        const practiceKey = b.match(/\n\s*source: practiceSource\("([^"]+)"\)/)?.[1];
+        const source = b.match(/\n\s*source: "([^"]+)"/)?.[1] ??
+          (authoredId && authoredSource ? authoredSource.replace("${id}", authoredId) : null) ?? practiceSources[practiceKey];
+        if (id && (!title || !hook || !context || !source)) throw new Error(`Cannot read source-backed scenario ${id} from ${f}`);
+        return id ? { id, file: f, title, hook, context, source } : null;
       })
-      .filter(Boolean),
-  );
+      .filter(Boolean);
+  });
 if (SCENARIOS.length < 20) console.warn(`warn: only ${SCENARIOS.length} scenarios parsed from the corpus`);
+if (Number(trust.stats.find((stat) => stat.icon === "scene")?.n) !== SCENARIOS.length) throw new Error("Site scenario count differs from the source-backed corpus");
 const guideScenarios = new Map(guides.map((g) => {
   const scenario = SCENARIOS.find((s) => s.id === g.id);
   if (!scenario) throw new Error(`Guide ${g.id} has no matching source-backed scenario`);
@@ -979,10 +996,10 @@ writeFileSync(
 
 ## What it is
 
-- An AI practice partner for difficult real-life conversations. Characters have goals of their own, a hidden motive, a turn limit and a failure state; they do not yield because the learner is polite.
+- An AI practice partner for difficult real-life conversations. Characters have goals of their own and a hidden motive; they do not yield because the learner is polite. Text practice uses finite, extendable segments, and the learner decides when to debrief.
 - An AI tool for practicing social skills within social and emotional learning (SEL). Its 34-skill map uses the five CASEL competencies; it is an individual practice tool, not a certified school curriculum. Framework: ${learning.sourceUrl}
 - Every debrief point quotes the learner's own words first, then separates an acquisition deficit (did not know the move) from a performance deficit (knew it, could not execute under pressure), then cites a source.
-- Corpus shipped in the product: 46 bilingual scenarios, 42 strategies, 30 cases; every strategy and case carries a source. Teaching illustrations are labelled.
+- Corpus shipped in the product: ${SCENARIOS.length} bilingual scenarios, 42 strategies, 30 cases; every strategy and case carries a source. Teaching illustrations are labelled.
 - No account, no user database. Practice history stays on the device and can be exported. Bring-your-own-key and self-hosting are supported.
 - For everyday practice and reflection, not clinical assessment or hiring. Proficiency numbers are model estimates shown as such in the UI.
 
@@ -1000,7 +1017,7 @@ ${guides.map((g) => `- ${pick(g.title, "en")}: ${guideUrl(g.id, "en")} (中文: 
 ## Research
 
 - Paper: ${research.paperTitle}. arXiv:${site.arxivId} (cs.HC, 2026). ${site.arxivUrl}
-- The paper studies the research system and an internal research platform; the product is its productised version with a smaller, source-checked corpus (46 scenarios, 42 strategies, 30 cases), distinct from the paper's 43,170-entry research corpus.
+- The paper studies the research system and an internal research platform; the product is its productised version with a smaller, source-checked corpus (${SCENARIOS.length} scenarios, 42 strategies, 30 cases), distinct from the paper's 43,170-entry research corpus.
 `,
 );
 

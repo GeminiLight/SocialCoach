@@ -6,7 +6,7 @@ SocialCoach 的对外官网：中英双语、纯静态，独立于 `app/` 的 Ne
 |---|---|
 | `content.mjs` | 官网首页文案，`L(zh, en)` 双语对象，与 app 同一套约定。事实以 `wiki/00-product-proposal.md` 和 `README.md` 为准 |
 | `guides.mjs` | 五个情境的双语编辑文案；只写公开练习预览，不暴露角色的 `hidden`、成功条件或模型指令 |
-| `build.mjs` | 零依赖构建：`node site/build.mjs` → `dist/`（首页中文在 `/`、英文在 `/en/`；情境页在 `/guides/{id}/` 与 `/en/guides/{id}/`），附 `sitemap.xml` / `robots.txt` / `llms.txt` / JSON-LD / hreflang。场景标题、简介及来源直接读 `app/src/data/corpus/scenarios-*.ts`，情境分类读 `taxonomy.ts`，不存在对应语料时构建失败 |
+| `build.mjs` | 零依赖构建：`node site/build.mjs` → `dist/`（首页中文在 `/`、英文在 `/en/`；情境页在 `/guides/{id}/` 与 `/en/guides/{id}/`），附 `sitemap.xml` / `robots.txt` / `llms.txt` / JSON-LD / hreflang。场景标题、简介及来源直接读 `app/src/data/corpus/scenarios-*.ts`，情境分类读 `taxonomy.ts`，支持多行双语与已知出处工厂；缺字段、场景数量与文案不一致或不存在对应语料时构建失败 |
 | `scripts/og.mjs` | 用 `app/node_modules` 里的 sharp 生成 1200×630 社交预览图到 `assets/og-{zh,en}.png`，改文案后重跑一次并提交 |
 | `assets/` | `icon.svg`（与 `app/public/icon.svg` 同源）、OG 图、产品截图 |
 | `../.github/workflows/site.yml` | 推送到 `main` 且改动了 `site/**` 时构建并发布到 GitHub Pages |
