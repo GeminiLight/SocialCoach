@@ -438,6 +438,8 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 }
 .rehearsal-invitation { background: transparent; border: 0; border-block: 1px solid var(--line); border-radius: 0; padding: 24px 0; }
 .rehearsal-invitation > div:first-child > svg { display: none; }
+.rehearsal-invitation.is-primary a { background: var(--action); color: var(--accent-ink); border-color: var(--action); }
+.rehearsal-invitation.is-primary a:hover { background: var(--action-hover); }
 .home-page .today-feature { min-height: 340px; }
 .home-page .home-resume > span:last-child,
 .home-page .rehearsal-invitation a { border-radius: var(--radius-sm); }

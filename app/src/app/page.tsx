@@ -75,6 +75,24 @@ export default function Home() {
   if (!profile) return null;
   const recent = sessions.filter((s) => s.status === "assessed").slice(0, 3);
 
+  const rehearsalInvitation = (
+    <section className={`rehearsal-invitation ${!todaySession && !unfinished ? "is-primary" : ""} rounded-[var(--radius)] p-5 lg:p-7 flex flex-col gap-5`}>
+              <div className="flex items-start gap-3">
+                <PenLine size={21} className="text-accent-deep shrink-0 mt-1" aria-hidden />
+                <div className="min-w-0">
+                  <h2 className="display text-[23px] lg:text-[26px] leading-snug">{t(lang, "home_rehearse_title")}</h2>
+                  <p className="text-[14px] text-ink-2 mt-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_rehearse_sub")}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <Link href="/rehearse" className="press inline-flex items-center justify-center gap-3 min-h-12 px-5 rounded-full text-[14px] font-semibold bg-card border border-line-strong hover:bg-inset">
+                  {t(lang, "home_rehearse_action")}<ArrowRight size={17} aria-hidden />
+                </Link>
+                <p className="text-[12px] text-ink-3 leading-relaxed">{t(lang, "home_rehearse_steps")}</p>
+              </div>
+            </section>
+  );
+
   return (
     <Shell>
       <Page className="home-page pt-5 lg:pt-10 flex flex-col gap-7 lg:gap-9">
@@ -115,6 +133,8 @@ export default function Home() {
 
         <div className="home-practice-layout flex flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,1fr)_var(--margin-w)] xl:gap-8 xl:items-start">
           <div className="flex flex-col gap-6 min-w-0">
+            {!todaySession && !loading && rehearsalInvitation}
+
             {/* Today card */}
             <section aria-live="polite" aria-busy={loading}>
               {!todaySession && !loading && !error && (
@@ -157,25 +177,11 @@ export default function Home() {
                 </div>
               )}
               {todaySession && todaySession.id !== unfinished?.id && !loading && (
-                <TodayCard session={todaySession} onStart={() => router.push(`/practice/${todaySession.id}`)} onSwap={planToday} />
+                <TodayCard secondary={!!unfinished} session={todaySession} onStart={() => router.push(`/practice/${todaySession.id}`)} onSwap={planToday} />
               )}
             </section>
 
-            <section className="rehearsal-invitation rounded-[var(--radius)] p-5 lg:p-7 flex flex-col gap-5">
-              <div className="flex items-start gap-3">
-                <PenLine size={21} className="text-accent-deep shrink-0 mt-1" aria-hidden />
-                <div className="min-w-0">
-                  <h2 className="display text-[23px] lg:text-[26px] leading-snug">{t(lang, "home_rehearse_title")}</h2>
-                  <p className="text-[14px] text-ink-2 mt-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_rehearse_sub")}</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <Link href="/rehearse" className="press inline-flex items-center justify-center gap-3 min-h-12 px-5 rounded-full text-[14px] font-semibold bg-card border border-line-strong hover:bg-inset">
-                  {t(lang, "home_rehearse_action")}<ArrowRight size={17} aria-hidden />
-                </Link>
-                <p className="text-[12px] text-ink-3 leading-relaxed">{t(lang, "home_rehearse_steps")}</p>
-              </div>
-            </section>
+            {(todaySession || loading) && rehearsalInvitation}
 
             {recent[0]?.report?.nextStep && recent[0].report.verdictEvidence && (
               <section className="takeaway-note flex flex-col gap-3 py-5 border-y border-line">
@@ -259,7 +265,7 @@ export default function Home() {
   );
 }
 
-function TodayCard({ session, onStart, onSwap }: { session: ReturnType<typeof buildSession>; onStart: () => void; onSwap: () => void }) {
+function TodayCard({ session, onStart, onSwap, secondary }: { secondary?: boolean; session: ReturnType<typeof buildSession>; onStart: () => void; onSwap: () => void }) {
   const lang = useLang();
   const [why, setWhy] = useState(false);
   const sc = session.scenario;
@@ -319,7 +325,7 @@ function TodayCard({ session, onStart, onSwap }: { session: ReturnType<typeof bu
         )}
         <div className="flex flex-col gap-2 pt-1 lg:max-w-[440px]">
           <div className="flex gap-2">
-            <Button requiresModel={session.status === "briefing" || session.status === "active"} block size="lg" variant={done ? "secondary" : "primary"} onClick={onStart}>
+            <Button requiresModel={session.status === "briefing" || session.status === "active"} block size="lg" variant={done || secondary ? "secondary" : "primary"} onClick={onStart}>
               {done ? t(lang, "home_view_report") : active ? t(lang, "home_continue") : t(lang, "home_start")}
               <ArrowRight size={18} />
             </Button>
