@@ -35,6 +35,7 @@ test('transparent surfaces, physical materials and different shadow / shading pr
 test('pixel ratio responds to sustained low frame rates within bounded quality, with a stable middle band',()=>{
   assert.equal(nextPixelRatio(1.5,30,1.5),1.2);assert.equal(nextPixelRatio(.75,20,1.5),.75);
   assert.equal(nextPixelRatio(1.2,50,1.5),1.2);assert.equal(nextPixelRatio(1.2,60,1.25),1.25);assert.equal(nextPixelRatio(1.5,60,1),1);
+  assert.equal(nextPixelRatio(.5,20,.5),.5);
 });
 test('camera settling noise does not refresh the whole UI, but actual movement and focus changes do',()=>{
   const world=createWorld(scenarios[0]),before=snapshot(world),key=roomUiKey(before);
