@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useApp, useLang } from "@/store/useApp";
 import { useByok } from "@/lib/byok";
-import { refreshModelAccess, syncModelConfiguration, useCanUseModel } from "@/lib/model-access";
+import { promptUnavailableSharedModel, refreshModelAccess, syncModelConfiguration, useCanUseModel, useModelAccess } from "@/lib/model-access";
 import { ModelSheet } from "./ModelSheet";
 import { FeedbackWidget } from "./Feedback";
 import { Toaster } from "./ui";
@@ -24,6 +24,11 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   const lang = useLang();
   const dinner = path === "/3d";
   const canUseModel = useCanUseModel();
+  const modelAccess = useModelAccess();
+
+  useEffect(() => {
+    if (hydrated && byok.hydrated && !storageIssue) promptUnavailableSharedModel();
+  }, [hydrated, byok.hydrated, storageIssue, modelAccess.state, modelAccess.source, modelAccess.issue, modelAccess.epoch]);
 
   useEffect(() => {
     if (!byok.hydrated) return;

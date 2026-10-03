@@ -38,13 +38,18 @@ try {
   browser(['open', 'about:blank']);
   browser(['network', 'route', '**/api/track', '--body', '{}']);
   browser(['network', 'route', '**/api/feedback', '--body', '{"available":false}']);
-  health({ state: 'unavailable', issue: 'setup', serverKey: false, requireByok: false });
+  health({ state: 'available', serverKey: true, requireByok: false });
   browser(['open', base + '/onboarding']);
   evaluate(`localStorage.setItem('socialcoach.v1', ${JSON.stringify(JSON.stringify({ state, version: 0 }))}); localStorage.removeItem('socialcoach.llm.v1'); true`);
+  health({ state: 'unavailable', issue: 'setup', serverKey: false, requireByok: false });
   open('/arena'); wait("document.body.innerText.includes('练习需要连接一个模型')");
-  check('no model shows a concise banner without forcing a modal', evaluate("!document.querySelector('dialog[open]') && document.querySelectorAll('h1').length === 1"));
+  wait("document.querySelector('#model-key') !== null");
+  check('confirmed shared failure automatically opens the configuration form', evaluate("document.querySelector('dialog[open]') !== null && document.querySelectorAll('h1').length === 1"));
+  browser(['press', 'Escape']); wait("!document.querySelector('dialog[open]')");
+  check('the automatic prompt can be dismissed to keep browsing', evaluate("document.querySelector('button').getClientRects().length > 0"));
   check('scenarios remain readable and searchable', evaluate("document.querySelector('input[type=search]') !== null || document.querySelectorAll('article').length > 0 || document.body.innerText.includes('临时加班')"));
   open(`/practice/${report.id}`); wait("document.querySelector('#review-assistant') !== null");
+  check('the same shared failure does not reopen after a full navigation', evaluate("!document.querySelector('dialog[open]')"));
   check('saved report remains readable while assistant generation is disabled', evaluate("document.querySelector('#review-assistant button[type=submit]').disabled && document.body.innerText.includes('自我暴露')"));
   check('history and proficiency are unchanged', JSON.stringify(saved().sessions[0]) === JSON.stringify(report) && saved().proficiency.communication === 2);
   open('/rehearse'); browser(['fill', 'textarea', '明天我要和同事讨论工作安排。']);
@@ -78,6 +83,9 @@ try {
   }; true`);
   browser(['fill', 'textarea', '我先说清自己的安排。']); browser(['click', 'button[aria-label=发送]']);
   wait("document.body.innerText.includes('额度已用完')");
+  wait("document.querySelector('#model-key') !== null");
+  check('runtime quota failure opens the form with a brief recovery explanation', evaluate("document.querySelector('dialog[open]')?.textContent.includes('默认模型暂时不可用')"));
+  browser(['click', 'button[aria-label=关闭]']); wait("!document.querySelector('dialog[open]')");
   check('streaming quota failure disables sending and hints', evaluate("document.querySelector('button[aria-label=发送]').disabled && document.querySelector('button[aria-label=提示]').disabled"));
   check('failed turn retains evidence and adds no fabricated NPC reply', saved().sessions.find((s: { id: string }) => s.id === active.id).messages.length === 2 && evaluate("window.__generated===1"));
   const messages = JSON.stringify(saved().sessions.find((s: { id: string }) => s.id === active.id).messages);
@@ -89,10 +97,15 @@ try {
     const data = saved(); data.profile.lang=lang; data.settings.theme=theme;
     evaluate(`localStorage.setItem('socialcoach.v1', ${JSON.stringify(JSON.stringify({state:data,version:0}))}); true`);
     browser(['set', 'viewport', String(width), '900']); open('/settings');
-    button(lang==='zh'?'接入模型':'Connect a model'); wait("document.querySelector('#model-key') !== null");
+    wait("document.body.innerText.includes(" + JSON.stringify(lang==='zh'?'密钥已失效':'The model key is invalid') + ")");
+    if (lang==='zh') { wait("document.querySelector('dialog[open]') !== null"); check('new credentials failure opens a fresh prompt after successful recovery', true); }
+    else check('language reload does not reopen the dismissed failure', evaluate("!document.querySelector('dialog[open]')"));
+    if (!evaluate("document.querySelector('#model-key') !== null")) button(lang==='zh'?'接入模型':'Connect a model');
+    wait("document.querySelector('#model-key') !== null");
     wait("!document.getAnimations().some(a=>a.playState==='running' && a.effect.getTiming().iterations!==Infinity)");
     check(`${lang}/${width}: form fits without horizontal overflow`, evaluate("document.documentElement.scrollWidth <= innerWidth && document.querySelector('dialog').scrollWidth <= document.querySelector('dialog').clientWidth"));
     check(`${lang}/${width}: controls remain reachable at touch size`, evaluate("Array.from(document.querySelectorAll('dialog button')).filter(b=>b.getClientRects().length).every(b=>b.getBoundingClientRect().height>=43)"));
+    check(`${lang}/${width}: failure guidance is localized and the form is immediately usable`, evaluate("document.querySelector('dialog').textContent.includes(" + JSON.stringify(lang==='zh'?'默认模型暂时不可用':'The default model is unavailable') + ") && document.querySelector('#model-key').type==='password'"));
     browser(['screenshot', join(artifacts, `model-${lang}-${width}.png`)]);
     const scan=browser(['a11y','--tags','wcag2a,wcag2aa','--selector','dialog']); check(`${lang}/${width}: no automatic accessibility violations`, scan.counts.violations===0);
   }

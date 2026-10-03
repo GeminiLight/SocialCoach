@@ -4,7 +4,7 @@ import { ChevronDown, Eye, EyeOff } from "lucide-react";
 import { Button, Chip, Sheet } from "@/components/ui";
 import { useByok, type ByokConfig } from "@/lib/byok";
 import { checkByokConnection } from "@/lib/llm-client";
-import { acceptModelCheck, refreshModelAccess } from "@/lib/model-access";
+import { acceptModelCheck, refreshModelAccess, useModelAccess } from "@/lib/model-access";
 import { M, modelMessage } from "@/lib/model-copy";
 import { pick } from "@/lib/i18n";
 import { useLang } from "@/store/useApp";
@@ -16,6 +16,7 @@ const DEFAULT = { openai: "gpt-4.1-mini", anthropic: "claude-sonnet-5-5" };
 
 function ModelForm({ onClose }: { onClose: () => void }) {
   const lang = useLang();
+  const access = useModelAccess();
   const current = useByok.getState();
   const [draft, setDraft] = useState<ByokConfig>(() => ({ ...current, fastModel: current.fastModel || DEFAULT[current.provider], smartModel: current.smartModel === current.fastModel ? "" : current.smartModel }));
   const [visible, setVisible] = useState(false);
@@ -39,7 +40,7 @@ function ModelForm({ onClose }: { onClose: () => void }) {
     } finally { if (!request.signal.aborted) setBusy(false); }
   };
   return <div className="flex flex-col gap-5 pt-1 pb-2">
-    <p className="text-[14px] text-ink-3 leading-relaxed">{pick(M.intro, lang)}</p>
+    <p className="text-[14px] text-ink-3 leading-relaxed">{pick(access.source === "server" && access.state === "unavailable" && access.issue !== "setup" ? M.sharedUnavailableIntro : M.intro, lang)}</p>
     <fieldset disabled={busy} className="flex flex-col gap-5 disabled:opacity-70">
       <div><p className="eyebrow mb-2">{pick(M.provider, lang)}</p><div className="flex flex-wrap gap-2">{(["anthropic", "openai"] as Provider[]).map(provider => <Chip key={provider} active={draft.provider === provider} onClick={() => update({ provider, fastModel: DEFAULT[provider], smartModel: "", baseUrl: "" })}>{provider === "anthropic" ? "Anthropic" : "OpenAI"}</Chip>)}</div></div>
       <div>

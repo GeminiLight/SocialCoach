@@ -12,6 +12,27 @@ export const useModelAccess = create<Access>(() => ({ state: "checking", source:
 export const useCanUseModel = () => useModelAccess(s => s.state === "available" || s.state === "unverified");
 let configuration: string | undefined;
 let pending: Promise<void> | undefined;
+const PROMPT_KEY = "socialcoach.model-prompt.v1";
+let promptedSharedIssue: string | undefined;
+
+/** A dismissible setup prompt, once per shared failure in this browser tab. */
+export function promptUnavailableSharedModel(): boolean {
+  const access = useModelAccess.getState();
+  if (access.state === "available") {
+    promptedSharedIssue = undefined;
+    try { sessionStorage.removeItem(PROMPT_KEY); } catch {}
+    return false;
+  }
+  if (access.source !== "server" || access.state !== "unavailable") return false;
+  const issue = access.issue ?? "setup";
+  let remembered = promptedSharedIssue;
+  try { remembered = sessionStorage.getItem(PROMPT_KEY) ?? remembered; } catch {}
+  if (remembered === issue) return false;
+  promptedSharedIssue = issue;
+  try { sessionStorage.setItem(PROMPT_KEY, issue); } catch {}
+  if (!useByok.getState().sheetOpen) useByok.getState().openSheet();
+  return true;
+}
 
 // The identity is private, transient and never logged or persisted.
 function identity(c: ByokConfig) { return JSON.stringify([c.enabled, c.provider, c.baseUrl, c.apiKey, c.fastModel, c.smartModel, c.tokenParam]); }

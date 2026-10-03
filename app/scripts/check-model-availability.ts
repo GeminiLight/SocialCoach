@@ -4,7 +4,7 @@ import { checkModelConnection, modelIssue, readModelFailure, type ModelMetadata 
 import { LLMError } from '../src/lib/llm-core';
 import { byokError, checkByokConnection } from '../src/lib/llm-client';
 import { useByok, type ByokConfig } from '../src/lib/byok';
-import { acceptModelCheck, refreshModelAccess, syncModelConfiguration, useModelAccess, withModelAccess } from '../src/lib/model-access';
+import { acceptModelCheck, promptUnavailableSharedModel, refreshModelAccess, syncModelConfiguration, useModelAccess, withModelAccess } from '../src/lib/model-access';
 import { clearServerObservation, observedServerHealth, observeServerFailure } from '../src/lib/server-model-observation';
 import { ApiError, parseRoleplay } from '../src/lib/client-api';
 
@@ -32,6 +32,28 @@ async function main() {
   assert.equal(readModelFailure('invalid API key').modelIssue, 'credentials'); check('stream errors retain status and support legacy text');
   clearServerObservation(); observeServerFailure('rate_limit'); assert.equal(observedServerHealth(), undefined);
   observeServerFailure('credentials'); assert.equal(observedServerHealth()?.issue, 'credentials'); clearServerObservation(); check('per-visitor limits cannot disable everyone');
+  // The prompt records a reason only; dismissal survives navigation without saving a key.
+  const storageDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'sessionStorage');
+  const remembered = new Map<string, string>();
+  Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value: { getItem: (key: string) => remembered.get(key) ?? null, setItem: (key: string, value: string) => remembered.set(key, value), removeItem: (key: string) => remembered.delete(key) } });
+  try {
+    useModelAccess.setState({ state: 'available', source: 'server', issue: undefined }); promptUnavailableSharedModel();
+    for (const state of ['checking', 'unverified'] as const) { useModelAccess.setState({ state }); assert.equal(promptUnavailableSharedModel(), false); }
+    useModelAccess.setState({ state: 'unavailable', source: 'own', issue: 'credentials' }); assert.equal(promptUnavailableSharedModel(), false);
+    useModelAccess.setState({ state: 'unavailable', source: 'server', issue: 'credentials' }); assert.equal(promptUnavailableSharedModel(), true); assert.equal(useByok.getState().sheetOpen, true);
+    useByok.getState().closeSheet(); assert.equal(promptUnavailableSharedModel(), false); assert.equal(useByok.getState().sheetOpen, false);
+    assert.deepEqual([...remembered.values()], ['credentials']); check('confirmed shared failure opens once; uncertain checks and own failures do not');
+    useModelAccess.setState({ state: 'available', issue: undefined }); promptUnavailableSharedModel(); assert.equal(remembered.size, 0);
+    useModelAccess.setState({ state: 'unavailable', issue: 'credentials' }); assert.equal(promptUnavailableSharedModel(), true); useByok.getState().closeSheet();
+    useModelAccess.setState({ state: 'available', issue: undefined }); promptUnavailableSharedModel();
+    remembered.set('socialcoach.model-prompt.v1', 'credentials'); useModelAccess.setState({ state: 'unavailable', issue: 'credentials' }); assert.equal(promptUnavailableSharedModel(), false); check('recovery allows a new failure prompt while a tab dismissal survives reload');
+    Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, get: () => { throw new Error('Storage blocked'); } });
+    useModelAccess.setState({ state: 'available', issue: undefined }); promptUnavailableSharedModel();
+    useModelAccess.setState({ state: 'unavailable', issue: 'quota' }); assert.equal(promptUnavailableSharedModel(), true); useByok.getState().closeSheet(); assert.equal(promptUnavailableSharedModel(), false); check('blocked tab storage still permits configuration and deduplicates prompts');
+  } finally {
+    useByok.getState().closeSheet(); useModelAccess.setState({ state: 'available', issue: undefined }); promptUnavailableSharedModel();
+    if (storageDescriptor) Object.defineProperty(globalThis, 'sessionStorage', storageDescriptor); else Reflect.deleteProperty(globalThis, 'sessionStorage');
+  }
   const original = globalThis.fetch;
   const calls: string[] = [];
   globalThis.fetch = async (url, init) => { calls.push(`${init?.method ?? 'GET'} ${url}`); return Response.json({ data: [{ id: 'm' }], has_more: false }); };

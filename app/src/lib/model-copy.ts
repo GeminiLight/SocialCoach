@@ -9,6 +9,7 @@ export const M = {
   tokenParam: { zh: "Token 参数", en: "Token parameter" },
   title: { zh: "接入模型", en: "Connect a model" },
   intro: { zh: "填入你的 API Key，就能继续练习。", en: "Add your API key to continue practicing." },
+  sharedUnavailableIntro: { zh: "默认模型暂时不可用。你可以填入自己的 API Key，继续练习。", en: "The default model is unavailable. Add your own API key to continue practicing." },
   checking: { zh: "正在检查模型连接…", en: "Checking the model connection…" },
   setup: { zh: "练习需要连接一个模型。", en: "Connect a model to start practicing." },
   credentials: { zh: "模型密钥已失效，请更新或换用自己的密钥。", en: "The model key is invalid. Update it or connect your own." },

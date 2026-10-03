@@ -64,6 +64,7 @@ try {
   check("refresh restores completed history and unsent draft", saved().sessions[0].debriefChat.length === 2 && evaluate("document.querySelector('#debrief-question').value === '还没发出的追问'"));
   evaluate("window.__mode='fail'; true"); button("发送问题"); wait("document.querySelector('#review-assistant [role=alert]') !== null");
   check("failed request preserves input and adds no unfinished Q&A", evaluate("document.querySelector('#debrief-question').value === '还没发出的追问'") && saved().sessions[0].debriefChat.length === 2);
+  wait("document.querySelector('#model-key') !== null"); browser(["press", "Escape"]); wait("!document.querySelector('dialog[open]')");
   evaluate("window.__mode='ok'; true"); button("重新检查"); wait("!Array.from(document.querySelectorAll('#review-assistant button')).find(b=>b.textContent.includes('重试这个问题')).disabled"); button("重试这个问题"); wait("document.querySelector('#debrief-question').value === ''");
   check("retry stores exactly one completed exchange", saved().sessions[0].debriefChat.length === 3);
   fill("请再举个例子"); evaluate("window.__mode='slow'; true"); button("发送问题"); wait("document.querySelector('#review-assistant [role=status]') !== null");
