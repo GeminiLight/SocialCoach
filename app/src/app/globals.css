@@ -940,3 +940,79 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dinner-experience .place-status { color:var(--dinner-ink); background:var(--dinner-paper); padding:4px 8px; border-radius:var(--dinner-radius-sm); font-size:11px; line-height:1.55; max-width:220px; }
 .dinner-experience .scene-picker { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .dinner-experience .scene-choice:last-child { grid-column:auto; }
+
+/* Scene controls appear when requested; the conversation stays in front. */
+.dinner-experience .topbar nav {gap:4px;}
+.dinner-experience .topbar nav .icon-button {position:relative;}
+.dinner-experience .topbar nav .icon-button:hover {background:var(--dinner-scene-overlay);color:var(--dinner-ink);}
+.dinner-experience .history-count {position:absolute;right:3px;top:3px;font-size:9px;color:var(--dinner-accent);}
+.dinner-experience .scene-context .attention-status {display:flex;align-items:center;gap:5px;margin-top:0;color:var(--dinner-ink-muted);font-size:10px;}
+.dinner-experience .exploration {position:absolute;left:32px;bottom:calc(var(--dinner-hud-height) + 32px);z-index:26;}
+.dinner-experience .exploration-toggle {display:flex;align-items:center;gap:7px;min-height:44px;padding:0 12px;border:1px solid var(--dinner-line-soft);border-radius:24px;background:var(--dinner-scene-overlay);font-size:11px;color:var(--dinner-ink-secondary);}
+.dinner-experience .exploration.is-open .exploration-toggle {display:none;}
+.dinner-experience .movement-dock {width:176px;max-height:min(300px,max(150px,calc(100dvh - var(--dinner-hud-height) - 132px)));overflow:auto;overscroll-behavior:contain;padding:6px 12px 10px;border:1px solid var(--dinner-line);border-radius:16px;background:var(--dinner-paper);box-shadow:0 8px 30px var(--dinner-shadow);}
+.dinner-experience .movement-dock-heading {display:flex;align-items:center;gap:6px;justify-content:space-between;color:var(--dinner-ink-secondary);font-size:10px;}
+.dinner-experience .movement-dock-heading>span {min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dinner-experience .movement-dock-heading .icon-button {min-width:44px;flex-shrink:0;}
+.dinner-experience .movement-joystick {display:flex;flex-direction:column;align-items:center;gap:6px;}
+.dinner-experience .joystick-pad {position:relative;display:grid;place-items:center;width:100px;height:100px;border-radius:50%;border:1px solid var(--dinner-line);background:var(--dinner-surface);touch-action:none;user-select:none;}
+.dinner-experience .joystick-track {position:absolute;inset:19px;border:1px dashed var(--dinner-line);border-radius:50%;pointer-events:none;}
+.dinner-experience .joystick-knob {display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--dinner-line);border-radius:50%;background:var(--dinner-surface-raised);color:var(--dinner-accent);transform:translate(var(--joystick-x,0px),var(--joystick-y,0px));pointer-events:none;}
+.dinner-experience .movement-joystick>span {color:var(--dinner-ink-muted);font-size:10px;line-height:1.5;text-align:center;}
+.dinner-experience .movement-return,.dinner-experience .movement-place {display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;width:100%;font-size:11px;color:var(--dinner-ink-secondary);}
+.dinner-experience .movement-return {margin-top:4px;}
+.dinner-experience .movement-place {border-top:1px solid var(--dinner-line-soft);color:var(--dinner-accent);}
+.dinner-experience .dialogue-tools .moment-trigger {display:flex;align-items:center;gap:6px;min-height:44px;min-width:44px;color:var(--dinner-ink-secondary);font-size:12px;}
+.dinner-experience .moment-trigger[aria-expanded=true] {color:var(--dinner-accent);}
+.dinner-experience .moment-action-row {padding:9px 10px;border:1px solid var(--dinner-line-soft);border-radius:10px;background:var(--dinner-scene-overlay);}
+.dinner-experience .moment-actions {display:flex;flex-wrap:wrap;}
+.dinner-experience .moment-actions button {flex:1;min-width:90px;border:0;background:none;}
+.dinner-experience .dinner-recipient {gap:8px;min-height:44px;padding:0;border-bottom:0;}
+.dinner-experience .recipient-select {position:relative;display:inline-flex;align-items:center;}
+.dinner-experience .recipient-select select {appearance:none;min-height:44px;padding:0 24px 0 4px;border:0;background:none;color:var(--dinner-accent);font:inherit;font-size:12px;cursor:pointer;max-width:220px;}
+.dinner-experience .recipient-select select:disabled {opacity:.5;cursor:default;}
+.dinner-experience .recipient-select option {background:var(--dinner-paper);color:var(--dinner-ink);}
+.dinner-experience .recipient-select svg {position:absolute;right:4px;pointer-events:none;color:var(--dinner-ink-muted);}
+.dinner-experience .reply-composer .input-wrap {padding-top:0;}
+.dinner-experience .voice-button {border-color:transparent;}
+.dinner-experience .mode-status {display:flex;align-items:center;gap:6px;font-size:10px;color:var(--dinner-ink-muted);}
+.dinner-experience .table-toolbar .suggestion-toggle {font-size:11px;}
+.dinner-experience .modal-scene-options {width:400px;}
+.dinner-experience .scene-options-links,.dinner-experience .scene-preferences {padding:6px 0;border-bottom:1px solid var(--dinner-line-soft);}
+.dinner-experience .scene-options-links button,.dinner-experience .scene-preferences button {display:flex;align-items:center;gap:12px;min-height:48px;width:100%;text-align:left;color:var(--dinner-ink-secondary);font-size:13px;}
+.dinner-experience .scene-options-links button>svg:first-child,.dinner-experience .scene-preferences button>svg {color:var(--dinner-ink-muted);flex-shrink:0;}
+.dinner-experience .scene-options-links button>svg:last-child:not(:first-child),.dinner-experience .scene-options-links small {margin-left:auto;font-size:11px;color:var(--dinner-ink-muted);}
+.dinner-experience .scene-options-links .mode-dot {margin:0 6px;}
+.dinner-experience .preference-switch {position:relative;width:30px;height:18px;flex-shrink:0;margin-left:auto;border:1px solid var(--dinner-line);border-radius:12px;background:var(--dinner-surface);}
+.dinner-experience .preference-switch::after {content:'';position:absolute;top:3px;left:3px;width:10px;height:10px;border-radius:50%;background:var(--dinner-ink-muted);}
+.dinner-experience [aria-checked=true] .preference-switch {border-color:var(--dinner-accent);}
+.dinner-experience [aria-checked=true] .preference-switch::after {left:15px;background:var(--dinner-accent);}
+.dinner-experience .scene-options-guide {margin:14px 0 0;font-size:11px;color:var(--dinner-ink-muted);line-height:1.6;}
+.dinner-experience .scene-finish-link {display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;margin-top:8px;color:var(--dinner-accent);font-size:12px;}
+@media (max-width:600px) {
+  .dinner-experience .topbar {height:64px;gap:2px;padding-inline:8px;}
+  .dinner-experience .brand small {display:none;}
+  .dinner-experience .topbar nav {gap:0;}
+  .dinner-experience .scene-context {top:73px;left:16px;max-width:calc(100% - 32px);}
+  .dinner-experience .scene-context p {font-size:10px;gap:6px;margin-bottom:4px;white-space:nowrap;}
+  .dinner-experience .scene-context time {font-size:9px;}
+  .dinner-experience .exploration {left:16px;bottom:clamp(20px,calc(var(--dinner-hud-height) + 25px),calc(100dvh - 230px));}
+  .dinner-experience .movement-dock {width:158px;padding-inline:9px;}
+  .dinner-experience .dialogue-tools {gap:14px;}
+  .dinner-experience .dialogue-tools .moment-trigger,.dinner-experience .dialogue-tools .evidence-trigger {font-size:11px;}
+  .dinner-experience .conversation {width:calc(100% - 32px);bottom:max(8px,env(safe-area-inset-bottom));}
+  .dinner-experience .conversation .spoken-line {font-size:17px;}
+  .dinner-experience .app-shell.is-seated .stage-cue {display:none;}
+  .dinner-experience .speak-button {min-width:56px;padding-inline:10px;}
+  .dinner-experience .dinner-recipient {min-height:44px;}
+  .dinner-experience .recipient-select select {min-height:44px;}
+  .dinner-experience .moment-actions button {min-width:80px;font-size:11px;}
+  .dinner-experience .moment-action-row {padding:6px;}
+  .dinner-experience .moment-actions button svg {display:block;}
+  .dinner-experience .modal.modal-scene-options {max-width:100%;width:100%;max-height:85dvh;margin:auto 0 0;border-radius:18px 18px 0 0;padding:18px 22px max(18px,env(safe-area-inset-bottom));}
+}
+@media (max-height:560px) and (min-width:601px) {
+  .dinner-experience .conversation {width:min(650px,calc(100% - 48px));bottom:3px;}
+  .dinner-experience .exploration {bottom:20px;}
+  .dinner-experience .movement-dock {max-height:calc(100dvh - 120px);}
+}

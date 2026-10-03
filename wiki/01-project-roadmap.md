@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-10-03 | Current stage: B -->
+<!-- Last verified: 2026-10-04 | Current stage: B -->
 
 # 项目路线图
 
@@ -48,7 +48,7 @@
 
 | A26 | 3D 与文字共用证据式复盘 | ✅ 主站实现、验证通过 | 原话评价 / 改写 / 知识 / 反思 / 多轮咨询、现场观察补充、主站历史与导出、访客直达、返回续聊 / 同开局重练；154 项 3D + 23 项原助手检查、中英真实模型与手机浏览器 → [方案](./archive/specs/spec-3d-debrief.md)、[验收](./reviews/review-2026-10-03-3d-debrief.md) |
 
-| A27 | Blender 人物与五类空间重建 | ✅ 主站实现、浏览器验证通过 | 15 NPC / 玩家 / 手臂、24 GLB、12 姿态 / 人、统一材质尺度、眼高 / 电梯镜头与群体举杯；161 项检查、格式 0 errors / 0 warnings；真实手机性能待补测 → [方案](./specs/spec-3d-blender-assets.md)、[验收](./reviews/review-2026-10-03-3d-blender.md) |
+| A27 | Blender 人物与五类空间重建 | ✅ 主站实现、浏览器验证通过 | 15 NPC / 玩家 / 手臂、24 GLB、12 姿态 / 人、统一材质尺度、眼高 / 电梯镜头与群体举杯；161 项检查、格式 0 errors / 0 warnings；真实手机性能待补测；操作入口 / 手机摇杆收敛已实现并验证 → [方案](./specs/spec-3d-blender-assets.md)、[资产验收](./reviews/review-2026-10-03-3d-blender.md)、[操作验收](./reviews/review-2026-10-04-3d-controls.md) |
 
 ### Stage B — 定位与对外物料
 
