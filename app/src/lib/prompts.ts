@@ -2,6 +2,7 @@ import type { Scenario, Theory, Case } from "@/data/corpus/types";
 import { COMPETENCIES, CONTEXTS, SKILLS, skillById, competencyById, type Lang, type L, type SkillId } from "@/data/taxonomy";
 import { SCENARIO_ICON_NAMES } from "@/data/scenario-icons";
 import type { ChatMessage, Profile, Proficiency } from "./types";
+import { SCENE_CRAFT } from './scene-craft';
 
 export const pick = (l: L, lang: Lang) => l[lang];
 
@@ -126,6 +127,8 @@ ${scenarioBlock(s, lang, learnerId)}
 
 ${PRACTICE_POLICY}
 
+${SCENE_CRAFT}
+
 REALISM RULES
 - Each NPC speaks in character: their personality, stance and emotional state drive every line. They are not helpful assistants. They have their own goals and will push back, deflect, get defensive, or warm up only when the learner earns it.
 - React specifically to what the learner just said — quote or echo their words when natural. Never ignore a concrete proposal.
@@ -166,7 +169,7 @@ Example shape (replace values with this turn's actual state and dialogue):
 {"meta":{"objectives":[${s.objectives.map(() => "false").join(",")}],"ended":false,"outcome":null,"stance":20,"revealed":false,"note":""},"utterances":[{"characterId":"${npcs[0]?.id}","text":"<spoken reply>"}]}
 meta.objectives: exactly ${s.objectives.length} booleans in original order. meta.stance: integer 0–100. meta.note: at most 12 words, a neutral stage direction in second person, never a coaching judgment. meta.outcome: original goal attainment or null.
 Only when proposing a grounded closing exchange, add meta.closure: {kind, learnerQuote?, npcQuote} with exact quotations as described above. Never put closure in a spoken line.
-utterances: one or two entries, characterId only from ${npcs.map((c) => c.id).join(", ")}, text is actual in-character speech. No extra narrator or invented speaker. Escape JSON strings correctly; use curly quotation marks inside dialogue.
+utterances: one entry per speaking character, at most two entries total; combine a character's sentences in ONE text string rather than repeating their characterId. characterId only from ${npcs.map((c) => c.id).join(", ")}, text is actual in-character speech. No extra narrator or invented speaker. Escape JSON strings correctly; use curly quotation marks inside dialogue.
 
 ${LANG_RULE[lang]} Dialogue must sound like real spoken language in that language.`;
 }
@@ -261,6 +264,7 @@ ${PRACTICE_POLICY}
 - 2–3 initial aims observable in dialogue and grounded in the learner's intent. Success/failure describe possible outcomes, not automatic ending triggers or compulsory solutions. Do not require unavailable evidence or authority.
 - Tag with the taxonomy below: 1–3 skill ids (most relevant first), 1–2 competency ids, one context id and type, relationship types, difficulty 1–3, maxTurns 6–10.
 - Opening line comes from an NPC and drops the learner straight into the tension.
+- Give the opening a concrete disputed choice from this situation, not a generic greeting. In NPC stance/personality, define what would make a partial offer feasible and what would still be disputed afterward. Keep several legitimate routes, including refusal and repair; no fixed script or required slogan. The first line must not reveal the hidden motive. Never invent an emergency, sanction, prior agreement or real-person fact for excitement. If a fictional practice assumption is needed, label it in background.
 - Pick the ONE icon from the list below that best names the situation — the object or act at its centre, not the emotion. Use the context's obvious choice only if nothing fits better.
 ${iconBlock()}
 ${taxonomyBlock()}

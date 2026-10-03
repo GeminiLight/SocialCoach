@@ -1,0 +1,14 @@
+{
+  "model": "glm-5.3-flash",
+  "accepted3dTurns": 123,
+  "variedInputTurns": 40,
+  "textSamples": 54,
+  "accepted3dMedianMs": 4252,
+  "accepted3dMaxMs": 8920,
+  "notices": [
+    "Primary 123 turns combine eight matrix cases with two targeted retests; not an uninterrupted ten-case green run.",
+    "Latency is one synthetic sample under shared load, not a performance guarantee.",
+    "Browser input failure prevented complete continuous-UI validation.",
+    "Structural validity does not prove semantic accuracy or user enjoyment."
+  ]
+}

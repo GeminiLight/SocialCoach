@@ -5,6 +5,7 @@ import { RoomContextSchema, RoomSaveSchema, validRoomCast, distance, walkable, t
 import { l, pick, scenarios, type Lang, type Scenario } from './content';
 
 import { continueScript, type ScriptContext } from './dialogue';
+import { isArcBeat } from './arcs';
 import { DEFAULT_DINNER_TURNS, MAX_DINNER_TURNS, DinnerLengthSchema, VariantIdSchema, StoryBeatSchema, isSceneVariant, sceneTopics, variantFor, type StoryBeat } from './story';
 
 export const ReactionSchema = z.object({ characterId: z.string().max(30), emotion: z.enum(['neutral', 'pressing', 'annoyed', 'thinking', 'supportive']), gesture: z.enum(['idle', 'toast', 'lean', 'fold', 'nod']) });
@@ -20,6 +21,7 @@ export const SaveSchema = z.object({ version: z.literal(1), practiceId:z.string(
   if(save.messages.filter(m=>m.role==='user').length>save.maxTurns)ctx.addIssue({code:'custom',message:'Turn budget exceeded'});
   if((save.targetId&&!ids.includes(save.targetId))||save.messages.some(m=>m.targetId&&!ids.includes(m.targetId)))ctx.addIssue({code:'custom',message:'Invalid addressee'});
   if(save.messages.some(m=>m.story&&(!sceneTopics[save.scenarioId].includes(m.story.topic)||(m.story.event&&!variantFor(save.scenarioId,save.variantId).events.includes(m.story.event)))))ctx.addIssue({code:'custom',message:'Invalid story beat'});
+  if(save.messages.some(m=>m.story?.beat&&(m.role!=='npc'||!isArcBeat(variantFor(save.scenarioId,save.variantId).id,m.story.beat))))ctx.addIssue({code:'custom',message:'Invalid scene development'});
   if (!save.messages.length || save.messages.length % 2 !== 1 || save.messages.some((m, i) => m.role !== (i % 2 ? 'user' : 'npc') || (m.role === 'npc' && !ids.includes(m.speakerId ?? '')))) ctx.addIssue({ code: 'custom', message: 'Invalid conversation order' });
   if(save.room&&(new Set(save.room.npcs.map(n=>n.id)).size!==3||save.room.npcs.some(n=>!ids.includes(n.id))))ctx.addIssue({code:'custom',message:'Invalid room cast'});
   if(save.room){const {player,npcs}=save.room;

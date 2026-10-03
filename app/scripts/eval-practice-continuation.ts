@@ -13,7 +13,7 @@ import type { ChatMessage } from "../src/lib/types";
 import type { Lang } from "../src/data/taxonomy";
 import type { LLM } from "../src/lib/llm-core";
 
-const root = resolve("../docs/reviews/text-practice-2026-10-03");
+const root = resolve(process.env.PRACTICE_EVAL_DIR ?? "../docs/reviews/text-practice-2026-10-03");
 const records: unknown[] = [];
 const issues: string[] = [];
 const warnings: string[] = [];

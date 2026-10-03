@@ -70,7 +70,9 @@ test('unavailable events, wrong addressed speaker and foreign topics fail visibl
  await assert.rejects(runDinner(request(0),fake({...reply,story:{topic:'toast',event:'work-deadline'}}),'fast'));
  await assert.rejects(runDinner(request(5),fake({...reply,story:{topic:'privacy'}}),'fast'));
  const d=createDrama();syncDrama(d,base,0,true,false);settleForSpeech(d);syncDrama(d,base,5,true,false,{requestedEvent:'work-deadline'});
- await assert.rejects(runDinner({...request(5),dinner:dinnerContext(d)},fake({...reply,story:{topic:'deadline',event:'work-deadline'}}),'fast'));
+ const repeated=await runDinner({...request(5),dinner:dinnerContext(d)},fake({...reply,story:{topic:'deadline',event:'work-deadline'}}),'fast');
+ assert.equal(repeated.story?.event,undefined); // A redundant current moment is ignored, not replayed.
+ await assert.rejects(runDinner({...request(5),dinner:dinnerContext(d)},fake({...reply,story:{topic:'deadline',event:'family-phone'}}),'fast'));
 });
 test('third-person mentions are not mistaken for an addressee; explicit selection wins',()=>{
  assert.equal(addressedCharacter(base,'我跟小周一起做的，陈总您听我说'),undefined);

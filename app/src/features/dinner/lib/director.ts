@@ -4,8 +4,11 @@ import { scenarios, pick } from './content';
 import { RoomContextSchema } from './room';
 import { DinnerContextSchema, validDinnerContext, dinnerEvents, actionEvidence } from './drama';
 import { validateReply, renderedCue, MessageSchema, HeardSchema, SaveSchema } from './engine';
-import { DEFAULT_DINNER_TURNS, MAX_DINNER_TURNS, DinnerLengthSchema, VariantIdSchema, variantFor, factsForVariant, availableStoryEvents, characterAgendas, sceneTopics, topicLabels, addressedCharacter } from './story';
+import { DEFAULT_DINNER_TURNS, MAX_DINNER_TURNS, DinnerLengthSchema, VariantIdSchema, variantFor, factsForVariant, availableStoryEvents, characterAgendas, sceneTopics, topicLabels, addressedCharacter, inferTopic } from './story';
 import {tableEvidence} from './tableEvidence';
+import { SCENE_CRAFT } from '@/lib/scene-craft';
+import { arcDirection, isArcBeat } from './arcs';
+import { sceneFactError } from './fact-boundary';
 
 export const DinnerInputSchema = z.object({
   scenarioId:z.enum(['work','family','school','elevator','office']), variantId:VariantIdSchema.optional(),
@@ -50,9 +53,13 @@ export function dinnerPrompt(body:DinnerInput) {
   return `You direct a fictional, goal-focused 3D social rehearsal for SocialCoach. Respond in ${lang==='zh'?'Simplified Chinese':'English'}.
 SPACE: ${scene.space??'dinner'}. ${scene.space==='elevator'?'A stopped elevator and its lobby, not a moving ride. All three remain in place. Nobody loses hearing because the player steps aside or closes a door.':scene.space==='office'?'An office with desks and a whiteboard. No dinner, cups, alcohol or restaurant. Raising a hand requests the floor but does not automatically secure it.':'A dinner table in a private room.'}
 STORY: ${pick(variant.title,lang)}. Setup: ${pick(variant.setup,lang)}. Player aim: ${pick(variant.goal,lang)}.
+${SCENE_CRAFT}
+${arcDirection(variant.id,lang)}
 CAST AND INDEPENDENT AGENDAS: ${JSON.stringify(scene.characters.map((c,i)=>({id:c.id,name:pick(c.name,lang),role:pick(c.role,lang),agenda:pick(characterAgendas[scenarioId][i],lang)})))}.
 ${scene.space?'FACT BOUNDARY: Do not invent an existing report deadline, employment policy, penalty, prior agreement, complete handoff checklist or already-checked data. A new time or task can be proposed explicitly, never claimed as an established requirement. Use the exact handed-over artifacts and requested deliverables in the opening evidence. Do not add handoff artifacts or client requirements. A teammate knows only the supplied material; missing log access, checklist completeness and test results remain unknown unless stated in this transcript. Do not add an HR conversation to the incident opening, an incident to the privacy opening, or the 18:30 delivery deadline to the interrupted-meeting opening.':''}
 CANONICAL FACTS: ${JSON.stringify(factsForVariant(variant,lang))}.
+KNOWLEDGE LIMIT: Unchecked is not unavailable, inaccessible, untested or verified. Don't invent an NPC's access rights, schedule, named artifact or a new status update. Keep the failing tests failing until an actual player statement establishes a new result. NPCs can OFFER their own next action explicitly, not claim an offscreen action happened. In the HR-privacy opening there is no assigned document to hand over; work planning is a proposed discussion only.
+DATA AND CONSENT: Office data remains unchecked in this conversation; Rui cannot claim to have checked a part, found a source sheet, or verified numbers offscreen. Their next check can be offered as an action after this conversation, with the result unknown. Likewise, “I can discuss the demo / 可以谈演示” is not accepting demo ownership; asking to reduce Q&A is not accepting Q&A. When naming the player's commitments, retain conditions and uncertainty and check their own words, not another NPC's assignment. Don't invent a promised task merely to create a gap.
 OPENING SCENE EVIDENCE (the player can inspect this): ${JSON.stringify(tableEvidence[variant.id].lines.map(line=>pick(line,lang)))}. These describe the opening, not later agreements. If asked to quote the opening caption, use the exact draft. Any proposed revised caption must name the correct contributors and remains a proposal until confirmed. Do not keep saying “the draft is on my phone” instead of answering what it says.
 CONTINUITY CONTRACT:
 - Read the entire transcript before replying. The user payload separates already-answered history from current_player_turn, which appears LAST. Respond ONLY to current_player_turn.text. Earlier utterances and heard interjections provide context, not a new question. Answer the latest substantive question or proposal FIRST. If the player already explained a risk or reason, address that actual explanation; do not claim they never supplied it because another NPC answered in between. The interrupted speaking slot belongs to the player, not to the interrupting colleague. Start the JSON with replyTo: an exact short quote from the CURRENT player text that you are answering. This focuses the reply; do not display that quote as a repetitive spoken preface. Pronouns and short answers refer to the last line actually heard, including a physical-action interjection, not an older question.
@@ -69,12 +76,13 @@ SPEECH: This is a spoken back-and-forth, not a written explanation. Use 1–2 sh
 BODY AND EVENTS: Ground gestures in the supplied current room and observed actions. Walking or calling someone over is not a concession. Do not invent movement. Raising a glass is not proof of drinking; taking a phone is not agreement to a date; a team photo is not an agreement on credit. The cue only describes supported visible gestures: ${scene.space?'idle, lean, fold, nod. NO toast; this space contains no cups.':'idle, toast, lean, fold, nod.'} Do not describe eating, putting down or passing objects, navigation, or private thoughts as if animated.
 GROUP PARTICIPATION: You may add ONE brief interjection from a different NPC when they have a concrete competing stake, a missing fact they know, or a limit on their own commitment. The primary speaker must still answer the current player first. This is audible dialogue after the main reply, not private thoughts, coaching or a narrator. Use 8–30 Chinese characters (hard maximum 45), or 5–15 English words (hard maximum 25 words / 160 characters). Do not add one just to agree, summarize, flatter, or repeat the main line. Never have that person sign for anyone else. Omit it when the exchange needs space or the other people have nothing new to add. Prior interjections in history are actual spoken evidence and can be answered next turn. A short response or pronoun refers to the last heard interjection when present, not an older main question. This remains one player turn, not an extra decision or a forced topic change.
 Available optional physical moments: ${JSON.stringify(availableEvents.map(id=>{const e=dinnerEvents.find(e=>e.id===id)!;return {id,kind:e.kind,title:pick(e.title,lang)};}))}. Only request one when it fits the CURRENT topic and your spoken line naturally introduces it. It supplies physical choices, not a second scripted speech. Never restart a seen moment. For a photo or phone introduction, do not claim the player took it. Omit event when irrelevant.
-Return ONLY JSON: {replyTo,speakerId,text,reactions,story:{topic,event?},interjection?:{speakerId,text}}. replyTo must copy 1–40 characters exactly from the current player text. speakerId must be one of ${scene.characters.map(c=>c.id).join(',')}. text: ${lang==='zh'?'1–120 characters':'1–400 characters, at most 60 words'}. Do not generate cue or a narration: the application derives the visible cue from validated gestures. reactions: exactly one {characterId,emotion,gesture} per cast member. emotion: neutral|pressing|annoyed|thinking|supportive; gesture: ${scene.space?'idle|lean|fold|nod':'idle|toast|lean|fold|nod'}. story.topic must be an allowed topic. story.event is optional and must be an available moment. No extra facts or assessments.`;
+FIELD SEPARATION: story.topic is a subject from the allowed topic list, NOT a development id. story.beat describes how you develop that subject. For example, an office decision uses {"topic":"speaking","beat":"decision"}, NOT {"topic":"decision"}. Never put respect, care, quality, ownership or decision into story.topic. An optional beat is not a physical event either.
+Return ONLY JSON: {replyTo,speakerId,text,reactions,story:{topic,event?,beat?},interjection?:{speakerId,text}}. replyTo must copy 1–40 characters exactly from the current player text. speakerId must be one of ${scene.characters.map(c=>c.id).join(',')}. text: ${lang==='zh'?'1–120 characters':'1–400 characters, at most 60 words'}. Do not generate cue or a narration: the application derives the visible cue from validated gestures. reactions: exactly one {characterId,emotion,gesture} per cast member. emotion: neutral|pressing|annoyed|thinking|supportive; gesture: ${scene.space?'idle|lean|fold|nod':'idle|toast|lean|fold|nod'}. story.topic must be an allowed topic. story.event is optional and must be an available moment. story.beat is optional and must be an applicable development id from SCENE-SPECIFIC PLAY. No extra facts or assessments.`;
 }
 
 /** Spoken history and observed actions survive; repeated animation / save data does not go to the model. */
 export function dinnerPayload(body:DinnerInput) {
-  return {scenarioId:body.scenarioId,variantId:body.variantId,lang:body.lang,maxTurns:body.maxTurns,room:body.room,dinner:body.dinner,observedActions:body.dinner?.previous.map(r=>({...r,...actionEvidence(r,body.lang)}))??[],history:body.history.map(({role,speakerId,text,cue,interjection,heard,room,targetId,dinner})=>({role,speakerId,text,cue,interjection,heard,room,targetId,dinner:dinner?{eventId:dinner.eventId,phase:dinner.phase,choice:dinner.choice}:undefined})),heard:body.heard,playerEvidence:body.history.filter(m=>m.role==='user').map(m=>m.text),current_player_turn:{number:body.history.filter(m=>m.role==='user').length+1,targetId:body.targetId,text:body.text}};
+  return {scenarioId:body.scenarioId,variantId:body.variantId,lang:body.lang,maxTurns:body.maxTurns,room:body.room,dinner:body.dinner,observedActions:body.dinner?.previous.map(r=>({...r,...actionEvidence(r,body.lang)}))??[],history:body.history.map(({role,speakerId,text,cue,interjection,heard,room,targetId,dinner,story})=>({role,speakerId,text,cue,interjection,heard,room,targetId,story,dinner:dinner?{eventId:dinner.eventId,phase:dinner.phase,choice:dinner.choice}:undefined})),heard:body.heard,playerEvidence:body.history.filter(m=>m.role==='user').map(m=>m.text),current_player_turn:{number:body.history.filter(m=>m.role==='user').length+1,targetId:body.targetId,text:body.text}};
 }
 
 export async function runDinner(input:unknown,llm:LLM,model:string,signal?:AbortSignal) {
@@ -87,12 +95,35 @@ export async function runDinner(input:unknown,llm:LLM,model:string,signal?:Abort
     const result=await jsonCall<unknown>({model,system:system+repair,user:JSON.stringify(payload),maxTokens:1700,thinking:false,signal},llm);
     signal?.throwIfAborted();
     try {
-      const reply=validateReply(result&&typeof result==='object'&&!Array.isArray(result)?{...result,cue:'…'}:result,scene);
+      let candidate=result;
+      // A repeated current/seen moment is a redundant request, not a new action.
+      // Ignore it locally rather than discarding a valid spoken answer or replaying it.
+      // Unseen, foreign or declined moments still require validation and repair.
+      if(candidate&&typeof candidate==='object'&&!Array.isArray(candidate)){
+        const value=candidate as {text?:unknown;story?:{event?:unknown;topic?:unknown;beat?:unknown}};
+        const variant=variantFor(scene.id,body.variantId),event=value.story?.event;
+        const story={...value.story};let adjusted=false;
+        const seen=[variant.openingEvent,body.dinner?.eventId,...body.history.map(m=>m.story?.event),...(body.dinner?.previous.map(r=>r.eventId)??[])];
+        if(typeof event==='string'&&variant.events.some(id=>id===event)&&seen.includes(event as NonNullable<typeof variant.openingEvent>)){
+          delete story.event;adjusted=true;
+        }
+        // Models sometimes copy a valid development into both metadata fields.
+        // Classify the spoken subject locally; keep all speech/identity checks.
+        if(typeof story.beat==='string'&&story.topic===story.beat&&isArcBeat(variant.id,story.beat)&&!sceneTopics[scene.id].some(id=>id===story.topic)){
+          const previous=[...body.history].reverse().find(m=>m.role==='npc')?.story?.topic??variant.topic;
+          story.topic=inferTopic(scene.id,typeof value.text==='string'?value.text:'',previous);adjusted=true;
+        }
+        if(adjusted)candidate={...candidate,story};
+      }
+      const reply=validateReply(candidate&&typeof candidate==='object'&&!Array.isArray(candidate)?{...candidate,cue:'…'}:candidate,scene);
       if([...reply.text].length>(body.lang==='zh'?120:400)||(body.lang==='en'&&reply.text.trim().split(/\s+/u).length>60))throw new Error('The spoken reply is too long. Rewrite in 1–2 short sentences within the language limit. Keep the essential answer, refusal and conditions. Do not cut off a sentence');
       if(reply.interjection&&([...reply.interjection.text].length>(body.lang==='zh'?45:160)||(body.lang==='en'&&reply.interjection.text.trim().split(/\s+/u).length>25)))throw new Error('The interjection is too long. Keep only one brief, concrete line from the other NPC or omit it');
       if(!reply.replyTo||!body.text.includes(reply.replyTo))throw new Error('replyTo must be an exact substring of the CURRENT player text');
       const addressed=addressedCharacter(scene,body.text,body.targetId);
       if(addressed&&reply.speakerId!==addressed)throw new Error(`The speaker must be ${addressed}, directly answering the CURRENT player text`);
+      if(reply.story?.beat&&!isArcBeat(variantFor(scene.id,body.variantId).id,reply.story.beat))throw new Error('story.beat must be a development from this opening, or omitted');
+      const factError=sceneFactError(variantFor(scene.id,body.variantId).id,[reply.text,reply.interjection?.text??''].join('\n'),[...body.history.filter(m=>m.role==='user').map(m=>m.text),body.text]);
+      if(factError)throw new Error(factError);
       const event=reply.story?.event;
       if(event){
         const variant=variantFor(scene.id,body.variantId);
@@ -103,7 +134,7 @@ export async function runDinner(input:unknown,llm:LLM,model:string,signal?:Abort
       return {...reply,cue:renderedCue(reply,scene,body.lang)};
     }catch(error){
       if(attempt===1)throw new LLMError(pick({zh:'这一句没有接上当前场景，你的话已保留，请再试一次。',en:'That reply did not fit the current scene. Your words are saved; please retry.'},body.lang),502);
-      repair=`\nREPAIR REQUIRED: Your previous draft failed validation: ${error instanceof Error?error.message:'Invalid reply'}. Return a fresh valid reply to the same current player turn. Do not repeat an unavailable event. This is still the same turn, not a new conversation.`;
+      repair=`\nREPAIR REQUIRED: Your previous draft failed validation: ${error instanceof Error?error.message:'Invalid reply'}. Return a fresh valid reply to the same current player turn. story.topic must be exactly one of ${sceneTopics[scene.id].join(', ')}; development IDs belong ONLY in story.beat. Do not repeat an unavailable event. This is still the same turn, not a new conversation.`;
     }
   }
   throw new LLMError('Reply unavailable',502);

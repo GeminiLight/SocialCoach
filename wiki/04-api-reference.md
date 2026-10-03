@@ -294,9 +294,13 @@ JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: stri
 
 请求 `{scenarioId: "work"|"family"|"school"|"elevator"|"office", variantId?, maxTurns?, targetId?, lang: "zh"|"en", text, history, room?, dinner?, heard?}`。`text` 非空且最多 500 字；`history` 为 1–47 条 NPC / 用户交替记录，起止为 NPC。`maxTurns` 默认 12，上限 24（兼容旧四回合），达到预算后客户端先延长再请求。`variantId` 是当前场景的两个原创开局之一；`targetId` 指定当前回复人，不赋予其替别人承诺的权限。历史保留话题、原话、空间 / 动作证据及用户开口前实际听到的 `heard:{speakerId,text,cue?}`，不得剥掉这些字段或截断成最后四轮。角色、开局、话题与事件交叉校验。正文最多 192 KiB（检查实际字节，不只信任请求头）。
 
-返回 `{replyTo,speakerId,text,cue,reactions:[{characterId,emotion,gesture}],story?:{topic,event?},interjection?:{speakerId,text}}`，恰好包含当前场景三名角色的反应。`replyTo` 是当前输入的 1–120 字符原文片段，由任务层核验，用来发现错答上一句，不显示为用户评价。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。`cue` 从实际支持的动作派生，模型编造的吃饭 / 手机操作不进入舞台说明。`story.event` 只能是当前开局允许、未出现且未被拒绝的动作插曲；不再在固定回合自动播放。可选 `interjection` 是另一名在场 NPC 在主回复之后的一句可听见插话，必须不同于主回复人，不能跨场景或替他人承诺。中文最多 45 字符；英文最多 25 词 / 160 字符。该字段嵌入同一个 NPC message，存档 / 完整历史 / 下一次请求都保留原话，不消耗额外玩家回合。无分数 / 隐藏动机。
+返回 `{replyTo,speakerId,text,cue,reactions:[{characterId,emotion,gesture}],story?:{topic,event?,beat?},interjection?:{speakerId,text}}`，恰好包含当前场景三名角色的反应。`replyTo` 是当前输入的 1–120 字符原文片段，由任务层核验，用来发现错答上一句，不显示为用户评价。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。`cue` 从实际支持的动作派生，模型编造的吃饭 / 手机操作不进入舞台说明。`story.event` 只能是当前开局允许、未出现且未被拒绝的动作插曲；不再在固定回合自动播放。可选 `interjection` 是另一名在场 NPC 在主回复之后的一句可听见插话，必须不同于主回复人，不能跨场景或替他人承诺。中文最多 45 字符；英文最多 25 词 / 160 字符。该字段嵌入同一个 NPC message，存档 / 完整历史 / 下一次请求都保留原话，不消耗额外玩家回合。无分数 / 隐藏动机。
 
 模型同时接收十种可查阅的原创开局资料和只包含玩家既有原话的 `playerEvidence`，帮助区分 NPC 建议与玩家决定。拒绝、时间、个人信息的语义仍由模型理解，不能把结构校验宣称为语义保证。模型输入把完整历史放在前面，单独的 `current_player_turn` 放在最后；各开局事实分离，防止相亲线混入工作变动。新生成台词要求 1–2 个短句，中文目标 25–70 字符、硬上限 120；英文目标 15–35 词、上限 60 词且 400 字符。旧转录仍按原长度读取，不截断原话。回复角色、引文、长度或事件校验失败时最多修复一次，仍失败则返回错误，绝不提交无效回合或静默换成内置剧情。
+
+2026-10-04 新增可选 `story.beat`（1–30 字符，必须属于当前开局 `arcs.ts` 的转折 ID）。它描述这句实际发挥的剧情机会，不代表成功、同意或评分。旧记录可不含此字段；新记录与原话一起保存并传回 `history.story`，用户消息不得伪造转折进度。`topic` 仍只允许当前场景的话题枚举，不能拿转折 ID 代替。已复现的串场事实 / 无依据承诺经狭义检查，失败共用原有一次修复预算，不增加第二套模型或公开端点。
+
+重复请求当前或历史已见的本开局 `event` 时，本地移除冗余字段，保留正常台词，不重放动作。若 `topic===beat` 且该值是本开局有效转折但非允许话题，本地按实际台词与此前话题重新归类；不修改原话。其他外来 / 未知字段仍走原有校验与修复。`jsonCall` 的格式重试独立存在，不能将“最多一次场景修复”理解为所有失败都只有两个底层请求。
 
 新增空间：`elevator-privacy/elevator-blame` 与 `office-overtime/office-interruption`，各自独立资料、角色与话题；`responsibility` 和 `speaking` 新增话题。办公室、电梯口拒绝 `toast` 动作，禁止饭局道具。空间证据 `room` 新增可选 `space:"dinner"|"elevator"|"office"`、`liftDoors:"open"|"opening"|"closing"|"closed"`；`zone` 允许 `lobby/cabin/desk/board`，并与场景交叉校验。现场事件新增 `elevator-door/office-task/office-floor`；动作 `hold-door/release-door/step-aside/inspect/request/board`。它们只有实际抵达后才写入动作记录，保持 `silent:true`，不生成自动同意台词。门仍停在同层，不把关门当作私聊。客户端 v1 档案的 `room.space` 与 `room.lift:{openness,target}` 是可选扩展；旧饭桌不需要这些字段。
 

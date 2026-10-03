@@ -1,0 +1,213 @@
+[
+  {
+    "variant": "office-overtime",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      4151,
+      6513,
+      4189,
+      4244
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "还有四十分钟。数据、排版、检查你一起收尾吧，我六点半要发给客户。",
+        "cue": "任务资料放在你的工位上，白板留着讨论的位置。",
+        "mode": "script",
+        "story": {
+          "topic": "workload"
+        },
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "何主管，顺手这么长，我得长出三双手。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "waiting",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "那就别三双。三件事，你挑能做的，剩下给我个人。数据、排版、检查，哪件你来？",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "thinking",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "favor"
+        },
+        "replyTo": "我得长出三双手",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "数据我没核对过，发之前得留时间核。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，我能讨论排版，但数据核对和最终检查没有答应。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "行，那“讨论排版”算没接。三件里你到底接哪件？数据瑞瑞说要留时间核，检查我可以自己盯。",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "favor"
+        },
+        "replyTo": "我能讨论排版，但数据核对和最终检查没有答应",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "排版别光讨论，谁动手？我来可以，但得先定格式。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "瑞瑞，您本人能查哪些数据，哪些还未知？",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "rui",
+        "text": "我能核来源：摘要里的数和原始表对不对。核对要多久现在不好说，得先过一遍才知道哪里对不上。",
+        "cue": "瑞瑞点了点头。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "quality"
+        },
+        "replyTo": "您本人能查哪些数据，哪些还未知？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "宁姐，您愿意接哪段排版，不要替我答应。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "ning",
+        "text": "我只接我自己的部分：主方案的排版我来动手，格式我定。但你得先告诉我数据摘要是谁出、什么时候给我。",
+        "cue": "宁姐抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "quality"
+        },
+        "replyTo": "宁姐，您愿意接哪段排版",
+        "interjection": {
+          "speakerId": "he",
+          "text": "那就剩两件：数据核对归谁？检查我盯。"
+        },
+        "mode": "model"
+      }
+    ],
+    "failure": {
+      "turn": 5,
+      "text": "何主管，邮件要主方案和数据摘要，先谈哪个优先。",
+      "error": "这一句没有接上当前场景，你的话已保留，请再试一次。",
+      "lastRaw": "{\"replyTo\":\"邮件要主方案和数据摘要，先谈哪个优先\",\"speakerId\":\"he\",\"text\":\"都得上。要排顺序的话：主方案先定稿给宁姐排，数据摘要跟着核。但数据核对还没人接，你接不接？\",\"reactions\":[{\"characterId\":\"he\",\"emotion\":\"pressing\",\"gesture\":\"lean\"},{\"characterId\":\"ning\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"rui\",\"emotion\":\"neutral\",\"gesture\":\"fold\"}],\"story\":{\"topic\":\"priority\",\"beat\":\"priority\"},\"interjection\":{\"speakerId\":\"rui\",\"text\":\"数据摘要没人核就是未核，发之前我得说清。\"}}"
+    }
+  }
+]

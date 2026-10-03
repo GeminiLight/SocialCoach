@@ -94,6 +94,8 @@ profile/goals/proficiency/history
 
 文字场景可附 `simulationFacts`（双语事实 / 未知边界），仅传给 roleplay 的 simulation 视图；准备、提示与点评继续使用 learner 视图，避免私有事实变成标准答案。关联复测见 [文字连续性复盘](./81-postmortem-text-continuation.md)。
 
+2026-10-04 剧情方向由 `src/lib/scene-craft.ts` 统一到文字 / 3D，排练创作同步约束具体冲突、有限让步与修复。3D `arcs.ts` 为十个开局提供条件式压力与决定机会；回复可带 `story.beat`，按当前开局校验后随原话存入本地档案，并在下一轮 payload 的 `history.story` 中保留。该字段是内部剧情记忆，不是同意证据、评分或公开教练结论；不额外发模型请求。原档没有 beat 不猜测补写。少量回放中已复现的串场事实另经 `fact-boundary.ts` 检查，失败共用原有一次修复预算；这不是通用事实真伪判定器。
+
 这条链之外有一条**跨场次**的读取，只在「成长」页触发：
 
 ```

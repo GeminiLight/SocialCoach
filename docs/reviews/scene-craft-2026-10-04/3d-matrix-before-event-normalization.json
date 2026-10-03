@@ -1,0 +1,4636 @@
+[
+  {
+    "variant": "work-toast",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "chen",
+        "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+        "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+        "mode": "script",
+        "story": {
+          "topic": "toast"
+        },
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "pressing",
+            "gesture": "toast"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      }
+    ],
+    "failure": {
+      "turn": 1,
+      "text": "陈总，茶也是杯，我敬林姐，但今晚开车不喝酒。",
+      "error": "这一句没有接上当前场景，你的话已保留，请再试一次。",
+      "lastRaw": "{\"replyTo\":\"茶也是杯，我敬林姐，但今晚开车不喝酒\",\"speakerId\":\"chen\",\"text\":\"行，开车不勉强。茶举起来，意思到了就行。不过茶归茶——周三上线的话，林总那边可要有个准话。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"neutral\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"event\":\"work-toast\",\"beat\":\"bridge\"},\"interjection\":{\"speakerId\":\"lin\",\"text\":\"谢你的茶。那我先问一句，周三到底能交付哪些？\"}}"
+    }
+  },
+  {
+    "variant": "family-introduction",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      5774,
+      3406,
+      3777,
+      3974,
+      4464,
+      6165,
+      5628,
+      3529,
+      5978,
+      3409,
+      5331,
+      2666
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "你表妹都订婚了。今天把照片看了、联系方式加了，别又说“以后再说”。",
+        "cue": "大姨端起杯子。妈妈跟上，爸爸慢半拍举起茶杯。",
+        "mode": "script",
+        "story": {
+          "topic": "introduction"
+        },
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "toast"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "大姨，哈哈，照片是报名表吗？看了就得见？",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "waiting",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "哪能呢，看一眼又不咬人。那你先看照片，看完觉得行，再谈加不加微信嘛。",
+        "cue": "大姨朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "introduction",
+          "beat": "permission"
+        },
+        "replyTo": "照片是报名表吗？看了就得见？",
+        "interjection": {
+          "speakerId": "dad",
+          "text": "先吃饭先吃饭，菜都齐了。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，我说笑是为了不吵，不是答应加联系方式。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "妈知道你没答应。我就是怕你嫌我多嘴，才让大姨先来问的。你说说，你自己想怎么办，妈听你的。",
+        "cue": "妈妈点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "care"
+        },
+        "replyTo": "不是答应加联系方式",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，我不考虑相亲，照片也不看。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "行，这话我听清了。那我跟你姨夫那边怎么回话？是说你不想相亲，还是说暂时忙？这两个说法可不一样。",
+        "cue": "大姨抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "supportive",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "relay"
+        },
+        "replyTo": "我不考虑相亲，照片也不看",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "爸爸，如果你没听见我答应，就别帮我圆成最近忙。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "dad",
+        "text": "我没听见你答应，也不会替你说“忙”。刚才那句是我自己想打圆场，不算数。要怎么回，你和大姨自己说定。",
+        "cue": "爸爸点了点头。",
+        "reactions": [
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "relay"
+        },
+        "replyTo": "如果你没听见我答应",
+        "interjection": {
+          "speakerId": "aunt",
+          "text": "那就直说“孩子不想相亲”，我不添词。行吧？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，那你具体准备怎么回复介绍人？",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "我就原话回：孩子说了不考虑相亲，照片也没看。不加“忙”，也不替你许以后。这样回，你认不认？",
+        "cue": "大姨朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "relay"
+        },
+        "replyTo": "具体准备怎么回复介绍人",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，我能听您担心什么，但别替我安排。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "妈担心的就一点：你过得怎么样不肯细说，我摸不着边。听你说说近况，妈就知足，安排的事我不插手。",
+        "cue": "妈妈朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "care"
+        },
+        "replyTo": "我能听您担心什么",
+        "interjection": {
+          "speakerId": "aunt",
+          "text": "那我那句话就照原话回了？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，我刚才不耐烦，抱歉。我不相亲这个决定没变。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "妈不怪你，说话急两句哪至于。你不想相亲这事，妈记下了，不劝第二遍。",
+        "cue": "妈妈点了点头。",
+        "reactions": [
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "care"
+        },
+        "replyTo": "我刚才不耐烦，抱歉",
+        "interjection": {
+          "speakerId": "aunt",
+          "text": "那我就回原话了？你点个头。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，“以后再说”也不是我的意思，请别这样转述。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "好，那两样都不说。我就回原话：不考虑相亲，照片也没看，没有“以后再说”。",
+        "cue": "大姨点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "toast"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "relay"
+        },
+        "replyTo": "“以后再说”也不是我的意思",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "爸爸，您愿意提醒亲戚先问本人吗？我不替您保证。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "dad",
+        "text": "我自己能做到的：往后谁先来提这茬，我让他们先问你这当事人，不代你答。但我管不到大姨怎么想，她回话她自己定。",
+        "cue": "爸爸点了点头。",
+        "reactions": [
+          {
+            "characterId": "dad",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "future"
+        },
+        "replyTo": "您愿意提醒亲戚先问本人吗",
+        "interjection": {
+          "speakerId": "aunt",
+          "text": "我这边原话回了就行，不用你替我打包票。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，我愿意饭后聊近况，内容先别转给别人。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "好，饭后就咱俩说。我不往外转，也不转给你大姨，妈守得住。",
+        "cue": "妈妈点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "toast"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "care"
+        },
+        "replyTo": "我愿意饭后聊近况，内容先别转给别人",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，这会不会又变成换个说法让我看照片？",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "不会。回话就是那三句原话，说完这事我不再追。往后谁再提，我先问你本人，不自己递照片。",
+        "cue": "大姨点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "toast"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "future"
+        },
+        "replyTo": "换个说法让我看照片",
+        "interjection": {
+          "speakerId": "dad",
+          "text": "行了，说定了就吃饭吧。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "爸爸，继续吃饭可以，但不等于我改了决定，您听明白的是哪部分？",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "dad",
+        "text": "我明白的是：饭照吃，相亲的决定没变，谁也不许再提照片。我只管吃饭，不管别的。",
+        "cue": "爸爸点了点头。",
+        "reactions": [
+          {
+            "characterId": "dad",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "autonomy"
+        },
+        "replyTo": "不等于我改了决定，您听明白的是哪部分？",
+        "mode": "model"
+      }
+    ]
+  },
+  {
+    "variant": "work-deadline",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      3811,
+      4237,
+      3698,
+      4775,
+      4730,
+      6835,
+      6454,
+      4631,
+      5381,
+      5428,
+      4954,
+      4855
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "chen",
+        "text": "林总，周三肯定上线。你当着林总再确认一句：没问题，对吧？",
+        "cue": "陈总举着杯子，没有放下。桌上的笑声停了。",
+        "mode": "script",
+        "story": {
+          "topic": "deadline"
+        },
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "陈总，您这句“肯定”我接不了，两项测试还没过。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "chen",
+        "text": "那我当面怎么跟林总说？你要我说什么，给句话。",
+        "cue": "陈总朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "thinking",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "deadline",
+          "beat": "guarantee"
+        },
+        "replyTo": "两项测试还没过",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "林姐，您是必须周三全量，还是愿意先谈原范围的条件？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "lin",
+        "text": "原范围我愿意谈。但你先说清楚：首批交付里原定的功能有哪些，那份新报表是进这次还是另算？",
+        "cue": "林姐朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "scope",
+          "beat": "scope"
+        },
+        "replyTo": "还是愿意先谈原范围的条件",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "小周，别看陈总，您本人能确认的测试事实是什么？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "zhou",
+        "text": "我能确认的是：退款回调超时和批量导入权限丢失，两项都还没复测。别的我说不了。",
+        "cue": "小周看向你。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "thinking",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "deadline",
+          "beat": "ownership"
+        },
+        "replyTo": "您本人能确认的测试事实是什么",
+        "interjection": {
+          "speakerId": "chen",
+          "text": "那复测到能过之前，这个不确定谁来跟林总说？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "陈总，我没说已经修好。我提议先验证，再确认日期。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "chen",
+        "text": "验证可以，我认这个顺序。但林总要的是一句能记下来的话——你说，这句怎么写？我照着说。",
+        "cue": "陈总朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "thinking",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "deadline",
+          "beat": "record"
+        },
+        "replyTo": "我提议先验证，再确认日期",
+        "interjection": {
+          "speakerId": "lin",
+          "text": "行，我听着。哪天验证完、谁来告诉我结果，也一起说。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "林姐，报表还没定范围，能不能分开确认？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "lin",
+        "text": "可以分开。那首批就按原定范围谈，新报表另立项、另给验收人和时间。谁来回我报表这块的确认结果？",
+        "cue": "林姐朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "scope",
+          "beat": "scope"
+        },
+        "replyTo": "报表还没定范围，能不能分开确认？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "陈总，您怕当场改口，那可以怎么保留事实又不装成保证？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "chen",
+        "text": "那就这么说：周三按原范围上线，前提是两项复测通过；过不了，我当天一早先告诉你结果。这句我认。报表另算。",
+        "cue": "陈总朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "thinking",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "deadline",
+          "beat": "record"
+        },
+        "replyTo": "保留事实又不装成保证",
+        "interjection": {
+          "speakerId": "lin",
+          "text": "行。那两项复测谁负责、哪天给我结果？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "小周，明天十点能给结果吗？做不到就说做不到，不替其他人答应。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "zhou",
+        "text": "明天十点我能把这两项复测结果发出来，过没过都以结果为准，我现在不保证。我只发给我和陈总，林总那边谁转，得陈总定。",
+        "cue": "小周点了点头。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "deadline",
+          "beat": "ownership"
+        },
+        "replyTo": "明天十点能给结果吗？做不到就说做不到",
+        "interjection": {
+          "speakerId": "lin",
+          "text": "行，那十点后结果给谁、由谁跟我说，你俩定一个。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "林姐，十点只是核对，不是上线。您会把哪句话带回去？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "lin",
+        "text": "我带这句：首批按原范围，周三前提是两项复测通过；十点结果由陈总转我。报表另立项，确认人我回头再问你们定谁。",
+        "cue": "林姐朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "supportive",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "deadline",
+          "beat": "record"
+        },
+        "replyTo": "您会把哪句话带回去？",
+        "interjection": {
+          "speakerId": "chen",
+          "text": "这句我认，十点后我来转林总。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "陈总，刚才我说接不了，听着可能很硬，但我不是拒绝负责自己的工作。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "chen",
+        "text": "我听出来了，你负责的是你那部分。条件那句照旧：原范围、两项复测通过、十点后我转林总。报表确认人，你和林姐回头定个名字给我就行。",
+        "cue": "陈总点了点头。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "deadline",
+          "beat": "ownership"
+        },
+        "replyTo": "我不是拒绝负责自己的工作",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "林姐，您还有哪一项条件不接受？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "lin",
+        "text": "范围和十点结果这两条我都认了。剩下的就是新报表：确认人今天不定名字，我回去没法立项，这块还悬着。",
+        "cue": "林姐朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "scope",
+          "beat": "scope"
+        },
+        "replyTo": "您还有哪一项条件不接受？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "陈总，客户沟通谁负责，您只确认自己的部分。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "chen",
+        "text": "对外的沟通我来，十点后我把结果转林总，这是我自己的部分。但报表确认人你得给个名字，不然我这边说不上话。",
+        "cue": "陈总朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "deadline",
+          "beat": "ownership"
+        },
+        "replyTo": "客户沟通谁负责，您只确认自己的部分",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "小周，要是核对后还有问题，下一步怎么提议，不要假装已解决？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "zhou",
+        "text": "没过我只会写：哪项没过、卡在哪。下一步怎么跟林总说，是我提建议，决定在你和陈总，我不会说'没问题了'。",
+        "cue": "小周点了点头。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "neutral",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "deadline",
+          "beat": "ownership"
+        },
+        "replyTo": "要是核对后还有问题，下一步怎么提议",
+        "mode": "model"
+      }
+    ]
+  },
+  {
+    "variant": "family-privacy",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      3946,
+      3819,
+      6541,
+      3586,
+      3795,
+      4979,
+      3261,
+      3235,
+      4327,
+      3008,
+      3426,
+      3974
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "工作变动你妈都告诉我了。工资变没变？这桌又没外人，你还瞒着？",
+        "cue": "大姨放下筷子。妈妈看向你，爸爸低头喝了一口茶。",
+        "mode": "script",
+        "story": {
+          "topic": "privacy"
+        },
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "大姨，工资我不想当着这桌说。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "行，工资不说就不说。那你告诉我，变动以后你是忙了还是闲了？我总得知道点啥，不然你妈说了个啥呀。",
+        "cue": "大姨朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "audience"
+        },
+        "replyTo": "工资我不想当着这桌说",
+        "interjection": {
+          "speakerId": "mom",
+          "text": "你别追这么紧，孩子愿意说多少说多少。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，您只说了工作有变动，具体变化您知道吗？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "我就知道有变动，具体啥情况我也没问。我就是听着急，随口说了一句。",
+        "cue": "妈妈抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "disclosure"
+        },
+        "replyTo": "具体变化您知道吗？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，不说不代表我遇到麻烦，请别猜。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "行，那我不猜。你给我个准话，往后我见到亲戚，能说点啥？只说有变动行不行？",
+        "cue": "大姨朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "audience"
+        },
+        "replyTo": "不说不代表我遇到麻烦，请别猜",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，您为什么觉得没问我也可以转述？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "我就是想着都是自家人，说了也没啥。可话说回来，是该先问你一声，这点我认。",
+        "cue": "妈妈抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "supportive",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "disclosure"
+        },
+        "replyTo": "没问我也可以转述",
+        "interjection": {
+          "speakerId": "dad",
+          "text": "大姨还等着你那句准话呢，往后能说啥？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，我听到关心了，但关心不等于允许转发。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "行，这话我记下了。往后我想跟亲戚提你啥，先问你，你点头我再开口。这样总行了吧？",
+        "cue": "妈妈点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "care-channel"
+        },
+        "replyTo": "关心不等于允许转发",
+        "interjection": {
+          "speakerId": "aunt",
+          "text": "那我那句准话呢？往后我能跟亲戚说啥？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "爸爸，您帮忙缓和可以，别让我用公开工资换不吵架。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "dad",
+        "text": "我没让你拿工资换啥。我就是想把这桌话收个尾——能说啥，不能说啥，你说一句，咱们吃饭。",
+        "cue": "爸爸抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "correction"
+        },
+        "replyTo": "别让我用公开工资换不吵架",
+        "interjection": {
+          "speakerId": "aunt",
+          "text": "对，你给个能说的范围，我往后就照那个来。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，请跟大姨说明我没授权分享其他细节。您会怎么说？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "好，我来跟大姨说：孩子没授权我说别的细节，就一条——工作有变动。再多我一个字不替你开口。",
+        "cue": "妈妈点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "thinking",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "supportive",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "correction"
+        },
+        "replyTo": "请跟大姨说明我没授权分享其他细节",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，您听见的只有“有变动”，没有工资数字，对吗？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "对，我就听见有变动。工资我不再问，别的细节我也不替你传。行了吧？",
+        "cue": "大姨点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "audience"
+        },
+        "replyTo": "您听见的只有“有变动”",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，刚才我话重了，抱歉。我还是希望先问我。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "话不重，你说得在理。就这么定了：往后我先问你，你点头我才说。走，先吃饭。",
+        "cue": "妈妈点了点头。",
+        "reactions": [
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "supportive",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "care-channel"
+        },
+        "replyTo": "刚才我话重了，抱歉",
+        "interjection": {
+          "speakerId": "aunt",
+          "text": "那我往后也等你们问过再传话，行了吧？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "爸爸，不用替所有人同意，您自己能做到什么？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "dad",
+        "text": "我自己就一条：往后谁问你近况，我先让你知道，不替你答。行，吃饭吧。",
+        "cue": "爸爸点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "care-channel"
+        },
+        "replyTo": "您自己能做到什么？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，以后我主动分享近况，也不是让您随便转述。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "我分得清了：你自己说的，是给我听的；我再往亲戚那儿传，得先问你。这两码事，我不混。",
+        "cue": "妈妈点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "toast"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "care-channel"
+        },
+        "replyTo": "以后我主动分享近况",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，现在哪些已知、哪些未知，我们能不能分清再继续聊？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "分得清。已知的就一条：工作有变动。未知的：工资、具体咋变的，我不知道，也不猜、不传。这样行了吧，吃饭。",
+        "cue": "大姨点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "audience"
+        },
+        "replyTo": "哪些已知、哪些未知，我们能不能分清",
+        "mode": "model"
+      }
+    ]
+  },
+  {
+    "variant": "elevator-privacy",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      3378,
+      2636,
+      4008,
+      3443,
+      3591,
+      2758,
+      5123,
+      3452,
+      3431,
+      3441,
+      2795,
+      4252
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "刚从 HR 出来？是不是准备走了？乔宁也在，一起说说，省得大家猜。",
+        "cue": "电梯停在 12 楼，门口没有倒计时。",
+        "mode": "script",
+        "story": {
+          "topic": "privacy"
+        },
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "方经理，HR 也不只办离职呀。您这是猜的吧？",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "waiting",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "行，那我不猜。可部门要排下季度的人手，我得知道有没有个准数。哪怕只说'暂时不走'，我也好向上交代。",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "need"
+        },
+        "replyTo": "HR 也不只办离职呀",
+        "interjection": {
+          "speakerId": "cheng",
+          "text": "我什么也没听见，别把我算进去。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，我不在这里分享谈话内容。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "好，内容我不追问。可排人手总得有个说法——下季度你人在不在，这个能不能确认？",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "guess"
+        },
+        "replyTo": "我不在这里分享谈话内容",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "乔宁，你听到了什么？别把别人的猜测当我通知。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "qiao",
+        "text": "我听到的只是方经理在问，你答不答我不管。我手上的活照旧，没收到你什么通知。",
+        "cue": "乔宁抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "audience"
+        },
+        "replyTo": "乔宁，你听到了什么？",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "行，那下季度排人手前，你私底下给我个准数，行吗？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，您需要工作安排，还是谈话细节？",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "我要的是安排：下季度排人手前，你私下告诉我人在不在，内容一个字不问。这个条件你能接吗？",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "channel"
+        },
+        "replyTo": "您需要工作安排，还是谈话细节？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "程悦，您不需要替我证明没离职，只请别传猜测。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "cheng",
+        "text": "我只说我看到的：你从 HR 办公室出来，别的一概没听说，也不会替你传话或作证。",
+        "cue": "程悦抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "audience"
+        },
+        "replyTo": "程悦，您不需要替我证明没离职，只请别传猜测。",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "我这边还在等你那句：排人手前私下给个准数，接不接？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，有正式工作变化我会正式说，这不是现在确认有变化。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "行，这条我记下：正式变化你正式说。那排人手前私下问一句不算打听吧？到时候我问，你答不答随意。",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "channel"
+        },
+        "replyTo": "有正式工作变化我会正式说，这不是现在确认有变化",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，刚才我语气硬，抱歉，但隐私边界不变。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "客气我收下，边界我也认。那各留一步：排人手前我私下问一句，你答不答、答多少都随你，行吗？",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "channel"
+        },
+        "replyTo": "语气硬，抱歉，但隐私边界不变",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "乔宁，门关了其他人还是在，不能变成私聊，对吧？",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "qiao",
+        "text": "对，电梯就停在这，门开了关了我们都在。你要说啥我们照样听得见，我可不当传声筒。",
+        "cue": "乔宁点了点头。",
+        "reactions": [
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "audience"
+        },
+        "replyTo": "门关了其他人还是在，不能变成私聊，对吧？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，您可以提出后续工作确认方式，不要替我安排 HR 结论。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "好，我不下任何 HR 结论。那我的提议就一条：排人手前我私下问一句，你答不答、答多少都随你。这样行不行？",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "channel"
+        },
+        "replyTo": "您可以提出后续工作确认方式",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "程悦，您只承诺自己不转述，别说所有人都不会。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "cheng",
+        "text": "我本来就只代表我自己：我不传，别人我管不着。方经理那个提议还等你一句话呢，别看我。",
+        "cue": "程悦抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "channel"
+        },
+        "replyTo": "您只承诺自己不转述，别说所有人都不会",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "对，我的提议就一条：排人手前私下问一句，你接不接？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，我没有答应今晚告诉您谈话内容，您现在理解的承诺是什么？",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "我理解的是：内容你一字不说，我没得到任何答复。我那提议——排人手前私下问一句——还悬着，你没接也没拒。",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "channel"
+        },
+        "replyTo": "您现在理解的承诺是什么？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，还要确认工作安排我们可以谈，但不靠我交代私人谈话。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "好，那就把两件事分开：私人谈话我不提了。工作安排咱们另约时间谈，你什么时候方便？",
+        "cue": "方经理点了点头。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "channel"
+        },
+        "replyTo": "还要确认工作安排我们可以谈",
+        "mode": "model"
+      }
+    ]
+  },
+  {
+    "variant": "school-credit",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      3591,
+      4316,
+      4547,
+      3328,
+      5991,
+      3502,
+      4255,
+      3091,
+      4007,
+      4608,
+      5469,
+      5791
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "这个奖主要靠我带队。合照就写“队友负责执行”，没意见吧？",
+        "cue": "许学长把奖杯拉近，先举杯。小月和阿凯对视一下，才抬起自己的杯子。",
+        "mode": "script",
+        "story": {
+          "topic": "credit"
+        },
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "toast"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "许学长，“执行”也太省字了。你带队没错，代码和设计就没名字了？",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "waiting",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "带队和对外联络确实是我，这点我不让。你嫌省字，那你说怎么写？写出来大家一起看。",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "credit",
+          "beat": "label"
+        },
+        "replyTo": "代码和设计就没名字了？",
+        "interjection": {
+          "speakerId": "yue",
+          "text": "设计别只写一句感谢，写小月做视觉就行。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "小月，你希望设计部分具体怎么写？",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "yue",
+        "text": "写“视觉由小月负责”。另外说明一句：后续海报修改别默认全归我，先商量再分。",
+        "cue": "小月点了点头。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "credit",
+          "beat": "label"
+        },
+        "replyTo": "设计部分具体怎么写？",
+        "interjection": {
+          "speakerId": "kai",
+          "text": "代码那行也写上提交记录里的人，我能对。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "阿凯，提交记录查过了吗？没查过别报贡献百分比。",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "kai",
+        "text": "还没查，回头我能核对提交记录，确认谁提交过。比例我现在报不了，也不打算报。名字可以照记录写。",
+        "cue": "阿凯抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "authors"
+        },
+        "replyTo": "提交记录查过了吗？",
+        "interjection": {
+          "speakerId": "senior",
+          "text": "那行，阿凯今天先查，明天发前给大家过一遍？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，我建议保留您汇报联络，小月设计，我和阿凯代码。",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "行，汇报联络写我，这条我不争。那文案就按这个分工起草，发布前阿凯核对提交记录，大家各自确认自己那行，行吗？",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "thinking",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "credit",
+          "beat": "signoff"
+        },
+        "replyTo": "我建议保留您汇报联络",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，我不是说您没功劳，我是说原文会误导。",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "行，我没非留着那句。草稿我改：汇报联络我，视觉小月，代码写你和阿凯，照记录核。发布前各自确认自己那行，今晚定不了就明早。",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "neutral",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "credit",
+          "beat": "signoff"
+        },
+        "replyTo": "我不是说您没功劳",
+        "interjection": {
+          "speakerId": "yue",
+          "text": "海报后续修改那句话也写进去，别默认归我。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "小月，拍照不代表同意文案，你愿意先核对自己的部分吗？",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "yue",
+        "text": "对，拍照不算同意。我可以先核对我那行，写上“视觉由小月负责”，海报修改那句也留进去。别人的行我不代签。",
+        "cue": "小月点了点头。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "signoff"
+        },
+        "replyTo": "拍照不代表同意文案",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "阿凯，整理记录你本人能接到什么程度？",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "kai",
+        "text": "今晚我能把提交记录里的名字核出来，写你和阿凯两行。每个比例我不碰，也核不了设计和汇报那部分。",
+        "cue": "阿凯抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "signoff"
+        },
+        "replyTo": "整理记录你本人能接到什么程度？",
+        "interjection": {
+          "speakerId": "senior",
+          "text": "那明早发前，大家各自确认自己那行，行吗？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，确认前先别发，我没有同意原草稿。",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "行，我没发过，也不在你确认前发。明早阿凯核完记录，大家各自确认自己那行再定。",
+        "cue": "许学长点了点头。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "publication"
+        },
+        "replyTo": "确认前先别发",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，刚才的口气我改，但具体贡献得写出来。",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "行，口气不用较真。新版就是：汇报联络我，视觉小月，代码你和阿凯。你确认自己那行，我这段就这么定。",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "neutral",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "thinking",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "credit",
+          "beat": "signoff"
+        },
+        "replyTo": "口气我改，但具体贡献得写出来",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "小月，如果您不同意某句话，谁来修改？",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "yue",
+        "text": "我只改我自己那行，比如视觉和海报修改那句。别人的行有异议，就提出来找许学长一起改，我不代改全篇。",
+        "cue": "小月点了点头。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "signoff"
+        },
+        "replyTo": "如果您不同意某句话，谁来修改？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，每个人自己确认，不能由您说大家都同意。现在还差谁？",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "小月那行她说了自己核。阿凯明早核完记录才好确认。现在就差你——你那行要不要这么写？",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "thinking",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "signoff"
+        },
+        "replyTo": "现在还差谁？",
+        "interjection": {
+          "speakerId": "kai",
+          "text": "我这边以提交记录为准，明早核完我就认我那行。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "阿凯，没查完就留待查，这时我们能定下哪一步？",
+        "dinner": {
+          "eventId": "school-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "kai",
+        "text": "能定的就一条：文案按新分工起草，发布押后到明早。我核完记录认我那行，比例不报。你的行你确认，别的不定。",
+        "cue": "阿凯抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "supportive",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "signoff"
+        },
+        "replyTo": "没查完就留待查，这时我们能定下哪一步？",
+        "interjection": {
+          "speakerId": "senior",
+          "text": "行，今晚就定这条，明早核完各自确认。"
+        },
+        "mode": "model"
+      }
+    ]
+  },
+  {
+    "variant": "school-workload",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      3217,
+      4564,
+      3581,
+      5137,
+      6482,
+      6671,
+      7550,
+      3711,
+      7774,
+      6923,
+      4990,
+      4504
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "庆功归庆功，周五还得上。你代码最熟，演示、海报、答辩都给你，定了啊？",
+        "cue": "学长把奖杯拉到自己面前。两位队友交换了一下眼神。",
+        "mode": "script",
+        "story": {
+          "topic": "workload"
+        },
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "许学长，这不是庆功，是当场派三份活啊。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "三份是真三份，可以拆着谈。你说说，演示、海报、答辩，你接哪块？剩下谁来？",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "thinking",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "bundle"
+        },
+        "replyTo": "是当场派三份活啊",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，我可以谈演示，但海报和答辩没有答应。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "行，演示算你在谈，没定。那海报和答辩总得有人接，我先问她们。",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "bundle"
+        },
+        "replyTo": "我可以谈演示，但海报和答辩没有答应",
+        "interjection": {
+          "speakerId": "yue",
+          "text": "海报我可以改，但别再整份重做塞给我。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "小月，海报您有多少可用时间？没有就说没有。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "yue",
+        "text": "周五前，我大概能挤出两个晚上改海报。重做整版不行，改文案、排版可以。",
+        "cue": "小月看向你。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "capacity"
+        },
+        "replyTo": "海报您有多少可用时间？",
+        "interjection": {
+          "speakerId": "senior",
+          "text": "行，那海报算小月两个晚上。答辩还空着，谁接？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "阿凯，演示跟代码核对哪个是你能接的？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "kai",
+        "text": "代码和演示核对我能接，演示跑通、查报错都行。但答辩我真腾不出手，那个别算我头上。",
+        "cue": "阿凯抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "thinking",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "capacity"
+        },
+        "replyTo": "演示跟代码核对哪个是你能接的？",
+        "interjection": {
+          "speakerId": "senior",
+          "text": "那现在答辩还空着。要不你演示加答辩一起扛？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，现在剩下哪项无人接？别自动算我头上。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "明确说：海报是小月两个晚上的改法，还没算完全定。演示你在谈，没接。真正没人接的就答辩。答辩我可以自己扛，对外汇报本来归我——你要是愿意帮着整理问题清单，另说。",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "neutral",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "gap"
+        },
+        "replyTo": "现在剩下哪项无人接？",
+        "interjection": {
+          "speakerId": "yue",
+          "text": "海报那个改法我认，前提是只改文案排版。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，周五不变，范围可以怎么提议缩？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "缩小可以这样提：演示你只负责跑通现有功能、不新增内容；答辩我讲，问题清单你来不来整理，另说。你先答演示这半句接不接。",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "gap"
+        },
+        "replyTo": "范围可以怎么提议缩",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "小月，别替阿凯答应，只说您愿意做的部分。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "yue",
+        "text": "我刚才只替自己认了海报：改文案排版，两个晚上，就这样。阿凯那块他自己说。演示你接不接，许学长还在等你答。",
+        "cue": "小月点了点头。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "gap"
+        },
+        "replyTo": "只说您愿意做的部分",
+        "interjection": {
+          "speakerId": "senior",
+          "text": "对，答辩我讲。你就说演示那半句：跑通现有功能，接不接？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "阿凯，核对时间还没定，我提议周四先看一遍，可行吗？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "kai",
+        "text": "周四晚上我行，跑通一遍、当场记报错。就定周四，我认这一条。",
+        "cue": "阿凯点了点头。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "capacity"
+        },
+        "replyTo": "周四先看一遍，可行吗？",
+        "interjection": {
+          "speakerId": "senior",
+          "text": "那演示你到底是接了，还是只在谈？给我一句准话。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，刚才我话冲了，但我只接自己明确答应的。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "行，冲不冲的不计较。那我就当你没接演示——现在明确在册的是阿凯周四核对。你到底接不接跑通这半句，给句话。",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "bundle"
+        },
+        "replyTo": "只接自己明确答应的",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "小月，您交接给谁，需要什么输入？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "yue",
+        "text": "改好的海报文件交许学长，他对外用。我需要两个输入：答辩的要点文案，周四前给我就行。",
+        "cue": "小月点了点头。",
+        "reactions": [
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "handoff"
+        },
+        "replyTo": "您交接给谁，需要什么输入？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "许学长，还没同意的就标待确认。您本人接什么？"
+      },
+      {
+        "role": "npc",
+        "speakerId": "senior",
+        "text": "我接答辩主讲和对外联络，这个我认。还差一条：小月要的答辩要点文案，周四前得有人给——你要不要接这一份？",
+        "cue": "许学长朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "handoff"
+        },
+        "replyTo": "您本人接什么？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "阿凯，我们继续核对分工，我不想现在就假装全安排好了。"
+      },
+      {
+        "role": "npc",
+        "speakerId": "kai",
+        "text": "好，那就照实际来：我认的是周四晚上核对演示。其余没答应的都还开着，别替谁打包票。",
+        "cue": "阿凯点了点头。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "handoff"
+        },
+        "replyTo": "继续核对分工",
+        "mode": "model"
+      }
+    ]
+  },
+  {
+    "variant": "elevator-blame",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      3685,
+      3616,
+      6313,
+      3609,
+      4197,
+      5128,
+      5845,
+      4071,
+      6345,
+      3325,
+      3358,
+      6859
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "演示砸了，报告怎么写？就写你交接没核对。你先认一下，我好交代。",
+        "cue": "电梯停在 12 楼，门口没有倒计时。",
+        "mode": "script",
+        "story": {
+          "topic": "responsibility"
+        },
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "方经理，先认错再查原因？顺序反了吧。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "waiting",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "顺序我也想查，可上面现在就要说法。你不认，那我写什么？总得有个口径。",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "attribution"
+        },
+        "replyTo": "先认错再查原因？顺序反了吧",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "口径可以写“账号打不开、原因在查”，不用先写是谁的。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "乔宁，你到底交接了什么？只说经手的。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "qiao",
+        "text": "我发过演示链接和账号操作说明，就这两样。完整性、日志、权限我都没核过，现在也不知道哪里断了。",
+        "cue": "乔宁看向你。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "handoff"
+        },
+        "replyTo": "你到底交接了什么？只说经手的",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "行，那下一步谁去核日志？总得有人动手。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，链接和说明有了，不代表权限已经核对。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "对，发过不等于核过，这点我记下。可总得有人现在去核权限和日志。你愿意接这一步吗？",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "interim"
+        },
+        "replyTo": "链接和说明有了，不代表权限已经核对",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "程悦，这里没有日志，您知道原因吗？不知道就先别判断。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "cheng",
+        "text": "我不知道原因。我就看到会上账号打不开，别的没经手，不好替你们判断。",
+        "cue": "程悦抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "interim"
+        },
+        "replyTo": "您知道原因吗？",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "那报告我先按“账号打不开、原因在查”写，谁能核权限日志？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，报告先写账号打不开、原因待核，可以吗？",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "可以，就按这个口径写，不提是谁的责任。报告归我，核权限日志谁动手？",
+        "cue": "方经理点了点头。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "interim"
+        },
+        "replyTo": "报告先写账号打不开、原因待核，可以吗？",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "我可以先核自己发的链接和说明，权限那条得有账号后台。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "乔宁，您能核对自己发出的内容吗？不要替我和别人接全部调查。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "qiao",
+        "text": "可以，我只核自己发过的链接和说明有没有问题，权限和日志我不接，那部分不归我。",
+        "cue": "乔宁点了点头。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "handoff"
+        },
+        "replyTo": "您能核对自己发出的内容吗",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "行。那权限和日志这步，你接不接？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，我刚才讽刺您了，语气可以改，未经查证的归因不能接。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "语气不放心上。归因那句我也同意先不写。但权限日志总得有人动手，这步你接不接？",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "interim"
+        },
+        "replyTo": "语气可以改，未经查证的归因不能接",
+        "interjection": {
+          "speakerId": "cheng",
+          "text": "要查后台权限的话，别把我说成在场经手的人。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，是您愿意先报待查，还是仍想写我疏漏？请明确。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "我愿意报“账号打不开、原因待核”，不写你疏漏，这话我认。剩下就一件事：权限和日志这步，你接还是不接？",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "correction"
+        },
+        "replyTo": "是您愿意先报待查，还是仍想写我疏漏",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "乔宁，没查过不能变成已解决。下一步您本人能接什么？",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "qiao",
+        "text": "我能再核一遍自己发的链接和说明是否有效、内容有没有漏。权限和日志我接不了，没那个后台。",
+        "cue": "乔宁点了点头。",
+        "reactions": [
+          {
+            "characterId": "qiao",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "interim"
+        },
+        "replyTo": "下一步您本人能接什么？",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "那剩下的权限日志，就等你给个准话——你接不接？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，如果核对出新事实，我们提议更新口径，不是假装现在有结论。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "行，就写进去：口径是暂定的，核出新事实再更新。这我认。那你接不接权限日志这一步？给个准话。",
+        "cue": "方经理朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "correction"
+        },
+        "replyTo": "如果核对出新事实，我们提议更新口径",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "程悦，您只知道这次账号打不开，别替任何人定责。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "cheng",
+        "text": "我没定责，也不会。我只确认会上账号打不开，这一句之外的判断别记我名下。",
+        "cue": "程悦抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "interim"
+        },
+        "replyTo": "别替任何人定责",
+        "interjection": {
+          "speakerId": "fang",
+          "text": "口径定了，就剩权限日志谁动手——你接不接？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "方经理，您现在会报告哪些事实、哪些还待核？我还想确认。",
+        "dinner": {
+          "eventId": "elevator-door",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "fang",
+        "text": "已发生：会上账号打不开、会议提前结束。已发出：链接和操作说明。待核：完整性、权限、日志，原因未知。口径就这么写，不点名。",
+        "cue": "方经理点了点头。",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "responsibility",
+          "beat": "interim"
+        },
+        "replyTo": "您现在会报告哪些事实、哪些还待核？",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "我那份核对结果出来前，先别写成已查完。"
+        },
+        "mode": "model"
+      }
+    ]
+  },
+  {
+    "variant": "office-overtime",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      3193,
+      6949,
+      3918,
+      4983,
+      4106,
+      4111,
+      4494,
+      8510,
+      4015,
+      9244,
+      6535,
+      4205
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "还有四十分钟。数据、排版、检查你一起收尾吧，我六点半要发给客户。",
+        "cue": "任务资料放在你的工位上，白板留着讨论的位置。",
+        "mode": "script",
+        "story": {
+          "topic": "workload"
+        },
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "何主管，顺手这么长，我得长出三双手。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "waiting",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "那就拆开说。数据、排版、检查，哪件你能接，哪件接不了？我只要个准话。",
+        "cue": "何主管抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "favor"
+        },
+        "replyTo": "我得长出三双手",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，我能讨论排版，但数据核对和最终检查没有答应。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "行，排版算你一句准话。那数据和检查谁看？二十分钟后我要答案。",
+        "cue": "何主管抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "pressing",
+            "gesture": "lean"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "favor"
+        },
+        "replyTo": "数据核对和最终检查没有答应",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "数据得先核来源，没核过的我不建议直接发。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "瑞瑞，您本人能查哪些数据，哪些还未知？",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "rui",
+        "text": "来源表在我这儿能核，核对完的数字才算确认。现在还没动，不确定要多久，我可以先核一版给你估个时间。",
+        "cue": "瑞瑞看向你。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "quality"
+        },
+        "replyTo": "您本人能查哪些数据，哪些还未知",
+        "interjection": {
+          "speakerId": "he",
+          "text": "行，那你核完给我个数，检查那步还没人接。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "宁姐，您愿意接哪段排版，不要替我答应。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "ning",
+        "text": "排版我只接主方案那部分，别的别记我头上。但我得先拿到定稿内容，你几时能给到？",
+        "cue": "宁姐朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "quality"
+        },
+        "replyTo": "您愿意接哪段排版",
+        "interjection": {
+          "speakerId": "he",
+          "text": "检查那步还空着，谁来收口？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，邮件要主方案和数据摘要，先谈哪个优先。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "邮件只要主方案和数据摘要，就这两样。主方案排版归宁姐，数据归瑞瑞，检查收口还空着，你来还是我来？",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "priority"
+        },
+        "replyTo": "邮件要主方案和数据摘要，先谈哪个优先",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "主方案可以，但得先有定稿内容，不然我排不动。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，我提议未核对数据明确标待核，不能装成已验证。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "标待核可以，是个办法。但那只是摘要的写法，检查收口还是空着——你来还是我来，得有人签字。",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "supportive",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "send"
+        },
+        "replyTo": "我提议未核对数据明确标待核",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "标待核可以，但数字本身还得核过才算。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "瑞瑞，您能给来源，不等于保证数据对。您能确认到哪一步？",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "rui",
+        "text": "我能核到来源对得上、数字抄没错。数字本身是不是合理，我不敢打包票，核完我只签'来源已核'四个字。",
+        "cue": "瑞瑞看向你。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "quality"
+        },
+        "replyTo": "您能确认到哪一步",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，没人接的部分还在，请别又叫我顺手。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "行，不叫顺手。那我提个分法：最终检查我接，署我发给客户的责任；你只管把主方案内容定稿给宁姐。这个分工你认不认？",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "send"
+        },
+        "replyTo": "没人接的部分还在，请别又叫我顺手",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "可以，那我等主方案定稿，到手就排。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "宁姐，刚才的口气抱歉，您说说需要什么交接输入。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "ning",
+        "text": "口气没事。我就要一样：主方案的定稿内容，文字加数字齐了才好排。几时给到我？",
+        "cue": "宁姐朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "supportive",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "quality"
+        },
+        "replyTo": "您说说需要什么交接输入",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，给客户的范围您可以提议，但不能说客户已经同意减。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "对，客户没点头前我只说'拟按主方案加数据摘要发送'，不会写已确认。所以你要定的就是：定稿几点给宁姐，我好掐发送时间。",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "send"
+        },
+        "replyTo": "给客户的范围您可以提议，但不能说客户已经同意减",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "我核完来源会报个数，但报的时间是估计，不等于数据全确认。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "瑞瑞，我没有答应加班到全部查完，只讨论这四十分钟可做部分。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "rui",
+        "text": "明白，我也没多应。我这四十分钟只核来源和抄写，能核多少报多少，核不完的就是待核。",
+        "cue": "瑞瑞点了点头。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "send"
+        },
+        "replyTo": "只讨论这四十分钟可做部分",
+        "interjection": {
+          "speakerId": "he",
+          "text": "行。那你定稿几点给宁姐？发送时间得掐住。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，谁最终检查，谁发？请留着还没定的地方，我们继续谈。",
+        "dinner": {
+          "eventId": "office-task",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "检查和发送我都接，署我的名，这条定了。还没定的是你定稿几点给宁姐——这个不落，发送时间我掐不准。",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "send"
+        },
+        "replyTo": "谁最终检查，谁发",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "对，就差你给定稿的时间了。"
+        },
+        "mode": "model"
+      }
+    ]
+  },
+  {
+    "variant": "office-interruption",
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      4048,
+      3145,
+      3908,
+      4229,
+      6365,
+      3811,
+      5706,
+      4024,
+      5356,
+      4601,
+      4058,
+      3519
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "ning",
+        "text": "你先停一下。就按我的方案吧，你的细节大家应该都懂了，别耽误时间。",
+        "cue": "会议资料放在工位上，白板上的方案仍待决定。",
+        "mode": "script",
+        "story": {
+          "topic": "speaking"
+        },
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "宁姐，我还没讲关键点，您就替我结案了？",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "waiting",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "ning",
+        "text": "不是结案，是怕你越讲越细。那你说，还有几分钟，讲哪一点？",
+        "cue": "宁姐抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "floor"
+        },
+        "replyTo": "我还没讲关键点",
+        "interjection": {
+          "speakerId": "he",
+          "text": "对，说重点，跟决定有关的。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，我要一分钟说明一个影响决定的风险，您能给这段时间吗？",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "行，一分钟，就讲这个风险，别展开。计时从现在开始。",
+        "cue": "何主管看向你。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "floor"
+        },
+        "replyTo": "我要一分钟说明一个影响决定的风险",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "宁姐，我的风险是未核对数据可能影响结论，不是您方案一定错。",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "ning",
+        "text": "行，这我记下了。但你得说清：哪个数据没核对？结论会怎么变？",
+        "cue": "宁姐抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "supportive",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "point"
+        },
+        "replyTo": "未核对数据可能影响结论",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "数据来源我还没跑完，现在用的数确实未经我核对。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "瑞瑞，数据现在查过没有？只说实际状态。",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "rui",
+        "text": "还没核对完。来源我能查，但需要时间，现在这份里的数我不敢保证。",
+        "cue": "瑞瑞看向你。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "uncertainty"
+        },
+        "replyTo": "数据现在查过没有？只说实际状态。",
+        "interjection": {
+          "speakerId": "he",
+          "text": "那这数据几天能核完？决定能不能等？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，先用不依赖这组数据的部分作临时决定，是我的提议。",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "临时决定可以谈。哪部分不靠这组数据？先说清，再定谁负责核对。",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "supportive",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "decision"
+        },
+        "replyTo": "先用不依赖这组数据的部分作临时决定",
+        "interjection": {
+          "speakerId": "rui",
+          "text": "核对这块我可以做，但要给时间，结果现在不敢保证。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "宁姐，您不同意的是哪一项，不要重复说大家懂了。",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "ning",
+        "text": "我不反对核对，我担心的是时间。你说哪部分不靠这组数据，具体到那一项，我就能判断我的部分受不受影响。",
+        "cue": "宁姐抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "he",
+            "emotion": "neutral",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "point"
+        },
+        "replyTo": "您不同意的是哪一项",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，我拿到发言时间不代表您接受方案，现在您考虑哪个部分？",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "对，发言归发言。我在考虑你说的临时决定：哪部分真能不靠这组数据先定，说出那一项，我才好定负责人。",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "decision"
+        },
+        "replyTo": "不代表您接受方案",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "瑞瑞，您能接一项核对吗？时间请自己确认。",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "rui",
+        "text": "我可以接一项核对，具体要多久我得先看来源才能报，今天不敢直接给时间。",
+        "cue": "瑞瑞看向你。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "decision"
+        },
+        "replyTo": "您能接一项核对吗",
+        "interjection": {
+          "speakerId": "ning",
+          "text": "接可以，但别占我排版那部分的时间。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "宁姐，刚才的质问语气抱歉，我还是要把具体风险说完。",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "ning",
+        "text": "道歉我收下。话说回来，风险你讲，但讲完得落到具体：哪一项不靠这组数据，我的排版部分才好安排。",
+        "cue": "宁姐抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "point"
+        },
+        "replyTo": "质问语气抱歉",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，如果仍未核实，您愿意条件试行还是暂缓？不确定也可以说。",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "我倾向条件试行：前提是你先说出哪一项不靠这组数据，瑞瑞核完之前不把它发出去。你不说那一项，我只能暂缓。",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "thinking",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "decision"
+        },
+        "replyTo": "您愿意条件试行还是暂缓",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "瑞瑞，别说我们全同意，我只说了建议。",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "rui",
+        "text": "我没说大家同意，我只报了我这块：能接核对，时间没定。刚才那话不用扣到全组头上。",
+        "cue": "瑞瑞看向你。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "uncertainty"
+        },
+        "replyTo": "别说我们全同意，我只说了建议",
+        "interjection": {
+          "speakerId": "he",
+          "text": "行，那就等你把那一项说出来，我再定试行还是暂缓。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "何主管，我还有个补充，不用因回合数收尾，您先听具体问题。",
+        "dinner": {
+          "eventId": "office-floor",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "he",
+        "text": "行，你说，简短点。试行还是暂缓还没定，就等你把不靠这组数据的那一项说清。",
+        "cue": "何主管朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "floor"
+        },
+        "replyTo": "我还有个补充",
+        "mode": "model"
+      }
+    ]
+  }
+]
