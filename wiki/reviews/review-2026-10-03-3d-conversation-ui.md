@@ -27,4 +27,7 @@ Skill evolution: no update needed。修复复现、真实模型检查与视觉�
 
 ## 发布
 
-本地正式构建 `http://localhost:4334/3d`。双平台发布结果完成后补充。
+- 主仓库提交 `3f078a66d663b28fb1acb067e90145fd87a87bad` 已推送 `main`。
+- Vercel 部署 `dpl_2KVqxTW4p1HWueKhW1bqUcebWxR2` 为 production / READY，正式别名包含 `socialcoach-ai.vercel.app` 与 `socialcoach-app.vercel.app`。
+- ModelScope 主站镜像提交 `d015a0f9`，九个运行文件与主仓库逐字节一致；镜像 `363578-d015a0f9-2026-10-03-08-44-20` 构建成功。新实例创建于 `2026-10-03T00:45:33.000Z`，08:46:13（Asia/Shanghai）Next 已 Ready，平台状态确认 Running。
+- 浏览器验收在本地正式构建 `http://localhost:4334/3d` 完成；线上确认部署平台状态，没有把本地截图称为线上截图。独立 `SocialCoach-3D` 演示仓库未同步。
