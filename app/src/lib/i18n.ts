@@ -249,6 +249,8 @@ const dict = {
   da_retry: { zh: "重试这个问题", en: "Retry this question" },
   pr_voice: { zh: "语音输入", en: "Voice input" },
   pr_listening: { zh: "正在听…", en: "Listening…" },
+  pr_voice_edit_hint: { zh: "正在收音 · 点输入框即可停下改字", en: "Listening · Tap the reply to stop and edit" },
+  pr_voice_editing: { zh: "收音已停止，文字已保留。修改后再发送。", en: "Voice stopped and your words are kept. Edit, then send." },
   pr_error: { zh: "对话中断了。", en: "The conversation was interrupted." },
   pr_reply_interrupted: { zh: "上一条回复没有完成。重试会恢复你的原话，请确认后再发送。", en: "The last reply did not finish. Retry restores your words; review them before sending again." },
   pr_silence_interrupted: { zh: "对方对这次沉默的回复没有完成。继续对话会重新给你思考时间。", en: "The reply to your silence did not finish. Keep talking gives you time to think again." },

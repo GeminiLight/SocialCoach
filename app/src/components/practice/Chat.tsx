@@ -62,13 +62,23 @@ export function Chat({ session }: { session: Session }) {
   const [floor, setFloor] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const taRef = useRef<HTMLTextAreaElement>(null);
-  const recRef = useRef<{ stop: () => void } | null>(null);
+  const recRef = useRef<{ stop: () => void; cancel: () => void } | null>(null);
   const spokenRef = useRef<Set<string>>(new Set());
   const busyRef = useRef(false);
   const endingRef = useRef(false);
   const request = useRef<AbortController | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const needsRecovery = unanswered && !busy;
+  const cancelListening = useCallback(() => {
+    if (!recRef.current) return;
+    recRef.current.cancel();
+    setListening(false);
+  }, []);
+  const editVoiceDraft = () => {
+    if (!recRef.current) return;
+    cancelListening();
+    setVoiceNote(t(lang, "pr_voice_editing"));
+  };
 
   const learnerTurns = session.messages.filter((m) => m.role === "learner").length;
   const remaining = Math.max(0, sc.maxTurns - learnerTurns);
@@ -137,9 +147,7 @@ export function Chat({ session }: { session: Session }) {
       request.current?.abort();
       if (closeTimer.current) clearTimeout(closeTimer.current);
       stopSpeaking();
-      try {
-        recRef.current?.stop();
-      } catch {}
+      recRef.current?.cancel();
     },
     [],
   );
@@ -167,7 +175,7 @@ export function Chat({ session }: { session: Session }) {
    * separates a laptop from an iPad in landscape, which `min-width` alone does not.
    */
   useEffect(() => {
-    if (busy || endOpen || clockOpen || voiceNotice) return;
+    if (busy || endOpen || clockOpen || voiceNotice || recRef.current) return;
     if (typeof window === "undefined" || !window.matchMedia("(min-width: 1024px) and (pointer: fine)").matches) return;
     taRef.current?.focus();
   }, [busy, endOpen, clockOpen, voiceNotice]);
@@ -176,6 +184,7 @@ export function Chat({ session }: { session: Session }) {
     (objectiveDone: boolean[], outcome: "success" | "partial" | "failure", by: "engine" | "cap" | "silence" | "user", noteText?: string) => {
       const current = useApp.getState().sessions.find((x) => x.id === session.id);
       if (!current || current.status !== "active") return;
+      cancelListening();
       request.current?.abort();
       if (closeTimer.current) clearTimeout(closeTimer.current);
       endingRef.current = true;
@@ -198,7 +207,7 @@ export function Chat({ session }: { session: Session }) {
         byok: !!byokConfig(),
       });
     },
-    [session, sc, updateSession],
+    [session, sc, updateSession, cancelListening],
   );
 
   // A refresh during the final reading pause must finish the already answered
@@ -305,6 +314,7 @@ export function Chat({ session }: { session: Session }) {
       const live = useApp.getState().sessions.find((s) => s.id === session.id);
       const last = live && lastSpoken(live.messages);
       if (!canUseModel || !text || busyRef.current || endingRef.current || !live || live.status !== "active" || live.closure || live.messages.filter((m) => m.role === "learner").length >= sc.maxTurns || last?.role === "learner" || last?.role === "event") return;
+      cancelListening();
       setErr(null);
       setNote(null);
       setFloor(false);
@@ -316,7 +326,7 @@ export function Chat({ session }: { session: Session }) {
       appendMessage(session.id, learnerMsg);
       await advance([...live.messages, learnerMsg], "send");
     },
-    [session, sc.maxTurns, appendMessage, advance, setInput, canUseModel],
+    [session, sc.maxTurns, appendMessage, advance, setInput, canUseModel, cancelListening],
   );
 
   /* ── replies on the clock ──
@@ -397,7 +407,8 @@ export function Chat({ session }: { session: Session }) {
   };
 
   const startListening = () => {
-    type SR = new () => { lang: string; interimResults: boolean; continuous: boolean; onresult: (e: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void; onend: () => void; onerror: (e: { error?: string }) => void; start: () => void; stop: () => void };
+    if (recRef.current) return;
+    type SR = new () => { lang: string; interimResults: boolean; continuous: boolean; onresult: ((e: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null; onend: (() => void) | null; onerror: ((e: { error?: string }) => void) | null; start: () => void; stop: () => void; abort: () => void };
     const w = window as unknown as { SpeechRecognition?: SR; webkitSpeechRecognition?: SR };
     const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition;
     if (!Ctor) return;
@@ -406,22 +417,38 @@ export function Chat({ session }: { session: Session }) {
     rec.interimResults = true;
     rec.continuous = false;
     const base = input;
+    const owner = {
+      stop: () => rec.stop(),
+      cancel: () => {
+        // Revoke ownership before abort: even already queued callbacks must not change manual edits.
+        if (recRef.current === owner) recRef.current = null;
+        rec.onresult = rec.onend = rec.onerror = null;
+        try { rec.abort(); } catch { /* already ended */ }
+      },
+    };
     rec.onresult = (e) => {
+      if (recRef.current !== owner) return;
       const txt = Array.from(e.results as ArrayLike<ArrayLike<{ transcript: string }>>).map((r) => r[0].transcript).join("");
       setInput((base ? base + " " : "") + txt);
     };
-    rec.onend = () => setListening(false);
-    rec.onerror = (e) => {
+    rec.onend = () => {
+      if (recRef.current !== owner) return;
+      recRef.current = null;
       setListening(false);
+    };
+    rec.onerror = (e) => {
+      if (recRef.current !== owner) return;
+      cancelListening();
       setVoiceNote(recognitionError(e?.error, lang));
     };
-    recRef.current = rec;
+    recRef.current = owner;
+    taRef.current?.blur();
     setVoiceNote(null);
     setListening(true);
     try {
       rec.start();
     } catch {
-      setListening(false);
+      cancelListening();
       setVoiceNote(recognitionError(undefined, lang));
     }
   };
@@ -613,7 +640,8 @@ export function Chat({ session }: { session: Session }) {
             <textarea
               ref={taRef}
               value={input}
-              onChange={(e) => { setInput(e.target.value); grow(e.target); }}
+              onFocus={editVoiceDraft}
+              onChange={(e) => { editVoiceDraft(); setInput(e.target.value); grow(e.target); }}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void send(input); } }}
               rows={1}
               aria-label={t(lang, "pr_input_ph")}
@@ -634,7 +662,7 @@ export function Chat({ session }: { session: Session }) {
           </button>
         </div>
         <div className="flex flex-wrap justify-between gap-x-3 gap-y-1 px-1 mt-2 text-[11px] text-ink-3">
-          <p role="status">{busy ? t(lang, "pr_replying") : input ? t(lang, draftSaved ? "pr_draft_saved" : "pr_draft_unsaved") : t(lang, "pr_ready_reply")}</p>
+          <p role="status">{busy ? t(lang, "pr_replying") : listening ? t(lang, "pr_voice_edit_hint") : input ? t(lang, draftSaved ? "pr_draft_saved" : "pr_draft_unsaved") : t(lang, "pr_ready_reply")}</p>
           <p id="composer-hint" className="hidden lg:block">{t(lang, "pr_keyboard_hint")}</p>
         </div>
       </div>

@@ -78,3 +78,38 @@ test('missing start/end events have bounded recovery and release the microphone'
   const stopping = harness(); stopping.session.start('', 'en'); stopping.recognition.results(['Confirmed.', true]); stopping.session.stop();
   t.mock.timers.tick(4000); assert.equal(stopping.state().phase, 'idle'); assert.equal(stopping.state().notice, 'ready'); assert.equal(stopping.draft(), 'Confirmed.'); assert.equal(stopping.recognition.aborts, 1);
 });
+
+test('editing adopts visible provisional words, releases capture and ignores every late callback', () => {
+  const h = harness(); h.session.start('陈总，', 'zh');
+  h.recognition.results(['我今天不喝酒。', true], ['我以茶敬您', false]);
+  const lateResult = h.recognition.onresult!, lateEnd = h.recognition.onend!, lateError = h.recognition.onerror!;
+  h.session.edit();
+  assert.equal(h.draft(), '陈总，我今天不喝酒。我以茶敬您');
+  assert.equal(h.state().notice, 'editing'); assert.equal(h.session.active, false); assert.equal(h.recognition.aborts, 1);
+  lateResult(event(['迟到的识别', true])); lateEnd(); lateError({error:'network'});
+  assert.equal(h.draft(), '陈总，我今天不喝酒。我以茶敬您'); assert.equal(h.state().notice, 'editing');
+  h.session.start('陈总，我不喝酒。', 'zh'); h.recognition.results(['我以茶敬您。', true]);
+  lateResult(event(['旧的一句', true]));
+  assert.equal(h.draft(), '陈总，我不喝酒。我以茶敬您。'); h.session.dispose();
+});
+test('editing can interrupt permission startup and a pending final result', () => {
+  const starting = harness(); starting.recognition.start = () => {}; starting.session.start('已有草稿', 'zh');
+  const lateStart = starting.recognition.onstart!; starting.session.edit(); lateStart();
+  assert.equal(starting.draft(), '已有草稿'); assert.equal(starting.state().phase, 'idle'); assert.equal(starting.recognition.aborts, 1);
+  const stopping = harness(); stopping.session.start('Thanks,', 'en'); stopping.recognition.results(['I will have tea', false]); stopping.session.stop();
+  const lateFinal = stopping.recognition.onresult!; stopping.session.edit(); lateFinal(event(['I will have wine.', true]));
+  assert.equal(stopping.draft(), 'Thanks, I will have tea'); assert.equal(stopping.state().notice, 'editing');
+});
+test('editing respects English spaces and the draft limit without repeating confirmed words', () => {
+  const english = harness(); english.session.start('Thanks, ', 'en'); english.recognition.results(['I will have tea.', true], ['Please go ahead.', false]); english.session.edit();
+  assert.equal(english.draft(), 'Thanks, I will have tea. Please go ahead.');
+  const bounded = harness(); bounded.session.start('字'.repeat(498), 'zh'); bounded.recognition.results(['四个字呀', false]); bounded.session.edit();
+  assert.equal(bounded.draft(), '字'.repeat(498)+'四个'); assert.equal(bounded.draft().length, 500); assert.equal(bounded.state().notice, 'limit');
+});
+test('explicit stop keeps visible words when the browser ends without a final result', t => {
+  t.mock.timers.enable({apis:['setTimeout']});
+  const ended = harness(); ended.session.start('已有：', 'zh'); ended.recognition.results(['确认。', true], ['最后半句', false]); ended.session.stop(); ended.recognition.onend?.();
+  assert.equal(ended.draft(), '已有：确认。最后半句'); assert.equal(ended.state().notice, 'ready');
+  const timeout = harness(); timeout.session.start('Thanks,', 'en'); timeout.recognition.results(['I will have tea.', false]); timeout.session.stop(); t.mock.timers.tick(4000);
+  assert.equal(timeout.draft(), 'Thanks, I will have tea.'); assert.equal(timeout.session.active, false); assert.equal(timeout.recognition.aborts, 1);
+});

@@ -18,6 +18,7 @@ export function useSpeechInput(lang: 'zh' | 'en', scene: string, enabled: boolea
     ...state, active: state.phase !== 'idle',
     start: (base: string) => { if (enabled) session.current?.start(base, lang); },
     stop: () => session.current?.stop(), cancel: () => session.current?.cancel(true),
+    edit: () => session.current?.edit(),
     discardInterim: () => session.current?.cancel(), isActive: () => session.current?.active ?? false,
   };
 }
