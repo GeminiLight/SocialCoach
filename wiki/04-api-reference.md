@@ -117,6 +117,8 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 
 **对外协议保持 `@@meta` 在前。** 模型内部改为生成 `{meta,utterances}` JSON，`roleplay-output.ts` 经 `extractJSON()` 和字段校验后转成上述文本流；片段只作可见预览，整个 JSON 完整闭合才进入存档。元信息真实结束后才发送其流前缀，兼容模型把 `meta` 放在末尾。若尚未显示任何 NPC 台词且格式失败，只修复一次；已显示的失败片段不能重新生成并当作原对话保存。→ [80-known-pitfalls.md](./80-known-pitfalls.md)
 
+`office-quick-favor` 另有已复现的狭义时间检查：用户自己的 16:30 报告截止不是帮同事的约定，NPC 建议不能建立承诺。该场景等完整 JSON 通过检查后才发可见台词，首段可能更晚；失败仍只用原有一次未展示修复。再次无效走现有错误流（`RoleplayFactError` 状态 502），保留用户原话，不提交 NPC 回复。请求 / 成功响应字段不变，其他场景仍流式预览；不覆盖所有事实与隐含承诺。
+
 **协议约束（改 prompt 时必须保住）：** NPC 不得跳出角色、不得提及目标或 App、不得提前吐露 `hidden`；用户敌意时真实升级或退让，用户用对技能时按比例软化而非立刻投降。→ 详见 [00-product-proposal.md#不做什么](./00-product-proposal.md#不做什么)
 
 ---

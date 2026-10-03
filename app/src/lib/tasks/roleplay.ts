@@ -2,7 +2,8 @@ import type { ChatOpts, LLM } from "@/lib/llm-core";
 import { pick, roleplaySystem } from "@/lib/prompts";
 import { lastSpoken, silenceStreak } from "@/lib/session-utils";
 import { practiceTurnLimit } from "@/lib/practice-policy";
-import { roleplayOutput } from "@/lib/roleplay-output";
+import { roleplayOutput, RoleplayFactError } from "@/lib/roleplay-output";
+import { roleplaySpeechGuard } from '@/lib/roleplay-facts';
 import { LLMError } from "@/lib/llm-core";
 import type { TurnInput } from "./types";
 import type { RoleplayMeta } from "@/lib/types";
@@ -72,7 +73,7 @@ OUTPUT REMINDER: The opening and older stored assistant turns may contain only u
     messages: turns,
   };
   const run = llm.chatStream(options);
-  const output = roleplayOutput(scenario, learnerCharacterId, lang);
+  const output = roleplayOutput(scenario, learnerCharacterId, lang,roleplaySpeechGuard(scenario.id,messages));
   let raw = "";
   let sent = "";
   for await (const d of run.deltas) {
@@ -91,7 +92,7 @@ OUTPUT REMINDER: The opening and older stored assistant turns may contain only u
     if (sent || run.refused()) throw error;
     const repair = await llm.chatText({ ...options, system: [
       ...(Array.isArray(options.system) ? options.system : [{ text: options.system }]),
-      { text: "Your previous draft had invalid JSON or missing required fields. No reply was accepted. Repair this SAME exchange, using the same facts, history and latest learner words. Return ONLY valid JSON with meta and utterances, including every required field. Do not count this as a new turn or invent a transition." },
+      { text: `${error instanceof RoleplayFactError?error.correction:'Your previous draft had invalid JSON or missing required fields.'} No reply was accepted. Repair this SAME exchange, using the same facts, history and latest learner words. Return ONLY valid JSON with meta and utterances, including every required field. Do not count this as a new turn or invent a transition.` },
     ] });
     complete = output.complete(repair);
   }

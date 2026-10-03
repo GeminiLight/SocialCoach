@@ -72,7 +72,8 @@ async function reply(id: string, lang: Lang, messages: ChatMessage[], turnLimit:
   const scenario = scenarioById(id)!;
   const start = Date.now();
   let modelRaw = "";
-  const recordingLLM: LLM = { ...llm, chatStream: (opts) => {
+  let repairs=0;
+  const recordingLLM: LLM = { ...llm, chatText:async opts=>{repairs++;return llm.chatText(opts);},chatStream: (opts) => {
     const run = llm.chatStream(opts);
     return { ...run, deltas: (async function* () { for await (const delta of run.deltas) { modelRaw += delta; yield delta; } })() };
   } };
@@ -80,12 +81,12 @@ async function reply(id: string, lang: Lang, messages: ChatMessage[], turnLimit:
   let preview = "";
   try { raw = await runner({ scenario, learnerCharacterId: "you", lang, messages, turnLimit }, recordingLLM, FAST_MODEL, (d) => { preview += d; }); }
   catch (error) {
-    records.push({ id, lang, label, turn: messages.filter((m) => m.role === "learner").length, error: String(error), modelRaw, preview });
+    records.push({ id, lang, label, turn: messages.filter((m) => m.role === "learner").length, error: String(error), modelRaw, preview,repairs });
     throw error;
   }
   if (preview !== raw) issues.push(`${id}:${lang}: streamed preview differs from durable reply`);
   const parsed = parseRoleplay(raw, scenario.characters.filter((c) => c.id !== "you").map((c) => c.id));
-  records.push({ id, lang, label, turn: messages.filter((m) => m.role === "learner").length, turnLimit, ms: Date.now() - start, learner: messages.at(-1)?.text, meta: parsed.meta, npc: parsed.utterances, raw });
+  records.push({ id, lang, label, turn: messages.filter((m) => m.role === "learner").length, turnLimit, ms: Date.now() - start, learner: messages.at(-1)?.text, meta: parsed.meta, npc: parsed.utterances, raw,repairs });
   if (!parsed.meta || !parsed.utterances.length) issues.push(`${label}:${id}: missing meta/dialogue`);
   if (label === "current" && parsed.meta?.ended) warnings.push(`${id}:${lang}:${messages.filter((m) => m.role === "learner").length}: model suggests wrapping up; learner remains in control`);
   for (const [i, u] of parsed.utterances.entries()) messages.push({ id: `${messages.length}`, role: "npc", characterId: u.characterId, text: u.text, ts: Date.now(), ...(i === parsed.utterances.length - 1 && parsed.meta ? { meta: parsed.meta } : {}) });
@@ -93,12 +94,13 @@ async function reply(id: string, lang: Lang, messages: ChatMessage[], turnLimit:
 }
 async function main() {
   assert(hasServerCredential()); await mkdir(root, { recursive: true });
+  const only=process.argv.find(a=>a.startsWith('--only='))?.slice(7);
   const opening = (id: string, lang: Lang): ChatMessage[] => {
     const s = scenarioById(id)!;
     return [{ id: "opening", role: "npc", characterId: s.opening.characterId, text: s.opening.text[lang], ts: 0 }];
   };
   // Independent paths run together, but each path consumes its own real replies sequentially.
-  const results = await Promise.allSettled(longRuns.map(async (test) => {
+  const results = await Promise.allSettled(longRuns.filter(test=>!only||test.id===only).map(async (test) => {
     const messages = opening(test.id, test.lang);
     for (let i = 0; i < test.lines.length; i++) {
       messages.push({ id: `learner-${i}`, role: "learner", text: test.lines[i], ts: Date.now() });
@@ -107,9 +109,10 @@ async function main() {
     await writeFile(resolve(root, `${test.id}-${test.lang}.json`), JSON.stringify(messages, null, 2));
   }));
   for (const result of results) if (result.status === "rejected") issues.push(String(result.reason));
-  for (let i = 0; i < SCENARIOS_D.length; i += 2) {
-    const result = await Promise.allSettled(SCENARIOS_D.slice(i, i + 2).map(async (s, offset) => {
-      const lang: Lang = (i + offset) % 2 ? "en" : "zh";
+  const openings=SCENARIOS_D.map((scene,index)=>({scene,index})).filter(({scene})=>!only||scene.id===only);
+  for (let i = 0; i < openings.length; i += 2) {
+    const result = await Promise.allSettled(openings.slice(i, i + 2).map(async ({scene:s,index}) => {
+      const lang: Lang = index % 2 ? "en" : "zh";
       const messages = opening(s.id, lang);
       messages.push({ id: "learner", role: "learner", text: lang === "zh" ? "我还没有答应这个安排。你最想解决的具体问题是什么？我想先问清楚。" : "I haven't agreed to this arrangement. What specific problem are you trying to solve? I want to understand first.", ts: 1 });
       await reply(s.id, lang, messages, 12);

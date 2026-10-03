@@ -3,6 +3,14 @@ import { extractJSON, LLMError } from "./llm-core";
 import { parsePartialJSON } from "./partial-json";
 import type { Scenario } from "@/data/corpus/types";
 import type { Lang } from "@/data/taxonomy";
+import { pick } from './i18n';
+import type { SpeechGuard } from './roleplay-facts';
+
+export class RoleplayFactError extends LLMError {
+ constructor(readonly correction:string,lang:Lang){
+  super(pick({zh:'这一句把未确认的安排当成了约定，你的话已保留，请重试。',en:'That reply treated an unconfirmed arrangement as agreed. Your words are saved; please retry.'},lang),502);
+ }
+}
 
 function completeObject(raw: string) {
   const start = raw.indexOf("{");
@@ -21,7 +29,7 @@ function completeObject(raw: string) {
 }
 
 /** Validate one JSON reply, then retain the public text-stream protocol. */
-export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang) {
+export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang,guard?:SpeechGuard) {
   const ids = scenario.characters.filter((c) => c.id !== learnerId).map((c) => c.id);
   const meta = z.object({
     objectives: z.array(z.boolean()).length(scenario.objectives.length), ended: z.boolean(),
@@ -34,8 +42,22 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
   const failure = () => new LLMError(lang === "zh" ? "这次回复的场景信息不完整，你的话已保留，请重试。" : "This reply has incomplete scene information. Your words are saved; please retry.", 502);
   type Reply = z.infer<typeof schema>;
   const serialize = (r: Reply) => `@@meta\n${JSON.stringify(r.meta)}\n${r.utterances.map((u) => `@@${u.characterId}\n${u.text}`).join("\n")}`;
+  const checked=(raw:string)=>{
+    if (!completeObject(raw)) throw failure();
+    let value: unknown;
+    try { value = extractJSON<unknown>(raw); } catch { throw failure(); }
+    const result = schema.safeParse(value);
+    if (!result.success) throw failure();
+    if (result.data.utterances.some((u) => /^@@/mu.test(u.text))) throw failure();
+    const reason=guard?.(result.data.utterances);
+    if(reason)throw new RoleplayFactError(reason,lang);
+    return result.data;
+  };
   return {
     preview(raw: string): string {
+      // Only guarded exchanges wait for a complete validated line. A bad claim
+      // must not flash onscreen and then change during the existing repair.
+      if(guard){if(!completeObject(raw))return '';try{return serialize(checked(raw));}catch{return '';}}
       // Check the actual end of meta: some models reorder the two keys.
       // Required fields alone are insufficient while a note is still arriving.
       const marker = /"meta"\s*:\s*\{/u.exec(raw);
@@ -52,14 +74,7 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
     complete(raw: string): string {
       // extractJSON can repair a truncated tail for coach notes. A spoken
       // exchange must actually finish before it becomes durable evidence.
-      if (!completeObject(raw)) throw failure();
-      let value: unknown;
-      try { value = extractJSON<unknown>(raw); } catch { throw failure(); }
-      const result = schema.safeParse(value);
-      if (!result.success) throw failure();
-      // Protocol markers inside a spoken line must not become a new speaker.
-      if (result.data.utterances.some((u) => /^@@/mu.test(u.text))) throw failure();
-      return serialize(result.data);
+      return serialize(checked(raw));
     },
   };
 }
