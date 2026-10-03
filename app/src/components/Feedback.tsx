@@ -50,9 +50,9 @@ const useFeedback = create<{ open: boolean; rating?: Feedback["rating"]; show: (
   open: false, show: (rating) => set({ open: true, rating }), close: () => set({ open: false }),
 }));
 
-export function FeedbackButton({ className = "" }: { className?: string }) {
+export function FeedbackButton({ className = "", compact = false }: { className?: string; compact?: boolean }) {
   const lang = useLang();
-  return <button type="button" className={`press inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line bg-card px-4 text-[13px] font-medium text-ink-2 ${className}`} onClick={() => useFeedback.getState().show()}><MessageSquare size={16} />{pick(copy.entry, lang)}</button>;
+  return <button type="button" aria-label={pick(copy.entry, lang)} className={`press inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line bg-card ${compact ? "px-3 sm:px-4" : "px-4"} text-[13px] font-medium text-ink-2 ${className}`} onClick={() => useFeedback.getState().show()}><MessageSquare size={16} /><span className={compact ? "hidden sm:inline" : undefined}>{pick(copy.entry, lang)}</span></button>;
 }
 
 export function FeedbackPrompt() {

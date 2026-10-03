@@ -22,6 +22,8 @@ export type Proficiency = Partial<Record<SkillId, number>>;
 export type ChatRole = "learner" | "npc" | "coach" | "event";
 
 export interface ChatMessage {
+  /** Actual model state for this complete exchange, saved on its last NPC line. */
+  meta?: RoleplayMeta;
   id: string;
   role: ChatRole;
   characterId?: string;
@@ -149,6 +151,10 @@ export interface Session {
   outcomeNote?: string;
   closure?: Closure;
   startedAt: number;
+  /** Total learner turns available in this segment; extended by explicit choice. */
+  turnLimit?: number;
+  /** Last NPC reply whose checkpoint the learner chose to continue beyond. */
+  continuedFrom?: string;
   endedAt?: number;
   report?: Report;
   reflections: Reflection[];

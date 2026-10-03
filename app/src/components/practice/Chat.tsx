@@ -11,7 +11,7 @@ import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
 import { hint as hintApi, parseRoleplay, roleplayStream } from "@/lib/client-api";
 import { lastSpoken, npcsOf, silenceStreak } from "@/lib/session-utils";
-import { goalOutcome, supportedClosure } from "@/lib/practice-policy";
+import { continuePractice, practiceCheckpoint, practiceTurnLimit, supportedClosure } from "@/lib/practice-policy";
 import { uid } from "@/lib/format";
 import { track } from "@/lib/analytics/track";
 import { byokConfig } from "@/lib/byok";
@@ -67,7 +67,6 @@ export function Chat({ session }: { session: Session }) {
   const busyRef = useRef(false);
   const endingRef = useRef(false);
   const request = useRef<AbortController | null>(null);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const needsRecovery = unanswered && !busy;
   const cancelListening = useCallback(() => {
     if (!recRef.current) return;
@@ -81,7 +80,7 @@ export function Chat({ session }: { session: Session }) {
   };
 
   const learnerTurns = session.messages.filter((m) => m.role === "learner").length;
-  const remaining = Math.max(0, sc.maxTurns - learnerTurns);
+  const checkpoint = practiceCheckpoint(session);
   const objectives = session.adaptation?.objectives ?? sc.objectives.map((o) => o[lang]);
   const trail = session.stanceTrail ?? [];
   // Before the first turn reports one, show them where the scenario put them.
@@ -145,7 +144,6 @@ export function Chat({ session }: { session: Session }) {
   useEffect(
     () => () => {
       request.current?.abort();
-      if (closeTimer.current) clearTimeout(closeTimer.current);
       stopSpeaking();
       recRef.current?.cancel();
     },
@@ -186,7 +184,6 @@ export function Chat({ session }: { session: Session }) {
       if (!current || current.status !== "active") return;
       cancelListening();
       request.current?.abort();
-      if (closeTimer.current) clearTimeout(closeTimer.current);
       endingRef.current = true;
       setEnding(true);
       const endedAt = Date.now();
@@ -210,28 +207,14 @@ export function Chat({ session }: { session: Session }) {
     [session, sc, updateSession, cancelListening],
   );
 
-  // A refresh during the final reading pause must finish the already answered
-  // scene, rather than reopening its last turn. This runs only on mount.
-  useEffect(() => {
-    if (lastSpoken(session.messages)?.role !== "npc") return;
-    if (session.closure || learnerTurns >= sc.maxTurns || silenceStreak(session.messages) >= 2) {
-      let live = true;
-      queueMicrotask(() => {
-        if (live) finish(session.objectiveDone, goalOutcome(session.objectiveDone), session.closure ? "engine" : learnerTurns >= sc.maxTurns ? "cap" : "silence");
-      });
-      return () => { live = false; };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   /**
    * One exchange: the other side answers whatever now ends the transcript — a
    * line of the learner's, or a silence they left. `silence` is the streak the
-   * simulation is reacting to; a second in a row closes the scene whatever the
-   * model decides, because a character who has been left hanging twice leaves.
+   * simulation reacts in character. Only an explicit learner action opens
+   * the debrief, even when a character wants to leave.
    */
   const advance = useCallback(
-    async (history: ChatMessage[], from: "send" | "lapse", silence = 0) => {
+    async (history: ChatMessage[], from: "send" | "lapse") => {
       setBusy(true);
       busyRef.current = true;
       const controller = new AbortController();
@@ -239,7 +222,8 @@ export function Chat({ session }: { session: Session }) {
       const ids: string[] = [];
       try {
         const full = await roleplayStream(
-          { scenario: sc, learnerCharacterId: session.learnerCharacterId, messages: history, lang, learnerName },
+          { scenario: sc, learnerCharacterId: session.learnerCharacterId, messages: history, lang, learnerName,
+            turnLimit: practiceTurnLimit(useApp.getState().sessions.find((s) => s.id === session.id) ?? session) },
           (acc) => {
             if (controller.signal.aborted) return;
             const parsed = parseRoleplay(acc, npcIds);
@@ -259,6 +243,7 @@ export function Chat({ session }: { session: Session }) {
           return { id: ids[i], role: "npc", text: u.text, characterId: u.characterId, ts: Date.now() };
         });
         const meta = parsed.meta;
+        if (meta && replies.length) replies[replies.length - 1].meta = meta;
         const done = meta?.objectives?.length === sc.objectives.length ? meta.objectives : session.objectiveDone;
         if (done.some((d, i) => d && !session.objectiveDone[i]) && typeof navigator !== "undefined" && "vibrate" in navigator) {
           try { navigator.vibrate(12); } catch {}
@@ -277,16 +262,8 @@ export function Chat({ session }: { session: Session }) {
           return { messages: [...s0.messages, ...replies], objectiveDone: done,
             stanceTrail: [...prev, typeof meta?.stance === "number" ? meta.stance : (prev.at(-1) ?? 20)],
             ...(meta?.revealed && !s0.revealedAtTurn ? { revealedAtTurn: Math.max(1, turnsUsed) } : {}),
-            ...(closure ? { closure } : {}) };
+            closure };
         });
-        if (closure || turnsUsed >= sc.maxTurns || silence >= 2) {
-          const outcome = goalOutcome(done);
-          endingRef.current = true;
-          setEnding(true);
-          const by = silence >= 2 ? "silence" : closure ? "engine" : "cap";
-          // brief pause so the last line can be read
-          closeTimer.current = setTimeout(() => finish(done, outcome, by, meta?.note), 1400);
-        }
       } catch (e) {
         if (controller.signal.aborted) return;
         if (from === "lapse") {
@@ -305,7 +282,7 @@ export function Chat({ session }: { session: Session }) {
         }
       }
     },
-    [session, sc, lang, learnerName, npcIds, updateSession, finish],
+    [session, sc, lang, learnerName, npcIds, updateSession],
   );
 
   const send = useCallback(
@@ -313,7 +290,7 @@ export function Chat({ session }: { session: Session }) {
       const text = textRaw.trim();
       const live = useApp.getState().sessions.find((s) => s.id === session.id);
       const last = live && lastSpoken(live.messages);
-      if (!canUseModel || !text || busyRef.current || endingRef.current || !live || live.status !== "active" || live.closure || live.messages.filter((m) => m.role === "learner").length >= sc.maxTurns || last?.role === "learner" || last?.role === "event") return;
+      if (!canUseModel || !text || busyRef.current || endingRef.current || !live || live.status !== "active" || last?.role === "learner" || last?.role === "event") return;
       cancelListening();
       setErr(null);
       setNote(null);
@@ -323,10 +300,11 @@ export function Chat({ session }: { session: Session }) {
       setInput("");
       if (taRef.current) taRef.current.style.height = "auto";
       const learnerMsg: ChatMessage = { id: uid(), role: "learner", text, ts: Date.now() };
-      appendMessage(session.id, learnerMsg);
+      // Typing a new reply at a checkpoint is itself a choice to continue.
+      updateSession(session.id, (s) => ({ ...(practiceCheckpoint(s) ? continuePractice(s) : {}), closure: undefined, messages: [...s.messages, learnerMsg] }));
       await advance([...live.messages, learnerMsg], "send");
     },
-    [session, sc.maxTurns, appendMessage, advance, setInput, canUseModel, cancelListening],
+    [session, updateSession, advance, setInput, canUseModel, cancelListening],
   );
 
   /* ── replies on the clock ──
@@ -337,13 +315,14 @@ export function Chat({ session }: { session: Session }) {
   const patience = settings.patience ?? DEFAULT_PATIENCE;
   const timed = !!session.timed;
   const last = lastSpoken(session.messages);
-  const armed = !!last && last.role === "npc" && last.text !== "" && !busy && !ending;
+  const armed = !!last && last.role === "npc" && last.text !== "" && !busy && !ending && !checkpoint;
   const speaker = (last?.role === "npc" ? sc.characters.find((c) => c.id === last.characterId) : undefined) ?? npcs[0];
   const speakerName = speaker?.name[lang] ?? "";
 
   const lapse = useCallback(() => {
-    if (busyRef.current || endingRef.current || useApp.getState().sessions.find((s) => s.id === session.id)?.status !== "active") return;
-    const msgs = useApp.getState().sessions.find((x) => x.id === session.id)?.messages ?? session.messages;
+    const live = useApp.getState().sessions.find((s) => s.id === session.id);
+    if (busyRef.current || endingRef.current || !live || live.status !== "active" || practiceCheckpoint(live)) return;
+    const msgs = live.messages;
     const streak = silenceStreak(msgs) + 1;
     if (streak >= 2 && !msgs.some((m) => m.role === "learner")) {
       setFloor(true);
@@ -355,8 +334,8 @@ export function Chat({ session }: { session: Session }) {
     setNote(null);
     const ev: ChatMessage = { id: uid(), role: "event", kind: "silence", seconds: patience, text: t(lang, "pr_clock_lapsed", { n: patience }), ts: Date.now() };
     appendMessage(session.id, ev);
-    void advance([...msgs, ev], "lapse", streak);
-  }, [session.id, session.messages, patience, lang, appendMessage, advance]);
+    void advance([...msgs, ev], "lapse");
+  }, [session.id, patience, lang, appendMessage, advance]);
 
   const onStage = useCallback((s: ClockStage) => {
     if (s === 2 && typeof navigator !== "undefined" && "vibrate" in navigator) {
@@ -475,6 +454,14 @@ export function Chat({ session }: { session: Session }) {
     finish(session.objectiveDone, n === session.objectiveDone.length ? "success" : n > 0 ? "partial" : "failure", "user");
   };
 
+  const keepTalking = () => {
+    const live = useApp.getState().sessions.find((s) => s.id === session.id);
+    if (!live || live.status !== "active" || busyRef.current || endingRef.current) return;
+    updateSession(session.id, continuePractice(live));
+    setFloor(false);
+    taRef.current?.focus();
+  };
+
   const retry = () => {
     if (err?.from === "send") {
       const lastLine = [...session.messages].reverse().find((m) => m.role === "learner");
@@ -501,17 +488,17 @@ export function Chat({ session }: { session: Session }) {
       <div className="flex-1 flex flex-col min-h-0 min-w-0">
       {/* header */}
       <header className="px-3 border-b border-line bg-paper flex flex-col shrink-0">
-        <PracticeJourney phase={1} onBack={() => setEndOpen(true)} backLabel={t(lang, "pr_leave_options")} />
+        <PracticeJourney phase={1} onBack={() => setEndOpen(true)} backLabel={t(lang, "pr_leave_options")} actions={<FeedbackButton compact />} />
         <div className="flex items-center gap-2 py-2">
           <div className="flex-1 min-w-0 px-1">
             <h1 className="text-[16px] font-semibold truncate">{sc.title[lang]}</h1>
-            <p className="text-[12px] text-ink-3 num">{remaining <= 1 ? t(lang, "pr_last_turn") : t(lang, "pr_turns_left", { n: remaining })}</p>
+            <p className="text-[12px] text-ink-3 num">{t(lang, "pr_turn_progress", { n: learnerTurns })}</p>
           </div>
-          <FeedbackButton />
+          <button onClick={() => setEndOpen(true)} className="press min-h-11 px-2 text-[12px] font-medium text-ink-2 whitespace-nowrap">{t(lang, "pr_review_action")}</button>
           <IconButton label={t(lang, "pr_clock_title")} aria-pressed={timed} onClick={() => setClockOpen(true)}>
             <Timer size={20} className={clsx("transition-colors duration-300", timed ? "text-accent-deep" : "text-ink-3")} />
           </IconButton>
-          <div className="flex -space-x-2 pr-1 lg:hidden">
+          <div className="hidden sm:flex -space-x-2 pr-1 lg:hidden">
             {npcs.map((c) => (
               <span key={c.id} className={clsx("rounded-full ring-2 ring-paper transition-[transform,box-shadow] duration-300", ringFor(c.id, speaking, attention, speaker?.id))}>
                 <Avatar name={c.name[lang]} hue={c.hue} size={32} />
@@ -609,6 +596,16 @@ export function Chat({ session }: { session: Session }) {
       )}
       {/* composer */}
       <div className="relative border-t border-line bg-paper px-3 lg:px-5 pt-3 pb-safe shrink-0">
+        {checkpoint && !busy && !needsRecovery && (
+          <div className="mb-3 rounded-[var(--radius-sm)] border border-line-strong bg-card px-3 py-2.5" role="status">
+            <p className="text-[13px] font-medium">{t(lang, checkpoint === "segment" ? "pr_checkpoint_segment" : checkpoint === "silence" || session.closure?.kind === "withdrawal" ? "pr_checkpoint_withdrawal" : "pr_checkpoint_closure")}</p>
+            <p className="text-[12px] text-ink-2 mt-1">{t(lang, "pr_checkpoint_detail")}</p>
+            <div className="flex flex-wrap gap-2 mt-2">
+              <Button variant="ink" onClick={keepTalking}>{t(lang, "pr_continue_more")}</Button>
+              <Button variant="ghost" onClick={endEarly}>{t(lang, "pr_end_review")}</Button>
+            </div>
+          </div>
+        )}
         {/* The other side's patience, burning down along the rule the composer
             sits on. No digits: the room tells you how it is going. */}
         <span

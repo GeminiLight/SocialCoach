@@ -18,6 +18,7 @@ import type { Session } from "@/lib/types";
 import { contextById } from "@/data/taxonomy";
 import { learnerSeed } from "@/data/avatars";
 import { arenaReturnPath } from "@/lib/arena-location";
+import { practiceTurnLimit } from "@/lib/practice-policy";
 
 
 export function Briefing({ session }: { session: Session }) {
@@ -29,6 +30,7 @@ export function Briefing({ session }: { session: Session }) {
   const inflight = useRef(false);
   const [attempt, setAttempt] = useState(0);
   const sc = session.scenario;
+  const authoredDate = /^Original fictional practice — SocialCoach, (\d{4}-\d{2}-\d{2})\./u.exec(sc.source)?.[1];
   const adapting = !session.adaptation;
   const shownAt = useRef(0);
 
@@ -83,7 +85,7 @@ export function Briefing({ session }: { session: Session }) {
           <h1 className="display text-[30px] leading-[1.15]">{sc.title[lang]}</h1>
           <div className="flex items-center gap-3 text-[12px] text-ink-3 num">
             <span className="inline-flex items-center gap-1"><Clock size={13} />{sc.minutes} {t(lang, "min")}</span>
-            <span className="inline-flex items-center gap-1"><MessageSquare size={13} />{sc.maxTurns} {t(lang, "turns")}</span>
+            <span className="inline-flex items-center gap-1"><MessageSquare size={13} />{t(lang, "pr_segment_budget", { n: practiceTurnLimit(session) })}</span>
             <span>{t(lang, `diff_${sc.difficulty}` as "diff_1")}</span>
           </div>
           <div className="flex flex-wrap gap-1.5 mt-1">{sc.skills.map((k) => <SkillTag key={k} id={k} lang={lang} small />)}</div>
@@ -137,7 +139,7 @@ export function Briefing({ session }: { session: Session }) {
           </section>
         )}
         <ClockRow timed={timed} seconds={settings.patience ?? DEFAULT_PATIENCE} onChange={(v) => setSettings({ timed: v })} className="lg:hidden" />
-        <p className="text-[11px] text-ink-3">{t(lang, "source")}: {sc.source}</p>
+        <p className="text-[11px] text-ink-3">{t(lang, "source")}: {authoredDate ? t(lang, "pr_source_original", { date: authoredDate }) : sc.source}</p>
       </motion.div>
       </div>
 

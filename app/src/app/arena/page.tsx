@@ -8,6 +8,7 @@ import { Button, Chip, Empty, IconButton, Page } from "@/components/ui";
 import { SkillTag } from "@/components/SkillBits";
 import { ScenarioCover } from "@/components/ScenarioCover";
 import { SCENARIOS } from "@/data/corpus";
+import { SCENARIOS_D } from "@/data/corpus/scenarios-d";
 import type { Scenario } from "@/data/corpus/types";
 import { CONTEXTS, SKILLS, contextById, skillById, type ContextId, type SkillId } from "@/data/taxonomy";
 import { useApp, useLang } from "@/store/useApp";
@@ -15,6 +16,8 @@ import { t } from "@/lib/i18n";
 import { buildSession } from "@/lib/session-utils";
 import { rememberArenaLocation } from "@/lib/arena-location";
 import { clsx } from "clsx";
+
+const RECENT_IDS = new Set(SCENARIOS_D.map((s) => s.id));
 
 export default function Arena() {
   const lang = useLang();
@@ -29,10 +32,12 @@ export default function Arena() {
   const skill = SKILLS.find((s) => s.id === params.get("skill"))?.id ?? null;
   const difficulty = ["1", "2", "3"].includes(params.get("difficulty") ?? "") ? params.get("difficulty")! : "all";
   const practiced = ["new", "done"].includes(params.get("history") ?? "") ? params.get("history")! : "all";
+  const recent = params.get("collection") === "recent";
   const visible = Math.max(12, Math.min(500, Number(params.get("limit")) || 12));
   const setFilter = (key: string, value: string | null) => {
     const next = new URLSearchParams(params.toString());
     if (!value || value === "all") next.delete(key); else next.set(key, value);
+    if (key === "context" && value === "all") next.delete("collection");
     if (key !== "limit") next.delete("limit");
     window.history.replaceState(null, "", `/arena${next.size ? `?${next}` : ""}`);
   };
@@ -43,7 +48,7 @@ export default function Arena() {
   const [moreSkills, setMoreSkills] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const starting = useRef(false);
-  const all = useMemo(() => [...customScenarios, ...SCENARIOS], [customScenarios]);
+  const all = useMemo(() => [...customScenarios, ...SCENARIOS.filter((s) => RECENT_IDS.has(s.id)), ...SCENARIOS.filter((s) => !RECENT_IDS.has(s.id))], [customScenarios]);
   const counts = useMemo(() => {
     const map = new Map<string, number>();
     for (const s of sessions) if (s.status === "assessed") map.set(s.scenario.id, (map.get(s.scenario.id) ?? 0) + 1);
@@ -52,6 +57,7 @@ export default function Arena() {
   const list = useMemo(() => {
     const query = q.trim().toLowerCase();
     return all.filter((s) => {
+      if (recent && !RECENT_IDS.has(s.id)) return false;
       if (practiced === "new" && counts.has(s.id)) return false;
       if (practiced === "done" && !counts.has(s.id)) return false;
       if (ctx === "mine" && !s.custom) return false;
@@ -73,7 +79,7 @@ export default function Arena() {
       }
       return true;
     });
-  }, [all, ctx, skill, difficulty, q, practiced, counts]);
+  }, [all, ctx, skill, difficulty, q, practiced, counts, recent]);
   const forYou = useMemo(() => {
     if (!profile) return [];
     return SCENARIOS.filter(
@@ -90,7 +96,7 @@ export default function Arena() {
     addSession(session);
     router.push(`/practice/${session.id}`);
   };
-  const filtering = ctx !== "all" || !!skill || !!q.trim() || difficulty !== "all" || practiced !== "all";
+  const filtering = ctx !== "all" || !!skill || !!q.trim() || difficulty !== "all" || practiced !== "all" || recent;
   const reset = () => {
     window.history.replaceState(null, "", "/arena");
     searchRef.current?.focus();
@@ -115,6 +121,15 @@ export default function Arena() {
             <ArrowUpRight size={15} />
           </Link>
         </header>
+
+        <Link href="/arena?collection=recent" className="press card card-link px-5 py-4 flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <p className="eyebrow mb-1">{t(lang, "arena_recent_count", { n: RECENT_IDS.size })}</p>
+            <p className="font-semibold text-[17px]">{t(lang, "arena_recent_title")}</p>
+            <p className="text-[13px] text-ink-2 mt-1 leading-relaxed">{t(lang, "arena_recent_detail")}</p>
+          </div>
+          <ArrowUpRight size={21} className="text-accent-deep shrink-0" aria-hidden />
+        </Link>
 
         <section aria-label={t(lang, "arena_search_ph")} className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center gap-3">
@@ -190,10 +205,11 @@ export default function Arena() {
             className="flex gap-2 -mx-5 px-5 overflow-x-auto no-scrollbar md:mx-0 md:px-0 md:flex-wrap"
             role="group" aria-label={t(lang, "arena_by_context")}
           >
-            <Chip active={ctx === "all"} onClick={() => setCtx("all")}>
+            <Chip active={ctx === "all" && !recent} onClick={() => setCtx("all")}>
               {t(lang, "arena_all")}
               <span className="num">{all.length}</span>
             </Chip>
+            <Chip active={recent} onClick={() => setFilter("collection", recent ? null : "recent")}>{t(lang, "arena_recent")}<span className="num">{RECENT_IDS.size}</span></Chip>
             {customScenarios.length > 0 && (
               <Chip active={ctx === "mine"} onClick={() => setCtx("mine")}>
                 {t(lang, "custom_badge")}

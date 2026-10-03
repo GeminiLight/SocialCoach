@@ -3,6 +3,7 @@ import { SCENARIOS_B } from "./scenarios-b";
 import { THEORIES as THEORIES_BASE } from "./theories";
 import { THEORIES_C } from "./theories-c";
 import { SCENARIOS_C } from "./scenarios-c";
+import { SCENARIOS_D } from "./scenarios-d";
 import { CASES_C } from "./cases-c";
 import { CASES as CASES_BASE } from "./cases";
 import type { Case, Character, Scenario, Theory } from "./types";
@@ -10,6 +11,18 @@ import { L } from "../taxonomy";
 
 /** Role the learner plays in each corpus scenario (they are always "you"). */
 const LEARNER_ROLE: Record<string, { zh: string; en: string }> = {
+  "elevator-confidential-question": L("协助安排面试的员工", "Employee assisting with interviews"),
+  "office-quick-favor": L("正在赶报告的同事", "Colleague finishing a report"),
+  "group-chat-blame": L("整理上线清单的成员", "Team member compiling a launch checklist"),
+  "parent-unannounced-visit": L("马上参加考试的成年子女", "Adult child about to take an exam"),
+  "sibling-surprise-bill": L("未同意酒店预算的手足", "Sibling who did not agree to the hotel budget"),
+  "friend-advice-repair": L("过早给建议的朋友", "Friend who offered premature advice"),
+  "friend-left-out": L("没被邀请的朋友", "Friend who was not invited"),
+  "partner-location-pressure": L("被要求共享定位的伴侣", "Partner asked to share their location"),
+  "partner-trip-change": L("需要改变出行计划的伴侣", "Partner who needs to change travel plans"),
+  "class-chat-screenshot": L("私聊被转发的学生", "Student whose private message was shared"),
+  "queue-just-a-question": L("已经排到窗口的办事人", "Customer who reached the front of the queue"),
+  "party-live-camera": L("没有同意出镜的聚会来宾", "Guest who did not consent to being filmed"),
   "friend-good-news": L("也申请过驻留的朋友", "Friend who also applied for the residency"),
   "trip-budget-boundary": L("有旅行预算上限的朋友", "Friend with a travel budget ceiling"),
   "family-photo-permission": L("照片被公开的成年子女", "Adult child whose photo was posted"),
@@ -74,7 +87,7 @@ export function withLearner(s: Scenario): Scenario {
   return { ...s, characters: [you, ...s.characters] };
 }
 
-export const SCENARIOS: Scenario[] = [...SCENARIOS_A, ...SCENARIOS_B, ...SCENARIOS_C].map(withLearner);
+export const SCENARIOS: Scenario[] = [...SCENARIOS_A, ...SCENARIOS_B, ...SCENARIOS_C, ...SCENARIOS_D].map(withLearner);
 export const THEORIES: Theory[] = [...THEORIES_BASE, ...THEORIES_C];
 export const CASES: Case[] = [...CASES_BASE, ...CASES_C];
 export type { Case, Scenario, Theory };

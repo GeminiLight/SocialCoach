@@ -1,4 +1,31 @@
 import type { ChatMessage, Closure, RoleplayMeta, Session } from "./types";
+import { lastSpoken, silenceStreak } from "./session-utils";
+
+/** A finite practice segment; reaching it offers a choice rather than ending. */
+export const INITIAL_PRACTICE_TURNS = 12;
+export const CONTINUATION_TURNS = 8;
+export function practiceTurnLimit(s: Pick<Session, "scenario" | "turnLimit">): number {
+  const initial = Math.max(INITIAL_PRACTICE_TURNS, Math.min(24, Math.trunc(s.scenario.maxTurns) || INITIAL_PRACTICE_TURNS));
+  return Number.isSafeInteger(s.turnLimit) && s.turnLimit! >= initial ? s.turnLimit! : initial;
+}
+
+export function practiceCheckpoint(s: Pick<Session, "scenario" | "turnLimit" | "messages" | "closure" | "continuedFrom">): "closure" | "segment" | "silence" | null {
+  const last = lastSpoken(s.messages);
+  // A partial reply is recovery, never an invitation to skip that reply.
+  if (last?.role !== "npc" || !last.text || last.id === s.continuedFrom) return null;
+  if (s.closure) return "closure";
+  if (silenceStreak(s.messages) >= 2) return "silence";
+  return s.messages.filter((m) => m.role === "learner").length >= practiceTurnLimit(s) ? "segment" : null;
+}
+
+/** Kept on the same session: no transcript, commitments or progress is reset. */
+export function continuePractice(s: Pick<Session, "scenario" | "turnLimit" | "messages">): Pick<Session, "turnLimit" | "closure" | "continuedFrom"> {
+  return {
+    turnLimit: Math.max(practiceTurnLimit(s), s.messages.filter((m) => m.role === "learner").length) + CONTINUATION_TURNS,
+    closure: undefined,
+    continuedFrom: lastSpoken(s.messages)?.id,
+  };
+}
 
 /** Match an actual contiguous quotation, never fuzzy-match a different claim. */
 export function hasQuote(quote: unknown, texts: string[]): quote is string {
@@ -11,7 +38,7 @@ export function goalOutcome(done: boolean[]): NonNullable<Session["outcome"]> {
   return n > 0 && n === done.length ? "success" : n > 0 ? "partial" : "failure";
 }
 
-/** Only a grounded closing exchange can end early; an `ended` flag alone cannot. */
+/** A grounded closing proposal; only the learner chooses to end the practice. */
 export function supportedClosure(meta: RoleplayMeta | null, history: ChatMessage[], npcLines: string[]): Closure | undefined {
   if (meta?.ended !== true || !meta.closure) return;
   const c = meta.closure;

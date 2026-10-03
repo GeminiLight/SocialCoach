@@ -89,7 +89,9 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 
 推进一个对话回合。**流式，自定义文本协议，不是 SSE、不是 JSON。**
 
-**请求：** `{ scenario, learnerCharacterId, messages: ChatMessage[], lang, learnerName? }`
+**请求：** `{ scenario, learnerCharacterId, messages: ChatMessage[], lang, learnerName?, turnLimit? }`
+
+`turnLimit` 是当前段落的累计用户回合边界，缺省至少 12 回合；客户端选择续聊后增加 8。场景原来的 `maxTurns` 仍可读取旧档案，但不再触发结束。完整回复的最后一条 NPC 消息可带 `meta`，用于保留已生成的进度与输出格式；旧档案没有这个字段也能继续。
 
 `messages` 里可以出现 `{ role: "event", kind: "silence", seconds }`：限时应答里用户到点没开口。它占用户的位置进入回合（`(名字 says nothing for 15 seconds.)`），**不计入 `maxTurns`**；服务端按连续沉默次数追加一行系统提示，第二次连续沉默要求 NPC 收场（`ended: true`）。→ [spec-timed-reply](./specs/spec-timed-reply.md)
 
@@ -106,14 +108,14 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 | 字段 | 类型 | 说明 |
 |---|---|---|
 | `objectives` | `boolean[]` | 与 `scenario.objectives` 等长，严格按用户实际说出的话判定 |
-| `ended` | `boolean` | 模型提出收尾；提前结束还需 `closure` 引文通过校验。目标未达成、遭到拒绝或触发原失败示例不再自动终止 |
-| `closure` | `{ kind, learnerQuote?, npcQuote }?` | kind 为 agreement / boundary / deferred / withdrawal。前三者需最近用户原话 + 本回合 NPC 原话；单方离场允许缺用户引文。回合上限、手动结束和限时沉默仍独立生效 |
+| `ended` | `boolean` | 模型提出收尾；必须有有效 `closure` 引文才能提示用户选择。任何模型标志都不自动进入复盘 |
+| `closure` | `{ kind, learnerQuote?, npcQuote }?` | kind 为 agreement / boundary / deferred / withdrawal。前三者需最近用户原话 + 本回合 NPC 原话；单方离场允许缺用户引文。有效收尾、段落回合数、两次已回应沉默只显示续聊 / 复盘选项；用户决定是否结束 |
 | `outcome` | `"success"\|"partial"\|"failure"\|null` | `ended` 为 true 时给值 |
 | `stance` | `number` 0–100 | 对方离答应还有多远。**这是对方的立场，不是用户的分数**，允许下降；正当边界也可能让对方更抗拒。存进 `session.stanceTrail` |
 | `revealed` | `boolean` | 本回合 NPC 是否把 `hidden` 明确说出口。只标事件发生的那一回合，之后回到 false |
 | `note` | `string` | ≤12 词的中立舞台提示，第二人称 |
 
-**`@@meta` 必须在台词之前。** 放在末尾时快模型六个回合只输出两次，目标追踪因此长期静默失效。→ [80-known-pitfalls.md](./80-known-pitfalls.md)
+**对外协议保持 `@@meta` 在前。** 模型内部改为生成 `{meta,utterances}` JSON，`roleplay-output.ts` 经 `extractJSON()` 和字段校验后转成上述文本流；片段只作可见预览，整个 JSON 完整闭合才进入存档。元信息真实结束后才发送其流前缀，兼容模型把 `meta` 放在末尾。若尚未显示任何 NPC 台词且格式失败，只修复一次；已显示的失败片段不能重新生成并当作原对话保存。→ [80-known-pitfalls.md](./80-known-pitfalls.md)
 
 **协议约束（改 prompt 时必须保住）：** NPC 不得跳出角色、不得提及目标或 App、不得提前吐露 `hidden`；用户敌意时真实升级或退让，用户用对技能时按比例软化而非立刻投降。→ 详见 [00-product-proposal.md#不做什么](./00-product-proposal.md#不做什么)
 

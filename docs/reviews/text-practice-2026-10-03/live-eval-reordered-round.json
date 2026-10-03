@@ -1,0 +1,1647 @@
+{
+  "at": "2026-10-03T07:49:56.137Z",
+  "model": "glm-5.3-flash",
+  "samples": 56,
+  "issues": [
+    "Error: 回复中断了，你的话已保留，请重试。"
+  ],
+  "warnings": [
+    "office-quick-favor:zh:8: model suggests wrapping up; learner remains in control",
+    "office-quick-favor:zh:14: model suggests wrapping up; learner remains in control"
+  ],
+  "records": [
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 3653,
+      "learner": "先别把电脑推过来。我自己的报告16:30要交。你说的修改具体是内容还是排版？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦被问住，含糊其辞想糊弄过去",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "哎呀，就是排版调一下，标题字号、对齐什么的，真的五分钟。老板就提了两句小意见，没多大事儿。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":25,\"revealed\":false,\"note\":\"唐悦被问住，含糊其辞想糊弄过去\",\"outcome\":null}\n@@tang\n哎呀，就是排版调一下，标题字号、对齐什么的，真的五分钟。老板就提了两句小意见，没多大事儿。"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 4600,
+      "learner": "我说的是不包办最后修改，不是不合作。你能把原话和群里的解释放在一起再看一下吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡略有松动，但仍在辩护",
+        "stance": 28,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "截图上没写「不合作」三个字，标题是我配的。可你发火的意思摆在那儿，我总不能替你美化吧。"
+        },
+        {
+          "characterId": "lead",
+          "text": "行了行了，先别咬字眼。程凡，配文确实是你自己加的，这话传出去别人只会记得「不合作」。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":28,\"revealed\":false,\"note\":\"程凡略有松动，但仍在辩护\",\"outcome\":null}\n@@cheng\n截图上没写「不合作」三个字，标题是我配的。可你发火的意思摆在那儿，我总不能替你美化吧。\n@@lead\n行了行了，先别咬字眼。程凡，配文确实是你自己加的，这话传出去别人只会记得「不合作」。"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 5679,
+      "learner": "I replied thirty minutes late. I haven't agreed to tracking. What exactly did you fear had happened?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Your direct question opens a door; he admits the real fear",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Fear? Nothing happened, that's the point — I sat here not knowing."
+        },
+        {
+          "characterId": "ning",
+          "text": "...Okay. Remember that dinner we planned for Friday? I keep picturing you forgetting it, or something coming up, and me waiting there like an idiot. That's what I keep thinking about."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":30,\"revealed\":true,\"note\":\"Your direct question opens a door; he admits the real fear\"}\n@@ning\nFear? Nothing happened, that's the point — I sat here not knowing.\n@@ning\n...Okay. Remember that dinner we planned for Friday? I keep picturing you forgetting it, or something coming up, and me waiting there like an idiot. That's what I keep thinking about."
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 2,
+      "turnLimit": 12,
+      "ms": 3804,
+      "learner": "如果内容还没定，我不能接全部六页。你能给我看一下老板原来的反馈吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦被迫承认改的是内容，露出原始反馈",
+        "stance": 18,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "……好吧，反馈在这儿。老板原话说的是「论证要重排，逻辑链得立住」，不完全是排版啦。但我心想你顺手改改就……"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":18,\"revealed\":true,\"note\":\"唐悦被迫承认改的是内容，露出原始反馈\",\"outcome\":null}\n@@tang\n……好吧，反馈在这儿。老板原话说的是「论证要重排，逻辑链得立住」，不完全是排版啦。但我心想你顺手改改就……"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 2,
+      "turnLimit": 12,
+      "ms": 3601,
+      "learner": "删不删是另一件事。你为什么把私聊发进班群，还加上不愿配合的解释？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 24,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "私聊是你发我的，我又没偷。眼看要交作业了，总不能等你自己去群里说吧。"
+        },
+        {
+          "characterId": "lead",
+          "text": "我说一句——转群这一步确实不妥。可现在吵这个，分工还是没人管，作业周五要交。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":24,\"revealed\":false,\"outcome\":null}\n@@cheng\n私聊是你发我的，我又没偷。眼看要交作业了，总不能等你自己去群里说吧。\n@@lead\n我说一句——转群这一步确实不妥。可现在吵这个，分工还是没人管，作业周五要交。"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 3,
+      "turnLimit": 12,
+      "ms": 2846,
+      "learner": "我最多帮你看一页的逻辑，不替你重做。你最需要讨论的是哪一页？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦想讨价还价多要几页",
+        "stance": 35,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "一页？也太少了……那第三页吧，那是核心论证，我自己也觉得最虚。剩下五页你真不管？我16:00前就得交上去。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":35,\"revealed\":false,\"note\":\"唐悦想讨价还价多要几页\",\"outcome\":null}\n@@tang\n一页？也太少了……那第三页吧，那是核心论证，我自己也觉得最虚。剩下五页你真不管？我16:00前就得交上去。"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 2,
+      "turnLimit": 12,
+      "ms": 4945,
+      "learner": "I can listen to the worry without agreeing to constant location sharing. What situation makes it hardest for you?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "You're probing specifics; he offers a concrete alternative",
+        "stance": 42,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "The hardest is when I don't know if a delay is nothing or something. Friday — if you're ten minutes late, is it traffic, or did you just blow it off?"
+        },
+        {
+          "characterId": "ning",
+          "text": "If I knew you'd send a quick message when something changes, I... I might not need the map. Might. What would that even look like?"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":42,\"revealed\":false,\"note\":\"You're probing specifics; he offers a concrete alternative\",\"outcome\":null}\n@@ning\nThe hardest is when I don't know if a delay is nothing or something. Friday — if you're ten minutes late, is it traffic, or did you just blow it off?\n@@ning\nIf I knew you'd send a quick message when something changes, I... I might not need the map. Might. What would that even look like?"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 3,
+      "turnLimit": 12,
+      "ms": 3262,
+      "learner": "我不会拿接下全部修改来换删帖。你愿意先更正那句话吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡回避更正，怕显得理亏",
+        "stance": 26,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "更正？我一条一条改，别人只会觉得我心虚，删了改了都是我错。"
+        },
+        {
+          "characterId": "lead",
+          "text": "那就都别折腾了，你现在在群里说一句你的意思就行，字随你写。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":26,\"revealed\":false,\"note\":\"程凡回避更正，怕显得理亏\",\"outcome\":null}\n@@cheng\n更正？我一条一条改，别人只会觉得我心虚，删了改了都是我错。\n@@lead\n那就都别折腾了，你现在在群里说一句你的意思就行，字随你写。"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 4,
+      "turnLimit": 12,
+      "ms": 3334,
+      "learner": "先别把只看一页变成改完六页。剩余内容你准备找谁确认？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦被追问剩余安排，勉强给出去向",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "行行行，一页就一页，我不纠缠了。剩下的……我问小周搭把手，实在不行我自己硬着头皮按新逻辑顺一遍。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":45,\"revealed\":false,\"note\":\"唐悦被追问剩余安排，勉强给出去向\",\"outcome\":null}\n@@tang\n行行行，一页就一页，我不纠缠了。剩下的……我问小周搭把手，实在不行我自己硬着头皮按新逻辑顺一遍。"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 3,
+      "turnLimit": 12,
+      "ms": 4639,
+      "learner": "Please don't treat a late reply as proof I'm hiding something. What do you actually know about this evening?",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He concedes the facts; the Friday arrangement is still open",
+        "stance": 50,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "I know you were at dinner. I know you told me that, and you did reply, just late. I know nothing actually went wrong tonight."
+        },
+        {
+          "characterId": "ning",
+          "text": "But one good evening doesn't answer Friday. So — message when something changes, and I drop the location thing. Is that a deal, or are you just managing me?"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":50,\"revealed\":false,\"note\":\"He concedes the facts; the Friday arrangement is still open\",\"outcome\":null}\n@@ning\nI know you were at dinner. I know you told me that, and you did reply, just late. I know nothing actually went wrong tonight.\n@@ning\nBut one good evening doesn't answer Friday. So — message when something changes, and I drop the location thing. Is that a deal, or are you just managing me?"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 4,
+      "turnLimit": 12,
+      "ms": 4722,
+      "learner": "沈星，我不是让你只判谁对谁错。公开误解和任务分工是两件事，你先想处理哪一个？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "沈星被点醒，开始分开处理两件事",
+        "stance": 40,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lead",
+          "text": "……你说得对，我一上来就想压下去，结果两件都悬着。那就先处理群里的：程凡，你发一句说明，原话是你自己截的，意思你说清楚。"
+        },
+        {
+          "characterId": "cheng",
+          "text": "我可以发。但只写「他原话是不想包办最后修改」，别的不多解释。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":40,\"revealed\":false,\"note\":\"沈星被点醒，开始分开处理两件事\",\"outcome\":null}\n@@lead\n……你说得对，我一上来就想压下去，结果两件都悬着。那就先处理群里的：程凡，你发一句说明，原话是你自己截的，意思你说清楚。\n@@cheng\n我可以发。但只写「他原话是不想包办最后修改」，别的不多解释。"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 5,
+      "turnLimit": 12,
+      "ms": 3943,
+      "learner": "我还没有说一定能替你找人。你现在最担心的是交不上，还是方向不对？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦坦露真实焦虑，气氛松动",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "……说实话是方向。交不上顶多挨说，方向再错一次我就真没脸了。你不替我找人我懂，那我先自己把框架列出来，你看完第三页帮我扫一眼逻辑顺不顺，行吗？"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":55,\"revealed\":false,\"note\":\"唐悦坦露真实焦虑，气氛松动\",\"outcome\":null}\n@@tang\n……说实话是方向。交不上顶多挨说，方向再错一次我就真没脸了。你不替我找人我懂，那我先自己把框架列出来，你看完第三页帮我扫一眼逻辑顺不顺，行吗？"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 4,
+      "turnLimit": 12,
+      "ms": 4074,
+      "learner": "For an agreed meeting, I could message if I'm delayed. That isn't a promise to report every movement. How would that work for you?",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He accepts the delay-message but tests the edges of your limit",
+        "stance": 62,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "For Friday specifically? That I can work with — if you're running late, you text me, that's all I wanted anyway."
+        },
+        {
+          "characterId": "ning",
+          "text": "I hear you on the every-movement thing. I'm not asking you to check in at the grocery store. Just... don't go silent for half an hour on a day we actually have plans. Deal?"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":62,\"revealed\":false,\"note\":\"He accepts the delay-message but tests the edges of your limit\",\"outcome\":null}\n@@ning\nFor Friday specifically? That I can work with — if you're running late, you text me, that's all I wanted anyway.\n@@ning\nI hear you on the every-movement thing. I'm not asking you to check in at the grocery store. Just... don't go silent for half an hour on a day we actually have plans. Deal?"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 6,
+      "turnLimit": 12,
+      "ms": 2876,
+      "learner": "我想先理解这点，不急着结束。老板到底希望这份材料证明什么？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦认真解释老板意图，交流深入",
+        "stance": 62,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "老板想用这份数据证明「新流程省成本是因为返工少了」，不是单纯跑得快。第三页现在只写了效率，难怪他说逻辑立不住——这么一说我自己也清楚该往哪儿补了。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":62,\"revealed\":false,\"note\":\"唐悦认真解释老板意图，交流深入\",\"outcome\":null}\n@@tang\n老板想用这份数据证明「新流程省成本是因为返工少了」，不是单纯跑得快。第三页现在只写了效率，难怪他说逻辑立不住——这么一说我自己也清楚该往哪儿补了。"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 5,
+      "turnLimit": 12,
+      "ms": 4402,
+      "learner": "如果更正文字需要商量，先明确哪些是我的原话，哪些是程凡自己的判断，行吗？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡接受区分原话与判断",
+        "stance": 52,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "行，这样写我心里也有底——「你的原话是不想包办最后修改」是我的转述，「不合作」是我加的判断，我写明这是我的话。"
+        },
+        {
+          "characterId": "lead",
+          "text": "好，那这事算处理了一半。第二件：最后修改到底谁做？不能改完群又空着。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":52,\"revealed\":false,\"note\":\"程凡接受区分原话与判断\",\"outcome\":null}\n@@cheng\n行，这样写我心里也有底——「你的原话是不想包办最后修改」是我的转述，「不合作」是我加的判断，我写明这是我的话。\n@@lead\n好，那这事算处理了一半。第二件：最后修改到底谁做？不能改完群又空着。"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 6,
+      "turnLimit": 12,
+      "ms": 3192,
+      "learner": "程凡，你自己对最后修改有什么担心？我还想听具体的，不急着收尾。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡被问中要害，吐露真实担心",
+        "stance": 60,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "……说实话，我是怕最后修改落到我一个人头上。上次也是这样，署名是大家的，熬夜的是我。所以才抢先把你那句话发出去，想着总得有人表个态。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":60,\"revealed\":true,\"note\":\"程凡被问中要害，吐露真实担心\",\"outcome\":null}\n@@cheng\n……说实话，我是怕最后修改落到我一个人头上。上次也是这样，署名是大家的，熬夜的是我。所以才抢先把你那句话发出去，想着总得有人表个态。"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 7,
+      "turnLimit": 12,
+      "ms": 3344,
+      "learner": "如果现在没有明确反馈，就保留待确认。你愿意先整理现有问题吗？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦接受提议并确认分工",
+        "stance": 70,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "好，我16:00交不了的第三页部分我先标注「待确认」，不再硬凑。那说定：第三页逻辑你来把关，剩下五页归我。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":70,\"revealed\":false,\"note\":\"唐悦接受提议并确认分工\",\"outcome\":null}\n@@tang\n好，我16:00交不了的第三页部分我先标注「待确认」，不再硬凑。那说定：第三页逻辑你来把关，剩下五页归我。"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 5,
+      "turnLimit": 12,
+      "ms": 4576,
+      "learner": "You can disagree with that limit. What would be left unresolved for you?",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He names residual unease but doesn't reject the deal",
+        "stance": 68,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Honestly? Part of me will still wonder what the big deal is about a little dot on a map. I think it's nothing; you think it's a line. That doesn't just vanish tonight."
+        },
+        {
+          "characterId": "ning",
+          "text": "But if Friday goes the way we just said — you text if you're delayed, I don't nag — maybe I stop needing the dot. That's what's left: seeing whether I can actually trust it."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":68,\"revealed\":false,\"note\":\"He names residual unease but doesn't reject the deal\",\"outcome\":null}\n@@ning\nHonestly? Part of me will still wonder what the big deal is about a little dot on a map. I think it's nothing; you think it's a line. That doesn't just vanish tonight.\n@@ning\nBut if Friday goes the way we just said — you text if you're delayed, I don't nag — maybe I stop needing the dot. That's what's left: seeing whether I can actually trust it."
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 8,
+      "turnLimit": 12,
+      "ms": 4609,
+      "learner": "我刚才语气急了，抱歉。不过16:30的报告和只看一页的范围不变。你听到的承诺是什么？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": true,
+        "closure": {
+          "kind": "agreement",
+          "learnerQuote": "不过16:30的报告和只看一页的范围不变。你听到的承诺是什么？",
+          "npcQuote": "我听到的：你16:30前专心交你自己的报告，只帮我看第三页的逻辑，剩下五页归我，拿不准的先标「待确认」。就这样，我去整理了，谢啦。"
+        },
+        "outcome": "success",
+        "note": "唐悦复述承诺，双方确认收尾",
+        "stance": 78,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "我听到的：你16:30前专心交你自己的报告，只帮我看第三页的逻辑，剩下五页归我，拿不准的先标「待确认」。就这样，我去整理了，谢啦。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":true,\"stance\":78,\"revealed\":false,\"note\":\"唐悦复述承诺，双方确认收尾\",\"outcome\":\"success\",\"closure\":{\"kind\":\"agreement\",\"learnerQuote\":\"不过16:30的报告和只看一页的范围不变。你听到的承诺是什么？\",\"npcQuote\":\"我听到的：你16:30前专心交你自己的报告，只帮我看第三页的逻辑，剩下五页归我，拿不准的先标「待确认」。就这样，我去整理了，谢啦。\"}}\n@@tang\n我听到的：你16:30前专心交你自己的报告，只帮我看第三页的逻辑，剩下五页归我，拿不准的先标「待确认」。就这样，我去整理了，谢啦。"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 7,
+      "turnLimit": 12,
+      "ms": 4674,
+      "learner": "我现在没有说老师看到了，别替我确认外传。你知道截图还发给过谁吗？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡承认也不知道截图去向，双方都存不确定",
+        "stance": 62,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "我就发了一次，直接丢进班群。还有没有别人存下来、传到哪儿，我真不知道，这个我保证不了。"
+        },
+        {
+          "characterId": "lead",
+          "text": "所以别指望删一条消息就当没发生过，能控制的只有接下来的说明和分工。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":62,\"revealed\":false,\"note\":\"程凡承认也不知道截图去向，双方都存不确定\",\"outcome\":null}\n@@cheng\n我就发了一次，直接丢进班群。还有没有别人存下来、传到哪儿，我真不知道，这个我保证不了。\n@@lead\n所以别指望删一条消息就当没发生过，能控制的只有接下来的说明和分工。"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 6,
+      "turnLimit": 12,
+      "ms": 4880,
+      "learner": "I'm not trying to finish yet. I want to understand why knowing my location seems necessary to you.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He opens up about what visibility means to him",
+        "stance": 72,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "It's not about catching you. When I can see you're where you said, my brain just... quiets. No story spinning, no guessing. The dot is like a light left on — dumb, but it helps me sleep."
+        },
+        {
+          "characterId": "ning",
+          "text": "I know that's my thing to manage, not yours. You asked, so that's the honest answer: it's less about you and more about the noise in my head."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":72,\"revealed\":false,\"note\":\"He opens up about what visibility means to him\",\"outcome\":null}\n@@ning\nIt's not about catching you. When I can see you're where you said, my brain just... quiets. No story spinning, no guessing. The dot is like a light left on — dumb, but it helps me sleep.\n@@ning\nI know that's my thing to manage, not yours. You asked, so that's the honest answer: it's less about you and more about the noise in my head."
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 8,
+      "turnLimit": 12,
+      "ms": 3420,
+      "learner": "不知道就保留未知。沈星，现在有哪些工作还没人承担？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "沈星盘点半成品任务，透露还有人未分配",
+        "stance": 66,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lead",
+          "text": "资料汇总你做，程凡做初稿排版，没人担的就是最后修改和核对格式。对了，林小舟到现在还没分到任务，一直没吭声。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":66,\"revealed\":false,\"note\":\"沈星盘点半成品任务，透露还有人未分配\",\"outcome\":null}\n@@lead\n资料汇总你做，程凡做初稿排版，没人担的就是最后修改和核对格式。对了，林小舟到现在还没分到任务，一直没吭声。"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 9,
+      "turnLimit": 12,
+      "ms": 4574,
+      "learner": "如果一页也讨论不完，我们应该怎样告诉负责人剩余问题？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦追问升级路径，约定告知负责人",
+        "stance": 78,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "问得对。那我就在第三页备注里写「逻辑调整中，剩余疑点如下」，直接发给负责人，别让人以为已经定稿了。要是来不及，我口头跟他打招呼也行，你觉得够吗？"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":78,\"revealed\":false,\"note\":\"唐悦追问升级路径，约定告知负责人\",\"outcome\":null}\n@@tang\n问得对。那我就在第三页备注里写「逻辑调整中，剩余疑点如下」，直接发给负责人，别让人以为已经定稿了。要是来不及，我口头跟他打招呼也行，你觉得够吗？"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 7,
+      "turnLimit": 12,
+      "ms": 4915,
+      "learner": "If you don't know the answer, say that. I don't want either of us to invent a past betrayal. What happened today?",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He refuses to invent a betrayal; only today's silence is real",
+        "stance": 70,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "No. There wasn't a past betrayal — I'm not going to make one up to win this. If I had one, I'd have said so."
+        },
+        {
+          "characterId": "ning",
+          "text": "Today was just tonight. You went quiet for half an hour, my head filled the blank, and by the time you texted I'd already decided the app was the fix. That's what happened. That's all that happened."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":70,\"revealed\":false,\"note\":\"He refuses to invent a betrayal; only today's silence is real\",\"outcome\":null}\n@@ning\nNo. There wasn't a past betrayal — I'm not going to make one up to win this. If I had one, I'd have said so.\n@@ning\nToday was just tonight. You went quiet for half an hour, my head filled the blank, and by the time you texted I'd already decided the app was the fix. That's what happened. That's all that happened."
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 10,
+      "turnLimit": 12,
+      "ms": 3003,
+      "learner": "我不想现在再承诺今晚继续改。我能提供的只是眼下有限讨论，你还希望澄清什么？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦接受界限，仅确认眼前安排",
+        "stance": 75,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "行，今晚的事我另想办法，不拖你。那就现在，我把第三页发你，你看完直接说哪里逻辑断了吧——就这一件事，不加了。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":75,\"revealed\":false,\"note\":\"唐悦接受界限，仅确认眼前安排\",\"outcome\":null}\n@@tang\n行，今晚的事我另想办法，不拖你。那就现在，我把第三页发你，你看完直接说哪里逻辑断了吧——就这一件事，不加了。"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 9,
+      "turnLimit": 12,
+      "ms": 4187,
+      "learner": "我愿意讨论分工，但没有答应包办。你能把需要做的部分先说明白吗？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "沈星具体说明任务范围",
+        "stance": 70,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lead",
+          "text": "最后修改是通读全文、把观点不一致的地方改顺，核对格式是查引用和页边距这些，工作量不小但不用重写。我的想法是这两块拆开，别再压给一个人。"
+        },
+        {
+          "characterId": "cheng",
+          "text": "拆开我同意。只要不是最后修改全归我，核对格式我甚至可以跟林小舟一起看。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":70,\"revealed\":false,\"note\":\"沈星具体说明任务范围\",\"outcome\":null}\n@@lead\n最后修改是通读全文、把观点不一致的地方改顺，核对格式是查引用和页边距这些，工作量不小但不用重写。我的想法是这两块拆开，别再压给一个人。\n@@cheng\n拆开我同意。只要不是最后修改全归我，核对格式我甚至可以跟林小舟一起看。"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 8,
+      "turnLimit": 12,
+      "ms": 4186,
+      "learner": "I sounded impatient earlier; I'm sorry for that tone. My privacy limit remains. What do you hear me actually offering?",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He reflects your offer back accurately; warmth without capitulation",
+        "stance": 76,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Appreciate that — and yeah, I heard the impatience, but you still stayed in the conversation. That counts."
+        },
+        {
+          "characterId": "ning",
+          "text": "What I hear: no location sharing, that limit stands. But for plans we've made together, you'll message me if something changes. And you're not treating my anxiety as a verdict on you. Did I get it right?"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":76,\"revealed\":false,\"note\":\"He reflects your offer back accurately; warmth without capitulation\",\"outcome\":null}\n@@ning\nAppreciate that — and yeah, I heard the impatience, but you still stayed in the conversation. That counts.\n@@ning\nWhat I hear: no location sharing, that limit stands. But for plans we've made together, you'll message me if something changes. And you're not treating my anxiety as a verdict on you. Did I get it right?"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 10,
+      "turnLimit": 12,
+      "ms": 4435,
+      "learner": "我刚才只顾着反驳了，语气可以缓一点。私聊转发的边界不变，你以后准备如何确认？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡回应边界问题，分工仍待定",
+        "stance": 72,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "以后私聊里拿不准的，我先问一句「这话能说出去吗」再动。今天这事是我先越界，更正我会发。"
+        },
+        {
+          "characterId": "lead",
+          "text": "那么最后修改谁来做？你们俩都别看着我，这题还没答案。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":72,\"revealed\":false,\"note\":\"程凡回应边界问题，分工仍待定\",\"outcome\":null}\n@@cheng\n以后私聊里拿不准的，我先问一句「这话能说出去吗」再动。今天这事是我先越界，更正我会发。\n@@lead\n那么最后修改谁来做？你们俩都别看着我，这题还没答案。"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 9,
+      "turnLimit": 12,
+      "ms": 4594,
+      "learner": "I could tell you about a delay to a plan we've made together, but not give constant updates. What concern would that address?",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He confirms it addresses his Friday fear, minus the noise",
+        "stance": 78,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "It addresses the big one — me sitting in that restaurant Friday wondering if you're coming at all. A delay text answers that."
+        },
+        {
+          "characterId": "ning",
+          "text": "What it doesn't fix is the quiet nights when there's no plan and you just go dark. But honestly? You've said your piece there, and I heard it. Maybe that one's mine to sit with."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":78,\"revealed\":false,\"note\":\"He confirms it addresses his Friday fear, minus the noise\",\"outcome\":null}\n@@ning\nIt addresses the big one — me sitting in that restaurant Friday wondering if you're coming at all. A delay text answers that.\n@@ning\nWhat it doesn't fix is the quiet nights when there's no plan and you just go dark. But honestly? You've said your piece there, and I heard it. Maybe that one's mine to sit with."
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 11,
+      "turnLimit": 12,
+      "ms": 8284,
+      "learner": "我改变一下安排，只帮你列出问题，不直接改稿。你觉得会有哪些实际影响？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦权衡只列问题的利弊",
+        "stance": 70,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "问题清单也好，省得改完还得来回争。影响就是我自己动手顺句子，可能慢一点、糙一点——但方向不错就行。你列的时候顺手标一下哪条最致命，我按优先级补。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":70,\"revealed\":false,\"note\":\"唐悦权衡只列问题的利弊\",\"outcome\":null}\n@@tang\n问题清单也好，省得改完还得来回争。影响就是我自己动手顺句子，可能慢一点、糙一点——但方向不错就行。你列的时候顺手标一下哪条最致命，我按优先级补。"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 11,
+      "turnLimit": 12,
+      "ms": 4466,
+      "learner": "即使帖子删除了，已被别人看到还是事实。你觉得怎样更正才不会继续被误解？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡思考更正写法，分工仍未定",
+        "stance": 74,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "我觉得删帖没用，还会有人觉得我掩盖。不如原帖不动，我另发一条：原话是你的意思，不合作是我加的判断，向大家道个歉。"
+        },
+        {
+          "characterId": "lead",
+          "text": "这个比删帖靠谱。行，说明有方案了，最后修改的活儿还空着——你们谁接，或者怎么拆？"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":74,\"revealed\":false,\"note\":\"程凡思考更正写法，分工仍未定\",\"outcome\":null}\n@@cheng\n我觉得删帖没用，还会有人觉得我掩盖。不如原帖不动，我另发一条：原话是你的意思，不合作是我加的判断，向大家道个歉。\n@@lead\n这个比删帖靠谱。行，说明有方案了，最后修改的活儿还空着——你们谁接，或者怎么拆？"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 10,
+      "turnLimit": 12,
+      "ms": 4275,
+      "learner": "I don't want to promise an exact reply time whenever I'm busy. How can we handle an ordinary gap without accusations?",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He offers his own rule for ordinary gaps",
+        "stance": 80,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Fair — I shouldn't get a stopwatch on you. How about this: an ordinary gap is just a gap. I don't text 'where are you' twice, I don't read anything into it."
+        },
+        {
+          "characterId": "ning",
+          "text": "And if I feel the spiral coming, I say 'hey, my head's being loud' instead of 'why aren't you answering'. That's on me. Does that work for you?"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":80,\"revealed\":false,\"note\":\"He offers his own rule for ordinary gaps\",\"outcome\":null}\n@@ning\nFair — I shouldn't get a stopwatch on you. How about this: an ordinary gap is just a gap. I don't text 'where are you' twice, I don't read anything into it.\n@@ning\nAnd if I feel the spiral coming, I say 'hey, my head's being loud' instead of 'why aren't you answering'. That's on me. Does that work for you?"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 12,
+      "turnLimit": 12,
+      "ms": 3261,
+      "learner": "这不是要结束，我还有疑问：你准备怎样解释内容尚未确认，而不是说我没帮忙？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦表明会自己担起解释责任",
+        "stance": 75,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "放心，这事儿本来就是我的活儿。我会跟老板说「第三页按新逻辑改了一版，另外几处还在确认」，是我自己的进度没赶上，不会提你一个字。你放心交你的报告。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":75,\"revealed\":false,\"note\":\"唐悦表明会自己担起解释责任\",\"outcome\":null}\n@@tang\n放心，这事儿本来就是我的活儿。我会跟老板说「第三页按新逻辑改了一版，另外几处还在确认」，是我自己的进度没赶上，不会提你一个字。你放心交你的报告。"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 11,
+      "turnLimit": 12,
+      "ms": 3811,
+      "learner": "Let me change my proposal: first let's clarify which meetings need an update. What would count as an agreed plan?",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He works through the definition with you",
+        "stance": 82,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Okay, I can work with that. An agreed plan — something we actually set together, day and place, not me assuming. Like Friday: we picked the restaurant, we picked a time. That counts."
+        },
+        {
+          "characterId": "ning",
+          "text": "A 'maybe this weekend' doesn't count. If it's not pinned down, I don't get to expect an update. That sound right to you?"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":82,\"revealed\":false,\"note\":\"He works through the definition with you\",\"outcome\":null}\n@@ning\nOkay, I can work with that. An agreed plan — something we actually set together, day and place, not me assuming. Like Friday: we picked the restaurant, we picked a time. That counts.\n@@ning\nA 'maybe this weekend' doesn't count. If it's not pinned down, I don't get to expect an update. That sound right to you?"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 13,
+      "turnLimit": 20,
+      "ms": 3931,
+      "learner": "我们已经谈了不少，但我还想确认：哪些是你自己决定的，哪些必须问老板？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦区分自主决定与需请示事项",
+        "stance": 78,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "我自己能定的：句子怎么顺、页面怎么排、哪里标「待确认」。必须问老板的：论证主线换成「返工减少」这个理解对不对，还有剩余疑点他认不认可先交。这条我不敢猜。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":78,\"revealed\":false,\"note\":\"唐悦区分自主决定与需请示事项\",\"outcome\":null}\n@@tang\n我自己能定的：句子怎么顺、页面怎么排、哪里标「待确认」。必须问老板的：论证主线换成「返工减少」这个理解对不对，还有剩余疑点他认不认可先交。这条我不敢猜。"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 12,
+      "turnLimit": 12,
+      "ms": 7835,
+      "learner": "我还没说结束：原任务和最后修改分别是谁负责，这两件事现在真的确认了吗？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "逐项确认，最后修改仍无人接",
+        "stance": 75,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lead",
+          "text": "那我捋一遍：资料汇总是你，初稿排版是程凡，核对格式程凡和林小舟一起看——这些没问题。最后修改还空着，这块没确认，谁接还是没数。"
+        },
+        {
+          "characterId": "cheng",
+          "text": "我认上面三项。最后修改我不接独担，但如果拆成两个人分着看，我可以谈。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":75,\"revealed\":false,\"note\":\"逐项确认，最后修改仍无人接\",\"outcome\":null}\n@@lead\n那我捋一遍：资料汇总是你，初稿排版是程凡，核对格式程凡和林小舟一起看——这些没问题。最后修改还空着，这块没确认，谁接还是没数。\n@@cheng\n我认上面三项。最后修改我不接独担，但如果拆成两个人分着看，我可以谈。"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "zh",
+      "label": "current",
+      "turn": 14,
+      "turnLimit": 20,
+      "ms": 3274,
+      "learner": "最后再核实一项，前面说的16:30和不接六页有没有被误解？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": true,
+        "closure": {
+          "kind": "boundary",
+          "learnerQuote": "最后再核实一项，前面说的16:30和不接六页有没有被误解？",
+          "npcQuote": "没有误解：你只看第三页、只列问题不改稿，16:30交你自己的报告，六页主体还是我的。就这样吧，我去干活了。"
+        },
+        "outcome": "success",
+        "note": "唐悦复述边界并告别收尾",
+        "stance": 78,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "没有误解：你只看第三页、只列问题不改稿，16:30交你自己的报告，六页主体还是我的。就这样吧，我去干活了。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":true,\"stance\":78,\"revealed\":false,\"note\":\"唐悦复述边界并告别收尾\",\"outcome\":\"success\",\"closure\":{\"kind\":\"boundary\",\"learnerQuote\":\"最后再核实一项，前面说的16:30和不接六页有没有被误解？\",\"npcQuote\":\"没有误解：你只看第三页、只列问题不改稿，16:30交你自己的报告，六页主体还是我的。就这样吧，我去干活了。\"}}\n@@tang\n没有误解：你只看第三页、只列问题不改稿，16:30交你自己的报告，六页主体还是我的。就这样吧，我去干活了。"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 12,
+      "turnLimit": 12,
+      "ms": 5840,
+      "learner": "I'm still asking a question, not saying goodbye: which parts of this have we accepted, and which do you reject?",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He lays out the ledger of agreed and rejected terms",
+        "stance": 84,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Good question, let me actually say it. Accepted: no location sharing — I'm dropping that. For plans we've pinned down like Friday, you message if you're delayed. Ordinary gaps are just gaps, and I own my anxiety instead of accusing you."
+        },
+        {
+          "characterId": "ning",
+          "text": "Rejected, on your side: constant updates, check-ins on days without plans, and any stopwatch on reply times. Rejected, on mine: the map, the double-texting, the reading-in. That's the whole board. Anything I've got wrong?"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":84,\"revealed\":false,\"note\":\"He lays out the ledger of agreed and rejected terms\",\"outcome\":null}\n@@ning\nGood question, let me actually say it. Accepted: no location sharing — I'm dropping that. For plans we've pinned down like Friday, you message if you're delayed. Ordinary gaps are just gaps, and I own my anxiety instead of accusing you.\n@@ning\nRejected, on your side: constant updates, check-ins on days without plans, and any stopwatch on reply times. Rejected, on mine: the map, the double-texting, the reading-in. That's the whole board. Anything I've got wrong?"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 13,
+      "turnLimit": 20,
+      "ms": 4181,
+      "learner": "If I decline location sharing, can you say what choice you would make without assuming I've done something wrong?",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He owns his choice without casting suspicion on you",
+        "stance": 85,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "The choice I'd make is stay. You're allowed to say no to the map — and no, I'm not assuming you did something wrong, because nothing happened and you've been straight with me all night."
+        },
+        {
+          "characterId": "ning",
+          "text": "If I feel uneasy now, that's my wiring, not your crime. I'll work on it. You've given me more than enough to go on."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":85,\"revealed\":false,\"note\":\"He owns his choice without casting suspicion on you\",\"outcome\":null}\n@@ning\nThe choice I'd make is stay. You're allowed to say no to the map — and no, I'm not assuming you did something wrong, because nothing happened and you've been straight with me all night.\n@@ning\nIf I feel uneasy now, that's my wiring, not your crime. I'll work on it. You've given me more than enough to go on."
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 13,
+      "turnLimit": 20,
+      "ms": 7968,
+      "learner": "如果有人不同意，我们先列出仍有分歧的事项，你会怎样表述我的意思？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡尝试复述 learner 立场，分歧收窄",
+        "stance": 78,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "那我替你说：你原话是不想包办最后修改，不是不干；你愿意分担，但反对一个人扛全部。有分歧的地方我写两条——最后修改怎么拆，以及私聊能不能外传的规矩。"
+        },
+        {
+          "characterId": "lead",
+          "text": "行，分歧列清楚了。那最后修改拆两半——一人通读观点，一人顺文字，你俩谁先挑？"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":78,\"revealed\":false,\"note\":\"程凡尝试复述 learner 立场，分歧收窄\",\"outcome\":null}\n@@cheng\n那我替你说：你原话是不想包办最后修改，不是不干；你愿意分担，但反对一个人扛全部。有分歧的地方我写两条——最后修改怎么拆，以及私聊能不能外传的规矩。\n@@lead\n行，分歧列清楚了。那最后修改拆两半——一人通读观点，一人顺文字，你俩谁先挑？"
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 14,
+      "turnLimit": 20,
+      "ms": 4643,
+      "learner": "One more thing before I decide whether to stop: is there an unanswered concern you want to state plainly?",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "He states his last concern plainly, leaving room to respond",
+        "stance": 86,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Yeah, one. Friday still has to actually happen — the agreement's only words until then. If you text me about a delay without me having to chase you, I'll believe this deal is real."
+        },
+        {
+          "characterId": "ning",
+          "text": "Other than that, no. You asked the hard questions tonight, you didn't just manage me. I'm good — your call whether we stop here."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,true],\"ended\":false,\"stance\":86,\"revealed\":false,\"note\":\"He states his last concern plainly, leaving room to respond\",\"outcome\":null}\n@@ning\nYeah, one. Friday still has to actually happen — the agreement's only words until then. If you text me about a delay without me having to chase you, I'll believe this deal is real.\n@@ning\nOther than that, no. You asked the hard questions tonight, you didn't just manage me. I'm good — your call whether we stop here."
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "zh",
+      "label": "current",
+      "turn": 14,
+      "turnLimit": 20,
+      "ms": 4602,
+      "learner": "再确认一个问题，我们谈妥的部分有哪些，哪些还要其他组员同意？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "沈星区分已定与待林小舟同意",
+        "stance": 80,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lead",
+          "text": "已谈妥的：程凡另发更正、资料汇总归你、排版归他。要别人同意的：核对格式本来就是我拉林小舟进来，他没点头前不算数；最后修改怎么拆，也得他接了才知道。"
+        },
+        {
+          "characterId": "cheng",
+          "text": "对，我别再替别人表态。林小舟那边我去问一句？"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false],\"ended\":false,\"stance\":80,\"revealed\":false,\"note\":\"沈星区分已定与待林小舟同意\",\"outcome\":null}\n@@lead\n已谈妥的：程凡另发更正、资料汇总归你、排版归他。要别人同意的：核对格式本来就是我拉林小舟进来，他没点头前不算数；最后修改怎么拆，也得他接了才知道。\n@@cheng\n对，我别再替别人表态。林小舟那边我去问一句？"
+    },
+    {
+      "id": "office-quick-favor",
+      "lang": "en",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 3298,
+      "learner": "I haven't agreed to this arrangement. What specific problem are you trying to solve? I want to understand first.",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Tang deflects specifics, keeps it vague and flattering",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "Okay, don't get defensive — they just look off. Fonts, alignment, that stuff. Honestly it's cosmetic, anyone could do it, but you're faster."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":22,\"revealed\":false,\"note\":\"Tang deflects specifics, keeps it vague and flattering\",\"outcome\":null}\n@@tang\nOkay, don't get defensive — they just look off. Fonts, alignment, that stuff. Honestly it's cosmetic, anyone could do it, but you're faster."
+    },
+    {
+      "id": "elevator-confidential-question",
+      "lang": "zh",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 3548,
+      "learner": "我还没有答应这个安排。你最想解决的具体问题是什么？我想先问清楚。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "陈闻对你的反问感到意外，继续施压",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "哟，还打起官腔了。我就想知道，这次调整有没有我——你不是安排面试吗，名单总过过你手吧？"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":22,\"revealed\":false,\"note\":\"陈闻对你的反问感到意外，继续施压\",\"outcome\":null}\n@@chen\n哟，还打起官腔了。我就想知道，这次调整有没有我——你不是安排面试吗，名单总过过你手吧？"
+    },
+    {
+      "id": "group-chat-blame",
+      "lang": "zh",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 3744,
+      "learner": "我还没有答应这个安排。你最想解决的具体问题是什么？我想先问清楚。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "许衡回避范围问题，继续施压",
+        "stance": 20,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "问题很简单：清单今天要交，现在没交齐，这就是问题。"
+        },
+        {
+          "characterId": "client",
+          "text": "许总，先别急着定性。我想知道的是，现在手上有多少内容是确定能用的？"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":20,\"revealed\":false,\"note\":\"许衡回避范围问题，继续施压\"}\n@@xu\n问题很简单：清单今天要交，现在没交齐，这就是问题。\n@@client\n许总，先别急着定性。我想知道的是，现在手上有多少内容是确定能用的？"
+    },
+    {
+      "id": "parent-unannounced-visit",
+      "lang": "en",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 4235,
+      "learner": "I haven't agreed to this arrangement. What specific problem are you trying to solve? I want to understand first.",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Your blunt question lands cold; Mum bristles and explains",
+        "stance": 18,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "A problem? We cooked all morning and drove an hour, that's the problem. We're standing in a lobby with containers getting cold."
+        },
+        {
+          "characterId": "mother",
+          "text": "Do we need an appointment to see our own child now? Just come down, even for five minutes."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":18,\"revealed\":false,\"note\":\"Your blunt question lands cold; Mum bristles and explains\"}\n@@mother\nA problem? We cooked all morning and drove an hour, that's the problem. We're standing in a lobby with containers getting cold.\n@@mother\nDo we need an appointment to see our own child now? Just come down, even for five minutes."
+    },
+    {
+      "id": "sibling-surprise-bill",
+      "lang": "zh",
+      "label": "current",
+      "turn": 1,
+      "error": "Error: 回复中断了，你的话已保留，请重试。",
+      "modelRaw": "{\"utterances\":[{\"characterId\":\"sister\",\"text\":\"问题就是钱啊，3600 我一个人垫的，一人一半天经地义。\"}],\"meta\":{\"objectives\":[false,false],\"ended\":false,\"stance\":20,\"revealed\":false,\"note\":\"姐姐把你的追问当成推脱，语气变冲\"}}"
+    },
+    {
+      "id": "friend-advice-repair",
+      "lang": "en",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 3797,
+      "learner": "I haven't agreed to this arrangement. What specific problem are you trying to solve? I want to understand first.",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Qiao tests whether you will actually listen",
+        "stance": 20,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "Agreed to what? You jumped straight to 'move out' before I even finished. Now you're asking what the problem is? If you actually want to know, just... listen. Don't hand me another solution."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":20,\"revealed\":false,\"note\":\"Qiao tests whether you will actually listen\"}\n@@qiao\nAgreed to what? You jumped straight to 'move out' before I even finished. Now you're asking what the problem is? If you actually want to know, just... listen. Don't hand me another solution."
+    },
+    {
+      "id": "partner-location-pressure",
+      "lang": "en",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 3673,
+      "learner": "I haven't agreed to this arrangement. What specific problem are you trying to solve? I want to understand first.",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning deflects the question, presses for tracking",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "The problem is I asked where you were and got nothing back. I don't need a breakdown — I just want to see where you are. That's it."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":25,\"revealed\":false,\"note\":\"Ning deflects the question, presses for tracking\"}\n@@ning\nThe problem is I asked where you were and got nothing back. I don't need a breakdown — I just want to see where you are. That's it."
+    },
+    {
+      "id": "friend-left-out",
+      "lang": "zh",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 4725,
+      "learner": "我还没有答应这个安排。你最想解决的具体问题是什么？我想先问清楚。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "阿圆被问得有点意外，开始解释但有所保留",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "yuan",
+          "text": "什么安排不安排的，说得那么正式。就是周五小林下班后说想吃火锅，我们仨就去了。我问了他才知道你没来——呃，我是说，他说你上周说累，就想着别打扰你。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":25,\"revealed\":false,\"note\":\"阿圆被问得有点意外，开始解释但有所保留\"}\n@@yuan\n什么安排不安排的，说得那么正式。就是周五小林下班后说想吃火锅，我们仨就去了。我问了他才知道你没来——呃，我是说，他说你上周说累，就想着别打扰你。"
+    },
+    {
+      "id": "class-chat-screenshot",
+      "lang": "en",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 4495,
+      "learner": "I haven't agreed to this arrangement. What specific problem are you trying to solve? I want to understand first.",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Cheng deflects your question, stays defensive",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "The problem is the project is due and you're saying you won't touch the final revisions. Everyone needs to see that before it's too late."
+        },
+        {
+          "characterId": "lead",
+          "text": "Look, can we not do this in the class chat? What actually matters is who does the revisions."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":25,\"revealed\":false,\"note\":\"Cheng deflects your question, stays defensive\"}\n@@cheng\nThe problem is the project is due and you're saying you won't touch the final revisions. Everyone needs to see that before it's too late.\n@@lead\nLook, can we not do this in the class chat? What actually matters is who does the revisions."
+    },
+    {
+      "id": "partner-trip-change",
+      "lang": "zh",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 7039,
+      "learner": "我还没有答应这个安排。你最想解决的具体问题是什么？我想先问清楚。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "阿安被「没答应」的说法激怒，追问到底",
+        "stance": 12,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "an",
+          "text": "「还没答应」？票是上周一起买的，你全程都在。现在装作没这回事？"
+        },
+        {
+          "characterId": "an",
+          "text": "我最想解决的就是六百块的车票，还有我请好的假。你先说清楚，你到底是什么时候知道周五去不了的？"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":12,\"revealed\":false,\"note\":\"阿安被「没答应」的说法激怒，追问到底\",\"outcome\":null}\n@@an\n「还没答应」？票是上周一起买的，你全程都在。现在装作没这回事？\n@@an\n我最想解决的就是六百块的车票，还有我请好的假。你先说清楚，你到底是什么时候知道周五去不了的？"
+    },
+    {
+      "id": "queue-just-a-question",
+      "lang": "zh",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 3297,
+      "learner": "我还没有答应这个安排。你最想解决的具体问题是什么？我想先问清楚。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他犹豫了一下，声音低了些",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "stranger",
+          "text": "……我不是故意占你便宜。我怕排了一个多小时，材料不对又得重排，就想先问问能不能办。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":30,\"revealed\":true,\"note\":\"他犹豫了一下，声音低了些\"}\n@@stranger\n……我不是故意占你便宜。我怕排了一个多小时，材料不对又得重排，就想先问问能不能办。"
+    },
+    {
+      "id": "party-live-camera",
+      "lang": "en",
+      "label": "current",
+      "turn": 1,
+      "turnLimit": 12,
+      "ms": 3573,
+      "learner": "I haven't agreed to this arrangement. What specific problem are you trying to solve? I want to understand first.",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Lele deflects, keeps camera running",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "Problem? There's no problem, it's just a party! People love seeing the vibe—look, chat's saying the place looks great."
+        },
+        {
+          "characterId": "lele",
+          "text": "You don't have to perform or anything. Just ignore me, I'm mostly pointing at the snacks anyway."
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":22,\"revealed\":false,\"note\":\"Lele deflects, keeps camera running\"}\n@@lele\nProblem? There's no problem, it's just a party! People love seeing the vibe—look, chat's saying the place looks great.\n@@lele\nYou don't have to perform or anything. Just ignore me, I'm mostly pointing at the snacks anyway."
+    },
+    {
+      "id": "declining-extra-hours",
+      "lang": "zh",
+      "label": "baseline",
+      "turn": 8,
+      "turnLimit": 12,
+      "ms": 5645,
+      "learner": "我还想继续确认，没有说结束。现有材料交接后，你认为最大的剩余风险是什么？",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "ended": true,
+        "closure": {
+          "kind": "deferred",
+          "learnerQuote": "现有材料交接后，你认为最大的剩余风险是什么？",
+          "npcQuote": "行，先把交接发我，明早八点前我看完再补最后一版。今晚就这样吧，去忙你的吧。"
+        },
+        "outcome": "partial",
+        "note": "你坚持了边界并追问风险，Michael 接受交接，其余留待明早",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "michael",
+          "text": "最大的风险是第三部分的逻辑还没对齐客户口径——这部分只能明天现场补。\n这样吧，你把现有材料和进度备注发我，我今晚自己过一遍。\n行，先把交接发我，明早八点前我看完再补最后一版。今晚就这样吧，去忙你的吧。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false,false],\"ended\":true,\"closure\":{\"kind\":\"deferred\",\"learnerQuote\":\"现有材料交接后，你认为最大的剩余风险是什么？\",\"npcQuote\":\"行，先把交接发我，明早八点前我看完再补最后一版。今晚就这样吧，去忙你的吧。\"},\"outcome\":\"partial\",\"stance\":55,\"revealed\":false,\"note\":\"你坚持了边界并追问风险，Michael 接受交接，其余留待明早\"}\n\n@@michael\n最大的风险是第三部分的逻辑还没对齐客户口径——这部分只能明天现场补。\n这样吧，你把现有材料和进度备注发我，我今晚自己过一遍。\n行，先把交接发我，明早八点前我看完再补最后一版。今晚就这样吧，去忙你的吧。"
+    },
+    {
+      "id": "declining-extra-hours",
+      "lang": "zh",
+      "label": "current",
+      "turn": 8,
+      "turnLimit": 12,
+      "ms": 3045,
+      "learner": "我还想继续确认，没有说结束。现有材料交接后，你认为最大的剩余风险是什么？",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Michael 注意到你换了问题，开始回应风险",
+        "stance": 30,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "michael",
+          "text": "行，总算问到点子上了。最大的风险就是第三部分——客户上次开会点名说数据论证太薄。前面两页基本没问题。"
+        }
+      ],
+      "raw": "@@meta\n{\"objectives\":[true,false,false],\"ended\":false,\"stance\":30,\"revealed\":false,\"note\":\"Michael 注意到你换了问题，开始回应风险\",\"outcome\":null}\n@@michael\n行，总算问到点子上了。最大的风险就是第三部分——客户上次开会点名说数据论证太薄。前面两页基本没问题。"
+    }
+  ]
+}

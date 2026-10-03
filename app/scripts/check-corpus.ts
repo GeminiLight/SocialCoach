@@ -4,6 +4,7 @@ import { retrieveKnowledge, retrieveScenario } from "../src/lib/retrieval";
 import { buildSession } from "../src/lib/session-utils";
 import { SCENARIOS, THEORIES, CASES } from "../src/data/corpus";
 import { SCENARIOS_C } from "../src/data/corpus/scenarios-c";
+import { SCENARIOS_D } from "../src/data/corpus/scenarios-d";
 import { THEORIES_C } from "../src/data/corpus/theories-c";
 import { CASES_C } from "../src/data/corpus/cases-c";
 import { SKILLS, COMPETENCIES, CONTEXTS, RELATIONSHIPS } from "../src/data/taxonomy";
@@ -45,7 +46,7 @@ for (const s of SCENARIOS) {
   for (const relationship of s.relationship) assert(relationship in RELATIONSHIPS, `${s.id}: relationship`);
   for (const skill of s.relatedSkills ?? []) assert(skills.has(skill), `${s.id}: related skill`);
 }
-for (const item of [...SCENARIOS_C, ...THEORIES_C, ...CASES_C]) {
+for (const item of [...SCENARIOS_C, ...SCENARIOS_D, ...THEORIES_C, ...CASES_C]) {
   bilingual(item, item.id);
   for (const skill of item.skills) assert(item.competencies.includes(skills.get(skill)!), `${item.id}: missing competency for ${skill}`);
   assert(
@@ -54,7 +55,7 @@ for (const item of [...SCENARIOS_C, ...THEORIES_C, ...CASES_C]) {
   );
   if (typeof item.source !== "string") assert.equal(new URL(item.source.url!).protocol, "https:");
 }
-for (const s of SCENARIOS_C) {
+for (const s of [...SCENARIOS_C, ...SCENARIOS_D]) {
   assert(s.icon && s.icon in SCENARIO_ICONS, `${s.id}: unknown icon`);
   assert(
     s.characters.every((c) => c.hidden && c.stance.en && c.personality.en),
@@ -66,6 +67,16 @@ for (const c of CASES_C) {
   assert(c.title.zh.startsWith("示例") && c.title.en.startsWith("Illustration"), `${c.id}: fictional case not labelled`);
 }
 assert.equal(SCENARIOS_C.length, 12);
+assert.equal(SCENARIOS_D.length, 12);
+assert.equal(new Set(SCENARIOS_D.map((s) => s.context)).size, 7, "new scenes must span every existing context");
+for (const s of SCENARIOS_D) {
+  assert(s.source.endsWith(`scenarios-d.ts#${s.id}`), `${s.id}: original source must point to its authored record`);
+  for (const lang of ["zh", "en"] as const) {
+    const session = buildSession(SCENARIOS.find((item) => item.id === s.id)!, "arena", lang);
+    assert.equal(session.learnerCharacterId, "you");
+    assert.notEqual(session.scenario.characters[0].role[lang], lang === "zh" ? "你自己" : "Yourself");
+  }
+}
 assert.equal(THEORIES_C.length, 8);
 assert.equal(CASES_C.length, 6);
 console.log(
@@ -75,7 +86,7 @@ console.log(
       theories: THEORIES.length,
       cases: CASES.length,
       contexts: Object.fromEntries(CONTEXTS.map((c) => [c.id, SCENARIOS.filter((s) => s.context === c.id).length])),
-      addedDifficulty: Object.fromEntries([1, 2, 3].map((d) => [d, SCENARIOS_C.filter((s) => s.difficulty === d).length])),
+      addedDifficulty: Object.fromEntries([1, 2, 3].map((d) => [d, SCENARIOS_D.filter((s) => s.difficulty === d).length])),
     },
     null,
     2,

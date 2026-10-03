@@ -184,6 +184,10 @@ const dict = {
   arena_my_goals: { zh: "我的目标", en: "My goals" },
 
   // practice
+  arena_recent: { zh: "本次新增", en: "New scenes" },
+  arena_recent_count: { zh: "新增 {n} 个文字场景", en: "{n} new text scenes" },
+  arena_recent_title: { zh: "那些突然不好接的话", en: "The moments that catch you off guard" },
+  arena_recent_detail: { zh: "电梯里的套话、群里被点名、没商量过的账单……慢慢谈，由你决定何时收尾。", en: "A question in the elevator, blame in the group chat, a bill you never agreed to… Take your time and choose when to finish." },
   pr_briefing: { zh: "场景简报", en: "Briefing" },
   pr_you_play: { zh: "你扮演", en: "You play" },
   pr_characters: { zh: "对话角色", en: "Characters" },
@@ -198,6 +202,15 @@ const dict = {
   pr_end_confirm: { zh: "现在结束？你可以直接进入复盘。", en: "End now? You'll go straight to the debrief." },
   pr_turns_left: { zh: "还剩 {n} 回合", en: "{n} turns left" },
   pr_last_turn: { zh: "最后一回合", en: "Last turn" },
+  pr_segment_budget: { zh: "先练 {n} 回合，可继续", en: "Start with {n} turns · extend anytime" },
+  pr_turn_progress: { zh: "已聊 {n} 回合 · 随时可收尾", en: "{n} turns · finish when ready" },
+  pr_source_original: { zh: "SocialCoach 原创虚构练习 · {date}", en: "Original fictional practice by SocialCoach · {date}" },
+  pr_review_action: { zh: "收尾 / 复盘", en: "Finish / review" },
+  pr_checkpoint_segment: { zh: "这一段聊完了，还想接着说吗？", en: "A segment complete. Have more to say?" },
+  pr_checkpoint_closure: { zh: "话题暂时落定了，还可以再聊。", en: "A point settled. You can keep talking." },
+  pr_checkpoint_withdrawal: { zh: "对方想收尾了，你可以再补充一句。", en: "They want to wrap up. You can add a final thought." },
+  pr_checkpoint_detail: { zh: "直接输入也能继续；之前的对话和约定都会保留。", en: "Reply below to continue. Your conversation and arrangements stay intact." },
+  pr_continue_more: { zh: "我还想聊", en: "Keep talking" },
   // The other side's position. Named after them, never scored as the learner's.
   pr_stance_unmoved: { zh: "还没松动", en: "not budging" },
   pr_stance_wavering: { zh: "有点动摇", en: "wavering" },

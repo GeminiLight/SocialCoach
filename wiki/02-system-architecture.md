@@ -38,7 +38,7 @@ SocialCoach/
 │   ├── src/components/           Shell / Radar / Knowledge / practice/{Chat,Briefing,Debrief}
 │   ├── src/data/
 │   │   ├── taxonomy.ts           5 CASEL × 34 技能 × 7 情境（分类的唯一来源）
-│   │   └── corpus/               theories(42) · cases(30) · scenarios-a(16)+b(18)+c(12)
+│   │   └── corpus/               theories(42) · cases(30) · scenarios-a(16)+b(18)+c(12)+d(12)
 │   ├── src/lib/                  llm · prompts · retrieval · types · i18n · api-utils
 │   │                             partial-json · format · session-utils · client-api · use-media
 │   ├── src/store/useApp.ts       全部客户端状态
@@ -73,11 +73,14 @@ profile/goals/proficiency/history
   ③ 检索 retrieval      纯本地函数 retrieveScenario()；优先相容角色，再放松可选约束
   ④ 适配 adaptation     LLM 重写 briefing / objectives / focus / why，不改场景事实
         │
-        ▼  POST /api/roleplay          （流式，每回合一次）
+        ▼  POST /api/roleplay          （流式，每回合一次；未显示台词的格式失败最多修复一次）
+  模型输出 {meta,utterances} JSON → roleplay-output.ts 校验、转换为原文本协议
   文本协议：开头 @@meta {objectives,ended,closure?,outcome,stance,revealed,note}，之后 @@<characterId> + 台词
-  meta 必须在前：放末尾时快模型经常整块不写（实测 6 回合只出 2 次）
+  模型历史保留每次真实 meta 与台词；旧记录无 meta 时只发送已有台词，不伪造过去进度
   stance 存进 session.stanceTrail，revealed 存 session.revealedAtTurn
-  客户端边流边解析（partial-json.ts）
+  JSON 片段转换为文本流供客户端预览，完整回复才写入 messages，最后一条 NPC 保存本轮 meta
+  初始段至少 12 回合，续聊同一 session 累计 +8；保留完整原话与承诺
+  有引文的收尾 / 段落边界 / 两次已回应沉默 → 可选择续聊；仅手动结束改变 status
   限时应答到点：客户端追加 role:"event" 的沉默消息再调一次，NPC 以角色身份接话；不计回合
         │
         ▼  POST /api/assess            （流式，正文先出，@@final 后带完整 JSON）
@@ -88,6 +91,8 @@ profile/goals/proficiency/history
         │
         ▼  applyReport() 写回 proficiency（有界、非负增量）
 ```
+
+文字场景可附 `simulationFacts`（双语事实 / 未知边界），仅传给 roleplay 的 simulation 视图；准备、提示与点评继续使用 learner 视图，避免私有事实变成标准答案。关联复测见 [文字连续性复盘](./81-postmortem-text-continuation.md)。
 
 这条链之外有一条**跨场次**的读取，只在「成长」页触发：
 

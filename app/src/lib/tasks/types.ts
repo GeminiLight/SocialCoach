@@ -47,6 +47,8 @@ export interface TurnInput {
   messages: ChatMessage[];
   lang: Lang;
   learnerName?: string;
+  /** Current segment boundary. Legacy requests start with at least 12 turns. */
+  turnLimit?: number;
 }
 
 export interface ReflectInput {

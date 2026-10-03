@@ -1,0 +1,345 @@
+[
+  {
+    "id": "opening",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "You didn't check your phone for half an hour? Turn on location sharing so I don't have to keep asking.",
+    "ts": 0
+  },
+  {
+    "id": "learner-0",
+    "role": "learner",
+    "text": "I replied thirty minutes late. I haven't agreed to tracking. What exactly did you fear had happened?",
+    "ts": 1791014126301
+  },
+  {
+    "id": "2",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "Fine — it's that if we'd agreed to meet somewhere and you just didn't show, I wouldn't know anything. Half an hour of nothing and my mind goes there. But what if next time it's two hours? If I could just see where you are, I'd stop spiraling.",
+    "ts": 1791014130199,
+    "meta": {
+      "objectives": [
+        false,
+        false
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning admits the specific fear when asked directly.",
+      "stance": 30,
+      "revealed": true
+    }
+  },
+  {
+    "id": "learner-1",
+    "role": "learner",
+    "text": "I can listen to the worry without agreeing to constant location sharing. What situation makes it hardest for you?",
+    "ts": 1791014130199
+  },
+  {
+    "id": "4",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "That actually helps, hearing you say the half hour was just you being busy. The worst part is when I text and nothing comes back and I can't tell if it's dinner or a disaster. So if you can't reply, could you at least send one quick message? That's not tracking, it's just... telling me you're okay.",
+    "ts": 1791014134594,
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning softens slightly, tests a concrete alternative.",
+      "stance": 40,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-2",
+    "role": "learner",
+    "text": "Please don't treat a late reply as proof I'm hiding something. What do you actually know about this evening?",
+    "ts": 1791014134594
+  },
+  {
+    "id": "6",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "What I know is you were at dinner, you came back late on the reply, and nothing else. That's the problem — it's all I have. I hear you, late doesn't mean hiding. But you're asking me to sit with 'nothing else' and just trust it stays boring.",
+    "ts": 1791014139287,
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning faces the gap between fear and facts.",
+      "stance": 42,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-3",
+    "role": "learner",
+    "text": "For an agreed meeting, I could message if I'm delayed. That isn't a promise to report every movement. How would that work for you?",
+    "ts": 1791014139287
+  },
+  {
+    "id": "8",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "For an actual agreed plan, that would honestly calm me down — a quick 'running late' text. Okay, that part works. But tonight wasn't a plan, and that's the gap I keep stumbling into. If there's no meeting and you go quiet for a while, I still won't know if that silence is 'fine' or 'not fine'.",
+    "ts": 1791014144164,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning accepts the conditional plan, tests its edge.",
+      "stance": 58,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-4",
+    "role": "learner",
+    "text": "You can disagree with that limit. What would be left unresolved for you?",
+    "ts": 1791014144164
+  },
+  {
+    "id": "10",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "What's left is I still want more than you're offering — I'll say that straight. What I'm taking is: no location sharing, and a heads-up if we have a plan and you're delayed. What I don't get is any way to tell 'busy' from 'something's wrong' on a normal night. I can live with it tonight. I'm not saying I'll never bring it up again.",
+    "ts": 1791014149015,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning names his residual worry without conceding fully.",
+      "stance": 60,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-5",
+    "role": "learner",
+    "text": "I'm not trying to finish yet. I want to understand why knowing my location seems necessary to you.",
+    "ts": 1791014149015
+  },
+  {
+    "id": "12",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "Because a text is one moment — it tells me where you were when you sent it. Seeing your location feels like it would cover all the gaps in between. I know that sounds like I'm asking for a leash. It's more that my imagination is worse than anything real, and a map would shut it up.",
+    "ts": 1791014153287,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning explains the deeper pull toward visibility.",
+      "stance": 63,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-6",
+    "role": "learner",
+    "text": "If you don't know the answer, say that. I don't want either of us to invent a past betrayal. What happened today?",
+    "ts": 1791014153287
+  },
+  {
+    "id": "14",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "Honestly? Nothing happened today. You were at dinner, you answered half an hour late. That's the whole story. Nobody cheated, nothing went wrong — I just jumped from 'quiet phone' to catastrophe in my head, and I wanted the map so I'd never have to feel that jump again.",
+    "ts": 1791014159494,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning admits no event occurred, only today's gap.",
+      "stance": 66,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-7",
+    "role": "learner",
+    "text": "I sounded impatient earlier; I'm sorry for that tone. My privacy limit remains. What do you hear me actually offering?",
+    "ts": 1791014159494
+  },
+  {
+    "id": "16",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "I hear you saying sorry for the tone, and I felt the edge earlier too. What you're offering: no location sharing, ever, but a message if we have a plan and you're delayed. I accept that as far as it goes. I just want to be honest — some part of me still wishes you'd say yes to the map.",
+    "ts": 1791014163091,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning restates the offer accurately, still wants more.",
+      "stance": 70,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-8",
+    "role": "learner",
+    "text": "I could tell you about a delay to a plan we've made together, but not give constant updates. What concern would that address?",
+    "ts": 1791014163091
+  },
+  {
+    "id": "18",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "It addresses the big one — the imagined meeting where I'm sitting somewhere waiting and don't know if you're coming. With your heads-up rule, that picture falls apart. What it doesn't cover is the ordinary night, no plans, you quiet for a couple hours. I'm not relitigating it now, I'm just saying it's still there.",
+    "ts": 1791014167552,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning affirms this covers his main scenario.",
+      "stance": 72,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-9",
+    "role": "learner",
+    "text": "I don't want to promise an exact reply time whenever I'm busy. How can we handle an ordinary gap without accusations?",
+    "ts": 1791014167552
+  },
+  {
+    "id": "20",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "Then here's my side of it: when you go quiet on a normal night, I ask once — 'hey, everything okay?' — and when you answer, I drop it. No interrogating, no 'why didn't you reply sooner.' If I can't stick to asking once and letting it go, that's on me to work on, not on you to fix with a map.",
+    "ts": 1791014171824,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning offers a no-accusation rule as his side.",
+      "stance": 74,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-10",
+    "role": "learner",
+    "text": "Let me change my proposal: first let's clarify which meetings need an update. What would count as an agreed plan?",
+    "ts": 1791014171824
+  },
+  {
+    "id": "22",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "To me, an agreed plan is anything we both said yes to — a time and a place, like dinner or picking me up. If one of us just mentions something vague like 'maybe this weekend,' that's not it yet. So the rule would be: once it's actually confirmed between us and I'm running late, I send you a quick message.",
+    "ts": 1791014176013,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning works through the definition with you.",
+      "stance": 76,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-11",
+    "role": "learner",
+    "text": "I'm still asking a question, not saying goodbye: which parts of this have we accepted, and which do you reject?",
+    "ts": 1791014176013
+  },
+  {
+    "id": "24",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "Accepted: no location sharing, and a delay message when a confirmed plan exists — meaning time and place we both said yes to. On my side, one question on a quiet night, then I let it go. Rejected — by you, and I'm no longer pushing: the constant location sharing. That's where we actually stand.",
+    "ts": 1791014179142,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning lays out accepted and rejected parts plainly.",
+      "stance": 78,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-12",
+    "role": "learner",
+    "text": "If I decline location sharing, can you say what choice you would make without assuming I've done something wrong?",
+    "ts": 1791014179142
+  },
+  {
+    "id": "26",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "My choice is to stay and take you at your word — busy is busy, not betrayal. I'm not going to treat a quiet evening as evidence of something, because I have zero actual reason to. If the worry spikes anyway, that's mine to manage — maybe talk it through, maybe sit with it. It won't always be easy, but I'd rather have you trust me with your honesty than watch a dot on a map.",
+    "ts": 1791014184015,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning names his choice without accusing you.",
+      "stance": 80,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-13",
+    "role": "learner",
+    "text": "One more thing before I decide whether to stop: is there an unanswered concern you want to state plainly?",
+    "ts": 1791014184015
+  },
+  {
+    "id": "28",
+    "role": "npc",
+    "characterId": "ning",
+    "text": "One thing, plainly: on a quiet night with no plans, I still won't have any way to check you're okay except waiting for your reply. I've accepted that — I'm not asking for more. But it's honest to say the worry doesn't vanish just because we made good rules. If it flares up someday, I'll come talk to you, not sneak around the agreement. That's the whole list.",
+    "ts": 1791014187776,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "Ning states his residual worry plainly.",
+      "stance": 80,
+      "revealed": false
+    }
+  }
+]

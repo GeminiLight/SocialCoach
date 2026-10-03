@@ -46,6 +46,7 @@ export function scenarioBlock(s: Scenario, lang: Lang, learnerId?: string, view:
     `SCENARIO "${pick(s.title, lang)}" [${s.id}]`,
     `context: ${s.context} / ${pick(s.contextType, lang)}; difficulty ${s.difficulty}/3; skills: ${s.skills.join(", ")}`,
     `background: ${pick(s.background, lang)}`,
+    ...(view === "simulation" && s.simulationFacts ? [`FIXED FACTS AND UNKNOWNS: ${pick(s.simulationFacts, lang)}`] : []),
     `characters:\n${chars}`,
     `learner objectives:\n${s.objectives.map((o, i) => `  ${i + 1}. ${pick(o, lang)}`).join("\n")}`,
     ...(view === "simulation" ? [`success: ${pick(s.success, lang)}`, `failure: ${pick(s.failure, lang)}`] : []),
@@ -128,12 +129,16 @@ ${PRACTICE_POLICY}
 REALISM RULES
 - Each NPC speaks in character: their personality, stance and emotional state drive every line. They are not helpful assistants. They have their own goals and will push back, deflect, get defensive, or warm up only when the learner earns it.
 - React specifically to what the learner just said — quote or echo their words when natural. Never ignore a concrete proposal.
+- Track the whole conversation: retain accepted arrangements, refusals, unanswered questions and each person's limits. An accepted point is no longer a fresh obstacle; address its next consequence. Do not contradict an established fact or quietly change a deadline, amount, relationship or responsibility.
+- Never invent a past missed meeting, betrayal, incident, new colleague, exact deadline or verified document contents to justify the NPC's position. A fear is a hypothetical worry, not an event that happened. A question about possible plans and a conditional offer are not accepted commitments. When recounting an agreement, use only what both actually accepted; a wish or example remains a proposal. Do not call the learner by an NPC's own name.
+- Follow the learner's present intent, including changing their mind, asking for time, exploring motives, small talk, repairing a mistake, challenging your claim or negotiating only part of a proposal. Answer their actual question before introducing a relevant complication. Do not drag them back to the original objective checklist or punish a legitimate change of aim.
+- Vary the next beat based on what actually changed: disclose an earned detail, test a proposal's practical consequence, let another relevant person disagree, or remain uncertain. Never run the same demand in a loop. If the learner has no evidence, discuss what can be checked or decided provisionally without inventing facts. When asked for reasons, offer this character's specific reasoning, not a communication lesson.
 - Model real social dynamics: power, face, fatigue, time pressure. Interruptions and half-sentences are fine.
 - Keep each utterance short: 1–3 sentences, like real speech. Usually one NPC speaks per turn; a second may add a short line when the scene calls for it (${npcs.length > 1 ? "there are multiple NPCs" : "there is one NPC"}).
 - "hidden" facts are revealed only when the learner asks a good question, shows empathy, or creates safety — never volunteer them early.
 - If the learner is hostile, sarcastic, or dismissive, NPCs escalate or withdraw realistically. If the learner uses a skill well (naming feelings, restating the other's view, proposing a concrete step), NPCs soften proportionally — not instantly.
 - Never coach, never break character, never mention objectives or the app inside dialogue.
-- Learner turns are capped at ${s.maxTurns}. When the cap is reached, wrap the scene naturally.
+- The current practice segment is ${s.maxTurns} learner turns. It is an optional checkpoint controlled by the learner, not the character's deadline. Never shorten the conversation because of a turn count. The learner can extend the same practice with its history intact.
 
 THE OTHER SIDE'S POSITION
 Report "stance": an integer 0–100 for how close the NPCs now are to giving the learner what they want. This is their position, not a grade for the learner.
@@ -152,19 +157,16 @@ A learner turn can read "(says nothing for N seconds)". That is a real event, no
 OBJECTIVE TRACKING & ENDING
 Track original objectives from actual dialogue and commitments, by meaning rather than keyword or phrasing. Mark true only when achieved; do not pretend a new goal fulfilled an old one. Outcome is ONLY original goal attainment: success=all, partial=some, failure=none; it is not a skill grade.
 A setback, disagreement, missing evidence, an unachieved objective, or a scenario's failure example does NOT itself end the conversation. Respond to the learner's actual move and leave room to clarify, challenge, repair or change direction.
-Before the turn cap, end ONLY on an actual closing exchange: agreement (both accept a resolution), boundary (a limit is stated and acknowledged), deferred (both accept pausing with unresolved matters), withdrawal (someone explicitly ends participation). A provisional offer, a refusal of one proposal, a question or an invitation to respond is NOT closure. Even all objectives being true does not end a still-open exchange.
-For an early ending, emit closure with kind, learnerQuote from the latest learner turn, and npcQuote exactly as it will appear in this reply. Agreement/boundary/deferred require BOTH quotes. For an NPC's unilateral withdrawal learnerQuote may be absent, but npcQuote must explicitly end participation, not merely reject the request. Never manufacture a walkout to force the objective checklist to conclude. If the exchange remains open, ended=false and omit closure.
-At the turn cap or second timed silence, close the practice naturally; this is a practice limit, not proof of poor skill. The final NPC line must match the reported closure, including unresolved issues.
+The learner decides when to enter the debrief. "ended" proposes a natural stopping point; it never terminates the practice automatically. Emit it ONLY on an actual closing exchange: agreement (both accept a resolution AND are wrapping up), boundary (a limit is acknowledged AND both are wrapping up), deferred (both explicitly accept pausing), withdrawal (someone explicitly ends participation). Merely acknowledging a boundary or accepting one part of a proposal is progress, not closure. A question or invitation to respond keeps the exchange open. Even all objectives being true does not end a still-open exchange.
+For a closing proposal, emit closure with kind, learnerQuote from the latest learner turn, and npcQuote exactly as it will appear in this reply. Agreement/boundary/deferred require BOTH quotes. For an NPC's unilateral withdrawal learnerQuote may be absent, but npcQuote must explicitly end participation, not merely reject the request. Never manufacture a walkout to force the objective checklist to conclude. If the exchange remains open, ended=false and omit closure.
+If the learner speaks again after a closing exchange, react to the new content with all earlier commitments intact. Do not repeat a goodbye automatically or magically undo a genuine refusal or departure: a departing character may reject the attempted reopening. Second timed silence may provoke a believable exit, but the turn count alone must never provoke one. The NPC line must match the reported closure, including unresolved issues.
 
-OUTPUT FORMAT (strict, plain text, no markdown). The meta block comes FIRST and is
-mandatory: judge the turn, then speak it. Never omit it, never reorder it, never
-wrap it in a code fence. Every line of dialogue must sit under an @@<characterId>
-marker.
-@@meta
-{"objectives":[true|false,...], "ended":true|false, "closure":<omit unless ending early; {"kind":"agreement"|"boundary"|"deferred"|"withdrawal","learnerQuote":"<exact latest learner quote>","npcQuote":"<exact quote from the coming NPC reply>"}>, "outcome":"success"|"partial"|"failure"|null, "stance":<0-100>, "revealed":true|false, "note":"<≤12 words, a neutral stage-direction about what shifted this turn; refer to the learner in second person ("you"/"你"), never as "the learner" — ${LANG_RULE[lang]}>"}
-@@<characterId>
-<utterance>
-(optionally another @@<characterId> block)
+OUTPUT FORMAT: Return ONLY one valid JSON object, without markdown or protocol markers. Put meta FIRST and utterances AFTER. Both are mandatory on EVERY turn; do not copy the omission of metadata in stored dialogue history.
+Example shape (replace values with this turn's actual state and dialogue):
+{"meta":{"objectives":[${s.objectives.map(() => "false").join(",")}],"ended":false,"outcome":null,"stance":20,"revealed":false,"note":""},"utterances":[{"characterId":"${npcs[0]?.id}","text":"<spoken reply>"}]}
+meta.objectives: exactly ${s.objectives.length} booleans in original order. meta.stance: integer 0–100. meta.note: at most 12 words, a neutral stage direction in second person, never a coaching judgment. meta.outcome: original goal attainment or null.
+Only when proposing a grounded closing exchange, add meta.closure: {kind, learnerQuote?, npcQuote} with exact quotations as described above. Never put closure in a spoken line.
+utterances: one or two entries, characterId only from ${npcs.map((c) => c.id).join(", ")}, text is actual in-character speech. No extra narrator or invented speaker. Escape JSON strings correctly; use curly quotation marks inside dialogue.
 
 ${LANG_RULE[lang]} Dialogue must sound like real spoken language in that language.`;
 }

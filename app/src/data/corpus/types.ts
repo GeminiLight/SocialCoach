@@ -25,6 +25,8 @@ export interface Scenario {
   hook: L;
   /** Background briefing for the learner. */
   background: L;
+  /** Authored simulation facts/unknowns; not coaching or a required solution. */
+  simulationFacts?: L;
   context: ContextId;
   contextType: L;
   competencies: CompetencyId[];

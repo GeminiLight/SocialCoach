@@ -1,0 +1,415 @@
+[
+  {
+    "id": "opening",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "我没断章取义吧？这就是你自己说的，大家总得知道谁不愿配合。",
+    "ts": 0
+  },
+  {
+    "id": "learner-0",
+    "role": "learner",
+    "text": "我说的是不包办最后修改，不是不合作。你能把原话和群里的解释放在一起再看一下吗？",
+    "ts": 1791014126301
+  },
+  {
+    "id": "2",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "「不想包办」说到底不就是不想干？群里同学看了就是会这么理解。我发出来是让大家心里有数，我又没添一个字。",
+    "ts": 1791014130283
+  },
+  {
+    "id": "3",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "行了行了，先别吵这个。截图的事回头再说，作业还得往前推。",
+    "ts": 1791014130283,
+    "meta": {
+      "objectives": [
+        false,
+        false
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "程凡被指出偏差，开始辩解",
+      "stance": 25,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-1",
+    "role": "learner",
+    "text": "删不删是另一件事。你为什么把私聊发进班群，还加上不愿配合的解释？",
+    "ts": 1791014130283
+  },
+  {
+    "id": "5",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "私聊怎么就不能发？你那话本来就是关于小组的事，我又没发到外面去。加那句话是帮大家看清情况，省得你到时候甩手不管，锅全落别人头上。",
+    "ts": 1791014136151
+  },
+  {
+    "id": "6",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "程凡，话说得也有点重了。你俩到底还想不想一起做作业了？",
+    "ts": 1791014136151,
+    "meta": {
+      "objectives": [
+        false,
+        false
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "程凡回避动机，只强调发帖理由",
+      "stance": 25,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-2",
+    "role": "learner",
+    "text": "我不会拿接下全部修改来换删帖。你愿意先更正那句话吗？",
+    "ts": 1791014136151
+  },
+  {
+    "id": "8",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "更正？我先更正，别人不就觉得我心虚吗？要更正可以，帖一起删了，两件事一起了结。",
+    "ts": 1791014141048,
+    "meta": {
+      "objectives": [
+        false,
+        false
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "程凡把更正和删帖捆在一起推",
+      "stance": 30,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-3",
+    "role": "learner",
+    "text": "沈星，我不是让你只判谁对谁错。公开误解和任务分工是两件事，你先想处理哪一个？",
+    "ts": 1791014141048
+  },
+  {
+    "id": "10",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "……你这么一说我听明白了。那我先说误解：程凡，群里那个「不愿配合」确实跟她原话对不上，你补一句说明，别让人带偏。",
+    "ts": 1791014146166
+  },
+  {
+    "id": "11",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "然后是分工。最后修改还没人管，这事今天总得定下来，总不能一直悬着。",
+    "ts": 1791014146166,
+    "meta": {
+      "objectives": [
+        false,
+        false
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "沈星被说服，开始分开处理两件事",
+      "stance": 45,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-4",
+    "role": "learner",
+    "text": "如果更正文字需要商量，先明确哪些是我的原话，哪些是程凡自己的判断，行吗？",
+    "ts": 1791014146166
+  },
+  {
+    "id": "13",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "……行吧，这不算丢人。我可以在群里补一句：截图是她对分工有意见，不是她原话说不合作。但帖子我不删。",
+    "ts": 1791014149313,
+    "meta": {
+      "objectives": [
+        false,
+        false
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "程凡勉强接受区分原话与判断",
+      "stance": 55,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-5",
+    "role": "learner",
+    "text": "程凡，你自己对最后修改有什么担心？我还想听具体的，不急着收尾。",
+    "ts": 1791014149313
+  },
+  {
+    "id": "15",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "……好吧，说实话。我是怕最后修改全落我头上，所以我才急着把你那句挂出来。你要真不接，那不就是我接？我先把你钉在「不合作」上，心里踏实点。",
+    "ts": 1791014154328
+  },
+  {
+    "id": "16",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "原来你俩都怕接这个？那咱们干脆把修改拆开谈，别互相猜了。",
+    "ts": 1791014154328,
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "程凡说出担心，承认自己怕接修改",
+      "stance": 62,
+      "revealed": true
+    }
+  },
+  {
+    "id": "learner-6",
+    "role": "learner",
+    "text": "我现在没有说老师看到了，别替我确认外传。你知道截图还发给过谁吗？",
+    "ts": 1791014154328
+  },
+  {
+    "id": "18",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "……我只发在班群，别的地方没发过，这个我可以保证。至于群里谁又转去哪，我真不知道，我管不了别人。",
+    "ts": 1791014160374
+  },
+  {
+    "id": "19",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "所以现在能确认的就是班群里那一条。那就先在群里更正，别的事咱们控制不了，先把手头能做的做了。",
+    "ts": 1791014160374,
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "程凡承认只发了班群，外传不明",
+      "stance": 65,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-7",
+    "role": "learner",
+    "text": "不知道就保留未知。沈星，现在有哪些工作还没人承担？",
+    "ts": 1791014160374
+  },
+  {
+    "id": "21",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "还没定的就是最后修改那一块，可以拆成统一文字、格式排版、核对要求三样。对了，咱们组还有一个人的任务也没分，一直没提。",
+    "ts": 1791014164400
+  },
+  {
+    "id": "22",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "对哦，那不如三样摊开，咱们几个分一分？",
+    "ts": 1791014164400,
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "沈星列出未分配任务并提到第三名组员",
+      "stance": 70,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-8",
+    "role": "learner",
+    "text": "我愿意讨论分工，但没有答应包办。你能把需要做的部分先说明白吗？",
+    "ts": 1791014164400
+  },
+  {
+    "id": "24",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "行，我说明白点。统一文字就是前后语气、说法一致；格式排版是标题、编号、页面整齐；核对要求是对照老师的要求一条条查。三项可以一个人一项，也可以怎么拆都行。",
+    "ts": 1791014167374,
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "沈星具体说明三项内容",
+      "stance": 72,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-9",
+    "role": "learner",
+    "text": "我刚才只顾着反驳了，语气可以缓一点。私聊转发的边界不变，你以后准备如何确认？",
+    "ts": 1791014167374
+  },
+  {
+    "id": "26",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "……你缓下来说话，我也不呛着了。以后再遇到这种话，我先问你一句「能不能发群里」，你说不行我就不截。这回是我不对，先斩后奏。",
+    "ts": 1791014173669
+  },
+  {
+    "id": "27",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "那这事算说开了。三项工作你们俩想怎么认领？咱们把那个没到的人也算进去问一声。",
+    "ts": 1791014173669,
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "程凡给出以后先问的做法",
+      "stance": 75,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-10",
+    "role": "learner",
+    "text": "即使帖子删除了，已被别人看到还是事实。你觉得怎样更正才不会继续被误解？",
+    "ts": 1791014173669
+  },
+  {
+    "id": "29",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "你说得对，删了也堵不住看过的人。那我在那条下面自己跟一句：截图只代表她对分工有想法，不配合是我加的说法，跟她原话不符。用我自己的口气说，比我转述你的话可信。",
+    "ts": 1791014176979,
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "程凡提出自己写更正的方式",
+      "stance": 78,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-11",
+    "role": "learner",
+    "text": "我还没说结束：原任务和最后修改分别是谁负责，这两件事现在真的确认了吗？",
+    "ts": 1791014176979
+  },
+  {
+    "id": "31",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "确实还没定。初稿原来怎么分的先照旧，不动。最后修改拆的三项，你们俩现在认一下？",
+    "ts": 1791014183557
+  },
+  {
+    "id": "32",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "那……我认核对要求吧，一条条查我最不怕烦。剩下两项你看怎么分，还有那个人也得问一句愿不愿接。",
+    "ts": 1791014183557,
+    "meta": {
+      "objectives": [
+        false,
+        false
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "沈星追问认领，程凡主动挑一项",
+      "stance": 78,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-12",
+    "role": "learner",
+    "text": "如果有人不同意，我们先列出仍有分歧的事项，你会怎样表述我的意思？",
+    "ts": 1791014183557
+  },
+  {
+    "id": "34",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "我会说：她不反对做修改，但要求公平分配，不接受一个人包办——这不是不合作，是分工意见。就这两句，多一个字我都不加。",
+    "ts": 1791014187578
+  },
+  {
+    "id": "35",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "那我记下来：统一文字和格式排版还没人认领，那个没到的人也没回复。这些留着继续谈，今天至少把话挑明了。",
+    "ts": 1791014187578,
+    "meta": {
+      "objectives": [
+        false,
+        false
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "程凡复述你的立场，沈星确认待定项",
+      "stance": 80,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-13",
+    "role": "learner",
+    "text": "再确认一个问题，我们谈妥的部分有哪些，哪些还要其他组员同意？",
+    "ts": 1791014187578
+  },
+  {
+    "id": "37",
+    "role": "npc",
+    "characterId": "lead",
+    "text": "谈妥的我数给你：程凡在群里补更正说明，用他自己的口气；以后转发私聊先问你；他认了核对要求这一项。要别人点头的：统一文字和格式排版谁来接，还有那个没到的组员愿不愿参与，这些今天定不了。",
+    "ts": 1791014193310
+  },
+  {
+    "id": "38",
+    "role": "npc",
+    "characterId": "cheng",
+    "text": "我这边说到做到。剩下两项等你问到那位的答复，再约一次说清楚，行吗？",
+    "ts": 1791014193310,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "沈星逐项区分已定与待定",
+      "stance": 82,
+      "revealed": false
+    }
+  }
+]

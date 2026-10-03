@@ -86,19 +86,26 @@ try {
   browser(["find", "role", "button", "click", "--name", "继续对话", "--exact"]);
   check("silence recovery removes the unanswered event and unlocks input", evaluate("document.querySelector('textarea')?.disabled === false && !document.querySelector('[role=alert]')") && !saved().sessions.find((s: { id: string }) => s.id === active.id).messages.some((m: { id: string }) => m.id === silence.id));
 
-  const capped = { ...active, scenario: { ...sc, maxTurns: 1 } };
+  const segmentHistory: ChatMessage[] = [opening, ...Array.from({ length: 11 }, (_, i): ChatMessage[] => [
+    { id: `segment-l${i}`, role: "learner", text: `第${i + 1}次澄清。`, ts: i * 2 + 2 },
+    { id: `segment-n${i}`, role: "npc", characterId: sc.opening.characterId, text: `第${i + 1}次回应。`, ts: i * 2 + 3 },
+  ]).flat()];
+  const capped = { ...active, messages: segmentHistory, turnLimit: 12 };
   seed({ ...state, sessions: [brief, capped] });
   open("/practice/recovery-chat");
   browser(["network", "unroute", "**/api/roleplay"]);
   browser(["network", "route", "**/api/roleplay", "--body", `@@meta\n${JSON.stringify({ objectives: sc.objectives.map(() => false), stance: 30, ended: false })}\n@@${sc.opening.characterId}\nCOMPLETE_FINAL_REPLY`]);
-  browser(["fill", "textarea", "这是最后一个回合。"]);
+  browser(["fill", "textarea", "这是第十二个回合，我仍有问题。"]);
   browser(["click", "button[aria-label=发送]"]);
   wait("document.querySelector('.chat-transcript')?.textContent.includes('COMPLETE_FINAL_REPLY') === true");
-  check("the final-turn pause prevents extra input", evaluate("document.querySelector('textarea')?.disabled === true && document.querySelector('button[aria-label=发送]')?.disabled === true"));
-  screenshot("final-turn.png");
+  check("a completed segment stays editable and offers continuation", evaluate("document.querySelector('textarea')?.disabled === false && Array.from(document.querySelectorAll('button')).some(b=>b.textContent==='我还想聊')"));
+  screenshot("segment-choice.png");
   open("/practice/recovery-chat");
-  wait("document.querySelector('.chat-transcript') === null");
-  check("refresh during the final pause does not reopen the scene", saved().sessions.find((s: { id: string }) => s.id === active.id).status === "ended");
+  check("refresh preserves the active transcript and continuation choice", evaluate("document.querySelector('.chat-transcript')?.textContent.includes('COMPLETE_FINAL_REPLY') && Array.from(document.querySelectorAll('button')).some(b=>b.textContent==='我还想聊')") && saved().sessions.find((s: { id: string }) => s.id === active.id).status === "active");
+  browser(["find", "role", "button", "click", "--name", "我还想聊", "--exact"]);
+  check("continuation adds eight turns without replacing the transcript", saved().sessions.find((s: { id: string; turnLimit: number }) => s.id === active.id).turnLimit === 20 && evaluate("document.querySelector('.chat-transcript')?.textContent.includes('COMPLETE_FINAL_REPLY')"));
+  open("/practice/recovery-chat");
+  check("refresh after continuation retains the extended segment", saved().sessions.find((s: { id: string; turnLimit: number }) => s.id === active.id).turnLimit === 20 && evaluate("!Array.from(document.querySelectorAll('button')).some(b=>b.textContent==='我还想聊') && document.querySelector('textarea')?.disabled === false"));
 
   seed();
   open("/practice/recovery-chat");

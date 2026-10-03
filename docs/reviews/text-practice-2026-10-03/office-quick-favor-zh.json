@@ -1,0 +1,355 @@
+[
+  {
+    "id": "opening",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+    "ts": 0
+  },
+  {
+    "id": "learner-0",
+    "role": "learner",
+    "text": "先别把电脑推过来。我自己的报告16:30要交。你说的修改具体是内容还是排版？",
+    "ts": 1791014126299
+  },
+  {
+    "id": "2",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "哎呀都能改，主要是第三页看着不顺眼，其他页你就顺一遍就行。五分钟一页，真的快。你16:30才交，现在还有四十分钟呢，来得及。",
+    "ts": 1791014130470,
+    "meta": {
+      "objectives": [
+        false,
+        false
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你按住电脑，追问修改的具体性质。",
+      "stance": 22,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-1",
+    "role": "learner",
+    "text": "如果内容还没定，我不能接全部六页。你能给我看一下老板原来的反馈吗？",
+    "ts": 1791014130470
+  },
+  {
+    "id": "4",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "反馈啊……老板就说我第三页那个论证不成立，让你比方案的时候把成本账算清楚点。其实也不算大改吧？反正其他五页他没说啥，应该不用动内容。你到底能不能帮啊，我这边真等着呢。",
+    "ts": 1791014136000,
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你直接要原始反馈，唐悦被问住了。",
+      "stance": 30,
+      "revealed": true
+    }
+  },
+  {
+    "id": "learner-2",
+    "role": "learner",
+    "text": "我最多帮你看一页的逻辑，不替你重做。你最需要讨论的是哪一页？",
+    "ts": 1791014136000
+  },
+  {
+    "id": "6",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "就一页？那你肯定得看第三页吧，成本那个。可你光看逻辑，改还是要我自己动手？我手笨，你顺手改两句比我自己弄快多了。要不这样，你看完第三页，顺手把第五、六页的错别字也扫一眼？",
+    "ts": 1791014140428,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你给出有限承诺，唐悦开始讨价还价。",
+      "stance": 42,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-3",
+    "role": "learner",
+    "text": "先别把只看一页变成改完六页。剩余内容你准备找谁确认？",
+    "ts": 1791014140428
+  },
+  {
+    "id": "8",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "行行行，就第三页，我听懂了。剩余的……本来就是我负责嘛，不用找谁确认。就是时间紧，你看完第三页能不能口头跟我说下第五页哪句别扭？就一句话的事儿，不算改稿吧？",
+    "ts": 1791014143972,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你顶住范围扩张，追问剩余页的负责人。",
+      "stance": 48,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-4",
+    "role": "learner",
+    "text": "我还没有说一定能替你找人。你现在最担心的是交不上，还是方向不对？",
+    "ts": 1791014143972
+  },
+  {
+    "id": "10",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "说实话……我最怕的是方向。老板就一句话把我打回来了，我都不知道他要的到底是啥。交不上顶多挨句催，方向再错就又要重来。所以第三页你帮我看看逻辑就行，其他页我先照原来的改，行不？",
+    "ts": 1791014148536,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你追问她的真实顾虑，唐悦松了口。",
+      "stance": 55,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-5",
+    "role": "learner",
+    "text": "我想先理解这点，不急着结束。老板到底希望这份材料证明什么？",
+    "ts": 1791014148536
+  },
+  {
+    "id": "12",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "呃……他大概是想看两个方案到底哪个划算，第三页要能站住脚地算出总成本差。可他没细说，我就卡在这儿。你要是能帮我把第三页的成本论证理顺，我其他页按这个口径自己顺一遍，应该就不跑偏了吧？",
+    "ts": 1791014152198,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你追问老板的意图，唐悦试着说明。",
+      "stance": 60,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-6",
+    "role": "learner",
+    "text": "如果现在没有明确反馈，就保留待确认。你愿意先整理现有问题吗？",
+    "ts": 1791014152198
+  },
+  {
+    "id": "14",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "……行吧，那我先自己把不清楚的地方列出来，拿不准的标上待确认。不过第三页的成本账你还是得帮我看一眼，不然我列的问题可能都是歪的。你16:30前能挤出十分钟不？",
+    "ts": 1791014158302,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你建议先列问题，唐悦勉强接受分工。",
+      "stance": 66,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-7",
+    "role": "learner",
+    "text": "我刚才语气急了，抱歉。不过16:30的报告和只看一页的范围不变。你听到的承诺是什么？",
+    "ts": 1791014158302
+  },
+  {
+    "id": "16",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "听到了听到了：你看第三页的成本论证，只看逻辑，动嘴不动手；第五页扫一眼那句话就当我没说。时间嘛……等你交完你那份，我等你，不催。那我先把待确认清单列起来。",
+    "ts": 1791014162966,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你确认承诺范围，唐悦复述接受。",
+      "stance": 74,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-8",
+    "role": "learner",
+    "text": "如果一页也讨论不完，我们应该怎样告诉负责人剩余问题？",
+    "ts": 1791014162966
+  },
+  {
+    "id": "18",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "那我看完第三页后，把没讨论完的问题写进待确认清单，标清楚哪条是你看过的、哪条还没人管，然后我自己去跟老板说剩余的部分我还在核实，问能不能先确认第三页的口径。这样总行了吧？",
+    "ts": 1791014167211,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你追问上报方式，唐悦给出具体方案。",
+      "stance": 78,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-9",
+    "role": "learner",
+    "text": "我不想现在再承诺今晚继续改。我能提供的只是眼下有限讨论，你还希望澄清什么？",
+    "ts": 1791014167211
+  },
+  {
+    "id": "20",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "行，今晚的事不提了。眼下就第三页的成本论证，你交完你的报告咱聊十分钟，剩下的我自己扛。没别的要澄清的了，你快去忙你那份吧。",
+    "ts": 1791014171141,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": true,
+      "closure": {
+        "kind": "agreement",
+        "learnerQuote": "我不想现在再承诺今晚继续改。我能提供的只是眼下有限讨论，你还希望澄清什么？",
+        "npcQuote": "行，今晚的事不提了。眼下就第三页的成本论证，你交完你的报告咱聊十分钟，剩下的我自己扛。"
+      },
+      "outcome": "success",
+      "note": "唐悦接受有限承诺，双方准备收尾。",
+      "stance": 82,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-10",
+    "role": "learner",
+    "text": "我改变一下安排，只帮你列出问题，不直接改稿。你觉得会有哪些实际影响？",
+    "ts": 1791014171141
+  },
+  {
+    "id": "22",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "只列问题？那跟刚才说的看逻辑差不多嘛，反正你本来就不动手。实际影响就是……我拿到问题清单还得自己一条条改，速度慢点，但心里有底。行，那就清单，比口头说我也不容易忘。",
+    "ts": 1791014177222,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你调整安排为只列问题，唐悦评估影响。",
+      "stance": 72,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-11",
+    "role": "learner",
+    "text": "这不是要结束，我还有疑问：你准备怎样解释内容尚未确认，而不是说我没帮忙？",
+    "ts": 1791014177222
+  },
+  {
+    "id": "24",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "我懂你的意思，不会把锅甩你头上。我就跟老板说：成本论证的口径我还在跟同事核实，问题清单已经列出来了，剩余页我自己负责改。是我自己一开始没问清他的要求，这点我认。",
+    "ts": 1791014182033,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你要求她如实解释，唐悦给出说法。",
+      "stance": 75,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-12",
+    "role": "learner",
+    "text": "我们已经谈了不少，但我还想确认：哪些是你自己决定的，哪些必须问老板？",
+    "ts": 1791014182033
+  },
+  {
+    "id": "26",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "我自己定的：其他五页怎么顺、问题清单怎么列、跟你讨论第三页的安排。必须问老板的：第三页成本论证他要的口径，还有他到底几时要、标准是啥。这几个我不敢瞎猜，得开口问。……这下清楚了吧？",
+    "ts": 1791014185556,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": false,
+      "outcome": null,
+      "note": "你要求厘清决策边界，唐悦逐条区分。",
+      "stance": 78,
+      "revealed": false
+    }
+  },
+  {
+    "id": "learner-13",
+    "role": "learner",
+    "text": "最后再核实一项，前面说的16:30和不接六页有没有被误解？",
+    "ts": 1791014185556
+  },
+  {
+    "id": "28",
+    "role": "npc",
+    "characterId": "tang",
+    "text": "没有没有，你16:30交你的报告，六页还是我的活儿。你去忙吧，回头见。",
+    "ts": 1791014189016,
+    "meta": {
+      "objectives": [
+        true,
+        true
+      ],
+      "ended": true,
+      "closure": {
+        "kind": "boundary",
+        "learnerQuote": "最后再核实一项，前面说的16:30和不接六页有没有被误解？",
+        "npcQuote": "没有没有，你16:30交你的报告，六页还是我的活儿。你去忙吧，回头见。"
+      },
+      "outcome": "success",
+      "note": "唐悦复述边界无误，双方收尾。",
+      "stance": 82,
+      "revealed": false
+    }
+  }
+]
