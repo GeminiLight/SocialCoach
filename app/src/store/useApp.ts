@@ -216,6 +216,7 @@ export const useApp = create<AppState>()(
       storage: appStorage,
       partialize: (s) => ({
         profile: s.profile,
+        onboardingLang:s.onboardingLang,
         proficiency: s.proficiency,
         sessions: s.sessions.slice(0, 200),
         customScenarios: s.customScenarios,

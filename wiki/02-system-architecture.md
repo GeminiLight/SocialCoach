@@ -280,7 +280,7 @@ pnpm lint
 
 `DinnerReviewEntry` 先呈现最后一次原话与真实回应；用户主动生成时，动态导入 `dinner/lib/review.ts`，将已完成转录投影为现有 `Session`（origin 保持 arena，custom 场景，`sceneContext.kind:"3d"` 标识来源）。NPC 主句、旁人插话及旧 heard 台词按实际顺序保留一次，动作与台词分开。公开开局事实与带出处的原创场景进入评估，不带隐藏设定、未发草稿、镜头或动画情绪。
 
-快照保存到主站 Zustand 的 sessions，进入 `/practice/{id}` 的同一个 `Debrief` / `runAssess` / `sanitizeReport` / `applyReport`，复用知识检索、能力变化、反思、多轮咨询、历史与导出。没有新增模型、评分或服务端会话存储。访客可以打开自己已结束 / 已评价的 3D 场次而无需先建档。通用 UI 不加载 WebGL，3D 的适配逻辑只在点击生成时加载。
+快照保存到主站 Zustand 的 sessions，进入 `/practice/{id}` 的同一个 `Debrief` / `runAssess` / `sanitizeReport` / `applyReport`，复用知识检索、能力变化、反思、多轮咨询、历史与导出。没有新增模型、评分或服务端会话存储。访客可以打开自己已结束 / 已评价的 3D 场次而无需先建档，已有 onboardingLang 进入主档案白名单以保持刷新后的语言选择。通用 UI 不加载 WebGL，3D 的适配逻辑只在点击生成时加载。访客 / 连续快照问题见 [根因](./81-postmortem-3d-debrief.md)。
 
 `scene-context.ts` 将每条公开现场观察绑定到用户发言序号与精确原话。可选 `Report.sceneNotes` 同时校验引文和观察 ID，`SceneReview` 先呈现原话与记录再显示解释，完整记录默认折叠。位置、动作是补充语境，不增加一套动作分数；未记录语音语调、注视轨迹或精确对话时长。
 
