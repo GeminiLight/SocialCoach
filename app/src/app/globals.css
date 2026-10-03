@@ -830,7 +830,12 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dinner-experience .input-meta {display:none;justify-content:space-between;min-height:16px;margin:3px 2px 0;font-size:10px;color:var(--dinner-ink-muted);pointer-events:none;}
 .dinner-experience .reply-key-hint {display:none;}.dinner-experience .reply-form.has-long-draft .input-meta {display:flex;}
 .dinner-experience .input-meta>span:last-child:not(.reply-key-hint) {margin-left:auto;}
-@media (min-width:601px) and (pointer:fine) {.dinner-experience .reply-form:focus-within .input-meta {display:flex;}.dinner-experience .reply-key-hint {display:inline;}}
+/* Keep the hint's space stable: focus changes must not resize the HUD or reframe the camera. */
+@media (min-width:601px) and (pointer:fine) {
+  .dinner-experience .input-meta {display:flex;visibility:hidden;}
+  .dinner-experience .reply-form:focus-within .input-meta,.dinner-experience .reply-form.has-long-draft .input-meta {visibility:visible;}
+  .dinner-experience .reply-key-hint {display:inline;}
+}
 .dinner-experience .action-evidence {margin-top:24px;}.dinner-experience .action-evidence h3 {font-size:13px;color:var(--dinner-ink-secondary);font-weight:500;}.dinner-experience .action-evidence article {padding:16px 0;border-top:1px solid var(--dinner-line);}.dinner-experience .action-evidence small {font-size:10px;color:var(--dinner-accent);}.dinner-experience .action-evidence article>p {display:flex;align-items:center;gap:8px;font-size:13px;}.dinner-experience .action-evidence blockquote {margin:10px 0;font-family:var(--dinner-font-display);font-size:17px;}.dinner-experience .action-evidence article>span {font-size:11px;color:var(--dinner-ink-secondary);}
 @media (max-width:600px) {.dinner-experience .dinner-moment {margin-top:8px;}.dinner-experience .moment-actions {gap:4px;}.dinner-experience .moment-actions button {gap:4px;font-size:10px;padding:5px 4px;min-height:44px;}.dinner-experience .moment-actions button svg {display:none;}.dinner-experience .moment-note:not(.sr-only) {font-size:10px;}.dinner-experience .has-moment .dialogue {max-height:156px;}.dinner-experience .has-moment .spoken-line {font-size:18px;line-height:1.6;margin:6px 0;}.dinner-experience .has-moment .stage-cue {display:none;}.dinner-experience .has-moment .reply-form {padding-top:10px;}}
 @media (max-height:560px) {.dinner-experience .moment-actions button {min-height:44px;}.dinner-experience .dinner-moment {margin-top:3px;}.dinner-experience .has-moment .spoken-line {font-size:16px;}.dinner-experience .has-moment .dialogue {max-height:75px;}}

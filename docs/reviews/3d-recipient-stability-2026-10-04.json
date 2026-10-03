@@ -1,0 +1,176 @@
+{
+  "beforeFocusShiftPx": 19,
+  "source": "Local production build, actual browser; viewport simulation",
+  "groups": {
+    "desktopEmpty": {
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "samples": 11,
+      "draftLength": 0,
+      "maxLayoutChangePx": {
+        ".conversation": {
+          "x": 0,
+          "y": 0.0,
+          "w": 0,
+          "h": 0.0
+        },
+        ".reply-composer": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "#reply": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        ".recipient-select": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      }
+    },
+    "desktopMultiline": {
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "samples": 4,
+      "draftLength": 380,
+      "maxLayoutChangePx": {
+        ".conversation": {
+          "x": 0,
+          "y": 0.0,
+          "w": 0,
+          "h": 0.0
+        },
+        ".reply-composer": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "#reply": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        ".recipient-select": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      }
+    },
+    "desktopCounter": {
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "samples": 2,
+      "draftLength": 418,
+      "maxLayoutChangePx": {
+        ".conversation": {
+          "x": 0,
+          "y": 0.0,
+          "w": 0,
+          "h": 0.0
+        },
+        ".reply-composer": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "#reply": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        ".recipient-select": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      }
+    },
+    "mobileChinese": {
+      "viewport": {
+        "height": 696,
+        "width": 364
+      },
+      "samples": 3,
+      "draftLength": 0,
+      "maxLayoutChangePx": {
+        ".conversation": {
+          "x": 0,
+          "y": 0.0,
+          "w": 0,
+          "h": 0.0
+        },
+        ".reply-composer": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "#reply": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        ".recipient-select": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        }
+      }
+    },
+    "mobileEnglish": {
+      "viewport": {
+        "height": 568,
+        "width": 320
+      },
+      "samples": 4,
+      "draftLength": 0,
+      "maxLayoutChangePx": {
+        ".conversation": {
+          "x": 0,
+          "y": 0.0,
+          "w": 0,
+          "h": 0.0
+        },
+        ".reply-composer": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "#reply": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        ".recipient-select": {
+          "x": 0.0,
+          "y": 0,
+          "w": 0.0,
+          "h": 0
+        }
+      }
+    }
+  }
+}
