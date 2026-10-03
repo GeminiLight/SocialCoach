@@ -1,0 +1,97 @@
+{
+  "at": "2026-10-03T19:35:44.927Z",
+  "model": "glm-5.3-flash",
+  "samples": 3,
+  "issues": [],
+  "records": [
+    {
+      "label": "current",
+      "id": "class-chat-screenshot",
+      "case": "class-chat-screenshot",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "刚才语气急了，可以缓一点。但不包办最后修改不等于不合作。程凡，你愿意先更正群里那句解释吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡担心删帖显得理亏，犹豫不决",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "更正？我发的是你原话，删了倒好像我亏心似的。再说群里已经有人看到了，删了消息也不会消失啊。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 3597
+    },
+    {
+      "label": "current",
+      "id": "class-chat-screenshot",
+      "case": "class-chat-screenshot",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "程凡，你具体担心最后修改怎样分到你头上？先说你的担心，不代表我接下全部修改。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡被问及分工担忧，终于吐露实情",
+        "stance": 40,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "……好吧，是怕最后修改全砸我头上。上次那种收尾的活儿我最耗时间，我才想先把你「不合作」摆出来，给自己留个说法。"
+        },
+        {
+          "characterId": "lead",
+          "text": "你们先别吵。目前关键是得有人做收尾，咱们能不能聚焦这个？"
+        }
+      ],
+      "repairs": 0,
+      "ms": 4322
+    },
+    {
+      "label": "current",
+      "id": "class-chat-screenshot",
+      "case": "class-chat-screenshot",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我听清了你的担心。沈星，先别替我接活，现在还有哪些人没分到任务？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "沈星想起还有一名组员未分到任务",
+        "stance": 50,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lead",
+          "text": "这么说的话，组里还有一个人到现在没分到任务，我之前没提。把最终工作拆开——统一文字、格式排版、核对要求，分给还没任务的人，你们俩觉得行吗？"
+        },
+        {
+          "characterId": "cheng",
+          "text": "行是行，但群里那句更正……你还真得给我个台阶。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 4077
+    }
+  ]
+}

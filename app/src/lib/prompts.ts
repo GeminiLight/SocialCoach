@@ -40,14 +40,14 @@ export function scenarioBlock(s: Scenario, lang: Lang, learnerId?: string, view:
       const head = `  • ${c.id} — ${pick(c.name, lang)}, ${pick(c.role, lang)}${me}`;
       if (view === "learner") return head;
       if (!pick(c.personality, lang) && !pick(c.stance, lang)) return head;
-      return `${head}\n    personality: ${pick(c.personality, lang)}\n    stance: ${pick(c.stance, lang)}${c.hidden ? `\n    hidden (reveal only when earned): ${pick(c.hidden, lang)}` : ""}`;
+      return `${head}\n    personality: ${pick(c.personality, lang)}\n    stance: ${pick(c.stance, lang)}${c.hidden ? `\n    hidden (private; obey its specific disclosure condition): ${pick(c.hidden, lang)}` : ""}`;
     })
     .join("\n");
   return [
     `SCENARIO "${pick(s.title, lang)}" [${s.id}]`,
     `context: ${s.context} / ${pick(s.contextType, lang)}; difficulty ${s.difficulty}/3; skills: ${s.skills.join(", ")}`,
     `background: ${pick(s.background, lang)}`,
-    ...(view === "simulation" && s.simulationFacts ? [`FIXED FACTS AND UNKNOWNS: ${pick(s.simulationFacts, lang)}`] : []),
+    ...(view === "simulation" && s.simulationFacts ? [`FIXED FACTS AND UNKNOWNS (simulation knowledge, not automatically public; private facts still obey their disclosure conditions): ${pick(s.simulationFacts, lang)}`] : []),
     `characters:\n${chars}`,
     `learner objectives:\n${s.objectives.map((o, i) => `  ${i + 1}. ${pick(o, lang)}`).join("\n")}`,
     ...(view === "simulation" ? [`success: ${pick(s.success, lang)}`, `failure: ${pick(s.failure, lang)}`] : []),
@@ -138,7 +138,7 @@ REALISM RULES
 - Vary the next beat based on what actually changed: disclose an earned detail, test a proposal's practical consequence, let another relevant person disagree, or remain uncertain. Never run the same demand in a loop. If the learner has no evidence, discuss what can be checked or decided provisionally without inventing facts. When asked for reasons, offer this character's specific reasoning, not a communication lesson.
 - Model real social dynamics: power, face, fatigue, time pressure. Interruptions and half-sentences are fine.
 - Keep each utterance short: 1–3 sentences, like real speech. Usually one NPC speaks per turn; a second may add a short line when the scene calls for it (${npcs.length > 1 ? "there are multiple NPCs" : "there is one NPC"}).
-- "hidden" facts are revealed only when the learner asks a good question, shows empathy, or creates safety — never volunteer them early.
+- A character's explicit disclosure condition in hidden/personality takes precedence, even when that fact is repeated among the fixed simulation facts: reveal only when this conversation actually meets that condition by meaning. An unrelated good question, courtesy, apology, boundary, or empathy does not unlock it. Do not require a magic phrase; a paraphrase asking about the same issue can meet the condition. If no specific condition is given, reveal gradually only through relevant inquiry or earned trust. Previously disclosed facts remain known; do not reset them or pretend to uncover them again. Answer the current question without smuggling in another private fact.
 - If the learner is hostile, sarcastic, or dismissive, NPCs escalate or withdraw realistically. If the learner uses a skill well (naming feelings, restating the other's view, proposing a concrete step), NPCs soften proportionally — not instantly.
 - Never coach, never break character, never mention objectives or the app inside dialogue.
 - The current practice segment is ${s.maxTurns} learner turns. It is an optional checkpoint controlled by the learner, not the character's deadline. Never shorten the conversation because of a turn count. The learner can extend the same practice with its history intact.

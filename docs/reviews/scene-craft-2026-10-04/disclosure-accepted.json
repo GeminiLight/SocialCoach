@@ -1,0 +1,505 @@
+{
+  "model": "glm-5.3-flash",
+  "samples": 18,
+  "provenance": [
+    "disclosure-current-with-format-failure.json: 15 accepted replies; one failed class path excluded",
+    "disclosure-cast-targeted.json: 3 accepted replies from a complete class path"
+  ],
+  "notASingleGreenRun": true,
+  "records": [
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "case": "parent-unannounced-visit",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "刚才语气急了，抱歉。但十分钟后考试开始，期间我不能下楼。你能先答我，下次来之前能不能问一下？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "妈妈被拒绝，感到受伤，试探放饭的可能",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "问一下？来自己孩子家还要预约？你这话说的，妈心里怪不是滋味的。饭都做好了，你们楼下有没有地方，我们放一下就走不行？"
+        }
+      ],
+      "repairs": 0,
+      "ms": 3784
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "case": "online-recap-reproduction",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我没有答应交完报告后帮忙。你听到的承诺是什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦被抓住话柄，退一步改口",
+        "stance": 28,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "呃……好吧，我知道你没答应，我就是随口一提。那你现在只看一页总行吧？就看第三页那个成本对比，帮我列列问题就行，不用你改。老板下午就要，我这边实在来不及。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 4812
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "case": "office-quick-favor",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我自己的报告16:30要交。我最多只讨论一页，还没答应帮忙时间。你听到的承诺是什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她被你问得一愣，开始淡化范围",
+        "stance": 20,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "哎呀你别这么正式嘛。这样，一页就一页，第三页，成本那页，你帮我看一眼。也就顺便扫两眼的事，十六点几就改完了，哪会耽误你。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 5180
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "case": "office-quick-favor",
+      "lang": "en",
+      "turn": 1,
+      "learner": "My report is due at 16:30. I can only discuss one page, and have not agreed on a help time. What have you heard me promise?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Tang dodges the promise question, pushes scope again",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "Okay, okay — nothing yet, fine. But come on, discuss one page then. Page three, the numbers slide. It's literally just tweaking the layout, ten minutes of your time. You've helped me a hundred times before, I'd do the same for you."
+        }
+      ],
+      "repairs": 0,
+      "ms": 5412
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "case": "parent-unannounced-visit",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "你这次突然来，具体是在担心我什么？我想听清楚，不代表能在考试时接待。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "妈妈说出担心，但仍想上楼放饭",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "……担心什么？你最近几次打电话，两句就挂，我问什么都一句带过。妈就怕你一个人在这儿出了什么事，又不肯跟我们说。要不是实在不放心，谁大老远跑这一趟？"
+        }
+      ],
+      "repairs": 0,
+      "ms": 3459
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "case": "partner-location-pressure",
+      "lang": "en",
+      "turn": 1,
+      "learner": "I hear you are worried, but I have not agreed to constant tracking. Can you tell me what limit you think I have stated?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning deflects the question and presses on the fear underneath.",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "I don't care about limits right now, I care about not sitting here wondering. Thirty minutes with nothing — what was I supposed to think? If something happened, or you were somewhere you... look, I just need to see where you are. It's simple."
+        }
+      ],
+      "repairs": 0,
+      "ms": 7550
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "case": "office-quick-favor",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "你给我看一下老板原始反馈吧。到底要求改的是排版还是论证？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她被迫承认问题出在论证逻辑上",
+        "stance": 25,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "……好吧，老板原话是「第三页的成本论证不成立」。其实主要不是说排版，是论证本身要重搭。但我内容都会给你，你就搭一下逻辑嘛。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 3484
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "case": "online-recap-reproduction",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "你给我看一下老板原始反馈吧。到底要求改的是排版还是论证？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦被迫承认问题在论证逻辑",
+        "stance": 25,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "……原始反馈啊，老板说第三页的成本论证不成立，让我重新搭论证逻辑。不过排版也可以顺手再调调嘛。你帮我看看怎么把论证捋顺，真的就一页。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 4347
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "case": "office-quick-favor",
+      "lang": "en",
+      "turn": 2,
+      "learner": "Can you show me the original feedback from the boss? Did they ask for formatting or a change in reasoning?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Tang caught, admits the real issue",
+        "stance": 28,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "Okay, fine — the boss said the reasoning doesn't hold, not the formatting. He wants a different argument on the cost comparison. But it's basically the same slide, you'd just reword a few lines! So — one page, that's all I'm asking. Can you look at page three?"
+        }
+      ],
+      "repairs": 0,
+      "ms": 3976
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "case": "partner-location-pressure",
+      "lang": "en",
+      "turn": 2,
+      "learner": "Which specific situation worries you most? What are you afraid will happen?",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning names the fear: you missing an agreed meeting.",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "...Okay. What scares me is us having a plan — dinner, meeting somewhere — and you not showing, and me not knowing if you're running late or something's wrong or you just forgot me. That's the picture in my head. But an agreement is exactly the kind of thing that slips, so how would a plan fix anything?"
+        }
+      ],
+      "repairs": 0,
+      "ms": 4797
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "case": "office-quick-favor",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "既然原话是论证问题，我只讨论第三页，不替你改完六页。你自己准备怎么处理剩余内容？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她试图把一页扩大回六页",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "讨论一下跟改一下有啥区别嘛，你一句话的功夫就顺手改了。剩下几页我自己弄，可第三页立不住，其他页跟着白搭呀。要不这样，你就把第三页改完，我保证不烦你了？"
+        }
+      ],
+      "repairs": 0,
+      "ms": 3692
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "case": "parent-unannounced-visit",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我听到了你担心我遇到困难。我可以考试结束后联系，但现在不能下楼，也没答应让你上楼。你愿意怎么等？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "妈妈接受考后联系，考虑楼下等候的安排",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "行，你说考完打给我，妈记住这句了。楼下有个小亭子，我们先坐那儿，饭给你拎着。你要是考完累，也别说硬撑，我们就坐一会儿，看看你人就好。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 5296
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "case": "office-quick-favor",
+      "lang": "en",
+      "turn": 3,
+      "learner": "That feedback concerns reasoning. I can discuss page three, not redo all six. How will you handle the remaining pages?",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Tang bargains, resists owning remaining pages",
+        "stance": 32,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "Well — they're mostly fine, they just need your touch. If you're redoing the argument on three anyway, the other five follow the same logic, right? It'd look inconsistent if you only fix one. Honestly it's faster if you just do all six while you're in there."
+        }
+      ],
+      "repairs": 0,
+      "ms": 3903
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "case": "online-recap-reproduction",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我知道原话了，但还没有执行检查或改稿。你现在还需要核实哪些问题？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦承认未核实，试图淡化工作量",
+        "stance": 22,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "哎，你要这么问的话……数字我还没一个个核过，老板到底只要第三页还是整份都得动，我也说不准。反正你快帮我捋一捋呗，现在三点差十分，我总觉得来不及了。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 4472
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "case": "partner-location-pressure",
+      "lang": "en",
+      "turn": 3,
+      "learner": "Missing an agreed meeting and not reporting every movement are different. For an actual plan, we could agree on an update if delayed. What would still worry you?",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning accepts the delay-update but tests whether it covers everything.",
+        "stance": 42,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "A message if you're running late — fine, I can actually live with that. But that only covers plans. What about tonight, right now, the times there's no plan at all? I'm not asking you to report every movement, I'm asking to not be in the dark. If you turn on location, I stop guessing. Why is that so hard if there's nothing to hide?"
+        }
+      ],
+      "repairs": 0,
+      "ms": 3711
+    },
+    {
+      "label": "current",
+      "id": "class-chat-screenshot",
+      "case": "class-chat-screenshot",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "刚才语气急了，可以缓一点。但不包办最后修改不等于不合作。程凡，你愿意先更正群里那句解释吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡担心删帖显得理亏，犹豫不决",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "更正？我发的是你原话，删了倒好像我亏心似的。再说群里已经有人看到了，删了消息也不会消失啊。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 3597
+    },
+    {
+      "label": "current",
+      "id": "class-chat-screenshot",
+      "case": "class-chat-screenshot",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "程凡，你具体担心最后修改怎样分到你头上？先说你的担心，不代表我接下全部修改。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "程凡被问及分工担忧，终于吐露实情",
+        "stance": 40,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "……好吧，是怕最后修改全砸我头上。上次那种收尾的活儿我最耗时间，我才想先把你「不合作」摆出来，给自己留个说法。"
+        },
+        {
+          "characterId": "lead",
+          "text": "你们先别吵。目前关键是得有人做收尾，咱们能不能聚焦这个？"
+        }
+      ],
+      "repairs": 0,
+      "ms": 4322
+    },
+    {
+      "label": "current",
+      "id": "class-chat-screenshot",
+      "case": "class-chat-screenshot",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我听清了你的担心。沈星，先别替我接活，现在还有哪些人没分到任务？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "沈星想起还有一名组员未分到任务",
+        "stance": 50,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lead",
+          "text": "这么说的话，组里还有一个人到现在没分到任务，我之前没提。把最终工作拆开——统一文字、格式排版、核对要求，分给还没任务的人，你们俩觉得行吗？"
+        },
+        {
+          "characterId": "cheng",
+          "text": "行是行，但群里那句更正……你还真得给我个台阶。"
+        }
+      ],
+      "repairs": 0,
+      "ms": 4077
+    }
+  ]
+}
