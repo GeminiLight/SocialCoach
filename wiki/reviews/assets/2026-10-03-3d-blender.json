@@ -295,5 +295,369 @@
       }
     ]
   },
-  "realPhoneMeasured": false
+  "realPhoneMeasured": false,
+  "release": {
+    "applicationCommit": "5770e5c830e1a044f977687824a32c29e8e2ac0d",
+    "vercel": {
+      "id": "dpl_948uqZnMXbjo7BC7ytSr7VbfGshW",
+      "state": "READY",
+      "target": "production",
+      "aliases": [
+        "socialcoach-ai.vercel.app",
+        "socialcoach-app.vercel.app"
+      ],
+      "manifestMatches": true,
+      "homePreviewMatches": true
+    },
+    "modelscope": {
+      "commit": "307cc9edc74d95a41f721c9c657e7d57221fc24e",
+      "state": "Running",
+      "imageTag": "363578-307cc9ed-2026-10-03-23-12-57",
+      "matchingAppSourceAndPublicFiles": 221,
+      "verificationHost": "authenticated dedicated API",
+      "manifestMatches": true,
+      "homePreviewMatches": true
+    },
+    "models": [
+      {
+        "target": "vercel",
+        "file": "aunt.glb",
+        "http": 200,
+        "bytes": 2244548,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "chen.glb",
+        "http": 200,
+        "bytes": 2361220,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "cheng.glb",
+        "http": 200,
+        "bytes": 2488884,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "dad.glb",
+        "http": 200,
+        "bytes": 2365416,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "fang.glb",
+        "http": 200,
+        "bytes": 2211948,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "hand-grip.glb",
+        "http": 200,
+        "bytes": 141396,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "hand-open.glb",
+        "http": 200,
+        "bytes": 141008,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "he.glb",
+        "http": 200,
+        "bytes": 2266496,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "kai.glb",
+        "http": 200,
+        "bytes": 2466164,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "lin.glb",
+        "http": 200,
+        "bytes": 2366440,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "mom.glb",
+        "http": 200,
+        "bytes": 2488008,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "ning.glb",
+        "http": 200,
+        "bytes": 2367352,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "player.glb",
+        "http": 200,
+        "bytes": 2321316,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "props.glb",
+        "http": 200,
+        "bytes": 37256,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "qiao.glb",
+        "http": 200,
+        "bytes": 2318300,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "room-elevator.glb",
+        "http": 200,
+        "bytes": 579464,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "room-family.glb",
+        "http": 200,
+        "bytes": 2176928,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "room-office.glb",
+        "http": 200,
+        "bytes": 393580,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "room-school.glb",
+        "http": 200,
+        "bytes": 962272,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "room-work.glb",
+        "http": 200,
+        "bytes": 1032100,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "rui.glb",
+        "http": 200,
+        "bytes": 2425800,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "senior.glb",
+        "http": 200,
+        "bytes": 2412688,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "yue.glb",
+        "http": 200,
+        "bytes": 2441524,
+        "sha256Matches": true
+      },
+      {
+        "target": "vercel",
+        "file": "zhou.glb",
+        "http": 200,
+        "bytes": 2401048,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "aunt.glb",
+        "http": 200,
+        "bytes": 2244548,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "chen.glb",
+        "http": 200,
+        "bytes": 2361220,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "cheng.glb",
+        "http": 200,
+        "bytes": 2488884,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "dad.glb",
+        "http": 200,
+        "bytes": 2365416,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "fang.glb",
+        "http": 200,
+        "bytes": 2211948,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "hand-grip.glb",
+        "http": 200,
+        "bytes": 141396,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "hand-open.glb",
+        "http": 200,
+        "bytes": 141008,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "he.glb",
+        "http": 200,
+        "bytes": 2266496,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "kai.glb",
+        "http": 200,
+        "bytes": 2466164,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "lin.glb",
+        "http": 200,
+        "bytes": 2366440,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "mom.glb",
+        "http": 200,
+        "bytes": 2488008,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "ning.glb",
+        "http": 200,
+        "bytes": 2367352,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "player.glb",
+        "http": 200,
+        "bytes": 2321316,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "props.glb",
+        "http": 200,
+        "bytes": 37256,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "qiao.glb",
+        "http": 200,
+        "bytes": 2318300,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "room-elevator.glb",
+        "http": 200,
+        "bytes": 579464,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "room-family.glb",
+        "http": 200,
+        "bytes": 2176928,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "room-office.glb",
+        "http": 200,
+        "bytes": 393580,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "room-school.glb",
+        "http": 200,
+        "bytes": 962272,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "room-work.glb",
+        "http": 200,
+        "bytes": 1032100,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "rui.glb",
+        "http": 200,
+        "bytes": 2425800,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "senior.glb",
+        "http": 200,
+        "bytes": 2412688,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "yue.glb",
+        "http": 200,
+        "bytes": 2441524,
+        "sha256Matches": true
+      },
+      {
+        "target": "modelscope",
+        "file": "zhou.glb",
+        "http": 200,
+        "bytes": 2401048,
+        "sha256Matches": true
+      }
+    ],
+    "onlineBrowserAcceptance": "not completed: computer/browser automation entry timed out three times",
+    "modelscopePublicHostRequest": "TLS unexpected EOF",
+    "visualEvidence": "local actual browser pages, not production screenshots"
+  }
 }

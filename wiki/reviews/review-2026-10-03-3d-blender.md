@@ -45,6 +45,14 @@ Blender 5.2.2 LTS（d13f752e3b9c）、MPFB 2.0.17 固定提交、Three.js 0.180.
 
 前两行同一电脑、视口与 DPR 1.5 的观察样本；第三行构建模式和剧情阶段不同，单独列出。活动举杯与端茶状态会改变物件 / 绘制数量，不宣称帧率的稳定提升。真实手机 GPU、网络下载 / 解码 / 首帧、内存和长任务尚未测量，不能证明 3D 与文字版同速。该待办保留在 [backlog](../85-backlog.md)；方案暂不归档。
 
+## 发布核对
+
+应用提交 `5770e5c830e1a044f977687824a32c29e8e2ac0d` 已推送 main。Vercel 生产部署 `dpl_948uqZnMXbjo7BC7ytSr7VbfGshW` 为 Ready，部署列表的 GitHub SHA 与该提交相同，正式别名包含 `socialcoach-ai.vercel.app` 和 `socialcoach-app.vercel.app`。公开主站的素材清单与首页 JPG 均 HTTP 200，字节及 SHA256 与主仓库一致。
+
+ModelScope 按既有白名单同步当前 main 应用，`app/src` / `app/public` 共 221 文件逐个一致，空间提交 `307cc9edc74d95a41f721c9c657e7d57221fc24e`。显式触发 OpenAPI 构建，日志确认该提交与镜像标签 `363578-307cc9ed-2026-10-03-23-12-57`，构建成功，空间 Running；专用认证 API 的素材清单与首页 JPG 均 HTTP 200，字节 / SHA256 与主仓库相同。两端各 24 个 GLB 实际下载，48 次 HTTP / SHA256 检查全部通过；资源核对记录保存在评审的测量摘要。没有改动免费硬件、空间权限或环境配置。
+
+本轮发布后，浏览器自动化入口连续超时，不能补做线上实际画面检查；ModelScope 公共 host 的非浏览器请求也出现 TLS EOF。上文五类空间的视觉证据来自本地真实网页，不能用部署 Ready、资源一致或截图替代线上 / 实体手机验收。此限制与既有国内公共入口问题分别保留。
+
 ## 画面证据
 
 旧版 [职场画面](../../docs/screenshots/3d-before-blender.png) 保留作历史对照。新版第一 / 第三人称来自实际网页，灯光、镜头和 HUD 已修改，不能称为严格同光照的美术 A/B。
