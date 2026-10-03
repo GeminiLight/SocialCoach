@@ -1,6 +1,6 @@
 <div align="center">
 
-<p align="left"><a href="https://www.hkust-gz.edu.cn/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/logos/hkust-guangzhou-dark.png"><img src="docs/logos/hkust-guangzhou.svg" width="120" alt="The Hong Kong University of Science and Technology (Guangzhou) · 香港科技大学（广州）"></picture></a>&nbsp;&nbsp;&nbsp;<a href="https://www.ustc.edu.cn/"><img src="docs/logos/ustc.svg" width="120" alt="University of Science and Technology of China · 中国科学技术大学"></a></p>
+<p align="left"><a href="https://www.hkust-gz.edu.cn/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/logos/hkust-guangzhou-dark.png"><img src="docs/logos/hkust-guangzhou.svg" height="24" alt="The Hong Kong University of Science and Technology (Guangzhou) · 香港科技大学（广州）"></picture></a>&nbsp;&nbsp;&nbsp;<a href="https://www.ustc.edu.cn/"><img src="docs/logos/ustc.svg" height="24" alt="University of Science and Technology of China · 中国科学技术大学"></a></p>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/banner-dark.svg">
