@@ -1,0 +1,14 @@
+{
+  "id": "ning",
+  "height": 2.97,
+  "standingEye": 2.7721,
+  "seatedEye": 2.2793,
+  "pelvis": 1.5529,
+  "scale": 2.0604,
+  "faceTargets": {
+    "head/head-round": 0.36,
+    "head/head-scale-vert-decr": 0.08,
+    "chin/chin-prominent-decr": 0.18,
+    "nose/nose-width2-incr": 0.1
+  }
+}

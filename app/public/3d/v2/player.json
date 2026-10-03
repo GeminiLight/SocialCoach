@@ -1,0 +1,13 @@
+{
+  "id": "player",
+  "height": 3.1,
+  "standingEye": 2.8819,
+  "seatedEye": 2.3303,
+  "pelvis": 1.6116,
+  "scale": 2.1059,
+  "faceTargets": {
+    "head/head-oval": 0.24,
+    "chin/chin-width-incr": 0.1,
+    "nose/nose-scale-depth-incr": 0.12
+  }
+}

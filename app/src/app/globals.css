@@ -499,11 +499,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   --dinner-radius: 12px;
   --dinner-radius-sm: 6px;
   --dinner-ease-out: cubic-bezier(.16,1,.3,1);
-  --dinner-scene-wall: oklch(.37 .035 74);
-  --dinner-scene-wallInset: oklch(.32 .035 72);
+  --dinner-scene-wall: oklch(.68 .033 78);
+  --dinner-scene-wallInset: oklch(.48 .033 72);
   --dinner-scene-wood: oklch(.43 .063 60);
   --dinner-scene-woodEdge: oklch(.265 .037 59);
-  --dinner-scene-floor: oklch(.32 .033 59);
+  --dinner-scene-floor: oklch(.50 .026 72);
   --dinner-scene-chair: oklch(.30 .047 104);
   --dinner-scene-brass: oklch(.64 .081 81);
   --dinner-scene-porcelain: oklch(.88 .025 87);

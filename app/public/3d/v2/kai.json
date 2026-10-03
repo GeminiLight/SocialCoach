@@ -1,0 +1,14 @@
+{
+  "id": "kai",
+  "height": 3.04,
+  "standingEye": 2.8325,
+  "seatedEye": 2.3172,
+  "pelvis": 1.5753,
+  "scale": 2.1773,
+  "faceTargets": {
+    "head/head-round": 0.32,
+    "head/head-scale-horiz-incr": 0.12,
+    "chin/chin-height-decr": 0.1,
+    "nose/nose-width1-incr": 0.18
+  }
+}

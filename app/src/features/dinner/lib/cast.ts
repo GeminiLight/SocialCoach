@@ -1,3 +1,4 @@
+import { avatarMetrics } from './avatarAssets';
 /** Stable casting, separate from scene text: changing tables must change people. */
 export type CastAppearance = {
   feminine:boolean; age:'young'|'adult'|'mature';
@@ -28,4 +29,4 @@ export const castAppearances:Record<string,CastAppearance>={
 };
 export const castAppearance=(id:string)=>castAppearances[id]??base;
 /** Torso scaling is around the hips; chair and foot anchors remain unchanged. */
-export const castEyeHeight=(id:string,seated:boolean)=>(seated?1.32:1.72)+(1.11+.023*.72)*castAppearance(id).build[1];
+export const castEyeHeight=(id:string,seated:boolean)=>avatarMetrics[id]?.[seated?'seatedEye':'standingEye']??((seated?1.32:1.72)+(1.11+.023*.72)*castAppearance(id).build[1]);

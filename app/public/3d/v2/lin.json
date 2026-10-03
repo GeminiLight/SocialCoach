@@ -1,0 +1,14 @@
+{
+  "id": "lin",
+  "height": 3.0,
+  "standingEye": 2.7825,
+  "seatedEye": 2.2857,
+  "pelvis": 1.5568,
+  "scale": 2.0552,
+  "faceTargets": {
+    "head/head-oval": 0.48,
+    "head/head-scale-horiz-decr": 0.18,
+    "chin/chin-height-incr": 0.18,
+    "nose/nose-scale-horiz-decr": 0.1
+  }
+}

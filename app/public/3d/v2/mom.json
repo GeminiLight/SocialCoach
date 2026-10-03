@@ -1,0 +1,16 @@
+{
+  "id": "mom",
+  "height": 2.88,
+  "standingEye": 2.6885,
+  "seatedEye": 2.2374,
+  "pelvis": 1.5111,
+  "scale": 1.9139,
+  "faceTargets": {
+    "head/head-round": 0.25,
+    "head/head-age-incr": 0.3,
+    "chin/chin-height-decr": 0.16,
+    "nose/nose-point-down": 0.12,
+    "cheek/cheek-volume-incr": 0.2,
+    "eyes/eye-bag-incr": 0.15
+  }
+}

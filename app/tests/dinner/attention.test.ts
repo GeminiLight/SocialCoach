@@ -32,3 +32,14 @@ test('conversation follows a new speaker but a chosen person keeps priority',()=
 test('non-dinner opening speakers can be framed before play without moving characters or advancing time',()=>{
  for(const scene of scenarios.filter(s=>s.space))for(const speaker of scene.characters){const world=createWorld(scene),poses=world.npcs.map(n=>({x:n.x,z:n.z,seated:n.seated}));world.speakerId=speaker.id;trackAttention(world,0,true);assert.equal(world.clock,0);assert.deepEqual(world.npcs.map(n=>({x:n.x,z:n.z,seated:n.seated})),poses);const subject=attentionSubject(world)!;for(const aspect of [1280/720,390/844]){const pose=cameraPose(world,'first',aspect),camera=new PerspectiveCamera(pose.fov,aspect,.1,60);camera.position.set(...pose.position as [number,number,number]);camera.lookAt(...pose.target as [number,number,number]);camera.updateMatrixWorld();const face=new Vector3(subject.x,playerEyeHeight(subject),subject.z).project(camera);assert.ok(Math.abs(face.x)<.05&&Math.abs(face.y)<.15,`Opening face ${speaker.id}: ${face.toArray()}`);}}
 });
+
+
+test('third-person cameras stay in the lobby at the panel and inside the cabin after entering',()=>{
+  const scene=scenarios.find(s=>s.space==='elevator')!;
+  for(const aspect of [1280/720,390/844]){
+    const world=createWorld(scene);world.player.x=2.4;world.player.z=-1.3;trackAttention(world,0,true);
+    let pose=cameraPose(world,'third',aspect);assert.ok(pose.position[2]>=-1.8,'Lobby wall cannot cover the whole screen');
+    world.player.x=1.25;world.player.z=-3.5;trackAttention(world,0,true);
+    pose=cameraPose(world,'third',aspect);assert.ok(Math.abs(pose.position[0])<=1.72);assert.ok(pose.position[2]>=-4.5&&pose.position[2]<=-2.55);assert.ok(pose.position[1]<=4.45);
+  }
+});

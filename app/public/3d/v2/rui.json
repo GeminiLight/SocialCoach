@@ -1,0 +1,14 @@
+{
+  "id": "rui",
+  "height": 3.15,
+  "standingEye": 2.9313,
+  "seatedEye": 2.357,
+  "pelvis": 1.6342,
+  "scale": 2.2046,
+  "faceTargets": {
+    "head/head-triangular": 0.22,
+    "head/head-scale-horiz-decr": 0.12,
+    "chin/chin-prominent-incr": 0.18,
+    "nose/nose-point-down": 0.1
+  }
+}

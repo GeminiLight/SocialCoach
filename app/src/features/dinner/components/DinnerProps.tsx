@@ -1,23 +1,17 @@
 /* eslint-disable react-hooks/immutability -- Three.js cameras, meshes and the room simulation are mutable resources; React renders their separate snapshots. */
 import {useEffect,useMemo,useRef} from 'react';
 import {useFrame} from '@react-three/fiber';
-import {CanvasTexture,Group,MathUtils,SRGBColorSpace,Vector2,Vector3} from 'three';
+import {CanvasTexture,Group,MathUtils,SRGBColorSpace,Vector3} from 'three';
 import {RoundedBox} from '@react-three/drei';
 import {pick,ui,type Lang,type Scenario,type Gesture} from '../lib/content';
 import type {Palette} from '../lib/palette';
 import {actorBeat,playerBeat,trophyPosition,type Drama} from '../lib/drama';
 import {PLAYER_HOME,type World} from '../lib/room';
-import {DinnerHand} from './DinnerHand';
+import {AssetHand} from './SceneAssets';
 import {advancePresence,createPresence,conversationalRaise} from '../lib/presence';
-export function Cup({position=[0,0,0],palette:p,wine=false}:{position?:[number,number,number];palette:Palette;wine?:boolean}){
- const profile=useMemo(()=> (wine?[[0,.20],[.032,.20],[.054,.22],[.079,.25],[.092,.30],[.096,.36],[.091,.367],[.088,.36],[.085,.30],[.072,.25],[.046,.225],[0,.216]]:[[.068,-.095],[.079,-.085],[.094,-.04],[.116,.089],[.115,.10],[.106,.102],[.104,.09],[.084,-.035],[.070,-.065],[0,-.066]]).map(([x,y])=>new Vector2(x,y)),[wine]);
- return <group position={position}>
-   {wine&&<><mesh position={[0,.012,0]}><cylinderGeometry args={[.091,.095,.021,28]}/><meshPhysicalMaterial color={p.porcelain} transparent opacity={.35} roughness={.10} metalness={.08}/></mesh><mesh position={[0,.114,0]}><cylinderGeometry args={[.012,.013,.2,16]}/><meshPhysicalMaterial color={p.porcelain} transparent opacity={.50} roughness={.08}/></mesh></>}
-   <mesh castShadow><latheGeometry args={[profile,32]}/><meshPhysicalMaterial color={p.porcelain} transparent={wine} opacity={wine?.32:1} roughness={wine?.08:.22} clearcoat={.45} side={2} depthWrite={!wine}/></mesh>
-   <mesh position={[0,wine?.27:.056,0]}><cylinderGeometry args={[wine?.080:.099,wine?.055:.078,wine?.066:.019,28]}/><meshStandardMaterial color={p.tea} roughness={.20}/></mesh>
-   {!wine&&<><mesh position={[0,.102,0]} rotation={[Math.PI/2,0,0]}><torusGeometry args={[.11,.0045,6,32]}/><meshStandardMaterial color={p.brass} metalness={.45} roughness={.3}/></mesh><mesh position={[.119,.005,0]} rotation={[0,Math.PI/2,0]}><torusGeometry args={[.046,.012,8,24]}/><meshStandardMaterial color={p.porcelain} roughness={.22}/></mesh></>}
- </group>;
-}
+export { AssetCup as Cup } from './SceneAssets';
+import { AssetCup as Cup } from './SceneAssets';
+
 function useScreen(p:Palette,kind:'calendar'|'intro'|'photo'|'family'|'trophy',lang:Lang){
  const texture=useMemo(()=>{const canvas=document.createElement('canvas');canvas.width=384;canvas.height=640;const c=canvas.getContext('2d')!;c.fillStyle=kind==='family'?p.wine:p.porcelain;c.fillRect(0,0,384,640);c.fillStyle=kind==='family'?p.brass:p.dark;c.textAlign='center';c.font='600 30px sans-serif';c.fillText(pick(ui[kind==='calendar'?'calendarDay':kind==='intro'?'phoneCard':kind==='photo'?'photoScreen':kind==='family'?'familyWish':'trophyLabel'],lang),192,70,345);
  if(kind==='calendar'){c.font='700 110px sans-serif';c.fillText(pick(ui.calendarShort,lang),192,245,320);for(let i=0;i<3;i++){c.fillStyle=i? p.napkin:p.brass;c.fillRect(40,330+i*65,304,38);}}
@@ -65,17 +59,12 @@ export function PlayerHands({p,drama,lang,scenario,world,hudHeight}:{p:Palette;d
  const wrist:[number,number,number]=holdingPhone?[.145,-.035,.045]:wine?[.045,-.025,-.08]:[.07,-.12,-.10];
  return <group ref={root}>
    <group ref={hand} position={[.47,-.62,-.78]}>
-     <group position={wrist}>
-       <mesh position={[0,-.28,.15]} rotation={[-.55,0,0]} castShadow><cylinderGeometry args={[.05,.07,.46,20]}/><meshStandardMaterial color={p.navy} roughness={.92}/></mesh>
-       <mesh position={[0,-.045,.010]}><cylinderGeometry args={[.037,.045,.07,16]}/><meshStandardMaterial color={p.white} roughness={.85}/></mesh>
-       <group rotation={[0,holdingPhone?Math.PI:0,Math.PI]}><DinnerHand p={p} side={holdingPhone?-1:1} pose={holdingPhone?'phone':wine?'stem':'cup'}/></group>
-     </group>
+     <group position={wrist}><AssetHand p={p}/></group>
      <group ref={cup}><Cup palette={p} wine={wine}/></group>
      <group ref={phone} position={[0,.12,0]}><Phone p={p} kind={drama.active==='family-phone'?'intro':'calendar'} lang={lang}/></group>
    </group>
    <group ref={palm} position={[-.28,-.71,-.75]} rotation={[.18,0,.1]}>
-     <group rotation={[0,0,Math.PI]}><DinnerHand p={p} side={-1} pose="open"/></group>
-     <mesh position={[0,-.20,.01]}><cylinderGeometry args={[.045,.06,.35,18]}/><meshStandardMaterial color={p.navy} roughness={.9}/></mesh>
+     <AssetHand p={p} open/>
    </group>
  </group>;
 }

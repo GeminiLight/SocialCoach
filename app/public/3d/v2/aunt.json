@@ -1,0 +1,14 @@
+{
+  "id": "aunt",
+  "height": 2.93,
+  "standingEye": 2.7384,
+  "seatedEye": 2.2559,
+  "pelvis": 1.5425,
+  "scale": 1.9494,
+  "faceTargets": {
+    "head/head-round": 0.46,
+    "head/head-fat-incr": 0.28,
+    "chin/chin-width-incr": 0.16,
+    "nose/nose-width2-incr": 0.12
+  }
+}

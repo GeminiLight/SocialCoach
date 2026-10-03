@@ -11,11 +11,18 @@ function Box({at,size,color,metal=0,round=0,children}:{at:[number,number,number]
  const material=<meshStandardMaterial color={color} metalness={metal} roughness={metal?.36:.78}/>;
  return <group position={at}>{round?<RoundedBox args={size} radius={round} smoothness={2} castShadow receiveShadow>{material}</RoundedBox>:<mesh castShadow receiveShadow><boxGeometry args={size}/>{material}</mesh>}{children}</group>;
 }
-function Sign({at,size,lines,p,lang,dark=false}:{at:[number,number,number];size:[number,number];lines:L[];p:Palette;lang:Lang;dark?:boolean}){
- const words=lines.map(line=>pick(line,lang)).join('\n');
- const texture=useMemo(()=>{const canvas=document.createElement('canvas');canvas.width=768;canvas.height=384;const c=canvas.getContext('2d')!;c.fillStyle=dark?p.screen:p.white;c.fillRect(0,0,768,384);c.fillStyle=dark?p.white:p.charcoal;c.textAlign='left';const text=words.split('\n');text.forEach((line,i)=>{if(text.length===1)c.textAlign='center';c.font=`${i===0?'600':'400'} ${i===0?58:38}px sans-serif`;c.fillText(line,text.length===1?384:48,text.length===1?216:82+i*75,680);});const map=new CanvasTexture(canvas);map.colorSpace=SRGBColorSpace;return map;},[words,dark,p]);
+export function Sign({at,size,lines,p,lang,dark=false,name}:{at:[number,number,number];size:[number,number];lines:L[];p:Palette;lang:Lang;dark?:boolean;name?:string}){
+ const words=lines.map(line=>pick(line,lang)).join('\n'),aspect=size[0]/size[1];
+ const texture=useMemo(()=>{
+  const canvas=document.createElement('canvas');canvas.width=768;canvas.height=Math.round(768/aspect);
+  const c=canvas.getContext('2d')!;c.fillStyle=dark?p.screen:p.white;c.fillRect(0,0,canvas.width,canvas.height);
+  c.fillStyle=dark?p.white:p.charcoal;const text=words.split('\n');c.textAlign=text.length===1?'center':'left';
+  const font=Math.min(58,canvas.height/(text.length*2.7));
+  text.forEach((line,i)=>{c.font=`${i===0?'600':'400'} ${i===0?font:font*.66}px sans-serif`;c.fillText(line,text.length===1?384:48,text.length===1?canvas.height/2+font*.32:Math.min(82,canvas.height*.2)+i*Math.max(75,canvas.height*.13),680);});
+  const map=new CanvasTexture(canvas);map.colorSpace=SRGBColorSpace;return map;
+ },[words,aspect,dark,p]);
  useEffect(()=>()=>texture.dispose(),[texture]);
- return <mesh position={at}><planeGeometry args={size}/><meshBasicMaterial map={texture} toneMapped={false}/></mesh>;
+ return <mesh name={name} position={at}><planeGeometry args={size}/><meshBasicMaterial map={texture} toneMapped={false}/></mesh>;
 }
 function Floor({p,world,paused}:{p:Palette;world:World;paused:boolean}){
  return <group><mesh rotation={[-Math.PI/2,0,0]} position={[0,-.025,.6]} receiveShadow onClick={e=>{if(!paused){e.stopPropagation();walkPlayer(world,{x:e.point.x,z:e.point.z});}}}><planeGeometry args={[12.5,13]}/><meshStandardMaterial color={p.officeFloor} roughness={.82}/></mesh>{Array.from({length:11},(_,i)=><Box key={i} at={[i-5,.001,.6]} size={[.009,.003,12.5]} color={p.floorJoint}/>)}{Array.from({length:11},(_,i)=><Box key={i} at={[0,.001,i-4.5]} size={[12.3,.003,.009]} color={p.floorJoint}/>)}</group>;

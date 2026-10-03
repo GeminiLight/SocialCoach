@@ -1,0 +1,13 @@
+{
+  "id": "zhou",
+  "height": 3.05,
+  "standingEye": 2.8401,
+  "seatedEye": 2.3191,
+  "pelvis": 1.581,
+  "scale": 2.1678,
+  "faceTargets": {
+    "head/head-rectangular": 0.28,
+    "chin/chin-prominent-incr": 0.14,
+    "nose/nose-scale-vert-incr": 0.14
+  }
+}

@@ -19,3 +19,7 @@ docs/screenshots/raw/
 
 # Cloudflare API token for scripts/dns-sync.mjs
 .cloudflare
+
+# Regenerable packed Blender sources and production cache (not web assets)
+.blender-work/
+__pycache__/

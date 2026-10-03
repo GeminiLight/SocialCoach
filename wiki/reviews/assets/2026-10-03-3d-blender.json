@@ -1,0 +1,299 @@
+{
+  "date": "2026-10-03",
+  "baseline": {
+    "kind": "development warm scene, work, first person, active toast, Mac desktop 1280x720 CSS, dpr 1.5",
+    "fps": 113.4,
+    "frameP95ms": 11.4,
+    "drawCalls": 287,
+    "geometries": 306,
+    "textures": 29,
+    "triangles": 562306
+  },
+  "newDevelopment": {
+    "kind": "same Mac desktop, warm work first person active toast, CSS 1280x720 DPR 1.5",
+    "fps": 120.1,
+    "frameP95ms": 9.0,
+    "drawCalls": 94,
+    "geometries": 79,
+    "textures": 57,
+    "triangles": 243100
+  },
+  "newProductionTea": {
+    "kind": "warm work first person after tea action; production build, CSS 1280x720 DPR 1.5",
+    "fps": 118.9,
+    "frameP95ms": 9.6,
+    "drawCalls": 97,
+    "geometries": 92,
+    "textures": 66,
+    "triangles": 247068
+  },
+  "validator": {
+    "version": "2.0.0-dev.3.10",
+    "files": 24,
+    "errors": 0,
+    "warnings": 0,
+    "informationalNotSuppressed": true
+  },
+  "sourceContact": {
+    "blender": "5.2.2 LTS",
+    "contact": [
+      {
+        "actor": "aunt",
+        "seated": false,
+        "soleHeight": {
+          "left": 0.00623,
+          "right": 0.00623
+        }
+      },
+      {
+        "actor": "aunt",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00818,
+          "right": 0.0082
+        }
+      },
+      {
+        "actor": "chen",
+        "seated": false,
+        "soleHeight": {
+          "left": -0.00627,
+          "right": -0.00627
+        }
+      },
+      {
+        "actor": "chen",
+        "seated": true,
+        "soleHeight": {
+          "left": -0.00112,
+          "right": -0.00096
+        }
+      },
+      {
+        "actor": "cheng",
+        "seated": false,
+        "soleHeight": {
+          "left": 0.00448,
+          "right": 0.00448
+        }
+      },
+      {
+        "actor": "cheng",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.0099,
+          "right": 0.00994
+        }
+      },
+      {
+        "actor": "dad",
+        "seated": false,
+        "soleHeight": {
+          "left": -0.00653,
+          "right": -0.00653
+        }
+      },
+      {
+        "actor": "dad",
+        "seated": true,
+        "soleHeight": {
+          "left": -0.00219,
+          "right": -0.00202
+        }
+      },
+      {
+        "actor": "fang",
+        "seated": false,
+        "soleHeight": {
+          "left": 0.00369,
+          "right": 0.00369
+        }
+      },
+      {
+        "actor": "fang",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00895,
+          "right": 0.00908
+        }
+      },
+      {
+        "actor": "he",
+        "seated": false,
+        "soleHeight": {
+          "left": -0.00629,
+          "right": -0.00629
+        }
+      },
+      {
+        "actor": "he",
+        "seated": true,
+        "soleHeight": {
+          "left": -0.00158,
+          "right": -0.00142
+        }
+      },
+      {
+        "actor": "kai",
+        "seated": false,
+        "soleHeight": {
+          "left": -0.00663,
+          "right": -0.00663
+        }
+      },
+      {
+        "actor": "kai",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00198,
+          "right": 0.00206
+        }
+      },
+      {
+        "actor": "lin",
+        "seated": false,
+        "soleHeight": {
+          "left": 0.00351,
+          "right": 0.00351
+        }
+      },
+      {
+        "actor": "lin",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00904,
+          "right": 0.00918
+        }
+      },
+      {
+        "actor": "mom",
+        "seated": false,
+        "soleHeight": {
+          "left": 0.00457,
+          "right": 0.00457
+        }
+      },
+      {
+        "actor": "mom",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00723,
+          "right": 0.00725
+        }
+      },
+      {
+        "actor": "ning",
+        "seated": false,
+        "soleHeight": {
+          "left": 0.00311,
+          "right": 0.00311
+        }
+      },
+      {
+        "actor": "ning",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00855,
+          "right": 0.00869
+        }
+      },
+      {
+        "actor": "player",
+        "seated": false,
+        "soleHeight": {
+          "left": -0.00614,
+          "right": -0.00614
+        }
+      },
+      {
+        "actor": "player",
+        "seated": true,
+        "soleHeight": {
+          "left": -0.00014,
+          "right": -8e-05
+        }
+      },
+      {
+        "actor": "qiao",
+        "seated": false,
+        "soleHeight": {
+          "left": -0.00498,
+          "right": -0.00498
+        }
+      },
+      {
+        "actor": "qiao",
+        "seated": true,
+        "soleHeight": {
+          "left": -0.00215,
+          "right": -0.00215
+        }
+      },
+      {
+        "actor": "rui",
+        "seated": false,
+        "soleHeight": {
+          "left": -0.00596,
+          "right": -0.00596
+        }
+      },
+      {
+        "actor": "rui",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00072,
+          "right": 0.00079
+        }
+      },
+      {
+        "actor": "senior",
+        "seated": false,
+        "soleHeight": {
+          "left": -0.00713,
+          "right": -0.00713
+        }
+      },
+      {
+        "actor": "senior",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00271,
+          "right": 0.00279
+        }
+      },
+      {
+        "actor": "yue",
+        "seated": false,
+        "soleHeight": {
+          "left": 0.0043,
+          "right": 0.0043
+        }
+      },
+      {
+        "actor": "yue",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00951,
+          "right": 0.00954
+        }
+      },
+      {
+        "actor": "zhou",
+        "seated": false,
+        "soleHeight": {
+          "left": -0.00605,
+          "right": -0.00605
+        }
+      },
+      {
+        "actor": "zhou",
+        "seated": true,
+        "soleHeight": {
+          "left": 0.00126,
+          "right": 0.00133
+        }
+      }
+    ]
+  },
+  "realPhoneMeasured": false
+}

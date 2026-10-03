@@ -1,0 +1,15 @@
+{
+  "id": "dad",
+  "height": 3.03,
+  "standingEye": 2.8242,
+  "seatedEye": 2.268,
+  "pelvis": 1.6162,
+  "scale": 1.8638,
+  "faceTargets": {
+    "head/head-rectangular": 0.36,
+    "head/head-age-incr": 0.24,
+    "chin/chin-width-incr": 0.2,
+    "nose/nose-scale-vert-incr": 0.18,
+    "eyes/eye-bag-incr": 0.2
+  }
+}

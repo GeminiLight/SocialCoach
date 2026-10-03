@@ -1,0 +1,520 @@
+{
+  "version": 2,
+  "exported": "2026-10-03",
+  "blender": "5.2.2 LTS",
+  "mpfb": "afb9f530a7c2741dedb8df0ebae2e0b183caec21",
+  "models": [
+    {
+      "file": "aunt.glb",
+      "bytes": 2244548,
+      "sha256": "55656067a46ebc67827e7a102ff9d3812b781e6d0d5f4dbd80f53985ace12f7e",
+      "triangles": 34300,
+      "drawCalls": 8,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "chen.glb",
+      "bytes": 2361220,
+      "sha256": "6845836eed40239e381f49c69d4406ae0e0235e02ec3f899504d7378b727845b",
+      "triangles": 42290,
+      "drawCalls": 7,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "cheng.glb",
+      "bytes": 2488884,
+      "sha256": "bb63f841ff728346ae592b3aaeb4a8a43642f0e283dc9bf2757e1af79f86c212",
+      "triangles": 40500,
+      "drawCalls": 8,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "dad.glb",
+      "bytes": 2365416,
+      "sha256": "c84bfc488a8b17ac21328593d70e9eff578ad19a615c0b43cf1c2ae4c4d1f4ed",
+      "triangles": 37398,
+      "drawCalls": 13,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "fang.glb",
+      "bytes": 2211948,
+      "sha256": "1619851ccde029108d3e1a79695b51f338ed73671a0ca3a6391176c5bdbcdd1e",
+      "triangles": 57586,
+      "drawCalls": 7,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "hand-grip.glb",
+      "bytes": 141396,
+      "sha256": "31b54688f3bd852d2d60afe9908046bcff883b375e3509f5ad6d4fcea70d1db1",
+      "triangles": 3680,
+      "drawCalls": 2,
+      "generator": "Khronos glTF Blender I/O v5.2.40"
+    },
+    {
+      "file": "hand-open.glb",
+      "bytes": 141008,
+      "sha256": "aac89790b669517fdb54b24cc8690ace9003c64131198e33dbada5fde917fa00",
+      "triangles": 3680,
+      "drawCalls": 2,
+      "generator": "Khronos glTF Blender I/O v5.2.40"
+    },
+    {
+      "file": "he.glb",
+      "bytes": 2266496,
+      "sha256": "5ee3bd60c8cc67e0de52a1920fa4c5087475bc683746bbf94ce8a53897dbcb91",
+      "triangles": 45704,
+      "drawCalls": 12,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "kai.glb",
+      "bytes": 2466164,
+      "sha256": "1e4b7eef465f334e7558eb21f0931a9a3584c7c220a10c2f542dfc80836e06d6",
+      "triangles": 35538,
+      "drawCalls": 13,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "lin.glb",
+      "bytes": 2366440,
+      "sha256": "3a5fdcb2f5263abc6e7c1791eccefc43ef76eb323f6768312dc5f5becbefa001",
+      "triangles": 41582,
+      "drawCalls": 7,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "mom.glb",
+      "bytes": 2488008,
+      "sha256": "3d83acd7144f2b1657e7a81dc8cf37632008400232ff6572342f354b370bd099",
+      "triangles": 40500,
+      "drawCalls": 8,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "ning.glb",
+      "bytes": 2367352,
+      "sha256": "8788e218e7d86845888f69d33b5194474e19cef86fc2042282801346005706c4",
+      "triangles": 37396,
+      "drawCalls": 8,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "player.glb",
+      "bytes": 2321316,
+      "sha256": "9b56481d55059b5aa7bfa670a6234f13781dbbf40513cb9a9889977c60b7a122",
+      "triangles": 34084,
+      "drawCalls": 8,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "props.glb",
+      "bytes": 37256,
+      "sha256": "2f44b7ddc795bb7d347d9cd52bd408d41aee59f70b4508f39cbae899e6200416",
+      "triangles": 5184,
+      "drawCalls": 7,
+      "generator": "Khronos glTF Blender I/O v5.2.40"
+    },
+    {
+      "file": "qiao.glb",
+      "bytes": 2318300,
+      "sha256": "1267f0ea9fc0dc9b2c2ae9b98ba396a8063d0c1ea0effd5266cc49d446b995fe",
+      "triangles": 44584,
+      "drawCalls": 7,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "room-elevator.glb",
+      "bytes": 579464,
+      "sha256": "653f430ffe23659b1454e3b73e6e7fe9fb907bbc46f843b4eadd4fc9f7d35b84",
+      "triangles": 11572,
+      "drawCalls": 22,
+      "generator": "Khronos glTF Blender I/O v5.2.40"
+    },
+    {
+      "file": "room-family.glb",
+      "bytes": 2176928,
+      "sha256": "33c27996623ef89c95874bc66172f6c44e49e08cce8e7a0fff2d23d32ecd6258",
+      "triangles": 83212,
+      "drawCalls": 38,
+      "generator": "Khronos glTF Blender I/O v5.2.40"
+    },
+    {
+      "file": "room-office.glb",
+      "bytes": 393580,
+      "sha256": "6fe44b9863745f5eed9e349d668e0c343e032d01ac1b0268a5c17a03faf7b8b2",
+      "triangles": 67768,
+      "drawCalls": 29,
+      "generator": "Khronos glTF Blender I/O v5.2.40"
+    },
+    {
+      "file": "room-school.glb",
+      "bytes": 962272,
+      "sha256": "9c0bae0b96d6a8a1a6ae0f6e1b9c78288519565076b00e64c99de88e2ae58521",
+      "triangles": 83356,
+      "drawCalls": 38,
+      "generator": "Khronos glTF Blender I/O v5.2.40"
+    },
+    {
+      "file": "room-work.glb",
+      "bytes": 1032100,
+      "sha256": "cbbbf4cb0a7f1d035756a2530af2a26df10b04b64868a74a7b28c8cd4b752e9f",
+      "triangles": 94792,
+      "drawCalls": 41,
+      "generator": "Khronos glTF Blender I/O v5.2.40"
+    },
+    {
+      "file": "rui.glb",
+      "bytes": 2425800,
+      "sha256": "f73e3a4b19bc4d66deea709d4516b610d3fd121c8c1c3dab160b05aa9fa6d9a5",
+      "triangles": 44026,
+      "drawCalls": 7,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "senior.glb",
+      "bytes": 2412688,
+      "sha256": "f1497a849a25861884e983f276ec4b57838624ba3ad6417c8afb5f7c520fa39c",
+      "triangles": 32470,
+      "drawCalls": 8,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "yue.glb",
+      "bytes": 2441524,
+      "sha256": "5e04517fabfeadc8bf177c78295c0b8a350f4844c93feb2d15dd9d26e22221bb",
+      "triangles": 37404,
+      "drawCalls": 8,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    },
+    {
+      "file": "zhou.glb",
+      "bytes": 2401048,
+      "sha256": "1743f80d2a36b05f1206f56f2df1a2d0779df060d5c288bfeb4690001800fcdc",
+      "triangles": 47440,
+      "drawCalls": 12,
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "animations": [
+        "SeatedFold",
+        "SeatedIdle",
+        "SeatedLean",
+        "SeatedPalm",
+        "SeatedPhone",
+        "SeatedToast",
+        "StandingFold",
+        "StandingIdle",
+        "StandingLean",
+        "StandingPalm",
+        "StandingPhone",
+        "StandingToast"
+      ],
+      "morphs": [
+        "jawOpen",
+        "browInnerUp",
+        "blink",
+        "smile"
+      ]
+    }
+  ]
+}

@@ -1,20 +1,18 @@
 /* eslint-disable react-hooks/immutability -- Three.js cameras, meshes and the room simulation are mutable resources; React renders their separate snapshots. */
-import { Component, memo, Suspense, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { Component, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { ContactShadows } from '@react-three/drei';
 import { ACESFilmicToneMapping, MathUtils, Mesh, PerspectiveCamera, Vector3 } from 'three';
 import { emotions, gestures, pick, ui, type Character, type Lang, type Scenario } from '../lib/content';
 import { getPalette } from '../lib/palette';
-import { SEATS, PLAYER_HOME, snapshot, roomUiKey, stepWorld, focusConversation, freeLook, type World, type ViewMode, type RoomSave, type RoomEvent, type Point } from '../lib/room';
+import { snapshot, roomUiKey, stepWorld, focusConversation, freeLook, type World, type ViewMode, type RoomSave, type RoomEvent, type Point } from '../lib/room';
 import { l } from '../lib/content';
-import { attentionSubject, eyeHeight, cameraPose, trackAttention, wrapAngle } from '../lib/attention';
+import { attentionSubject, eyeHeight, cameraPose, constrainCamera, trackAttention, wrapAngle } from '../lib/attention';
 import {actorActionLabel,type Drama} from '../lib/drama';
 import {TableCups,ScenarioObjects,PlayerHands} from './DinnerProps';
-import {DinnerCharacter} from './DinnerCharacter';
-import {DinnerRoom,DinnerTable,DinnerChair} from './DinnerEnvironment';
-import {StaticFurniture} from './StaticFurniture';
+import {RiggedCharacter} from './RiggedCharacter';
+import {AssetRoom,useSceneAsset} from './SceneAssets';
 import {RenderBudget} from './RenderBudget';
-import {ElevatorEnvironment,OfficeEnvironment} from './PlaceEnvironment';
 import {useDinnerSurfaces} from '../lib/surfaces';
 import type { Reply } from '../lib/engine';
 
@@ -116,15 +114,23 @@ function CameraRig({props,heading}:{props:SceneProps;heading:RefObject<number>})
     const pose=cameraPose(props.world,props.view,size.width/size.height);
     const perspective=camera as PerspectiveCamera;
     perspective.fov=MathUtils.lerp(perspective.fov,pose.fov,props.reduced?1:1-Math.exp(-10*Math.min(dt,.05)));const offset=props.started?Math.min(size.height*(props.scenario.space?.22:.15),Math.max(0,props.hudHeight-190)*.45+(props.scenario.space&&props.view==='first'?(size.width>600?40:20):0)):0;framingOffset.current=MathUtils.lerp(framingOffset.current,offset,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));sideOffset.current=MathUtils.lerp(sideOffset.current,size.width/size.height<=1.25&&!props.world.player.seated?-56:0,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));perspective.setViewOffset(size.width,size.height,sideOffset.current,framingOffset.current,size.width,size.height);perspective.updateProjectionMatrix();
-    position.set(props.scenario.space?MathUtils.clamp(pose.position[0],-5.6,5.6):pose.position[0],pose.position[1],props.scenario.space?Math.max(-4.1,pose.position[2]):pose.position[2]);target.set(pose.target[0],pose.target[1],pose.target[2]);
-    camera.position.lerp(position,props.reduced?1:1-Math.exp(-14*Math.min(dt,.05)));camera.lookAt(target);
+    position.set(pose.position[0],pose.position[1],pose.position[2]);target.set(pose.target[0],pose.target[1],pose.target[2]);
+    camera.position.lerp(position,props.reduced?1:1-Math.exp(-14*Math.min(dt,.05)));if(props.view==='third')camera.position.fromArray(constrainCamera(props.world,camera.position.toArray()));camera.lookAt(target);
     if(props.paused&&(camera.position.distanceToSquared(position)>1e-7||Math.abs(perspective.fov-pose.fov)>.001||Math.abs(framingOffset.current-offset)>.01))invalidate();
   },-1);return null;
 }
 const playerCharacter:Character={id:'player',name:l('你','You'),role:l('玩家','Player'),description:l('你的角色','Your character'),outfit:'shirt',palette:'navy',hair:'short',glasses:false};
-const Chairs=memo(function Chairs({p,surfaces}:{p:ReturnType<typeof getPalette>;surfaces:ReturnType<typeof useDinnerSurfaces>}) {
-  return <StaticFurniture>{SEATS.map((seat,i)=><DinnerChair key={i} p={p} surfaces={surfaces} position={[seat.x,0,seat.z]} rotation={seat.heading}/>)}<DinnerChair p={p} surfaces={surfaces} position={[PLAYER_HOME.x,0,PLAYER_HOME.z]} rotation={Math.PI}/></StaticFurniture>;
-});
+
+function AssetReady({scenario,view,onReady}:{scenario:Scenario;view:ViewMode;onReady:(ready:boolean)=>void}) {
+  useSceneAsset(`room-${scenario.space??scenario.id}`);
+  useSceneAsset(scenario.characters[0].id);
+  useSceneAsset(scenario.characters[1].id);
+  useSceneAsset(scenario.characters[2].id);
+  useSceneAsset('props');
+  useSceneAsset(view==='third'?'player':'hand-grip');
+  useEffect(()=>{onReady(true);return()=>onReady(false);},[onReady]);
+  return null;
+}
 
 class SceneBoundary extends Component<{ fallback: ReactNode; children: ReactNode; onError:()=>void },{ error: boolean }> {
   state = { error: false };
@@ -138,25 +144,29 @@ export default function DinnerScene(props: SceneProps) {
   const surfaces=useDinnerSurfaces(p,props.scenario.space?'none':props.scenario.id==='family'?'family':'landscape');
   const labels=useRef<(HTMLButtonElement|null)[]>([]);
   const [ready,setReady]=useState(false);
+  const availability=props.onAvailability;
+  const assetReady=useCallback((value:boolean)=>{setReady(value);availability(value);},[availability]);
   const heading=useRef(Math.PI);
   const [visible,setVisible]=useState(()=>!document.hidden);
   const [dpr,setDpr]=useState(()=>Math.min(window.devicePixelRatio||1,window.innerWidth<=600?1.25:1.5));
   useEffect(()=>{const change=()=>setVisible(!document.hidden);document.addEventListener('visibilitychange',change);return()=>document.removeEventListener('visibilitychange',change);},[]);
   const fallback=<div className="scene-fallback"><p>{pick(ui.sceneFallback,props.lang)}</p><div>{props.scenario.characters.map(c=><button key={c.id} onClick={()=>props.onSelect(c.id)}>{pick(c.name,props.lang)}<small>{pick(c.role,props.lang)}</small></button>)}</div></div>;
-  return <SceneBoundary fallback={fallback} onError={()=>props.onAvailability(false)}><div className="dinner-render"><Suspense fallback={<div className="scene-loading" role="status">{pick(ui.sceneLoading,props.lang)}</div>}><Canvas role="img" aria-label={pick(ui.cameraLabel,props.lang)} frameloop={!props.paused&&visible?'always':'demand'} shadows dpr={dpr} camera={{position:[0,2.58,3.55],fov:55,near:.1,far:60}} gl={{ antialias:true, toneMapping:ACESFilmicToneMapping, toneMappingExposure:1.12 }} fallback={null} onCreated={()=>{setReady(true);props.onAvailability(true);}}>
+  return <SceneBoundary fallback={fallback} onError={()=>props.onAvailability(false)}><div className="dinner-render"><Suspense fallback={<div className="scene-loading" role="status">{pick(ui.sceneLoading,props.lang)}</div>}><Canvas role="img" aria-label={pick(ui.cameraLabel,props.lang)} frameloop={!props.paused&&visible?'always':'demand'} shadows dpr={dpr} camera={{position:[0,2.58,3.55],fov:55,near:.1,far:60}} gl={{ antialias:true, toneMapping:ACESFilmicToneMapping, toneMappingExposure:1.12 }} fallback={null} >
     <color attach="background" args={[props.scenario.space?p.officeWall:p.wall]} /><fog attach="fog" args={[props.scenario.space?p.officeWall:p.wall,18,36]} />
     <ambientLight intensity={props.scenario.space?.62:.35} color={p.porcelain} /><hemisphereLight args={[p.porcelain,p.woodEdge,.65]} />
     <directionalLight position={[-3,5,1]} intensity={1.65} color={p.white} castShadow shadow-mapSize={[2048,2048]} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-bias={-.0005} shadow-normalBias={.018} shadow-radius={5} />
     <directionalLight position={[4,3,2]} intensity={.75} color={p.porcelain} />
     <directionalLight position={[0,3.5,6]} intensity={.65} color={p.porcelain} />
+    <pointLight position={[0,4.8,.4]} intensity={props.scenario.space?26:32} distance={14} decay={2} color={p.white}/>
+    {!props.scenario.space&&<>{[-3.1,3.1].map(x=><pointLight key={x} position={[x,3.4,-4.6]} intensity={7} distance={6} decay={2} color={p.light}/>)}</>}
+    <AssetReady key={`${props.scenario.id}-${props.view}`} scenario={props.scenario} view={props.view} onReady={assetReady}/>
     <WorldDirector props={props} heading={heading}/>
     <RenderBudget active={!props.paused&&visible} onChange={setDpr}/>
-    {props.scenario.space==='elevator'?<ElevatorEnvironment p={p} world={props.world} lang={props.lang} paused={props.paused}/>:props.scenario.space==='office'?<OfficeEnvironment p={p} world={props.world} lang={props.lang} paused={props.paused} scenario={props.scenario} onEvidence={props.onEvidence}/>:<>
-    <DinnerRoom p={p} surfaces={surfaces} world={props.world} paused={props.paused} scenario={props.scenario}/><group onClick={e=>e.stopPropagation()}><DinnerTable p={p} surfaces={surfaces}/><TableCups p={p} world={props.world} drama={props.drama} scenario={props.scenario} reactions={props.reactions} line={props.line} paused={props.paused}/><ScenarioObjects p={p} drama={props.drama} scenario={props.scenario} lang={props.lang} reduced={props.reduced}/></group>
-    <Chairs p={p} surfaces={surfaces}/></>}
+    <AssetRoom p={p} world={props.world} scenario={props.scenario} lang={props.lang} paused={props.paused} onEvidence={props.onEvidence} surfaces={surfaces}/>
+    {!props.scenario.space&&<><TableCups p={p} world={props.world} drama={props.drama} scenario={props.scenario} reactions={props.reactions} line={props.line} paused={props.paused}/><ScenarioObjects p={p} drama={props.drama} scenario={props.scenario} lang={props.lang} reduced={props.reduced}/></>}
 
-    {props.scenario.characters.map((c,i)=><DinnerCharacter key={c.id} character={c} actor={props.world.npcs[i]} world={props.world} reaction={props.reactions.find(r=>r.characterId===c.id)} active={props.speaking&&props.speakerId===c.id} onSelect={()=>props.onSelect(c.id)} p={p} surfaces={surfaces} reduced={props.reduced} drama={props.drama} index={i} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} />)}
-    {props.view==='third'&&<DinnerCharacter character={playerCharacter} actor={props.world.player} world={props.world} active={false} onSelect={()=>{}} p={p} surfaces={surfaces} reduced={props.reduced} drama={props.drama} index={3} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} player/>}
+    {props.scenario.characters.map((c,i)=><RiggedCharacter key={c.id} character={c} actor={props.world.npcs[i]} world={props.world} reaction={props.reactions.find(r=>r.characterId===c.id)} active={props.speaking&&props.speakerId===c.id} onSelect={()=>props.onSelect(c.id)} p={p} reduced={props.reduced} drama={props.drama} index={i} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} />)}
+    {props.view==='third'&&<RiggedCharacter character={playerCharacter} actor={props.world.player} world={props.world} active={false} onSelect={()=>{}} p={p} reduced={props.reduced} drama={props.drama} index={3} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} player/>}
     {props.view==='first'&&<PlayerHands p={p} drama={props.drama} lang={props.lang} scenario={props.scenario} world={props.world} hudHeight={props.hudHeight}/>}
     <ContactShadows position={[0,.02,0]} opacity={.38} scale={14} blur={2.5} far={4.5} resolution={256} frames={1} color={p.dark} />
     <CameraRig props={props} heading={heading}/>

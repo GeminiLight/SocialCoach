@@ -138,13 +138,13 @@ export default function App() {
     if(complete&&drama.pending){const frame=requestAnimationFrame(()=>{drama.pending=undefined;stopApproach();});return()=>cancelAnimationFrame(frame);}
     if(!started||complete||modal||modelSheetOpen||corrupt)return;
     let frame=0,previous=0,since=0,last='';
-    const tick=(now:number)=>{const dt=previous?(now-previous)/1000:0;previous=now;if(!busy)syncDrama(drama,scenario,turn,started,complete,{openingEvent:variant.openingEvent??null,requestedEvent:latestNPC.story?.event});if(complete&&drama.pending){drama.pending=undefined;stopApproach();}stepDrama(drama,dt,!!modal||modelSheetOpen||!started||!!corrupt||document.hidden||complete);
+    const tick=(now:number)=>{const dt=previous?(now-previous)/1000:0;previous=now;if(!busy)syncDrama(drama,scenario,turn,started,complete,{openingEvent:variant.openingEvent??null,requestedEvent:latestNPC.story?.event});if(complete&&drama.pending){drama.pending=undefined;stopApproach();}stepDrama(drama,dt,!!modal||modelSheetOpen||!started||!!corrupt||document.hidden||complete||!sceneReady);
       if(drama.pending&&!modal&&!busy&&!corrupt&&!complete){if(drama.pending==='accept'&&(drama.inventory==='glass'||drama.inventory==='tea')&&distance(world.player,PLAYER_HOME)<1.2){drama.inventory='none';goNear(world,scenario.characters[1].id);}if(readyForChoice(drama,drama.pending,world)){const pending=drama.pending;stopApproach();chooseDrama(drama,pending,world,turn);if(pending==='inspect')setModal('evidence');if(sound&&(pending==='join'||pending==='tea'))clink();}else if(!world.player.path.length&&!world.player.moving){drama.pending=undefined;}}
       since+=dt;if(since>.15){since=0;const current=dramaUiKey(drama,scenarioId);if(current!==last){last=current;setDinner(snapshotDrama(drama));}}frame=requestAnimationFrame(tick);};
     const visibility=()=>{cancelAnimationFrame(frame);previous=0;if(!document.hidden)frame=requestAnimationFrame(tick);};
     document.addEventListener('visibilitychange',visibility);visibility();
     return ()=>{cancelAnimationFrame(frame);document.removeEventListener('visibilitychange',visibility);};
-  },[drama,scenario,scenarioId,turn,started,complete,modal,modelSheetOpen,busy,corrupt,world,sound,stopApproach,variant.openingEvent,latestNPC.story?.event]);
+  },[drama,scenario,scenarioId,turn,started,complete,modal,modelSheetOpen,busy,corrupt,world,sound,stopApproach,variant.openingEvent,latestNPC.story?.event,sceneReady]);
   function stepFromButton(direction:Point){const yaw=world.viewYaw;explore(()=>walkPlayer(world,{x:world.player.x+(-Math.cos(yaw)*direction.x+Math.sin(yaw)*direction.z)*.7,z:world.player.z+(Math.sin(yaw)*direction.x+Math.cos(yaw)*direction.z)*.7}));}
   const directions=[{key:'forward',x:0,z:1,icon:ArrowUp},{key:'left',x:-1,z:0,icon:ArrowLeft},{key:'backward',x:0,z:-1,icon:ArrowDown},{key:'right',x:1,z:0,icon:ArrowRight}] as const;
 
@@ -220,7 +220,7 @@ export default function App() {
   return <div ref={shell} lang={lang==='zh'?'zh-CN':'en'} style={{'--dinner-hud-height':`${hudHeight}px`} as CSSProperties} className={`app-shell ${started?'is-seated':'is-arriving'}`}>
     <main id="main" className="immersive-stage">
       <section className="scene-viewport" aria-label={pick(scenario.room,lang)}>
-        <Suspense fallback={<div className="scene-loading" role="status">{t('sceneLoading')}</div>}><DinnerScene scenario={scenario} lang={lang} reactions={reactions} speakerId={currentSpeakerId} drama={drama} hudHeight={hudHeight} line={playback.beat?.text??momentDialogue?.text??latestNPC.text} speaking={playback.speaking} selectedId={selectedId} onEvidence={()=>setModal('evidence')} onSelect={id=>setSelectedId(current=>current===id?null:id)} reduced={reduced} started={started} viewReset={viewReset} world={world} view={view} input={movementInput} paused={!!modal||modelSheetOpen||!started||!!corrupt} onWorldChange={updateRoom} onAvailability={setSceneReady}/></Suspense>
+        <Suspense fallback={<div className="scene-loading" role="status">{t('sceneLoading')}</div>}><DinnerScene key={scenarioId} scenario={scenario} lang={lang} reactions={reactions} speakerId={currentSpeakerId} drama={drama} hudHeight={hudHeight} line={playback.beat?.text??momentDialogue?.text??latestNPC.text} speaking={playback.speaking} selectedId={selectedId} onEvidence={()=>setModal('evidence')} onSelect={id=>setSelectedId(current=>current===id?null:id)} reduced={reduced} started={started} viewReset={viewReset} world={world} view={view} input={movementInput} paused={!!modal||modelSheetOpen||!started||!!corrupt} onWorldChange={updateRoom} onAvailability={setSceneReady}/></Suspense>
       </section>
       <div className="cinematic-scrim" aria-hidden="true"/>
       <header className="topbar">

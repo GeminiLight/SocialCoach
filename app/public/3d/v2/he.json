@@ -1,0 +1,14 @@
+{
+  "id": "he",
+  "height": 3.06,
+  "standingEye": 2.8551,
+  "seatedEye": 2.2843,
+  "pelvis": 1.6308,
+  "scale": 1.8807,
+  "faceTargets": {
+    "head/head-square": 0.25,
+    "head/head-age-incr": 0.25,
+    "cheek/cheek-volume-decr": 0.16,
+    "nose/nose-scale-vert-incr": 0.18
+  }
+}
