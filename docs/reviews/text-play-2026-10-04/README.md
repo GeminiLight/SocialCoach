@@ -8,3 +8,5 @@ Original authored test inputs; no real learner records. See the [review](../../.
 - Long replay: 14 Chinese office turns and an English opening. Checkpoints do not automatically end practice.
 
 Single stochastic samples, not a retention study or proof of factual accuracy. Timing varies with provider load; no performance improvement claimed.
+
+Release receipts: `release-vercel.json`, `release-mirror.json`; the first mirror TLS failure before generation is retained separately. Browser screenshot contains only the fictional four-turn practice, cropped before the new draft input.

@@ -1,0 +1,12 @@
+{
+  "site": "mirror",
+  "phase": "static-asset GET before any roleplay request",
+  "failure": "TLS connection ended during handshake",
+  "httpChecksCompleted": [
+    "arena",
+    "health"
+  ],
+  "roleplayCalls": 0,
+  "certificateVerificationDisabled": false,
+  "nextAction": "bounded retry for read-only GET; generation POST not automatically retried"
+}

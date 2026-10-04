@@ -1,0 +1,68 @@
+{
+  "site": "vercel",
+  "source": "5bbba48c2b9e7fb7522b04a7170cdec571f511c7",
+  "at": "2026-10-04T01:58:15Z",
+  "turns": [
+    {
+      "status": 200,
+      "ms": 6533,
+      "learner": "不包办不是不合作。我不拿接活换更正。程凡，你具体担心最后修改怎么分工？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "stance": 30,
+        "revealed": true,
+        "note": "程凡被问到分工担心，承认动机；沈星转向任务"
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "行吧……我怕的就是最后修改全压我头上。你那句「不想包办」我听着像要把活推给我，才先发出去的。"
+        },
+        {
+          "characterId": "lead",
+          "text": "先别吵了，截图的事等下再说，我们手上的活总得有人干吧？"
+        }
+      ]
+    },
+    {
+      "status": 200,
+      "ms": 4965,
+      "learner": "沈星，我只愿讨论分工，还没接排版或统一文字。现在哪些工作和哪些组员没分到任务？更正草稿也还没发，不要当已发。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "stance": 32,
+        "revealed": false,
+        "note": "沈星列出未分任务和未分派组员"
+      },
+      "npc": [
+        {
+          "characterId": "lead",
+          "text": "行，只谈活。最终修改能拆成三块：统一文字、格式排版、核对要求，这三块现在都没定谁做。还有一个组员也还没分到任务——名字我这就不点了，回头群里问本人愿不愿挑一块。"
+        },
+        {
+          "characterId": "cheng",
+          "text": "那你到底接不接？别光列清单。"
+        }
+      ]
+    }
+  ],
+  "arenaStatus": 200,
+  "health": {
+    "serverKey": true,
+    "requireByok": false,
+    "state": "available"
+  },
+  "assets": {
+    "count": 17,
+    "all200": true,
+    "authoredDirectionBundle": true
+  }
+}

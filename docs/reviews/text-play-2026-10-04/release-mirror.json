@@ -1,0 +1,68 @@
+{
+  "site": "mirror",
+  "source": "5bbba48c2b9e7fb7522b04a7170cdec571f511c7",
+  "at": "2026-10-04T06:59:59Z",
+  "turns": [
+    {
+      "status": 200,
+      "ms": 4351,
+      "learner": "不包办不是不合作。我不拿接活换更正。程凡，你具体担心最后修改怎么分工？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "stance": 25,
+        "revealed": true,
+        "note": "程凡被问到分工担心，松口承认"
+      },
+      "npc": [
+        {
+          "characterId": "cheng",
+          "text": "……行吧，我就是怕最后修改全砸我头上。你私聊里那句「不想包办」，我听着就像你要撂挑子，我先发了截图，好像就没我什么事了似的。"
+        },
+        {
+          "characterId": "lead",
+          "text": "先别吵了。群里的事群里说清楚，但作业也得往下走，最终修改总得有人接。"
+        }
+      ]
+    },
+    {
+      "status": 200,
+      "ms": 4445,
+      "learner": "沈星，我只愿讨论分工，还没接排版或统一文字。现在哪些工作和哪些组员没分到任务？更正草稿也还没发，不要当已发。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "stance": 30,
+        "revealed": false,
+        "note": "沈星列出未分配工作，不替他人承诺"
+      },
+      "npc": [
+        {
+          "characterId": "lead",
+          "text": "现在没分的是三块：统一文字、格式排版、核对要求。还有一位组员一直没分到任务，具体哪块可以问他愿不愿意接。更正的事你自己跟程凡谈，我不管群。"
+        },
+        {
+          "characterId": "cheng",
+          "text": "更正可以谈，但帖我不能删，删了显得我理亏。"
+        }
+      ]
+    }
+  ],
+  "arenaStatus": 200,
+  "health": {
+    "serverKey": true,
+    "requireByok": false,
+    "state": "available"
+  },
+  "assets": {
+    "count": 17,
+    "all200": true,
+    "authoredDirectionBundle": true
+  }
+}
