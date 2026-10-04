@@ -13,7 +13,17 @@ const session = `coach-identity-${process.pid}`;
 const artifacts = process.env.UX_ARTIFACTS ?? join(tmpdir(), session);
 mkdirSync(artifacts, { recursive: true });
 function browser(args: string[], input?: string) {
-  const result = JSON.parse(execFileSync("agent-browser", ["--session", session, "--json", ...args], { input, encoding: "utf8", timeout: 60000 }));
+  let output: string;
+  try {
+    output = execFileSync("agent-browser", ["--session", session, "--json", ...args], { input, encoding: "utf8", timeout: 60000 });
+  } catch (error) {
+    const failure = error as { code?: string; stdout?: string };
+    // Occasionally the CLI prints its completed response but fails to exit.
+    // Accept only that valid response; failed or missing UI results still fail.
+    if (failure.code !== "ETIMEDOUT" || !failure.stdout?.trim()) throw error;
+    output = failure.stdout;
+  }
+  const result = JSON.parse(output);
   assert(result.success, JSON.stringify(result.error)); return result.data;
 }
 const evaluate = (code: string) => browser(["eval", "--stdin"], code).result;
@@ -32,7 +42,9 @@ const saved = () => JSON.parse(evaluate("localStorage.getItem('socialcoach.v1')"
 const scans: unknown[] = [];
 try {
   browser(["open", "about:blank"]);
-  browser(["network", "route", "**/api/**", "--status", "503", "--body", '{"error":"Local UI fixture — no inference"}']);
+  for (const endpoint of ["schedule", "roleplay", "assess", "rehearse", "hint", "pattern", "reflect", "debrief-chat", "dinner/direct"]) {
+    browser(["network", "route", `**/api/${endpoint}`, "--status", "503", "--body", '{"error":"Local UI fixture — no inference"}']);
+  }
   browser(["network", "route", "**/api/health*", "--body", '{"state":"available","serverKey":true,"requireByok":false}']);
   browser(["network", "route", "**/api/track", "--body", "{}"]);
   browser(["network", "route", "**/api/feedback", "--body", '{"available":false}']);
