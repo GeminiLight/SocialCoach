@@ -30,7 +30,7 @@ export function DinnerEntry({ compact = false, welcome = false }: { compact?: bo
   if (compact) return <Link href="/3d" prefetch={false} className="press mt-5 flex min-h-12 items-center gap-3 rounded-[var(--radius-sm)] px-3.5 text-[14px] text-ink-2 hover:bg-inset"><Box size={19} /><span>{pick(copy.nav, lang)}</span><span className="ml-auto rounded-full bg-accent-soft px-2 py-1 text-[10px] font-medium text-accent-deep">3D</span></Link>;
   return <section className={`dinner-feature overflow-hidden rounded-[var(--radius)] ${welcome ? "dinner-feature-welcome" : ""}`} aria-labelledby={welcome ? "welcome-dinner-title" : "home-dinner-title"}>
     <div className="dinner-feature-preview relative overflow-hidden">
-      <Image src="/images/dinner-home-preview.jpg" alt="" fill preload sizes={welcome ? "(min-width: 1024px) 480px, 100vw" : "(min-width: 1024px) calc(100vw - 312px), (min-width: 768px) 640px, 100vw"} className="object-cover" />
+      <Image src="/images/dinner-home-preview-bright.jpg" alt="" fill preload sizes={welcome ? "(min-width: 1024px) 480px, 100vw" : "(min-width: 1024px) calc(100vw - 312px), (min-width: 768px) 640px, 100vw"} className="object-cover" />
       <span className="dinner-feature-caption absolute bottom-3 right-4 text-[10px]">{pick(copy.preview, lang)}</span>
     </div>
     <div className="dinner-feature-content flex flex-col gap-5 p-5 lg:flex-row lg:items-center lg:justify-between lg:gap-8 lg:px-7 lg:py-6">
@@ -62,7 +62,7 @@ export function DinnerAnnouncement({ enabled }: { enabled: boolean }) {
   return <Sheet open={open && enabled} onClose={() => setOpen(false)} title={pick(copy.title, lang)} footer={<div className="flex flex-col gap-3"><div className="flex flex-wrap items-center gap-3"><Link href="/3d" prefetch={false} onClick={() => setOpen(false)} className="press inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-action px-5 text-[14px] font-semibold text-accent-ink hover:bg-action-hover">{pick(copy.play, lang)}<ArrowUpRight size={17} /></Link><button onClick={() => setOpen(false)} className="press min-h-12 rounded-full px-4 text-[13px] text-ink-2 hover:bg-inset">{pick(copy.later, lang)}</button></div>
       <p className="text-[11px] text-ink-3">{pick(copy.note, lang)}</p></div>}>
     <div className="flex flex-col gap-5">
-      <div className="relative h-40 sm:h-44 overflow-hidden rounded-[var(--radius-sm)] bg-paper-deep"><Image src="/images/dinner-home-preview.jpg" alt="" fill sizes="(min-width: 640px) 560px, 100vw" className="object-cover" /></div>
+      <div className="relative h-40 sm:h-44 overflow-hidden rounded-[var(--radius-sm)] bg-paper-deep"><Image src="/images/dinner-home-preview-bright.jpg" alt="" fill sizes="(min-width: 640px) 560px, 100vw" className="object-cover" /></div>
       <div><p className="eyebrow text-accent-deep">{pick(copy.tag, lang)}</p><blockquote className="display mt-3 text-[24px] leading-snug">{pick(copy.quote, lang)}</blockquote><p className="mt-3 text-[14px] leading-relaxed text-ink-2">{pick(copy.body, lang)}</p><p className="mt-2 text-[13px] leading-relaxed text-ink-3">{pick(copy.detail, lang)}</p></div>
 
     </div>

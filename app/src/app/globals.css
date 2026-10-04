@@ -698,32 +698,39 @@ aside.lg\:border-dashed { border-left: 0; }
   --dinner-error: oklch(.80 .11 32);
   --dinner-overlay: oklch(.09 .006 62 / .82);
   --dinner-scene-overlay: oklch(.14 .017 64 / .88);
-  --dinner-clear: oklch(.09 .006 62 / 0);
   --dinner-scrim-top: oklch(.09 .006 62 / .82);
-  --dinner-scrim-middle: oklch(.09 .006 62 / .08);
-  --dinner-scrim-bottom: oklch(.09 .006 62 / .91);
   --dinner-shadow: oklch(.06 .008 60 / .35);
+  --dinner-hud-surface: oklch(.965 .010 85 / .95);
+  --dinner-hud-raised: oklch(.99 .005 85);
+  --dinner-hud-ink: oklch(.27 .019 63);
+  --dinner-hud-secondary: oklch(.43 .020 63);
+  --dinner-hud-muted: oklch(.49 .018 63);
+  --dinner-hud-line: oklch(.82 .020 78);
+  --dinner-hud-accent: oklch(.42 .060 66);
+  --dinner-hud-green: oklch(.46 .070 149);
+  --dinner-hud-error: oklch(.50 .140 32);
+  --dinner-hud-shadow: oklch(.23 .018 63 / .13);
   --dinner-font-sans: 'PingFang SC', 'Hiragino Sans GB', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --dinner-font-display: 'Noto Serif SC', 'Songti SC', 'STSong', Georgia, serif;
   --dinner-radius: 12px;
   --dinner-radius-sm: 6px;
   --dinner-ease-out: cubic-bezier(.16,1,.3,1);
-  --dinner-scene-wall: oklch(.68 .033 78);
-  --dinner-scene-wallInset: oklch(.48 .033 72);
+  --dinner-scene-wall: oklch(.86 .023 83);
+  --dinner-scene-wallInset: oklch(.73 .027 78);
   --dinner-scene-wood: oklch(.43 .063 60);
   --dinner-scene-woodEdge: oklch(.265 .037 59);
-  --dinner-scene-floor: oklch(.50 .026 72);
-  --dinner-scene-chair: oklch(.30 .047 104);
+  --dinner-scene-floor: oklch(.72 .021 80);
+  --dinner-scene-chair: oklch(.42 .042 128);
   --dinner-scene-brass: oklch(.64 .081 81);
   --dinner-scene-porcelain: oklch(.88 .025 87);
   --dinner-scene-ceramic: oklch(.48 .05 180);
   --dinner-scene-tea: oklch(.44 .085 66);
   --dinner-scene-bottle: oklch(.32 .045 147);
-  --dinner-scene-napkin: oklch(.70 .046 85);
-  --dinner-scene-skin: oklch(.77 .076 45);
-  --dinner-scene-skinShadow: oklch(.65 .064 39);
-  --dinner-scene-skinWarm: oklch(.745 .077 45);
-  --dinner-scene-skinMature: oklch(.72 .068 44);
+  --dinner-scene-napkin: oklch(.84 .023 85);
+  --dinner-scene-skin: oklch(.80 .059 46);
+  --dinner-scene-skinShadow: oklch(.69 .055 40);
+  --dinner-scene-skinWarm: oklch(.78 .065 46);
+  --dinner-scene-skinMature: oklch(.76 .058 45);
   --dinner-scene-sclera: oklch(.81 .028 75);
   --dinner-scene-lip: oklch(.62 .073 30);
   --dinner-scene-iris: oklch(.39 .050 55);
@@ -748,13 +755,15 @@ aside.lg\:border-dashed { border-left: 0; }
   --dinner-scene-red: oklch(.51 .12 38);
   --dinner-scene-rice: oklch(.85 .045 85);
   --dinner-scene-dark: oklch(.18 .013 65);
-  --dinner-scene-light: oklch(.93 .059 81);
-  --dinner-scene-officeWall: oklch(.85 .012 90);
-  --dinner-scene-officeFloor: oklch(.67 .015 87);
-  --dinner-scene-floorJoint: oklch(.54 .012 88);
+  --dinner-scene-light: oklch(.96 .026 85);
+  --dinner-scene-officeWall: oklch(.91 .009 90);
+  --dinner-scene-officeFloor: oklch(.78 .010 87);
+  --dinner-scene-floorJoint: oklch(.66 .010 88);
   --dinner-scene-steel: oklch(.68 .012 240);
   --dinner-scene-steelSeam: oklch(.43 .011 240);
   --dinner-scene-window: oklch(.88 .035 225);
+  --dinner-scene-dusk: oklch(.66 .030 245);
+  --dinner-scene-night: oklch(.38 .038 250);
   --dinner-scene-screen: oklch(.29 .028 235);
   --dinner-scene-marker: oklch(.44 .055 200);
   --dinner-scene-art: oklch(.42 .03 152);
@@ -777,9 +786,7 @@ aside.lg\:border-dashed { border-left: 0; }
 .dinner-experience .scene-viewport>div { width:100%; height:100%; }
 .dinner-experience .scene-viewport canvas { display:block; touch-action:none; }
 .dinner-experience .dinner-render { position:relative; width:100%; height:100%; }
-.dinner-experience .cinematic-scrim { position:absolute; inset:0; pointer-events:none; background:linear-gradient(to bottom,var(--dinner-scrim-top) 0%,var(--dinner-scrim-top) 14%,var(--dinner-clear) 32%,var(--dinner-clear) 57%,var(--dinner-scrim-middle) 67%,var(--dinner-scrim-bottom) 100%); }
-.dinner-experience .cinematic-scrim::after {content:'';position:absolute;bottom:0;left:0;right:0;height:calc(var(--dinner-hud-height,300px) + 45px);pointer-events:none;background:linear-gradient(to bottom,var(--dinner-clear),var(--dinner-scene-overlay) 32px,var(--dinner-scene-overlay));}
-.dinner-experience .topbar { position:absolute; top:0; left:0; right:0; display:flex; align-items:center; gap:24px; height:82px; padding:0 30px; z-index:30; }
+.dinner-experience .topbar { --dinner-ink:var(--dinner-hud-ink);--dinner-ink-secondary:var(--dinner-hud-secondary);--dinner-accent:var(--dinner-hud-accent);--dinner-line:var(--dinner-hud-line);--dinner-scene-overlay:var(--dinner-hud-raised);position:absolute; top:0; left:0; right:0; display:flex; align-items:center; gap:24px; height:82px; padding:0 30px; z-index:30; background:var(--dinner-hud-surface);color:var(--dinner-ink);border-bottom:1px solid var(--dinner-line); }
 .dinner-experience .brand { display:flex; align-items:center; gap:10px; margin-right:auto; min-height:44px; }
 .dinner-experience .brand-mark { width:33px; height:33px; border:1px solid var(--dinner-accent); border-radius:50%; display:grid; place-items:center; color:var(--dinner-accent); }
 .dinner-experience .brand strong { display:flex; align-items:center; gap:8px; font-family:var(--dinner-font-display); font-size:20px; font-weight:500; line-height:1.2; }
@@ -791,7 +798,7 @@ aside.lg\:border-dashed { border-left: 0; }
 .dinner-experience .topbar-tools { gap:4px; }
 .dinner-experience .language-button,.dinner-experience .icon-button { height:44px; min-width:44px; display:inline-flex; align-items:center; justify-content:center; border-radius:var(--dinner-radius-sm); color:var(--dinner-ink-secondary); }
 .dinner-experience .language-button { font-size:12px; font-weight:600; }
-.dinner-experience .scene-context { position:absolute; top:99px; left:32px; pointer-events:none; }
+.dinner-experience .scene-context { --dinner-ink-secondary:var(--dinner-hud-secondary);--dinner-ink-muted:var(--dinner-hud-muted);--dinner-accent:var(--dinner-hud-accent);--dinner-line:var(--dinner-hud-line);position:absolute; top:99px; left:32px; pointer-events:none; padding:7px 10px;border-radius:var(--dinner-radius-sm);background:var(--dinner-hud-surface); }
 .dinner-experience .scene-context p { display:flex; align-items:center; gap:9px; margin:0 0 8px; color:var(--dinner-ink-secondary); font-size:11px; }
 .dinner-experience .scene-context time { margin-left:7px; padding-left:13px; border-left:1px solid var(--dinner-line); font-variant-numeric:tabular-nums; color:var(--dinner-ink-muted); }
 .dinner-experience h1 { font-family:var(--dinner-font-display); font-weight:500; font-size:21px; line-height:1.5; margin:0; }
@@ -815,13 +822,20 @@ aside.lg\:border-dashed { border-left: 0; }
 .dinner-experience .character-popover strong { display:block; font-size:19px; font-family:var(--dinner-font-display); }
 .dinner-experience .character-popover>span { font-size:11px; color:var(--dinner-accent); }
 .dinner-experience .character-popover p { font-size:12px; margin:10px 0 0; color:var(--dinner-ink-secondary); }
-.dinner-experience .conversation { position:absolute; bottom:17px; left:50%; transform:translateX(-50%); width:min(700px,calc(100% - 48px)); z-index:25; }
+.dinner-experience .conversation {
+  --dinner-paper:var(--dinner-hud-raised);--dinner-surface:var(--dinner-hud-raised);--dinner-surface-raised:var(--dinner-hud-raised);
+  --dinner-ink:var(--dinner-hud-ink);--dinner-ink-secondary:var(--dinner-hud-secondary);--dinner-ink-muted:var(--dinner-hud-muted);
+  --dinner-line:var(--dinner-hud-line);--dinner-line-soft:var(--dinner-hud-line);--dinner-scene-overlay:var(--dinner-hud-raised);
+  --dinner-accent:var(--dinner-hud-accent);--dinner-accent-ink:var(--dinner-hud-raised);--dinner-green:var(--dinner-hud-green);--dinner-error:var(--dinner-hud-error);
+  position:absolute;bottom:17px;left:50%;transform:translateX(-50%);width:min(700px,calc(100% - 48px));z-index:25;
+  padding:10px 18px 2px;background:var(--dinner-hud-surface);color:var(--dinner-ink);border:1px solid var(--dinner-hud-line);border-radius:var(--dinner-radius);box-shadow:0 4px 20px var(--dinner-hud-shadow);
+}
 .dinner-experience .dialogue { text-align:center; animation:dinner-rise 280ms var(--dinner-ease-out); max-height:220px; overflow-y:auto; padding:8px 12px 0; scrollbar-width:thin; }
 .dinner-experience .speaker-line { display:flex; justify-content:center; align-items:center; gap:8px; font-size:12px; }
 .dinner-experience .speaker-line strong { font-weight:500; color:var(--dinner-accent); }
 .dinner-experience .speaker-line>span:not(.speaker-dot) { color:var(--dinner-ink-secondary); font-size:10px; }
-.dinner-experience .spoken-line { font-family:var(--dinner-font-sans); font-size:24px; font-weight:400; line-height:1.6; margin:8px 0 9px; overflow-wrap:anywhere; text-shadow:0 2px 12px var(--dinner-scrim-bottom); }
-.dinner-experience .stage-cue { text-shadow:0 1px 4px var(--dinner-paper),0 1px 9px var(--dinner-paper); font-size:11px; color:var(--dinner-ink-secondary); line-height:1.8; margin:0; }
+.dinner-experience .spoken-line { font-family:var(--dinner-font-sans); font-size:24px; font-weight:400; line-height:1.6; margin:8px 0 9px; overflow-wrap:anywhere; }
+.dinner-experience .stage-cue { font-size:11px; color:var(--dinner-ink-secondary); line-height:1.8; margin:0; }
 .dinner-experience .take-seat { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:20px 0 9px; }
 .dinner-experience .take-seat>p { font-size:12px; color:var(--dinner-ink-secondary); margin:0; }
 .dinner-experience .take-seat>p>span { display:block; color:var(--dinner-accent); font-size:10px; margin-bottom:3px; }

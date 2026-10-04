@@ -48,7 +48,7 @@
 
 | A26 | 3D 与文字共用证据式复盘 | ✅ 主站实现、验证通过 | 原话评价 / 改写 / 知识 / 反思 / 多轮咨询、现场观察补充、主站历史与导出、访客直达、返回续聊 / 同开局重练；154 项 3D + 23 项原助手检查、中英真实模型与手机浏览器 → [方案](./archive/specs/spec-3d-debrief.md)、[验收](./reviews/review-2026-10-03-3d-debrief.md) |
 
-| A27 | Blender 人物与五类空间重建 | ✅ 主站实现、浏览器验证通过 | 15 NPC / 玩家 / 手臂、24 GLB、12 姿态 / 人、统一材质尺度、眼高 / 电梯镜头与群体举杯；161 项检查、格式 0 errors / 0 warnings；真实手机性能待补测；操作入口 / 手机摇杆收敛已实现并验证 → [方案](./specs/spec-3d-blender-assets.md)、[资产验收](./reviews/review-2026-10-03-3d-blender.md)、[操作验收](./reviews/review-2026-10-04-3d-controls.md) |
+| A27 | Blender 人物与五类空间重建 | ✅ 主站实现、浏览器验证通过 | 15 NPC / 玩家 / 手臂、24 GLB、12 姿态 / 人、统一材质尺度、眼高 / 电梯镜头与群体举杯；161 项检查、格式 0 errors / 0 warnings；真实手机性能待补测；操作入口 / 手机摇杆收敛已实现并验证 → [方案](./specs/spec-3d-blender-assets.md)、[资产验收](./reviews/review-2026-10-03-3d-blender.md)、[操作验收](./reviews/review-2026-10-04-3d-controls.md)；2026-10-05 五空间明亮室内 / 时段窗景 / 局部浅色字幕已本地实现与验证，尚未发布 → [光照验收](./reviews/review-2026-10-05-3d-lighting.md) |
 
 | A28 | 饭桌文化首局与重玩流程 | 📋 产品方案已完成，待实现 / 试玩 | 《鱼头该对着谁？》单桌转盘 / 身份线索 / 可补救后果 / 接续敬酒与自由对话；验证主动重玩后再扩地域、倒酒和角色 → [方案](./specs/spec-3d-table-culture.md) |
 

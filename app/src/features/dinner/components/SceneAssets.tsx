@@ -7,6 +7,7 @@ import type { Palette } from '../lib/palette';
 import { l, type Lang, type Scenario } from '../lib/content';
 import { operateLift, walkPlayer, type World } from '../lib/room';
 import { Sign } from './PlaceEnvironment';
+import { RoomWindows, OfficeScreens } from './RoomSurfaces';
 
 useGLTF.setDecoderPath('/3d/draco/');
 export const assetUrl = (name:string) => `/3d/v2/${name}.glb`;
@@ -24,7 +25,16 @@ export function instantiateAsset(source:Group,p:Palette) {
     object.material=(Array.isArray(object.material)?object.material:[object.material]).map(material=>{
       const local=material.clone() as MeshStandardMaterial;
       const token=local.name.replace(/^sc:/,'').replace(/\.\d+$/,'') as keyof Palette;
-      if(local.name.startsWith('sc:')&&p[token])local.color.set(p[token]);
+      if(local.name.startsWith('sc:')&&p[token]) {
+        local.color.set(p[token]);
+        // Static GLB batches retain material names, not individual lamp nodes.
+        // Windows and diffusers should read as light sources rather than grey slabs.
+        if(token==='window'||token==='light') {
+          local.emissive.set(p[token]);local.emissiveIntensity=token==='window'?.35:.85;
+        } else if(local.emissive.getHex()!==0) {
+          local.emissive.set(p[token]);local.emissiveIntensity=.65;
+        }
+      }
       materials.add(local);return local;
     });
     if(object.material.length===1)object.material=object.material[0];
@@ -65,6 +75,7 @@ export function AssetRoom({p,world,scenario,lang,paused,onEvidence,surfaces}:{p:
   };
   return <group ref={root} onClick={click}>
     <primitive object={instance.scene} dispose={null}/>
+    {['family','school','office'].includes(kind)&&<RoomWindows p={p} kind={kind} time={scenario.time}/>}
     {kind==='work'&&surfaces.landscape&&<mesh position={[0,3.55,-4.972]}><planeGeometry args={[3.84,1.77]}/><meshStandardMaterial map={surfaces.landscape} roughness={1}/></mesh>}
     {kind==='family'&&surfaces.familyArt&&<mesh position={[4,2.7,-5.028]}><planeGeometry args={[.70,.58]}/><meshStandardMaterial map={surfaces.familyArt} roughness={1}/></mesh>}
     {kind==='elevator'&&<>
@@ -73,6 +84,7 @@ export function AssetRoom({p,world,scenario,lang,paused,onEvidence,surfaces}:{p:
       {(['open','closed'] as const).map((target,i)=><Sign key={target} name={target==='open'?'LiftOpen':'LiftClosed'} at={[2.5,2.32-i*.42,-1.964]} size={[.19,.17]} lines={[target==='open'?l('◀ ▶','◀ ▶'):l('▶ ◀','▶ ◀')]} p={p} lang={lang}/>)}
     </>}
     {kind==='office'&&<>
+      <OfficeScreens p={p}/>
       <Sign at={[3.4,4.35,-5.097]} size={[2.38,.70]} lines={[l('项目组 · 工作区','PROJECT TEAM'),l('讨论区 02','MEETING 02')]} p={p} lang={lang}/>
       <Sign name="OfficeBoard" at={[4.85,2.65,-3.754]} size={[1.47,2.32]} lines={[l('待确认','TO CONFIRM'),l('范围 · 负责人','SCOPE · OWNER'),l('核对 · 下一步','CHECK · NEXT STEP')]} p={p} lang={lang}/>
     </>}

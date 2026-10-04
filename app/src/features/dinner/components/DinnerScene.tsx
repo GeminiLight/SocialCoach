@@ -13,6 +13,7 @@ import {TableCups,ScenarioObjects,PlayerHands} from './DinnerProps';
 import {RiggedCharacter} from './RiggedCharacter';
 import {AssetRoom,useSceneAsset} from './SceneAssets';
 import {RenderBudget} from './RenderBudget';
+import {RoomLighting} from './RoomLighting';
 import {useDinnerSurfaces} from '../lib/surfaces';
 import type { Reply } from '../lib/engine';
 
@@ -153,12 +154,7 @@ export default function DinnerScene(props: SceneProps) {
   const fallback=<div className="scene-fallback"><p>{pick(ui.sceneFallback,props.lang)}</p><div>{props.scenario.characters.map(c=><button key={c.id} onClick={()=>props.onSelect(c.id)}>{pick(c.name,props.lang)}<small>{pick(c.role,props.lang)}</small></button>)}</div></div>;
   return <SceneBoundary fallback={fallback} onError={()=>props.onAvailability(false)}><div className="dinner-render"><Suspense fallback={<div className="scene-loading" role="status">{pick(ui.sceneLoading,props.lang)}</div>}><Canvas role="img" aria-label={pick(ui.cameraLabel,props.lang)} frameloop={!props.paused&&visible?'always':'demand'} shadows dpr={dpr} camera={{position:[0,2.58,3.55],fov:55,near:.1,far:60}} gl={{ antialias:true, toneMapping:ACESFilmicToneMapping, toneMappingExposure:1.12 }} fallback={null} >
     <color attach="background" args={[props.scenario.space?p.officeWall:p.wall]} /><fog attach="fog" args={[props.scenario.space?p.officeWall:p.wall,18,36]} />
-    <ambientLight intensity={props.scenario.space?.62:.35} color={p.porcelain} /><hemisphereLight args={[p.porcelain,p.woodEdge,.65]} />
-    <directionalLight position={[-3,5,1]} intensity={1.65} color={p.white} castShadow shadow-mapSize={[2048,2048]} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-bias={-.0005} shadow-normalBias={.018} shadow-radius={5} />
-    <directionalLight position={[4,3,2]} intensity={.75} color={p.porcelain} />
-    <directionalLight position={[0,3.5,6]} intensity={.65} color={p.porcelain} />
-    <pointLight position={[0,4.8,.4]} intensity={props.scenario.space?26:32} distance={14} decay={2} color={p.white}/>
-    {!props.scenario.space&&<>{[-3.1,3.1].map(x=><pointLight key={x} position={[x,3.4,-4.6]} intensity={7} distance={6} decay={2} color={p.light}/>)}</>}
+    <RoomLighting p={p} scenario={props.scenario}/>
     <AssetReady key={`${props.scenario.id}-${props.view}`} scenario={props.scenario} view={props.view} onReady={assetReady}/>
     <WorldDirector props={props} heading={heading}/>
     <RenderBudget active={!props.paused&&visible} onChange={setDpr}/>
@@ -168,7 +164,7 @@ export default function DinnerScene(props: SceneProps) {
     {props.scenario.characters.map((c,i)=><RiggedCharacter key={c.id} character={c} actor={props.world.npcs[i]} world={props.world} reaction={props.reactions.find(r=>r.characterId===c.id)} active={props.speaking&&props.speakerId===c.id} onSelect={()=>props.onSelect(c.id)} p={p} reduced={props.reduced} drama={props.drama} index={i} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} />)}
     {props.view==='third'&&<RiggedCharacter character={playerCharacter} actor={props.world.player} world={props.world} active={false} onSelect={()=>{}} p={p} reduced={props.reduced} drama={props.drama} index={3} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} player/>}
     {props.view==='first'&&<PlayerHands p={p} drama={props.drama} lang={props.lang} scenario={props.scenario} world={props.world} hudHeight={props.hudHeight}/>}
-    <ContactShadows position={[0,.02,0]} opacity={.38} scale={14} blur={2.5} far={4.5} resolution={256} frames={1} color={p.dark} />
+    <ContactShadows position={[0,.02,0]} opacity={.24} scale={14} blur={2.5} far={4.5} resolution={256} frames={1} color={p.dark} />
     <CameraRig props={props} heading={heading}/>
     <ProjectLabels elements={labels} world={props.world} speakerId={props.speakerId} selectedId={props.selectedId} view={props.view}/>
   </Canvas></Suspense>{ready&&<div className="scene-labels">{props.scenario.characters.map((c,i)=>{const reaction=props.reactions.find(r=>r.characterId===c.id);const active=props.speaking&&props.speakerId===c.id;const selected=props.selectedId===c.id;const actor=props.world.npcs[i];const eventGesture=actorActionLabel(props.drama,i,props.scenario.id,props.lang);return <button key={c.id} ref={el=>{labels.current[i]=el;}} className={`npc-label ${active?'is-speaking':''} ${selected?'is-selected':''} ${actor.seated?'':'is-standing'}`} onClick={()=>props.onSelect(c.id)} aria-pressed={selected}><span className="npc-name">{active&&<i/>}{pick(c.name,props.lang)}</span><span className="npc-state sr-only">{actor.moving?pick(ui.walking,props.lang):!actor.seated?pick(ui.standing,props.lang):active?pick(ui.speaking,props.lang):pick(emotions[reaction?.emotion??'neutral'],props.lang)}<span className="npc-gesture"><span className="label-divider">/</span>{eventGesture??pick(gestures[reaction?.gesture??'idle'],props.lang)}</span></span></button>;})}</div>}</div></SceneBoundary>;

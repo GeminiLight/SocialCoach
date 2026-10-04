@@ -230,7 +230,6 @@ export default function App() {
       <section className="scene-viewport" aria-label={pick(scenario.room,lang)}>
         <Suspense fallback={<div className="scene-loading" role="status">{t('sceneLoading')}</div>}><DinnerScene key={scenarioId} scenario={scenario} lang={lang} reactions={reactions} speakerId={currentSpeakerId} drama={drama} hudHeight={hudHeight} line={playback.beat?.text??momentDialogue?.text??latestNPC.text} speaking={playback.speaking} selectedId={selectedId} onEvidence={()=>setModal('evidence')} onSelect={id=>setSelectedId(current=>current===id?null:id)} reduced={reduced} started={started} viewReset={viewReset} world={world} view={view} input={movementInput} paused={!!modal||modelSheetOpen||!started||!!corrupt} onWorldChange={updateRoom} onAvailability={setSceneReady}/></Suspense>
       </section>
-      <div className="cinematic-scrim" aria-hidden="true"/>
       <header className="topbar">
         <Link href="/" className="back-home" aria-label={pick({zh:"返回 SocialCoach 首页",en:"Back to SocialCoach home"},lang)} title={pick({zh:"返回首页",en:"Back to home"},lang)}><ArrowLeft size={19}/></Link>
         <a className="brand" href="#main" aria-label="SocialCoach"><span className="brand-mark"><Users size={19} strokeWidth={1.65}/></span><span><strong>SocialCoach<span className="brand-version">3D</span></strong><small>{t('subtitle')}</small></span></a>
