@@ -140,8 +140,8 @@ async function main() {
   await assert.rejects(() => runSchedule({ profile, proficiency: {}, history: [], lang: "zh" }, blocked, "test"), /暂时没有/); checks++;
   // The same shared task powers hosted and BYOK: raw invented evidence never streams out.
   const streamed: string[] = [];
-  const mockStream: LLM = { ...stub(null), chatStream: () => ({
-    deltas: (async function* () { yield JSON.stringify(raw); })(), text: () => JSON.stringify(raw), refused: () => false,
+  const mockStream: LLM = { ...stub({approved:true,issues:[],alternatives:[{original:learner.text,intentPreserved:true,factsAtTime:true,reason:''}]}), chatStream: () => ({
+    deltas: (async function* () { yield JSON.stringify(raw); })(), text: () => JSON.stringify({...raw,objectiveResults:base.objectives.map((_,index)=>({index,status:'unknown',evidence:learner.text,reason:'This has not been agreed.'}))}), refused: () => false,
   }) };
   const report = await runAssess({ scenario: base, learnerCharacterId: role, messages: [learner, npc], lang: "zh", goals: [skill] }, mockStream, "test", (d) => streamed.push(d));
   assert.equal(streamed.length, 1); assert.equal(streamed[0], JSON.stringify(report)); assert.ok(!streamed[0].includes("根本没说过")); checks++;

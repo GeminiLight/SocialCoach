@@ -24,6 +24,8 @@ export interface Settings {
   avatarSeed?: number;
   /** Validated versioned portrait; independent of the learner’s display name. */
   avatarPortrait?: string;
+  /** Cropped, re-encoded raster data; stays on this device and out of model inputs. */
+  avatarImage?:string;
   /**
    * Default for new scenes: replies on the clock. Real conversations do not
    * wait fifteen seconds for an answer, and neither, with this on, does the
@@ -203,7 +205,7 @@ export const useApp = create<AppState>()(
         try {
           // Clear only this app's tab state, including unsent practice drafts.
           for (const key of Object.keys(sessionStorage)) {
-            if (key === "socialcoach.rehearsal-draft" || key === "socialcoach.arena.location" || key.startsWith("socialcoach.draft.")) sessionStorage.removeItem(key);
+            if (key === "socialcoach.rehearsal-draft" || key === "socialcoach.rehearsal-brief" || key === "socialcoach.arena.location" || key.startsWith("socialcoach.draft.")) sessionStorage.removeItem(key);
           }
         } catch {}
         // The analytics device id goes with everything else: a reset learner is a new device.

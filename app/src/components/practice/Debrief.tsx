@@ -7,8 +7,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { clsx } from "clsx";
-import { Bookmark, ChevronDown, RotateCcw, Share2, Send } from "lucide-react";
-import { BottomBar, Button, IconButton, Marginalia, Stages, Stars, Spinner, useToast } from "@/components/ui";
+import { Bookmark, ChevronDown, RotateCcw, Share2, Send, MessageSquareText } from "lucide-react";
+import { BottomBar, Button, IconButton, Marginalia, Stages, Stars, Spinner } from "@/components/ui";
 import { SkillTag, Level } from "@/components/SkillBits";
 import { CaseBody, TheoryBody } from "@/components/Knowledge";
 import { DebriefAssistant, type DebriefAssistantHandle } from "./DebriefAssistant";
@@ -25,6 +25,13 @@ import { caseById, theoryById } from "@/data/corpus";
 import { skillById, SKILLS, type SkillId } from "@/data/taxonomy";
 import { compColor } from "@/lib/format";
 import {SceneReview,sceneReviewCopy} from './SceneReview';
+import {TranscriptReader} from './TranscriptReader';
+import {ReviewSplit} from './ReviewSplit';
+import {OriginalAims} from './OriginalAims';
+import {hasQuote} from '@/lib/practice-policy';
+import dynamic from 'next/dynamic';
+import {defaultShareCard} from '@/lib/share-card';
+const SharePractice=dynamic(()=>import('./SharePractice').then(m=>m.SharePractice),{ssr:false});
 
 const skillIds = new Set(SKILLS.map((s) => s.id));
 
@@ -296,11 +303,12 @@ function Transcript({ session, title }: { session: Session; title?: string }) {
 function ReportView({ session, report, streaming, onAgain }: { session: Session; report: Partial<Report>; streaming: boolean; onAgain: () => void }) {
   const lang = useLang();
   const router = useRouter();
-  const toast = useToast((s) => s.show);
   const { proficiency, bookmarks, toggleBookmark, addReflection, updateReflection } = useApp();
   const goals = useApp((s) => s.profile?.goals) ?? session.scenario.skills;
   const sc = session.scenario;
   const [showTranscript, setShowTranscript] = useState(false);
+  const [transcriptSelection,setTranscriptSelection]=useState<string|null>(null);
+  const [showShare,setShowShare]=useState(false);
   const assistant = useRef<DebriefAssistantHandle>(null);
   const theories = (report.knowledge?.theoryIds ?? []).map(theoryById).filter(Boolean);
   const cases = (report.knowledge?.caseIds ?? []).map(caseById).filter(Boolean);
@@ -314,31 +322,18 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
   const rated = !quality || !!report.ratings?.length;
   const starLabel = quality ? (rated ? t(lang, "rp_quality", { n: stars }) : t(lang, "rp_unrated")) : t(lang, "rp_stars_of", { n: stars, m: sc.objectives.length });
 
-  const share = async () => {
-    const lines = [
-      lang === "zh" ? `我在「SocialCoach」练了《${sc.title.zh}》` : `I practiced "${sc.title.en}" on SocialCoach`,
-      starLabel,
-      strengths[0] ? `${t(lang, "rp_strengths")}: ${strengths[0].behavior}` : "",
-      report.nextStep ? `${t(lang, "rp_next_step")}: ${report.nextStep}` : "",
-    ].filter(Boolean).join("\n");
-    try {
-      if (navigator.share) await navigator.share({ text: lines });
-      else { await navigator.clipboard.writeText(lines); toast(t(lang, "rp_copied")); }
-    } catch {}
-  };
-
   return (
     <div className="min-h-dvh pt-safe pb-48 lg:pb-12 lg:mx-auto lg:w-full lg:max-w-[var(--focus-max)] lg:px-6">
       <div className="px-3 lg:px-0 mb-6">
-        <PracticeJourney phase={2} onBack={() => router.push(session.sceneContext?'/3d':"/")} actions={<IconButton label={t(lang, "rp_share")} onClick={share} disabled={streaming}><Share2 size={18} /></IconButton>} />
+        <PracticeJourney phase={2} onBack={() => router.push(session.sceneContext?'/3d':"/")} actions={<IconButton label={t(lang, "rp_share")} onClick={()=>setShowShare(true)} disabled={streaming}><Share2 size={18} /></IconButton>} />
       </div>
-      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_var(--margin-w)] lg:gap-x-10 lg:items-start">
+      <ReviewSplit lang={lang} aside={<div className="lg:sticky lg:top-6 lg:h-[calc(100dvh-5rem)] lg:overflow-y-auto"><button className="press min-h-11 text-[13px] text-action" onClick={()=>setTranscriptSelection('')}>{pick({zh:'展开完整对话',en:'Open full conversation'},lang)}</button><Transcript session={session} title={t(lang, "rp_transcript")} /></div>}>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }} className="px-5 flex flex-col gap-9 lg:px-0">
         <header className="flex flex-col gap-3">
           <p className="eyebrow">{t(lang, "rp_title")} · {sc.title[lang]}</p>
           {/* The verdict carries the first screen. Stars and a tally are a score,
               and a score answers a question nobody was asking; they drop below it. */}
-          {report.verdictEvidence && <Quote text={report.verdictEvidence} session={session} />}
+          {report.verdictEvidence && <Quote text={report.verdictEvidence} session={session} onInspect={setTranscriptSelection} />}
           {report.verdict ? (
             <h1 className="display text-[27px] leading-[1.24] text-ink lg:text-[31px]">
               {report.verdict}
@@ -353,6 +348,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
           </div>
           {quality&&!session.sceneContext && <p className="text-[12px] text-ink-3">{t(lang, "rp_stars_of", { n: session.objectiveDone.filter(Boolean).length, m: sc.objectives.length })}</p>}
           {report.summary && <p className="text-[15px] leading-[1.65] text-ink-2 lg:max-w-[var(--measure)]">{report.summary}{streaming && !strengths.length && <Caret />}</p>}
+          <OriginalAims results={report.objectiveResults} session={session} lang={lang} onInspect={setTranscriptSelection}/>
         </header>
 
         {!streaming && (
@@ -389,7 +385,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
             <ul className="flex flex-col gap-4">
               {strengths.map((s, i) => (
                 <Reveal key={i} className="flex flex-col gap-2">
-                    <Quote text={s.evidence} good session={session} />
+                    <Quote text={s.evidence} good session={session} onInspect={setTranscriptSelection} />
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-[15px] font-semibold leading-snug">{s.behavior}</p>
                       <SkillTag id={s.skill} lang={lang} small className="shrink-0 mt-0.5" />
@@ -405,7 +401,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
             <ul className="flex flex-col gap-5">
               {weaknesses.map((w, i) => (
                 <Reveal key={i} className="flex flex-col gap-2">
-                    <Quote text={w.evidence} session={session} />
+                    <Quote text={w.evidence} session={session} onInspect={setTranscriptSelection} />
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-[15px] font-semibold leading-snug">{w.behavior}</p>
                       <SkillTag id={w.skill} lang={lang} small className="shrink-0 mt-0.5" />
@@ -487,8 +483,8 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
 
         {!streaming && (
-          <section className="lg:hidden">
-            <button aria-expanded={showTranscript} aria-controls="review-transcript" onClick={() => setShowTranscript((x) => !x)} className="press inline-flex items-center gap-1.5 text-[13px] text-ink-3 min-h-11">
+          <section>
+            <button className="press min-h-11 text-[14px] text-action mr-4" onClick={()=>setTranscriptSelection('')}>{pick({zh:'完整对话',en:'Full conversation'},lang)}</button><button aria-expanded={showTranscript} aria-controls="review-transcript" onClick={() => setShowTranscript((x) => !x)} className="press inline-flex items-center gap-1.5 text-[13px] text-ink-3 min-h-11">
               {t(lang, "rp_transcript")} <ChevronDown size={14} className={clsx("transition-transform", showTranscript && "rotate-180")} />
             </button>
             <div id="review-transcript" hidden={!showTranscript} className="pt-3"><Transcript session={session} /></div>
@@ -502,11 +498,9 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
         )}
       </motion.div>
 
-      {/* the margin: your own words, so every quoted line can be checked against the source */}
-      <Marginalia lgOnly className="lg:sticky lg:top-6 lg:h-[calc(100dvh-5rem)] lg:overflow-y-auto">
-        <Transcript session={session} title={t(lang, "rp_transcript")} />
-      </Marginalia>
-      </div>
+      </ReviewSplit>
+      <TranscriptReader session={session} lang={lang} selection={transcriptSelection} onClose={()=>setTranscriptSelection(null)}/>
+      {showShare&&<SharePractice open onClose={()=>setShowShare(false)} session={session} stars={stars} quality={quality&&rated?defaultShareCard(lang,stars).quality:starLabel} lang={lang}/>}
     </div>
   );
 }
@@ -535,16 +529,14 @@ function Section({ id, title, sub, children }: { id?: string; title: string; sub
   );
 }
 
-function Quote({ text, good, session }: { text?: string; good?: boolean; session: Session }) {
+function Quote({ text, good, session,onInspect }: { text?: string; good?: boolean; session: Session;onInspect?:(quote:string)=>void }) {
   const lang = useLang();
   if (!text) return null;
-  const norm = (x: string) => x.replace(/[\s“”"'‘’。，,.!！?？…—-]/g, "");
-  const said = norm(text);
-  const isQuote = said.length > 0 && session.messages.some((m) => m.role === "learner" && norm(m.text).includes(said.slice(0, Math.min(said.length, 12))));
+  const isQuote=Boolean(hasQuote(text,session.messages.filter(m=>m.role==='learner').map(m=>m.text)));
   return (
     <p className="text-[14px] leading-relaxed text-ink-2">
       <span className="eyebrow mr-2">{t(lang, "rp_evidence")}</span>
-      {isQuote ? <span className={good ? "mark-good" : "mark-quote"}>“{text}”</span> : <span className="italic text-ink-3">{text.replace(/^no attempt\s*[—-]*\s*/i, "")}</span>}
+      {isQuote ? <><span className={good ? "mark-good" : "mark-quote"}>“{text}”</span>{onInspect&&<button type="button" className="press inline-flex items-center justify-center min-h-11 min-w-11 align-middle text-action" onClick={()=>onInspect(text)} aria-label={pick({zh:'在完整对话中查看这句原话',en:'View this quote in the full conversation'},lang)}><MessageSquareText size={15} aria-hidden/></button>}</> : <span className="italic text-ink-3">{text.replace(/^no attempt\s*[—-]*\s*/i, "")}</span>}
     </p>
   );
 }

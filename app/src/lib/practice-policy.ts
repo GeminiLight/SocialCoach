@@ -41,12 +41,16 @@ export function goalOutcome(done: boolean[]): NonNullable<Session["outcome"]> {
 /** A grounded closing proposal; only the learner chooses to end the practice. */
 export function supportedClosure(meta: RoleplayMeta | null, history: ChatMessage[], npcLines: string[]): Closure | undefined {
   if (meta?.ended !== true || !meta.closure) return;
-  const c = meta.closure;
-  if (!["agreement", "boundary", "deferred", "withdrawal"].includes(c.kind) || !hasQuote(c.npcQuote, npcLines)) return;
   const last = history.filter((m) => m.role !== "coach").at(-1);
+  return supportedClosingProposal(meta.closure,last?.role === 'learner' ? last.text : undefined,npcLines);
+}
+
+/** Shared by text practice, 3D generation and saved-record validation. */
+export function supportedClosingProposal(c: Closure, latestLearnerText: string | undefined, npcLines: string[]): Closure | undefined {
+  if (!["agreement", "boundary", "deferred", "withdrawal"].includes(c.kind) || !hasQuote(c.npcQuote, npcLines)) return;
   // Bilateral closure needs the latest learner contribution, not an old quote
   // contradicted by a newer turn. NPCs can still independently walk away.
-  if (c.kind !== "withdrawal" && (last?.role !== "learner" || !hasQuote(c.learnerQuote, [last.text]))) return;
-  if (c.learnerQuote && (last?.role !== "learner" || !hasQuote(c.learnerQuote, [last.text]))) return;
+  if (c.kind !== "withdrawal" && (!latestLearnerText || !hasQuote(c.learnerQuote, [latestLearnerText]))) return;
+  if (c.learnerQuote && (!latestLearnerText || !hasQuote(c.learnerQuote, [latestLearnerText]))) return;
   return { kind: c.kind, npcQuote: c.npcQuote.trim(), ...(c.learnerQuote ? { learnerQuote: c.learnerQuote.trim() } : {}) };
 }

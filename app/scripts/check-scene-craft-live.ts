@@ -31,6 +31,7 @@ const odd:Record<string,string[]>={
 async function main(){
  if(!hasServerCredential())throw Error('No configured provider');
  const selected=process.argv[2]??'all',baseline=process.env.SCENE_EVAL_DIRECTOR;
+ const briefVersion=process.env.SCENE_EVAL_LEGACY==='1'?undefined:1;
  const direct:typeof runDinner=baseline?(await import(pathToFileURL(baseline).href)).runDinner:runDinner;
  const cases=selected==='extras'?scenarios.flatMap(s=>[
   {variant:variants.find(v=>v.scene===s.id)!,lang:'zh' as Lang,route:'nonstandard',texts:odd[s.id]},
@@ -51,15 +52,15 @@ async function main(){
    for(let i=0;i<texts.length;i++){
     const observed=dinnerContext(drama),text=texts[i],start=performance.now();lastRaw='';
     try{
-     const reply=await direct({scenarioId:scene.id,variantId:c.variant.id,maxTurns:i<12?12:18,lang:c.lang,text,history,room:roomContext(world),dinner:observed},tracked,FAST_MODEL,AbortSignal.timeout(30_000));
+     const reply=await direct({briefVersion,scenarioId:scene.id,variantId:c.variant.id,maxTurns:i<12?12:18,lang:c.lang,text,history,room:roomContext(world),dinner:observed},tracked,FAST_MODEL,AbortSignal.timeout(30_000));
      timings.push(Math.round(performance.now()-start));
      history.push({role:'user',text,dinner:observed},{role:'npc',...reply,mode:'model'});
      settleForSpeech(drama);syncDrama(drama,scene,i+1,true,false,{requestedEvent:reply.story?.event,openingEvent:c.variant.openingEvent??null});
-     SaveSchema.parse({version:1,scenarioId:scene.id,variantId:c.variant.id,maxTurns:18,messages:history,started:true,complete:false,lang:c.lang,draft:''});
+     SaveSchema.parse({version:1,briefVersion,scenarioId:scene.id,variantId:c.variant.id,maxTurns:18,messages:history,started:true,complete:false,lang:c.lang,draft:''});
      console.log(`${c.variant.id}/${c.route} ${i+1}: ${reply.speakerId} [${reply.story?.beat??'-'}] ${reply.text}${reply.interjection?` | ${reply.interjection.speakerId}: ${reply.interjection.text}`:''}`);
     }catch(error){failure={turn:i+1,text,error:error instanceof Error?error.message:String(error),lastRaw};failed++;break;}
    }
-   results.push({variant:c.variant.id,lang:c.lang,route:c.route,model:FAST_MODEL,timings,history,failure});
+   results.push({variant:c.variant.id,briefVersion,lang:c.lang,route:c.route,model:FAST_MODEL,timings,history,failure});
    await writeFile(out,JSON.stringify(results,null,2));
   }
  }

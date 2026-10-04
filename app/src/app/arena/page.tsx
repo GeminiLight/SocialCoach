@@ -238,14 +238,14 @@ export default function Arena() {
                 <span className="flex-1 min-w-0 flex flex-col gap-2">
                   <span className="flex flex-wrap items-center gap-2"><span className="font-semibold text-[17px] leading-snug">{sc.title[lang]}</span>{sc.custom && <span className="text-[11px] text-accent-deep">{t(lang, "custom_badge")}</span>}</span>
                   <span className="text-[14px] text-ink-2 leading-relaxed max-w-[var(--measure)]">{sc.hook[lang]}</span>
-                  <span className="arena-metadata flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-ink-3">
-                    <span>{contextById(sc.context).name[lang]}</span>
-                    {sc.skills.slice(0, 2).map((id) => <span key={id}>{skillById(id).name[lang]}</span>)}
-                    <span className="md:hidden num">{sc.minutes} {t(lang, "min")} · {t(lang, `diff_${sc.difficulty}` as "diff_1")}</span>
+                  <span className="arena-metadata flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-2">
+                    <span className="font-medium">{contextById(sc.context).name[lang]}</span>
+                    <span>{t(lang, `diff_${sc.difficulty}` as "diff_1")}</span>
+                    <span className="num">{sc.minutes} {t(lang, "min")}</span>
                     {count > 0 && <span className="text-teal">{t(lang, "arena_practiced", { n: count })}</span>}
                   </span>
+                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-ink-3"><span>{pick(copy.skills,lang)}</span>{sc.skills.slice(0, 2).map((id) => <span key={id} className="text-ink-2">{skillById(id).name[lang]}</span>)}</span>
                 </span>
-                <span className="hidden md:flex flex-col items-end gap-2 shrink-0 text-[12px] text-ink-3 pt-0.5"><span className="num">{sc.minutes} {t(lang, "min")}</span><span>{t(lang, `diff_${sc.difficulty}` as "diff_1")}</span></span>
                 <ArrowRight size={16} className="shrink-0 mt-1 text-ink-3 group-hover:text-ink hidden md:block" aria-hidden />
               </button>;
             })}

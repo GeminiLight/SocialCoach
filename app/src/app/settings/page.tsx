@@ -52,7 +52,7 @@ export default function Settings() {
     const blob = new Blob(
       [
         JSON.stringify(
-          { profile, proficiency, sessions, customScenarios, bookmarks, practiceDays, dinner3d: dinnerBackup(), avatar: { seed: settings.avatarSeed, portrait: settings.avatarPortrait }, exportedAt: new Date().toISOString() },
+          { profile, proficiency, sessions, customScenarios, bookmarks, practiceDays, dinner3d: dinnerBackup(), avatar: { seed: settings.avatarSeed, portrait: settings.avatarPortrait, image: settings.avatarImage }, exportedAt: new Date().toISOString() },
           null,
           2,
         ),
@@ -108,7 +108,7 @@ export default function Settings() {
                   aria-label={pick({ zh: "编辑头像", en: "Edit portrait" }, lang)}
                   className="press relative rounded-full shrink-0"
                 >
-                  <AvatarFigure seed={learnerSeed(profile.name, settings.avatarSeed, settings.avatarPortrait)} hue={40} size={72} />
+                  <AvatarFigure imageData={settings.avatarImage} seed={learnerSeed(profile.name, settings.avatarSeed, settings.avatarPortrait)} hue={40} size={72} />
                   <span className="absolute -bottom-1 -right-1 rounded-full bg-card border border-line p-1.5 text-ink-2"><Pencil size={12} aria-hidden /></span>
                 </button>
                 <div className="min-w-0">
@@ -257,11 +257,12 @@ export default function Settings() {
       </Page>
 
       {avatarOpen && <AvatarPicker
+        currentImage={settings.avatarImage}
         currentSeed={learnerSeed(profile.name, settings.avatarSeed, settings.avatarPortrait)}
         lang={lang}
         onClose={() => setAvatarOpen(false)}
-        onSave={(avatarPortrait) => {
-          setSettings({ avatarPortrait });
+        onSave={(avatarPortrait,avatarImage) => {
+          setSettings({ avatarPortrait,avatarImage });
           setAvatarOpen(false);
           toast(pick({ zh: "头像已更新", en: "Portrait updated" }, lang));
         }}

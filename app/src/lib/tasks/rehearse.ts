@@ -4,11 +4,13 @@ import type { Scenario } from "@/data/corpus/types";
 import { CONTEXTS, SKILLS, COMPETENCIES, type CompetencyId, type ContextId, type SkillId, skillById } from "@/data/taxonomy";
 import { isScenarioIcon } from "@/data/scenario-icons";
 import type { RehearseInput } from "./types";
+import {RehearsalDescriptionSchema,MAX_REHEARSAL_CHARS} from '../rehearsal-input';
+import {pick} from '../i18n';
 
 /** Turn a situation in the learner's own words into a fully tagged scenario. */
 export async function runRehearse(input: RehearseInput, llm: LLM, fastModel: string): Promise<{ scenario: Scenario }> {
   const { description, lang, profile } = input;
-  if (!description || description.trim().length < 8) throw new LLMError("Please describe the situation in a bit more detail.", 400);
+  if(!RehearsalDescriptionSchema.safeParse(description).success)throw new LLMError(pick({zh:`请用 8–${MAX_REHEARSAL_CHARS} 字描述这场对话。`,en:`Describe the situation in 8–${MAX_REHEARSAL_CHARS} characters.`},lang),400);
 
   const raw = await jsonCall<Omit<Scenario, "id" | "source" | "custom">>({
     model: fastModel,

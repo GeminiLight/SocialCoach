@@ -19,6 +19,7 @@
 
 # production
 /build
+/public/local-reading/
 
 # misc
 .DS_Store

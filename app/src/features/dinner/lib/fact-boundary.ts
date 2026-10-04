@@ -12,8 +12,17 @@ export function sceneFactError(variant:VariantId,spoken:string,playerEvidence:st
   return 'No assigned document, report or demo exists in this HR-privacy opening. Discuss a proposed work update without claiming one already exists.';
  if(variant==='office-interruption'&&!/18[:：]30|六点半|6:30/.test(player)&&/18[:：]30|六点半|6:30/.test(spoken))
   return 'The 18:30 client deadline belongs to the other office opening. It is not an existing fact here.';
- if(variant==='elevator-blame'&&!/(?:我|乔宁|Qiao).{0,12}(?:没权限|无法访问|不能访问|cannot access)/i.test(player)&&/(?:日志|权限).{0,8}(?:碰不到|看不了|没法查)|(?:cannot|can’t|can't) access (?:the )?(?:logs|permissions)/i.test(spoken))
+ const asserted=(pattern:RegExp)=>[...spoken.matchAll(pattern)].some(match=>{
+  const before=spoken.slice(0,match.index).split(/[。！？.!?\n]/).at(-1)??'',after=spoken.slice(match.index+match[0].length);
+  return !/(?:如果|假如|假设|若|提议|建议|并非|不是|没有说|不确定|\bif\b|\bwhether\b|\bpropose\b|\bsuggest\b|\bnot saying\b)/i.test(before)&&!/^[^。！.!\n]{0,4}(?:吗|么|呢)?\s*[？?]|^(?:吗|么)/.test(after);
+ });
+ const logRestriction=/(?:日志|权限).{0,12}(?:碰不到|看不了|没法查|查不了|拿不到|没权限(?:看|查)?|没后台)|(?:没有|没|无)(?:查)?日志(?:的)?(?:访问)?权限|(?:不是我|我不|我没).{0,8}(?:登得了后台|能登后台|后台权限)|(?:cannot|can’t|can't) access (?:the )?(?:logs|permissions)|(?:have|has) no access to (?:the )?logs/gi;
+ if(variant==='elevator-blame'&&!/(?:乔宁|程悦|Qiao|Cheng).{0,12}(?:没权限|没有权限|没有日志权限|无法访问|不能访问|cannot access|no access)/i.test(player)&&asserted(logRestriction))
   return 'Log access and permissions are unknown, not proven inaccessible. State the known handoff and an explicitly proposed next check.';
+ if(variant==='elevator-blame'&&!/(?:今晚|今天|tonight|today).{0,16}(?:必须|要|due|deadline).{0,10}(?:报告|上报|report)|(?:报告|上报|report).{0,16}(?:今晚|今天|tonight|today)/i.test(player)&&asserted(/(?:报告|上报).{0,8}(?:今晚|今天).{0,6}(?:必须|就要|要|得)|(?:今晚|今天).{0,8}(?:必须|得|要).{0,8}(?:上报|报告)|(?:report|reporting).{0,16}(?:due tonight|due today|must go|deadline)/gi))
+  return 'No report deadline is established in this opening. You may explicitly propose a reporting time, not invent an existing deadline as pressure.';
+ if(!/(?:明早|明天|tomorrow).{0,8}(?:才|only|排得上)/i.test(player)&&asserted(/(?:明早|明天).{0,5}才排得上|(?:only available|only have time).{0,8}tomorrow/gi))
+  return 'Availability is unconfirmed. Offer a future checking time as a proposal; do not invent a calendar restriction.';
  if(variant.startsWith('office-')&&!/上周的表|last week.{0,4}(?:table|sheet)/i.test(player)&&/上周的表|last week.{0,4}(?:table|sheet)/i.test(spoken))
   return 'No last-week source sheet is established. Rui’s data source and validation result remain unknown; do not invent provenance.';
  if(variant.startsWith('office-')&&!/已经核|已核对|核过了|核对过了|already checked|already verified/i.test(player)&&/核过一部分|查过一部分|部分(?:已|已经)(?:核|查)|I(?:'ve| have) (?:already )?(?:checked|verified) (?:some|part)|(?:partly|partially) (?:checked|verified)/i.test(spoken))

@@ -95,6 +95,8 @@ export interface Alternative {
 }
 
 export interface Report {
+  /** Original aims, distinct from current intent and communication quality. */
+  objectiveResults?:{index:number;status:'met'|'unmet'|'unknown';evidence:string;npcEvidence?:string;reason:string}[];
   /** Optional, quote-linked observations for an immersive practice. */
   sceneNotes?: SceneNote[];
   /** Absent on legacy reports, whose stars counted completed objectives. */

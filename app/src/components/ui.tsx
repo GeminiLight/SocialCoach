@@ -136,14 +136,16 @@ export function Avatar({
   size = 40,
   seed,
   className,
+  imageData,
 }: {
   name: string;
   hue: number;
   size?: number;
   seed?: string;
   className?: string;
+  imageData?:string;
 }) {
-  return <AvatarFigure seed={seed ?? name} hue={hue} size={size} className={className} />;
+  return <AvatarFigure seed={seed ?? name} hue={hue} size={size} className={className} imageData={imageData} />;
 }
 
 /* ───────────── Stars (objectives) ───────────── */
@@ -207,7 +209,7 @@ export function Stages({ steps, title, slowAfterMs = 25000 }: { steps: string[];
 }
 
 /* ───────────── Bottom sheet ───────────── */
-export function Sheet({ open, onClose, title, children, footer }: { open: boolean; onClose: () => void; title?: string; children: ReactNode; footer?: ReactNode }) {
+export function Sheet({ open, onClose, title, children, footer,wide=false,bodyRef }: { open: boolean; onClose: () => void; title?: string; children: ReactNode; footer?: ReactNode;wide?:boolean;bodyRef?:React.Ref<HTMLDivElement> }) {
   const lang = useLang();
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -229,7 +231,7 @@ export function Sheet({ open, onClose, title, children, footer }: { open: boolea
     <dialog
       ref={dialog}
       aria-label={title || t(lang, "dialog_label")}
-      className="sheet-dialog"
+      className={clsx('sheet-dialog',wide&&'sheet-wide')}
       onKeyDown={(event) => {
         if (event.key !== "Tab") return;
         const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(
@@ -251,7 +253,7 @@ export function Sheet({ open, onClose, title, children, footer }: { open: boolea
         <h2 className="display text-[20px]">{title}</h2>
         <IconButton label={t(lang, "close")} onClick={onClose}><X size={18} /></IconButton>
       </div>
-      <div className="overflow-y-auto px-5 pt-4 pb-safe pb-6">{children}</div>
+      <div ref={bodyRef} className="overflow-y-auto px-5 pt-4 pb-safe pb-6">{children}</div>
       {footer && <div className="shrink-0 border-t border-line bg-card px-5 py-4 pb-safe">{footer}</div>}
     </dialog>
   );

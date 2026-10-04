@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Clock3, PenLine } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Clock3, PenLine } from "lucide-react";
 import { motion } from "framer-motion";
 import { Shell } from "@/components/Shell";
 import { Button, Page, Stages, Avatar } from "@/components/ui";
@@ -14,21 +14,23 @@ import { rehearse } from "@/lib/client-api";
 import { buildSession } from "@/lib/session-utils";
 import type { Scenario } from "@/data/corpus/types";
 import { contextById } from "@/data/taxonomy";
+import {RehearsalContext} from '@/components/RehearsalContext';
+import {readRehearsalDraft,REHEARSAL_DRAFT_KEY,RehearsalDescriptionSchema,type RehearsalDraft} from '@/lib/rehearsal-input';
 
 export default function Rehearse() {
   const lang = useLang();
   const router = useRouter();
   const { profile, customScenarios, addCustomScenario, addSession } = useApp();
-  const [text, setText] = useState(() => {
+  const [draft, setDraft] = useState<RehearsalDraft>(() => {
     try {
-      return sessionStorage.getItem("socialcoach.rehearsal-draft") ?? "";
+      return readRehearsalDraft(sessionStorage.getItem(REHEARSAL_DRAFT_KEY),sessionStorage.getItem('socialcoach.rehearsal-draft')??'');
     } catch {
-      return "";
+      return {text:'',fields:{}};
     }
   });
   const [draftSaved, setDraftSaved] = useState(() => {
     try {
-      return !!sessionStorage.getItem("socialcoach.rehearsal-draft");
+      return !!(sessionStorage.getItem(REHEARSAL_DRAFT_KEY)||sessionStorage.getItem("socialcoach.rehearsal-draft"));
     } catch {
       return false;
     }
@@ -36,16 +38,18 @@ export default function Rehearse() {
   const textarea = useRef<HTMLTextAreaElement>(null);
   const inflight = useRef(false);
   const starting = useRef(false);
-  const updateText = (value: string) => {
-    setText(value);
+  const updateDraft = (value: RehearsalDraft) => {
+    setDraft(value);
     try {
-      if (value) sessionStorage.setItem("socialcoach.rehearsal-draft", value);
-      else sessionStorage.removeItem("socialcoach.rehearsal-draft");
-      setDraftSaved(!!value);
+      sessionStorage.setItem(REHEARSAL_DRAFT_KEY,JSON.stringify(value));
+      sessionStorage.removeItem("socialcoach.rehearsal-draft");
+      setDraftSaved(true);
     } catch {
       setDraftSaved(false);
     }
   };
+  const text=draft.text;
+  const updateText=(text:string)=>updateDraft({...draft,text});
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [preview, setPreview] = useState<Scenario | null>(null);
@@ -54,14 +58,14 @@ export default function Rehearse() {
     if (preview) previewHeading.current?.focus();
   }, [preview]);
 
-  const generate = async () => {
-    if (!profile || inflight.current || text.trim().length < 8) return;
+  const generate = async (description:string) => {
+    if (!profile || inflight.current || !RehearsalDescriptionSchema.safeParse(description).success) return;
     inflight.current = true;
     setBusy(true);
     setErr(null);
     try {
       const { scenario } = await rehearse({
-        description: text,
+        description,
         lang,
         profile: { name: profile.name, bio: profile.bio, goals: profile.goals },
       });
@@ -107,47 +111,11 @@ export default function Rehearse() {
             </header>
             <div className="flex flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,1fr)_var(--margin-w)] xl:gap-8 mt-2 items-start">
               <div className="w-full min-w-0">
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    void generate();
-                  }}
+                <section
                   className="flex flex-col gap-4"
                   aria-busy={busy}
                 >
-                  <label htmlFor="rehearsal-description" className="font-semibold text-[15px]">
-                    {t(lang, "rh_label")}
-                  </label>
-                  <div className="writing-field overflow-hidden">
-                    <textarea
-                      id="rehearsal-description"
-                      ref={textarea}
-                      value={text}
-                      onChange={(e) => updateText(e.target.value)}
-                      rows={7}
-                      placeholder={t(lang, "rh_ph")}
-                      className="block w-full px-5 pt-5 pb-3 bg-transparent text-base leading-[1.8] placeholder:text-ink-3 focus:outline-none"
-                      maxLength={800}
-                      disabled={busy}
-                      aria-describedby="rehearsal-hint rehearsal-count"
-                    />
-                    <div className="px-5 pb-4 flex items-center justify-between gap-3 text-[11px] text-ink-3">
-                      <span className="inline-flex items-center gap-1.5">
-                        {draftSaved && (
-                          <>
-                            <Check size={12} />
-                            {t(lang, "rh_draft")}
-                          </>
-                        )}
-                      </span>
-                      <span id="rehearsal-count" className="num shrink-0">
-                        {text.length} / 800
-                      </span>
-                    </div>
-                  </div>
-                  <p id="rehearsal-hint" className="text-[12px] text-ink-3 leading-relaxed">
-                    {t(lang, text.trim().length < 8 ? "rh_hint" : "rh_ready")}
-                  </p>
+                  <RehearsalContext draft={draft} onChange={updateDraft} lang={lang} disabled={busy} draftSaved={draftSaved} textarea={textarea} onGenerate={description=>void generate(description)}/>
                   {!text.trim() && !busy && (
                     <div className="flex flex-col gap-2 pt-1 pb-2">
                       <span className="eyebrow">{t(lang, "rh_examples")}</span>
@@ -172,17 +140,12 @@ export default function Rehearse() {
                       {err}
                     </div>
                   )}
-                  {busy ? (
+                  {busy && (
                     <div role="status" className="card p-5">
                       <Stages title={t(lang, "rh_generating")} steps={tList(lang, "rh_gen_steps")} slowAfterMs={40000} />
                     </div>
-                  ) : (
-                    <Button requiresModel type="submit" block size="lg" disabled={text.trim().length < 8}>
-                      {t(lang, "rh_generate")}
-                      <ArrowRight size={18} />
-                    </Button>
                   )}
-                </form>
+                </section>
                 {customScenarios.length > 0 && !busy && (
                   <section className="flex flex-col gap-2 mt-8 pt-6 border-t border-line">
                     <h2 className="display text-[20px] mb-2">{t(lang, "rh_saved")}</h2>

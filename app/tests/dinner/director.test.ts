@@ -56,3 +56,20 @@ test('provider failures propagate without silently substituting scripted dialogu
   const failing:LLM={chatText:async()=>{throw new Error('Provider failed');},chatStream:()=>{throw new Error('Unexpected');}};
   await assert.rejects(runDinner(input,failing,'fast'),/Provider failed/);
 });
+
+test('a natural closing proposal survives only with both current spoken quotations',async()=>{
+  const text='今天先到这里，剩下的测试明天核对。';
+  const closing={...reply,replyTo:'今天先到这里',text:'行，明天拿到测试结果再定上线。',closure:{kind:'deferred',learnerQuote:'今天先到这里',npcQuote:'明天拿到测试结果再定上线'}};
+  const result=await runDinner({...input,text},model(closing),'fast');
+  assert.deepEqual(result.closure,closing.closure);
+  await assert.rejects(runDinner({...input,text},model({...closing,closure:{...closing.closure,learnerQuote:'我答应周三上线'}}),'fast'));
+  await assert.rejects(runDinner({...input,text},model({...closing,closure:{...closing.closure,npcQuote:'问题已经全部解决'}}),'fast'));
+});
+
+test('a closing NPC interjection can supply the actual closing quotation',async()=>{
+  const text='先吃饭吧，相亲这件事就到这里。';
+  const family=scenarios.find(s=>s.id==='family')!;
+  const answer={speakerId:family.characters[1].id,replyTo:'先吃饭吧',text:'好，饭后聊你自己的近况。',interjection:{speakerId:family.characters[2].id,text:'先吃饭，相亲今天就不再说了。'},reactions:family.characters.map(c=>({characterId:c.id,emotion:'neutral',gesture:'idle'})),closure:{kind:'boundary',learnerQuote:'相亲这件事就到这里',npcQuote:'相亲今天就不再说了'}};
+  const result=await runDinner({scenarioId:'family',lang:'zh',text,history:[opening(family,'zh')]},model(answer),'fast');
+  assert.deepEqual(result.closure,answer.closure);
+});

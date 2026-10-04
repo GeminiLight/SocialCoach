@@ -8,6 +8,7 @@ import {dinnerTranscript} from './transcript';
 import {actionEvidence} from './drama';
 import {variantFor,storyScenario,type VariantId} from './story';
 import {tableEvidence} from './tableEvidence';
+import {publicSceneBrief} from './briefing';
 
 const skills:Record<VariantId,SkillId[]>={
   'work-toast':['communication','resolving-conflicts','ethical-responsibility'],
@@ -28,19 +29,19 @@ const contexts:Record<Save['scenarioId'],ContextId>={work:'workplace',family:'fa
 export function dinnerReviewContent(raw:Save) {
   const save=SaveSchema.parse(raw),variant=variantFor(save.scenarioId,save.variantId);
   const scene=storyScenario(scenarios.find(s=>s.id===save.scenarioId)!,variant),lang=save.lang;
-  const source=tableEvidence[variant.id],targetSkills=skills[variant.id];
+  const source=tableEvidence[variant.id],targetSkills=skills[variant.id],brief=publicSceneBrief(variant.id,save.briefVersion);
   const hue=COMPETENCIES.find(c=>c.id==='relationship-skills')!.hue;
   const scenario:PracticeScenario={
     id:`3d-${variant.id}`,custom:true,title:variant.title,hook:source.pressure,
-    background:l(`${scene.room.zh}。${variant.setup.zh}\n${source.lines.map(v=>v.zh).join('\n')}`,`${scene.room.en}. ${variant.setup.en}\n${source.lines.map(v=>v.en).join('\n')}`),
+    background:l(`${scene.room.zh}。${variant.setup.zh}\n${brief.lines.map(v=>v.zh).join('\n')}\n${brief.unknown.zh}\n${scene.characters.map(c=>`${c.name.zh}：${c.description.zh}`).join('\n')}`,`${scene.room.en}. ${variant.setup.en}\n${brief.lines.map(v=>v.en).join('\n')}\n${brief.unknown.en}\n${scene.characters.map(c=>`${c.name.en}: ${c.description.en}`).join('\n')}`),
     context:contexts[scene.id],contextType:scene.category,skills:targetSkills,
     competencies:[...new Set(targetSkills.map(id=>skillById(id).competency))],
     relationship:scene.id==='family'?['parent']:scene.id==='school'?['senior','peer']:['senior','peer',...(scene.id==='work'?['customer' as const]:[])],
     difficulty:3,minutes:8,maxTurns:save.maxTurns,
-    characters:[{id:'you',name:l('你','You'),role:l('玩家','Learner'),personality:l('按自己的意愿表达。','Speak according to your own intent.'),stance:variant.goal,playable:true,hue},...scene.characters.map(c=>({id:c.id,name:c.name,role:c.role,personality:c.description,stance:c.role,hue}))],
-    objectives:[variant.goal],success:l('根据用户真实意图与对话中的具体约定核对，不预设成功。','Check the learner’s actual intent and explicit arrangements without assuming success.'),failure:l('没有达成预设目标不自动代表沟通失败。','Not achieving the initial aim does not automatically mean poor communication.'),
+    characters:[{id:'you',name:l('你','You'),role:brief.role,personality:l('按自己的意愿表达。','Speak according to your own intent.'),stance:variant.goal,playable:true,hue},...scene.characters.map(c=>({id:c.id,name:c.name,role:c.role,personality:c.description,stance:c.role,hue}))],
+    objectives:brief.aims,success:l('根据用户真实意图与对话中的具体约定核对，不预设成功。','Check the learner’s actual intent and explicit arrangements without assuming success.'),failure:l('没有达成预设目标不自动代表沟通失败。','Not achieving the initial aim does not automatically mean poor communication.'),
     opening:{characterId:scene.characters[variant.speaker].id,text:variant.opening},
-    source:`Original fiction: ${source.source.path}`,keywords:[variant.id,...targetSkills],
+    source:`Original fiction: ${brief.source.path}`,keywords:[variant.id,...targetSkills],
   };
   const messages:ChatMessage[]=dinnerTranscript(save.messages,save.dinner?.records??[],scene,lang)
     .filter(line=>line.role!=='action').map(line=>({id:line.id,role:line.role==='user'?'learner':'npc',characterId:line.role==='user'?'you':line.speakerId,text:line.text,ts:0}));

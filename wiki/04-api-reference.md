@@ -184,7 +184,8 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 | `scoringVersion` | `2` | 新报告的评分口径；旧报告缺失此字段，保留旧目标星数 |
 | `ratings` | `{skill, level: 0–3, evidence, reason}[]` | 实际练习的目标技能；无目标交集时取场景主技能。每技能一项，必须有用户原话，缺证据不评分 |
 | `stars` | `0–3` | 有效 ratings 均值四舍五入，与目标数独立；ratings 为空时数值占位 0，UI 显示未评分 |
-| `outcome` | `success / partial / failure` | 初始目标结果，不能从 stars 推导 |
+| `outcome` | `success / partial / failure` | 新报告按 objectiveResults 中 met 的项数计算，unknown 仍单列；不能从 stars 推导 |
+| `objectiveResults` | `{index,status,evidence,npcEvidence?,reason}[]?` | 新生成报告必需，与初始目标同序；status 为 met/unmet/unknown。evidence 必须是用户原话，npcEvidence 若提供须是 NPC 原话。旧报告可不含 |
 | `verdictEvidence` | `string?` | 经过转录校验的用户原话，显示在判决前 |
 | `verdict` | `string` | 有证据的简短判断；无有效 verdictEvidence 时显示证据不足，隐藏 summary |
 | `weaknesses[].deficit` | `"acquisition" \| "performance"` | **产品定位的核心字段**，不会 vs 会但没做到 |
@@ -230,7 +231,7 @@ practiceId 标识设备上的同一局，继续后仍沿用、重练才更换；
 
 把用户描述的真实处境变成一个全量打标的场景。
 
-**请求：** `{ description, lang, profile?: { name?, bio?, goals? } }`
+**请求：** `{ description, lang, profile?: { name?, bio?, goals? } }`。`description` 去首尾空白后须为 8–8000 字符，托管与 BYOK 使用同一 schema。分项与核对后的附件文字由客户端合并为此字段；不接收原文件、文件名、图片或头像。
 **响应：** `{ "scenario": Scenario }` —— 服务端会校验并纠正 `skills` / `context` / `competencies` 是否为合法 id，输出场景带 `custom: true`。
 
 `custom` 场景**不进排程池**（`retrieveScenario` 过滤掉），只能从 `/rehearse` 或历史进入。
@@ -296,9 +297,9 @@ JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: stri
 
 ### `POST /api/dinner/direct`
 
-请求 `{scenarioId: "work"|"family"|"school"|"elevator"|"office", variantId?, maxTurns?, targetId?, lang: "zh"|"en", text, history, room?, dinner?, heard?}`。`text` 非空且最多 500 字；`history` 为 1–47 条 NPC / 用户交替记录，起止为 NPC。`maxTurns` 默认 12，上限 24（兼容旧四回合），达到预算后客户端先延长再请求。`variantId` 是当前场景的两个原创开局之一；`targetId` 指定当前回复人，不赋予其替别人承诺的权限。历史保留话题、原话、空间 / 动作证据及用户开口前实际听到的 `heard:{speakerId,text,cue?}`，不得剥掉这些字段或截断成最后四轮。角色、开局、话题与事件交叉校验。正文最多 192 KiB（检查实际字节，不只信任请求头）。
+请求 `{scenarioId: "work"|"family"|"school"|"elevator"|"office", briefVersion?:1, variantId?, maxTurns?, targetId?, lang: "zh"|"en", text, history, room?, dinner?, heard?}`。`text` 非空且最多 500 字；`history` 为 1–47 条 NPC / 用户交替记录，起止为 NPC。`maxTurns` 默认 12，上限 24（兼容旧四回合），达到预算后客户端先延长再请求。`variantId` 是当前场景的两个原创开局之一；`targetId` 指定当前回复人，不赋予其替别人承诺的权限。历史保留话题、原话、空间 / 动作证据及用户开口前实际听到的 `heard:{speakerId,text,cue?}`，不得剥掉这些字段或截断成最后四轮。角色、开局、话题与事件交叉校验。正文最多 192 KiB（检查实际字节，不只信任请求头）。
 
-返回 `{replyTo,speakerId,text,cue,reactions:[{characterId,emotion,gesture}],story?:{topic,event?,beat?},interjection?:{speakerId,text}}`，恰好包含当前场景三名角色的反应。`replyTo` 是当前输入的 1–120 字符原文片段，由任务层核验，用来发现错答上一句，不显示为用户评价。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。`cue` 从实际支持的动作派生，模型编造的吃饭 / 手机操作不进入舞台说明。`story.event` 只能是当前开局允许、未出现且未被拒绝的动作插曲；不再在固定回合自动播放。可选 `interjection` 是另一名在场 NPC 在主回复之后的一句可听见插话，必须不同于主回复人，不能跨场景或替他人承诺。中文最多 45 字符；英文最多 25 词 / 160 字符。该字段嵌入同一个 NPC message，存档 / 完整历史 / 下一次请求都保留原话，不消耗额外玩家回合。无分数 / 隐藏动机。
+返回 `{replyTo,speakerId,text,cue,reactions:[{characterId,emotion,gesture}],story?:{topic,event?,beat?},interjection?:{speakerId,text},closure?:{kind,learnerQuote?,npcQuote}}`，恰好包含当前场景三名角色的反应。`replyTo` 是当前输入的 1–120 字符原文片段，由任务层核验，用来发现错答上一句，不显示为用户评价。可用表情 `neutral|pressing|annoyed|thinking|supportive`；动作 `idle|toast|lean|fold|nod`。`cue` 从实际支持的动作派生，模型编造的吃饭 / 手机操作不进入舞台说明。`story.event` 只能是当前开局允许、未出现且未被拒绝的动作插曲；不再在固定回合自动播放。可选 `interjection` 是另一名在场 NPC 在主回复之后的一句可听见插话，必须不同于主回复人，不能跨场景或替他人承诺。中文最多 45 字符；英文最多 25 词 / 160 字符。该字段嵌入同一个 NPC message，存档 / 完整历史 / 下一次请求都保留原话，不消耗额外玩家回合。无分数 / 隐藏动机。
 
 模型同时接收十种可查阅的原创开局资料和只包含玩家既有原话的 `playerEvidence`，帮助区分 NPC 建议与玩家决定。拒绝、时间、个人信息的语义仍由模型理解，不能把结构校验宣称为语义保证。模型输入把完整历史放在前面，单独的 `current_player_turn` 放在最后；各开局事实分离，防止相亲线混入工作变动。新生成台词要求 1–2 个短句，中文目标 25–70 字符、硬上限 120；英文目标 15–35 词、上限 60 词且 400 字符。旧转录仍按原长度读取，不截断原话。回复角色、引文、长度或事件校验失败时最多修复一次，仍失败则返回错误，绝不提交无效回合或静默换成内置剧情。
 
@@ -311,3 +312,10 @@ JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: stri
 错误：400 输入 / 状态无效；413 过长；429 沿用主站限流；503 部署无密钥或强制 BYOK；模型错误沿用 `fail()`，无剧本静默替代。服务器请求 30 秒取消、路由 `maxDuration=40`；客户端 35 秒取消，草稿保留。响应 `Cache-Control: no-store`。
 
 BYOK 在浏览器运行同一任务，密钥不发送到此路由。可用性复用 `/api/health` 的连接状态与浏览器统一的运行时失败状态，无新增公开配置端点。
+
+
+### 反馈修订协议补充（2026-10-05，本地开发）
+
+`/api/assess` 保留现有流格式，但只有完整结构、引文与独立语义检查通过后才发正文/`@@final`。完整格式最多修复一次；语义最多修订两次、每次复核整个报告，仅合并被指出有问题的顶层字段。修订后尚未用过的格式修复预算可以使用。总计至多一个初稿、一次格式修复、两次语义修订与三次语义检查；拒绝/网络错误不消耗这些修复来盲重试。verdictEvidence 不得引用 NPC；修复提示一次列明错误引文字段与实际原句。常规引号/已知 NPC 标签只有在正文逐字匹配时才可剥去，不能拼接或模糊修复。解释中显式归给用户的引文也核对逐字内容；书名与假设新说法不当成用户原话。语义核对关注已回答/未接受、意图改变、未知权限、未来安排与已完成事件、改写时可用信息及自主权。仍失败返回 502/可重试任务错误，不生成空报告、不触发模型不可用门控、不计熟练度；原转录保留。中断/拒绝/服务商错误保持原类型。需要特别注意：核对模型通过仍不代替人工语义验收。
+
+3D `briefVersion:1` 表示新局公共资料；省略时沿用旧局背景，不补入办公室默认项目。`closure.kind` 与文字版同为 agreement/boundary/deferred/withdrawal；前三种需要当前用户和本轮主回复/插话中的实际引文，单方离场允许缺用户引文。它只提供暂停选择，不能直接评分或强制复盘。档案可附 `continuedAtTurn`，用于记录用户已经选择继续的收尾。预算延长保持完整历史，最大仍为 24。

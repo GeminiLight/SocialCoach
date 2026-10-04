@@ -1,4 +1,6 @@
 import type { CSSProperties } from "react";
+import {validAvatarImage} from '@/lib/avatar-image';
+import {LocalPortrait} from '@/components/LocalPortrait';
 
 /** Fixed portrait geometry; identity comes from drawn hairstyles and pigments,
  * never from randomly stretching facial features. No external image requests. */
@@ -73,8 +75,8 @@ const HAIR_FRONT = [
   "", // clean shaved head
 ];
 
-export function AvatarFigure({ seed, hue, size = 40, className }: {
-  seed: string; hue: number; size?: number; className?: string;
+export function AvatarFigure({ seed, hue, size = 40, className,imageData }: {
+  seed: string; hue: number; size?: number; className?: string;imageData?:string;
 }) {
   const p = portraitFor(seed, hue);
   const palette = AVATAR_PALETTES[p.palette];
@@ -86,7 +88,7 @@ export function AvatarFigure({ seed, hue, size = 40, className }: {
     "--portrait-ground": `var(--avatar-${palette}-paper)`,
     "--portrait-shirt": `var(--avatar-${palette}-ink)`,
   } as CSSProperties;
-  return (
+  const fallback=(
     <span className={`avatar-portrait inline-block shrink-0 overflow-hidden rounded-full align-middle${className ? ` ${className}` : ""}`} style={style}>
       <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true" focusable="false" style={{ display: "block" }}>
         <rect width="100" height="100" fill="var(--portrait-ground)" />
@@ -115,4 +117,5 @@ export function AvatarFigure({ seed, hue, size = 40, className }: {
       </svg>
     </span>
   );
+  return validAvatarImage(imageData)?<LocalPortrait key={imageData} imageData={imageData} size={size} className={className} fallback={fallback}/>:fallback;
 }

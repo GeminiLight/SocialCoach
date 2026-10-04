@@ -72,9 +72,11 @@ function reportFixture(quote:string):Report{return {scoringVersion:2,stars:2,rat
 test('3D uses the existing assessment task, verified ratings and knowledge retrieval; text reports stay compatible',async()=>{
   const session=buildDinnerReview(reviewFixture(),'test'),quote=session.messages.find(m=>m.role==='learner')!.text,raw=reportFixture(quote);
   let request:ChatOpts|undefined;
-  const llm:LLM={chatText:async()=>{throw Error('Unexpected');},chatStream:o=>{request=o;return {deltas:(async function*(){yield JSON.stringify(raw);})(),text:()=>JSON.stringify(raw),refused:()=>false};}};
+  let factChecks=0;
+  const llm:LLM={chatText:async o=>{assert.ok(JSON.stringify(o.system).includes('ASSESSMENT FACT CHECK'));assert.equal(o.model,'same-smart');factChecks++;return JSON.stringify({approved:true,issues:[]});},chatStream:o=>{request=o;return {deltas:(async function*(){yield JSON.stringify(raw);})(),text:()=>JSON.stringify({...raw,objectiveResults:session.scenario.objectives.map((_,index)=>({index,status:'unknown',evidence:quote,reason:'A proposal is not a confirmed result.'}))}),refused:()=>false};}};
   const output=await runAssess({scenario:session.scenario,learnerCharacterId:'you',messages:session.messages,goals:session.scenario.skills,lang:'zh',sceneContext:session.sceneContext},llm,'same-smart');
   assert.equal(request?.model,'same-smart');assert.equal(output.ratings?.[0].level,2);assert.equal(output.sceneNotes?.length,1);
+  assert.equal(factChecks,1);
   assert.ok(request?.messages[0].content.includes('not tracked'));assert.ok(request?.messages[0].content.includes('spoken-1'));
   assert.ok(JSON.stringify(request?.system).includes('RETRIEVED KNOWLEDGE'));
   const text=sanitizeReport(raw,session.scenario,[],[],session.messages,session.scenario.skills,'zh');assert.equal(text.sceneNotes,undefined);assert.equal(text.stars,2);

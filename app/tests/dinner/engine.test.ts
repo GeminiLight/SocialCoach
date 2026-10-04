@@ -37,6 +37,17 @@ test('local restore rejects an unpaired user turn and unknown cast',()=>{
   const base={version:1,scenarioId:'work',lang:'zh',started:true,complete:false,draft:'原话',messages:[opening(scenarios[0],'zh')]};
   assert.equal(SaveSchema.safeParse(base).success,true);assert.equal(SaveSchema.safeParse({...base,messages:[...base.messages,{role:'user',text:'原话'}]}).success,false);assert.equal(SaveSchema.safeParse({...base,messages:[{role:'npc',speakerId:'unknown',text:'hello'}]}).success,false);
 });
+
+test('restore preserves a supported closing proposal and the user decision to continue',()=>{
+  const text='今天先到这里。',closing='好，明天再谈。';
+  const base={version:1,scenarioId:'work',lang:'zh',started:true,complete:false,draft:'',continuedAtTurn:1,messages:[opening(scenarios[0],'zh'),{role:'user',text},{role:'npc',speakerId:'chen',text:closing,closure:{kind:'deferred',learnerQuote:text,npcQuote:closing}}]};
+  const restored=SaveSchema.parse(JSON.parse(JSON.stringify(base)));
+  assert.equal(restored.complete,false);
+  assert.equal(restored.continuedAtTurn,1);
+  assert.deepEqual(restored.messages.at(-1)?.closure,base.messages.at(-1)?.closure);
+  assert.equal(SaveSchema.safeParse({...base,continuedAtTurn:2}).success,false);
+  assert.equal(SaveSchema.safeParse({...base,messages:[base.messages[0],base.messages[1],{...base.messages[2],closure:{kind:'agreement',learnerQuote:'我同意了',npcQuote:closing}}]}).success,false);
+});
 test('saved and exported user evidence preserves literal words',()=>{
   const words='陈总，这杯我用茶敬您。\n但酒我真的不喝。';const scene=scenarios[0];const reply=scriptedReply(scene,words,1,'zh');
   const save={version:1,scenarioId:'work',lang:'zh',started:true,complete:false,draft:'',messages:[opening(scene,'zh'),{role:'user',text:words},{role:'npc',speakerId:reply.speakerId,text:reply.text,reactions:reply.reactions}]};
