@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-10-03 | Current stage: B -->
+<!-- Last verified: 2026-10-04 | Current stage: B -->
 
 # 系统架构
 
@@ -93,6 +93,8 @@ profile/goals/proficiency/history
 ```
 
 文字场景可附 `simulationFacts`（双语事实 / 未知边界），仅传给 roleplay 的 simulation 视图；准备、提示与点评继续使用 learner 视图，避免私有事实变成标准答案。关联复测见 [文字连续性复盘](./81-postmortem-text-continuation.md)。
+
+十二个现有场景另附 `simulationDirection?: L`，保存专属口吻、条件式后续和关键决定，只进模拟视图。字段随场景快照在设备保存 / 导出，服务端与 BYOK 共用，不增加调用。旧档缺字段按原快照运行，新开局读取新版语料。见 [文字剧情方案](./specs/spec-text-scene-play.md)。
 
 同日明确了模拟器知识与公开信息的区别：固定事实中重复出现的私有内容仍须遵守角色的具体透露条件。`roleplaySystem()` 优先采用场景给出的条件，语义相同的追问可以触发，不要求关键词；泛泛共情、道歉或不相关的好问题不自动解锁。没有具体条件的角色沿用相关询问 / 信任逐步揭示。该约束仍由模型执行，不新增鉴定调用或保证 `revealed` 标记必然准确。
 

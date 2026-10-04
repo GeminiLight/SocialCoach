@@ -48,6 +48,7 @@ export function scenarioBlock(s: Scenario, lang: Lang, learnerId?: string, view:
     `context: ${s.context} / ${pick(s.contextType, lang)}; difficulty ${s.difficulty}/3; skills: ${s.skills.join(", ")}`,
     `background: ${pick(s.background, lang)}`,
     ...(view === "simulation" && s.simulationFacts ? [`FIXED FACTS AND UNKNOWNS (simulation knowledge, not automatically public; private facts still obey their disclosure conditions): ${pick(s.simulationFacts, lang)}`] : []),
+    ...(view === "simulation" && s.simulationDirection ? [`AUTHORED CONDITIONAL PLAY (opportunities, not a sequence or additional facts; private disclosures still obey their own conditions): ${pick(s.simulationDirection, lang)}`] : []),
     `characters:\n${chars}`,
     `learner objectives:\n${s.objectives.map((o, i) => `  ${i + 1}. ${pick(o, lang)}`).join("\n")}`,
     ...(view === "simulation" ? [`success: ${pick(s.success, lang)}`, `failure: ${pick(s.failure, lang)}`] : []),

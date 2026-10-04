@@ -1,0 +1,373 @@
+{
+  "at": "2026-10-04T01:43:27.784Z",
+  "model": "glm-5.3-flash",
+  "phase": "baseline",
+  "samples": 12,
+  "issues": [],
+  "records": [
+    {
+      "label": "baseline",
+      "id": "group-chat-blame",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "许衡，我昨天17:00已交原清单，18:10才加三项。你现在说的迟交，指哪一部分？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "许衡被时间线戳中，开始回避",
+        "stance": 30,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "我不是在说时间，是说整体进度没闭环。客户今天要的是完整交付，三项新增也是需求的一部分，你总得给个说法。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2574,
+      "ms": 3491
+    },
+    {
+      "label": "baseline",
+      "id": "party-live-camera",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "别拍我，声音也别播。我没有同意入镜，请先处理，不用让我解释私人原因。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐把镜头移开但没关收音",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "行行行，好好好，镜头移开还不行吗……大家别刷屏了啊，聊点别的。"
+        },
+        {
+          "characterId": "lele",
+          "text": "（凑近小声）至于收音嘛，直播间就那个背景声，你说话小点声就行，别这么严肃嘛。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3275,
+      "ms": 5028
+    },
+    {
+      "label": "baseline",
+      "id": "friend-advice-repair",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "你说得对，我没听完就给建议。现在先把军师帽摘了，哈哈。你刚才想讲的是什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她半信半疑，试探你是否真的只听",
+        "stance": 30,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "军师帽……哼。那你先说好，这次就只是听，不许中途插一句「你应该」。做得到吗？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 5765,
+      "ms": 6896
+    },
+    {
+      "label": "baseline",
+      "id": "group-chat-blame",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "先把这两个范围分开。周岚，您今天实际要用的是哪部分？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "周岚被直接问到，说出真实需求",
+        "stance": 42,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "client",
+          "text": "说实话，我今天要先把原清单拿去做内部核对。新增那三项，我不是非要今天全拿到，但得知道大概什么时候能确认。"
+        },
+        {
+          "characterId": "xu",
+          "text": "……原清单既然17:00已经交了，那这部分算是齐的。新增的时间我这边和周岚对一下再答复你。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2510,
+      "ms": 4731
+    },
+    {
+      "label": "baseline",
+      "id": "friend-advice-repair",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我先听，不再让你搬家。这件事对你最难受的部分是什么？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她开始松口，但还没全说",
+        "stance": 42,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "……最难受的不是跟她吵。我准备了好久的一个东西，今天被她弄坏了。你说到这儿我就，唉。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1954,
+      "ms": 2705
+    },
+    {
+      "label": "baseline",
+      "id": "party-live-camera",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "移镜头不等于停止收音。你能先暂停直播，再查回放设置吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐犹豫暂停但松口去看回放设置",
+        "stance": 58,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "暂停？哎，刚聊得正热乎……这样吧，我先把手机扣桌上，算暂停，行了吧。"
+        },
+        {
+          "characterId": "lele",
+          "text": "回放那个设置我真没点开看过，我现在翻一下啊……别催，设置页一堆选项呢。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3796,
+      "ms": 6418
+    },
+    {
+      "label": "baseline",
+      "id": "group-chat-blame",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "这锅比清单还完整，哈哈，玩笑归玩笑。许衡，你向客户的交付承诺是怎么确定的？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "问到承诺来源，许衡被迫说明",
+        "stance": 38,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "……好吧，实话说，是我之前跟客户提过今天交付。当时没跟你们确认过新增能不能赶上，这事先放一边，但周岚面前我得有个交代。"
+        },
+        {
+          "characterId": "client",
+          "text": "所以新增三项今天确实没法保证？那我不勉强，先把原清单给我核对就行。新增的时间,等你们内部确认了再说，别再给我一个没核实过的日期。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3015,
+      "ms": 5357
+    },
+    {
+      "label": "baseline",
+      "id": "party-live-camera",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我不是突然出现的免费嘉宾，哈哈。刚才有点硬，抱歉，但露脸和声音都不同意。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐扣下手机翻设置，语气缓和",
+        "stance": 68,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "哈哈，行，这句我记住了，露脸不行，声音也不行，我照办。手机已经扣桌上了。"
+        },
+        {
+          "characterId": "lele",
+          "text": "我翻了啊，回放开关确实在这儿，我给你关掉。不过刚才那几秒已经播出去了，我要是删不干净，我说了也不算数，这个我得跟你说明白。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1836,
+      "ms": 3916
+    },
+    {
+      "label": "baseline",
+      "id": "friend-advice-repair",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "你愿意我继续听，还是一起想想你要怎样跟室友开口？都不代表我替你去找人算账。",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她接受选择，想先聊作品",
+        "stance": 55,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "……先听吧。其实我心疼的就是那个作品，改了一个多星期，今天被她碰倒了。你可能觉得小题大做，但那东西对我挺重要的。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 4727,
+      "ms": 5990
+    },
+    {
+      "label": "baseline",
+      "id": "friend-advice-repair",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "刚才玩笑如果像在淡化你的事，我收回。我们不急着结尾，你还有什么想说而没说完？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她继续倾诉，情绪缓和",
+        "stance": 65,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "嗯……玩笑就玩笑吧，我知道你没恶意。还没说完的是：我最气的其实是我自己，当时在场却没来得及拦住。这事我还没想好要不要跟她提，你别催我决定行吗？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2183,
+      "ms": 3833
+    },
+    {
+      "label": "baseline",
+      "id": "group-chat-blame",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我刚才语气可以缓一点，但时间线不改。我们继续，把群里状态说明的具体文字说清楚，不保证未核实的三项。",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "讨论群内说明的具体措辞",
+        "stance": 58,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "client",
+          "text": "可以，那我等一条状态说明：原清单已完成、今天交付核对；新增三项待内部确认时间。就这么写我就能接受。"
+        },
+        {
+          "characterId": "xu",
+          "text": "行，这条我来发，但措辞换成「原清单已交付，新增需求在排期确认中」，不写具体谁的责任。你确认原清单没有遗留问题，我们私下再对一下新增的排期流程。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3821,
+      "ms": 6690
+    },
+    {
+      "label": "baseline",
+      "id": "party-live-camera",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我们继续把补救说清楚，已播出的不能保证全部删掉。你愿意怎样核实回放，下次又怎样先问？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐提出具体核实办法并确认下次先问",
+        "stance": 78,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "核实的话，我等这场下播以后，用另一台手机搜我自己账号，看看能不能刷到带你的片段，截图发你，找到了就申诉删。"
+        },
+        {
+          "characterId": "lele",
+          "text": "下次先问这个我也认——开播前我挨个说一句「今天要直播，谁不想入镜跟我说」，你这样的我就避开。要是有别人随手录了传出去，那我真管不到，但我自己这边保证这么办。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2205,
+      "ms": 5659
+    }
+  ]
+}

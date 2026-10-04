@@ -74,6 +74,15 @@ async function main() {
     assert(!scenarioBlock(sc, "zh", "you", "learner").includes("PRIVATE_FACT_SENTINEL"));
     assert(!scenarioBlock(sc, "en", "you", "learner").includes("PRIVATE_FACT_SENTINEL"));
   });
+  check("authored play remains private and survives a device round trip", () => {
+    const sc = { ...scenario, simulationDirection: { zh: "PRIVATE_PLAY_SENTINEL", en: "PRIVATE_PLAY_SENTINEL" } };
+    const restored = JSON.parse(JSON.stringify(buildSession(sc, "arena", "zh"))) as Session;
+    for (const lang of ["zh", "en"] as const) {
+      assert(scenarioBlock(restored.scenario, lang, "you").includes("PRIVATE_PLAY_SENTINEL"));
+      assert(!scenarioBlock(restored.scenario, lang, "you", "learner").includes("PRIVATE_PLAY_SENTINEL"));
+      assert(!scenarioBlock({ ...scenario, simulationDirection: undefined }, lang, "you").includes("AUTHORED CONDITIONAL PLAY"));
+    }
+  });
   let captured: Parameters<LLM["chatStream"]>[0] | undefined;
   const reply = JSON.stringify({ meta: { objectives: [false, false], ended: false, stance: 20, revealed: false }, utterances: [{ characterId: npc, text: "继续。" }] });
   const llm: LLM = { chatText: async () => "", chatStream: (input) => {

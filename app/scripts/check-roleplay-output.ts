@@ -43,6 +43,19 @@ async function main() {
   ]) { assert.throws(() => output.complete(JSON.stringify(invalid))); checks++; }
   const quoted = JSON.stringify({ meta, utterances: [{ characterId: "cheng", text: 'Did you say "all the revisions"? I have not agreed.' }] });
   assert.equal(parseRoleplay(output.complete(quoted), ["cheng", "lead"]).utterances[0].text, 'Did you say "all the revisions"? I have not agreed.'); checks++;
+  // Reproduced twice by the real model: it appended a cast name after a valid ID.
+  const extraName = raw.replace('"characterId":"lead"', '"characterId":"lead":"沈星"');
+  let castPreview = "", castRepairs = 0;
+  const namedCast: LLM = { chatText: async () => { castRepairs++; return raw; }, chatStream: () => ({
+    deltas: (async function* () { for (const ch of extraName) yield ch; })(), text: () => extraName, refused: () => false,
+  }) };
+  const castFull = await runRoleplay({ scenario, learnerCharacterId: "you", lang: "zh", messages: [] }, namedCast, "fixture", d => { castPreview += d; });
+  assert.equal(castPreview, castFull); assert.equal(castRepairs, 0);
+  assert.deepEqual(parseRoleplay(castFull, ["cheng", "lead"]).utterances, utterances); checks++;
+  for (const suffix of ['"陌生人"', '"Cheng"']) {
+    assert.throws(() => output.complete(raw.replace('"characterId":"lead"', '"characterId":"lead":' + suffix)));
+    checks++;
+  }
   let repairs = 0;
   const broken: LLM = { chatText: async (opts) => { repairs++; assert.equal(opts.messages.at(-1)?.content, "我还想确认分工。"); return raw; }, chatStream: () => ({
     deltas: (async function* () { yield '{"meta":broken}'; })(), text: () => '{"meta":broken}', refused: () => false,

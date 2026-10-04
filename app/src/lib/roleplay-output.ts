@@ -30,7 +30,20 @@ function completeObject(raw: string) {
 
 /** Validate one JSON reply, then retain the public text-stream protocol. */
 export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang,guard?:SpeechGuard) {
-  const ids = scenario.characters.filter((c) => c.id !== learnerId).map((c) => c.id);
+  const cast = scenario.characters.filter((c) => c.id !== learnerId);
+  const ids = cast.map((c) => c.id);
+  // A captured model draft used "characterId":"lead":"沈星". Remove ONLY
+  // a redundant name matching that exact cast ID. No speaker aliasing or text rewrite.
+  const normalizeCastName = (raw: string) => raw.replace(
+    /("characterId"\s*:\s*("(?:[^"\\]|\\.)*"))\s*:\s*("(?:[^"\\]|\\.)*")(?=\s*[,}])/gu,
+    (match, field: string, encodedId: string, encodedName: string) => {
+      try {
+        const character = cast.find(c => c.id === JSON.parse(encodedId));
+        const name = JSON.parse(encodedName);
+        return character && (name === character.name.zh || name === character.name.en) ? field : match;
+      } catch { return match; }
+    },
+  );
   const meta = z.object({
     objectives: z.array(z.boolean()).length(scenario.objectives.length), ended: z.boolean(),
     stance: z.number().int().min(0).max(100), revealed: z.boolean(), note: z.string().max(300).optional(),
@@ -45,7 +58,7 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
   const checked=(raw:string)=>{
     if (!completeObject(raw)) throw failure();
     let value: unknown;
-    try { value = extractJSON<unknown>(raw); } catch { throw failure(); }
+    try { value = extractJSON<unknown>(normalizeCastName(raw)); } catch { throw failure(); }
     const result = schema.safeParse(value);
     if (!result.success) throw failure();
     if (result.data.utterances.some((u) => /^@@/mu.test(u.text))) throw failure();
@@ -62,7 +75,7 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
       // Required fields alone are insufficient while a note is still arriving.
       const marker = /"meta"\s*:\s*\{/u.exec(raw);
       if (!marker || !completeObject(raw.slice(marker.index + marker[0].length - 1))) return "";
-      const part = parsePartialJSON<Reply>(raw);
+      const part = parsePartialJSON<Reply>(normalizeCastName(raw));
       const checkedMeta = meta.safeParse(part?.meta);
       if (!checkedMeta.success) return "";
       const lines = (Array.isArray(part?.utterances) ? part.utterances : []).flatMap((u) => {

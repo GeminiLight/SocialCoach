@@ -27,6 +27,8 @@ export interface Scenario {
   background: L;
   /** Authored simulation facts/unknowns; not coaching or a required solution. */
   simulationFacts?: L;
+  /** Conditional play, voices and consequences. Simulation only, never new facts. */
+  simulationDirection?: L;
   context: ContextId;
   contextType: L;
   competencies: CompetencyId[];

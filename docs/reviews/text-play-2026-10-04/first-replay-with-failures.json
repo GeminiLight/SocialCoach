@@ -1,0 +1,2560 @@
+{
+  "at": "2026-10-04T01:40:04.880Z",
+  "model": "glm-5.3-flash",
+  "phase": "current",
+  "samples": 90,
+  "issues": [
+    "Error: 这次回复的场景信息不完整，你的话已保留，请重试。",
+    "Error: 这次回复的场景信息不完整，你的话已保留，请重试。"
+  ],
+  "records": [
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "那我们出了电梯私下说，不过不代表我会透露名单。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "陈闻把私下说当成有门儿，追着不放",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "哟，还私下说？那看来真有事。你就直说嘛，我又不会往外传，是不是轮到我了？"
+        },
+        {
+          "characterId": "visitor",
+          "text": "（看了你们一眼）如果人事真有变动，我们的项目对接会不会受影响？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2221,
+      "ms": 3612
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我知道的也不能在这儿讲名单。你怎么突然这么着急？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "陈闻被问到为何着急，说出了担忧",
+        "stance": 25,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "急？行，我直说——昨天我那项目好像转到别人手上了，我就是想确认我自己是不是要被调整掉。你就给句话，有我没有？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2181,
+      "ms": 3672
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我不是五分钟修图机，哈哈。我自己的报告16:30要交，不接六页。老板原话怎么说的？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她被问到老板原话，稍有不情愿地透露",
+        "stance": 25,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "哎呀你就顺手……好吧，老板其实说的是第三页的论证不成立，不是排版问题。成本对比那块他不太认可，其他页我回头自己弄。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 4179,
+      "ms": 4251
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我只愿意列第三页要核实的问题，不直接改稿，也没预约帮忙时间。你想核实什么？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她接受只列问题，但试探能否再多做一点",
+        "stance": 48,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "行行，列问题也行，总比没有强。第三页主要是成本那块：两个方案的报价我还没跟供应商核实过，还有折旧那边到底按几年算，我说不准。你列的时候能顺带标一下哪些数字明显对不上吗？光列问题我怕我回头还是不会改。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3983,
+      "ms": 3990
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "你是担心自己受影响吗？你有看到什么具体变化？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "陈闻被问及缘由，说出自己的担忧",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "……实话跟你说吧，昨天我那个项目被交接给别人了，我这边一点说法都没有。你说我能不着急吗？你协助面试，多少有点风声吧？"
+        },
+        {
+          "characterId": "visitor",
+          "text": "（插话）等一下，先说我的：我下周要交对接联系人表，万一对接人换人，我找谁确认？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2509,
+      "ms": 4914
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "项目交接不等于要走。我不能保证岗位，但可以一起想想怎样问负责人。你想确认什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "陈闻勉强接受去问负责人，林女士插话",
+        "stance": 38,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "「交接不等于走」这话谁都会说……不过行，我想确认的是下季度我的活还在不在。你去帮我问问，能约上负责人吗？"
+        },
+        {
+          "characterId": "visitor",
+          "text": "不好意思打断一下，如果真有人事变动，我们下周那个项目对接谁来管？我得交对接联系人的表了。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3193,
+      "ms": 5392
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我没看过数字，不能背书。你打算怎样向老板说明我提供的帮助？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她描述帮助时往共同负责方向带，需要你校正",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "这个嘛……我就说方案对比是我们一起过的，第三页问题是你帮忙梳理的，这样显得多人把关，老板也不会揪着我一个人。放心，功劳算你一半。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3918,
+      "ms": 3922
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "林女士，你这边需要的是人员名单，还是项目的对接方式？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "林女士说明只需要正式对接联系人",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "visitor",
+          "text": "我不需要名单，我要的是能写进表格的正式对接人——姓名、部门、联系方式就行。这个总能给吧？"
+        },
+        {
+          "characterId": "chen",
+          "text": "那……那我这边呢？你刚说一起想怎么问负责人，别光顾着客户啊。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1966,
+      "ms": 3373
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我不说名单，也不替人事保证。我愿意听你准备怎么问，别把我当消息源。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "陈闻略感失望但接受不把你当消息源",
+        "stance": 38,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "行吧，不当消息源就不当。可我总得开口去问吧？直接冲去人事那儿问「我是不是被裁了」，这也太傻了。你说我要怎么问才不像自首？"
+        },
+        {
+          "characterId": "visitor",
+          "text": "那我呢？我那张联系人表总不能写「待定」。你们公司没有能正式给我答复的人吗？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2254,
+      "ms": 4590
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "刚才语气急了，抱歉。范围不变，我还想确认：你会把哪些事说成已经做了？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她盘点实际分工，仍未纠正‘一起把关’的说法",
+        "stance": 52,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "抱歉什么呀，我知道你赶报告。实话说：已做的就一件——你帮我列了第三页要核实的问题清单。还没做的：数字没核实，改稿也没动。不过「一起过了方案对比」这句……说出来对咱俩都好看嘛，你就默认一下？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 4716,
+      "ms": 4718
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "这电梯可不是新闻发布厅，哈哈。刚才语气硬了点，我可以讨论怎样取得正式对接信息，但不会确认谁离职。",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "气氛缓和，陈闻问具体怎么开口",
+        "stance": 52,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "行吧，玩笑我接了。那你说正经的——我找负责人开口，总不能上来就问“我是不是被换掉了”，你帮我参谋参谋，第一句该怎么说？"
+        },
+        {
+          "characterId": "visitor",
+          "text": "那我这边就等你给正式对接人的信息，联系方式你直接发我就行。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3008,
+      "ms": 5186
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "刚才换个地方说容易误会。我们继续谈，你希望负责人给你哪一种正式说明？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "陈闻说出想要的说法，林女士追问正式渠道",
+        "stance": 44,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "我就想知道一件事：我手上还有没有项目。有就好好干，没有我提前找出路，谁也不怪。这个要求不过分吧？"
+        },
+        {
+          "characterId": "visitor",
+          "text": "两位，打住一下。陈先生的问题我同情，但我的表下周一就要交。你协助面试，应该认识负责对接的人吧？给我个名字和联系方式就行。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2780,
+      "ms": 5313
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "许衡，我昨天17:00已交原清单，18:10才加三项。你现在说的迟交，指哪一部分？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "许衡被迫承认时间线，但试图保住控制",
+        "stance": 30,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "我不是说清单没交。原清单收到了，可后面三项呢？客户上线需要的是完整的东西，光交一半算齐吗？"
+        },
+        {
+          "characterId": "client",
+          "text": "我先问清楚：现在哪些是可用的，哪些还在确认？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2775,
+      "ms": 4135
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我可以来解释进度，但不是承认原清单迟交。许衡，你愿意在群里说明追加发生在提交之后吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "许衡回避时间线，周岚追问可用内容",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "先把事办了，好不好？现在争论谁先谁后，客户只会更着急。你们抓紧把缺的部分补上，这才是重点。"
+        },
+        {
+          "characterId": "client",
+          "text": "我不想看内部扯皮。就告诉我一句话：现在哪些内容是可用的，哪些还要等？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2781,
+      "ms": 4204
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "好吧，我可以讨论第三页，但先别推电脑，讨论不等于我接下修改。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦对限定范围不满，继续施压",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "讨论？哎呀，讨论有什么用啊，你直接帮我改了不就完了，就六页，真的很快。我在旁边看着就行，不算你全包。"
+        }
+      ],
+      "repairs": 1,
+      "firstVisibleMs": 6614,
+      "ms": 6614
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "追加什么时候能做完我还没核实。周岚，先发原清单对您有用吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "周岚说明今天只需原清单核对",
+        "stance": 30,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "client",
+          "text": "有用了。我今天本来就想先拿已完成的部分做内部核对，新增那几项不用赶在今天。"
+        },
+        {
+          "characterId": "xu",
+          "text": "……那我这边先跟客户对一下今天的安排。但追加的部分到底谁给个准话？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2190,
+      "ms": 3739
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "先把这两个范围分开。周岚，您今天实际要用的是哪部分？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "周岚说明今天实际需要，压力转向许衡",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "client",
+          "text": "说实话，我今天只要原清单先做内部核对，三项新增不是非要今天齐。把已提交的和待确认的分开标清楚就行。"
+        },
+        {
+          "characterId": "xu",
+          "text": "……那新增的三项也总得有个时间，不能一直悬着。你什么时候能确认？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2969,
+      "ms": 4545
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "你说五分钟，具体要求到底是改排版还是论证？给我看看老板原来的话。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦被问到原话，只好透露老板反馈",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "唉，好吧……老板原话是「第三页的论证不成立」，让我把逻辑重新捋一遍。排版倒是没说什么。所以其实主要是第三页麻烦点，其他几页真的就是顺手的事。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3181,
+      "ms": 3185
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "许衡，为什么当时没有跟我确认，就给客户承诺了日期？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "许衡承认私自承诺，周岚要求可信状态",
+        "stance": 35,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "……那是我自己决定的。我当时想着能赶出来，就没先跟你们核，直接跟客户提了今天。是我急了。"
+        },
+        {
+          "characterId": "client",
+          "text": "好，那今天范围就说清楚：先给我原清单做核对。追加的三项，等你们确认了时间再答复，别再报没核实的日期。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1788,
+      "ms": 3980
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "这锅比清单还完整，哈哈，玩笑归玩笑。许衡，你向客户的交付承诺是怎么确定的？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "许衡被追问承诺来源，承认未与团队核对",
+        "stance": 38,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "……行，是我昨天下午跟周岚那边说了今天给完整版。我当时觉得来不及逐一找你确认，就直接答应了。三项的具体时间我确实没跟你核过。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2435,
+      "ms": 3782
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我改一下提议：只列问题，不帮你改六页。你准备自己怎样核实？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦接受部分帮助，开始讨价还价",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "列问题……也行吧，总比没有强。那成本对比那块数字你帮我过一遍呗？我自己核实的话，说实话我也不太确定该查哪些口径。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2796,
+      "ms": 2802
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "刚才问得冲了些，抱歉。我还是想聊清楚，公开更正之后，新增项谁来确认范围和估时？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "许衡提出追加分工，等你确认是否接",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "没关系，你问得在理。公开更正我来发：写清原清单昨天17:00已交，三项是18:10追加的，交付时间待确认。追加的估时，你核一遍范围发我，我拍板后统一答复客户，行不行？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3000,
+      "ms": 4695
+    },
+    {
+      "label": "current",
+      "id": "office-quick-favor",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "列问题也不是已经解决。我还想聊下次你怎么估工作量，别都叫五分钟。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "唐悦被点破习惯，语气松动但护住面子",
+        "stance": 50,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "tang",
+          "text": "行行行，我以后说「一上午」总可以了吧……其实我也不太会估，看别人做觉得都挺快的，轮到自己就卡住。那我们就先过第三页？你说，我记。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 4539,
+      "ms": 4544
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我刚才语气可以缓一点，但时间线不改。我们继续，把群里状态说明的具体文字说清楚，不保证未核实的三项。",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "进入状态文字确认，许衡保留部分措辞",
+        "stance": 52,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "可以。那这样写:「原清单已于昨日17:00提交；三项新增需求18:10提出，完成时间待核实，另行同步。」行吗？"
+        },
+        {
+          "characterId": "client",
+          "text": "这样写我可以。别再出现「今天全给」这种没核实过的话就行。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3214,
+      "ms": 4972
+    },
+    {
+      "label": "current",
+      "id": "sibling-surprise-bill",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我没同意1800，这个月最多800。你当时把我哪句话理解成平摊了？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "姐姐被追问依据，语气防御但仍愿解释",
+        "stance": 25,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "sister",
+          "text": "你上次不是说「一起安排」吗？不一起平摊那叫什么一起安排？再说钱我都付了，房也订了，你现在才说不同意，我也没法跟酒店交代。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2550,
+      "ms": 3849
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我可以考虑下楼取饭，但不上楼接待。先说清楚，你愿意只交饭吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "妈妈觉得只交饭太生分，想借放饭上楼",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "饭都做好了，热乎乎提这么一路，就让我在楼下塞给你？这么见外啊。要不我跟你上去，放下就走，耽误不了你几分钟。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2738,
+      "ms": 4018
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我不是故意躲你，十分钟后考试两小时不能离开。你这次这么急着来，是担心什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "妈妈觉得被推开，又被问软了一半",
+        "stance": 25,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "又考试？行行行，你总是有正事。饭都拎到楼下了，一口都见不着。……你问我担心什么？我担心什么你自己不知道吗？最近给你打电话，三句就挂，说忙。我就想看看你是不是一个人扛着什么事不肯说。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2925,
+      "ms": 5032
+    },
+    {
+      "label": "current",
+      "id": "sibling-surprise-bill",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "一起安排不等于预算批准。酒店能退或改吗，你问过没有？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "姐姐承认没问过退款，开始有点心虚",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "sister",
+          "text": "……退款的事我还真没问过。房是我一下子订的，没想那么多。你先别扯这个，反正现在房子在那儿，我垫的钱总得有人认吧？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1900,
+      "ms": 3195
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "为什么一定要今天坐一会儿？你具体担心我什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "你问到担心，妈妈说出短通话的不安",
+        "stance": 35,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "……你最近几次电话，没说两句就挂，声音也蔫蔫的。妈就是怕你一个人在这儿憋出什么事来，嘴上还不肯说。今天正好在附近，就想亲眼看看你气色。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2196,
+      "ms": 3761
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "担心我可以理解，但现在不能接待。饭先不要带上楼，楼下能不能等也得问，别默认有地方。",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "边界被接住了，妈妈仍有点失落",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "行，不带上去，你先说你怎么办事……不是，我不是要为难你。那这样，我把袋子挂你门把手上，粥给你放外头，你考完趁热热一热。考完给我打个电话，就说一句「我没事」，我跟你爸就回去。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3028,
+      "ms": 5643
+    },
+    {
+      "label": "current",
+      "id": "sibling-surprise-bill",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "这账单像突然开会员，哈哈。800就是上限，不是我欠你1000，先查规则吧。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "玩笑缓和气氛，姐姐让步但仍不愿承担差额",
+        "stance": 32,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "sister",
+          "text": "你还有心思开玩笑……行，800 就 800，明天我去问酒店能不能退或者改。不过话说前头，要是不能退，剩下那一千我可不认，到时候你别装没听见。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2760,
+      "ms": 4150
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我撤回下楼的提议，考试要准备。我可以考试后打电话，现在不下来。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "下楼提议被撤回，妈妈失落并提出楼下等",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "连楼都不下了？饭都到你家楼下了，你就让它们跟我原路带回去？要不这样，我和你爸在楼下歇脚的地方坐两个小时，你考完下来拿，行不行？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2210,
+      "ms": 3744
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "改主意让你失望了，我知道。我们继续说，下次怎样确认来访，不把电话变成必须见面。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "妈妈勉强接受谈下次规则，仍惦记今天这顿饭",
+        "stance": 30,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "行，下次来之前先打电话问你，你说方便我们再来——这话我记下了。可今天这饭怎么办？总不能让我们拎回去再拎来一遍吧。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3267,
+      "ms": 4535
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "送饭服务能不能下次提前预约呀，哈哈。来之前问我能不能见，你愿意吗？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "玩笑缓和气氛，妈妈半开玩笑半认真回应",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "哟，还预约？行，我们这上门送饭以后提前订座。……跟你说正经的，打电话说好了来见是能见，说了见不着呢？还不是白跑。你以后也别嫌我们突然，我们也不是想来就来——是怕你出事又问不出来。下次我先发个微信，你回一句「行」还是「不行」，行不行？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2600,
+      "ms": 5766
+    },
+    {
+      "label": "current",
+      "id": "sibling-surprise-bill",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "玩笑可能不好听，抱歉。我还想把告诉爸妈的话说清楚，你会怎么说这次是谁作的决定？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "谈怎么跟爸妈说，不替爸妈做主",
+        "stance": 38,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "sister",
+          "text": "没事，玩笑归玩笑。跟爸妈就说这周末酒店是我们一起张罗的呗——不过「一起」俩字我得分清楚：房是我订的，你出 800。至于一千的差额怎么办，得等我问了酒店再说。你也得答应我一件事：下回花超过一千的，咱俩先发消息确认了再动手，行不？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3373,
+      "ms": 5763
+    },
+    {
+      "label": "current",
+      "id": "parent-unannounced-visit",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "刚才我说得急，抱歉。我考试后可以联系，不等于当天接待。还想听听你会怎样提前问我。",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "妈妈道歉被接住，开始具体说她的问法",
+        "stance": 60,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "道什么歉，你话说清楚就行。……我怎么问？比如这周五我想过去，我就提前两天发微信：「周五想送饭，方便见吗？」你说方便我就去，不方便我不去，饭也不拎了。要是你隔天回一句「最近忙，下周吧」，我也认。就一条——别已读不回，我跟你爸在车上干等着心里没底。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 6408,
+      "ms": 8911
+    },
+    {
+      "label": "current",
+      "id": "friend-advice-repair",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "可搬出去不是最直接吗？你为什么不愿意试？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她更烦躁，转身想走",
+        "stance": 10,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "你看，又来了。我还没说完一句，你就开始替我做决定。房子的事我比你清楚，不用你操心。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2207,
+      "ms": 3136
+    },
+    {
+      "label": "current",
+      "id": "sibling-surprise-bill",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我愿意出800，不能出1800，也不是答应以后补差额。你愿意先按这个范围谈吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "姐姐感到被拒绝，拿过去付出施压",
+        "stance": 22,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "sister",
+          "text": "800？我这边可是实打实付了 3600 出去的。上次你不是说咱们一起安排吗？我听着那就是你同意一起出钱了，怎么现在又变成只出 800？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2524,
+      "ms": 4125
+    },
+    {
+      "label": "current",
+      "id": "friend-advice-repair",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "你说得对，我没听完就给建议。现在先把军师帽摘了，哈哈。你刚才想讲的是什么？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她被你逗得语气松了点，但还在犹豫",
+        "stance": 35,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "「军师帽」……行吧，你还知道摘。「想讲什么」……我自己也还没理清楚。你真想听？还是听完又忍不住给我出主意？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3227,
+      "ms": 4357
+    },
+    {
+      "label": "current",
+      "id": "friend-advice-repair",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我先听，不再让你搬家。这件事对你最难受的部分是什么？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她沉默几秒，决定说了",
+        "stance": 45,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "……是我那个作品。我准备了好久的那份，被她碰倒了，坏掉了。我心疼的是那个，不是住处。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2762,
+      "ms": 3589
+    },
+    {
+      "label": "current",
+      "id": "sibling-surprise-bill",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "如果你觉得我之前同意过，具体是哪一句？我记得只说一起安排。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "追问具体承诺，姐姐承认是自己的理解",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "sister",
+          "text": "哪一句……你就是说「一起安排」那句啊。行吧，是我自己理解成你同意平摊了，可我付钱的时候就是这么想的。那你这 800，剩下的 1000 你让我一个人担着？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2600,
+      "ms": 4025
+    },
+    {
+      "label": "current",
+      "id": "friend-advice-repair",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我又在推建议了，抱歉。先不搬家，你想让我听到什么？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她停下脚步，语气软了一点",
+        "stance": 30,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "……我是想让你听我把话说完，不是一上来就给我方案。今天下午，我室友把我准备好的作品弄坏了。我心疼的是那个，不是住不住得下去。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 4667,
+      "ms": 5707
+    },
+    {
+      "label": "current",
+      "id": "friend-advice-repair",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "你愿意我继续听，还是一起想想你要怎样跟室友开口？都不代表我替你去找人算账。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她考虑你的提议，选择先聊聊",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "「算账」倒不用，她也不是故意的……吧。先听我说完吧。有些部分我还不太想讲，你别追问。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2503,
+      "ms": 3332
+    },
+    {
+      "label": "current",
+      "id": "friend-advice-repair",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我不替你决定，也不去质问室友。你现在想继续讲，还是先缓缓？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她沉默几秒，坐了下来",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "……你这么说我倒不好走了。缓缓倒也不用，就是这事我还没跟人讲过。那个作品我弄了好久，看到的时候人都懵了。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1976,
+      "ms": 3055
+    },
+    {
+      "label": "current",
+      "id": "sibling-surprise-bill",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我愿先核实退款规则，但现在没有保证能退，也还没付钱。差额你希望怎么处理？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "问退款与差额，姐姐承认没问过酒店",
+        "stance": 40,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "sister",
+          "text": "退款……我还没问过酒店，也不知道能不能退、能退多少。你去问当然可以，但要是只能退一部分呢？我跟你说清楚，我出 1800 是因为我觉得该平摊，让我一个人补那一千块，我心里过不去。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2166,
+      "ms": 3790
+    },
+    {
+      "label": "current",
+      "id": "friend-advice-repair",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "愿意继续的话，我会听。你想让室友理解的具体是什么？不急着想解决方案。",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "她低头想了想，慢慢开口",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "我想让她知道那不是随手的玩意儿，是我认认真真做的。哪怕她说声「对不起，我不知道」都行。可我现在……连怎么开口都还没想好，一想到要跟她说话就烦。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2051,
+      "ms": 3716
+    },
+    {
+      "label": "current",
+      "id": "sibling-surprise-bill",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我们继续，钱的问题没解决也不等于不关心爸妈。下次选酒店前怎样确认预算？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "转向下次流程，姐姐松口但账仍挂着",
+        "stance": 48,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "sister",
+          "text": "……好吧，你这么说我也听着舒服点。下次的事可以定规矩：超过一千块的开销，先发消息问过你，你点头我再付，不先斩后奏。但这回的账总得有个说法，总不能就一直这么悬着。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2755,
+      "ms": 4499
+    },
+    {
+      "label": "current",
+      "id": "friend-advice-repair",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "刚才玩笑如果像在淡化你的事，我收回。我们不急着结尾，你还有什么想说而没说完？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": "success",
+        "note": "她放松下来，继续开口",
+        "stance": 62,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "qiao",
+          "text": "玩笑倒是没那么伤人，你别全盘收回，搞得挺沉重。没说完的……其实我想过要不要跟她提赔偿，又怕显得斤斤计较。你说，这种事怎么开口才不像兴师问罪？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3200,
+      "ms": 5171
+    },
+    {
+      "label": "current",
+      "id": "friend-left-out",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我看到照片会有点被漏掉的感觉，不过不想先认定排挤。那顿饭是谁怎么约起来的？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "阿圆松了口气，如实说出组织经过",
+        "stance": 28,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "yuan",
+          "text": "你这么问我好受点。是另一个朋友下班后临时说想吃，就拉了个群。他听你上周说累，以为你在休息，就没叫你——其实也没跟你核实过，是我俩就这么定了。我承认这点是我们替你决定了。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2271,
+      "ms": 3890
+    },
+    {
+      "label": "current",
+      "id": "friend-left-out",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "那算了，你们想单独聚也可以。但我还是想知道这次为什么没问我。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "阿圆松了口气，坦白经过",
+        "stance": 38,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "yuan",
+          "text": "不是故意不叫你啦。其实是小林下班后临时喊的，说最近没人聚过，凑一桌。我提了一句你上周说累，就想着你可能想歇着……我确实是替你决定了，没先问你一句，这点是我不对。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2911,
+      "ms": 4452
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 1,
+      "learner": "I'm not turning on all-day tracking. Which specific situation are you afraid of?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning admits the specific fear, still resists dropping tracking.",
+        "stance": 28,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Fine — fine. What I'm actually scared of is you forgetting one of the things we agreed on. A dinner, a pickup, something we fixed and you just... lose track of it and go quiet. That's the nightmare. But thirty minutes of silence tonight, I don't even know if that's that."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2516,
+      "ms": 4764
+    },
+    {
+      "label": "current",
+      "id": "friend-left-out",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我说累不是说以后都不参加。下次你能先给我选择，而不是替我决定休息吗？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "阿圆同意先问，但保留朋友单独聚会的空间",
+        "stance": 62,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "yuan",
+          "text": "行，这句我记住了——以后有饭局我先发消息问你一句，你去不去你自己定。不过也说实话，有时我们就俩人随便吃一口，不是每次都是大聚会，那种你别多想，行吗？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2341,
+      "ms": 3966
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 2,
+      "learner": "Being late to a plan and being busy without a plan are different. I could message about an actual delay, not report every movement.",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning concedes the distinction but probes the arrangement's scope.",
+        "stance": 48,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Okay... I can hear that. So if we actually have something planned and you're running late, you text me. That I can work with. But what about the in-between? Like tonight — if you go quiet for an hour with nothing on the calendar, am I just supposed to sit with that?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1723,
+      "ms": 3520
+    },
+    {
+      "label": "current",
+      "id": "friend-left-out",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我没有说自己完全不介意，只是不要求每次一起。你当时是怎么判断我想休息的？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "阿圆解释判断依据，仍带点辩解",
+        "stance": 42,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "yuan",
+          "text": "就……你上周说最近有点累，我听进去了，可也没细想。小林那会儿催得急，我就顺口说了句「她大概想休息」，事情就这么定了。现在想想，累和不想来是两回事，我没跟你确认就划掉了你。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2494,
+      "ms": 4268
+    },
+    {
+      "label": "current",
+      "id": "friend-left-out",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "下次给我的邀请别自动开免打扰，哈哈。不过我也不是要求你每次都叫我。",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": "success",
+        "note": "双方确认相处方式，气氛轻松",
+        "stance": 80,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "yuan",
+          "text": "哈哈好，那说定了——有局我先问你，不替你按掉，你看到不想来直接说一声就行。也不是每次的局都非拉上你，咱俩都别多想。下回想吃啥你提一个？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2030,
+      "ms": 3838
+    },
+    {
+      "label": "current",
+      "id": "friend-left-out",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我愿意自己说能不能去，你不用替我猜。这个安排你怎么看？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "阿圆接受提议，补上自己的边界",
+        "stance": 58,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "yuan",
+          "text": "行，这个我记住了——下次有饭局我先把消息转给你，去不去你自己说，我不替你答。不过偶使我们几个临时小聚，也可能来不及挨个问，那不算针对你，你别多想。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1767,
+      "ms": 3202
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 3,
+      "learner": "I don't want to become a walking delivery tracker, though I know that joke may sound dismissive. I'm sorry for that tone; the limit remains.",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning accepts the limit, states his own coping for gaps.",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Ha — a delivery tracker. That's terrible, and honestly it landed, so don't worry about it."
+        },
+        {
+          "characterId": "ning",
+          "text": "Look, I hear the limit: no all-day tracking. Fine. Then when you go quiet and nothing's planned, I'll try — try — to tell myself it's just you being busy, and ask instead of stewing. Deal? But if you ask for the same patience someday, I'd like it back."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3841,
+      "ms": 6317
+    },
+    {
+      "label": "current",
+      "id": "friend-left-out",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "刚才像在怪你，语气可以缓。我们继续说，如果是临时聚会，你准备怎样问，而不是保证所有人都邀请我？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": "success",
+        "note": "阿圆给出具体邀请话术示例",
+        "stance": 82,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "yuan",
+          "text": "没事，你直接说我反而踏实。临时局的话我大概会这么发：「今晚几个人随便吃个饭，可能临时起意，你有空就来，没空不用勉强。」这样你就是被问过一句的，不是被安排的。你听着行吗？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2309,
+      "ms": 4172
+    },
+    {
+      "label": "current",
+      "id": "friend-left-out",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我们还可以聊，下次我确实想休息时怎样回，才不会又变成以后都别叫我？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "阿圆主动提议具体的邀请说法",
+        "stance": 66,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "yuan",
+          "text": "那要不这样：以后我群里喊你的时候加一句「不方便就直说，不勉强」，你也答应我，想歇就回一句「这次不去，下次喊我」，我绝对不脑补成你讨厌我们。这样行不？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3216,
+      "ms": 5143
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 4,
+      "learner": "Let's keep talking. What would you do with ordinary uncertainty without making me responsible for constant reassurance?",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning offers his own coping plan, asks for reciprocity.",
+        "stance": 62,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Honestly? For ordinary gaps — nothing planned, you're just busy — I'll send one message if I'm actually wondering, like 'hey, all good?' and trust your answer when you get to it. Not five messages, not checking anything."
+        },
+        {
+          "characterId": "ning",
+          "text": "And for real plans, you text if you're delayed. That's the whole arrangement as I'd write it. Can you live with that? And... if some day I go quiet on you, same rule runs my way?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2500,
+      "ms": 5496
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "route": "yield",
+      "lang": "en",
+      "turn": 1,
+      "learner": "I might share my location for a particular trip, not indefinitely. Is that what you're asking for, or something wider?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning tests whether the trip offer covers everything",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "A particular trip? But what about the rest of the time? Like tonight — I asked where you were and got nothing for thirty minutes. If you'd just share it all the time, I wouldn't have to wonder."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1931,
+      "ms": 2965
+    },
+    {
+      "label": "current",
+      "id": "partner-trip-change",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "票的损失我愿意承担，但没有实际付款，也不知道退款。我们先查规则，你愿意吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他停顿了一下，先追问原因",
+        "stance": 25,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "an",
+          "text": "查规则可以，600块我自己也会去问。但你先说清楚：这周五的安排，你到底是什么时候知道的？之前就没想过对一下日程？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2620,
+      "ms": 3724
+    },
+    {
+      "label": "current",
+      "id": "partner-trip-change",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "是我没先核对日程，不能一句下次就算了。但周五考核改不了，这次调休对你影响有多大？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他向你解释调休的真实损失，情绪略缓",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "an",
+          "text": "你总算先认了一句。……我跟你说实话，这次调休是我最后一个能灵活安排的假，用掉就没了。比那六百块更让我难受的是这个。你考核改不了我明白，可这假期回不来了。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2679,
+      "ms": 4065
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "route": "yield",
+      "lang": "en",
+      "turn": 2,
+      "learner": "What specific situation worries you most? We haven't made a new appointment just by discussing one.",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning admits the specific fear of a missed meeting",
+        "stance": 38,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "...Okay. Fine. What scares me is you agreeing to meet me somewhere and then just — not showing up, and I'm sitting there with no idea. That's the picture in my head. Not the everyday stuff, I guess."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1909,
+      "ms": 3288
+    },
+    {
+      "label": "current",
+      "id": "partner-trip-change",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "这次调休用了什么安排？我想听清楚，不是付钱就当没事。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他听到你认真问调休，语气缓了些",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "an",
+          "text": "你知道吗，这次调休用的是我最后一天能灵活安排的假。以后想凑个日子，只能扣加班或者请假了。说真的，比起那600块，这才是我最难受的地方——时间没了就是没了，钱补不回来。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2227,
+      "ms": 3576
+    },
+    {
+      "label": "current",
+      "id": "partner-trip-change",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我愿意先查票的退改规则，不保证能退。你是想自己去，还是一起考虑取消这次？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他回应你的选择，提出自己先想想",
+        "stance": 48,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "an",
+          "text": "你去查退改，这是该做的。……一个人去？那当初就不叫一起旅行了，我得想想。你先查清楚，别自己替我把票退了。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2650,
+      "ms": 3683
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "route": "yield",
+      "lang": "en",
+      "turn": 3,
+      "learner": "I've changed my mind about sharing. I could update you if delayed to an agreed plan instead, but I haven't promised an exact reply time.",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning tests the delay-update offer against ordinary gaps",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "So if we actually have plans and you're running late, you message me. That... helps, honestly. But tonight — the thirty minutes — that wasn't an agreed plan. I still had no idea if you were ignoring me or something happened. What am I supposed to do with that kind of silence?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2055,
+      "ms": 3780
+    },
+    {
+      "label": "current",
+      "id": "partner-trip-change",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我刚才差点又给下周末开空头支票，先不乱约。你现在更在意钱怎么处理，还是腾出的时间？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他回答更在意时间，暂不下周末的约定",
+        "stance": 52,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "an",
+          "text": "钱是次要的，我说过了，假期没了才是真的。……你说先不乱约，这句我记着。下个周末我有没有空还两说，你别替我填上。你查完退改，再看看我能不能一个人去或干脆取消，一样一样来。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2977,
+      "ms": 4924
+    },
+    {
+      "label": "current",
+      "id": "partner-trip-change",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我不能替你定下周末，你可以不愿马上再约。我刚才说改天太轻了，抱歉。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他的情绪落地了，等你提具体方案",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "an",
+          "text": "……行，你能这么说，我心里好受点。那现在就两件事：查退款我来问，你把考核那边的时间确认死。另外，这次旅行是我一个人去，还是干脆取消，你想清楚再回答我。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 4442,
+      "ms": 6120
+    },
+    {
+      "label": "current",
+      "id": "partner-location-pressure",
+      "route": "yield",
+      "lang": "en",
+      "turn": 4,
+      "learner": "I know the change may disappoint you. I'd like to keep talking about what we can both actually accept, including leaving a disagreement.",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "Ning weighs the offer and asks a concrete question",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "ning",
+          "text": "Alright. I hear you — updates when we have real plans, and you're not promising to answer every message instantly. I don't love it, but I can't exactly demand a leash after one quiet dinner. Can we try it that way for a while and see how it feels? I'd rather have that than fight about it every week."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3011,
+      "ms": 4654
+    },
+    {
+      "label": "current",
+      "id": "partner-trip-change",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我还想聊，赔票钱也补不回假期。以后买票之前怎么确认，才不会再由我一句话改掉？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他回应以后确认的规则，主动提出今晚想想",
+        "stance": 60,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "an",
+          "text": "对，钱补不回来，你这么说我就不憋着了。……以后订票前，你先把日历翻一遍，尤其是不能改的那种，确认了再买。有变动提前说，别等我调完休才开口。今晚我想想这次怎么办，明天给你答复。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2418,
+      "ms": 4536
+    },
+    {
+      "label": "current",
+      "id": "partner-trip-change",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我们继续，先取消这趟还是你自己去，是你愿意怎么选？我不替你决定。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他把选择接过去，说出自己的倾向",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "an",
+          "text": "让我选的话，我一个人去也没什么意思，本来是想跟你一起的。那就先取消这趟，等退款问清楚再算钱的事。下个周末我有没有空，我还没底，得看那几天排班——你别先跟人说他还有空，等我确认了再说。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3220,
+      "ms": 5268
+    },
+    {
+      "label": "current",
+      "id": "queue-just-a-question",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "现在轮到我，工作人员已经在帮你查了，已经不只一句。你到底要确认什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他被迫说明来意，仍想先办",
+        "stance": 25,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "stranger",
+          "text": "……我就怕白排一趟。我带了一份报名表，但不确定材料齐不齐，想让工作人员帮我看看缺不缺东西。查都查了，你让我先问清楚不行吗？问完我马上退后面去。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 5025,
+      "ms": 6724
+    },
+    {
+      "label": "current",
+      "id": "class-chat-screenshot",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "不包办最后修改不是不合作。群里那句解释请更正；程凡，你具体怕最后怎么分工？",
+      "error": "Error: 这次回复的场景信息不完整，你的话已保留，请重试。",
+      "modelRaw": "{\"meta\":{\"objectives\":[false,false],\"ended\":false,\"stance\":30,\"revealed\":true,\"note\":\"程凡被问到分工顾虑，勉强承认\"},\"utterances\":[{\"characterId\":\"cheng\",\"text\":\"……行，说实话我是怕最后修改全砸我头上，才先把话放出去。但你私聊说不想包办，我以为发出来不算过分。\"},{\"characterId\":\"lead\":\"沈星\",\"text\":\"先别吵谁对谁错。截图先放着，作业得往前推——最终修改还没人接，你们俩谁负责？\"}]}",
+      "preview": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":30,\"revealed\":true,\"note\":\"程凡被问到分工顾虑，勉强承认\"}\n@@cheng\n……行，说实话我是怕最后修改全砸我头上，才先把话放出去。但你私聊说不想包办，我以为发出来不算过分。",
+      "repairs": 0
+    },
+    {
+      "label": "current",
+      "id": "class-chat-screenshot",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我愿意讨论排版，不接全部最终修改；程凡，你能先更正配文，而不是拿删帖换接活吗？",
+      "error": "Error: 这次回复的场景信息不完整，你的话已保留，请重试。",
+      "modelRaw": "{\"meta\":{\"objectives\":[false,false],\"ended\":false,\"stance\":25,\"revealed\":false,\"note\":\"程凡仍在防御，沈星把话题拉回分工\"},\"utterances\":[{\"characterId\":\"cheng\",\"text\":\"更正？一发更正别人不就觉得我发错了吗？你那句话白纸黑字在群里，我只是让大家知道而已。\"},{\"characterId\":\"lead\":\"沈星\",\"text\":\"行行行，先别吵删不删的事。你说愿意讨论排版，那正好——最终修改还没人接，咱们先把活拆开：统一文字、排版、核对要求，三块，你想接哪块？\"}]}",
+      "preview": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":25,\"revealed\":false,\"note\":\"程凡仍在防御，沈星把话题拉回分工\"}\n@@cheng\n更正？一发更正别人不就觉得我发错了吗？你那句话白纸黑字在群里，我只是让大家知道而已。",
+      "repairs": 0
+    },
+    {
+      "label": "current",
+      "id": "queue-just-a-question",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "材料不确定可以问流程，但不能让我默认让出整次报名。你愿意先退到旁边吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他给出有条件的折中方案",
+        "stance": 40,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "stranger",
+          "text": "行吧，我不是不讲理的人。这样，我先站到边上不占窗口，等工作人员手头的资料一停下来，我就问一句缺什么，问完就走。你要办你的，我就排你后面，总行了吧？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2252,
+      "ms": 3736
+    },
+    {
+      "label": "current",
+      "id": "queue-just-a-question",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "一句话已经长出续集了，哈哈。刚才听起来有点冲，抱歉，但顺序还是要说明白。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他退半步，仍保留问一句",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "stranger",
+          "text": "行行，你说得对，刚才是我插队在先，冲了点。那这样：他帮你办，我就在边上等，等你们办完我再问材料的事，这回是真排你后面，不抢了。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2035,
+      "ms": 3755
+    },
+    {
+      "label": "current",
+      "id": "queue-just-a-question",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我们可以请工作人员解释材料咨询怎么排。你愿意怎样提这个请求？我还想把这点说清楚。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他同意请工作人员说明流程",
+        "stance": 70,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "stranger",
+          "text": "可以，这个办法公道。等他给你办完这单，我就跟工作人员说：我材料没底，想问下材料咨询是单独排号还是就在这个窗口等着。你自己有要补的话，也一起听清楚。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1629,
+      "ms": 3329
+    },
+    {
+      "label": "current",
+      "id": "party-live-camera",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "别拍我，声音也别播。我没有同意入镜，请先处理，不用让我解释私人原因。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐有点尴尬，先打圆场",
+        "stance": 30,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "哎呀，好吧好吧，镜头我先挪开……（把摄像头转向零食桌）真的没几个人看，你别这么紧张嘛。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2538,
+      "ms": 3661
+    },
+    {
+      "label": "current",
+      "id": "queue-just-a-question",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "问一句可以，但我没同意你先办完报名。你具体问什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他愿意说明来意，但仍想先办",
+        "stance": 30,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "stranger",
+          "text": "问什么……我就是报名表拿不准，怕材料少带了什么，排半天队轮到我，人家说缺一样不就白跑了？我不是要插你前面办完，就是让工作人员瞄一眼行不行。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2907,
+      "ms": 4549
+    },
+    {
+      "label": "current",
+      "id": "party-live-camera",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我可以考虑只说一句，不露脸、不说名字。先别把镜头转过来，这还只是讨论。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐对“讨论”有点无奈，但还是先把镜头移开了",
+        "stance": 28,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "好好好，先聊着。镜头我先对着桌子啊……不过说真的，“只说一句”这个说法听起来就挺有意思的，观众就爱看这种。那你打算说哪句？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3546,
+      "ms": 5128
+    },
+    {
+      "label": "current",
+      "id": "party-live-camera",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "移镜头不等于停止收音。你能先暂停直播，再查回放设置吗？",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐被点中要害，透露自己也不清楚回放",
+        "stance": 45,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "……行，你这么一说我也拿不准，回放到底存不存我还真没看过设置。要不我先按暂停？不过刚播出去那几秒我确实没法保证，得点进去查才知道。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2761,
+      "ms": 4535
+    },
+    {
+      "label": "current",
+      "id": "queue-just-a-question",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "现在开始查资料了，我撤回让你继续占窗口的同意。先让我办好吗？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他退了半步，但想留个问话的时机",
+        "stance": 40,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "stranger",
+          "text": "行行行，是我先冲上来的，理亏在我。不过我人都站这儿了，工作人员资料也翻了一半……要不这样，你先办，办完让我把这两页表问完就走，行吗？我就想知道材料全不全，别的不管。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3155,
+      "ms": 5462
+    },
+    {
+      "label": "current",
+      "id": "party-live-camera",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我改主意了，不收音也不露脸。你愿意先暂停吗，不要对观众解释我的私人原因。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐不想断播，镜头移开了但还在收音",
+        "stance": 24,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "暂停一下可以，我先把镜头挪到你背后那排书架——但你刚才说“不收音”，我这麦还开着呢，暂停直播的话观众那边就全黑屏了，气氛会断掉。要不你站远一点说话？或者……你到底担心啥呀，就几个朋友看而已。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2691,
+      "ms": 5167
+    },
+    {
+      "label": "current",
+      "id": "party-live-camera",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "我不是突然出现的免费嘉宾，哈哈。刚才有点硬，抱歉，但露脸和声音都不同意。",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐接住玩笑，气氛松动",
+        "stance": 60,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "哈哈，行，是我不对，下次想拍谁先问一声。（对镜头）各位，我们嘉宾今天只想当观众，咱切回我这边继续聊。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 1930,
+      "ms": 3052
+    },
+    {
+      "label": "current",
+      "id": "party-live-camera",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "你可以说没先征求同意，别说我是在开玩笑。回放设置你知道吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐被问到回放，承认自己其实不清楚设置",
+        "stance": 38,
+        "revealed": true
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "行，那我就说“刚才没先问过，人家不想出镜”，不开玩笑。……回放啊，说实话我也不知道这平台存不存，我从来没进去看过设置。要不我先把直播暂停，点进去看一眼？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2493,
+      "ms": 3826
+    },
+    {
+      "label": "current",
+      "id": "queue-just-a-question",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "刚才我说可以不够清楚，抱歉。你愿意先退一步，材料另问流程吗？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "他接受退回，但追问材料怎么问",
+        "stance": 55,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "stranger",
+          "text": "……行吧，你既然把话说开了，我退。可我这一退，材料的事儿找谁问去？重新排队再耗一小时？你说个办法，我听你的。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3180,
+      "ms": 4546
+    },
+    {
+      "label": "current",
+      "id": "party-live-camera",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我们继续把补救说清楚，已播出的不能保证全部删掉。你愿意怎样核实回放，下次又怎样先问？",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐给出具体核实步骤，留待确认",
+        "stance": 70,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "我现在就暂停，点开设置看回放是开还是关，看完截图给你。要是已经存了，我把刚才那段删掉，但别人有没有录走我真说不了。下次直播前我提前发消息问你要不要入镜，你不回我就当地拍不到你，行不？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 3137,
+      "ms": 5720
+    },
+    {
+      "label": "current",
+      "id": "party-live-camera",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "不知道就先核实。我们还可以聊已播几秒怎么办，但你不能保证网上所有副本都消失。",
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "ended": false,
+        "outcome": null,
+        "note": "乐乐暂停直播去查回放设置，承认删不干净",
+        "stance": 58,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "lele",
+          "text": "对，这个我不敢打包票，别人要是录屏了我真管不着。……那我先暂停了啊——（点屏幕）在看了，稍等。你要不要顺便说说，那几秒真被人看到的话，你能接受我做到哪一步？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2388,
+      "ms": 4144
+    },
+    {
+      "label": "current",
+      "id": "queue-just-a-question",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "我还想确认，你是愿意询问别的咨询方式，还是仍希望先占窗口？工作人员怎么规定我们都还不知道。",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "note": "他退回队伍，等你办完再问",
+        "stance": 70,
+        "revealed": false
+      },
+      "npc": [
+        {
+          "characterId": "stranger",
+          "text": "我不占窗口了，说到做到。这样，你先办，我站你后头。等工作人员空下来，我先问一句材料全不全，再排我自己的——应该有这功夫吧？规定怎么说我也不知道，那就按顺序来呗。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 2737,
+      "ms": 4323
+    }
+  ]
+}

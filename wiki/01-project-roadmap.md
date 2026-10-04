@@ -20,7 +20,7 @@
 | A1 | 三层语料库（理论 / 案例 / 场景，双语，全部带 `source`） | ✅ | 42 / 30 / 58（2026-10-03 再增 12 个原创虚构场景，覆盖 7 个情境）；`src/data/corpus/` |
 | A2 | 多面分类体系（5 CASEL × 34 技能 × 7 情境 / 26 类型） | ✅ | `src/data/taxonomy.ts` |
 | A3 | 自适应排程 `/api/schedule`（处方 → 受约束检索 → 适配） | ✅ | 固定放松顺序，核心约束不放松 |
-| A4 | 沉浸式角色扮演 `/api/roleplay`（流式、隐藏动机、目标追踪、可续聊段落、可失败） | ✅ | 对外 `@@characterId` / `@@meta`；内部 JSON 校验，至少 12 回合、续段 +8，由用户结束 → [文字验收](./reviews/review-2026-10-03-text-practice.md) |
+| A4 | 沉浸式角色扮演 `/api/roleplay`（流式、隐藏动机、目标追踪、可续聊段落、可失败） | ✅ | 对外 `@@characterId` / `@@meta`；内部 JSON 校验，至少 12 回合、续段 +8，由用户结束；十二场景条件式后续与双人物格式修复见 [本轮评审](./reviews/review-2026-10-04-text-play.md) → [文字验收](./reviews/review-2026-10-03-text-practice.md) |
 | A5 | 证据式复盘 `/api/assess`（引用原话、acquisition/performance 归因、有界增量） | ✅ | 2026-09-21 改为先验证引文再发正文与 `@@final`，新星数评沟通表现 |
 | A6 | 知识检索卡片 + 苏格拉底式反思 `/api/reflect` | ✅ | 报告内嵌理论 / 案例 |
 | A7 | 对话中提示 `/api/hint` | ✅ | ≤40 词，只点动作不代写 |

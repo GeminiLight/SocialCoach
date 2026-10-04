@@ -1,10 +1,11 @@
 import { L } from "../taxonomy";
 import type { Scenario } from "./types";
+import { TEXT_SCENE_DIRECTIONS } from "./text-scene-directions";
 
 /** Original authored simulations, not reported cases or claims from a book. */
-const original = (id: string) => `Original fictional practice — SocialCoach, 2026-10-03. Authored scenario record: app/src/data/corpus/scenarios-d.ts#${id}`;
+const original = (id: string) => `Original fictional practice — SocialCoach, 2026-10-03. Conditional play revision: SocialCoach, 2026-10-04, app/src/data/corpus/text-scene-directions.ts#${id}. Authored scenario record: app/src/data/corpus/scenarios-d.ts#${id}`;
 
-export const SCENARIOS_D: Scenario[] = [
+const authored: Scenario[] = [
   {
     id: "elevator-confidential-question",
     simulationFacts: L("只有陈闻、林女士与你在场。没有已确认的离职名单、岗位结果或新的公开通知。招聘流程与实际项目对接可讨论，人员去留不能凭猜测定论。", "Only Chen, Ms. Lin and you are present. No confirmed departures, job outcomes or new announcement exist. Public recruitment procedures and project contacts can be discussed; guesses do not establish staffing outcomes."),
@@ -113,10 +114,10 @@ export const SCENARIOS_D: Scenario[] = [
     id: "friend-left-out",
     simulationFacts: L("聚餐由另一位朋友临时组织，那位朋友的姓名与性别未给出。阿圆只是猜用户想休息，未向用户确认；不存在已经确认的排斥计划。", "Another friend organized the meal at short notice; that person's name and gender are unspecified. Yuan assumed the learner wanted rest without checking; no deliberate exclusion plan is established."),
     title: L("他们聚会了，却没叫你", "The Get-Together You Weren't Invited To"),
-    hook: L("朋友圈里四个人围着同一张桌子，其中三个是你的好友。", "A photo shows four people at one table. Three are your close friends."),
+    hook: L("周末聚餐照片里，阿圆和另外两位朋友都在，唯独没问你。", "Yuan and two friends appear in a weekend dinner photo. Nobody asked you."),
     background: L("你看到周末聚餐的照片，才知道好友阿圆和另外两位朋友一起去了。上周你说过最近有点累，但没有说不想参加聚会。你不知道谁组织，也不确定是否故意没叫你，打算先找阿圆问清楚。", "A weekend dinner photo shows Yuan and two mutual friends together. Last week you said you were tired, but never said you did not want invitations. You do not know who organized it or whether you were deliberately excluded. You ask Yuan first."),
     context: "friendship", contextType: L("非正式", "Informal"), competencies: ["relationship-skills", "self-awareness", "responsible-decision-making"], skills: ["communication", "identifying-emotions", "curiosity"], relationship: ["friend"], difficulty: 2, minutes: 6, icon: "users",
-    characters: [{ id: "yuan", name: L("阿圆", "Yuan"), role: L("参加了聚餐的好友", "Friend who attended"), hue: 110, personality: L("先说只是随便吃个饭，被指控抱团会防御；对没有预设答案的询问才讲过程。", "First calls it a casual meal and becomes defensive about clique accusations; explains events when asked without a predetermined verdict."), stance: L("不愿承诺以后每次都必须邀请你，也不想友情因此断掉。", "Will not promise an invitation to every gathering but does not want the friendship to end."), hidden: L("聚餐是另一位朋友下班后临时组织的，他以为你在休息，没核实就替你决定了。", "Another friend organized it after work at short notice; Yuan assumed you were resting without checking.") }],
+    characters: [{ id: "yuan", name: L("阿圆", "Yuan"), role: L("参加了聚餐的好友", "Friend who attended"), hue: 110, personality: L("先说只是随便吃个饭，被指控抱团会防御；对没有预设答案的询问才讲过程。", "First calls it a casual meal and becomes defensive about clique accusations; explains events when asked without a predetermined verdict."), stance: L("不愿承诺以后每次都必须邀请你，也不想友情因此断掉。", "Will not promise an invitation to every gathering but does not want the friendship to end."), hidden: L("聚餐是另一位朋友下班后临时组织的。阿圆自己以为你在休息，没核实就替你决定了；不预设排斥结论地问组织经过才会说明。", "Another friend organized it after work at short notice. Yuan assumed you were resting without checking; explains when asked about the process without presuming deliberate exclusion.") }],
     objectives: [L("区分已看到的事实与对被排斥的推测。", "Distinguish observed facts from suspected exclusion."), L("表达自己的感受与邀请偏好，听取对方真实边界。", "Express your feelings and invitation preference while hearing the friend's limits.")],
     success: L("澄清发生经过，形成不替你决定是否参加的相处方式；不要求所有聚会都带上你。", "Clarifies events and discusses not deciding attendance for you; universal invitations are not required."),
     failure: L("把未知动机当事实指控，或逼对方承诺你参与所有聚会。", "Accuses on the basis of unknown motives or demands inclusion in every gathering."),
@@ -173,7 +174,7 @@ export const SCENARIOS_D: Scenario[] = [
     simulationFacts: L("这是社区活动报名窗口。陌生人带着报名表，想核实材料够不够；实际材料要求未知。没有姓氏变更、医疗或其他法律事务。工作人员不是本轮发言角色，不能替他保证办成。", "This is a community activity registration counter. The stranger has an application form and wants to check whether it is sufficient; actual document requirements are unknown. No name change, medical or legal matter is involved. The clerk is not a voiced character; do not guarantee acceptance for the clerk."),
     title: L("“我就问一句，不算插队”", "“Just One Question—I'm Not Cutting In”"),
     hook: L("你等了二十分钟，后面的人径直走到窗口。", "After your twenty-minute wait, someone walks straight to the counter."),
-    background: L("你正在社区活动报名窗口排队，轮到你时，一位陌生人插到前面说只问一句，工作人员开始查资料。你不知道他的具体事情，也没有管理队伍的权限。可以直接说明顺序、向工作人员询问流程或选择放弃等待。", "At a community activity registration counter you reach the front after waiting twenty minutes. A stranger steps ahead saying he has one question, and the clerk starts checking records. You do not know his issue and have no authority over the queue. You can state the order, ask the clerk about procedure, or leave."),
+    background: L("你在社区活动报名窗口等了二十分钟。轮到你时，一位陌生人插到前面说只问一句，工作人员开始查资料。你不知道他的具体事情，也没有管理队伍的权限。可以直接说明顺序、向工作人员询问流程或选择放弃等待。", "At a community activity registration counter you reach the front after waiting twenty minutes. A stranger steps ahead saying he has one question, and the clerk starts checking records. You do not know his issue and have no authority over the queue. You can state the order, ask the clerk about procedure, or leave."),
     context: "public", contextType: L("陌生人", "Unknown people"), competencies: ["relationship-skills", "self-management", "social-awareness"], skills: ["communication", "emotion-regulation", "social-norms"], relationship: ["stranger"], difficulty: 2, minutes: 5, icon: "clipboard-list",
     characters: [{ id: "stranger", name: L("窗口前的人", "Person at the counter"), role: L("说只问一句的陌生人", "Stranger with 'one question'"), hue: 190, personality: L("觉得自己的事很小，不耐烦被指出插队；你说明实际影响后仍可能要你通融。", "Considers his issue tiny and dislikes being called out; may still ask for an exception after hearing its impact."), stance: L("想先办完，不接受被羞辱；不会因声音更大就配合。", "Wants to finish first and resists humiliation; a louder voice does not compel cooperation."), hidden: L("他不确定自己拿的材料能否办理，害怕排完又白跑；被问到要查什么才会说。", "Unsure whether his documents are sufficient and fears waiting for nothing; explains when asked what he needs checked.") }],
     objectives: [L("说清当前顺序与自己的请求，而非推测对方动机。", "State the current order and request without assuming motives."), L("选择自己能控制的处理方式，避免升级到威胁。", "Choose a response within your control without escalating to threats.")],
@@ -197,3 +198,7 @@ export const SCENARIOS_D: Scenario[] = [
     source: original("party-live-camera"), keywords: ["聚会", "直播", "出镜", "同意", "party", "livestream", "consent", "camera"],
   },
 ];
+
+export const SCENARIOS_D: Scenario[] = authored.map(s => ({
+  ...s, simulationDirection: TEXT_SCENE_DIRECTIONS[s.id],
+}));
