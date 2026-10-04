@@ -120,6 +120,12 @@
 - **解决方案：** ModelScope 专用根目录 Dockerfile 创建用户时加 `-s /bin/sh`，继续使用非 root 用户运行应用。
 - **教训：** 云平台可能包装容器启动命令；镜像构建通过后仍需查看运行日志，确认进程实际监听目标端口。
 
+### ModelScope 公共 iframe 访问会受本机系统代理影响
+- **现象：** 空间 Running、构建与专用 API 正常，公开全屏页面的 `.ms.show` iframe 却显示连接终止；Python 读取公共 host 报 TLS EOF（2026-10-05）。
+- **原因：** 本次失败发生在启用了 macOS 系统代理的访问路径；同机 DNS 指向同一公网地址，直连 curl / Python 与仅测试浏览器禁用代理均成功，证据支持本机代理路径问题，不是应用未监听端口。
+- **解法：** 分别检查平台状态、认证 API 和不带凭证的公共入口；公共 GET 可在独立验证客户端直连，浏览器只为自己的测试会话加 `--no-proxy-server`。保留正常证书校验，不修改用户系统代理。
+- **教训：** Running 不等于公共入口已验证，局部连接失败也不等于部署失败；Python 和浏览器可能沿用系统代理，curl 的默认路径可能不同。见 [发布原件](../docs/reviews/modelscope-ui-2026-10-05/README.md)。
+
 ### `after()` 里的工作计入 Vercel 函数时长
 - **现象：** `/api/track` 第二批上线后，生产第一条 POST 记了 `Vercel Runtime Timeout Error: Task timed out after 30 seconds`，那批事件丢了。
 - **原因：** 落点第一次写旧表前要补 12 列，加上列表和写入是 14 次串行跨境飞书调用，全在 `after()` 里跑；`after()` 不是 fire-and-forget，它占用函数的 `maxDuration`，而路由写的是 30 秒。

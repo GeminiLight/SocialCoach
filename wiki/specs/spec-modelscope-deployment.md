@@ -1,6 +1,6 @@
 # ModelScope 创空间部署
 
-状态：已公开部署，ModelScope 返回 Running（2026-10-04）；Blender 人物、五类 3D 空间与按需展开的操作界面已更新。最新公共浏览器验收限制见文末。
+状态：已公开部署，ModelScope 返回 Running（2026-10-05）；教练 IP、新版工作区界面与紧凑语言切换已同步到 Vercel / ModelScope。最新验收范围见文末。
 
 本地验证：隔离目录使用锁定依赖完成生产构建与 TypeScript 检查；standalone 服务在 7860 端口启动，首页、设置、场景目录、health 和 manifest 均返回 HTTP 200。云端 Docker 构建及启动均通过。
 
@@ -8,7 +8,7 @@
 
 - 空间：[GeminiLight/SocialCoach](https://modelscope.cn/studios/GeminiLight/SocialCoach)。公开，Apache-2.0，免费 `platform/2v-cpu-16g-mem`。
 - 应用 host：`https://geminilight-socialcoach.ms.show`。自动化 API 检查使用平台提示的专用地址 `https://studio-geminilight-socialcoach.api-inference.modelscope.net`，该地址需要 ModelScope Bearer token，不能当作无需认证的普通分享链接。
-- 空间 Git：`https://modelscope.cn/studios/GeminiLight/SocialCoach.git`，分支 `master`，当前应用部署提交 `128d487`（2026-10-04，3D 对象选择 / 编辑焦点稳定，对应 GitHub 应用提交 `7cb0ebf`）。通过独立克隆同步应用必需文件，未将本地 Git 历史、环境变量或其他文档上传。
+- 空间 Git：`https://modelscope.cn/studios/GeminiLight/SocialCoach.git`，分支 `master`，当前应用部署提交 `71b01e3`（2026-10-05，教练 IP 与语言切换精修，对应 GitHub 应用提交 `8b337d5`）。通过独立克隆同步应用必需文件，未将本地 Git 历史、环境变量或其他文档上传。
 - 同步步骤（本机钥匙串已有推送凭证）：克隆空间仓库；`rsync -a --delete` 主仓库的 `app/src/`、`app/public/`，复制 `app/` 下的 `next.config.ts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`postcss.config.mjs`、`tsconfig.json`、`next-env.d.ts`，以及根目录 `Dockerfile`、`.dockerignore`、`LICENSE`；不带 `app/scripts`、`.env*`、`AGENTS.md`、eslint 配置；空间自己的 `README.md`（含卡片 frontmatter）不动。提交后 `git push origin master`。**推送不会自动重建**：2026-09-10 推送 `ceee413` 后 25 分钟空间仍在跑旧构建。重建走 OpenAPI：`POST https://modelscope.cn/openapi/v1/studios/GeminiLight/SocialCoach/deploy`，`Authorization: Bearer <token>`，token 就是本机 git 钥匙串里 modelscope.cn 的密码（`printf 'protocol=https\nhost=modelscope.cn\n\n' | git credential fill`），不要落盘。状态用 `GET …/studios/GeminiLight/SocialCoach`（Building → Running），日志 `GET …/logs/build` 与 `…/logs/run`。
 - 环境变量：非敏感配置在明文变量 `GET/POST/PUT …/variables`（`{"key","value"}`），敏感值在 `…/secrets`（只回 key）。空间现有布局：`LLM_API_KEY`、`FEEDBACK_FEISHU_APP_SECRET` 是 secret，其余 LLM / 限流 / 飞书 app id、base token、table id、`FEEDBACK_DEPLOYMENT=ModelScope` 都是明文变量。完整端点见本机 skill `~/.claude/skills/modelscope-studio`。
 - 统计：2026-09-10 通过 API 加明文变量 `ANALYTICS_FEISHU_TABLE_PREFIX=events`（复用已有 `FEEDBACK_FEISHU_*`）并触发重建；没有它 `/api/track` 报不可用，客户端不发。
@@ -151,3 +151,11 @@
 ## 文字剧情同步（2026-10-04）
 
 应用来源 `5bbba48c2b9e7fb7522b04a7170cdec571f511c7`，镜像提交 `d613eea`，应用 src/public 229 个文件逐项哈希一致。白名单同步同时带入主线已有 `d616310` 工作区界面更新，未复制环境文件、脚本、主 README，硬件继续免费 2v CPU / 16g Docker public。构建 tag `363578-d613eeaf-2026-10-04-09-57-20`、成功构建步骤和 Running 读回；专用 API 两轮校园对话与 17 静态资源通过。首次静态读取 TLS 中断的失败保留，只重试 GET，不关闭证书验证、不自动重发生成。公开 iframe 未完整试玩。见 [文字精修验收](../reviews/review-2026-10-04-text-play.md)。
+
+## 教练 IP 与语言切换精修同步（2026-10-05）
+
+- 冻结主仓库已验证提交 `8b337d59892962d40f0e9decfece11f831039fd4` 后按白名单同步；镜像由 `d613eea` 更新至 `71b01e384f673accb47d985c2780488e1c420863`，`src/public` 231 个文件逐项哈希一致。欢迎页、首页与复盘助手的小猫教练形象、两项等宽紧凑语言选择均已带入。未发布主仓库并行中的未提交改动，空间卡片、免费硬件、公开性与环境配置保持原设置。
+- 显式触发部署，构建镜像 `363578-71b01e38-2026-10-05-01-26-23`；构建完成、7860 启动日志与 Running 状态均已确认。Vercel 对应应用提交已是生产 Ready，别名 `socialcoach-ai.vercel.app` 正常指向该部署，无需重复发布。
+- 专用认证 API 与不带凭证的公共 host 均检查首页、欢迎页、设置、场景、3D、manifest、health、小猫 WebP，8 项返回 200；每侧 22 个引用资源全部 200。线上小猫文件 SHA-256 与源文件一致，新语言选择 CSS 与教练组件资源已确认；免费 health 检查返回 `available`。本次未执行计费推理、发送测试反馈或上传练习记录。
+- 公开全屏入口在实际 Chromium 中显示小猫教练，两个语言选项各 50×44px、间距 4px；中英切换与 iframe 刷新后的偏好保留通过。首次系统代理下连接中断，同机直连与仅该测试浏览器禁用代理后通过；未改系统代理或关闭证书校验。本轮不替代整轮练习与手机端验收。
+- [发布核对原件](../../docs/reviews/modelscope-ui-2026-10-05/README.md)。

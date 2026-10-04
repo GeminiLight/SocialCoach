@@ -1,0 +1,12 @@
+{
+  "source": "8b337d59892962d40f0e9decfece11f831039fd4",
+  "id": "dpl_Ae6JK2u38WLWa6AsRNbPcyh9q2GN",
+  "status": "Ready",
+  "target": "production",
+  "url": "https://socialcoach-ek118k0gm-geminilights-projects.vercel.app",
+  "aliases": [
+    "https://socialcoach-ai.vercel.app",
+    "https://socialcoach-app.vercel.app"
+  ],
+  "verification": "Vercel CLI production inspection; no new deployment required"
+}

@@ -71,7 +71,7 @@
 
 | B11 | 用户反馈 → 飞书 | ✅ | 双部署真实提交通过；2026-09-17 本人 Base 可管理权限已添加并读回确认 → [反馈方案](./archive/specs/spec-user-feedback.md) |
 | B12 | 匿名使用统计 → 飞书（四个事件、按月建表、留存脚本） | ✅ | 2026-09-10 Vercel 生产上线并跑通一局无错误；ModelScope 通过 OpenAPI 加变量并重建，`/api/track` 已可用 → [spec-analytics](./specs/spec-analytics.md) |
-| B13 | 品牌教练 IP 与关键触点 | ✅ | 用户提供的小猫形象：欢迎页完整展示、首页教练问候、复盘助手肖像；统一透明素材、克制展示、双语 / 双主题 / 短屏 / 减少动效与访客入口；141 项浏览器检查 → [接入评审](./reviews/review-2026-10-04-coach-identity.md) |
+| B13 | 品牌教练 IP 与关键触点 | ✅ 已部署 | 2026-10-05 Vercel / ModelScope 同步；用户提供的小猫形象：欢迎页完整展示、首页教练问候、复盘助手肖像；统一透明素材、克制展示、双语 / 双主题 / 短屏 / 减少动效与访客入口；141 项浏览器检查 → [接入评审](./reviews/review-2026-10-04-coach-identity.md) |
 
 ### Stage C — 可索引化与 GEO
 

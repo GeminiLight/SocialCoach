@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-04T17:38:00.591719+00:00",
+  "entry": "https://modelscope.cn/studios/GeminiLight/SocialCoach?mode=full",
+  "browser": "Chromium 153, 1440×1000",
+  "network": "Direct browser connection; no system proxy change",
+  "telemetry_intercepted": "**/api/track",
+  "zh_screenshot": "modelscope-ui-onboarding-zh.png",
+  "en_screenshot": "modelscope-ui-onboarding-en.png",
+  "initial_proxy_attempt": "Public iframe connection closed; same entry succeeds with browser --no-proxy-server",
+  "coach_image_rendered": true,
+  "english_selected": true,
+  "english_persists_after_reload": true,
+  "reload_snapshot": "- generic [ref=e10] clickable [onclick]\n  - Iframe \"iframe\" [ref=e11]\n    - button \"中文\" [ref=e18]\n    - button \"English\" [ref=e19]\n    - heading \"That difficult conversation. Try it here first.\" [level=1, ref=e13]\n    - button \"Rehearse my conversation\" [ref=e14]\n    - button \"Choose a ready-made scene\" [ref=e15]\n    - button \"Set my practice goals first\" [ref=e16]\n    - link \"Step into a 3D scene\" [ref=e17]",
+  "chinese_option_box": {
+    "height": 44,
+    "width": 50,
+    "x": 1118.40625,
+    "y": 40
+  },
+  "english_option_box": {
+    "height": 44,
+    "width": 50,
+    "x": 1172.40625,
+    "y": 40
+  },
+  "option_gap_px": 4.0,
+  "visible_language_group_width_px": 104,
+  "chinese_snapshot": "- generic [ref=e10] clickable [onclick]\n  - Iframe \"iframe\" [ref=e11]\n    - button \"中文\" [ref=e18]\n    - button \"English\" [ref=e19]\n    - heading \"那场难开口的对话， 先在这里练一遍。\" [level=1, ref=e13]\n    - button \"排练我的对话\" [ref=e14]\n    - button \"先选一个现成场景\" [ref=e15]\n    - button \"先设置我的练习目标\" [ref=e16]\n    - link \"走进 3D 现场\" [ref=e17]"
+}

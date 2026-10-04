@@ -1,0 +1,14 @@
+{
+  "source": "8b337d59892962d40f0e9decfece11f831039fd4",
+  "previous_mirror_commit": "d613eeaf5f927bb3eeb6e727658ac7763fdb0fd1",
+  "source_public_files": 231,
+  "source_public_exact_match": true,
+  "readme_unchanged": true,
+  "credential_pattern_files": [],
+  "sensitive_file_names": [],
+  "generated_build_input": "app/next-env.d.ts",
+  "cat_sha256": "cf5669a85cb4e0c4302d7d350febe2fdc3406e61ae0142da142354e3bb669000",
+  "mirror_commit": "71b01e384f673accb47d985c2780488e1c420863",
+  "deploy_requested_at": "2026-10-04T17:26:23.406301+00:00",
+  "deploy_accepted": true
+}

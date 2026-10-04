@@ -1,0 +1,64 @@
+{
+  "checked_at": "2026-10-04T17:32:57.900623+00:00",
+  "source": "8b337d59892962d40f0e9decfece11f831039fd4",
+  "mirror_commit": "71b01e384f673accb47d985c2780488e1c420863",
+  "access": "Public ModelScope host via direct connection (no credentials)",
+  "requests": [
+    {
+      "path": "/",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/onboarding",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/settings",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/arena",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/3d",
+      "status": 200,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/manifest.webmanifest",
+      "status": 200,
+      "type": "application/manifest+json"
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "type": "application/json"
+    },
+    {
+      "path": "/images/coach/socialcoach-cat.webp",
+      "status": 200,
+      "type": "image/webp"
+    }
+  ],
+  "static_asset_count": 22,
+  "checks": {
+    "cat_exact_sha256": true,
+    "language_picker_css": true,
+    "language_width_50px": true,
+    "coach_figure_css": true,
+    "coach_image_in_bundle": true,
+    "all_pages_200": true,
+    "all_assets_200": true
+  },
+  "health": {
+    "serverKey": true,
+    "requireByok": false,
+    "state": "available"
+  },
+  "inference_requests": 0
+}
