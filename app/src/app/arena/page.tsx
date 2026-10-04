@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Search, ArrowRight, ArrowUpRight, ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import Link from "next/link";
 import { Shell } from "@/components/Shell";
-import { Button, Chip, Empty, IconButton, Page } from "@/components/ui";
+import { Button, Chip, ChoiceGroup, Empty, IconButton, Page } from "@/components/ui";
 import { SCENARIOS } from "@/data/corpus";
 import { SCENARIOS_D } from "@/data/corpus/scenarios-d";
 import type { Scenario } from "@/data/corpus/types";
@@ -38,7 +38,8 @@ export default function Arena() {
   const recent = params.get("collection") === "recent";
   const visible = Math.max(12, Math.min(500, Number(params.get("limit")) || 12));
   const setFilter = (key: string, value: string | null) => {
-    const next = new URLSearchParams(params.toString());
+    // Consecutive input events can precede React's next URL snapshot.
+    const next = new URLSearchParams(window.location.search);
     if (!value || value === "all") next.delete(key); else next.set(key, value);
     if (key === "context" && value === "all") next.delete("collection");
     if (key !== "limit") next.delete("limit");
@@ -50,6 +51,39 @@ export default function Arena() {
   const setDifficulty = (value: string) => setFilter("difficulty", value);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+  const filterToggle = useRef<HTMLButtonElement>(null);
+  const filterPanel = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const fit = () => {
+      const trigger = filterToggle.current;
+      if (!trigger || !filterPanel.current) return;
+      const nav = document.querySelector<HTMLElement>(".app-tabbar");
+      const bottom = nav?.getClientRects().length ? nav.getBoundingClientRect().top - 12 : window.innerHeight - 24;
+      filterPanel.current.style.setProperty("--filter-room", `${Math.max(96, bottom - trigger.getBoundingClientRect().bottom - 12)}px`);
+    };
+    fit();
+    const dismiss = (event: PointerEvent) => {
+      const target = event.target;
+      if (target instanceof Node && !filterPanel.current?.contains(target) && !filterToggle.current?.contains(target)) setFiltersOpen(false);
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setFiltersOpen(false);
+      filterToggle.current?.focus({ preventScroll: true });
+    };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", escape);
+    window.addEventListener("resize", fit);
+    window.addEventListener("scroll", fit, { passive: true });
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", escape);
+      window.removeEventListener("resize", fit);
+      window.removeEventListener("scroll", fit);
+    };
+  }, [filtersOpen]);
   const starting = useRef(false);
   const all = useMemo(() => [...customScenarios, ...SCENARIOS.filter((s) => RECENT_IDS.has(s.id)), ...SCENARIOS.filter((s) => !RECENT_IDS.has(s.id))], [customScenarios]);
   const counts = useMemo(() => {
@@ -129,12 +163,12 @@ export default function Arena() {
               <input ref={searchRef} type="search" aria-label={t(lang, "arena_search_ph")} value={q} onChange={(e) => setQ(e.target.value)} placeholder={t(lang, "arena_search_ph")} className="flex-1 min-w-0 bg-transparent outline-none text-base py-3 placeholder:text-ink-3 [&::-webkit-search-cancel-button]:hidden" />
               {q && <IconButton label={t(lang, "arena_clear_search")} onClick={() => { setQ(""); searchRef.current?.focus(); }} className="-mr-2"><X size={17} /></IconButton>}
             </div>
-            <button onClick={() => setFiltersOpen((v) => !v)} aria-expanded={filtersOpen} aria-controls="arena-filters" className={clsx("arena-filter-toggle press min-h-12 px-3 inline-flex items-center gap-2 rounded-[var(--radius-sm)] border text-[13px] shrink-0", extraFilters ? "border-ink text-ink bg-inset" : "border-line text-ink-2")}>
+            <button ref={filterToggle} onClick={() => setFiltersOpen((v) => !v)} aria-expanded={filtersOpen} aria-controls="arena-filters" className={clsx("arena-filter-toggle press min-h-12 px-3 inline-flex items-center gap-2 rounded-[var(--radius-sm)] border text-[13px] shrink-0", extraFilters ? "border-ink text-ink bg-inset" : "border-line text-ink-2")}>
               <SlidersHorizontal size={16} aria-hidden />{pick(copy.filters, lang)}
               {extraFilters > 0 && <span className="num">{extraFilters}</span>}
             </button>
           </div>
-          <div id="arena-filters" hidden={!filtersOpen}>
+          <div ref={filterPanel} id="arena-filters" hidden={!filtersOpen} inert={!filtersOpen}>
             <div className="arena-filter-panel flex flex-col gap-4 p-4 border border-line rounded-[var(--radius-sm)]">
               <div className="grid grid-cols-2 gap-3">
                 <label className="flex flex-col gap-2 text-[12px] text-ink-3">{t(lang, "difficulty")}
@@ -153,19 +187,19 @@ export default function Arena() {
               </div>
               <div>
                 <p className="text-[12px] text-ink-3 mb-2">{pick(copy.skills, lang)}</p>
-                <div className="flex flex-wrap gap-2" role="group" aria-label={pick(copy.skills, lang)}>
+                <ChoiceGroup className="flex flex-wrap gap-2" label={pick(copy.skills, lang)}>
                   <Chip small active={!skill} onClick={() => setSkill(null)}>{t(lang, "arena_all")}</Chip>
                   {orderedSkills.map((s) => <Chip key={s.id} small active={skill === s.id} onClick={() => setSkill(skill === s.id ? null : s.id)}>{s.name[lang]}</Chip>)}
-                </div>
+                </ChoiceGroup>
               </div>
             </div>
           </div>
-          <div className="arena-contexts flex gap-4 overflow-x-auto no-scrollbar" role="group" aria-label={t(lang, "arena_by_context")}>
+          <ChoiceGroup className="arena-contexts flex gap-1 overflow-x-auto no-scrollbar" label={t(lang, "arena_by_context")}>
             <Chip active={ctx === "all" && !recent} onClick={() => setCtx("all")}>{t(lang, "arena_all")}<span className="num">{all.length}</span></Chip>
-            <Chip active={recent} onClick={() => setFilter("collection", recent ? null : "recent")}>{t(lang, "arena_recent")}<span className="num">{RECENT_IDS.size}</span></Chip>
+            <Chip sharedSelection={false} active={recent} onClick={() => setFilter("collection", recent ? null : "recent")}>{t(lang, "arena_recent")}<span className="num">{RECENT_IDS.size}</span></Chip>
             {customScenarios.length > 0 && <Chip active={ctx === "mine"} onClick={() => setCtx("mine")}>{t(lang, "custom_badge")}<span className="num">{customScenarios.length}</span></Chip>}
             {CONTEXTS.map((c) => <Chip key={c.id} active={ctx === c.id} onClick={() => setCtx(ctx === c.id ? "all" : c.id)}>{c.name[lang]}<span className="num">{all.filter((s) => s.context === c.id).length}</span></Chip>)}
-          </div>
+          </ChoiceGroup>
           {extraFilters > 0 && <div className="arena-selected-filters flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-ink-2" role="status">
             {skill && <span>{skillById(skill).name[lang]}</span>}
             {difficulty !== "all" && <span>{t(lang, `diff_${difficulty}` as "diff_1")}</span>}
@@ -197,11 +231,10 @@ export default function Arena() {
             </div>
           </div>
           {list.length === 0 && <Empty title={t(lang, "arena_empty_title")} body={t(lang, "arena_empty_body")} action={<div className="flex flex-col gap-2"><Button variant="secondary" onClick={reset}>{t(lang, "arena_reset")}</Button><Link href="/rehearse" className="min-h-11 inline-flex items-center justify-center gap-2 text-[13px] text-accent-deep">{t(lang, "rh_title")}<ArrowRight size={15} aria-hidden /></Link></div>} />}
-          <div className="flex flex-col">
-            {list.slice(0, visible).map((sc, i) => {
+          <div className="arena-rows flex flex-col">
+            {list.slice(0, visible).map((sc) => {
               const count = counts.get(sc.id) ?? 0;
               return <button key={sc.id} onClick={() => start(sc)} className="arena-row notebook-row group text-left flex items-start gap-4 py-5">
-                <span className="text-[12px] text-ink-3 num pt-1 shrink-0 w-5" aria-hidden>{String(i + 1).padStart(2, "0")}</span>
                 <span className="flex-1 min-w-0 flex flex-col gap-2">
                   <span className="flex flex-wrap items-center gap-2"><span className="font-semibold text-[17px] leading-snug">{sc.title[lang]}</span>{sc.custom && <span className="text-[11px] text-accent-deep">{t(lang, "custom_badge")}</span>}</span>
                   <span className="text-[14px] text-ink-2 leading-relaxed max-w-[var(--measure)]">{sc.hook[lang]}</span>

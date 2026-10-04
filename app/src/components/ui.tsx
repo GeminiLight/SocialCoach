@@ -1,8 +1,9 @@
 "use client";
 import { clsx } from "clsx";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup, useReducedMotion } from "framer-motion";
 import { create } from "zustand";
-import { useEffect, useRef, useState, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useId, useRef, useState, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { workspaceMotion } from "@/lib/motion";
 import { AvatarFigure } from "@/data/avatars";
 import { isReady, openModelSheet, useByok } from "@/lib/byok";
 import { useLang } from "@/store/useApp";
@@ -35,7 +36,7 @@ export function Button({ variant = "primary", size = "md", loading, block, class
     danger: "bg-danger-soft text-danger hover:opacity-90",
   };
   return (
-    <button className={clsx(base, sizes, variants[variant], block && "w-full", className)} disabled={disabled || loading || blocked} title={blocked ? pick(M.disabled, lang) : rest.title} aria-busy={loading || undefined} {...rest}>
+    <button data-variant={variant} className={clsx(base, sizes, variants[variant], block && "w-full", className)} disabled={disabled || loading || blocked} title={blocked ? pick(M.disabled, lang) : rest.title} aria-busy={loading || undefined} {...rest}>
       {loading && <Spinner />}
       {children}
     </button>
@@ -60,12 +61,25 @@ export function IconButton({ className, children, label, ...rest }: ButtonHTMLAt
 }
 
 /* ───────────── Chip ───────────── */
-export function Chip({ active, children, onClick, className, style, small }: { active?: boolean; children: ReactNode; onClick?: () => void; className?: string; style?: React.CSSProperties; small?: boolean }) {
+const SelectionContext = createContext<string | null>(null);
+
+/** Related choices share one moving selection surface, isolated per group. */
+export function ChoiceGroup({ children, className, label }: { children: ReactNode; className?: string; label?: string }) {
+  const id = useId();
+  return <LayoutGroup id={id}><SelectionContext.Provider value={id}>
+    <div className={clsx("choice-group", className)} role="group" aria-label={label}>{children}</div>
+  </SelectionContext.Provider></LayoutGroup>;
+}
+
+export function Chip({ active, children, onClick, className, style, small, sharedSelection = true }: { active?: boolean; children: ReactNode; onClick?: () => void; className?: string; style?: React.CSSProperties; small?: boolean; sharedSelection?: boolean }) {
   const Comp = onClick ? "button" : "span";
+  const selection = useContext(SelectionContext);
+  const reduced = useReducedMotion();
   return (
     <Comp
       onClick={onClick}
       aria-pressed={onClick ? !!active : undefined}
+      data-shared-selection={selection && onClick && sharedSelection ? "true" : undefined}
       style={style}
       className={clsx(
         "app-chip press inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border whitespace-nowrap",
@@ -74,7 +88,10 @@ export function Chip({ active, children, onClick, className, style, small }: { a
         className,
       )}
     >
-      {children}
+      {selection && onClick && active && sharedSelection && (reduced
+        ? <span aria-hidden className="choice-indicator" />
+        : <motion.span aria-hidden className="choice-indicator" layoutId="selection" transition={workspaceMotion.gentle} />)}
+      <span className="chip-label inline-flex items-center gap-1.5">{children}</span>
     </Comp>
   );
 }
@@ -294,8 +311,9 @@ export function SectionTitle({ children, right, className }: { children: ReactNo
 
 /* ───────────── Page transition wrapper ───────────── */
 export function Page({ children, className }: { children: ReactNode; className?: string }) {
+  const reduced = useReducedMotion();
   return (
-    <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.18 }} className={clsx("app-page px-5 md:px-8 lg:px-10", className)}>
+    <motion.main initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={reduced ? { duration: 0 } : workspaceMotion.gentle} className={clsx("app-page px-5 md:px-8 lg:px-10", className)}>
       {children}
     </motion.main>
   );

@@ -1,10 +1,12 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Bookmark, ChevronDown, Search, X } from "lucide-react";
 import { clsx } from "clsx";
+import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
+import { workspaceMotion } from "@/lib/motion";
 import { Shell } from "@/components/Shell";
-import { Chip, Empty, Page } from "@/components/ui";
+import { Chip, ChoiceGroup, Empty, Page } from "@/components/ui";
 import { SkillTag } from "@/components/SkillBits";
 import { CASES, SCENARIOS, THEORIES } from "@/data/corpus";
 import type { Case, Scenario, Theory } from "@/data/corpus/types";
@@ -18,6 +20,7 @@ import { ScenarioCover } from "@/components/ScenarioCover";
 
 export default function Learn() {
   const lang = useLang();
+  const reduced = useReducedMotion();
   const router = useRouter();
   const starting = useRef(false);
   const { bookmarks, toggleBookmark, profile, addSession } = useApp();
@@ -25,6 +28,7 @@ export default function Learn() {
   const [tab, setTab] = useState<"theories" | "cases" | "saved">("theories");
   const [q, setQ] = useState("");
   const [open, setOpen] = useState<string | null>(null);
+  const reading = useRef<HTMLElement>(null);
   const start = (scene: Scenario) => {
     if (starting.current) return;
     starting.current = true;
@@ -68,10 +72,13 @@ export default function Learn() {
   /* On desktop the library is master/detail, so something is always open: the
      item you picked, or the first one once a new tab or query changes the list. */
   const selected = desktop ? (items.find((x) => x.id === open) ?? items[0]) : undefined;
+  useEffect(() => {
+    reading.current?.scrollTo({ top: 0, behavior: "instant" });
+  }, [selected?.id]);
 
   return (
     <Shell>
-      <Page className="pt-4 lg:pt-9 flex flex-col gap-5 lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-x-10 lg:gap-y-8 lg:items-start">
+      <Page className="learn-page pt-4 lg:pt-9 flex flex-col gap-5 lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-x-10 lg:gap-y-8 lg:items-start">
         <header className="lg:col-span-2 border-b border-line pb-6">
           <p className="eyebrow text-teal mb-3">{t(lang, "ln_title")}</p>
           <h1 className="display text-[30px] lg:text-[38px] leading-tight text-balance">{t(lang, "ln_heading")}</h1>
@@ -80,7 +87,7 @@ export default function Learn() {
 
         {/* the index */}
         <div className="contents lg:flex lg:flex-col lg:gap-4 lg:sticky lg:top-6 lg:h-[calc(100dvh-3rem)]">
-          <label className="flex items-center gap-2 min-h-12 px-3.5 rounded-xl bg-card border border-line focus-within:border-ink transition-colors shrink-0">
+          <label className="library-search-field flex items-center gap-2 min-h-12 px-3.5 rounded-xl bg-card border border-line focus-within:border-ink transition-colors shrink-0">
             <Search size={17} className="text-ink-4" />
             <input
               aria-label={t(lang, "ln_search_ph")}
@@ -101,7 +108,7 @@ export default function Learn() {
               </button>
             )}
           </label>
-          <div className="grid grid-cols-3 gap-1.5 shrink-0 [&>button]:px-2 [&>button]:text-[12px] [&>button]:justify-center">
+          <ChoiceGroup className="library-tabs grid grid-cols-3 gap-1.5 shrink-0 [&>button]:px-2 [&>button]:text-[12px] [&>button]:justify-center">
             <Chip active={tab === "theories"} onClick={() => setTab("theories")}>
               {t(lang, "ln_theories")} <span className="num">{THEORIES.length}</span>
             </Chip>
@@ -112,7 +119,7 @@ export default function Learn() {
               <Bookmark size={14} />
               {t(lang, "ln_saved")} {bookmarks.length > 0 && <span className="num">{bookmarks.length}</span>}
             </Chip>
-          </div>
+          </ChoiceGroup>
 
           <p className="text-[11px] text-ink-3 num" role="status">
             {t(lang, "ln_results", { n: items.length })}
@@ -135,6 +142,7 @@ export default function Learn() {
             />
           )}
 
+          <LayoutGroup>
           <ul className="flex flex-col gap-2 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
             {items.map((it) => {
               const isTheory = "principle" in it;
@@ -142,8 +150,10 @@ export default function Learn() {
               const isSelected = selected?.id === it.id;
               const saved = bookmarks.includes(it.id);
               return (
-                <li
+                <motion.li
                   key={it.id}
+                  layout={desktop || reduced ? false : "position"}
+                  transition={reduced ? { duration: 0 } : workspaceMotion.surface}
                   className={clsx("card card-link overflow-hidden shrink-0", isSelected && "knowledge-selected")}
                 >
                   <button
@@ -186,8 +196,8 @@ export default function Learn() {
                     id={`knowledge-${it.id}`}
                     inert={!isOpen || desktop}
                     aria-hidden={!isOpen || desktop}
-                    className="grid transition-[grid-template-rows] duration-300 lg:hidden"
-                    style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+                    hidden={!isOpen || desktop}
+                    className="knowledge-reveal lg:hidden"
                   >
                     <div className="overflow-hidden">
                       <div className="px-4 pb-4 flex flex-col gap-4">
@@ -195,21 +205,21 @@ export default function Learn() {
                       </div>
                     </div>
                   </div>
-                </li>
+                </motion.li>
               );
             })}
           </ul>
+          </LayoutGroup>
         </div>
 
-        {/* The open page. The left column is a stack of bordered cards; a naked
-            column of text beside them reads as unanchored and makes the empty
-            tail below short entries feel like a rendering gap — so the open page
-            gets the same paper surface, and the pair reads as list → page. */}
+        {/* The selected entry sits on one quiet reading surface. */}
         {selected && (
           <article
+            ref={reading}
             id="knowledge-reading"
             className="hidden lg:block lg:sticky lg:top-6 lg:max-h-[calc(100dvh-3rem)] lg:overflow-y-auto lg:max-w-[760px] lg:rounded-[var(--radius-lg)] lg:border lg:border-line lg:bg-card lg:p-8"
           >
+            <motion.div key={selected.id} initial={reduced ? false : { opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={reduced ? { duration: 0 } : workspaceMotion.surface}>
             <header className="flex flex-col gap-3 mb-6 border-b border-line pb-5">
               <span className={clsx("eyebrow inline-flex items-center gap-2", "principle" in selected ? "text-teal" : "text-accent-deep")}>
                 <KindMark theory={"principle" in selected} />
@@ -220,6 +230,7 @@ export default function Learn() {
             <div className="flex flex-col gap-4">
               <ItemBody it={selected} lang={lang} saved={bookmarks.includes(selected.id)} onSave={() => toggleBookmark(selected.id)} onPractice={start} />
             </div>
+            </motion.div>
           </article>
         )}
       </Page>

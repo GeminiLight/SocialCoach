@@ -7,6 +7,8 @@
 
 ## Bug
 
+- [x] 2026-10-04 主站去除重复横线并补齐材质与连续状态反馈：筛选就地浮层、共享选中面、知识阅读起点、减少动效、快速输入条件保留；163 项本地浏览器检查 → [验收](./reviews/review-2026-10-04-material-motion.md)、[集成复盘](./81-postmortem-workspace-motion.md)。
+
 - [x] 2026-10-02 本地修复六组复现问题：准备失败仍可开练、半截回复污染转录、刷新 / 暂停失去恢复入口、最后回合仍可输入、复盘重复更新能力 / 日期、损坏档案导致空白。→ [评审与证据](./reviews/review-2026-10-01-practice-recovery.md)、[相关根因](./81-postmortem-practice-continuity.md)
 
 - [x] README 两处 `REPLACE-WITH-YOUR-URL` 是死链（导航行 + Live 徽章）。2026-09-08 已替换为 `https://socialcoach-app.vercel.app`（`curl` 确认 title / lang 是本项目）；仓库 homepage 字段也从 404 的 `socialcoach-lime` 改为该地址
