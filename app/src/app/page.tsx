@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Check, Clock3, PenLine, RefreshCw } from "lucide-react";
 import { DinnerEntry } from "@/components/DinnerEntry";
+import { CoachMascot } from "@/components/CoachMascot";
 import { Shell } from "@/components/Shell";
 import { Button, Page, SectionTitle, Stages, Stars } from "@/components/ui";
 import { Level, SkillTag } from "@/components/SkillBits";
@@ -98,13 +99,17 @@ export default function Home() {
       <Page className="home-page pt-5 lg:pt-10 flex flex-col gap-7 lg:gap-9">
         {/* header */}
         <header className="home-header flex flex-wrap items-end justify-between gap-4 pb-6 border-b border-line">
-          <div>
+          <div className="home-greeting flex items-center gap-4 lg:gap-6">
+            <CoachMascot variant="portrait" className="home-coach-portrait" preload sizes="(min-width: 1024px) 128px, 96px" />
+            <div className="min-w-0">
             <p className="eyebrow text-accent-deep">
-              {t(lang, greet)}
+              {t(lang, "coach_identity")}<span className="text-ink-3"> · {t(lang, greet)}
               {profile.name ? `, ${profile.name}` : ""}
+              </span>
             </p>
             <h1 className="display text-[32px] lg:text-[38px] leading-tight mt-3">{t(lang, "home_today")}</h1>
             <p className="text-[14px] text-ink-3 mt-3">{t(lang, "home_intro")}</p>
+            </div>
           </div>
           <Link
             href="/arena"

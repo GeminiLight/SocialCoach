@@ -2,7 +2,8 @@
 
 import { useCanUseModel } from "@/lib/model-access";
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
-import { ArrowUp, MessageCircle, Square } from "lucide-react";
+import { ArrowUp, Square } from "lucide-react";
+import { CoachMascot } from "@/components/CoachMascot";
 import { CASES, THEORIES } from "@/data/corpus";
 import { Button, Spinner } from "@/components/ui";
 import { useApp, useLang } from "@/store/useApp";
@@ -77,8 +78,9 @@ export function DebriefAssistant({ session, ref }: { session: Session; ref?: Ref
   return (
     <section id="review-assistant" ref={section} className="card p-5 sm:p-6 flex flex-col gap-5 scroll-mt-20" aria-labelledby="review-assistant-title">
       <div className="flex gap-3 items-start">
-        <span className="shrink-0 h-10 w-10 rounded-full bg-teal-soft text-teal flex items-center justify-center"><MessageCircle size={19} aria-hidden /></span>
+        <CoachMascot variant="portrait" className="review-coach-portrait" />
         <div className="min-w-0 flex flex-col gap-1.5">
+          <p className="text-[11px] text-ink-3">{t(lang, "coach_identity")}</p>
           <h2 id="review-assistant-title" className="display text-[20px]">{t(lang, "da_title")}</h2>
           <p className="text-[13px] text-ink-3 leading-relaxed">{t(lang, "da_sub")}</p>
         </div>

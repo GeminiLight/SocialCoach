@@ -3,6 +3,9 @@ import type { L, Lang } from "@/data/taxonomy";
 export const pick = (value: L, lang: Lang) => value[lang];
 
 const dict = {
+  coach_identity: { zh: "SocialCoach 教练", en: "Your SocialCoach" },
+  ob_coach_role: { zh: "陪你练习，也陪你复盘。", en: "Here to practice. Here to reflect." },
+  ob_dinner_short: { zh: "走进 3D 现场", en: "Step into a 3D scene" },
   pr_journey: { zh: "练习进程", en: "Practice progress" },
   pr_step_prepare: { zh: "准备", en: "Prepare" },
   pr_step_talk: { zh: "对话", en: "Talk" },

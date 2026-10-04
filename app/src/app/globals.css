@@ -581,10 +581,59 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .app-page [role="radiogroup"] > button,
 .sheet-dialog [role="group"] > button[aria-pressed] { border-radius: 4px; }
 #review-assistant { border: 0; border-radius: var(--radius-lg); padding: 24px; background: var(--surface-rest); }
-#review-assistant > div:first-child > span { width: 24px; height: 28px; background: transparent; color: var(--ink-3); }
+#review-assistant .review-coach-portrait { width: 48px; }
 #review-assistant button { border-radius: var(--radius-sm); }
 #review-assistant form > div { border-radius: var(--radius-sm); background: var(--card); }
 #review-assistant [role="log"] p.rounded-2xl { border-radius: var(--radius-sm); }
+
+/* One recognizable coach, reserved for the welcome and coaching surfaces. */
+.coach-mascot { display: block; flex-shrink: 0; pointer-events: none; user-select: none; }
+.coach-mascot-figure { aspect-ratio: 2 / 3; }
+.coach-mascot-figure img { width: 100%; height: auto; }
+.coach-mascot-portrait { width: 48px; aspect-ratio: 1; overflow: hidden; border-radius: 50%; background: var(--paper-deep); position: relative; }
+.coach-mascot-portrait img { position: absolute; width: 142%; max-width: none; height: auto; left: -21%; top: -4%; }
+.home-coach-portrait { width: 64px; }
+.home-greeting h1 { margin-top: 8px; }
+.home-greeting h1 + p { margin-top: 8px; }
+
+.onboarding-intro { max-width: var(--col); margin-inline: auto; width: 100%; }
+.onboarding-intro .onboarding-top { padding-top: 20px; padding-inline: var(--page-gutter); }
+.welcome-page-body { padding: 20px var(--page-gutter) 12px; }
+.welcome-stage { display: flex; flex-direction: column; gap: 24px; }
+.welcome-coach { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.welcome-coach-figure { width: 156px; animation: coach-arrive var(--motion-gentle) var(--ease-out) both; }
+.welcome-coach-caption { text-align: center; }
+.welcome-copy h1 { font-size: 28px; line-height: 1.3; margin-top: 12px; }
+.welcome-description { margin-top: 16px; }
+.onboarding-welcome-actions { margin-top: 24px; }
+.onboarding-welcome-actions .app-button { border-radius: var(--radius-sm); }
+.welcome-other-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 12px; }
+.welcome-local { text-align: center; line-height: 1.6; padding: 16px var(--page-gutter) max(24px, env(safe-area-inset-bottom)); }
+@keyframes coach-arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (min-width: 64rem) {
+  .home-coach-portrait { width: 88px; }
+  .onboarding-intro { max-width: var(--focus-max); }
+  .onboarding-intro .onboarding-top { padding-top: 32px; }
+  .welcome-page-body { justify-content: center; padding-block: 40px; }
+  .welcome-stage { display: grid; grid-template-columns: minmax(0, 1fr) 300px; align-items: center; gap: 64px; }
+  .welcome-copy { grid-column: 1; grid-row: 1; }
+  .welcome-copy h1 { font-size: 40px; line-height: 1.25; }
+  .welcome-description { font-size: 15px; margin-top: 24px; }
+  .onboarding-welcome-actions { margin-top: 32px; max-width: var(--col); }
+  .welcome-coach { grid-column: 2; grid-row: 1; gap: 16px; }
+  .welcome-coach-figure { width: 300px; }
+  .welcome-local { text-align: left; padding-bottom: 32px; }
+}
+@media (max-width: 63.99rem) and (max-height: 740px) {
+  .welcome-page-body { padding-top: 12px; }
+  .welcome-stage { gap: 16px; }
+  .welcome-coach-figure { width: 104px; }
+  .welcome-coach-caption { display: none; }
+  .welcome-copy h1 { margin-top: 8px; }
+  .welcome-description { margin-top: 12px; }
+  .onboarding-welcome-actions { margin-top: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .welcome-coach-figure { animation: none; } }
 
 /* A contact sheet of portraits: focus and selection have separate outlines. */
 .avatar-preview { background: var(--paper-deep); border: 1px solid var(--line); }

@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { track } from "@/lib/analytics/track";
 import { AnimatePresence, motion } from "framer-motion";
 import { clsx } from "clsx";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
 import { COMPETENCIES, CONTEXTS, SKILLS, skillById, type ContextId, type SkillId } from "@/data/taxonomy";
 import { CONTEXT_HUES } from "@/data/scenario-icons";
 import { ContextIllustration } from "@/data/context-illustrations";
@@ -14,7 +15,8 @@ import { openModelSheet } from "@/lib/byok";
 import { BottomBar, Button, Chip } from "@/components/ui";
 import { BrandMark } from "@/components/BrandMark";
 import { LanguagePicker } from "@/components/LanguagePicker";
-import { DinnerEntry } from "@/components/DinnerEntry";
+import { CoachMascot } from "@/components/CoachMascot";
+import { workspaceMotion } from "@/lib/motion";
 import { Level } from "@/components/SkillBits";
 import { compColor, hueColor } from "@/lib/format";
 
@@ -62,14 +64,14 @@ export default function Onboarding() {
     setGoals((g) => (g.includes(id) ? g.filter((x) => x !== id) : g.length >= 5 ? g : [...g, id]));
 
   return (
-    <main className="min-h-dvh flex flex-col pt-safe lg:mx-auto lg:w-full lg:max-w-[var(--dialog-max)]">
+    <main className={clsx("min-h-dvh flex flex-col pt-safe lg:mx-auto lg:w-full", step === 0 ? "onboarding-intro lg:max-w-[var(--focus-max)]" : "lg:max-w-[var(--dialog-max)]")}>
       {/* progress */}
-      <div className="px-5 pt-4 flex items-center justify-between">
-        <div role="img" className="flex gap-1.5" aria-label={t(lang, "ob_step", { n: step + 1, total: STEPS })}>
+      <div className="onboarding-top px-5 pt-4 flex items-center justify-between gap-4">
+        {step === 0 ? <div className="flex items-center gap-2.5"><BrandMark size={32} /><span className="display text-[19px]">{t(lang, "app_name")}</span></div> : <div role="img" className="flex gap-1.5" aria-label={t(lang, "ob_step", { n: step + 1, total: STEPS })}>
           {Array.from({ length: STEPS }).map((_, i) => (
             <span key={i} className={clsx("h-1 w-5 rounded-full", i <= step ? "bg-ink" : "bg-line-strong")} />
           ))}
-        </div>
+        </div>}
         {step === 0 && (
           <LanguagePicker lang={lang} onChange={setLang} />
         )}
@@ -84,18 +86,31 @@ export default function Onboarding() {
         <motion.div
           key={step}
           onAnimationComplete={() => { if (step > 0) heading.current?.focus(); }}
-          initial={{ opacity: 0, x: 24 }}
+          initial={{ opacity: 0, x: step === 0 ? 0 : 24 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -16 }}
-          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-          className={clsx("flex-1 flex flex-col px-5", step === 0 ? "pt-6 pb-4" : "pt-8 pb-56 lg:pb-8")}
+          exit={{ opacity: 0, x: step === 0 ? 0 : -16 }}
+          transition={workspaceMotion.surface}
+          className={clsx("flex-1 flex flex-col px-5", step === 0 ? "welcome-page-body" : "pt-8 pb-56 lg:pb-8")}
         >
           {step === 0 && (
-            <div className="flex-1 flex flex-col justify-center gap-4">
-              <div className="flex items-center gap-3"><BrandMark size={44} /><span className="display text-[20px]">{t(lang, "app_name")}</span></div>
-              <h1 className="display text-[28px] sm:text-[36px] leading-[1.2] whitespace-pre-line">{t(lang, "ob_welcome_title")}</h1>
-              <p className="text-[14px] text-ink-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "ob_welcome_body")}</p>
-              <DinnerEntry welcome />
+            <div className="welcome-stage">
+              <div className="welcome-coach">
+                <CoachMascot className="welcome-coach-figure" preload />
+                <p className="welcome-coach-caption text-[12px] text-ink-3">{t(lang, "ob_coach_role")}</p>
+              </div>
+              <div className="welcome-copy">
+                <p className="eyebrow text-accent-deep">{t(lang, "coach_identity")}</p>
+                <h1 className="display whitespace-pre-line">{t(lang, "ob_welcome_title")}</h1>
+                <p className="welcome-description text-[14px] text-ink-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "ob_welcome_body")}</p>
+                <div className="onboarding-welcome-actions flex flex-col gap-2">
+                  <Button block size="lg" onClick={() => startNow("/rehearse")}>{t(lang, "ob_rehearse")}<ArrowRight size={18} /></Button>
+                  <Button block variant="secondary" onClick={() => startNow("/arena")}>{t(lang, "ob_browse")}</Button>
+                  <div className="welcome-other-actions">
+                    <button onClick={() => setStep(1)} className="press min-h-11 text-[12px] text-ink-2 rounded-[var(--radius-sm)]">{t(lang, "ob_personalize")}</button>
+                    <Link href="/3d" prefetch={false} className="press min-h-11 inline-flex items-center gap-1.5 text-[12px] text-ink-2 rounded-[var(--radius-sm)]">{t(lang, "ob_dinner_short")}<ArrowUpRight size={14} /></Link>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
@@ -244,25 +259,18 @@ export default function Onboarding() {
         </motion.div>
       </AnimatePresence>
 
-      <BottomBar className={clsx("px-5 pb-safe pb-6 pt-3 lg:pb-8", step === 0 && "onboarding-welcome-actions")}>
+      {step === 0 ? <p className="welcome-local px-5 text-[11px] text-ink-3">{t(lang, "ob_local")}</p> : <BottomBar className="px-5 pb-safe pb-6 pt-3 lg:pb-8">
         {step === 1 && (
           <p className={clsx("text-center text-[13px] mb-2", canNext ? "text-moss" : "text-ink-3")}>
             {goals.length === 0 ? t(lang, "ob_goals_pick_more") : t(lang, "ob_goals_ok", { n: goals.length })}
           </p>
         )}
-        {step === 0 ? (
-          <div className="flex flex-col gap-2">
-            <Button block size="lg" variant="secondary" onClick={() => startNow("/rehearse")}>{t(lang, "ob_rehearse")}<ArrowRight size={18} /></Button>
-            <Button block variant="secondary" onClick={() => startNow("/arena")}>{t(lang, "ob_browse")}</Button>
-            <button onClick={() => setStep(1)} className="press min-h-11 text-[13px] text-ink-2 rounded-full">{t(lang, "ob_personalize")}</button>
-            <p className="text-[11px] text-ink-3 text-center">{t(lang, "ob_local")}</p>
-          </div>
-        ) : step < STEPS - 1 ? (
+        {step < STEPS - 1 ? (
           <Button block size="lg" disabled={!canNext} onClick={() => setStep((s) => s + 1)}>{t(lang, "next")}</Button>
         ) : (
           <Button block size="lg" onClick={finish}>{t(lang, "ob_done")}</Button>
         )}
-      </BottomBar>
+      </BottomBar>}
     </main>
   );
 }
