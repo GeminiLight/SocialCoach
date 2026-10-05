@@ -52,3 +52,5 @@
 后续验证：模型生成的新 evidence/disclosures 字段命中率、长/短双语盲测、真实手机/微信/Web Locks 兼容、实际预算服务与金额上限配置、线上阶段统计及真实重练变化。当前新增回归保护程序契约，不代替这些验证。技能流程无需更新全局 skill；仓库经验已记录在 [档案复盘](../81-postmortem-archive-consistency.md)。
 
 完整 Node 22 Docker 镜像本轮因 `auth.docker.io` 连接超时未完成；不能把本地构建通过等同容器验证。两种构建脚本已接入门槛，白名单包含 tests/scripts/ESLint 配置，平台执行仍需发布前补验。
+
+后续发布与配置已完成：Vercel 和 ModelScope 共用匿名 Redis 预算计数，真实 REST 原子限额与两端实际默认模型提示均通过；ModelScope Docker 构建也已通过。见 [正式发布与启用复核](../../docs/reviews/product-sync-2026-10-06/README.md)。此前“本轮未发布／未配置”的描述保留本地修订阶段的历史边界；供应商金额上限、公共 iframe、真实手机和整体语义仍未据此验证。

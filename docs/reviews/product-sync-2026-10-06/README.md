@@ -12,8 +12,12 @@
 ## 正式发布结果
 
 - 主线 `d92e586`，PR #10 已合并；GitHub Linux 检查与构建再次通过，运行 [37360002049](https://github.com/GeminiLight/SocialCoach/actions/runs/37360002049)。
-- Vercel 生产 `dpl_7QtdChVwdZXYaNA9knryHzvC1GhG` Ready，`socialcoach-ai.vercel.app` / `socialcoach-app.vercel.app` 已关联到该提交。依据平台状态及别名核验，没有抓取线上 URL。
+- Vercel 生产 `dpl_7QtdChVwdZXYaNA9knryHzvC1GhG` Ready，`socialcoach-ai.vercel.app` / `socialcoach-app.vercel.app` 已关联到该提交。后续补验正式地址：health 为 `available`，合成提示生成 200，约 5.69s。
 - ModelScope `a0a6381`，镜像 `363578-a0a6381c-2026-10-06-03-02-13`；真正 Docker 构建的检查与构建通过，7860 Ready、平台 Running，公开性与原免费硬件保留。371 个同步输入逐项一致，构建脚本与测试均在包内。
 - 国内专用认证后端：首页、3D、设置、22 个静态资源全部 200；health 为 `available`、`serverKey=true`、`requireByok=false`。合成文字对练与指定陈总的 3D 回复均 200，分别约 4.42s / 5.11s，格式及当前原文绑定检查通过。见 [线上检查](./ms-smoke.json)、[同步范围](./modelscope-sync.json) 与 [发布元数据](./release.json)。
 - 共发起 3 次合成生成请求：第一次验收脚本误用人物标记的占位名，修正断言后完成文字与 3D 检查，没有修改应用或放宽输出契约。没有发送反馈／统计或上传真实练习记录。
 - 未重测公共 iframe、真实手机及浏览器整局；上述接口检查不替代这些验收，也不证明模型总体语义或学习效果。
+
+## 共享预算启用复核
+
+两端 production 补齐并核对同一 Redis REST 配置，每个 UTC 日最多 2,000,000 个保守预留 token、并发 8。真实原子限额再次通过；Vercel 正式地址与 ModelScope 专用认证后端均返回实际默认模型提示，分别约 5.69s / 3.65s，详见 [启用记录](./shared-budget-activation.json)。没有发送真实练习档案，临时凭证副本已清理。已发布源码与隔离构建一致，因此保留已验证的正式部署，没有提升重复构建。

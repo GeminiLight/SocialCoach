@@ -1,0 +1,57 @@
+{
+  "checked_at": "2026-10-06T03:14:06.047899+08:00",
+  "shared_service_on_both_platforms": true,
+  "daily_reserved_token_ceiling": 2000000,
+  "concurrency": 8,
+  "reset": "UTC day",
+  "anonymous_counters_only": true,
+  "real_redis_rest": {
+    "parallel_requests": 12,
+    "accepted": 2,
+    "concurrency_refused": 10,
+    "daily_cap_enforced": true,
+    "higher_instance_cap_refused": true,
+    "test_namespace_cleaned": true
+  },
+  "active_vercel_deployment": "dpl_7QtdChVwdZXYaNA9knryHzvC1GhG",
+  "health": {
+    "Vercel": {
+      "state": "available",
+      "serverKey": true,
+      "requireByok": false
+    },
+    "ModelScope": {
+      "state": "available",
+      "serverKey": true,
+      "requireByok": false
+    }
+  },
+  "synthetic_hint_checks": [
+    {
+      "platform": "Vercel",
+      "url": "https://socialcoach-ai.vercel.app/api/hint",
+      "status": 200,
+      "response": {
+        "hint": "说出你已有的具体安排（父亲的生日晚餐），一次讲清即可，别补多个理由——然后问客户明早真正要的是什么。可以用「我今晚已有无法改的安排，方案具体需要哪部分？」开头。"
+      },
+      "elapsed": 5.69
+    },
+    {
+      "platform": "ModelScope",
+      "status": 200,
+      "response": {
+        "hint": "好，接下来别急着解释，先弄清需求再谈替代：问清客户明早具体要什么、截止到几点，例如「客户明早几点要？最核心的是哪部分？」"
+      },
+      "elapsed": 3.65
+    }
+  ],
+  "redirects": {
+    "legacy_vercel_alias": "307 preserves API path to socialcoach-ai.vercel.app",
+    "share_url": "302 to platform homepage; not an API base"
+  },
+  "limits": [
+    "ModelScope check used its authenticated dedicated backend; public iframe was not retested.",
+    "Provider monetary cap and overall model quality remain separate unverified items."
+  ],
+  "release_handling": "The already-published source matches the isolated build; retained the verified active production deployment instead of promoting a duplicate."
+}

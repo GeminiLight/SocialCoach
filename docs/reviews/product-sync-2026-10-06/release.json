@@ -35,9 +35,9 @@
   "academic_material": "excluded",
   "verification_limitations": [
     "ModelScope checks used the authenticated dedicated backend; public iframe and real mobile hardware were not re-tested.",
-    "Vercel acceptance used platform readiness and aliases; no deployed URL was fetched.",
     "Provider monetary cap and broad model semantic effectiveness were not verified."
   ],
   "synthetic_generation_requests": 3,
-  "probe_correction": "The first roleplay check used a literal placeholder instead of the actual NPC marker; the check was corrected without changing application code."
+  "probe_correction": "The first roleplay check used a literal placeholder instead of the actual NPC marker; the check was corrected without changing application code.",
+  "budget_activation": "shared-budget-activation.json"
 }
