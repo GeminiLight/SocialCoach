@@ -21,6 +21,7 @@ export const site = {
   pdfUrl: "https://arxiv.org/pdf/2606.04155",
   // Copied from ../docs at build time so Scholar can find PDF + abstract on one host.
   localPdf: "paper/socialcoach-2606.04155.pdf",
+  supplementaryUrl: "https://tianfuwang.tech/SocialCoach-SupplementaryMaterials/",
   name: "SocialCoach",
   year: 2026,
 };
@@ -373,6 +374,7 @@ export const research = {
     arxiv: L("arXiv", "arXiv"),
     pdf: L("PDF", "PDF"),
     code: L("GitHub", "GitHub"),
+    supplementary: L("补充材料", "Supplementary materials"),
     bibtex: L("BibTeX", "BibTeX"),
   },
   bibtexLabel: L("引用", "Cite"),
