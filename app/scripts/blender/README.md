@@ -32,7 +32,9 @@ pnpm test:dinner
 
 Independent neutral head, chin, cheek and nose targets in `identities.py` are baked before fitting eyes, hair and the rig; age, gender or recoloring alone do not define a face.
 
-Each character exports 12 named pose clips: standing / seated idle, toast, phone, palm, folded arms and leaning forward. Four neutral face shapes drive blinking, jaw opening, a small smile and brow emphasis.
+Each character exports 12 named pose clips: standing / seated idle, toast, phone, palm, folded arms and leaning forward. Six neutral face shapes drive blinking, jaw opening, a small smile, raised inner brows, lowered brows and pressed lips. Runtime emotions use small, smoothed combinations; oral interior and solid brows follow the corresponding face controls.
+
+The live direction is **adult animation** (`adult-animation-v1`). `animation_style.py` applies a mild head enlargement to the continuous skin, fitted accessories, all shape keys and rest skeleton, with a smooth neck transition. It authors matte vertex pigments, a curved painted eyeball, fitted opaque brows and sculpted hair masses with short / bob / gathered styles and mature temples. Broad 256px garment and wood color maps preserve collars, tailoring and grain. The current build has no photo skin, alpha hair cards or photo eyes; no outline postprocessing is required.
 
 Every character and room also saves a **packed, editable `.blend`** in `ASSET_WORK`. Local delivered source files live in `.blender-work/generated/` at the repository root and are ignored by Git. Reproducible production scripts, source manifests and GLBs are committed; large source packs and Blender caches are not uploaded with the web app.
 
@@ -56,13 +58,24 @@ Check the actual deformed shoes in all 16 editable sources as well:
 
 This checks both feet in standing and seated poses (32 posture pairs), rather than assuming rig markers prove contact.
 
+Also check eye/eyelid contact on the actual deformed geometry:
+
+```sh
+"$BLENDER" --background --factory-startup --python-exit-code 1 --python scripts/blender/verify_animation.py -- \
+  --source "$ASSET_WORK" --report "$ASSET_WORK/eye-contact.json"
+```
+
+This checks neutral iris visibility, closed-lid coverage and raw mesh/Basis agreement for every actor. It does not replace visual near-view checks for grazing camera angles, emotional blends or props.
+
+For fast art iteration on already fitted **pre-animation** packed sources, `restyle_characters.py --source /path/to/immutable-originals --save /path/to/new-sources --out public/3d/v2 --only chen` applies the same treatment. Never use a restyled source as input, or the anatomical transform will accumulate. The regular `build_characters.py` command above remains the clean rebuild path.
+
 The command fails on glTF errors **or warnings**. Khronos currently reports Draco as an unsupported extension (informational); therefore browser decoding and animation playback are also required. Do not suppress transform or tangent warnings. Current exports triangulate normal-mapped surfaces and put skinned meshes at the glTF scene root.
 
 The scene preserves existing navigation coordinates and old saves. One virtual unit is approximately 0.56 m; actors are around 3 virtual units tall. Seated pelvis, per-actor leg lengths, camera eye heights and hand anchors are solved consistently. Colors are read from the OKLCH tokens in `globals.css`; texture photographs retain their own authored color.
 
-Browser acceptance covers: seated / standing; first / third views; independent movement; tracking and free look; leader and group toasts; cups / phone; doors and documents; Chinese / English; portrait framing; draft editing and history. Check cold loading separately from warmed rendering. All 24 exports total 51.0 MiB but **only the current room and cast load**; do not preload every character or put them into the service worker's offline shell.
+Browser acceptance covers: seated / standing; first / third views; independent movement; tracking and free look; leader and group toasts; cups / phone; doors and documents; Chinese / English; portrait framing; draft editing and history. Check cold loading separately from warmed rendering. All 24 animation exports total approximately 30.0 MiB but **only the current room and cast load**; do not preload every character or put them into the service worker's offline shell.
 
-The 2026-10-05 finish pass keeps the original anatomy and anchors, with 2K skin / 1K cloth diffuse maps, JPEG quality 80 for opaque photographs, small baked micro normals and morph normals. `surface_detail.py` exports repeatable tangent-space data; it adds no runtime Blender dependency or external request. Transparent hair / brows retain their alpha images. Triangulate while preserving shape-key / UV / weight layers and export tangents for both the full rig and first-person arms.
+The earlier 2026-10-05 finish pass used 2K skin / 1K cloth photographs and alpha wigs; the animation pass supersedes those appearance assets. Triangulation still preserves shape keys / UV / weights, including vertex pigments. Keep raw mesh positions aligned with edited Basis coordinates before BMesh triangulation; otherwise the old head is restored while the eye/teeth transform remains changed.
 
 Dining rooms have thinner glazed rims, shaped dishes with different meal combinations, folded foliage and quieter walnut normals. The work table has fitted linen. Work / family rugs are joined into `Floor`, preserving click-to-walk; other decorative surfaces must not consume floor hits. Exporters save editable sources under `--asset-root`; run `finalize.mjs` after the whole batch, never halfway through an export.
 

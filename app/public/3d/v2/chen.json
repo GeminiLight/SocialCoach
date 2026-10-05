@@ -1,13 +1,14 @@
 {
   "id": "chen",
   "height": 3.12,
-  "standingEye": 2.9138,
-  "seatedEye": 2.3122,
+  "standingEye": 2.9437,
+  "seatedEye": 2.342,
   "pelvis": 1.6617,
   "scale": 1.9156,
   "faceTargets": {
     "head/head-square": 0.32,
     "chin/chin-width-incr": 0.22,
     "nose/nose-width1-incr": 0.12
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

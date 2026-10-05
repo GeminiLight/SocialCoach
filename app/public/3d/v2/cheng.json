@@ -1,8 +1,8 @@
 {
   "id": "cheng",
   "height": 2.98,
-  "standingEye": 2.7594,
-  "seatedEye": 2.2463,
+  "standingEye": 2.7894,
+  "seatedEye": 2.2763,
   "pelvis": 1.5732,
   "scale": 2.2393,
   "faceTargets": {
@@ -10,5 +10,6 @@
     "chin/chin-width-decr": 0.18,
     "nose/nose-scale-depth-decr": 0.14,
     "mouth/mouth-scale-horiz-incr": 0.14
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

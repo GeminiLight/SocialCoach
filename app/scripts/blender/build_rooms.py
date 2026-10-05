@@ -34,17 +34,19 @@ def material(pigment,rough=.65,metal=0,photo=None,emission=0):
   if pigment in ('porcelain','ceramic') and rough<.6:
    bs.inputs['Coat Weight'].default_value=.22;bs.inputs['Coat Roughness'].default_value=.22
  if photo:
-  bs.inputs['Base Color'].default_value=(1,1,1,1)
-  for suffix,out,input in [('diff','Color','Base Color'),('nor_gl','Color','Normal'),('rough','Color','Roughness')]:
-   fn=ROOT/'textures'/(photo+'_'+suffix+'.jpg');img=bpy.data.images.load(str(fn),check_existing=True)
-   if suffix!='diff':
-    img.colorspace_settings.name='Non-Color'
-    if max(img.size)>512:
-     img.scale(512,512);cached=ROOT/'texture-cache';cached.mkdir(exist_ok=True);img.file_format='JPEG';img.filepath_raw=str(cached/(photo+'_'+suffix+'512.jpg'));img.save()
-   tex=mat.node_tree.nodes.new('ShaderNodeTexImage');tex.image=img
-   if suffix=='nor_gl':
-    normal=mat.node_tree.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.08 if photo=='wood_table_001' else .3;mat.node_tree.links.new(tex.outputs[out],normal.inputs['Color']);mat.node_tree.links.new(normal.outputs['Normal'],bs.inputs[input])
-   else:mat.node_tree.links.new(tex.outputs[out],bs.inputs[input])
+  # The attributed wood photo supplies broad grain, treated in the same pigment
+  # language as the animated cast. No high-frequency photographic relief or
+  # roughness maps competing with the characters. Geometry still catches light.
+  fn=ROOT/'textures'/(photo+'_diff.jpg');original=bpy.data.images.load(str(fn),check_existing=True)
+  img=original.copy();img.scale(256,256);pixels=list(img.pixels[:]);tint=PIGMENTS[pigment]
+  for index in range(0,len(pixels),4):
+   value=sum(pixels[index:index+3])/3
+   for c in range(3):pixels[index+c]=max(0,min(1,tint[c]*(.90+.22*value)))**(1/2.2)
+   pixels[index+3]=1
+  img.pack();tex=mat.node_tree.nodes.new('ShaderNodeTexImage');tex.image=img
+  mat.node_tree.links.new(tex.outputs['Color'],bs.inputs['Base Color']);bs.inputs['Roughness'].default_value=max(.60,rough)
+ for node in mat.node_tree.nodes:
+  if node.type=='NORMAL_MAP':node.inputs['Strength'].default_value=min(.12,node.inputs['Strength'].default_value)
  MAT[key]=mat;return mat
 def finish(obj,name,mat,bevel=0):
  obj.name=name;obj.data.materials.append(mat)

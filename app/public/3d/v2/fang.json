@@ -1,8 +1,8 @@
 {
   "id": "fang",
   "height": 3.08,
-  "standingEye": 2.8699,
-  "seatedEye": 2.329,
+  "standingEye": 2.9023,
+  "seatedEye": 2.3614,
   "pelvis": 1.6009,
   "scale": 2.0913,
   "faceTargets": {
@@ -10,5 +10,6 @@
     "chin/chin-height-incr": 0.18,
     "cheek/cheek-bones-incr": 0.18,
     "nose/nose-scale-vert-incr": 0.1
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

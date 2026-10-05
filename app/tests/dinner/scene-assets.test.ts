@@ -23,8 +23,21 @@ test('every live cast has a self-contained rig, neutral expressions and seated /
     for(const posture of ['Seated','Standing'])for(const action of ['Idle','Toast','Phone','Palm','Fold','Lean'])assert.ok(gltf.animations.some((a:{name:string})=>a.name===posture+action));
     assert.ok(gltf.skins.length>0);
     for(const mesh of gltf.meshes)assert.ok((mesh.weights??[]).every((n:number)=>n===0),'Faces must not begin with closed eyes or a forced smile');
-    for(const image of gltf.images)assert.ok(image.bufferView!==undefined&&!image.uri,'No third-party runtime texture fetch');
+    for(const image of gltf.images??[])assert.ok(image.bufferView!==undefined&&!image.uri,'No third-party runtime texture fetch');
     for(const node of gltf.nodes)if(node.skin!==undefined)assert.ok(gltf.scenes[0].nodes.includes(gltf.nodes.indexOf(node)),'Skinned meshes must not depend on ignored parent transforms');
+  }
+});
+
+test('all live actors use one animation art direction with opaque sculpted hair and complete facial controls',()=>{
+  for(const id of new Set([...scenarios.flatMap(s=>s.characters.map(c=>c.id)),'player'])) {
+    const {gltf}=load(`${id}.glb`);
+    assert.equal(gltf.asset.extras.artStyle,'adult-animation-v1',`${id}: mixed art direction`);
+    const names=gltf.nodes.map((node:{name:string})=>node.name);
+    for(const name of ['Sculpted hair cap','Swept hair masses','Sculpted brows'])assert.ok(names.includes(name),`${id}: missing solid ${name}`);
+    for(const material of gltf.materials)assert.ok(!material.alphaMode||material.alphaMode==='OPAQUE',`${id}: alpha cards should not remain in the cast`);
+    const skin=gltf.meshes[gltf.nodes.find((node:{name:string})=>node.name==='skin').mesh];
+    for(const name of ['blink','jawOpen','smile','browInnerUp','browDown','mouthPress'])assert.ok(skin.extras.targetNames.includes(name),`${id}: missing expressive ${name}`);
+    assert.ok(skin.primitives.every((p:{attributes:Record<string,number>})=>p.attributes.COLOR_0!==undefined),`${id}: skin lacks authored vertex pigments`);
   }
 });
 

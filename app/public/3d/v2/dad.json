@@ -1,8 +1,8 @@
 {
   "id": "dad",
   "height": 3.03,
-  "standingEye": 2.8242,
-  "seatedEye": 2.268,
+  "standingEye": 2.8537,
+  "seatedEye": 2.2975,
   "pelvis": 1.6162,
   "scale": 1.8638,
   "faceTargets": {
@@ -11,5 +11,6 @@
     "chin/chin-width-incr": 0.2,
     "nose/nose-scale-vert-incr": 0.18,
     "eyes/eye-bag-incr": 0.2
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

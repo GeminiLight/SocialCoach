@@ -6,12 +6,13 @@ import path from 'node:path';
 const app=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const directory=path.join(app,'public/3d/v2');
 const files=(await readdir(directory)).filter(file=>file.endsWith('.glb')).sort();
-const anchors={},models=[];
+const anchors={},models=[],styles=new Set();
 for(const file of files) {
   const bytes=await readFile(path.join(directory,file));
   const gltf=JSON.parse(bytes.subarray(20,20+bytes.readUInt32LE(12)).toString());
   const id=file.slice(0,-4),isCharacter=gltf.skins?.length>0;
   if(isCharacter) {
+    styles.add(gltf.asset.extras?.artStyle);
     const metrics=JSON.parse(await readFile(path.join(directory,`${id}.json`),'utf8'));
     anchors[id]={standingEye:metrics.standingEye,seatedEye:metrics.seatedEye,scale:metrics.scale};
   }
@@ -20,6 +21,7 @@ for(const file of files) {
     drawCalls:gltf.meshes.reduce((count,mesh)=>count+mesh.primitives.length,0),generator:gltf.asset.generator,
     ...(isCharacter?{animations:gltf.animations.map(a=>a.name),morphs:[...new Set(gltf.meshes.flatMap(m=>m.extras?.targetNames??[]))]}:{})});
 }
+if(styles.size!==1||!styles.has('adult-animation-v1'))throw new Error('Mixed or missing actor art direction; finish the complete batch before finalizing.');
 await writeFile(path.join(app,'src/features/dinner/lib/avatarAssets.ts'),`/** Generated anatomical anchors; run scripts/blender/finalize.mjs after exporting. */\nexport const avatarMetrics:Record<string,{standingEye:number;seatedEye:number;scale:number}>= ${JSON.stringify(anchors,null,2)};\n`);
-await writeFile(path.join(directory,'manifest.json'),JSON.stringify({version:2,exported:new Date().toISOString().slice(0,10),blender:'5.2.2 LTS',mpfb:'afb9f530a7c2741dedb8df0ebae2e0b183caec21',models},null,2)+'\n');
+await writeFile(path.join(directory,'manifest.json'),JSON.stringify({version:2,artStyle:'adult-animation-v1',exported:new Date().toISOString().slice(0,10),blender:'5.2.2 LTS',mpfb:'afb9f530a7c2741dedb8df0ebae2e0b183caec21',models},null,2)+'\n');
 console.log(`Updated ${Object.keys(anchors).length} actors and ${models.length} assets (${(models.reduce((n,m)=>n+m.bytes,0)/1024/1024).toFixed(1)} MiB).`);

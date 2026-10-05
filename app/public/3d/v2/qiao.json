@@ -1,13 +1,14 @@
 {
   "id": "qiao",
   "height": 3.22,
-  "standingEye": 3.0092,
-  "seatedEye": 2.3681,
+  "standingEye": 3.04,
+  "seatedEye": 2.3989,
   "pelvis": 1.7011,
   "scale": 1.9623,
   "faceTargets": {
     "head/head-rectangular": 0.42,
     "chin/chin-prominent-incr": 0.22,
     "nose/nose-greek-incr": 0.12
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

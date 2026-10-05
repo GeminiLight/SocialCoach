@@ -1,83 +1,83 @@
 /** Generated anatomical anchors; run scripts/blender/finalize.mjs after exporting. */
 export const avatarMetrics:Record<string,{standingEye:number;seatedEye:number;scale:number}>= {
   "aunt": {
-    "standingEye": 2.7384,
-    "seatedEye": 2.2559,
+    "standingEye": 2.7709,
+    "seatedEye": 2.2884,
     "scale": 1.9494
   },
   "chen": {
-    "standingEye": 2.9138,
-    "seatedEye": 2.3122,
+    "standingEye": 2.9437,
+    "seatedEye": 2.342,
     "scale": 1.9156
   },
   "cheng": {
-    "standingEye": 2.7594,
-    "seatedEye": 2.2463,
+    "standingEye": 2.7894,
+    "seatedEye": 2.2763,
     "scale": 2.2393
   },
   "dad": {
-    "standingEye": 2.8242,
-    "seatedEye": 2.268,
+    "standingEye": 2.8537,
+    "seatedEye": 2.2975,
     "scale": 1.8638
   },
   "fang": {
-    "standingEye": 2.8699,
-    "seatedEye": 2.329,
+    "standingEye": 2.9023,
+    "seatedEye": 2.3614,
     "scale": 2.0913
   },
   "he": {
-    "standingEye": 2.8551,
-    "seatedEye": 2.2843,
+    "standingEye": 2.8848,
+    "seatedEye": 2.314,
     "scale": 1.8807
   },
   "kai": {
-    "standingEye": 2.8325,
-    "seatedEye": 2.3172,
+    "standingEye": 2.8628,
+    "seatedEye": 2.3475,
     "scale": 2.1773
   },
   "lin": {
-    "standingEye": 2.7825,
-    "seatedEye": 2.2857,
+    "standingEye": 2.8155,
+    "seatedEye": 2.3187,
     "scale": 2.0552
   },
   "mom": {
-    "standingEye": 2.6885,
-    "seatedEye": 2.2374,
+    "standingEye": 2.721,
+    "seatedEye": 2.2699,
     "scale": 1.9139
   },
   "ning": {
-    "standingEye": 2.7721,
-    "seatedEye": 2.2793,
+    "standingEye": 2.804,
+    "seatedEye": 2.3111,
     "scale": 2.0604
   },
   "player": {
-    "standingEye": 2.8819,
-    "seatedEye": 2.3303,
+    "standingEye": 2.9129,
+    "seatedEye": 2.3613,
     "scale": 2.1059
   },
   "qiao": {
-    "standingEye": 3.0092,
-    "seatedEye": 2.3681,
+    "standingEye": 3.04,
+    "seatedEye": 2.3989,
     "scale": 1.9623
   },
   "rui": {
-    "standingEye": 2.9313,
-    "seatedEye": 2.357,
+    "standingEye": 2.963,
+    "seatedEye": 2.3888,
     "scale": 2.2046
   },
   "senior": {
-    "standingEye": 2.9688,
-    "seatedEye": 2.3771,
+    "standingEye": 2.9999,
+    "seatedEye": 2.4082,
     "scale": 2.2648
   },
   "yue": {
-    "standingEye": 2.693,
-    "seatedEye": 2.205,
+    "standingEye": 2.7222,
+    "seatedEye": 2.2341,
     "scale": 2.2665
   },
   "zhou": {
-    "standingEye": 2.8401,
-    "seatedEye": 2.3191,
+    "standingEye": 2.8712,
+    "seatedEye": 2.3502,
     "scale": 2.1678
   }
 };

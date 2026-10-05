@@ -1,13 +1,14 @@
 {
   "id": "senior",
   "height": 3.18,
-  "standingEye": 2.9688,
-  "seatedEye": 2.3771,
+  "standingEye": 2.9999,
+  "seatedEye": 2.4082,
   "pelvis": 1.6517,
   "scale": 2.2648,
   "faceTargets": {
     "head/head-square": 0.4,
     "chin/chin-bones-incr": 0.18,
     "nose/nose-scale-depth-incr": 0.18
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

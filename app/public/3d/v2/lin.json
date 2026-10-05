@@ -1,8 +1,8 @@
 {
   "id": "lin",
   "height": 3.0,
-  "standingEye": 2.7825,
-  "seatedEye": 2.2857,
+  "standingEye": 2.8155,
+  "seatedEye": 2.3187,
   "pelvis": 1.5568,
   "scale": 2.0552,
   "faceTargets": {
@@ -10,5 +10,6 @@
     "head/head-scale-horiz-decr": 0.18,
     "chin/chin-height-incr": 0.18,
     "nose/nose-scale-horiz-decr": 0.1
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

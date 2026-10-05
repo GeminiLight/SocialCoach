@@ -733,7 +733,7 @@ aside.lg\:border-dashed { border-left: 0; }
   --dinner-scene-skinShadow: oklch(.69 .055 40);
   --dinner-scene-skinWarm: oklch(.78 .065 46);
   --dinner-scene-skinMature: oklch(.76 .058 45);
-  --dinner-scene-sclera: oklch(.81 .028 75);
+  --dinner-scene-sclera: oklch(.91 .014 75);
   --dinner-scene-lip: oklch(.62 .073 30);
   --dinner-scene-iris: oklch(.39 .050 55);
   --dinner-scene-hair: oklch(.245 .026 51);

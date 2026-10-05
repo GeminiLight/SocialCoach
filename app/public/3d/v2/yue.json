@@ -1,8 +1,8 @@
 {
   "id": "yue",
   "height": 2.9,
-  "standingEye": 2.693,
-  "seatedEye": 2.205,
+  "standingEye": 2.7222,
+  "seatedEye": 2.2341,
   "pelvis": 1.548,
   "scale": 2.2665,
   "faceTargets": {
@@ -11,5 +11,6 @@
     "chin/chin-width-decr": 0.22,
     "cheek/cheek-volume-incr": 0.16,
     "mouth/mouth-scale-horiz-incr": 0.12
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

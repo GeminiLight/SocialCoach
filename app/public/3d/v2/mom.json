@@ -1,8 +1,8 @@
 {
   "id": "mom",
   "height": 2.88,
-  "standingEye": 2.6885,
-  "seatedEye": 2.2374,
+  "standingEye": 2.721,
+  "seatedEye": 2.2699,
   "pelvis": 1.5111,
   "scale": 1.9139,
   "faceTargets": {
@@ -12,5 +12,6 @@
     "nose/nose-point-down": 0.12,
     "cheek/cheek-volume-incr": 0.2,
     "eyes/eye-bag-incr": 0.15
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

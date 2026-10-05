@@ -7,6 +7,7 @@ sys.path.insert(0,str(pathlib.Path(__file__).parent))
 from pigments import pigments
 from identities import fit_identity, FACES
 from surface_detail import add_surface_detail
+from animation_style import apply_animation_style, STYLE
 PIGMENTS=pigments()
 argsv=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
 p=argparse.ArgumentParser();p.add_argument('--mpfb-source',required=True);p.add_argument('--asset-root',required=True);p.add_argument('--out',required=True);p.add_argument('--only',default='chen');p.add_argument('--render',action='store_true');args=p.parse_args(argsv)
@@ -27,16 +28,16 @@ CAST={
  'lin':dict(gender=0,age=.44,weight=.45,muscle=.35,height=3.00,hair='ponytail01',clothes='toigo_female_double-breasted_suit',skin='young_asian_female',brow='eyebrow003'),
  'zhou':dict(gender=1,age=.27,weight=.40,muscle=.37,height=3.05,hair='short02',clothes='male_casualsuit01',skin='young_asian_male',brow='eyebrow001'),
  'aunt':dict(gender=0,age=.70,weight=.65,muscle=.30,height=2.93,hair='bob02',clothes='female_casualsuit01',skin='middleage_asian_female',brow='eyebrow006'),
- 'mom':dict(gender=0,age=.67,weight=.49,muscle=.30,height=2.88,hair='ponytail01',clothes='female_casualsuit02',skin='middleage_asian_female',brow='eyebrow004'),
+ 'mom':dict(gender=0,age=.67,weight=.49,muscle=.30,height=2.88,hair='ponytail01',clothes='female_casualsuit01',skin='middleage_asian_female',brow='eyebrow004'),
  'dad':dict(gender=1,age=.76,weight=.58,muscle=.35,height=3.03,hair='short04',clothes='male_casualsuit06',skin='old_asian_male',brow='eyebrow002'),
  'senior':dict(gender=1,age=.27,weight=.47,muscle=.59,height=3.18,hair='short04',clothes='male_casualsuit03',skin='young_asian_male',brow='eyebrow005'),
  'yue':dict(gender=0,age=.25,weight=.41,muscle=.35,height=2.90,hair='ponytail01',clothes='female_casualsuit01',skin='young_asian_female',brow='eyebrow003'),
  'kai':dict(gender=1,age=.26,weight=.54,muscle=.34,height=3.04,hair='short01',clothes='male_casualsuit02',skin='young_asian_male',brow='eyebrow001'),
  'fang':dict(gender=0,age=.46,weight=.42,muscle=.40,height=3.08,hair='bob02',clothes='toigo_female_suit',skin='young_asian_female',brow='eyebrow005'),
  'qiao':dict(gender=1,age=.50,weight=.58,muscle=.55,height=3.22,hair='short02',clothes='male_elegantsuit01',skin='middleage_asian_male',brow='eyebrow002'),
- 'cheng':dict(gender=0,age=.30,weight=.39,muscle=.30,height=2.98,hair='ponytail01',clothes='female_casualsuit02',skin='young_asian_female',brow='eyebrow004'),
+ 'cheng':dict(gender=0,age=.30,weight=.39,muscle=.30,height=2.98,hair='ponytail01',clothes='female_casualsuit01',skin='young_asian_female',brow='eyebrow004'),
  'he':dict(gender=1,age=.72,weight=.60,muscle=.40,height=3.06,hair='short02',clothes='male_elegantsuit01',skin='middleage_asian_male',brow='eyebrow006'),
- 'ning':dict(gender=0,age=.43,weight=.51,muscle=.40,height=2.97,hair='bob02',clothes='female_casualsuit02',skin='young_asian_female',brow='eyebrow003'),
+ 'ning':dict(gender=0,age=.43,weight=.51,muscle=.40,height=2.97,hair='bob02',clothes='female_casualsuit01',skin='young_asian_female',brow='eyebrow003'),
  'rui':dict(gender=1,age=.29,weight=.38,muscle=.39,height=3.15,hair='short04',clothes='male_casualsuit01',skin='young_asian_male',brow='eyebrow005'),
  'player':dict(gender=1,age=.33,weight=.47,muscle=.40,height=3.10,hair='short02',clothes='male_casualsuit02',skin='young_asian_male',brow='eyebrow001'),
 }
@@ -90,12 +91,12 @@ def camera(name,position,target,lens=50):
 def render(id,rig):
  pose(rig,True)
  bpy.ops.mesh.primitive_plane_add(size=200);floor=bpy.context.object;floor.name='Preview floor'
- mat=bpy.data.materials.new('Preview ground');mat.diffuse_color=(.19,.18,.16,1);floor.data.materials.append(mat)
+ mat=bpy.data.materials.new('Preview ground');mat.diffuse_color=(*PIGMENTS['floor'],1);floor.data.materials.append(mat)
  for position,energy,size in [((-3,-4,6),320,5),((3,-2,4),180,4),((0,3,5),220,3)]:
   bpy.ops.object.light_add(type='AREA',location=position);lamp=bpy.context.object;lamp.data.energy=energy;lamp.data.shape='DISK';lamp.data.size=size;lamp.rotation_euler=(Vector((0,0,1.8))-lamp.location).to_track_quat('-Z','Y').to_euler()
  camera('Portrait',(0,-5,2.7),(0,0,2.1),58)
  scene=bpy.context.scene;scene.render.engine='CYCLES';scene.cycles.samples=24;scene.render.resolution_x=900;scene.render.resolution_y=1100;scene.render.resolution_percentage=100
- scene.world.color=(.15,.15,.15);scene.view_settings.view_transform='AgX';scene.render.filepath=str(OUT/(id+'-preview.png'));bpy.ops.render.render(write_still=True)
+ scene.world.color=PIGMENTS['wall'];scene.view_settings.view_transform='AgX';scene.render.filepath=str(OUT/(id+'-preview.png'));bpy.ops.render.render(write_still=True)
 
 def glasses(rig,eyes,id):
  left=[v.co for v in eyes.data.vertices if v.co.x>0];center=Vector(tuple((max(v[i] for v in left)+min(v[i] for v in left))/2 for i in range(3)))
@@ -119,6 +120,7 @@ def wire(name,points,r):
 
 def patch_alpha(file):
  raw=file.read_bytes();length=struct.unpack_from('<I',raw,12)[0];data=json.loads(raw[20:20+length]);tail=raw[20+length:]
+ data['asset'].setdefault('extras',{})['artStyle']=STYLE
  for material in data['materials']:
   if material['name'] in ('hair','brows'):
    material['alphaMode']='MASK';material['alphaCutoff']=.35;material['doubleSided']=True
@@ -184,14 +186,15 @@ def build(id,cfg):
  bmesh.ops.delete(bm,geom=remove,context='VERTS');bm.to_mesh(base.data);bm.free()
  for modifier in list(base.modifiers):
   if modifier.type=='MASK':base.modifiers.remove(modifier)
+ total=max(v.co.z for v in base.data.vertices);scale=cfg['height']/total;rig.scale=(scale,)*3
+ centers=apply_animation_style(id)
  for mesh in [o for o in bpy.context.scene.objects if o.type=='MESH']:
   # Preserve shape-key / UV / weight layers while exporting portable tangents.
   bm=bmesh.new();bm.from_mesh(mesh.data);bmesh.ops.triangulate(bm,faces=list(bm.faces));bm.to_mesh(mesh.data);bm.free()
   for poly in mesh.data.polygons:poly.use_smooth=True
- total=max(v.co.z for v in base.data.vertices);scale=cfg['height']/total;rig.scale=(scale,)*3
- eye=max(v.co.z for v in bpy.data.objects['eyes'].data.vertices)*scale-.03
+ eye=max(c.z for c in centers)*scale
  pelvis=rig.data.bones['pelvis'].head_local.z*scale;drop=pelvis-1.06
- info={'id':id,'height':cfg['height'],'standingEye':round(eye,4),'seatedEye':round(eye-drop,4),'pelvis':round(pelvis,4),'scale':round(scale,4),'faceTargets':FACES[id]}
+ info={'id':id,'height':cfg['height'],'standingEye':round(eye,4),'seatedEye':round(eye-drop,4),'pelvis':round(pelvis,4),'scale':round(scale,4),'faceTargets':FACES[id],'artStyle':STYLE}
  # Named pose clips retain anatomy and clothing weights. Web transitions use
  # the real event timeline; visual animation never becomes dialogue evidence.
  for seated in (False,True):

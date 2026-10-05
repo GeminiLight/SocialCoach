@@ -1,8 +1,8 @@
 {
   "id": "aunt",
   "height": 2.93,
-  "standingEye": 2.7384,
-  "seatedEye": 2.2559,
+  "standingEye": 2.7709,
+  "seatedEye": 2.2884,
   "pelvis": 1.5425,
   "scale": 1.9494,
   "faceTargets": {
@@ -10,5 +10,6 @@
     "head/head-fat-incr": 0.28,
     "chin/chin-width-incr": 0.16,
     "nose/nose-width2-incr": 0.12
-  }
+  },
+  "artStyle": "adult-animation-v1"
 }

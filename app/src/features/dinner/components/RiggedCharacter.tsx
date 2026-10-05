@@ -11,6 +11,7 @@ import type { Reply } from '../lib/engine';
 import type { Palette } from '../lib/palette';
 import {createPoseMixer,undoPresentation,presentationTurn} from '../lib/rigMotion';
 import { avatarMetrics } from '../lib/avatarAssets';
+import { facialExpression } from '../lib/facialExpression';
 import { instantiateAsset, useSceneAsset, AssetCup } from './SceneAssets';
 import { Phone } from './DinnerProps';
 
@@ -71,7 +72,8 @@ export function RiggedCharacter({character,actor,world,reaction,active,onSelect,
     turn(rig.bones.spine_03,-breathing*.7,gaze.torso*.6);turn(rig.bones.neck_01,0,gaze.head*.15);
     turn(rig.bones.head,gaze.pitch+(reaction?.gesture==='nod'?presenceState.emphasis*.04:0),gaze.head*.85);
     if(actor.moving&&!reduced){const stride=Math.sin(timing.time*8)*.26;turn(rig.bones.thigh_l,stride,0);turn(rig.bones.thigh_r,-stride,0);turn(rig.bones.upperarm_l,-stride*.5,0);turn(rig.bones.upperarm_r,stride*.5,0);}
-    for(const face of rig.faces){const dict=face.morphTargetDictionary!,values=face.morphTargetInfluences!;for(const [name,value] of Object.entries({blink:1-presenceState.blink,jawOpen:presenceState.speech*.24,browInnerUp:presenceState.emphasis*.14,smile:reaction?.emotion==='supportive'?.10:0})){if(dict[name]!==undefined)values[dict[name]]=name==='smile'?MathUtils.lerp(values[dict[name]],value,smoothing):value;}}
+    const expression=facialExpression(player?'neutral':reaction?.emotion);
+    for(const face of rig.faces){const dict=face.morphTargetDictionary!,values=face.morphTargetInfluences!;for(const [name,value] of Object.entries({...expression,blink:1-presenceState.blink,jawOpen:presenceState.speech*.34,browInnerUp:expression.browInnerUp+presenceState.emphasis*.10,mouthPress:expression.mouthPress*(1-presenceState.speech)})){if(dict[name]!==undefined)values[dict[name]]=name==='blink'||name==='jawOpen'?value:MathUtils.lerp(values[dict[name]],value,smoothing);}}
     root.current.updateMatrixWorld(true);
     if(held.current&&rig.bones.hand_r){
       rig.bones.hand_r.getWorldQuaternion(rotations.parent);rotations.target.setFromEuler(rotations.euler.set(beat.sip*.14,root.current.rotation.y,0));
