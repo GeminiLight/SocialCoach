@@ -237,6 +237,14 @@ The paper studies personalized practice scheduling and tutoring with a traceable
 
 </details>
 
+## Community and feedback
+
+Scan the QR code to join the **SocialCoach WeChat community** and share your experience, report issues, or discuss conversations you want to practice.
+
+<img src="docs/community/wechat-group-2026-10-05.png" alt="SocialCoach WeChat community QR code, valid before October 12, 2026" width="320">
+
+The group QR code is valid **before October 12, 2026**. You can also add me on WeChat: **`gemining2018`**.
+
 ## Contributing
 
 Bug reports, translations, and contributions are welcome. For bugs, include reproduction steps, your browser, and model configuration without API keys or private conversations.
