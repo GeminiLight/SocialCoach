@@ -37,7 +37,9 @@
     "ModelScope checks used the authenticated dedicated backend; public iframe and real mobile hardware were not re-tested.",
     "Provider monetary cap and broad model semantic effectiveness were not verified."
   ],
-  "synthetic_generation_requests": 3,
+  "synthetic_generation_requests": 5,
   "probe_correction": "The first roleplay check used a literal placeholder instead of the actual NPC marker; the check was corrected without changing application code.",
-  "budget_activation": "shared-budget-activation.json"
+  "budget_activation": "shared-budget-activation.json",
+  "release_generation_requests": 3,
+  "additional_budget_hint_requests": 2
 }
