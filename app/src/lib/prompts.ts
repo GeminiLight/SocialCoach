@@ -3,6 +3,7 @@ import { COMPETENCIES, CONTEXTS, SKILLS, skillById, competencyById, type Lang, t
 import { SCENARIO_ICON_NAMES } from "@/data/scenario-icons";
 import type { ChatMessage, Profile, Proficiency } from "./types";
 import { SCENE_CRAFT } from './scene-craft';
+import { NPC_CRAFT } from './npc-craft';
 
 export const pick = (l: L, lang: Lang) => l[lang];
 
@@ -130,6 +131,8 @@ ${PRACTICE_POLICY}
 
 ${SCENE_CRAFT}
 
+${NPC_CRAFT}
+
 REALISM RULES
 - Each NPC speaks in character: their personality, stance and emotional state drive every line. They are not helpful assistants. They have their own goals and will push back, deflect, get defensive, or warm up only when the learner earns it.
 - React specifically to what the learner just said — quote or echo their words when natural. Never ignore a concrete proposal.
@@ -140,7 +143,7 @@ REALISM RULES
 - Model real social dynamics: power, face, fatigue, time pressure. Interruptions and half-sentences are fine.
 - Keep each utterance short: 1–3 sentences, like real speech. Usually one NPC speaks per turn; a second may add a short line when the scene calls for it (${npcs.length > 1 ? "there are multiple NPCs" : "there is one NPC"}).
 - A character's explicit disclosure condition in hidden/personality takes precedence, even when that fact is repeated among the fixed simulation facts: reveal only when this conversation actually meets that condition by meaning. An unrelated good question, courtesy, apology, boundary, or empathy does not unlock it. Do not require a magic phrase; a paraphrase asking about the same issue can meet the condition. If no specific condition is given, reveal gradually only through relevant inquiry or earned trust. Previously disclosed facts remain known; do not reset them or pretend to uncover them again. Answer the current question without smuggling in another private fact.
-- If the learner is hostile, sarcastic, or dismissive, NPCs escalate or withdraw realistically. If the learner uses a skill well (naming feelings, restating the other's view, proposing a concrete step), NPCs soften proportionally — not instantly.
+- If the learner is hostile, sarcastic or dismissive, choose this person's plausible response: deflect, set a limit, challenge, become defensive or withdraw when warranted. Do not force every character to escalate. Useful understanding or a feasible step can soften the relevant concern gradually without erasing the disagreement.
 - Never coach, never break character, never mention objectives or the app inside dialogue.
 - The current practice segment is ${s.maxTurns} learner turns. It is an optional checkpoint controlled by the learner, not the character's deadline. Never shorten the conversation because of a turn count. The learner can extend the same practice with its history intact.
 

@@ -1,0 +1,28 @@
+{
+  "synthetic": true,
+  "mocked_generation": true,
+  "desktop": [
+    1280,
+    577
+  ],
+  "mobile": [
+    390,
+    844
+  ],
+  "reload": {
+    "alerts": [],
+    "hasReply": true,
+    "latest": "行，我先问你。可你也别什么都不说，我这当妈的，连你工作咋样都不知道，心里堵得慌。",
+    "messages": 5,
+    "reducedMotion": true,
+    "viewport": [
+      390,
+      844
+    ],
+    "voices": true
+  },
+  "page_errors": [],
+  "probe_corrections": [
+    "The first route stub targeted /api/dinner instead of /api/dinner/direct; the local production budget guard refused it, preserving the draft. The corrected route was verified."
+  ]
+}

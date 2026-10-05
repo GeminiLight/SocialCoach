@@ -10,6 +10,7 @@ import {variantFor,storyScenario,agendasForVariant,factsForVariant,type VariantI
 import {tableEvidence} from './tableEvidence';
 import {publicSceneBrief} from './briefing';
 import {DinnerContentSchema} from './content-snapshot';
+import {characterVoices} from './voices';
 
 const skills:Record<VariantId,SkillId[]>={
   'work-toast':['communication','resolving-conflicts','ethical-responsibility'],
@@ -78,5 +79,5 @@ export function dinnerReplayUrl(context:SceneContext) {
 export function captureDinnerContent(scenarioId:Save['scenarioId'],variantId:VariantId,maxTurns:number,briefVersion?:1){
  const variant=variantFor(scenarioId,variantId),scene=storyScenario(scenarios.find(s=>s.id===scenarioId)!,variant),brief=publicSceneBrief(variant.id,briefVersion),agendas=agendasForVariant(variant);
  const save:Save={version:1,scenarioId,variantId,maxTurns,briefVersion,messages:[opening(scene,'zh',variantId)],started:false,complete:false,lang:'zh',draft:''};
- return DinnerContentSchema.parse({version:1,publicScenario:dinnerReviewContent(save).scenario,direction:{title:variant.title,setup:variant.setup,goal:variant.goal,cast:scene.characters.map((c,i)=>({id:c.id,name:c.name,role:c.role,description:c.description,agenda:agendas[i]})),facts:{zh:factsForVariant(variant,'zh'),en:factsForVariant(variant,'en')},brief:{role:brief.role,unknown:brief.unknown,lines:brief.lines}}});
+ return DinnerContentSchema.parse({version:1,publicScenario:dinnerReviewContent(save).scenario,direction:{title:variant.title,setup:variant.setup,goal:variant.goal,cast:scene.characters.map((c,i)=>({id:c.id,name:c.name,role:c.role,description:c.description,agenda:agendas[i],voice:characterVoices[c.id]})),facts:{zh:factsForVariant(variant,'zh'),en:factsForVariant(variant,'en')},brief:{role:brief.role,unknown:brief.unknown,lines:brief.lines}}});
 }

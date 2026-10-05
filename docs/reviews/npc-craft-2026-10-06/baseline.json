@@ -1,0 +1,1069 @@
+{
+  "stage": "baseline",
+  "model": "glm-5.3-flash",
+  "fixtures": 10,
+  "failures": 0,
+  "results": [
+    {
+      "id": "aunt-refusal",
+      "kind": "3d",
+      "expected": "Keep the refusal, respond to the reporting wording; no renewed photo pressure or blanket approval.",
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "family",
+        "variantId": "family-introduction",
+        "maxTurns": 12,
+        "targetId": "aunt",
+        "lang": "zh",
+        "text": "大姨，您就说我不接受介绍，别说我只是最近忙。这话您愿意原样转达吗？",
+        "history": [
+          {
+            "role": "npc",
+            "text": "你表妹都订婚了。今天把照片看了、联系方式加了，别又说“以后再说”。",
+            "speakerId": "aunt",
+            "cue": "大姨端起杯子。妈妈跟上，爸爸慢半拍举起茶杯。",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "aunt",
+                "emotion": "pressing",
+                "gesture": "toast"
+              },
+              {
+                "characterId": "mom",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "dad",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "introduction"
+            }
+          },
+          {
+            "role": "user",
+            "text": "大姨，我不相亲，也不看照片。"
+          },
+          {
+            "role": "npc",
+            "text": "行，今天不看了。我还得给介绍的人一个说法。",
+            "speakerId": "aunt",
+            "reactions": [
+              {
+                "characterId": "aunt",
+                "emotion": "annoyed",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "mom",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "dad",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ]
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "aunt",
+        "text": "原样说，人家该觉得我这个大姨没面子。要不这样——我说你本人暂时不愿意，别提别的？",
+        "cue": "大姨抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "introduction",
+          "beat": "relay"
+        },
+        "replyTo": "别说我只是最近忙",
+        "interjection": {
+          "speakerId": "dad",
+          "text": "孩子说得清楚了，就照原话讲吧。"
+        }
+      },
+      "calls": 1,
+      "inputBytes": 20433,
+      "durationMs": 5090
+    },
+    {
+      "id": "chen-joke",
+      "kind": "3d",
+      "expected": "Notice the joke without agreeing to alcohol; protect face in Chen’s own voice, no random new facts.",
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "work",
+        "variantId": "work-toast",
+        "maxTurns": 12,
+        "targetId": "chen",
+        "lang": "zh",
+        "text": "陈总，我开车来的，茶也能把谢意敬到位，酒留给车钥匙吧。",
+        "history": [
+          {
+            "role": "npc",
+            "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+            "speakerId": "chen",
+            "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "chen",
+                "emotion": "pressing",
+                "gesture": "toast"
+              },
+              {
+                "characterId": "lin",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "zhou",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "toast"
+            }
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "chen",
+        "text": "开车就是开车，这杯不劝你。茶举起来也一样，心意到了就行。",
+        "cue": "陈总点了点头。",
+        "reactions": [
+          {
+            "characterId": "chen",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "lin",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "zhou",
+            "emotion": "supportive",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "toast",
+          "beat": "bridge"
+        },
+        "replyTo": "茶也能把谢意敬到位",
+        "interjection": {
+          "speakerId": "lin",
+          "text": "谢意我收下。不过周三上线，到底包含哪些内容，你们这边有说法吗？"
+        }
+      },
+      "calls": 1,
+      "inputBytes": 20423,
+      "durationMs": 4794
+    },
+    {
+      "id": "dad-voice",
+      "kind": "3d",
+      "expected": "A brief personal position from Dad, not a therapist or an automatic ruling for all relatives.",
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "family",
+        "variantId": "family-introduction",
+        "maxTurns": 12,
+        "targetId": "dad",
+        "lang": "zh",
+        "text": "爸，我不相亲，但也不想一桌人吵起来。你想怎么处理？",
+        "history": [
+          {
+            "role": "npc",
+            "text": "你表妹都订婚了。今天把照片看了、联系方式加了，别又说“以后再说”。",
+            "speakerId": "aunt",
+            "cue": "大姨端起杯子。妈妈跟上，爸爸慢半拍举起茶杯。",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "aunt",
+                "emotion": "pressing",
+                "gesture": "toast"
+              },
+              {
+                "characterId": "mom",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "dad",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "introduction"
+            }
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "dad",
+        "text": "我先说我的：我就是来吃顿饭。你要是不相亲，这话你自己跟大姨说清楚，我不替你答。",
+        "cue": "爸爸看向你。",
+        "reactions": [
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "introduction"
+        },
+        "replyTo": "你想怎么处理？",
+        "interjection": {
+          "speakerId": "aunt",
+          "text": "你看，让孩子自己说。那你说，照片总可以看一眼吧？"
+        }
+      },
+      "calls": 1,
+      "inputBytes": 20166,
+      "durationMs": 4038
+    },
+    {
+      "id": "fang-privacy-en",
+      "kind": "3d",
+      "expected": "Do not treat refusal as resignation or invent staffing deadlines; engage the planning concern.",
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "elevator",
+        "variantId": "elevator-privacy",
+        "maxTurns": 12,
+        "targetId": "fang",
+        "lang": "en",
+        "text": "Fang, I can discuss my current work, but that does not confirm I am leaving. What needs planning?",
+        "history": [
+          {
+            "role": "npc",
+            "text": "Just out of HR? Planning to leave? Qiao’s here too. Tell us, so we don’t have to guess.",
+            "speakerId": "fang",
+            "cue": "The car is stopped on floor 12. There is no countdown.",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "fang",
+                "emotion": "pressing",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "qiao",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "cheng",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "privacy"
+            }
+          },
+          {
+            "role": "user",
+            "text": "I’m not discussing HR here. Work planning is a separate question."
+          },
+          {
+            "role": "npc",
+            "text": "Then tell me what work information you can actually share.",
+            "speakerId": "fang",
+            "reactions": [
+              {
+                "characterId": "fang",
+                "emotion": "annoyed",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "qiao",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "cheng",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ]
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "fang",
+        "text": "Fine, no guessing. Qiao mentioned the interface handoff is still unclear to them — can you confirm whether you're still the contact point for that, or should I plan around someone else?",
+        "cue": "Fang leans toward you.",
+        "reactions": [
+          {
+            "characterId": "fang",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "qiao",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "cheng",
+            "emotion": "neutral",
+            "gesture": "fold"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "need"
+        },
+        "replyTo": "that does not confirm I am leaving",
+        "interjection": {
+          "speakerId": "qiao",
+          "text": "I only said I don't know who to ask now — nothing about anyone leaving."
+        }
+      },
+      "calls": 1,
+      "inputBytes": 21319,
+      "durationMs": 5795
+    },
+    {
+      "id": "kai-uncertainty",
+      "kind": "3d",
+      "expected": "Sound like a cautious teammate, keep unchecked records unknown and no invented percentages.",
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "school",
+        "variantId": "school-credit",
+        "maxTurns": 12,
+        "targetId": "kai",
+        "lang": "zh",
+        "text": "阿凯，咱俩的代码部分写清楚就行，你真核对过提交记录吗？",
+        "history": [
+          {
+            "role": "npc",
+            "text": "这个奖主要靠我带队。合照就写“队友负责执行”，没意见吧？",
+            "speakerId": "senior",
+            "cue": "许学长把奖杯拉近，先举杯。小月和阿凯对视一下，才抬起自己的杯子。",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "senior",
+                "emotion": "pressing",
+                "gesture": "toast"
+              },
+              {
+                "characterId": "yue",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "kai",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "credit"
+            }
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "kai",
+        "text": "还没细看，饭前只扫了一眼。提交记录在仓库里，等会儿我能翻一下咱俩那部分。",
+        "cue": "阿凯看向你。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "credit",
+          "beat": "signoff"
+        },
+        "replyTo": "你真核对过提交记录吗？",
+        "interjection": {
+          "speakerId": "yue",
+          "text": "那设计呢？总得写上是谁做的，别就一句感谢。"
+        }
+      },
+      "calls": 1,
+      "inputBytes": 19967,
+      "durationMs": 5319
+    },
+    {
+      "id": "mom-repair",
+      "kind": "3d",
+      "expected": "Respond as a hurt mother, repair tone gradually; apology is not permission or an instant emotional reset.",
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "family",
+        "variantId": "family-privacy",
+        "maxTurns": 12,
+        "targetId": "mom",
+        "lang": "zh",
+        "text": "妈，刚才语气重了，对不起。工作消息以后先问我再转发，可以吗？",
+        "history": [
+          {
+            "role": "npc",
+            "text": "工作变动你妈都告诉我了。工资变没变？这桌又没外人，你还瞒着？",
+            "speakerId": "aunt",
+            "cue": "大姨放下筷子。妈妈看向你，爸爸低头喝了一口茶。",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "aunt",
+                "emotion": "pressing",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "mom",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "dad",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "privacy"
+            }
+          },
+          {
+            "role": "user",
+            "text": "妈，你这样让我很生气！"
+          },
+          {
+            "role": "npc",
+            "text": "你这么凶，我还不是怕你不跟家里说话。",
+            "speakerId": "mom",
+            "reactions": [
+              {
+                "characterId": "aunt",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "mom",
+                "emotion": "annoyed",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "dad",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ]
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "mom",
+        "text": "行，我记住这条。那我问你，大姨刚才已经听了“变动”，这事儿她还能跟别人提吗？",
+        "cue": "妈妈朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "mom",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "privacy",
+          "beat": "correction"
+        },
+        "replyTo": "工作消息以后先问我再转发",
+        "interjection": {
+          "speakerId": "dad",
+          "text": "别追了，先吃饭。她提的规矩我也有份，我也不乱传。"
+        }
+      },
+      "calls": 1,
+      "inputBytes": 20360,
+      "durationMs": 4717
+    },
+    {
+      "id": "ning-floor",
+      "kind": "3d",
+      "expected": "Do not restart the interruption; engage the concrete risk with Ning’s brisk voice, retain access uncertainty.",
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "office",
+        "variantId": "office-interruption",
+        "maxTurns": 12,
+        "targetId": "ning",
+        "lang": "zh",
+        "text": "宁姐，我要提的风险是工单权限没确认，先查访问，再试两名客服。您担心哪一部分？",
+        "history": [
+          {
+            "role": "npc",
+            "text": "你先停一下。就按我的方案吧，你的细节大家应该都懂了，别耽误时间。",
+            "speakerId": "ning",
+            "cue": "会议资料放在工位上，白板上的方案仍待决定。",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "he",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "ning",
+                "emotion": "pressing",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "rui",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "speaking"
+            }
+          },
+          {
+            "role": "user",
+            "text": "宁姐，先让我讲一分钟，再判断。"
+          },
+          {
+            "role": "npc",
+            "text": "好，一分钟。别再绕背景。",
+            "speakerId": "ning",
+            "reactions": [
+              {
+                "characterId": "he",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "ning",
+                "emotion": "annoyed",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "rui",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ]
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "ning",
+        "text": "查访问要时间。我方案今天就定了才赶得上，你这一步会不会拖到下周？",
+        "cue": "宁姐抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "he",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "ning",
+            "emotion": "annoyed",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "rui",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "speaking",
+          "beat": "point"
+        },
+        "replyTo": "先查访问，再试两名客服",
+        "interjection": {
+          "speakerId": "he",
+          "text": "一分钟到了。谁去查、查多久，给个数。"
+        }
+      },
+      "calls": 1,
+      "inputBytes": 22427,
+      "durationMs": 4273
+    },
+    {
+      "id": "text-boundary-en",
+      "kind": "text",
+      "expected": "A boss’s own concern, no instant agreement, no invented task or accepted morning time, conversational phrasing.",
+      "input": {
+        "scenario": {
+          "id": "declining-extra-hours",
+          "title": {
+            "zh": "拒绝临时加班",
+            "en": "Declining Extra Hours"
+          },
+          "hook": {
+            "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+            "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+          },
+          "background": {
+            "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+            "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+          },
+          "context": "workplace",
+          "contextType": {
+            "zh": "办公室",
+            "en": "Office"
+          },
+          "competencies": [
+            "relationship-skills",
+            "self-management"
+          ],
+          "skills": [
+            "seeking-help",
+            "communication",
+            "goal-setting"
+          ],
+          "relatedSkills": [
+            "problem-solving"
+          ],
+          "relationship": [
+            "senior"
+          ],
+          "difficulty": 2,
+          "minutes": 4,
+          "characters": [
+            {
+              "id": "you",
+              "name": {
+                "zh": "你",
+                "en": "You"
+              },
+              "role": {
+                "zh": "团队成员",
+                "en": "Team member"
+              },
+              "personality": {
+                "zh": "",
+                "en": ""
+              },
+              "stance": {
+                "zh": "",
+                "en": ""
+              },
+              "playable": true,
+              "hue": 40
+            },
+            {
+              "id": "michael",
+              "name": {
+                "zh": "Michael",
+                "en": "Michael"
+              },
+              "role": {
+                "zh": "你的经理",
+                "en": "Your manager"
+              },
+              "personality": {
+                "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+                "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+              },
+              "stance": {
+                "zh": "明早前必须交付，谁做无所谓。",
+                "en": "The deck must ship by morning; who does it doesn't matter."
+              },
+              "hidden": {
+                "zh": "其实客户只要先看前三页。",
+                "en": "The client really only needs the first three slides tomorrow."
+              },
+              "hue": 25
+            }
+          ],
+          "objectives": [
+            {
+              "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+              "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+            },
+            {
+              "zh": "提出一个真正可行的替代方案。",
+              "en": "Offer a genuinely workable alternative."
+            },
+            {
+              "zh": "弄清楚客户明早真正需要什么。",
+              "en": "Find out what the client actually needs tomorrow."
+            }
+          ],
+          "success": {
+            "zh": "Michael 接受方案，你今晚按时离开。",
+            "en": "Michael accepts the plan and you leave on time."
+          },
+          "failure": {
+            "zh": "你答应留下，或对话变得对立。",
+            "en": "You agree to stay, or the exchange turns adversarial."
+          },
+          "maxTurns": 8,
+          "opening": {
+            "characterId": "michael",
+            "text": {
+              "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+              "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+            }
+          },
+          "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+          "keywords": [
+            "boundaries",
+            "saying no",
+            "overtime",
+            "manager",
+            "request",
+            "alternative"
+          ]
+        },
+        "learnerCharacterId": "you",
+        "messages": [
+          {
+            "id": "opening",
+            "role": "npc",
+            "characterId": "michael",
+            "text": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?",
+            "ts": 1
+          },
+          {
+            "id": "player",
+            "role": "learner",
+            "text": "It’s my father’s birthday tonight. I cannot stay. I can discuss checking the problem tomorrow morning; that is not a promise to finish it.",
+            "ts": 2
+          }
+        ],
+        "lang": "en"
+      },
+      "output": {
+        "utterances": [
+          {
+            "characterId": "michael",
+            "text": "I hear you — family night, fair enough, I won't pretend otherwise. But 'checking in the morning' is cutting it very close to nine. Look, let me ask you this: what would make tomorrow morning actually workable for you?"
+          }
+        ],
+        "meta": {
+          "objectives": [
+            false,
+            false,
+            false
+          ],
+          "objectiveEvidence": [],
+          "ended": false,
+          "outcome": null,
+          "note": "Michael tests the no, offers a small opening on scope.",
+          "stance": 30,
+          "revealed": false,
+          "disclosures": []
+        },
+        "error": null
+      },
+      "calls": 1,
+      "inputBytes": 18047,
+      "durationMs": 5370
+    },
+    {
+      "id": "text-boundary-zh",
+      "kind": "text",
+      "expected": "A boss’s own concern, no instant agreement, no invented task or accepted morning time, conversational phrasing.",
+      "input": {
+        "scenario": {
+          "id": "declining-extra-hours",
+          "title": {
+            "zh": "拒绝临时加班",
+            "en": "Declining Extra Hours"
+          },
+          "hook": {
+            "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+            "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+          },
+          "background": {
+            "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+            "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+          },
+          "context": "workplace",
+          "contextType": {
+            "zh": "办公室",
+            "en": "Office"
+          },
+          "competencies": [
+            "relationship-skills",
+            "self-management"
+          ],
+          "skills": [
+            "seeking-help",
+            "communication",
+            "goal-setting"
+          ],
+          "relatedSkills": [
+            "problem-solving"
+          ],
+          "relationship": [
+            "senior"
+          ],
+          "difficulty": 2,
+          "minutes": 4,
+          "characters": [
+            {
+              "id": "you",
+              "name": {
+                "zh": "你",
+                "en": "You"
+              },
+              "role": {
+                "zh": "团队成员",
+                "en": "Team member"
+              },
+              "personality": {
+                "zh": "",
+                "en": ""
+              },
+              "stance": {
+                "zh": "",
+                "en": ""
+              },
+              "playable": true,
+              "hue": 40
+            },
+            {
+              "id": "michael",
+              "name": {
+                "zh": "Michael",
+                "en": "Michael"
+              },
+              "role": {
+                "zh": "你的经理",
+                "en": "Your manager"
+              },
+              "personality": {
+                "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+                "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+              },
+              "stance": {
+                "zh": "明早前必须交付，谁做无所谓。",
+                "en": "The deck must ship by morning; who does it doesn't matter."
+              },
+              "hidden": {
+                "zh": "其实客户只要先看前三页。",
+                "en": "The client really only needs the first three slides tomorrow."
+              },
+              "hue": 25
+            }
+          ],
+          "objectives": [
+            {
+              "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+              "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+            },
+            {
+              "zh": "提出一个真正可行的替代方案。",
+              "en": "Offer a genuinely workable alternative."
+            },
+            {
+              "zh": "弄清楚客户明早真正需要什么。",
+              "en": "Find out what the client actually needs tomorrow."
+            }
+          ],
+          "success": {
+            "zh": "Michael 接受方案，你今晚按时离开。",
+            "en": "Michael accepts the plan and you leave on time."
+          },
+          "failure": {
+            "zh": "你答应留下，或对话变得对立。",
+            "en": "You agree to stay, or the exchange turns adversarial."
+          },
+          "maxTurns": 8,
+          "opening": {
+            "characterId": "michael",
+            "text": {
+              "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+              "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+            }
+          },
+          "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+          "keywords": [
+            "boundaries",
+            "saying no",
+            "overtime",
+            "manager",
+            "request",
+            "alternative"
+          ]
+        },
+        "learnerCharacterId": "you",
+        "messages": [
+          {
+            "id": "opening",
+            "role": "npc",
+            "characterId": "michael",
+            "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "ts": 1
+          },
+          {
+            "id": "player",
+            "role": "learner",
+            "text": "今晚是父亲生日，我不能留下。不是不管项目，我可以明早先看问题。",
+            "ts": 2
+          }
+        ],
+        "lang": "zh"
+      },
+      "output": {
+        "utterances": [
+          {
+            "characterId": "michael",
+            "text": "生日餐我理解，爸的生日一年一次。可「明早再看」来不及啊——九点客户就到了，你早上看发现问题谁来改？"
+          }
+        ],
+        "meta": {
+          "objectives": [
+            false,
+            false,
+            false
+          ],
+          "objectiveEvidence": [],
+          "ended": false,
+          "outcome": null,
+          "note": "Michael收到拒绝，开始追问早上的可行性",
+          "stance": 30,
+          "revealed": false,
+          "disclosures": []
+        },
+        "error": null
+      },
+      "calls": 1,
+      "inputBytes": 17982,
+      "durationMs": 4334
+    },
+    {
+      "id": "yue-own-limit-en",
+      "kind": "3d",
+      "expected": "A teammate’s own conditional offer or limit, without inventing availability or accepting for the team.",
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "school",
+        "variantId": "school-workload",
+        "maxTurns": 12,
+        "targetId": "yue",
+        "lang": "en",
+        "text": "Yue, I am not taking all three jobs. Which part would you personally consider?",
+        "history": [
+          {
+            "role": "npc",
+            "text": "Celebration’s over; Friday’s showcase is next. You know the code—demo, poster and Q&A all go to you. Settled?",
+            "speakerId": "senior",
+            "cue": "Your senior pulls the trophy toward himself. Your teammates exchange a look.",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "senior",
+                "emotion": "pressing",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "yue",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "kai",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "workload"
+            }
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "yue",
+        "text": "Poster's mine—that's my design work. Revisions too, but I'll say my limit now: content and wording aren't all on me. So which of the three are you actually taking?",
+        "cue": "Yue folds their arms.",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "thinking",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "workload",
+          "beat": "bundle"
+        },
+        "replyTo": "Which part would you personally consider?"
+      },
+      "calls": 1,
+      "inputBytes": 20033,
+      "durationMs": 4149
+    }
+  ]
+}

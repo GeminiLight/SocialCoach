@@ -11,7 +11,7 @@ export function advancePresence(state:Presence,{dt,line,speakerId,paused=false}:
   return state;
 }
 export function presencePose(state:Presence,{index,active,reduced=false,event=false,playback=false}:{index:number;active:boolean;reduced?:boolean;event?:boolean;playback?:boolean}) {
-  if(reduced)return {breath:0,speech:0,emphasis:0,blink:1,speakerAttention:0,tableAttention:0};
+  if(reduced)return {breath:0,speech:0,emphasis:0,nod:0,blink:1,speakerAttention:0,tableAttention:0};
   const e=state.elapsed,d=state.duration;
   const envelope=smooth(e/.25)*(playback&&active?1:1-smooth((e-d+.55)/.55));
   const phrase=.5+.5*Math.sin(e*2.15-.8);
@@ -24,5 +24,9 @@ export function presencePose(state:Presence,{index,active,reduced=false,event=fa
   const tableAttention=!active&&index>0&&!event&&d>0?smooth((e-restAt)/.7)*(1-smooth((e-restAt-1.3)/.8))*.7:0;
   const phase=(state.time+1.3+index*1.19)%(4.9+index*.43);
   const blink=phase<.19?1-.94*Math.sin(Math.PI*phase/.19):1;
-  return {breath:Math.sin(state.time*(1.25-index*.07)+index*.91)*.0025,speech,emphasis:active?Math.sin(Math.min(1,e/1.8)*Math.PI)*envelope:0,blink,speakerAttention,tableAttention};
+  // A requested nod belongs to a listener too. Offset listeners slightly,
+  // finish once per line, and let explicit physical moments own their pose.
+  const nodProgress=Math.max(0,Math.min(1,(e-(active?0:.2+index*.12))/1.25));
+  const nod=!event&&nodProgress>0&&nodProgress<1?Math.sin(Math.PI*nodProgress)**2*.045:0;
+  return {breath:Math.sin(state.time*(1.25-index*.07)+index*.91)*.0025,speech,emphasis:active?Math.sin(Math.min(1,e/1.8)*Math.PI)*envelope:0,nod,blink,speakerAttention,tableAttention};
 }
