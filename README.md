@@ -40,7 +40,7 @@
 
 饭桌上，领导突然举杯；电梯口，同事追问你是不是要离职；快下班时，三件临时任务落到桌上。先在现场练一次怎么回应。
 
-<p align="center"><a href="https://socialcoach-ai.vercel.app/3d"><img src="app/public/images/dinner-home-preview-bright.jpg" width="860" alt="SocialCoach 实际渲染的 3D 职场饭桌，三位角色坐在桌子对面"></a></p>
+<p align="center"><a href="https://socialcoach-ai.vercel.app/3d"><img src="docs/screenshots/3d-practice-zh-2026-10-05.jpg" width="860" alt="SocialCoach 3D 职场饭桌实景，明亮室内、三位角色和中文对话输入"></a></p>
 
 选择**职场、家庭或学校饭局**，也可以走进**电梯口或办公室**，每个场景都有独立的人物。切换第一、第三人称，起身走动，选择回应谁，用文字或浏览器语音开口。旁人可能插话，你也可以举杯、查看资料，或走到电梯按钮旁操作。
 

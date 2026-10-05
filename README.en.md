@@ -44,7 +44,7 @@ https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
 
 A toast from your manager. A question about leaving your job in the elevator lobby. Three more tasks before you leave the office. Practice your response with everyone else in the room.
 
-<p align="center"><a href="https://socialcoach-ai.vercel.app/3d"><img src="app/public/images/dinner-home-preview-bright.jpg" width="860" alt="A rendered 3D work dinner in SocialCoach, with three characters seated across the table"></a></p>
+<p align="center"><a href="https://socialcoach-ai.vercel.app/3d"><img src="docs/screenshots/3d-practice-en-2026-10-05.jpg" width="860" alt="A 3D work dinner in SocialCoach, with a bright room, three characters and English conversation controls"></a></p>
 
 Choose a **work, family, or campus dinner**, an **elevator lobby**, or an **office**, each with its own cast. Switch between first- and third-person views, move around, choose whom to address, and speak by typing or browser voice input. Characters can interject, and scene actions let you raise a cup, check materials, or walk over to the elevator controls.
 
