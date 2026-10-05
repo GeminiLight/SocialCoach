@@ -10,6 +10,8 @@
 !app/next-env.d.ts
 !app/postcss.config.mjs
 !app/tsconfig.json
+!app/scripts/
+!app/scripts/prepare-local-reading.mjs
 !app/src/
 !app/src/**
 !app/public/
