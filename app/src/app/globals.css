@@ -786,6 +786,8 @@ aside.lg\:border-dashed { border-left: 0; }
 .dinner-experience .scene-viewport>div { width:100%; height:100%; }
 .dinner-experience .scene-viewport canvas { display:block; touch-action:none; }
 .dinner-experience .dinner-render { position:relative; width:100%; height:100%; }
+.dinner-experience .dinner-gaze-reticle { position:absolute;left:50%;top:36%;width:14px;height:14px;border:1px solid var(--dinner-hud-accent);border-radius:50%;box-shadow:0 0 0 2px var(--dinner-hud-surface);transform:translate(-50%,-50%);pointer-events:none;z-index:12;opacity:.65; }
+.dinner-experience:has(#reply:focus,.recipient-select select:focus) .dinner-gaze-reticle {visibility:hidden;}
 .dinner-experience .topbar { --dinner-ink:var(--dinner-hud-ink);--dinner-ink-secondary:var(--dinner-hud-secondary);--dinner-accent:var(--dinner-hud-accent);--dinner-line:var(--dinner-hud-line);--dinner-scene-overlay:var(--dinner-hud-raised);position:absolute; top:0; left:0; right:0; display:flex; align-items:center; gap:24px; height:82px; padding:0 30px; z-index:30; background:var(--dinner-hud-surface);color:var(--dinner-ink);border-bottom:1px solid var(--dinner-line); }
 .dinner-experience .brand { display:flex; align-items:center; gap:10px; margin-right:auto; min-height:44px; }
 .dinner-experience .brand-mark { width:33px; height:33px; border:1px solid var(--dinner-accent); border-radius:50%; display:grid; place-items:center; color:var(--dinner-accent); }

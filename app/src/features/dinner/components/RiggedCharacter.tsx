@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/immutability -- The animation mixer owns this cloned rig. */
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, type RefObject } from 'react';
 import { createPortal, useFrame } from '@react-three/fiber';
 import { Bone, Euler, Group, MathUtils, Mesh, Quaternion } from 'three';
 import { attentionSubject, eyeHeight, gazePose, playerEyeHeight, wrapAngle } from '../lib/attention';
@@ -14,9 +14,9 @@ import { avatarMetrics } from '../lib/avatarAssets';
 import { instantiateAsset, useSceneAsset, AssetCup } from './SceneAssets';
 import { Phone } from './DinnerProps';
 
-type Props={character:Character;actor:Actor;world:World;reaction?:Reply['reactions'][number];active:boolean;onSelect:()=>void;p:Palette;reduced:boolean;drama:Drama;index:number;scenario:Scenario;lang:Lang;line:string;player?:boolean;paused?:boolean};
+type Props={character:Character;actor:Actor;world:World;reaction?:Reply['reactions'][number];active:boolean;onSelect:()=>void;p:Palette;reduced:boolean;drama:Drama;index:number;scenario:Scenario;lang:Lang;line:string;player?:boolean;paused?:boolean;lookOffset?:RefObject<number>};
 
-export function RiggedCharacter({character,actor,world,reaction,active,onSelect,p,reduced,drama,index,scenario,lang,line,player=false,paused=false}:Props) {
+export function RiggedCharacter({character,actor,world,reaction,active,onSelect,p,reduced,drama,index,scenario,lang,line,player=false,paused=false,lookOffset}:Props) {
   const asset=useSceneAsset(character.id),root=useRef<Group>(null!),held=useRef<Group>(null!),cup=useRef<Group>(null!),phone=useRef<Group>(null!);
   const metric=avatarMetrics[character.id];
   const rig=useMemo(()=>{
@@ -58,6 +58,7 @@ export function RiggedCharacter({character,actor,world,reaction,active,onSelect,
 
     const subject=player?attentionSubject(world):beat.gaze>=0&&beat.gaze!==index?world.npcs[beat.gaze]:world.player;
     const target=subject?{x:subject.x,z:subject.z,eye:subject===world.player?playerEyeHeight(subject):eyeHeight(subject)}:{x:actor.x+Math.sin(world.viewYaw)*6,z:actor.z+Math.cos(world.viewYaw)*6,eye:playerEyeHeight(actor)+Math.tan(world.viewPitch)*6};
+    if(player&&lookOffset?.current){const dx=target.x-actor.x,dz=target.z-actor.z,yaw=lookOffset.current;target.x=actor.x+dx*Math.cos(yaw)+dz*Math.sin(yaw);target.z=actor.z+dz*Math.cos(yaw)-dx*Math.sin(yaw);}
     const speaker=world.npcs.find(n=>n.id===world.speakerId);
     if(!player&&!actor.moving&&speaker&&speaker!==actor){const a=presenceState.speakerAttention;target.x=MathUtils.lerp(target.x,speaker.x,a);target.z=MathUtils.lerp(target.z,speaker.z,a);target.eye=MathUtils.lerp(target.eye,eyeHeight(speaker),a);}
     if(!player&&actor.seated&&presenceState.tableAttention>0){const a=presenceState.tableAttention;target.x=MathUtils.lerp(target.x,actor.x+Math.sin(actor.heading),a);target.z=MathUtils.lerp(target.z,actor.z+Math.cos(actor.heading),a);target.eye=MathUtils.lerp(target.eye,1.75,a);}
@@ -76,7 +77,7 @@ export function RiggedCharacter({character,actor,world,reaction,active,onSelect,
     }
   });
   const wine=scenario.id!=='family'&&(player?drama.inventory==='glass':index===0);
-  return <group ref={root} position={[actor.x,0,actor.z]} rotation={[0,actor.heading,0]} onClick={event=>{event.stopPropagation();if(event.delta<5&&!player)onSelect();}}>
+  return <group ref={root} name={`dinner-actor-${actor.id}`} position={[actor.x,0,actor.z]} rotation={[0,actor.heading,0]} onClick={event=>{event.stopPropagation();if(event.delta<5&&!player)onSelect();}}>
     <primitive object={rig.scene} dispose={null}/>
     {rig.bones.hand_r&&createPortal(<group ref={held} scale={1/metric.scale} position={[0,.065,0]}>
       <group ref={cup} visible={false} position={wine?[0,-.12,.075]:[0,.01,.095]}><AssetCup palette={p} wine={wine}/></group>

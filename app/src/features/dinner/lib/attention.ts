@@ -49,8 +49,8 @@ export function constrainCamera(world:World,position:number[]) {
   }
   return result;
 }
-export function cameraPose(world:World,view:ViewMode,aspect:number) {
-  const p=world.player,subject=attentionSubject(world),yaw=world.viewYaw,pitch=world.viewPitch;
+export function cameraPose(world:World,view:ViewMode,aspect:number,lookOffset=0) {
+  const p=world.player,subject=attentionSubject(world),yaw=world.viewYaw+(view==='first'?lookOffset:0),pitch=world.viewPitch;
   const forward={x:Math.sin(yaw),z:Math.cos(yaw)},right={x:-Math.cos(yaw),z:Math.sin(yaw)};
   const portrait=aspect<=1.25;
   const fov=view==='first'?(portrait?Math.min(p.seated?96:92,2*Math.atan(Math.tan(Math.PI*33/180)/aspect)*180/Math.PI):world.layout.kind==='dinner'?55:68):(portrait?2*Math.atan(Math.tan(Math.PI*19/180)/aspect)*180/Math.PI:50);
@@ -70,5 +70,7 @@ export function cameraPose(world:World,view:ViewMode,aspect:number) {
   const position=correction(candidates[0])>correction(candidates[1])+.2?candidates[1]:candidates[0];
   // Frame the person and the player together; the shoulder offset keeps one face from hiding the other.
   const target=subject?[p.x+(subject.x-p.x)*.56,1.85+(eyeHeight(subject)-1.85)*.56,p.z+(subject.z-p.z)*.56]:[p.x+forward.x*2.6,2.1+Math.tan(pitch)*2.6,p.z+forward.z*2.6];
-  return {position:constrainCamera(world,position),target,fov};
+  const safePosition=constrainCamera(world,position);
+  if(lookOffset){const dx=target[0]-safePosition[0],dz=target[2]-safePosition[2];target[0]=safePosition[0]+dx*Math.cos(lookOffset)+dz*Math.sin(lookOffset);target[2]=safePosition[2]+dz*Math.cos(lookOffset)-dx*Math.sin(lookOffset);}
+  return {position:safePosition,target,fov};
 }

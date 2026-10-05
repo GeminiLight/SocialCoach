@@ -73,7 +73,7 @@ export function AssetRoom({p,world,scenario,lang,paused,onEvidence,surfaces}:{p:
     else if(name.startsWith('LiftClosed'))operateLift(world,'closed');
     else if(name.startsWith('EvidenceDocument')||name==='OfficeBoard')onEvidence();
   };
-  return <group ref={root} onClick={click}>
+  return <group ref={root} name="dinner-room" onClick={click}>
     <primitive object={instance.scene} dispose={null}/>
     {['family','school','office'].includes(kind)&&<RoomWindows p={p} kind={kind} time={scenario.time}/>}
     {kind==='work'&&surfaces.landscape&&<mesh position={[0,3.55,-4.972]}><planeGeometry args={[3.84,1.77]}/><meshStandardMaterial map={surfaces.landscape} roughness={1}/></mesh>}
