@@ -14,7 +14,7 @@
 [![在线体验](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E4%BD%93%E9%AA%8C-Live-49814C?style=for-the-badge&labelColor=261D16)](https://socialcoach.aurax.live)
 [![3D 现场，立即进入](https://img.shields.io/badge/3D%E7%8E%B0%E5%9C%BA-%E7%AB%8B%E5%8D%B3%E8%BF%9B%E5%85%A5-785307?style=for-the-badge&labelColor=261D16)](https://socialcoach-ai.vercel.app/3d)
 [![阅读论文](https://img.shields.io/badge/%E8%AE%BA%E6%96%87-arXiv-AD411C?style=for-the-badge&labelColor=261D16)](https://arxiv.org/abs/2606.04155)
-[![Apache 2.0 开源许可证](https://img.shields.io/badge/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF-Apache%202.0-00656A?style=for-the-badge&labelColor=261D16)](LICENSE)
+[![加入 SocialCoach 微信交流群](https://img.shields.io/badge/%E5%BE%AE%E4%BF%A1%E4%BA%A4%E6%B5%81-%E6%89%AB%E7%A0%81%E5%8A%A0%E5%85%A5-00656A?style=for-the-badge&labelColor=261D16)](#交流与反馈)
 
 酒桌劝酒、电梯尬聊、下班加活——尴尬先彩排。
 
