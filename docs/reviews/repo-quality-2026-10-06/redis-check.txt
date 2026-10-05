@@ -1,0 +1,1 @@
+PASS 12 concurrent reservations: 2 accepted, 10 refused; application restarts retain usage; daily ceiling cannot be exceeded or raised by a differently configured instance.

@@ -11,6 +11,10 @@ marketing/
 # Local academic research and submission notes
 /docs/research/
 
+# Local agent helpers installed by Marketplace tooling
+/app/.agents/
+/app/skills-lock.json
+
 # Rejected logo explorations — kept locally for reference, not part of the app
 docs/icon-candidates/
 

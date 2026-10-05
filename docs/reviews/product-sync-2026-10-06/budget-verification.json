@@ -1,0 +1,13 @@
+{
+  "provider": "Upstash Redis REST",
+  "isolated_namespace": true,
+  "anonymous_fixture_only": true,
+  "parallel_requests": 12,
+  "accepted": 2,
+  "concurrency_refused": 10,
+  "daily_cap_enforced": true,
+  "higher_instance_cap_refused": true,
+  "shared_across_clients": true,
+  "release_confirmed": true,
+  "passed": true
+}

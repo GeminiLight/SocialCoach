@@ -1,0 +1,64 @@
+{
+  "metadata": [
+    {
+      "field": "store.name",
+      "value": "socialcoach-model-budget"
+    },
+    {
+      "field": "store.projectsMetadata.0.name",
+      "value": "socialcoach"
+    },
+    {
+      "field": "store.status",
+      "value": "available"
+    },
+    {
+      "field": "store.metadata.primaryRegion",
+      "value": "hnd1"
+    },
+    {
+      "field": "store.metadata.eviction",
+      "value": false
+    },
+    {
+      "field": "store.metadata.autoUpgrade",
+      "value": false
+    },
+    {
+      "field": "store.metadata.prodPack",
+      "value": false
+    },
+    {
+      "field": "store.secrets.0.name",
+      "value": "REDIS_URL"
+    },
+    {
+      "field": "store.secrets.1.name",
+      "value": "KV_REST_API_URL"
+    },
+    {
+      "field": "store.secrets.2.name",
+      "value": "KV_REST_API_READ_ONLY_TOKEN"
+    },
+    {
+      "field": "store.secrets.3.name",
+      "value": "KV_REST_API_TOKEN"
+    },
+    {
+      "field": "store.secrets.4.name",
+      "value": "KV_URL"
+    },
+    {
+      "field": "store.product.name",
+      "value": "Upstash for Redis"
+    },
+    {
+      "field": "store.product.integration.name",
+      "value": "Upstash"
+    },
+    {
+      "field": "store.billingPlan.name",
+      "value": "Free"
+    }
+  ]
+}

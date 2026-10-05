@@ -7,7 +7,8 @@
 - `browser-check.txt` / `browser-probe.ts`：实际 Chromium 配额/重试、备份预览/合并/ID 冲突、两个窗口的写权限交接；截图为 430×932 与 1280×900 视口，不替代真机。
 - `reflection-result.jsonl` / `reflection-probe.ts` / `reflection-fixed.png`：改答重试后答案和回复一致。旧错误截图仍保留在上一轮目录。
 - `recovery-check.txt` / `recovery/`：原有 14 项网页中断恢复。
-- Redis 原子脚本的隔离集成检查：`app/scripts/check-shared-budget-redis.ts`。12 并发请求在限额 2 时只接受 2；应用重启保留总量；更高配置的实例不能抬高本日 token 上限。
+- `docker-unverified.txt`：完整镜像构建的网络阻断，未计通过。
+- `redis-check.txt`：Redis 结果；原子脚本的隔离集成检查：`app/scripts/check-shared-budget-redis.ts`。12 并发请求在限额 2 时只接受 2；应用重启保留总量；更高配置的实例不能抬高本日 token 上限。
 
 复跑：从 `app/` 执行 `pnpm check` 与 `pnpm build`。网页探针需要 `agent-browser` 和 `localhost:3101` 的当前正式构建；构建期间应停止服务器，构建结束后重启再测，避免旧 manifest 指向被替换的资源。
 

@@ -1,0 +1,22 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.07kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-alpine
+#2 ERROR: failed to authorize: DeadlineExceeded: failed to fetch anonymous token: Get "https://auth.docker.io/token?scope=repository%3Alibrary%2Fnode%3Apull&service=registry.docker.io": dial tcp 75.126.164.178:443: i/o timeout
+------
+ > [internal] load metadata for docker.io/library/node:22-alpine:
+------
+Dockerfile:8
+--------------------
+   6 |     RUN pnpm install --frozen-lockfile
+   7 |
+   8 | >>> FROM node:22-alpine AS build
+   9 |     WORKDIR /app
+  10 |     RUN corepack enable
+--------------------
+ERROR: failed to build: failed to solve: DeadlineExceeded: failed to fetch anonymous token: Get "https://auth.docker.io/token?scope=repository%3Alibrary%2Fnode%3Apull&service=registry.docker.io": dial tcp 75.126.164.178:443: i/o timeout
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/jcbcuv2fsyrj9qpie8s45n3ut
