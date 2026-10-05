@@ -1,0 +1,10 @@
+{
+  "type": "image-to-3d-input",
+  "status": "reference-image-only",
+  "generator": "built-in imagegen",
+  "reference": "a-adult-animation.png",
+  "input": "chen-generation-input.png",
+  "prompt": "Use case: stylized-concept. Asset type: character input for image-to-3D reconstruction. Reference image: use ONLY the middle businessman’s identity and adult 3D animation visual style from the supplied dinner concept; the image is a style/identity reference, not an edit target. Generate exactly one isolated full-body Chinese male executive aged around 48, recognizably the central man from reference: broad rounded-square face, expressive restrained brown eyes, strong brows, subtle smile lines, swept sculpted dark brown hair with modest gray at temples, finely tailored charcoal gray suit, white shirt, muted dark textured tie, brown-black dress shoes. Maintain an elegant feature-film animation sculpt, subtly enlarged head and warm approachable face, anatomically connected neck and shoulders; no uncanny realism, no bobblehead. Modeling-friendly A pose: standing straight, arms gently angled about 30 degrees away from torso, open relaxed hands with five separated fingers each, feet a small distance apart. Entire head, fingers and shoes visible, centered, nearly front view with slight three-quarter angle (about 8 degrees), orthographic feel. One person only. Soft neutral even studio illumination, restrained highlights, matte woven fabric, clean sculpted hair masses, no dramatic shadows or rim light. Transparent background, no floor, no shadow, no furniture, no glass, no props, no text, no logos, no extra views or split panels. High quality visible sculpt details; the result must be useful as a single-object reconstruction input.",
+  "generated_at": "2026-10-05",
+  "note": "This image is input art, not a runtime 3D asset. Generated 3D geometry needs independent validation, rigging, expression support, and license review."
+}

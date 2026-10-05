@@ -19,7 +19,7 @@ test('paths go around the table and do not cut furniture corners',()=>{
 });
 test('player reaches a selected floor destination and returns to a real seat',()=>{
   const world=createWorld(scene);walkPlayer(world,{x:3.7,z:2.5});run(world,12);assert.ok(distance(world.player,{x:3.75,z:2.5})<.15);assert.equal(world.player.seated,false);
-  goHome(world);run(world,12);assert.equal(world.player.seated,true);assert.equal(distance(world.player,PLAYER_HOME),0);
+  goHome(world);run(world,12);assert.equal(world.player.seated,true);assert.equal(distance(world.player,world.layout.player),0);
   world.player.seated=false;world.player.x=5;world.player.z=4;world.player.intent='home';world.player.path=[];run(world,.1);assert.equal(world.player.seated,false);assert.ok(world.player.x>4.9,'A failed route must never teleport to the seat');
 });
 test('diagonal movement is normalized and paused rooms stay still',()=>{

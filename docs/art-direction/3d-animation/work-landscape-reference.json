@@ -1,0 +1,6 @@
+{
+  "source": "Built-in imagegen, generated 2026-10-05",
+  "reference": "docs/art-direction/3d-animation/a-adult-animation.png",
+  "asset": "app/public/3d/art/work-landscape-reference.webp",
+  "prompt": "Generate only an unframed panoramic Chinese shan shui landscape artwork, orthographic and edge-to-edge, 2.17:1; warm ivory rice paper, misty layered sage and umber mountains, delicate brush texture, pine trees and atmospheric depth. Match the framed artwork in reference A. No people, room, furniture, frame, lamps, food, text, seals or watermark."
+}

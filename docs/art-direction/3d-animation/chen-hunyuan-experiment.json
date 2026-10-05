@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-05",
+  "service": "https://huggingface.co/spaces/tencent/Hunyuan3D-2.1",
+  "endpoint": "/shape_generation",
+  "input": "chen-generation-input.png",
+  "cost": "free anonymous public demo, no purchase",
+  "stats": {
+    "model": {
+      "shapegen": "tencent/Hunyuan3D-2.1/hunyuan3d-dit-v2-1",
+      "texgen": "tencent/Hunyuan3D-2.1"
+    },
+    "params": {
+      "caption": null,
+      "steps": 30,
+      "guidance_scale": 5.0,
+      "seed": 10052026,
+      "octree_resolution": 512,
+      "check_box_rembg": false,
+      "num_chunks": 8000
+    },
+    "number_of_faces": 640272,
+    "number_of_vertices": 320132,
+    "time": {
+      "shape generation": 59.28275465965271,
+      "export to trimesh": 0.18002605438232422,
+      "total": 59.46579551696777
+    }
+  },
+  "output": "local .blender-work/candidates/chen-hunyuan-2026-10-05/chen-clean.glb",
+  "runtime_replacement": false,
+  "textures": false,
+  "rig": false,
+  "facial_morphs": false,
+  "license": "https://huggingface.co/tencent/Hunyuan3D-2.1/blob/main/LICENSE",
+  "status": "geometry candidate, not accepted for production"
+}

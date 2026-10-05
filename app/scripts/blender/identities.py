@@ -4,9 +4,9 @@ These shape choices change the underlying face before the rig and accessories
 are fitted. They are not expressions, and do not force smiles or frowns.
 """
 FACES = {
- 'chen': {'head/head-square': .32, 'chin/chin-width-incr': .22, 'nose/nose-width1-incr': .12},
- 'lin': {'head/head-oval': .48, 'head/head-scale-horiz-decr': .18, 'chin/chin-height-incr': .18, 'nose/nose-scale-horiz-decr': .10},
- 'zhou': {'head/head-rectangular': .28, 'chin/chin-prominent-incr': .14, 'nose/nose-scale-vert-incr': .14},
+ 'chen': {'head/head-square': .52, 'chin/chin-width-incr': .25, 'chin/chin-prominent-incr': .12, 'nose/nose-width1-incr': .08, 'head/head-age-incr': .16, 'eyes/eye-bag-incr': .12, 'mouth/mouth-upperlip-volume-decr': .25, 'mouth/mouth-lowerlip-volume-decr': .30, 'mouth/mouth-scale-depth-decr': .18},
+ 'lin': {'head/head-oval': .48, 'head/head-scale-horiz-decr': .18, 'chin/chin-height-incr': .18, 'nose/nose-scale-horiz-decr': .10, 'mouth/mouth-upperlip-volume-decr': .25, 'mouth/mouth-lowerlip-volume-decr': .30, 'mouth/mouth-scale-depth-decr': .25},
+ 'zhou': {'head/head-rectangular': .32, 'chin/chin-prominent-incr': .08, 'nose/nose-scale-vert-incr': .10, 'mouth/mouth-upperlip-volume-decr': .20, 'mouth/mouth-lowerlip-volume-decr': .25, 'mouth/mouth-scale-depth-decr': .18},
  'aunt': {'head/head-round': .46, 'head/head-fat-incr': .28, 'chin/chin-width-incr': .16, 'nose/nose-width2-incr': .12},
  'mom': {'head/head-round': .25, 'head/head-age-incr': .30, 'chin/chin-height-decr': .16, 'nose/nose-point-down': .12, 'cheek/cheek-volume-incr': .20, 'eyes/eye-bag-incr': .15},
  'dad': {'head/head-rectangular': .36, 'head/head-age-incr': .24, 'chin/chin-width-incr': .20, 'nose/nose-scale-vert-incr': .18, 'eyes/eye-bag-incr': .20},

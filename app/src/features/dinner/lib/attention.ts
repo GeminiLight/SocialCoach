@@ -60,12 +60,13 @@ export function cameraPose(world:World,view:ViewMode,aspect:number,lookOffset=0)
   const p=world.player,subject=attentionSubject(world),yaw=world.viewYaw+(view==='first'?lookOffset:0),pitch=world.viewPitch;
   const forward={x:Math.sin(yaw),z:Math.cos(yaw)},right={x:-Math.cos(yaw),z:Math.sin(yaw)};
   const portrait=aspect<=1.25;
-  const fov=view==='first'?(portrait?Math.min(p.seated?75:80,2*Math.atan(Math.tan(Math.PI*33/180)/aspect)*180/Math.PI):world.layout.kind==='dinner'?48:68):(portrait?2*Math.atan(Math.tan(Math.PI*19/180)/aspect)*180/Math.PI:48);
+  const closeDinner=world.layout.profile==='compact-work'&&p.seated;
+  const fov=view==='first'?(closeDinner?Math.min(portrait?60:52,2*Math.atan(Math.tan(Math.PI*15.5/180)*(16/9)/aspect)*180/Math.PI):portrait?Math.min(p.seated?75:80,2*Math.atan(Math.tan(Math.PI*33/180)/aspect)*180/Math.PI):world.layout.kind==='dinner'?48:68):(portrait?2*Math.atan(Math.tan(Math.PI*19/180)/aspect)*180/Math.PI:48);
   if(view==='first') {
     const eye=playerEyeHeight(p);
     return {position:[p.x,eye,p.z],target:[p.x+forward.x*6,eye+Math.tan(pitch)*6,p.z+forward.z*6],fov};
   }
-  const d=portrait?6.2:5.2,shoulder=portrait?3.3:2.8;
+  const d=closeDinner?(portrait?4.8:4.1):portrait?6.2:5.2,shoulder=closeDinner?(portrait?2.4:2.2):portrait?3.3:2.8;
   const height=p.seated?4.5:5.3;
   const candidates=[1,-1].map(side=>[p.x-forward.x*d+right.x*shoulder*side,height,p.z-forward.z*d+right.z*shoulder*side]);
   const correction=(position:number[])=>{

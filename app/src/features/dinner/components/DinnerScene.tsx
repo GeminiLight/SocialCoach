@@ -49,18 +49,19 @@ function ProjectLabels({ elements, world, speakerId, selectedId, view }: { eleme
       cache.dirty=false;
     }
     const occupied=[...cache.occupied];
+    const compact=world.layout.profile==='compact-work';
     const {point,right,center,projected,side,top,bottom}=vectors;
     const cameraRight=right.set(1,0,0).applyQuaternion(camera.quaternion);
     const faces=[...world.npcs,...(view==='third'?[world.player]:[])].flatMap(actor=>{
       center.set(actor.x,eyeHeight(actor),actor.z);projected.copy(center).project(camera);
       if(projected.z< -1||projected.z>1)return [];
-      side.copy(center).addScaledVector(cameraRight,.30).project(camera);
-      top.copy(center);top.y+=.36;top.project(camera);bottom.copy(center);bottom.y-=.36;bottom.project(camera);
+      side.copy(center).addScaledVector(cameraRight,compact?.24:.30).project(camera);
+      top.copy(center);top.y+=compact?.28:.36;top.project(camera);bottom.copy(center);bottom.y-=compact?.28:.36;bottom.project(camera);
       return [{x:(projected.x*.5+.5)*size.width,y:(projected.y*-.5+.5)*size.height,w:Math.abs(side.x-projected.x)*size.width,h:Math.abs(top.y-bottom.y)*size.height*.5}];
     });
     const focusId=attentionSubject(world)?.id;
     const candidates=world.npcs.map((actor,i)=>{
-      point.set(actor.x,eyeHeight(actor)+.56,actor.z).project(camera);
+      point.set(actor.x,eyeHeight(actor)+(compact?.38:.56),actor.z).project(camera);
       const el=elements.current[i];
       const priority=actor.id===focusId?3:actor.id===speakerId?2:actor.id===selectedId?1:0;
       return {el,priority,depth:point.z,x:(point.x*.5+.5)*size.width,y:(-point.y*.5+.5)*size.height,visible:point.z>-1&&point.z<1&&Math.abs(point.x)<1.03&&Math.abs(point.y)<.95};
@@ -192,7 +193,7 @@ export default function DinnerScene(props: SceneProps) {
   useEffect(()=>{const change=()=>setVisible(!document.hidden);document.addEventListener('visibilitychange',change);return()=>document.removeEventListener('visibilitychange',change);},[]);
   const fallback=<div className="scene-fallback"><p>{pick(ui.sceneFallback,props.lang)}</p><div>{props.scenario.characters.map(c=><button key={c.id} onClick={()=>props.onSelect(c.id)}>{pick(c.name,props.lang)}<small>{pick(c.role,props.lang)}</small></button>)}</div></div>;
   return <SceneBoundary fallback={fallback} onError={()=>props.onAvailability(false)}><div className="dinner-render"><Suspense fallback={<div className="scene-loading" role="status">{pick(ui.sceneLoading,props.lang)}</div>}><Canvas role="img" aria-label={pick(ui.cameraLabel,props.lang)} frameloop={!props.paused&&visible?'always':'demand'} shadows dpr={dpr} camera={{position:[0,2.58,3.55],fov:55,near:.1,far:60}} gl={{ antialias:true, toneMapping:ACESFilmicToneMapping, toneMappingExposure:1.02 }} fallback={null} >
-    <color attach="background" args={[props.scenario.space?p.officeWall:p.wall]} /><fog attach="fog" args={[props.scenario.space?p.officeWall:p.wall,18,36]} />
+    <color attach="background" args={[props.scenario.id==='work'?p.filmWall:props.scenario.space?p.officeWall:p.wall]} /><fog attach="fog" args={[props.scenario.id==='work'?p.filmWall:props.scenario.space?p.officeWall:p.wall,18,36]} />
     <RoomLighting p={p} scenario={props.scenario}/>
     <AssetReady key={`${props.scenario.id}-${props.view}`} scenario={props.scenario} view={props.view} onReady={assetReady}/>
     <WorldDirector props={props} heading={heading}/>

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
-import { useGLTF } from '@react-three/drei';
-import { Group, Mesh, MeshStandardMaterial } from 'three';
+import { useGLTF, useTexture } from '@react-three/drei';
+import { Group, Mesh, MeshStandardMaterial, SRGBColorSpace } from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import type { Palette } from '../lib/palette';
 import { l, type Lang, type Scenario } from '../lib/content';
@@ -75,6 +75,13 @@ export function AssetCup({palette:p,wine=false,position=[0,0,0]}:{palette:Palett
   return <group position={position}><primitive object={instance.scene} position={[0,wine?0:-.095,0]} dispose={null}/></group>;
 }
 
+function WorkArtwork() {
+  const painting=useTexture('/3d/art/work-landscape-reference.webp');
+  const local=useMemo(()=>{const texture=painting.clone();texture.colorSpace=SRGBColorSpace;texture.needsUpdate=true;return texture;},[painting]);
+  useEffect(()=>()=>local.dispose(),[local]);
+  return <mesh position={[0,3.55,-4.972]}><planeGeometry args={[3.84,1.77]}/><meshStandardMaterial map={local} roughness={1}/></mesh>;
+}
+
 export function AssetRoom({p,world,scenario,lang,paused,onEvidence,surfaces}:{p:Palette;world:World;scenario:Scenario;lang:Lang;paused:boolean;onEvidence:()=>void;surfaces:{landscape:import('three').Texture|null;familyArt:import('three').Texture|null}}) {
   const kind=scenario.space??scenario.id;
   const asset=useSceneAsset(`room-${kind}`);
@@ -94,7 +101,7 @@ export function AssetRoom({p,world,scenario,lang,paused,onEvidence,surfaces}:{p:
   return <group ref={root} name="dinner-room" onClick={click}>
     <primitive object={instance.scene} dispose={null}/>
     {['family','school','office'].includes(kind)&&<RoomWindows p={p} kind={kind} time={scenario.time}/>}
-    {kind==='work'&&surfaces.landscape&&<mesh position={[0,3.55,-4.972]}><planeGeometry args={[3.84,1.77]}/><meshStandardMaterial map={surfaces.landscape} roughness={1}/></mesh>}
+    {kind==='work'&&<WorkArtwork/>}
     {kind==='family'&&surfaces.familyArt&&<mesh position={[4,2.7,-5.028]}><planeGeometry args={[.70,.58]}/><meshStandardMaterial map={surfaces.familyArt} roughness={1}/></mesh>}
     {kind==='elevator'&&<>
       <Sign at={[0,4.72,-2.077]} size={[1.36,.36]} lines={[l('12 F','12 F')]} p={p} lang={lang} dark/>

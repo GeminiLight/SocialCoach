@@ -6,7 +6,8 @@ import {RoundedBox} from '@react-three/drei';
 import {pick,ui,type Lang,type Scenario,type Gesture} from '../lib/content';
 import type {Palette} from '../lib/palette';
 import {actorBeat,playerBeat,trophyPosition,type Drama} from '../lib/drama';
-import {PLAYER_HOME,type World} from '../lib/room';
+import type {World} from '../lib/room';
+import dinnerGeometry from '../lib/dinnerGeometry.json';
 import {AssetHand} from './SceneAssets';
 import {advancePresence,createPresence,conversationalRaise} from '../lib/presence';
 export { AssetCup as Cup } from './SceneAssets';
@@ -24,7 +25,8 @@ export function Phone({p,kind,lang}:{p:Palette;kind:'calendar'|'intro'|'photo';l
 export function TableCups({p,world,drama,scenario,reactions,line,paused}:{p:Palette;world:World;drama:Drama;scenario:Scenario;reactions:{gesture:Gesture}[];line:string;paused:boolean}){
  const cups=useRef<(Group|null)[]>([]),presence=useRef(createPresence());
  useFrame((_,dt)=>{const timing=advancePresence(presence.current,{dt,line,speakerId:world.speakerId,paused:paused||document.hidden});cups.current.forEach((cup,i)=>{const raise=drama.active&&drama.phase!=='settled'?actorBeat(drama,i,scenario.id).raise:reactions[i]?.gesture==='toast'?conversationalRaise(timing.elapsed):0;if(cup)cup.visible=i===4?drama.inventory!=='glass':i===3?scenario.id==='family'?drama.inventory!=='glass'&&drama.inventory!=='tea':drama.inventory!=='tea':raise<.015;});});
- return <>{[...world.npcs,{...PLAYER_HOME,id:'player'},...(scenario.id!=='family'?[{...PLAYER_HOME,id:'player-wine'}]:[])].map((actor,i)=>{const home=i>=3?PLAYER_HOME:world.npcs[i].home,r=Math.hypot(home.x,home.z);return <group key={actor.id} ref={el=>{cups.current[i]=el;}} position={[home.x/r*2.13+(i===4?-.28:.28),scenario.id!=='family'&&(i===0||i===4)?1.724:1.819,home.z/r*2.13]}><Cup palette={p} wine={scenario.id!=='family'&&(i===0||i===4)}/></group>;})}</>;
+ const compact=world.layout.profile==='compact-work',radius=(compact?dinnerGeometry.work:dinnerGeometry.classic).cupRadius;
+ return <>{[...world.npcs,{...world.player.home,id:'player'},...(scenario.id!=='family'?[{...world.player.home,id:'player-wine'}]:[])].map((actor,i)=>{const home=i>=3?world.player.home:world.npcs[i].home,r=Math.hypot(home.x,home.z),heading=i>=3?world.layout.player.heading:world.npcs[i].homeHeading,side=i===4?-1:1;return <group key={actor.id} ref={el=>{cups.current[i]=el;}} position={[home.x/r*radius+(compact?-Math.cos(heading)*.41*side:i===4?-.28:.28),scenario.id!=='family'&&(i===0||i===4)?1.724:1.819,home.z/r*radius+(compact?Math.sin(heading)*.41*side:0)]}><Cup palette={p} wine={scenario.id!=='family'&&(i===0||i===4)}/></group>;})}</>;
 }
 export function ScenarioObjects({p,drama,scenario,lang,reduced}:{p:Palette;drama:Drama;scenario:Scenario;lang:Lang;reduced:boolean}){
  const trophy=useRef<Group>(null!),steam=useRef<Group>(null!);const family=useScreen(p,'family',lang),plaque=useScreen(p,'trophy',lang);
@@ -32,7 +34,7 @@ export function ScenarioObjects({p,drama,scenario,lang,reduced}:{p:Palette;drama
  return <>
  {scenario.id==='family'&&<><mesh position={[3.73,3.6,-4.79]} rotation={[0,0,Math.PI/4]}><planeGeometry args={[1.05,1.05]}/><meshStandardMaterial color={p.wine}/></mesh><mesh position={[3.73,3.6,-4.77]}><planeGeometry args={[.75,.75]}/><meshBasicMaterial map={family}/></mesh>{[-.38,.38].map(x=><group key={x} position={[x,1.8,-.8]} rotation={[-Math.PI/2,0,.18]}><mesh><boxGeometry args={[.24,.42,.015]}/><meshStandardMaterial color={p.wine}/></mesh><mesh position={[0,0,.011]}><planeGeometry args={[.12,.13]}/><meshStandardMaterial color={p.brass}/></mesh></group>)}</>}
  {scenario.id==='school'&&<group ref={trophy} position={[0,1.794,-.75]} scale={.72}><mesh castShadow><boxGeometry args={[.55,.14,.38]}/><meshStandardMaterial color={p.dark}/></mesh><mesh position={[0,.14,0]}><cylinderGeometry args={[.08,.13,.2,20]}/><meshStandardMaterial color={p.brass} metalness={.65} roughness={.2}/></mesh><mesh position={[0,.4,0]}><cylinderGeometry args={[.21,.07,.35,28]}/><meshStandardMaterial color={p.brass} metalness={.65} roughness={.2}/></mesh>{[-1,1].map(side=><mesh key={side} position={[side*.22,.43,0]} rotation={[0,0,side*Math.PI/2]}><torusGeometry args={[.12,.018,8,24,Math.PI*1.35]}/><meshStandardMaterial color={p.brass} metalness={.6} roughness={.2}/></mesh>)}<mesh position={[0,.012,.197]}><planeGeometry args={[.31,.11]}/><meshBasicMaterial map={plaque}/></mesh></group>}
- <group ref={steam} position={[-.78,1.83,-.72]}>{[0,1,2].map(i=><mesh key={i}><sphereGeometry args={[.07,10,8]}/><meshStandardMaterial color={p.porcelain} transparent opacity={.08} depthWrite={false}/></mesh>)}</group>
+ <group ref={steam} position={[scenario.id==='work'?-.50:-.78,1.83,scenario.id==='work'?-.46:-.72]}>{[0,1,2].map(i=><mesh key={i}><sphereGeometry args={[.07,10,8]}/><meshStandardMaterial color={p.porcelain} transparent opacity={.08} depthWrite={false}/></mesh>)}</group>
  </>;
 }
 export function PlayerHands({p,drama,lang,scenario,hudHeight}:{p:Palette;drama:Drama;lang:Lang;scenario:Scenario;hudHeight:number}){

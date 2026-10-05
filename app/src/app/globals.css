@@ -769,6 +769,14 @@ aside.lg\:border-dashed { border-left: 0; }
   --dinner-scene-screen: oklch(.29 .028 235);
   --dinner-scene-marker: oklch(.44 .055 200);
   --dinner-scene-art: oklch(.42 .03 152);
+  --dinner-scene-filmKey: oklch(.94 .073 75);
+  --dinner-scene-filmFill: oklch(.88 .027 245);
+  --dinner-scene-filmWall: oklch(.85 .035 76);
+  --dinner-scene-filmSkin: oklch(.79 .077 49);
+  --dinner-scene-filmSkinShadow: oklch(.68 .069 41);
+  --dinner-scene-filmLip: oklch(.65 .068 31);
+  --dinner-scene-filmSuit: oklch(.43 .008 255);
+  --dinner-scene-filmHair: oklch(.30 .038 50);
 }
 .dinner-experience * { box-sizing:border-box; }
 .dinner-experience { scroll-behavior:smooth; }

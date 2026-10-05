@@ -37,8 +37,8 @@
     },
     {
       "file": "chen.glb",
-      "bytes": 1753780,
-      "sha256": "fca8b9e87d4b6c6ece9974ef8a55ba4f1db020e2669db90004dd0cfef8eba0a4",
+      "bytes": 1789972,
+      "sha256": "0dc5dbc3d0d9e0ca3bb4bacd849ac6f720fb7eda95f77ee8fc347e4074341bba",
       "triangles": 71072,
       "drawCalls": 8,
       "generator": "Khronos glTF Blender I/O v5.2.40",
@@ -157,16 +157,16 @@
     },
     {
       "file": "hand-grip.glb",
-      "bytes": 28548,
-      "sha256": "58ea673d1fb18264ec3c0c1426e8f56f30f4d4c4d7099ebc21ae131002259d34",
+      "bytes": 49820,
+      "sha256": "5cd27c1065d7de7b64f0cf37a516096f8f505a2fbae9ecc5d35fed28808251b4",
       "triangles": 3681,
       "drawCalls": 2,
       "generator": "Khronos glTF Blender I/O v5.2.40"
     },
     {
       "file": "hand-open.glb",
-      "bytes": 27580,
-      "sha256": "1e2927c664ee63f6ed1dd82ea8545ecd55dbdbf538091292dca2dc3c65795fbe",
+      "bytes": 48852,
+      "sha256": "bb458c7019fc105108325a342ffcd65e3a45cea136633d3a1d8c210e1edfff27",
       "triangles": 3681,
       "drawCalls": 2,
       "generator": "Khronos glTF Blender I/O v5.2.40"
@@ -233,9 +233,9 @@
     },
     {
       "file": "lin.glb",
-      "bytes": 1742512,
-      "sha256": "e2fa125e3654105bbc7234536fe09bc59c5cef1e09ea64f142a981838af0fa64",
-      "triangles": 70254,
+      "bytes": 1938192,
+      "sha256": "7ffb009773a091d920faf4255172820ead79db7743f094180ed2bea53d3d2a0e",
+      "triangles": 89362,
       "drawCalls": 9,
       "generator": "Khronos glTF Blender I/O v5.2.40",
       "animations": [
@@ -323,8 +323,8 @@
     },
     {
       "file": "player.glb",
-      "bytes": 1713360,
-      "sha256": "42e930d54518a7a8e1755ce7b0d152947a3ba37c461c968d8de3f113cd966375",
+      "bytes": 1734112,
+      "sha256": "5626e954f2cd4d2cc1df142dd26f99ce46d62ee8b2fb820fb1a1889a1c3d6168",
       "triangles": 60572,
       "drawCalls": 9,
       "generator": "Khronos glTF Blender I/O v5.2.40",
@@ -423,8 +423,8 @@
     },
     {
       "file": "room-work.glb",
-      "bytes": 767452,
-      "sha256": "8ec1a14bf0e75c5b7a4ec12323cef89aa5d6fd70adcd268b4daa689294b108fb",
+      "bytes": 768620,
+      "sha256": "40de659f0598c781f7ea8e905f2182a6fd7dd921dc70f65b3c10be85f52bc831",
       "triangles": 130500,
       "drawCalls": 53,
       "generator": "Khronos glTF Blender I/O v5.2.40"
@@ -521,8 +521,8 @@
     },
     {
       "file": "zhou.glb",
-      "bytes": 1796412,
-      "sha256": "b4c1c4506659d6bdada2c9220f45c5cfd34cc542a6bac3d492d5be6e441b379a",
+      "bytes": 1821116,
+      "sha256": "6eab6b0dcbd691fb65264e7889e10ee6199f7b0569e5502c2ba7a569c43daea2",
       "triangles": 73928,
       "drawCalls": 13,
       "generator": "Khronos glTF Blender I/O v5.2.40",

@@ -6,9 +6,9 @@ export const avatarMetrics:Record<string,{standingEye:number;seatedEye:number;sc
     "scale": 1.9494
   },
   "chen": {
-    "standingEye": 2.9437,
-    "seatedEye": 2.342,
-    "scale": 1.9156
+    "standingEye": 2.9375,
+    "seatedEye": 2.3332,
+    "scale": 1.9181
   },
   "cheng": {
     "standingEye": 2.7894,
@@ -36,8 +36,8 @@ export const avatarMetrics:Record<string,{standingEye:number;seatedEye:number;sc
     "scale": 2.1773
   },
   "lin": {
-    "standingEye": 2.8155,
-    "seatedEye": 2.3187,
+    "standingEye": 2.8049,
+    "seatedEye": 2.3081,
     "scale": 2.0552
   },
   "mom": {
@@ -51,8 +51,8 @@ export const avatarMetrics:Record<string,{standingEye:number;seatedEye:number;sc
     "scale": 2.0604
   },
   "player": {
-    "standingEye": 2.9129,
-    "seatedEye": 2.3613,
+    "standingEye": 2.9022,
+    "seatedEye": 2.3505,
     "scale": 2.1059
   },
   "qiao": {
@@ -76,8 +76,8 @@ export const avatarMetrics:Record<string,{standingEye:number;seatedEye:number;sc
     "scale": 2.2665
   },
   "zhou": {
-    "standingEye": 2.8712,
-    "seatedEye": 2.3502,
-    "scale": 2.1678
+    "standingEye": 2.8607,
+    "seatedEye": 2.3395,
+    "scale": 2.168
   }
 };

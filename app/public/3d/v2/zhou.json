@@ -1,14 +1,17 @@
 {
   "id": "zhou",
   "height": 3.05,
-  "standingEye": 2.8712,
-  "seatedEye": 2.3502,
-  "pelvis": 1.581,
-  "scale": 2.1678,
+  "standingEye": 2.8607,
+  "seatedEye": 2.3395,
+  "pelvis": 1.5812,
+  "scale": 2.168,
   "faceTargets": {
-    "head/head-rectangular": 0.28,
-    "chin/chin-prominent-incr": 0.14,
-    "nose/nose-scale-vert-incr": 0.14
+    "head/head-rectangular": 0.32,
+    "chin/chin-prominent-incr": 0.08,
+    "nose/nose-scale-vert-incr": 0.1,
+    "mouth/mouth-upperlip-volume-decr": 0.2,
+    "mouth/mouth-lowerlip-volume-decr": 0.25,
+    "mouth/mouth-scale-depth-decr": 0.18
   },
   "artStyle": "adult-animation-v1"
 }

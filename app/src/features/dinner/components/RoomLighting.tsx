@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/immutability -- The R3F scene owns mutable GPU resources; this effect installs and restores its reflection probe. */
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
-import { BackSide, BoxGeometry, Mesh, MeshBasicMaterial, PlaneGeometry, PMREMGenerator, Scene } from 'three';
+import { BackSide, BoxGeometry, Mesh, MeshBasicMaterial, PlaneGeometry, PMREMGenerator, Scene, RectAreaLight } from 'three';
+import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import type { Palette } from '../lib/palette';
 import type { Scenario } from '../lib/content';
 import { roomLightPeriod } from '../lib/lighting';
+RectAreaLightUniformsLib.init();
 
 /** A small, local reflection probe: bright ceiling, broad windows and floor bounce.
  * Captured once per room, never rendered per frame or downloaded as an HDR file. */
@@ -33,7 +35,7 @@ function RoomReflections({ p, warm, period }: { p: Palette; warm: boolean; perio
     const generator = new PMREMGenerator(gl);
     const target = generator.fromScene(room, .08, .1, 40, { size: 128 });
     const previous = scene.environment, previousIntensity = scene.environmentIntensity;
-    scene.environment = target.texture; scene.environmentIntensity = warm ? .38 : .48;
+    scene.environment = target.texture; scene.environmentIntensity = warm ? .30 : .48;
     geometries.forEach(geometry => geometry.dispose());
     materials.forEach(material => material.dispose()); generator.dispose(); invalidate();
     return () => {
@@ -51,6 +53,21 @@ export function RoomLighting({ p, scenario }: { p: Palette; scenario: Scenario }
   const warm = kind === 'work' || kind === 'family';
   const period = roomLightPeriod(scenario.time);
   const window = ['family', 'school', 'office'].includes(kind) && period !== 'evening';
+  const softboxes=useMemo(()=>{
+    const key=new RectAreaLight(p.filmKey,2.7,4.4,3);key.position.set(-2,4.2,1.4);key.lookAt(0,2,-1);
+    const fill=new RectAreaLight(p.filmFill,.95,3,2.8);fill.position.set(3,3.5,1);fill.lookAt(0,2,-1);
+    return [key,fill];
+  },[p]);
+  if(kind==='work')return <>
+    <RoomReflections p={p} warm period={period}/>
+    <ambientLight intensity={.08} color={p.filmKey}/>
+    <hemisphereLight args={[p.filmKey,p.wood,.28]}/>
+    {softboxes.map((light,i)=><primitive key={i} object={light}/>)}
+    <directionalLight position={[-2,5,2]} intensity={.38} color={p.filmKey} castShadow shadow-mapSize={[2048,2048]} shadow-camera-left={-5} shadow-camera-right={5} shadow-camera-top={5} shadow-camera-bottom={-5} shadow-bias={-.0004} shadow-normalBias={.018}/>
+    <directionalLight position={[2,4,-4]} intensity={.6} color={p.filmKey}/>
+    {[-3.1,3.1].map(x=><pointLight key={x} position={[x,3.4,-4.6]} intensity={11} distance={5} decay={2} color={p.filmKey}/>)}
+    <pointLight position={[0,5,0]} intensity={6} distance={9} decay={2} color={p.filmKey}/>
+  </>;
   return <>
     <RoomReflections p={p} warm={warm} period={period} />
     <ambientLight intensity={.12} color={p.white} />
@@ -61,7 +78,6 @@ export function RoomLighting({ p, scenario }: { p: Palette; scenario: Scenario }
     <directionalLight position={[2, 3.8, 6]} intensity={window ? .55 : .4} color={p.white} />
     <directionalLight position={[5, 4, -3]} intensity={.28} color={p.white} />
     <pointLight position={[0, 4.9, .4]} intensity={warm ? 26 : 34} distance={14} decay={2} color={warm ? p.light : p.white} />
-    {kind === 'work' && [-3.1, 3.1].map(x => <pointLight key={x} position={[x, 3.4, -4.6]} intensity={9} distance={6} decay={2} color={p.light} />)}
     {kind === 'elevator' && <pointLight position={[0, 4.3, -3.6]} intensity={20} distance={6} decay={2} color={p.white} />}
   </>;
 }

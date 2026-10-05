@@ -24,8 +24,8 @@ SYSTEM=ROOT/'system';FACE=ROOT/'faceunits'/'targets'/'faceunits'
 # All models use the same real anatomical topology; identity comes from shape,
 # age, stature, hairstyle and outfit, not detached procedural face fragments.
 CAST={
- 'chen':dict(gender=1,age=.68,weight=.61,muscle=.45,height=3.12,hair='short04',clothes='male_elegantsuit01',skin='middleage_asian_male',brow='eyebrow002'),
- 'lin':dict(gender=0,age=.44,weight=.45,muscle=.35,height=3.00,hair='ponytail01',clothes='toigo_female_double-breasted_suit',skin='young_asian_female',brow='eyebrow003'),
+ 'chen':dict(gender=1,age=.68,weight=.54,muscle=.45,height=3.12,hair='short04',clothes='male_elegantsuit01',skin='middleage_asian_male',brow='eyebrow002'),
+ 'lin':dict(gender=0,age=.44,weight=.45,muscle=.35,height=3.00,hair='ponytail01',clothes='toigo_female_suit',skin='young_asian_female',brow='eyebrow003'),
  'zhou':dict(gender=1,age=.27,weight=.40,muscle=.37,height=3.05,hair='short02',clothes='male_casualsuit01',skin='young_asian_male',brow='eyebrow001'),
  'aunt':dict(gender=0,age=.70,weight=.65,muscle=.30,height=2.93,hair='bob02',clothes='female_casualsuit01',skin='middleage_asian_female',brow='eyebrow006'),
  'mom':dict(gender=0,age=.67,weight=.49,muscle=.30,height=2.88,hair='ponytail01',clothes='female_casualsuit01',skin='middleage_asian_female',brow='eyebrow004'),
@@ -104,11 +104,14 @@ def glasses(rig,eyes,id):
  for side in [-1,1]:
   points=[]
   for j in range(33):
-   a=j*math.tau/32;points.append((side*center.x+.026*math.cos(a),front,center.z+.016*math.sin(a)))
+   a=j*math.tau/32
+   if id=='zhou':
+    x=math.copysign(abs(math.cos(a))**.55,math.cos(a));z=math.copysign(abs(math.sin(a))**.55,math.sin(a));points.append((side*center.x+.027*x,front-.003,center.z+.019*z))
+   else:points.append((side*center.x+.026*math.cos(a),front,center.z+.016*math.sin(a)))
   objects.append(wire('Spectacle rim',points,.0017))
   objects.append(wire('Spectacle temple',[(side*(center.x+.026),front,center.z),(side*.073,front+.08,center.z-.005),(side*.070,front+.11,center.z-.025)],.0015))
  objects.append(wire('Spectacle bridge',[(-.012,front,center.z+.002),(0,front-.005,center.z+.009),(.012,front,center.z+.002)],.0015))
- mat=bpy.data.materials.new('sc:steelSeam');mat.use_nodes=True;bs=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED');bs.inputs['Base Color'].default_value=(*PIGMENTS['steelSeam'],1);bs.inputs['Metallic'].default_value=.65;bs.inputs['Roughness'].default_value=.32
+ token='hair' if id=='zhou' else 'steelSeam';mat=bpy.data.materials.new('sc:'+token);mat.use_nodes=True;bs=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED');bs.inputs['Base Color'].default_value=(*PIGMENTS[token],1);bs.inputs['Metallic'].default_value=0 if id=='zhou' else .65;bs.inputs['Roughness'].default_value=.32
  for obj in objects:
   bpy.ops.object.select_all(action='DESELECT');obj.select_set(True);bpy.context.view_layer.objects.active=obj;bpy.ops.object.convert(target='MESH');obj=bpy.context.object;obj.data.materials.append(mat)
   group=obj.vertex_groups.new(name='head');group.add(list(range(len(obj.data.vertices))),1,'REPLACE');obj.parent=rig;modifier=obj.modifiers.new('Head attachment','ARMATURE');modifier.object=rig
@@ -199,7 +202,7 @@ def build(id,cfg):
  # the real event timeline; visual animation never becomes dialogue evidence.
  for seated in (False,True):
   for kind in ('idle','toast','phone','palm','fold','lean'):
-   pose(rig,seated,kind);name=('Seated' if seated else 'Standing')+kind.title()
+   pose(rig,seated,kind,id=id);name=('Seated' if seated else 'Standing')+kind.title()
    action=bpy.data.actions.new(name);rig.animation_data_create();rig.animation_data.action=action
    for bone in rig.pose.bones:
     for frame in (1,25):bone.keyframe_insert('rotation_quaternion',frame=frame);bone.keyframe_insert('location',frame=frame)

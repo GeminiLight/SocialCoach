@@ -11,7 +11,7 @@ def aim(rig,name,direction):
  swing=current.rotation_difference(Vector(direction));rotation=swing@bone.matrix.to_quaternion()
  bone.matrix=Matrix.Translation(bone.head)@rotation.to_matrix().to_4x4();bpy.context.view_layer.update()
 
-def pose(rig,seated=False,kind='idle'):
+def pose(rig,seated=False,kind='idle',id=None):
  if rig.animation_data:
   rig.animation_data.action=None
   for track in rig.animation_data.nla_tracks:track.mute=True
@@ -45,4 +45,15 @@ def pose(rig,seated=False,kind='idle'):
  if kind=='lean':delta(rig,'spine_01',(1,0,0),.16)
  if kind=='palm':
   aim(rig,'upperarm_l',(.2,-.45,-1));aim(rig,'lowerarm_l',(.1,-1,.65));aim(rig,'hand_l',(.1,-1,.5))
+ if seated and kind=='idle' and id in {'chen','lin','zhou'}:
+  # Solve connected elbows and wrists onto the real table, rather than leaving
+  # both hands on the lap. Targets are actor-local and the rest rig is unchanged.
+  for side,sign in [('l',1),('r',-1)]:
+   upper=rig.pose.bones['upperarm_'+side];lower=rig.pose.bones['lowerarm_'+side]
+   start=upper.head.copy();target=Vector((sign*.42/rig.scale.x,-.76/rig.scale.x,1.79/rig.scale.x))
+   vector=target-start;d=vector.length;axis=vector.normalized();a=upper.length;b=lower.length
+   cosine=max(-.98,min(.98,(d*d+a*a-b*b)/(2*d*a)))
+   guide=Vector((sign*.32,0,-1));normal=(guide-axis*guide.dot(axis)).normalized()
+   elbow=start+axis*(a*cosine)+normal*(a*math.sqrt(1-cosine*cosine))
+   aim(rig,'upperarm_'+side,elbow-start);aim(rig,'lowerarm_'+side,target-rig.pose.bones['lowerarm_'+side].head);aim(rig,'hand_'+side,(0,-1,.035))
  bpy.context.view_layer.update()

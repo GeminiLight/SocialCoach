@@ -12,6 +12,7 @@ from pigments import pigments
 
 P= pigments()
 MATURE={'chen','aunt','mom','dad','he','qiao'}
+REFERENCE={'chen','lin','zhou','player'}
 FABRIC={'chen':'charcoal','lin':'charcoal','zhou':'denim','aunt':'wine',
  'mom':'sage','dad':'oat','senior':'white','yue':'sage','kai':'navy',
  'fang':'teal','qiao':'navy','cheng':'oat','he':'charcoal','ning':'terracotta',
@@ -55,12 +56,13 @@ def transform_anatomy(rig,eyes,id):
   eye_centers.append(Vector(tuple((min(v[i] for v in vs)+max(v[i] for v in vs))/2 for i in range(3))))
  def deform(co,aperture=False):
   v=co.copy();w=smooth(pivot.z-.035,head-.012,v.z)
-  v.x*=1+(.16 if id in MATURE else .22)*w;v.y=pivot.y+(v.y-pivot.y)*(1+.12*w);v.z=pivot.z+(v.z-pivot.z)*(1+.105*w)
+  width=(.08 if id=='chen' else .12) if id in REFERENCE else .16 if id in MATURE else .22
+  v.x*=1+width*w;v.y=pivot.y+(v.y-pivot.y)*(1+.12*w);v.z=pivot.z+(v.z-pivot.z)*(1+(.065 if id in REFERENCE else .105)*w)
   if aperture:
    for raw in eye_centers:
     e=deform(raw);dx=v.x-e.x;dz=v.z-e.z
     weight=math.exp(-((dx/.032)**4+(dz/.025)**4))*smooth(e.y+.02,e.y-.015,v.y)
-    v.x+=dx*.10*weight;v.z+=dz*.38*weight
+    v.x+=dx*.10*weight;v.z+=dz*(.55 if id in REFERENCE else .38)*weight
   return v
  for obj in list(bpy.context.scene.objects):
   if obj.type!='MESH':continue
@@ -82,23 +84,27 @@ def transform_anatomy(rig,eyes,id):
  return [deform(c) for c in eye_centers]
 
 def skin_pigments(skin,id,centers):
- base=P['skinMature' if id in MATURE else 'skinWarm'];lip=skin.vertex_groups.get('lips');colors=[]
+ base=P['filmSkin'] if id in REFERENCE else P['skinMature' if id in MATURE else 'skinWarm'];lip=skin.vertex_groups.get('lips');colors=[]
  eyes_z=sum(c.z for c in centers)/2
  for v in skin.data.vertices:
   co=v.co;c=base
   if co.z>eyes_z-.13:
    # Broad cheek/nose warmth: paint follows geometry through every expression.
    cheek=math.exp(-(((abs(co.x)-.050)/.035)**2+((co.z-(eyes_z-.037))/.025)**2))
-   front=smooth(-.03,-.14,co.y);c=blend(c,P['skinShadow'],cheek*.17*front)
+   front=smooth(-.03,-.14,co.y);c=blend(c,P['filmSkinShadow'] if id in REFERENCE else P['skinShadow'],cheek*.17*front)
    nose=math.exp(-((co.x/.014)**2+((co.z-(eyes_z-.020))/.028)**2));c=blend(c,P['lip'],nose*.10*front)
    if id in MATURE:
     # A pair of quiet authored brow folds retains age without skin-photo grain.
     fold=sum(math.exp(-((co.z-(eyes_z+z))/.0018)**2) for z in (.055,.067))
     c=blend(c,P['skinShadow'],min(.12,fold*.09)*math.exp(-(co.x/.055)**4)*front)
   weight=next((g.weight for g in v.groups if lip and g.group==lip.index),0)
-  if weight:c=blend(c,P['lip'],weight*.65)
+  if weight:c=blend(c,P['filmLip'] if id in REFERENCE else P['lip'],weight*(.52 if id in REFERENCE else .65))
   colors.append(c)
  skin.data.materials.clear();skin.data.materials.append(material('animation:skin','skin',.78,True));paint(skin,colors)
+ if id in REFERENCE:
+  from surface_detail import add_surface_detail
+  mat=skin.data.materials[0];bs=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED');bs.inputs['Roughness'].default_value=.64;bs.inputs['Specular IOR Level'].default_value=.32
+  add_surface_detail(mat,'skin');next(n for n in mat.node_tree.nodes if n.type=='NORMAL_MAP').inputs['Strength'].default_value=.045
  keys=skin.data.shape_keys.key_blocks;basis=keys[0]
  down=skin.shape_key_add(name='browDown');press=skin.shape_key_add(name='mouthPress')
  mouth=[v.co for v in skin.data.vertices if lip and any(g.group==lip.index for g in v.groups)]
@@ -111,7 +117,7 @@ def skin_pigments(skin,id,centers):
   press.data[i].co.z-=(co.z-mouth_z)*.20*w
  down.value=0;press.value=0
 
-def eyeballs(rig,centers,old):
+def eyeballs(rig,centers,old,id):
  """The iris/pupil belong to one curved eyeball, never floating front discs."""
  vs=[];fs=[];colors=[];segments=64;rings=32
  for c in centers:
@@ -120,7 +126,7 @@ def eyeballs(rig,centers,old):
    polar=j*math.pi/rings
    for i in range(segments):
     a=i*math.tau/segments;xx=math.sin(polar)*math.cos(a);zz=math.cos(polar);yy=math.sin(polar)*math.sin(a)
-    vs.append((c.x+xx*.0178,c.y+yy*.0143,c.z+zz*.0160))
+    vs.append((c.x+xx*.0178,c.y+(.003 if id in REFERENCE else 0)+yy*(.0125 if id in REFERENCE else .0143),c.z+zz*(.017 if id in REFERENCE else .016)))
     distance=math.hypot(xx,zz);color=P['sclera']
     if yy<0:
      iris=1-smooth(.43,.49,distance);color=blend(color,P['iris'],iris)
@@ -134,6 +140,8 @@ def eyeballs(rig,centers,old):
     fs.append((a,a+segments,b+segments,b))
  bpy.data.objects.remove(old,do_unlink=True)
  obj=mesh('eyes',vs,fs,material('animation:eyes','sclera',.36,True),rig);paint(obj,colors)
+ if id in REFERENCE:
+  bs=next(n for n in obj.data.materials[0].node_tree.nodes if n.type=='BSDF_PRINCIPLED');bs.inputs['Roughness'].default_value=.18;bs.inputs['Specular IOR Level'].default_value=.45;bs.inputs['Coat Weight'].default_value=.24;bs.inputs['Coat Roughness'].default_value=.08
  return obj
 
 def brows(rig,centers,skin,old,id):
@@ -173,7 +181,7 @@ def sculpted_hair(rig,skin,centers,old,id):
  feminine=id in {'lin','aunt','mom','yue','fang','cheng','ning'}
  bob=id in {'aunt','fang','ning'};bun=id in {'lin','mom','yue','cheng'}
  older=id in {'chen','dad','he'}
- gray=id in {'dad','he'};hair_color=blend(P['hair'],P['hairGray'],.78) if gray else P['hair']
+ gray=id in {'dad','he'};hair_color=blend(P['hair'],P['hairGray'],.78) if gray else P['filmHair'] if id in REFERENCE else P['hair']
  def cap(theta,t,extra=0):
   front=max(0,math.cos(theta));back=max(0,-math.cos(theta))
   line=ez+.009+front*.046-back*.047
@@ -231,9 +239,10 @@ def sculpted_hair(rig,skin,centers,old,id):
   angle=-1.30+i*.21
   points=[]
   for j in range(25):
-   t=j/24;theta=angle+.55*math.sin(t*math.pi*.75);height=.015+.97*math.sin(t*math.pi/2)
-   points.append(cap(theta,height,.0015+.003*math.sin(math.pi*t)))
-  lock(points,.008 if feminine else .010,.0035,older and (i<2 or i>10))
+   t=j/24;wave=.075*math.sin(t*math.tau+i*.71) if id in REFERENCE else 0;theta=angle+.55*math.sin(t*math.pi*.75)+wave;height=.015+.97*math.sin(t*math.pi/2)
+   lift=(.009+.003*math.sin(i*1.4))*math.sin(math.pi*t) if id=='zhou' else .006*math.sin(math.pi*t) if id in REFERENCE else .003*math.sin(math.pi*t)
+   points.append(cap(theta,height,.0015+lift))
+  lock(points,(.009+.003*math.sin(i*.8)) if id in REFERENCE else .008 if feminine else .010,.0045 if id in REFERENCE else .0035,older and (i<2 or i>10))
  for side in [-1,1]:
   for i in range(8):
    theta=side*(1.2+i*.22);points=[cap(theta+.28*j/20,.01+.66*j/20,.001) for j in range(21)]
@@ -279,22 +288,25 @@ def clothing(id):
      bm=bmesh.new();bm.from_mesh(obj.data);bmesh.ops.delete(bm,geom=[v for v in bm.verts if v.co.z>cut],context='VERTS');bm.to_mesh(obj.data);bm.free()
     obj.data.materials[i]=material('shoes animation','dark',.66);continue
    casual=len(obj.data.materials)>1 and any(m.name.startswith('sc:') for m in obj.data.materials)
-   token=old.name.replace('sc:','').split('.')[0] if old.name.startswith('sc:') else ('denim' if id in {'aunt','mom','yue','cheng','ning'} else 'charcoal') if casual else FABRIC[id]
+   token='filmSuit' if id in {'chen','lin'} else old.name.replace('sc:','').split('.')[0] if old.name.startswith('sc:') else ('denim' if id in {'aunt','mom','yue','cheng','ning'} else 'charcoal') if casual else FABRIC[id]
    new=material('animation:fabric:'+token,token,.86)
    # Preserve fitted white collars / tie boundaries with a deliberately simple
    # 256px color treatment. No photographed textile normals or printed logos.
    textures=[n.image for n in old.node_tree.nodes if n.type=='TEX_IMAGE' and n.image and n.image.colorspace_settings.name!='Non-Color']
    if textures and not old.name.startswith('sc:') and not casual:
-    img=textures[0].copy();img.scale(256,256);pixels=list(img.pixels[:])
+    img=textures[0].copy();img.scale(512 if id in REFERENCE else 256,512 if id in REFERENCE else 256);pixels=list(img.pixels[:])
     for index in range(0,len(pixels),4):
      r,g,b=pixels[index:index+3];value=(r+g+b)/3
-     light=smooth(.45,.72,value)
+     light=smooth(.42,.62,value) if id in REFERENCE else smooth(.45,.72,value)
      color=blend(P[token],P['white'],light)
      for c in range(3):pixels[index+c]=color[c]**(1/2.2)
      pixels[index+3]=1
     img.pixels[:]=pixels;img.pack();node=new.node_tree.nodes.new('ShaderNodeTexImage');node.image=img
     new.node_tree.links.new(node.outputs['Color'],new.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
    obj.data.materials[i]=new
+   if id in REFERENCE:
+    from surface_detail import add_surface_detail
+    add_surface_detail(new,'woven');next(n for n in new.node_tree.nodes if n.type=='NORMAL_MAP').inputs['Strength'].default_value=.12
 
 def mouth_interior(teeth):
  old=teeth.data.materials[0];tex=next((n.image for n in old.node_tree.nodes if n.type=='TEX_IMAGE' and n.image),None)
@@ -315,10 +327,14 @@ def mouth_interior(teeth):
 def apply_animation_style(id):
  rig=bpy.data.objects['SocialCoachRig'];skin=bpy.data.objects['skin'];old_eyes=bpy.data.objects['eyes']
  centers=transform_anatomy(rig,old_eyes,id)
- skin_pigments(skin,id,centers);eyeballs(rig,centers,old_eyes)
+ skin_pigments(skin,id,centers);eyeballs(rig,centers,old_eyes,id)
  brows(rig,centers,skin,bpy.data.objects['eyebrows'],id)
  sculpted_hair(rig,skin,centers,bpy.data.objects['hair'],id);clothing(id)
  mouth_interior(bpy.data.objects['teeth'])
+ if id in REFERENCE:
+  for mat in bpy.data.materials:
+   if mat.name.startswith(('animation:hair','animation:bun')):
+    bs=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED');bs.inputs['Roughness'].default_value=.48;bs.inputs['Specular IOR Level'].default_value=.38
  rig['artStyle']=STYLE;skin['artStyle']=STYLE
  for obj in bpy.context.scene.objects:
   if obj.type=='MESH':

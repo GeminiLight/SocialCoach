@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import {layouts,spaceFor,zoneFor,LIFT_GATE_Z,liftPanelFor,type SpaceKind,type SpaceLayout} from './spaces';
 import { l, pick, type Lang, type Scenario, type Emotion } from './content';
+import dinnerGeometry from './dinnerGeometry.json';
 
 export type Point = { x:number; z:number };
 export type ViewMode = 'first'|'third';
@@ -13,7 +14,7 @@ const PoseSchema=PointSchema.extend({heading:z.number().finite().min(-Math.PI*2)
 const AttentionSchema=z.object({mode:z.enum(['conversation','person','free']),characterId:z.string().max(30).optional(),yaw:z.number().finite().min(-Math.PI).max(Math.PI),pitch:z.number().finite().min(-1.2).max(1.2)}).refine(a=>a.mode!=='person'||!!a.characterId,'A person focus needs a character');
 export const LiftSaveSchema=z.object({openness:z.number().finite().min(0).max(1),target:z.enum(['open','closed'])});
 export const ZoneSchema=z.enum(['table','side','door','lobby','cabin','desk','board']);
-export const RoomSaveSchema=z.object({space:z.enum(['dinner','elevator','office']).optional(),lift:LiftSaveSchema.optional(),player:PoseSchema,npcs:z.array(PoseSchema.extend({id:z.string().min(1).max(30)})).length(3),attention:AttentionSchema.optional()}).refine(s=>[s.player,...s.npcs].every(a=>(s.space??'dinner')!=='dinner'||a.seated||Math.hypot(a.x,a.z)>=TABLE-.02),'Standing actors cannot be inside the table');
+export const RoomSaveSchema=z.object({space:z.enum(['dinner','elevator','office']).optional(),profile:z.literal('compact-work').optional(),lift:LiftSaveSchema.optional(),player:PoseSchema,npcs:z.array(PoseSchema.extend({id:z.string().min(1).max(30)})).length(3),attention:AttentionSchema.optional()}).refine(s=>[s.player,...s.npcs].every(a=>(s.space??'dinner')!=='dinner'||a.seated||Math.hypot(a.x,a.z)>=(s.profile==='compact-work'?dinnerGeometry.work.clearance:TABLE)-.02),'Standing actors cannot be inside the table');
 export type RoomSave=z.infer<typeof RoomSaveSchema>;
 export const RoomContextSchema=z.object({space:z.enum(['dinner','elevator','office']).optional(),liftDoors:z.enum(['open','opening','closing','closed']).optional(),posture:z.enum(['seated','standing']),zone:ZoneSchema,nearbyCharacterId:z.string().max(30).optional(),invitedCharacterId:z.string().max(30).optional(),npcs:z.array(z.object({characterId:z.string().max(30),posture:z.enum(['seated','standing','walking'])})).length(3)});
 export type RoomContext=z.infer<typeof RoomContextSchema>;
@@ -23,12 +24,17 @@ export type World={layout:SpaceLayout;pendingLift?:'open'|'closed';pendingLiftSp
 const angle=(n:number)=>Math.atan2(Math.sin(n),Math.cos(n));
 export function createWorld(scene:Scenario,saved?:RoomSave):World {
   const layout=spaceFor(scene);
-  const actor=(id:string,home:SpaceLayout['player'],pose?:z.infer<typeof PoseSchema>):Actor=>({...home,...pose,id,home:{x:home.x,z:home.z},homeHeading:home.heading,homeSeated:home.seated,heading:pose?.heading??home.heading,seated:pose?.seated??home.seated,path:[],intent:'idle',moving:false,canLeaveSeat:true,invitationSpot:null,respondAt:0,awaySince:null});
+  const actor=(id:string,home:SpaceLayout['player'],pose?:z.infer<typeof PoseSchema>):Actor=>{
+    // Old seated work poses refer to the previous physical chairs. Moving / free
+    // exploration poses stay where the player left them; text and look persist.
+    if(layout.profile==='compact-work'&&saved?.profile!=='compact-work'&&pose?.seated)pose=home;
+    return {...home,...pose,id,home:{x:home.x,z:home.z},homeHeading:home.heading,homeSeated:home.seated,heading:pose?.heading??home.heading,seated:pose?.seated??home.seated,path:[],intent:'idle',moving:false,canLeaveSeat:true,invitationSpot:null,respondAt:0,awaySince:null};
+  };
   return {layout,lift:layout.kind==='elevator'?{openness:saved?.lift?.openness??1,target:saved?.lift?.target??'open',blocked:false}:undefined,player:actor('player',layout.player,saved?.player),npcs:scene.characters.map((c,i)=>({...actor(c.id,layout.people[i],i===0&&layout.kind==='dinner'?undefined:saved?.npcs.find(n=>n.id===c.id)),canLeaveSeat:layout.kind==='dinner'&&i!==0})),clock:0,revision:0,event:{key:(saved?.player.seated??layout.player.seated)?'seated':'arrived'},destination:null,lastPlan:-10,viewYaw:saved?.attention?.yaw??Math.atan2(-(saved?.player.x??0),-(saved?.player.z??PLAYER_HOME.z)),viewPitch:saved?.attention?.pitch??-.08,attentionMode:saved?.attention?.mode??'conversation',speakerId:scene.characters[0].id,lookTarget:saved?.attention?.characterId??null};
 }
 export function snapshot(world:World):RoomSave {
   const pose=(a:Actor)=>({x:a.x,z:a.z,heading:angle(a.heading),seated:a.seated});
-  return {...(world.layout.kind==='dinner'?{}:{space:world.layout.kind}),...(world.lift?{lift:{openness:world.lift.openness,target:world.lift.target}}:{}),player:pose(world.player),npcs:world.npcs.map(a=>({...pose(a),id:a.id})),attention:{mode:world.attentionMode,characterId:world.attentionMode==='person'?world.lookTarget??undefined:undefined,yaw:angle(world.viewYaw),pitch:world.viewPitch}};
+  return {...(world.layout.kind==='dinner'?{}:{space:world.layout.kind}),...(world.layout.profile?{profile:world.layout.profile}:{}),...(world.lift?{lift:{openness:world.lift.openness,target:world.lift.target}}:{}),player:pose(world.player),npcs:world.npcs.map(a=>({...pose(a),id:a.id})),attention:{mode:world.attentionMode,characterId:world.attentionMode==='person'?world.lookTarget??undefined:undefined,yaw:angle(world.viewYaw),pitch:world.viewPitch}};
 }
 /** Ignore sub-millimetre / sub-milliradian settling in the UI; saves still use exact state. */
 export function roomUiKey(state:RoomSave) {
@@ -71,7 +77,7 @@ export function findPath(from:Point,to:Point,ignoreChair=-1,actors:Point[]=[],la
   return [];
 }
 function event(world:World,key:RoomEvent['key'],characterId?:string){world.event={key,characterId};world.revision++;}
-function stand(actor:Actor,layout:SpaceLayout){actor.seated=false;if(layout.kind!=='dinner')return;const r=Math.hypot(actor.x,actor.z);if(r<TABLE+.02){actor.x*= (TABLE+.03)/r;actor.z*=(TABLE+.03)/r;}}
+function stand(actor:Actor,layout:SpaceLayout){actor.seated=false;if(layout.kind!=='dinner')return;const table=layout.tableClearance??TABLE,r=Math.hypot(actor.x,actor.z);if(r<table+.02){actor.x*= (table+.03)/r;actor.z*=(table+.03)/r;}}
 export function focusConversation(world:World){world.attentionMode='conversation';world.lookTarget=null;world.revision++;}
 export function focusPerson(world:World,id:string){if(!world.npcs.some(n=>n.id===id))return;world.attentionMode='person';world.lookTarget=id;world.revision++;}
 export function freeLook(world:World){if(world.attentionMode==='free')return;world.attentionMode='free';world.lookTarget=null;world.revision++;}

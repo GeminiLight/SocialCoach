@@ -1,4 +1,4 @@
-import {spaceFor} from './spaces';
+import {layouts,spaceFor} from './spaces';
 import { z } from 'zod';
 import { supportedClosingProposal } from '@/lib/practice-policy';
 import {DramaSaveSchema,DinnerContextSchema,validDinnerContext,dinnerEvents,type DinnerContext} from './drama';
@@ -29,10 +29,12 @@ export const SaveSchema = z.object({ version: z.literal(1), briefVersion:z.liter
   if (!save.messages.length || save.messages.length % 2 !== 1 || save.messages.some((m, i) => m.role !== (i % 2 ? 'user' : 'npc') || (m.role === 'npc' && !ids.includes(m.speakerId ?? '')))) ctx.addIssue({ code: 'custom', message: 'Invalid conversation order' });
   if(save.room&&(new Set(save.room.npcs.map(n=>n.id)).size!==3||save.room.npcs.some(n=>!ids.includes(n.id))))ctx.addIssue({code:'custom',message:'Invalid room cast'});
   if(save.room){const {player,npcs}=save.room;
+    if(save.room.profile&&save.scenarioId!=='work')ctx.addIssue({code:'custom',message:'Invalid dinner geometry profile'});
+    const physicalLayout=save.scenarioId==='work'&&!save.room.profile?layouts.dinner:layout;
     if((save.room.space??'dinner')!==layout.kind||!!save.room.lift!==(layout.kind==='elevator'))ctx.addIssue({code:'custom',message:'Invalid room layout'});
-    const poseValid=(p:{x:number;z:number;seated:boolean},home:typeof layout.player,chair:number)=>p.seated?home.seated&&distance(p,home)<=.02:walkable(p,chair,[],layout);
-    if(!poseValid(player,layout.player,0))ctx.addIssue({code:'custom',message:'Invalid player position'});
-    for(const n of npcs){const index=ids.indexOf(n.id);if(index>=0&&(!poseValid(n,layout.people[index],index+1)||layout.kind!=='dinner'&&distance(n,layout.people[index])>.02))ctx.addIssue({code:'custom',message:'Invalid NPC position'});}
+    const poseValid=(p:{x:number;z:number;seated:boolean},home:typeof layout.player,chair:number)=>p.seated?home.seated&&distance(p,home)<=.02:walkable(p,chair,[],physicalLayout);
+    if(!poseValid(player,physicalLayout.player,0))ctx.addIssue({code:'custom',message:'Invalid player position'});
+    for(const n of npcs){const index=ids.indexOf(n.id);if(index>=0&&(!poseValid(n,physicalLayout.people[index],index+1)||layout.kind!=='dinner'&&distance(n,physicalLayout.people[index])>.02))ctx.addIssue({code:'custom',message:'Invalid NPC position'});}
     if(save.room.lift&&save.room.lift.openness<.92&&[player,...npcs].some(p=>Math.abs(p.z+2.3)<.4&&Math.abs(p.x)<2.05))ctx.addIssue({code:'custom',message:'An actor cannot intersect closed elevator doors'});
   }
   if(save.room?.attention?.characterId&&!ids.includes(save.room.attention.characterId))ctx.addIssue({code:'custom',message:'Invalid attention target'});

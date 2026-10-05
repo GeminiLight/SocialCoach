@@ -1,14 +1,20 @@
 {
   "id": "chen",
   "height": 3.12,
-  "standingEye": 2.9437,
-  "seatedEye": 2.342,
-  "pelvis": 1.6617,
-  "scale": 1.9156,
+  "standingEye": 2.9375,
+  "seatedEye": 2.3332,
+  "pelvis": 1.6643,
+  "scale": 1.9181,
   "faceTargets": {
-    "head/head-square": 0.32,
-    "chin/chin-width-incr": 0.22,
-    "nose/nose-width1-incr": 0.12
+    "head/head-square": 0.52,
+    "chin/chin-width-incr": 0.25,
+    "chin/chin-prominent-incr": 0.12,
+    "nose/nose-width1-incr": 0.08,
+    "head/head-age-incr": 0.16,
+    "eyes/eye-bag-incr": 0.12,
+    "mouth/mouth-upperlip-volume-decr": 0.25,
+    "mouth/mouth-lowerlip-volume-decr": 0.3,
+    "mouth/mouth-scale-depth-decr": 0.18
   },
   "artStyle": "adult-animation-v1"
 }

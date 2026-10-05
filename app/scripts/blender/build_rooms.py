@@ -3,7 +3,7 @@ World anchors deliberately match spaces.ts so old saved rooms remain valid.
 Pigments are read from globals.css; photographs are the attributed CC0 sources.
 """
 import argparse,bpy,json,math,pathlib,re,sys
-from mathutils import Vector
+from mathutils import Vector,Matrix
 sys.path.insert(0,str(pathlib.Path(__file__).parent))
 from surface_detail import add_surface_detail
 argv=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
@@ -15,6 +15,7 @@ for name,L,C,H in re.findall(r'--dinner-scene-(\w+): oklch\(\s*([\d.]+)\s+([\d.]
  l=(L+.3963377774*a+.2158037573*b)**3;m=(L-.1055613458*a-.0638541728*b)**3;s=(L-.0894841775*a-1.291485548*b)**3
  PIGMENTS[name]=tuple(max(0,min(1,v)) for v in (4.0767416621*l-3.3077115913*m+.2309699292*s,-1.2684380046*l+2.6097574011*m-.3413193965*s,-.0041960863*l-.7034186147*m+1.707614701*s))
 MAT={}
+GEOMETRY=json.loads((pathlib.Path(__file__).parents[2]/'src/features/dinner/lib/dinnerGeometry.json').read_text())
 def reset():
  bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False);MAT.clear()
  for coll in (bpy.data.materials,bpy.data.meshes):
@@ -30,7 +31,7 @@ def material(pigment,rough=.65,metal=0,photo=None,emission=0):
  if emission:bs.inputs['Emission Color'].default_value=(*PIGMENTS[pigment],1);bs.inputs['Emission Strength'].default_value=emission
  if not photo:
   if pigment in ('napkin','chair','sage','oat','terracotta','charcoal','wallInset') and rough>=.85:add_surface_detail(mat,'woven')
-  elif pigment in ('wall','officeWall','floor','officeFloor'):add_surface_detail(mat,'plaster')
+  elif pigment in ('wall','filmWall','officeWall','floor','officeFloor'):add_surface_detail(mat,'plaster')
   if pigment in ('porcelain','ceramic') and rough<.6:
    bs.inputs['Coat Weight'].default_value=.22;bs.inputs['Coat Roughness'].default_value=.22
  if photo:
@@ -223,7 +224,7 @@ def curtain(x,z,width=1.0,height=3.7):
    vertex=mesh.loops[index].vertex_index;uv.data[index].uv=(vertex%(columns+1)/columns,vertex//(columns+1)/rows)
  o=bpy.data.objects.new('Woven curtain',mesh);bpy.context.collection.objects.link(o);finish(o,o.name,material('napkin',.95))
 def shell(kind):
- wall='wall' if kind=='work' else 'oat' if kind=='family' else 'officeWall';floor='floor' if kind in ('work','family') else 'officeFloor'
+ wall='filmWall' if kind=='work' else 'oat' if kind=='family' else 'officeWall';floor='floor' if kind in ('work','family') else 'officeFloor'
  box('Floor',(0,-.06,.5),(13.2,.12,14),floor,.015,photo='wood_floor_deck' if kind=='family' else None,rough=.83)
  box('Back wall',(0,2.85,-5.25),(13.2,5.7,.16),wall,.02)
  for x in [-6.6,6.6]:box('Side wall',(x,2.85,.5),(.16,5.7,11.5),wall,.02)
@@ -235,23 +236,24 @@ def shell(kind):
   for z in range(-5,8):box('Tile joint',(0,.004,z),(13,.006,.007),'floorJoint',.002)
 
 def table(kind):
+ geometry=GEOMETRY['work' if kind=='work' else 'classic'];radius=geometry['radius'];ratio=radius/2.65
  photo='wood_table_001' if kind in ('work','family') else None
- cylinder('Table pedestal',(0,.80,0),.65,1.55,'woodEdge',top=.46,photo=photo)
- cylinder('Round tabletop',(0,1.60,0),2.65,.20,'wood' if kind!='school' else 'oat',photo=photo,rough=.4)
- cylinder('Table edge',(0,1.49,0),2.655,.025,'brass' if kind=='work' else 'woodEdge',metal=.4 if kind=='work' else 0)
+ cylinder('Table pedestal',(0,.80,0),.65*ratio,1.55,'woodEdge',top=.46*ratio,photo=photo)
+ cylinder('Round tabletop',(0,1.60,0),radius,.20,'wood' if kind!='school' else 'oat',photo=photo,rough=.4)
+ cylinder('Table edge',(0,1.49,0),radius+.005,.025,'brass' if kind=='work' else 'woodEdge',metal=.4 if kind=='work' else 0)
  if kind=='work':
   # A fitted banquet linen quiets the large foreground without hiding the
   # existing table edge, physical dishes, turntable or navigation anchors.
-  lathe('Fitted banquet linen',(0,1.713,0),[(0,0),(2.60,0),(2.673,-.018),(2.684,-.16)],'napkin',.94,top_surface=True)
- cylinder('Lazy susan',(0,1.736,0),1.54,.035,'ceramic' if kind=='family' else 'porcelain',rough=.22)
- seats=[(0,-3.05,0),(-2.65,-1.55,1.04),(2.65,-1.55,-1.04),(0,3.55,math.pi)]
+  lathe('Fitted banquet linen',(0,1.713,0),[(0,0),(radius-.05,0),(radius+.023,-.018),(radius+.034,-.16)],'napkin',.94,top_surface=True)
+ cylinder('Lazy susan',(0,1.736,0),1.54*ratio,.035,'ceramic' if kind=='family' else 'porcelain',rough=.22)
+ seats=[(s['x'],s['z'],s['heading']) for s in geometry['people']+[geometry['player']]]
  for x,z,a in seats:
-  chair((x,0,z),a,kind);r=math.hypot(x,z);sx=x/r*2.14;sz=z/r*2.14
+  chair((x,0,z),a,kind);r=math.hypot(x,z);sx=x/r*geometry['settingRadius'];sz=z/r*geometry['settingRadius']
   # Individual woven settings make the edge of a lived-in table readable.
   box('Woven placemat',(sx,1.716,sz),(.91,.014,.70),'wallInset' if kind=='work' else 'napkin',.018,rotation=a,rough=.96)
-  plate((sx,1.724,sz));bowl((sx,1.765,sz),.19)
+  plate((sx,1.724,sz),geometry['plateRadius']);bowl((sx,1.765,sz),geometry['bowlRadius'])
   spoon((sx+.36*math.cos(a),1.724,sz-.18*math.sin(a)),a)
-  cx=sx-.38*math.cos(a);cz=sz+.38*math.sin(a)
+  side=.36 if kind=='work' else -.38;cx=sx+side*math.cos(a);cz=sz-side*math.sin(a)
   box('Folded linen',(cx,1.73,cz),(.23,.035,.43),'napkin',.015,rotation=a,rough=.98)
   for side in [-.04,.04]:
    # Chopsticks have a tapered profile, real gaps and a ceramic rest.
@@ -284,11 +286,20 @@ def table(kind):
   if food=='soup':
    bowl((x,1.82,z),.35);cylinder('Clear broth',(x,1.985,z),.273,.008,'tea',rough=.25)
  # Plate feet contact the lazy susan rather than floating above it.
- for obj in set(bpy.context.scene.objects)-before_meals:obj.location.z-=.018
+ for obj in set(bpy.context.scene.objects)-before_meals:
+  obj.location.z-=.018
+  if kind=='work':obj.matrix_world=Matrix.Translation((0,0,1.754))@Matrix.Diagonal((ratio,ratio,ratio,1))@Matrix.Translation((0,0,-1.754))@obj.matrix_world
+ before_tea=set(bpy.context.scene.objects)
  teapot=(-1.5,1.73,-.92);sphere('Teapot body',(teapot[0],teapot[1]+.13,teapot[2]),(.20,.15,.19),'ceramic');cylinder('Teapot lid',(teapot[0],teapot[1]+.278,teapot[2]),.135,.022,'ceramic');sphere('Lid knob',(teapot[0],teapot[1]+.308,teapot[2]),(.035,.026,.035),'brass')
  curve('Teapot handle',[(-1.69,1.80,-.92),(-1.80,1.94,-.92),(-1.68,2.02,-.92)],.025,'ceramic');curve('Teapot spout',[(-1.36,1.82,-.92),(-1.20,1.95,-.92),(-1.19,2.03,-.92)],.035,'ceramic')
  if kind=='work':
   lathe('Green bottle',(1.65,1.70,-.9),[(.11,0),(.11,.36),(.057,.43),(.037,.59),(.037,.61)],'bottle',.2);cylinder('Bottle cap',(1.65,2.33,-.9),.042,.04,'brass',metal=.5)
+  # Relocate without shrinking the vessel: keep believable individual serving
+  # proportions, with clear gaps around each place setting and the shared tray.
+  for obj in set(bpy.context.scene.objects)-before_tea:
+   name=obj.name
+   tea=name.startswith(('Teapot','Lid'));dx,dz=(.20,.62) if tea else (3.60,-3.0)
+   obj.location+=Vector((dx,-dz,0 if tea else -.055))
 
 def dining(kind):
  shell(kind);table(kind);plant((-4.75,0,-3.45))

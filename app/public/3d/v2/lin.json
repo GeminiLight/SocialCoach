@@ -1,15 +1,18 @@
 {
   "id": "lin",
   "height": 3.0,
-  "standingEye": 2.8155,
-  "seatedEye": 2.3187,
+  "standingEye": 2.8049,
+  "seatedEye": 2.3081,
   "pelvis": 1.5568,
   "scale": 2.0552,
   "faceTargets": {
     "head/head-oval": 0.48,
     "head/head-scale-horiz-decr": 0.18,
     "chin/chin-height-incr": 0.18,
-    "nose/nose-scale-horiz-decr": 0.1
+    "nose/nose-scale-horiz-decr": 0.1,
+    "mouth/mouth-upperlip-volume-decr": 0.25,
+    "mouth/mouth-lowerlip-volume-decr": 0.3,
+    "mouth/mouth-scale-depth-decr": 0.25
   },
   "artStyle": "adult-animation-v1"
 }

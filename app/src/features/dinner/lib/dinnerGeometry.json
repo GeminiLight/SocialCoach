@@ -1,0 +1,30 @@
+{
+  "classic": {
+    "radius": 2.65,
+    "clearance": 3.08,
+    "settingRadius": 2.14,
+    "cupRadius": 2.13,
+    "plateRadius": 0.35,
+    "bowlRadius": 0.19,
+    "player": {"x": 0, "z": 3.55, "heading": 3.141592653589793, "seated": true},
+    "people": [
+      {"x": 0, "z": -3.05, "heading": 0, "seated": true},
+      {"x": -2.65, "z": -1.55, "heading": 1.04, "seated": true},
+      {"x": 2.65, "z": -1.55, "heading": -1.04, "seated": true}
+    ]
+  },
+  "work": {
+    "radius": 1.7,
+    "clearance": 2.13,
+    "settingRadius": 1.26,
+    "cupRadius": 1.25,
+    "plateRadius": 0.25,
+    "bowlRadius": 0.135,
+    "player": {"x": 0, "z": 2.5, "heading": 3.141592653589793, "seated": true},
+    "people": [
+      {"x": 0, "z": -2.2, "heading": 0, "seated": true},
+      {"x": -1.65, "z": -1.3, "heading": 0.91, "seated": true},
+      {"x": 1.65, "z": -1.3, "heading": -0.91, "seated": true}
+    ]
+  }
+}
