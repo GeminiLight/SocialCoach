@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
 
 ---
 
-[News](#news) · [3D practice](#3d-practice) · [Text practice](#what-you-can-practice) · [How it works](#how-it-works) · [Features](#key-features) · [Quick start](#quick-start) · [Deployment](#deployment) · [Research](#research)
+[News](#news) · [Start practicing](#start-a-practice-session) · [3D practice](#3d-practice) · [Scenarios](#what-you-can-practice) · [Features](#key-features) · [Learning foundations](#social-skills-and-social-and-emotional-learning-sel) · [Run locally](#run-locally) · [Deployment](#deployment) · [Research](#research)
 
 ## News
 
@@ -39,6 +39,32 @@ https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
 | **2026-10-03** | **[SocialCoach in 3D](#3d-practice).** Step into a dinner, elevator lobby, or office and practice difficult conversations by typing or speaking. |
 | **2026-09-09** | **[Live demo website launched](https://socialcoach.aurax.live).** Practice in Chinese or English, with no sign-up required. |
 | **2026-09-03** | **[First SocialCoach release](https://github.com/GeminiLight/SocialCoach/commit/bae956fc4eef36063c975fd4b980c7daf170223c).** Personalized practice scheduling, realistic role-play, and feedback grounded in your own words. |
+
+## Start a practice session
+
+1. **Choose a conversation.** Pick a skill or bring a situation you actually need to handle. Read your role and what you want to achieve.
+2. **Practice the exchange.** Talk to characters with their own goals, concerns, and limits. They can disagree, ask questions, and hold their position.
+3. **Review and try again.** See feedback tied to your actual words, consider another way to respond, and carry that lesson into your next attempt.
+
+<table align="center">
+<tr>
+<th width="33%">1 · Your next practice</th>
+<th width="33%">2 · The conversation</th>
+<th width="33%">3 · Your feedback</th>
+</tr>
+<tr>
+<td><a href="docs/screenshots/screenshot-01-home-en.png"><img src="docs/screenshots/screenshot-01-home-en.png" width="260" alt="A personalized recommendation to practice declining extra hours, with an explanation of why it fits"></a></td>
+<td><a href="docs/screenshots/screenshot-02-pushback-en.png"><img src="docs/screenshots/screenshot-02-pushback-en.png" width="260" alt="A practice conversation with a manager who challenges the learner's response"></a></td>
+<td><a href="docs/screenshots/screenshot-03-evidence-debrief-en.png"><img src="docs/screenshots/screenshot-03-evidence-debrief-en.png" width="260" alt="Feedback quoting the learner's words and suggesting a clearer way to set a boundary"></a></td>
+</tr>
+<tr>
+<td><sub>A scenario matched to your goals.</sub></td>
+<td><sub>Room to respond, disagree, and retry.</sub></td>
+<td><sub>Your words, the feedback, the next step.</sub></td>
+</tr>
+</table>
+
+<p align="center"><a href="https://socialcoach.aurax.live"><strong>Start a practice session →</strong></a></p>
 
 ## 3D practice
 
@@ -67,36 +93,6 @@ Choose from **58 scenarios across 7 areas of life**, follow a personalized recom
 
 Text practice starts with at least 12 learner turns. Continue the same conversation in eight-turn segments, keeping its history and commitments; you decide when to end and debrief.
 
-## Social skills and social and emotional learning (SEL)
-
-SocialCoach is an AI learning tool focused on practicing social skills, one part of social and emotional learning (SEL). Its 34-skill map draws on the [five CASEL competencies](https://casel.org/what-is-sel/): self-awareness, self-management, social awareness, relationship skills, and responsible decision-making. You can rehearse a difficult conversation, then review feedback grounded in what you actually said. It is an individual practice tool, not a certified school curriculum or a clinical assessment. The [bilingual website](https://tianfuwang.tech/SocialCoach/) explains how the skills map to practice.
-
-## How it works
-
-1. **Choose a conversation.** Pick a skill or bring a situation you actually need to handle. Read your role and what you want to achieve.
-2. **Practice the exchange.** Talk to characters with their own goals, concerns, and limits. They can disagree, ask questions, and hold their position.
-3. **Review and try again.** See feedback tied to your actual words, consider another way to respond, and carry that lesson into your next attempt.
-
-<table align="center">
-<tr>
-<th width="33%">1 · Your next practice</th>
-<th width="33%">2 · The conversation</th>
-<th width="33%">3 · Your feedback</th>
-</tr>
-<tr>
-<td><a href="docs/screenshots/screenshot-01-home-en.png"><img src="docs/screenshots/screenshot-01-home-en.png" width="260" alt="A personalized recommendation to practice declining extra hours, with an explanation of why it fits"></a></td>
-<td><a href="docs/screenshots/screenshot-02-pushback-en.png"><img src="docs/screenshots/screenshot-02-pushback-en.png" width="260" alt="A practice conversation with a manager who challenges the learner's response"></a></td>
-<td><a href="docs/screenshots/screenshot-03-evidence-debrief-en.png"><img src="docs/screenshots/screenshot-03-evidence-debrief-en.png" width="260" alt="Feedback quoting the learner's words and suggesting a clearer way to set a boundary"></a></td>
-</tr>
-<tr>
-<td><sub>A scenario matched to your goals.</sub></td>
-<td><sub>Room to respond, disagree, and retry.</sub></td>
-<td><sub>Your words, the feedback, the next step.</sub></td>
-</tr>
-</table>
-
-<p align="center"><a href="https://socialcoach.aurax.live"><strong>Try a conversation →</strong></a></p>
-
 ## Key features
 
 - **Realistic role-play.** Characters respond from their own perspective. Progress depends on how the conversation develops; politeness alone does not guarantee agreement. Optional timed replies add practice under pressure.
@@ -106,9 +102,13 @@ SocialCoach is an AI learning tool focused on practicing social skills, one part
 - **A view of your progress.** Ask follow-up questions about your debrief, revisit past conversations, and look for recurring patterns backed by quotes from different sessions.
 - **Practice on your terms.** No account required. Export your practice history, use your own model, or self-host the app. The mobile-first interface can be installed as a PWA.
 
-## Quick start
+## Social skills and social and emotional learning (SEL)
 
-To try the hosted app, [open SocialCoach](https://socialcoach.aurax.live). To run it locally, use **Node.js 22+**, **pnpm 11**, and credentials for an Anthropic or OpenAI-compatible model provider.
+SocialCoach is an AI learning tool focused on practicing social skills, one part of social and emotional learning (SEL). Its 34-skill map draws on the [five CASEL competencies](https://casel.org/what-is-sel/): self-awareness, self-management, social awareness, relationship skills, and responsible decision-making. You can rehearse a difficult conversation, then review feedback grounded in what you actually said. It is an individual practice tool, not a certified school curriculum or a clinical assessment. The [bilingual website](https://tianfuwang.tech/SocialCoach/) explains how the skills map to practice.
+
+## Run locally
+
+To run SocialCoach locally, use **Node.js 22+**, **pnpm 11**, and credentials for an Anthropic or OpenAI-compatible model provider.
 
 ```bash
 git clone https://github.com/GeminiLight/SocialCoach.git

@@ -60,7 +60,7 @@
 |---|---|---|---|
 | B1 | 核心定位陈述（敌人是「建议」；知道≠做到；A/B 客户分层） | ✅ | → [00-product-proposal](./00-product-proposal.md#产品定位) |
 | B2 | 主句定稿并三处对齐 | ✅ | README / `layout.tsx` / `manifest.webmanifest` |
-| B3 | README 按开源产品惯例重排 | ✅ | 2026-10-03 中英首屏突出 3D，新增真实场景预览、共用复盘说明；News 保留 3D 上线与首个版本发布两条里程碑；同步 58 个文字场景与续聊说明，维护规则见 [README 结构](./11-stage-b.md#b3-readme-结构)。2026-09-21 基础精修 → [评审](./reviews/review-2026-09-21-readme.md) |
+| B3 | README 按开源产品惯例重排 | ✅ | 2026-10-05 中英以“开始一场练习”为首个体验章节，接 3D / 场景 / 核心功能，SEL 学习依据后置；本地运行单独命名，3D 截图中英更新，News 保留三个发布节点。维护规则见 [README 结构](./11-stage-b.md#b3-readme-结构)。2026-09-21 基础精修 → [评审](./reviews/review-2026-09-21-readme.md) |
 | B4 | 品牌 banner（明暗双版 SVG，色值由 `globals.css` OKLCH 精确换算） | ✅ | `docs/banner.svg` / `banner-dark.svg` |
 | B5 | 产品截图（首页 / 场景目录 / 对话中 / 复盘 / 今日推荐） | ✅ | `site/scripts/screenshots.mjs` 对线上正式版自动拍摄，中英各五张，存 `docs/screenshots/` 与 `site/assets/`；官网四步流程各配对应截图 |
 | B6 | LICENSE 文件与 README 章节 | ✅ | 2026-09-09 用户选定 Apache-2.0；根目录加入官方 LICENSE 全文，README 增加许可及第三方材料说明 |
