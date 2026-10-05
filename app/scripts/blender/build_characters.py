@@ -6,6 +6,7 @@ from mathutils import Matrix, Quaternion, Vector
 sys.path.insert(0,str(pathlib.Path(__file__).parent))
 from pigments import pigments
 from identities import fit_identity, FACES
+from surface_detail import add_surface_detail
 PIGMENTS=pigments()
 argsv=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
 p=argparse.ArgumentParser();p.add_argument('--mpfb-source',required=True);p.add_argument('--asset-root',required=True);p.add_argument('--out',required=True);p.add_argument('--only',default='chen');p.add_argument('--render',action='store_true');args=p.parse_args(argsv)
@@ -56,10 +57,10 @@ def simple_material(obj,fn,kind):
  diffuse=fields.get('diffuseTexture')
  if diffuse:
   path=pathlib.Path(fn).parent/diffuse;img=bpy.data.images.load(str(path),check_existing=True)
-  maximum=1024 if kind=='skin' else 512
+  maximum=2048 if kind=='skin' else 1024 if kind=='cloth' else 512
   if max(img.size)>maximum:img.scale(int(img.size[0]*maximum/max(img.size)),int(img.size[1]*maximum/max(img.size)))
-  if kind=='skin':
-   cached=ROOT/'texture-cache';cached.mkdir(exist_ok=True);jpg=cached/(path.stem+'.jpg');img.file_format='JPEG';img.filepath_raw=str(jpg);img.save();img=bpy.data.images.load(str(jpg),check_existing=True)
+  if kind=='skin' or (kind=='cloth' and fields.get('transparent')!='True'):
+   cached=ROOT/'texture-cache';cached.mkdir(exist_ok=True);jpg=cached/(path.stem+'.jpg');img.file_format='JPEG';img.filepath_raw=str(jpg);img.save(quality=80);img=bpy.data.images.load(str(jpg),check_existing=True)
   texture=nodes.new('ShaderNodeTexImage');texture.image=img
   mat.node_tree.links.new(texture.outputs['Color'],bs.inputs['Base Color'])
   if fields.get('transparent')=='True' and kind!='eyes':
@@ -68,6 +69,8 @@ def simple_material(obj,fn,kind):
    # glTF exporter uses threshold > 0 with the clip-equivalent render mode.
    mat.surface_render_method='DITHERED'
   if kind=='hair':bs.inputs['Roughness'].default_value=.84
+ if kind in ('skin','cloth'):
+  add_surface_detail(mat,'woven' if kind=='cloth' else 'skin')
  obj.data.materials.clear();obj.data.materials.append(mat)
  return mat
 
@@ -153,7 +156,7 @@ def build(id,cfg):
   # Remove the source project's printed logo; retain the fitted cloth topology
   # and photographed trousers. The top uses the cast's CSS fabric pigment.
   token={'aunt':'wine','mom':'sage','dad':'oat','senior':'white','yue':'sage','kai':'navy','cheng':'oat','ning':'oat','player':'navy'}.get(id,'teal')
-  mat=bpy.data.materials.new('sc:'+token);mat.use_nodes=True;bs=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED');bs.inputs['Base Color'].default_value=(*PIGMENTS[token],1);bs.inputs['Roughness'].default_value=.89;clothes.data.materials.append(mat)
+  mat=bpy.data.materials.new('sc:'+token);mat.use_nodes=True;bs=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED');bs.inputs['Base Color'].default_value=(*PIGMENTS[token],1);bs.inputs['Roughness'].default_value=.89;add_surface_detail(mat,'woven');clothes.data.materials.append(mat)
   waist=rig.data.bones['pelvis'].head_local.z+.035
   for poly in clothes.data.polygons:
    if sum(clothes.data.vertices[i].co.z for i in poly.vertices)/len(poly.vertices)>waist:poly.material_index=1
@@ -182,6 +185,8 @@ def build(id,cfg):
  for modifier in list(base.modifiers):
   if modifier.type=='MASK':base.modifiers.remove(modifier)
  for mesh in [o for o in bpy.context.scene.objects if o.type=='MESH']:
+  # Preserve shape-key / UV / weight layers while exporting portable tangents.
+  bm=bmesh.new();bm.from_mesh(mesh.data);bmesh.ops.triangulate(bm,faces=list(bm.faces));bm.to_mesh(mesh.data);bm.free()
   for poly in mesh.data.polygons:poly.use_smooth=True
  total=max(v.co.z for v in base.data.vertices);scale=cfg['height']/total;rig.scale=(scale,)*3
  eye=max(v.co.z for v in bpy.data.objects['eyes'].data.vertices)*scale-.03
@@ -201,7 +206,7 @@ def build(id,cfg):
  bpy.ops.object.select_all(action='DESELECT')
  for obj in bpy.context.scene.objects:
   if obj.type in ('MESH','ARMATURE'):obj.select_set(True)
- bpy.ops.export_scene.gltf(filepath=str(OUT/(id+'.glb')),export_format='GLB',use_selection=True,export_apply=False,export_animations=True,export_animation_mode='ACTIONS',export_morph=True,export_morph_normal=False,export_image_format='AUTO',export_jpeg_quality=85,export_draco_mesh_compression_enable=True,export_draco_mesh_compression_level=6)
+ bpy.ops.export_scene.gltf(filepath=str(OUT/(id+'.glb')),export_format='GLB',use_selection=True,export_apply=False,export_animations=True,export_animation_mode='ACTIONS',export_morph=True,export_morph_normal=True,export_tangents=True,export_image_format='AUTO',export_jpeg_quality=85,export_draco_mesh_compression_enable=True,export_draco_mesh_compression_level=6)
  patch_alpha(OUT/(id+'.glb'))
  (OUT/(id+'.json')).write_text(json.dumps(info,indent=2));print('BUILT',id,info,flush=True)
  for image in list(bpy.data.images):

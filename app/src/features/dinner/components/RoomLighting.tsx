@@ -33,7 +33,7 @@ function RoomReflections({ p, warm, period }: { p: Palette; warm: boolean; perio
     const generator = new PMREMGenerator(gl);
     const target = generator.fromScene(room, .08, .1, 40, { size: 128 });
     const previous = scene.environment, previousIntensity = scene.environmentIntensity;
-    scene.environment = target.texture; scene.environmentIntensity = warm ? .5 : .65;
+    scene.environment = target.texture; scene.environmentIntensity = warm ? .38 : .48;
     geometries.forEach(geometry => geometry.dispose());
     materials.forEach(material => material.dispose()); generator.dispose(); invalidate();
     return () => {
@@ -53,13 +53,13 @@ export function RoomLighting({ p, scenario }: { p: Palette; scenario: Scenario }
   const window = ['family', 'school', 'office'].includes(kind) && period !== 'evening';
   return <>
     <RoomReflections p={p} warm={warm} period={period} />
-    <ambientLight intensity={.2} color={p.white} />
-    <hemisphereLight args={[p.white, warm ? p.floor : p.officeFloor, .65]} />
-    <directionalLight position={window ? [-4, 5.2, -1] : [-3, 5.3, 4]} intensity={window && period === 'day' ? 1.4 : 1.05} color={window && period === 'day' ? p.window : warm ? p.light : p.white}
+    <ambientLight intensity={.12} color={p.white} />
+    <hemisphereLight args={[p.white, warm ? p.floor : p.officeFloor, .45]} />
+    <directionalLight position={window ? [-4, 5.2, -1] : [-3, 5.3, 4]} intensity={window && period === 'day' ? 1.6 : 1.3} color={window && period === 'day' ? p.window : warm ? p.light : p.white}
       castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7}
       shadow-bias={-.0005} shadow-normalBias={.025} shadow-radius={4} />
-    <directionalLight position={[2, 3.8, 6]} intensity={window ? .9 : .65} color={p.white} />
-    <directionalLight position={[5, 4, -3]} intensity={.45} color={p.white} />
+    <directionalLight position={[2, 3.8, 6]} intensity={window ? .55 : .4} color={p.white} />
+    <directionalLight position={[5, 4, -3]} intensity={.28} color={p.white} />
     <pointLight position={[0, 4.9, .4]} intensity={warm ? 26 : 34} distance={14} decay={2} color={warm ? p.light : p.white} />
     {kind === 'work' && [-3.1, 3.1].map(x => <pointLight key={x} position={[x, 3.4, -4.6]} intensity={9} distance={6} decay={2} color={p.light} />)}
     {kind === 'elevator' && <pointLight position={[0, 4.3, -3.6]} intensity={20} distance={6} decay={2} color={p.white} />}

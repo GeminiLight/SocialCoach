@@ -21,5 +21,5 @@ for(const file of files) {
     ...(isCharacter?{animations:gltf.animations.map(a=>a.name),morphs:[...new Set(gltf.meshes.flatMap(m=>m.extras?.targetNames??[]))]}:{})});
 }
 await writeFile(path.join(app,'src/features/dinner/lib/avatarAssets.ts'),`/** Generated anatomical anchors; run scripts/blender/finalize.mjs after exporting. */\nexport const avatarMetrics:Record<string,{standingEye:number;seatedEye:number;scale:number}>= ${JSON.stringify(anchors,null,2)};\n`);
-await writeFile(path.join(directory,'manifest.json'),JSON.stringify({version:2,exported:'2026-10-03',blender:'5.2.2 LTS',mpfb:'afb9f530a7c2741dedb8df0ebae2e0b183caec21',models},null,2)+'\n');
+await writeFile(path.join(directory,'manifest.json'),JSON.stringify({version:2,exported:new Date().toISOString().slice(0,10),blender:'5.2.2 LTS',mpfb:'afb9f530a7c2741dedb8df0ebae2e0b183caec21',models},null,2)+'\n');
 console.log(`Updated ${Object.keys(anchors).length} actors and ${models.length} assets (${(models.reduce((n,m)=>n+m.bytes,0)/1024/1024).toFixed(1)} MiB).`);

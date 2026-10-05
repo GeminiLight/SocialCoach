@@ -4,6 +4,8 @@ Pigments are read from globals.css; photographs are the attributed CC0 sources.
 """
 import argparse,bpy,json,math,pathlib,re,sys
 from mathutils import Vector
+sys.path.insert(0,str(pathlib.Path(__file__).parent))
+from surface_detail import add_surface_detail
 argv=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
 p=argparse.ArgumentParser();p.add_argument('--asset-root',required=True);p.add_argument('--out',required=True);p.add_argument('--css',required=True);p.add_argument('--only',default='work,family,school,elevator,office,props');args=p.parse_args(argv)
 ROOT=pathlib.Path(args.asset_root);OUT=pathlib.Path(args.out);OUT.mkdir(parents=True,exist_ok=True)
@@ -26,6 +28,11 @@ def material(pigment,rough=.65,metal=0,photo=None,emission=0):
  mat=bpy.data.materials.new(name);mat.use_nodes=True;mat.diffuse_color=(*PIGMENTS[pigment],1)
  bs=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED');bs.inputs['Base Color'].default_value=(*PIGMENTS[pigment],1);bs.inputs['Roughness'].default_value=rough;bs.inputs['Metallic'].default_value=metal
  if emission:bs.inputs['Emission Color'].default_value=(*PIGMENTS[pigment],1);bs.inputs['Emission Strength'].default_value=emission
+ if not photo:
+  if pigment in ('napkin','chair','sage','oat','terracotta','charcoal','wallInset') and rough>=.85:add_surface_detail(mat,'woven')
+  elif pigment in ('wall','officeWall','floor','officeFloor'):add_surface_detail(mat,'plaster')
+  if pigment in ('porcelain','ceramic') and rough<.6:
+   bs.inputs['Coat Weight'].default_value=.22;bs.inputs['Coat Roughness'].default_value=.22
  if photo:
   bs.inputs['Base Color'].default_value=(1,1,1,1)
   for suffix,out,input in [('diff','Color','Base Color'),('nor_gl','Color','Normal'),('rough','Color','Roughness')]:
@@ -36,7 +43,7 @@ def material(pigment,rough=.65,metal=0,photo=None,emission=0):
      img.scale(512,512);cached=ROOT/'texture-cache';cached.mkdir(exist_ok=True);img.file_format='JPEG';img.filepath_raw=str(cached/(photo+'_'+suffix+'512.jpg'));img.save()
    tex=mat.node_tree.nodes.new('ShaderNodeTexImage');tex.image=img
    if suffix=='nor_gl':
-    normal=mat.node_tree.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.3;mat.node_tree.links.new(tex.outputs[out],normal.inputs['Color']);mat.node_tree.links.new(normal.outputs['Normal'],bs.inputs[input])
+    normal=mat.node_tree.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.08 if photo=='wood_table_001' else .3;mat.node_tree.links.new(tex.outputs[out],normal.inputs['Color']);mat.node_tree.links.new(normal.outputs['Normal'],bs.inputs[input])
    else:mat.node_tree.links.new(tex.outputs[out],bs.inputs[input])
  MAT[key]=mat;return mat
 def finish(obj,name,mat,bevel=0):
@@ -57,11 +64,17 @@ def box(name,at,size,pigment,bevel=.025,rotation=0,photo=None,rough=.7,metal=0,e
  o.rotation_euler.z=rotation;return finish(o,name,material(pigment,rough,metal,photo,emission),min(bevel,min(size)*.35))
 def cylinder(name,at,r,depth,pigment,rough=.65,metal=0,top=None,photo=None,vertices=48):
  bpy.ops.mesh.primitive_cone_add(vertices=vertices,radius1=r,radius2=r if top is None else top,depth=depth,location=xyz(at));o=bpy.context.object
+ if photo:
+  uv=o.data.uv_layers.active
+  for face in o.data.polygons:
+   if abs(face.normal.z)>.5:
+    for index in face.loop_indices:
+     v=o.data.vertices[o.data.loops[index].vertex_index].co;uv.data[index].uv=(v.x/2.6,v.y/2.6)
  return finish(o,name,material(pigment,rough,metal,photo),min(.014,depth*.14))
 def sphere(name,at,scale,pigment,rough=.55):
- bpy.ops.mesh.primitive_uv_sphere_add(segments=20,ring_count=12,location=xyz(at));o=bpy.context.object;o.scale=(scale[0],scale[2],scale[1]);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);return finish(o,name,material(pigment,rough))
+ bpy.ops.mesh.primitive_uv_sphere_add(segments=24,ring_count=12,location=xyz(at));o=bpy.context.object;o.scale=(scale[0],scale[2],scale[1]);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);return finish(o,name,material(pigment,rough))
 def curve(name,points,r,pigment,metal=0):
- data=bpy.data.curves.new(name,'CURVE');data.dimensions='3D';data.resolution_u=12;data.bevel_depth=r;data.bevel_resolution=3
+ data=bpy.data.curves.new(name,'CURVE');data.dimensions='3D';data.resolution_u=6 if r<.01 else 12;data.bevel_depth=r;data.bevel_resolution=1 if r<.01 else 3
  spline=data.splines.new('BEZIER');spline.bezier_points.add(len(points)-1)
  for bp,v in zip(spline.bezier_points,points):bp.co=xyz(v);bp.handle_left_type='AUTO';bp.handle_right_type='AUTO'
  o=bpy.data.objects.new(name,data);bpy.context.collection.objects.link(o);o.data.materials.append(material(pigment,.45,metal));return o
@@ -71,9 +84,70 @@ def lathe(name,at,profile,pigment,rough=.35,metal=0):
   for i in range(segments):a=i*math.tau/segments;verts.append(xyz((at[0]+radius*math.cos(a),at[1]+height,at[2]+radius*math.sin(a))))
  for j in range(len(profile)-1):
   for i in range(segments):faces.append((j*segments+i,j*segments+(i+1)%segments,(j+1)*segments+(i+1)%segments,(j+1)*segments+i))
- mesh=bpy.data.meshes.new(name);mesh.from_pydata(verts,[],faces);mesh.update();o=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(o);finish(o,name,material(pigment,rough,metal));return o
+ mesh=bpy.data.meshes.new(name);mesh.from_pydata(verts,[],faces);mesh.update()
+ uv=mesh.uv_layers.new(name='Turned surface UV')
+ for face in mesh.polygons:
+  j=face.index//segments;i=face.index%segments
+  coordinates=[(i/segments,j/(len(profile)-1)),((i+1)/segments,j/(len(profile)-1)),((i+1)/segments,(j+1)/(len(profile)-1)),(i/segments,(j+1)/(len(profile)-1))]
+  for index,coordinate in zip(face.loop_indices,coordinates):uv.data[index].uv=coordinate
+ o=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(o);finish(o,name,material(pigment,rough,metal));return o
 def plate(at,r=.35,pigment='porcelain'):
- return lathe('Glazed plate',at,[(0,0),(.08,0),(.09,.02),(r*.7,.034),(r,.078),(r,.09),(r*.95,.097),(r*.68,.052),(0,.04)],pigment)
+ # A thin porcelain rim and shallow well, rather than a solid white disc.
+ dish=lathe('Glazed plate',at,[(0,0),(.08,0),(.09,.018),(r*.7,.026),(r,.052),(r,.060),(r*.95,.066),(r*.68,.045),(0,.04)],pigment,.24)
+ lathe('Painted glaze ring',at,[(r*.85,.059),(r*.875,.061)],'ceramic',.24)
+ return dish
+
+def leaf(at,a,length=.22):
+ # Folded bok choy: tapered blade, raised vein and a pale edible stalk.
+ verts=[];faces=[]
+ for j in range(7):
+  t=j/6;w=.075*math.sin(math.pi*t)**.65
+  for k in range(5):
+   q=(k-2)/2;u=q*w;v=(t-.5)*length
+   verts.append(xyz((at[0]+u*math.cos(a)+v*math.sin(a),at[1]+.015*(1-q*q)+.015*math.sin(t*math.pi)+.009*math.sin(j+k*2),at[2]-u*math.sin(a)+v*math.cos(a))))
+ for j in range(6):
+  for k in range(4):i=j*5+k;faces.append((i,i+1,i+6,i+5))
+ mesh=bpy.data.meshes.new('Leaf blade');mesh.from_pydata(verts,[],faces);mesh.update();o=bpy.data.objects.new('Bok choy leaf',mesh);bpy.context.collection.objects.link(o);finish(o,o.name,material('green',.4))
+ curve('Bok choy stalk',[(at[0]-math.sin(a)*length*.4,at[1]+.01,at[2]-math.cos(a)*length*.4),at,(at[0]+math.sin(a)*length*.38,at[1]+.02,at[2]+math.cos(a)*length*.38)],.012,'rice')
+
+def dumpling(at,a,index):
+ # Crescent dough with a pinched ridge and individually varied pleats.
+ body=sphere('Dumpling dough',at,(.105,.050,.065),'rice',.61);body.rotation_euler.z=a
+ for j in range(7):
+  x=(j-3)*.023;h=.055*math.sqrt(max(0,1-(x/.11)**2))
+  def point(u,v,y):return(at[0]+u*math.cos(a)+v*math.sin(a),at[1]+y,at[2]-u*math.sin(a)+v*math.cos(a))
+  curve('Pinched dough pleat',[point(x-.009,-.028,h*.48),point(x,0,h),point(x+.009,.022,h*.55)],.003,'porcelain')
+ if index%3==0:
+  # Small browned underside, not a decal or repeated white pearl.
+  sphere('Golden dough edge',(at[0],at[1]-.025,at[2]+.008),(.087,.010,.055),'food',.7)
+
+def tomato(at,a):
+ # Wedge silhouette, juicy cut face, pale core and visible seeds.
+ body=sphere('Tomato wedge',at,(.10,.036,.064),'red',.32);body.rotation_euler.z=a
+ core=sphere('Tomato cut face',(at[0],at[1]+.026,at[2]),(.082,.013,.050),'food',.42);core.rotation_euler.z=a
+ for j in range(3):
+  t=a+j*2.1;x=at[0]+math.sin(t)*.038;z=at[2]+math.cos(t)*.03
+  sphere('Tomato seed',(x,at[1]+.04,z),(.009,.003,.005),'rice',.4)
+
+def fish(at):
+ x,y,z=at
+ sphere('Steamed fish body',(x,y,z),(.32,.065,.12),'rice',.46)
+ sphere('Fish head',(x-.29,y,z),(.115,.064,.097),'food',.48)
+ for side in [-1,1]:
+  sphere('Fish eye',(x-.327,y+.043,z+side*.073),(.014,.011,.008),'porcelain',.32)
+  sphere('Fish pupil',(x-.329,y+.048,z+side*.079),(.007,.006,.003),'dark',.22)
+ curve('Fish gill',[(x-.23,y+.044,z-.075),(x-.205,y+.065,z),(x-.23,y+.044,z+.075)],.003,'woodEdge')
+ for j in range(9):
+  xx=x-.17+j*.045
+  curve('Fish skin score',[(xx-.01,y+.035,z-.091),(xx,y+.067,z),(xx+.015,y+.035,z+.091)],.002,'food')
+ # A fan tail keeps the fish readable from either seat at the table.
+ outline=[(x+.28,y,z),(x+.45,y+.014,z-.10),(x+.41,y+.026,z),(x+.45,y+.014,z+.10)]
+ verts=[xyz(v) for v in outline]+[xyz((xx,yy-.008,zz)) for xx,yy,zz in outline]
+ faces=[(0,1,2),(0,2,3),(6,5,4),(7,6,4),(0,4,5,1),(1,5,6,2),(2,6,7,3),(3,7,4,0)]
+ mesh=bpy.data.meshes.new('Fish tail');mesh.from_pydata(verts,[],faces);mesh.update();o=bpy.data.objects.new('Fish tail',mesh);bpy.context.collection.objects.link(o);finish(o,o.name,material('food',.55))
+ for i in range(6):
+  xx=x-.13+i*.052
+  curve('Scallion garnish',[(xx-.04,y+.07,z-.04),(xx,y+.085,z),(xx+.035,y+.072,z+.06)],.006,'green' if i%2 else 'rice')
 def bowl(at,r=.23):return lathe('Ceramic bowl',at,[(.08,0),(.1,.014),(.12,.05),(r,.17),(r,.19),(r-.014,.195),(.11,.07),(.065,.034),(0,.034)],'ceramic')
 def chair(at,heading,kind):
  before=set(bpy.context.scene.objects);wood=kind!='school' and kind!='office';seat='chair' if kind=='work' else 'oat' if kind=='family' else 'terracotta' if kind=='school' else 'charcoal'
@@ -100,7 +174,16 @@ def plant(at):
   a=i*2.399;dx=math.sin(a);dz=math.cos(a);h=1.65+(i%3)*.23
   curve('Plant stalk',[(at[0],.6,at[2]),(at[0]+dx*.14,h*.65,at[2]+dz*.14),(at[0]+dx*.34,h,at[2]+dz*.34)],.012,'stem')
   for t in [.62,.82,1]:
-   leaf=sphere('Broad leaf',(at[0]+dx*(.12+t*.25),h*t,at[2]+dz*(.12+t*.25)),(.13,.28,.022),'leaf');leaf.rotation_euler.z=-a+.3
+   origin=(at[0]+dx*(.12+t*.25),h*t,at[2]+dz*(.12+t*.25));verts=[];faces=[]
+   # Pointed, folded leaves catching light along their centre vein.
+   for j in range(9):
+    u=j/8;width=.17*math.sin(math.pi*u)**.8
+    for k in range(5):
+     q=(k-2)/2;along=u*.62
+     verts.append(xyz((origin[0]+dx*along+dz*q*width,origin[1]+u*.19+.06*(1-q*q)*math.sin(math.pi*u),origin[2]+dz*along-dx*q*width)))
+   for j in range(8):
+    for k in range(4):i=j*5+k;faces.append((i,i+1,i+6,i+5))
+   mesh=bpy.data.meshes.new('Folded foliage');mesh.from_pydata(verts,[],faces);mesh.update();o=bpy.data.objects.new('Pointed leaf',mesh);bpy.context.collection.objects.link(o);mat=material('leaf',.72);mat.use_backface_culling=False;finish(o,o.name,mat)
 
 def curtain(x,z,width=1.0,height=3.7):
  verts=[];faces=[];columns=48;rows=8
@@ -110,7 +193,12 @@ def curtain(x,z,width=1.0,height=3.7):
    verts.append(xyz((px,py,pz)))
  for j in range(rows):
   for i in range(columns):n=j*(columns+1)+i;faces.append((n,n+1,n+columns+2,n+columns+1))
- mesh=bpy.data.meshes.new('Curtain folds');mesh.from_pydata(verts,[],faces);o=bpy.data.objects.new('Woven curtain',mesh);bpy.context.collection.objects.link(o);finish(o,o.name,material('napkin',.95))
+ mesh=bpy.data.meshes.new('Curtain folds');mesh.from_pydata(verts,[],faces);mesh.update()
+ uv=mesh.uv_layers.new(name='Fabric UV')
+ for face in mesh.polygons:
+  for index in face.loop_indices:
+   vertex=mesh.loops[index].vertex_index;uv.data[index].uv=(vertex%(columns+1)/columns,vertex//(columns+1)/rows)
+ o=bpy.data.objects.new('Woven curtain',mesh);bpy.context.collection.objects.link(o);finish(o,o.name,material('napkin',.95))
 def shell(kind):
  wall='wall' if kind=='work' else 'oat' if kind=='family' else 'officeWall';floor='floor' if kind in ('work','family') else 'officeFloor'
  box('Floor',(0,-.06,.5),(13.2,.12,14),floor,.015,photo='wood_floor_deck' if kind=='family' else None,rough=.83)
@@ -128,6 +216,10 @@ def table(kind):
  cylinder('Table pedestal',(0,.80,0),.65,1.55,'woodEdge',top=.46,photo=photo)
  cylinder('Round tabletop',(0,1.60,0),2.65,.20,'wood' if kind!='school' else 'oat',photo=photo,rough=.4)
  cylinder('Table edge',(0,1.49,0),2.655,.025,'brass' if kind=='work' else 'woodEdge',metal=.4 if kind=='work' else 0)
+ if kind=='work':
+  # A fitted banquet linen quiets the large foreground without hiding the
+  # existing table edge, physical dishes, turntable or navigation anchors.
+  lathe('Fitted banquet linen',(0,1.713,0),[(0,0),(2.60,0),(2.673,-.018),(2.684,-.16)],'napkin',.94)
  cylinder('Lazy susan',(0,1.736,0),1.54,.035,'ceramic' if kind=='family' else 'porcelain',rough=.22)
  seats=[(0,-3.05,0),(-2.65,-1.55,1.04),(2.65,-1.55,-1.04),(0,3.55,math.pi)]
  for x,z,a in seats:
@@ -140,20 +232,31 @@ def table(kind):
    o=cylinder('Wood chopstick',(cx+side*math.cos(a),1.762,cz),.009,.58,'woodEdge',top=.005,vertices=10);o.rotation_euler=(math.pi/2,0,a)
   box('Chopstick rest',(cx,1.745,cz-.15),(.15,.035,.04),'ceramic',.012,rotation=a)
  before_meals=set(bpy.context.scene.objects)
- for x,z,food in [(-.78,-.72,'fish'),(.74,-.78,'greens'),(1.07,.28,'meat'),(.05,1.10,'tomato'),(-.93,.39,'dumplings')]:
+ dishes=[(-.78,-.72,'fish'),(.74,-.78,'greens'),(1.07,.28,'meat'),(.05,1.10,'tomato'),(-.93,.39,'dumplings')]
+ if kind=='family':dishes=[(-.72,-.7,'fish'),(.65,-.83,'tomato'),(1.0,.25,'greens'),(.02,1.04,'soup'),(-.99,.38,'dumplings')]
+ if kind=='school':dishes=[(-.73,-.73,'meat'),(.76,-.78,'greens'),(1.04,.29,'tomato'),(.0,1.06,'noodles'),(-.98,.39,'dumplings')]
+ for x,z,food in dishes:
   plate((x,1.772,z),.43)
-  for i in range(8):
-   a=i*2.399;radius=math.sqrt(i/9)*.26;px=x+math.cos(a)*radius;pz=z+math.sin(a)*radius
+  for i in range(9):
+   a=i*2.399+math.sin(i*1.37)*.25;radius=math.sqrt(i/10)*.25;px=x+math.cos(a)*radius;pz=z+math.sin(a)*radius
    if food=='greens':
-    leaf=sphere('Stir-fried greens',(px,1.86+(i%3)*.025,pz),(.13,.023,.045),'green');leaf.rotation_euler.z=a
+    leaf((px,1.84+(i%3)*.017,pz),a,.19+(i%4)*.02)
    elif food=='dumplings':
-    dumpling=sphere('Pleated dumpling',(px,1.865,pz),(.10,.051,.065),'rice');dumpling.rotation_euler.z=a
-    for j in [-1,0,1]:curve('Dumpling seam',[(px+j*.025-.012,1.888,pz-.03),(px+j*.025,1.918,pz),(px+j*.025+.012,1.888,pz+.03)],.003,'porcelain')
-   elif food=='tomato':sphere('Tomato wedge',(px,1.86,pz),(.09,.035,.06),'red');sphere('Egg curd',(px+.055,1.89,pz+.025),(.055,.035,.045),'rice')
-   elif food=='meat':box('Braised meat',(px,1.86,pz),(.12,.075,.10),'food',.025,rotation=a);box('Glaze',(px,1.902,pz),(.1,.015,.085),'tea',.007,rotation=a,rough=.24)
-  if food=='fish':
-   sphere('Steamed fish',(x,1.886,z),(.32,.065,.12),'food');sphere('Fish head',(x-.27,1.886,z),(.12,.065,.10),'food');sphere('Fish eye',(x-.33,1.926,z+.048),(.010,.007,.008),'dark')
-   for i in range(6):box('Ginger and scallion',(x-.16+i*.055,1.941,z),(.018,.010,.13),'green' if i%2 else 'rice',.004,rotation=.4)
+    dumpling((px,1.865+(i%2)*.009,pz),a,i)
+   elif food=='tomato':
+    tomato((px,1.85,pz),a)
+    for j in range(3):sphere('Scrambled egg',(px+.045+j*.018,1.858+(j%2)*.01,pz+.035),(.035,.024,.028),'rice',.65)
+   elif food=='meat':
+    box('Braised meat',(px,1.855+(i%2)*.012,pz),(.115+(i%3)*.008,.068,.095),'food',.026,rotation=a,rough=.42)
+    glaze=box('Meat glaze',(px,1.892+(i%2)*.012,pz),(.10,.013,.086),'tea',.012,rotation=a,rough=.22)
+    if i%2==0:curve('Spring onion',[(px-.04,1.91,pz-.03),(px,1.927,pz),(px+.025,1.919,pz+.04)],.007,'green')
+   elif food=='soup' and i<6:sphere('Soup garnish',(px,1.937,pz),(.033,.015,.02),'green',.42)
+   elif food=='noodles':
+    for j in range(5):
+     curve('Noodle strand',[(px-.06,1.824+j*.009,pz-.035),(px+.01,1.842+j*.009,pz+.015),(px+.07,1.831+j*.009,pz-.045)],.005,'rice')
+  if food=='fish':fish((x,1.872,z))
+  if food=='soup':
+   bowl((x,1.82,z),.35);cylinder('Clear broth',(x,1.927,z),.287,.014,'tea',rough=.25)
  # Plate feet contact the lazy susan rather than floating above it.
  for obj in set(bpy.context.scene.objects)-before_meals:obj.location.z-=.018
  teapot=(-1.5,1.73,-.92);sphere('Teapot body',(teapot[0],teapot[1]+.13,teapot[2]),(.20,.15,.19),'ceramic');cylinder('Teapot lid',(teapot[0],teapot[1]+.278,teapot[2]),.135,.022,'ceramic');sphere('Lid knob',(teapot[0],teapot[1]+.308,teapot[2]),(.035,.026,.035),'brass')
@@ -163,9 +266,19 @@ def table(kind):
 
 def dining(kind):
  shell(kind);table(kind);plant((-4.75,0,-3.45))
+ if kind in ('work','family'):
+  # Keep rug hits on the navigable Floor mesh; a decorative layer must not
+  # silently swallow click-to-walk or change the navigation collision model.
+  floor=bpy.data.objects['Floor']
+  rug=box('Dining rug',(0,.008,.22),(6.22,.012,6.6),'wallInset',.002,rough=.94)
+  bpy.ops.object.select_all(action='DESELECT');floor.select_set(True);rug.select_set(True);bpy.context.view_layer.objects.active=floor;bpy.ops.object.join();floor.name='Floor'
  box('Sideboard',(4.85,.8,-3.8),(1.3,1.55,.70),'woodEdge',.035,photo='wood_table_001')
  box('Sideboard top',(4.85,1.61,-3.8),(1.4,.07,.80),'wood',.02,photo='wood_table_001')
  for x in [4.55,5.15]:box('Sideboard door',(x,.80,-3.435),(.55,1.35,.02),'wood',.02,photo='wood_table_001');box('Cabinet handle',(x,.99,-3.412),(.15,.025,.025),'brass',.008,metal=.7)
+ if kind in ('work','family'):
+  box('Tea tray',(4.85,1.67,-3.73),(.79,.045,.42),'wood',.018,photo='wood_table_001')
+  for x in [4.65,4.97]:
+   lathe('Spare tea cup',(x,1.694,-3.73),[(0,0),(.055,0),(.075,.13),(.067,.136),(.052,.025),(0,.025)],'porcelain',.24)
  if kind=='work':
   box('Walnut wainscot',(0,1.0,-5.11),(13.0,2.0,.10),'woodEdge',.015,photo='wood_table_001')
   for i in range(32):box('Reeded wall strip',(-6.18+i*.40,1.0,-5.025),(.03,1.85,.024),'wood',.008)

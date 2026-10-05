@@ -23,5 +23,5 @@ for kind,side in [('grip','r'),('open','l')]:
   obj=bpy.data.objects.new('Player '+kind+' '+source.name,mesh);bpy.context.collection.objects.link(obj);exports.append(obj)
  bpy.ops.object.select_all(action='DESELECT')
  for obj in exports:obj.select_set(True)
- bpy.ops.export_scene.gltf(filepath=str(OUT/('hand-'+kind+'.glb')),export_format='GLB',use_selection=True,export_animations=False,export_skins=False,export_morph=False,export_draco_mesh_compression_enable=True,export_draco_mesh_compression_level=6)
+ bpy.ops.export_scene.gltf(filepath=str(OUT/('hand-'+kind+'.glb')),export_format='GLB',use_selection=True,export_animations=False,export_skins=False,export_morph=False,export_tangents=True,export_draco_mesh_compression_enable=True,export_draco_mesh_compression_level=6)
  print('EXPORTED HAND',kind,flush=True)
