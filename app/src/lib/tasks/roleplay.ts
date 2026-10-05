@@ -74,7 +74,7 @@ REALITY CHECK FOR THIS REPLY: Before saying anything was agreed or done, identif
     messages: turns,
   };
   const run = llm.chatStream(options);
-  const output = roleplayOutput(scenario, learnerCharacterId, lang,roleplaySpeechGuard(scenario.id,messages));
+  const output = roleplayOutput(scenario, learnerCharacterId, lang,roleplaySpeechGuard(scenario.id,messages),messages);
   let raw = "";
   let sent = "";
   for await (const d of run.deltas) {
@@ -85,6 +85,7 @@ REALITY CHECK FOR THIS REPLY: Before saying anything was agreed or done, identif
       sent = preview;
     }
   }
+  if(run.refused())throw new LLMError(pick({zh:"模型未能回应这次请求，请调整说法或稍后重试。",en:"The model declined this request. Rephrase or retry later."},lang),422);
   let complete: string;
   try { complete = output.complete(run.text()); }
   catch (error) {

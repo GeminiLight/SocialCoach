@@ -18,6 +18,7 @@ import { compColor } from "@/lib/format";
 import { AvatarFigure, learnerSeed } from "@/data/avatars";
 import { AvatarPicker } from "@/components/AvatarPicker";
 import { LanguagePicker } from "@/components/LanguagePicker";
+import {BackupRestore} from "@/components/BackupRestore";
 import { FeedbackButton } from "@/components/Feedback";
 
 export default function Settings() {
@@ -28,6 +29,7 @@ export default function Settings() {
     proficiency,
     sessions,
     settings,
+    saveIssue,
     setSettings,
     setLang,
     updateProfile,
@@ -230,8 +232,9 @@ export default function Settings() {
                 </span>
                 <ChevronRight size={16} className="ml-auto text-ink-4" />
               </button>
+              <BackupRestore/>
               <button
-                onClick={() => setConfirm(true)}
+                disabled={saveIssue==="conflict"} onClick={() => setConfirm(true)}
                 className="press w-full flex items-center gap-3 px-4 py-3.5 text-left text-[14px] font-medium text-danger"
               >
                 <Trash2 size={17} />

@@ -132,17 +132,17 @@ test('the shared store applies continued 3D progress once and leaves ordinary te
     const nextReport={...reportFixture('我只负责已确认的部分。'),deltas:{communication:.4}};
     useApp.getState().applyReport(second.id,nextReport);
     useApp.getState().applyReport(second.id,nextReport);
-    assert.equal(useApp.getState().proficiency.communication,2.9);
-    assert.deepEqual(useApp.getState().sessions.find(s=>s.id===second.id)?.report?.deltas,{communication:.2});
-    assert.deepEqual(useApp.getState().sessions.find(s=>s.id===first.id)?.report?.deltas,{communication:.2});
+    assert.equal(useApp.getState().proficiency.communication,2.89);
+    assert.deepEqual(useApp.getState().sessions.find(s=>s.id===second.id)?.report?.deltas,{});
+    assert.deepEqual(useApp.getState().sessions.find(s=>s.id===first.id)?.report?.deltas,{communication:.39});
     assert.equal(useApp.getState().practiceDays.length,1);
     const savedText=JSON.stringify({sessions:useApp.getState().sessions,proficiency:useApp.getState().proficiency});
     assert.ok(savedText);
     const exported=JSON.parse(savedText);
     assert.equal(exported.sessions.find((s:{id:string})=>s.id===second.id).sceneContext.practiceId,save.practiceId);
-    assert.deepEqual(exported.sessions.find((s:{id:string})=>s.id===second.id).report.deltas,{communication:.2});
+    assert.deepEqual(exported.sessions.find((s:{id:string})=>s.id===second.id).report.deltas,{});
     const text={...buildDinnerReview(reviewFixture(),'store-text'),sceneContext:undefined};
     useApp.getState().addSession(text);useApp.getState().applyReport(text.id,initialReport);
-    assert.equal(useApp.getState().proficiency.communication,3.1);
+    assert.equal(useApp.getState().proficiency.communication,3.08);
   }finally{useApp.setState(original,true);}
 });

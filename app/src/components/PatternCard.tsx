@@ -24,13 +24,16 @@ function toInput(s: Session): PatternSession {
     if (v < (i === 0 ? 20 : trail[i - 1])) gaveGroundOn.push(i + 1);
   });
   return {
+    sessionId:s.id,
+    practiceId:s.sceneContext?.practiceId,
     title: s.scenario.title.zh || s.scenario.title.en,
     at: s.endedAt ?? s.startedAt,
     outcome: s.outcome,
     verdict: s.report?.verdict,
     gaveGroundOn,
     turns: s.messages.filter((m) => m.role === "learner").length,
-    weaknesses: (s.report?.weaknesses ?? []).map((w) => ({
+    weaknesses: (s.report?.weaknesses ?? []).filter(w=>s.messages.some(m=>m.role==="learner"&&m.text.includes(w.evidence))).map((w) => ({
+      messageId:s.messages.find(m=>m.role==="learner"&&m.text.includes(w.evidence))!.id,
       behavior: w.behavior,
       evidence: w.evidence,
       skill: w.skill,
@@ -59,10 +62,10 @@ export function PatternCard() {
   const [err, setErr] = useState<string | null>(null);
   const inflight = useRef(false);
 
-  const done = sessions.filter((s) => s.status === "assessed" && s.report);
+  const done = [...new Map([...sessions].reverse().filter(s=>s.status === "assessed" && s.report).map(s=>[s.sceneContext?.practiceId??s.id,s])).values()].reverse();
   const ids = done.map((s) => s.id);
   const cached = patternInsight;
-  const stale = !cached || ids.some((id) => !cached.from.includes(id));
+  const stale = !cached || (cached.result.found&&cached.result.evidence.some(e=>!e.sessionId||!e.messageId)) || ids.some((id) => !cached.from.includes(id)) || cached.from.some(id=>!ids.includes(id));
   const enough = done.length >= MIN_SESSIONS;
 
   const run = useCallback(async () => {
@@ -71,7 +74,7 @@ export function PatternCard() {
     setBusy(true);
     setErr(null);
     try {
-      const res = await patternApi({ lang, goals: profile.goals, sessions: done.map(toInput) });
+      const res = await patternApi({ lang, goals: profile.goals, sessions: done.slice(0,20).map(toInput) });
       setPatternInsight(res, ids);
     } catch (e) {
       setErr(e instanceof Error ? e.message : t(lang, "error_generic"));

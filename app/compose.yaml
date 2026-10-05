@@ -10,7 +10,7 @@ services:
     # 不对外发布端口：只有 Caddy 能访问它
     expose:
       - "3000"
-    # 限流计数在内存里，多副本会各算各的 —— 保持单实例
+    # 请求公平限流在内存；共享模型预算由配置的 Redis REST 服务统一预留
     deploy:
       replicas: 1
 

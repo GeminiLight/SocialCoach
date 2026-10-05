@@ -10,7 +10,7 @@ WORKDIR /app
 RUN corepack enable
 COPY --from=deps /app/node_modules ./node_modules
 COPY app/ ./
-RUN pnpm build
+RUN pnpm check && pnpm build
 
 FROM node:22-alpine AS runner
 WORKDIR /app

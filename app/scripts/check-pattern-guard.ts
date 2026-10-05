@@ -15,19 +15,19 @@ const input: PatternInput = {
   goals: ["standing-up"],
   sessions: [
     {
-      title: "和老板谈加薪", at: 1, outcome: "partial", verdict: "", gaveGroundOn: [2], turns: 3,
-      weaknesses: [{ behavior: "替对方做了拒绝", evidence: "算了算了，我知道预算紧，你别为难。", skill: "standing-up", deficit: "performance" }],
+      sessionId:"s1",title: "和老板谈加薪", at: 1, outcome: "partial", verdict: "", gaveGroundOn: [2], turns: 3,
+      weaknesses: [{ messageId:"m1",behavior: "替对方做了拒绝", evidence: "算了算了，我知道预算紧，你别为难。", skill: "standing-up", deficit: "performance" }],
     },
     {
-      title: "室友的深夜噪音", at: 2, outcome: "partial", verdict: "", gaveGroundOn: [2], turns: 2,
-      weaknesses: [{ behavior: "立刻收回请求", evidence: "行吧行吧，不然就算了，我戴个耳塞也一样。", skill: "standing-up", deficit: "performance" }],
+      sessionId:"s2",title: "室友的深夜噪音", at: 2, outcome: "partial", verdict: "", gaveGroundOn: [2], turns: 2,
+      weaknesses: [{ messageId:"m2",behavior: "立刻收回请求", evidence: "行吧行吧，不然就算了，我戴个耳塞也一样。", skill: "standing-up", deficit: "performance" }],
     },
   ],
 };
 
 /** An LLM that returns whatever JSON we hand it, ignoring the prompt. */
 const stub = (payload: unknown): LLM => ({
-  chatText: async () => JSON.stringify(payload),
+  chatText: async () => {const value=payload as {evidence?:{title:string;sessionId?:string;messageId?:string}[]};return JSON.stringify({...value,evidence:value.evidence?.map(e=>({...e,sessionId:e.title==="和老板谈加薪"?"s1":"s2",messageId:e.title==="和老板谈加薪"?"m1":"m2"}))});},
   chatStream: () => {
     throw new Error("not used");
   },

@@ -9,6 +9,7 @@ import { t } from "@/lib/i18n";
 /** Do not silently reset unreadable practice records or leave a blank shell. */
 export function StorageRecovery({ issue }: { issue: "unreadable" | "unavailable" }) {
   const lang = useLang();
+  const conflict=useApp(s=>s.saveIssue==="conflict");
   const [backedUp, setBackedUp] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState(false);
@@ -52,12 +53,12 @@ export function StorageRecovery({ issue }: { issue: "unreadable" | "unavailable"
       <Button block variant="secondary" onClick={retry} disabled={retrying}>{t(lang, "storage_retry")}</Button>
       {issue === "unreadable" && <>
         {backedUp && <p className="text-[13px] text-ink-3 leading-relaxed">{t(lang, "storage_backup_check")}</p>}
-        <Button block variant="ghost" disabled={!backedUp} onClick={() => setConfirm(true)}>{t(lang, "storage_restart")}</Button>
+        <Button block variant="ghost" disabled={!backedUp||conflict} onClick={() => setConfirm(true)}>{t(lang, "storage_restart")}</Button>
       </>}
       <Sheet open={confirm} onClose={() => setConfirm(false)} title={t(lang, "storage_restart")}>
         <div className="flex flex-col gap-4 pt-2">
           <p className="text-[14px] text-ink-2 leading-relaxed">{t(lang, "storage_reset_confirm")}</p>
-          <Button block onClick={() => useApp.getState().reset()}>{t(lang, "storage_restart")}</Button>
+          <Button block disabled={conflict} onClick={() => useApp.getState().reset()}>{t(lang, "storage_restart")}</Button>
           <Button block variant="ghost" onClick={() => setConfirm(false)}>{t(lang, "cancel")}</Button>
         </div>
       </Sheet>

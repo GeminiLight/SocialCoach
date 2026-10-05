@@ -1,0 +1,14 @@
+PASS failed role adaptation keeps the start button disabled
+PASS an interrupted reply is absent from the durable transcript
+PASS retry restores the learner's words and leaves no incomplete NPC answer
+PASS refresh offers recovery for a learner message with no reply
+PASS a pending unanswered turn cannot accept another learner message
+PASS refresh after an unanswered silence explains its own recovery
+PASS silence recovery removes the unanswered event and unlocks input
+PASS a completed segment stays editable and offers continuation
+PASS refresh preserves the active transcript and continuation choice
+PASS continuation adds eight turns without replacing the transcript
+PASS refresh after continuation retains the extended segment
+PASS streaming text stays visible without becoming durable evidence
+PASS leaving aborts the reply and late chunks cannot enter the transcript
+PASS a paused unfinished reply offers recovery on return

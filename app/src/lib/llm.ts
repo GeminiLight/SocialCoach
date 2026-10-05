@@ -1,3 +1,4 @@
+import {reserveSharedBudget,requiresBudgetSetup} from "./shared-budget";
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 import { modelIssue, type ModelIssue, type ModelMetadata } from "./model-status";
@@ -63,18 +64,19 @@ const DEFAULT_MODELS: Record<Provider, { fast: string; smart: string }> = {
 };
 
 /** Fast model: role-play turns, hints, short coach replies, scheduling, scenario generation. */
-export const FAST_MODEL = process.env.LLM_FAST_MODEL ?? DEFAULT_MODELS[PROVIDER].fast;
+export const FAST_MODEL = process.env.LLM_FAST_MODEL?.trim() || DEFAULT_MODELS[PROVIDER].fast;
 /** Smart model: post-practice assessment reports. */
-export const SMART_MODEL = process.env.LLM_SMART_MODEL ?? DEFAULT_MODELS[PROVIDER].smart;
+export const SMART_MODEL = process.env.LLM_SMART_MODEL?.trim() || DEFAULT_MODELS[PROVIDER].smart;
 
 let _anthropic: Anthropic | null = null;
 let _openai: OpenAI | null = null;
 
 /** Whether this deployment can call a model on the learner's behalf. */
 export const hasServerCredential = () => !!API_KEY;
+export const serverRequiresByok=()=>["1","true"].includes(process.env.LLM_REQUIRE_BYOK??"")||requiresBudgetSetup();
 
 function requireKey() {
-  if (API_KEY && !["1", "true"].includes(process.env.LLM_REQUIRE_BYOK ?? "")) return API_KEY;
+  if (API_KEY && !serverRequiresByok()) return API_KEY;
   throw new LLMError("Connect a model to continue.", 503, false, "setup");
 }
 
@@ -107,7 +109,7 @@ export function serverModelMetadata(): ModelMetadata {
  * ------------------------------------------------------------------------- */
 
 /** One-shot call; returns the assistant's text. */
-export async function chatText(o: ChatOpts): Promise<string> {
+async function providerText(o: ChatOpts): Promise<string> {
   if (PROVIDER === "openai") {
     const res = await openai().chat.completions.create(
       openaiArgs(o, SMART_MODEL, OPENAI_TOKEN_PARAM, OPENAI_DISABLE_THINKING) as unknown as OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming,
@@ -125,16 +127,23 @@ export async function chatText(o: ChatOpts): Promise<string> {
     .join("\n");
 }
 
+export async function chatText(o:ChatOpts):Promise<string>{
+ requireKey();const release=await reserveSharedBudget(o);
+ try{return await providerText(o);}finally{await release();}
+}
+
 /** Streaming call. Text deltas only; tool calls and thinking blocks are not surfaced. */
 export function chatStream(o: ChatOpts): TextRun {
   let acc = "";
   let refusal = false;
   async function* run() {
+    requireKey();const release=await reserveSharedBudget(o);
+    try{
     if (PROVIDER === "openai") {
       const stream = await openai().chat.completions.create({
         ...openaiArgs(o, SMART_MODEL, OPENAI_TOKEN_PARAM, OPENAI_DISABLE_THINKING),
         stream: true,
-      } as unknown as OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming);
+      } as unknown as OpenAI.Chat.Completions.ChatCompletionCreateParamsStreaming, {signal:o.signal});
       for await (const chunk of stream) {
         const choice = chunk.choices[0];
         if (choice?.delta?.refusal) refusal = true;
@@ -147,7 +156,7 @@ export function chatStream(o: ChatOpts): TextRun {
       }
       return;
     }
-    const stream = anthropic().messages.stream(anthropicArgs(o, SMART_MODEL));
+    const stream = anthropic().messages.stream(anthropicArgs(o, SMART_MODEL), {signal:o.signal});
     for await (const ev of stream) {
       if (ev.type === "content_block_delta" && ev.delta.type === "text_delta" && ev.delta.text) {
         acc += ev.delta.text;
@@ -157,6 +166,7 @@ export function chatStream(o: ChatOpts): TextRun {
     // Anthropic only reveals a refusal on the final message.
     const final = await stream.finalMessage();
     if (final.stop_reason === "refusal") refusal = true;
+    }finally{await release();}
   }
   return { deltas: run(), text: () => acc, refused: () => refusal };
 }

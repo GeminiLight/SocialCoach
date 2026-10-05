@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-10-04 | Current stage: B -->
+<!-- Last verified: 2026-10-06 | Current stage: B -->
 
 # 系统架构
 
@@ -89,7 +89,7 @@ profile/goals/proficiency/history
         │
         ▼  POST /api/reflect           （流式）针对用户的回答给教练回应
         │
-        ▼  applyReport() 写回 proficiency（有界、非负增量）
+        ▼  applyReport() 从最近独立、有原话的评级重估 proficiency（不采用模型累计奖励）
 ```
 
 文字场景可附 `simulationFacts`（双语事实 / 未知边界），仅传给 roleplay 的 simulation 视图；准备、提示与点评继续使用 learner 视图，避免私有事实变成标准答案。关联复测见 [文字连续性复盘](./81-postmortem-text-continuation.md)。
@@ -352,3 +352,13 @@ AppProviders 在确认默认 API 不可用时自动打开可关闭的配置弹�
 - `/rehearse` 的自由文字与五个可选分项合并，发送前允许编辑完整描述。确认后的文字仍走 `/api/rehearse`，8–8000 字符；旧草稿可读，新草稿写 `socialcoach.rehearsal-brief`。TXT/Markdown/DOCX/PDF/截图在设备上提取；原文件、文件名、截图和未确认的提取结果不进入模型。解析器按需加载，本地静态 worker/语言数据由构建脚本准备，不增加 3D 启动请求。详见 [本地文档读取](./refs/local-document-reading.md)。
 - 头像经设备解码、裁切、重编码成为 256×256 的 WebP/JPEG，`settings.avatarImage` 限 120000 字符且仅接受受限 data URL。所有用户头像入口复用 `LocalPortrait`，失败回退预设；取消不保存，导出携带重编码图，重置清理。模型 Profile 不带此字段。
 - 分享卡在设备 canvas 绘制，可编辑、预览、下载、复制或能力支持时分享 PNG。场景名与原话默认不含。系统取消安静返回，其余失败提供保存/复制退路；不发送本地练习 URL。复盘分栏只记设备宽度，完整历史面板保存当前阅读位置，原话按钮可跳到对应用户发言。
+
+## 全仓质量边界（2026-10-06，本地）
+
+详见 [质量复核](./reviews/review-2026-10-06-repo-quality.md)。`runtime-contracts.ts` / `task-input.ts` 共用模型与请求契约；`archive.ts` 区分安全历史读取和强新输出，`archive-storage.ts` 管读取保护/保存状态/窗口权限；`backup.ts` 与恢复入口处理版本、合并冲突和当前原档下载。状态与密钥继续留设备。
+
+`task-runtime.ts` 在托管与 BYOK 共享整个任务的取消、deadline、调用与字节预算；流断开会取消任务。生产共享模型每次逻辑调用由 `shared-budget.ts` 原子预留，Redis 只存匿名汇总/调用 ID，不存练习或设备身份。无预算配置的生产使用 BYOK，不以进程 Map 做硬预算。
+
+`proficiency.ts` 使用最近最多 8 个独立、有原话的评级与 2 个中性先验；低表现不会靠次数到顶，也允许新证据纠正估计。它是已练情境表现的粗略估计，未做真实能力校准。排程历史携带分技能诊断、原话、过去建议与反思自述。
+
+3D 新 `contentSnapshot` 分离公开场景与私有方向，公开角色/事实/原目标供界面及复盘，私有 agenda 只给模拟器；旧无快照局沿旧兼容逻辑，不伪称已经冻结。`practice_stage` 匿名事件关联 3D 链路，统计关闭时不发；模型调用运维日志没有正文/身份。应用 CI、Vercel 与 Docker 在构建前执行免费检查。

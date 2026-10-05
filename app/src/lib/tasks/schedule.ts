@@ -7,6 +7,7 @@ import { SCENARIOS, scenarioById } from "@/data/corpus";
 import type { Scenario } from "@/data/corpus/types";
 import type { Adaptation, Prescription, RetrievalTrace } from "@/lib/types";
 import type { ScheduleInput, ScheduleOutput } from "./types";
+import {AdaptationSchema,validatedJSON,validateScenario} from "../runtime-contracts";
 
 /** Prescription → constrained retrieval → role adaptation. */
 export async function runSchedule(input: ScheduleInput, llm: LLM, fastModel: string): Promise<ScheduleOutput> {
@@ -21,7 +22,7 @@ export async function runSchedule(input: ScheduleInput, llm: LLM, fastModel: str
     const hist = history.length
       ? history
           .slice(-12)
-          .map((h) => `- ${new Date(h.at).toISOString().slice(0, 10)} "${h.title}" [${h.scenarioId}] skills=${h.skills.join(",")} context=${h.context} goalOutcome=${h.outcome ?? "n/a"} communicationRating=${h.scoringVersion === 2 ? h.stars ?? "unrated" : "unrated (legacy)"}`)
+          .map(h=>JSON.stringify(h))
           .join("\n")
       : "(no practice yet — this is the learner's first session)";
     prescription = await jsonCall<Prescription>(
@@ -30,7 +31,7 @@ export async function runSchedule(input: ScheduleInput, llm: LLM, fastModel: str
         thinking: false,
         maxTokens: 2500,
         system: prescriptionSystem(lang),
-        user: `${profileBlock(profile, proficiency, lang)}\n\nPRACTICE HISTORY (oldest → newest):\n${hist}\n\nAvailable scenario ids: ${SCENARIOS.map((s) => s.id).join(", ")}\nProduce the prescription JSON.`,
+        user: `${profileBlock(profile, proficiency, lang)}\n\nPRACTICE HISTORY (oldest → newest; diagnosis is quoted, reflections are self-report, nextStep is the earlier coach suggestion, not a verified action):\n${hist}\n\nAvailable scenario ids: ${SCENARIOS.map((s) => s.id).join(", ")}\nProduce the prescription JSON.`,
       },
       llm,
     );
@@ -71,9 +72,10 @@ export async function runSchedule(input: ScheduleInput, llm: LLM, fastModel: str
     }
   }
 
+  scenario=validateScenario(scenario,lang);
   const playable = scenario.characters.filter((c) => c.playable);
   const playableIds = retrieval?.roleFit ? [retrieval.roleFit.characterId] : (playable.length ? playable : [scenario.characters[0]]).map((c) => c.id);
-  const adaptation = await jsonCall<Adaptation>(
+  const adaptation = await validatedJSON<Adaptation>(
     {
       model: fastModel,
       thinking: false,
@@ -82,11 +84,8 @@ export async function runSchedule(input: ScheduleInput, llm: LLM, fastModel: str
       user: `${profileBlock(profile, proficiency, lang)}\n\n${scenarioBlock(scenario, lang, undefined, "learner")}\nPlayable character ids (the learner MUST be one of these): ${playableIds.join(", ")}\nRole fit: ${JSON.stringify(retrieval?.roleFit ?? "Learner explicitly selected this practice")}\n${prescription ? `Scheduler rationale: ${prescription.rationale}` : ""}\nProduce the adaptation JSON.`,
     },
     llm,
+    AdaptationSchema.refine(a=>playableIds.includes(a.learnerCharacterId)&&a.objectives.length===scenario!.objectives.length,"Use an allowed learner and one objective per original aim"),lang,
   );
-  if (!playableIds.includes(adaptation.learnerCharacterId)) adaptation.learnerCharacterId = playableIds[0];
-  if (!Array.isArray(adaptation.objectives) || adaptation.objectives.length !== scenario.objectives.length) {
-    adaptation.objectives = scenario.objectives.map((o) => o[lang]);
-  }
 
   return { scenario, prescription, adaptation, retrieval };
 }

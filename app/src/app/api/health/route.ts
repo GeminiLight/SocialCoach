@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { hasServerCredential } from "@/lib/llm";
+import { hasServerCredential,serverRequiresByok } from "@/lib/llm";
 import { serverModelHealth } from "@/lib/server-model-health";
 
 export const dynamic = "force-dynamic";
@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
  */
 export async function GET(request: Request) {
   return NextResponse.json(
-    { serverKey: hasServerCredential(), requireByok: ["1", "true"].includes(process.env.LLM_REQUIRE_BYOK ?? ""), ...await serverModelHealth(new URL(request.url).searchParams.get("retry") === "1") },
+    { serverKey: hasServerCredential(), requireByok: serverRequiresByok(), ...await serverModelHealth(new URL(request.url).searchParams.get("retry") === "1") },
     { headers: { "Cache-Control": "no-store" } },
   );
 }

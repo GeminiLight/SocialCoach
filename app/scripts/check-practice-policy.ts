@@ -90,7 +90,7 @@ async function main() {
     const r = sanitizeReport(raw, base, [], [], [learner, npc], [skill]);
     assert.equal(r.stars, 3); assert.equal(r.outcome, "failure");
     assert.equal(r.strengths.length, 1); assert.equal(r.weaknesses.length, 0); assert.equal(r.alternatives.length, 1);
-    assert.equal(r.deltas[skill], 0.5);
+    assert.deepEqual(r.deltas, {},"single-report model rewards cannot determine proficiency");
   });
   check("getting all goals does not rescue poor communication", () => {
     const r = sanitizeReport({ ...raw, stars: 3, outcome: "success", ratings: [{ ...raw.ratings![0], level: 0 }] }, base, [], [], [learner], [skill]);
@@ -114,15 +114,18 @@ async function main() {
   await assert.rejects(() => fitRoles([base], profile, "zh", stub({ fits: [] }), "test")); checks++;
   // Full scheduler: explicit profile contexts survive a contradictory model prescription.
   let call = 0;
+  let compatibleId="";
+  let chosenId="";
   const llm: LLM = {
     chatText: async (o) => {
       call++;
       if (call === 1) return JSON.stringify({ query: "", core_constraints: { target_skills: [skill, "invented"], contexts: ["invented"] }, rationale: "test" });
       if (call === 2) {
         const request = JSON.parse(o.messages[0].content) as { scenarios: { id: string; roles: { id: string }[] }[] };
+        compatibleId=request.scenarios[0].roles[0].id;chosenId=request.scenarios[0].id;
         return JSON.stringify({ fits: request.scenarios.map((s, i) => ({ scenarioId: s.id, characterId: s.roles[0].id, fit: i === 0 ? "compatible" : "conflict", evidence: profile.bio, reason: "test" })) });
       }
-      return JSON.stringify({ learnerCharacterId: "invented", objectives: [], briefing: "test", focus: "test" });
+      return JSON.stringify({ learnerCharacterId: compatibleId, objectives: SCENARIOS.find(s=>s.id===chosenId)!.objectives.map(o=>o.zh), briefing: "test", focus: "test" });
     }, chatStream: () => { throw new Error("unused"); },
   };
   const scheduled = await runSchedule({ profile, proficiency: {}, history: [], lang: "zh" }, llm, "test");

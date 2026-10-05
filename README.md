@@ -140,6 +140,8 @@ pnpm dev
 
 </details>
 
+生产环境的共享模型还需配置 `LLM_BUDGET_REDIS_URL` 与 `LLM_BUDGET_REDIS_TOKEN`，用于跨实例的匿名 token 预留。未配置时走已有 BYOK 入口；本地开发可使用配置的服务器密钥。供应商处还应设置金额硬上限，token 预留不代表价格保证。详见[质量修订与预算说明](wiki/reviews/review-2026-10-06-repo-quality.md)。
+
 ## 部署
 
 | 方式 | 配置入口 |
@@ -166,7 +168,7 @@ docker compose up -d --build
 
 Dockerfile 已将 Next.js 静态资源复制到 standalone 构建目录；Caddy 配置了 `flush_interval -1`，支持流式响应。
 
-[`lib/rate-limit.ts`](app/src/lib/rate-limit.ts) 提供每 IP 和每次部署的调用限额。计数保存在内存里，重启会清零，不同实例之间不共享。Compose 部署保持一个应用实例；扩容时需要改用共享限流。
+[`lib/rate-limit.ts`](app/src/lib/rate-limit.ts) 只做单实例请求公平限流。`shared-budget.ts` 为每次模型调用预留 token，包括修复与 SDK 重试容量，并统一限制每日额度和并发；计数不含对话或设备身份。Vercel 与两种 Docker 构建都先运行免费质量检查。
 
 </details>
 
@@ -181,7 +183,7 @@ Dockerfile 已将 Next.js 静态资源复制到 standalone 构建目录；Caddy 
 - **产品反馈：** 你主动提交的反馈及可选联系方式，会发送到团队配置的飞书表格。
 - **语音输入：** 浏览器的语音识别服务可能将音频发送给其供应商进行转录。
 
-核心练习功能无需账号系统或数据库；反馈与统计是可选集成，配置见 [`.env.example`](app/.env.example)。
+练习档案留设备，不引入账号；BYOK 无需共享预算服务，共享额度只保存匿名计数；反馈与统计是可选集成，配置见 [`.env.example`](app/.env.example)。
 
 </details>
 

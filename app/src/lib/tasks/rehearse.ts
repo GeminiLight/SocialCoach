@@ -1,71 +1,28 @@
-import { jsonCall, LLMError, type LLM } from "@/lib/llm-core";
-import { rehearseSystem } from "@/lib/prompts";
-import type { Scenario } from "@/data/corpus/types";
-import { CONTEXTS, SKILLS, COMPETENCIES, type CompetencyId, type ContextId, type SkillId, skillById } from "@/data/taxonomy";
-import { isScenarioIcon } from "@/data/scenario-icons";
-import type { RehearseInput } from "./types";
+import {z} from 'zod';
+import {LLMError,type LLM} from '@/lib/llm-core';
+import {rehearseSystem} from '@/lib/prompts';
+import type {Scenario} from '@/data/corpus/types';
+import {ScenarioSchema,validatedJSON} from '../runtime-contracts';
 import {RehearsalDescriptionSchema,MAX_REHEARSAL_CHARS} from '../rehearsal-input';
 import {pick} from '../i18n';
+import type {RehearseInput} from './types';
 
-/** Turn a situation in the learner's own words into a fully tagged scenario. */
-export async function runRehearse(input: RehearseInput, llm: LLM, fastModel: string): Promise<{ scenario: Scenario }> {
-  const { description, lang, profile } = input;
-  if(!RehearsalDescriptionSchema.safeParse(description).success)throw new LLMError(pick({zh:`请用 8–${MAX_REHEARSAL_CHARS} 字描述这场对话。`,en:`Describe the situation in 8–${MAX_REHEARSAL_CHARS} characters.`},lang),400);
-
-  const raw = await jsonCall<Omit<Scenario, "id" | "source" | "custom">>({
-    model: fastModel,
-    thinking: false,
-    maxTokens: 6000,
-    system: rehearseSystem(lang),
-    user: `LEARNER: ${profile?.name || "(anonymous)"}; about: ${profile?.bio || "(n/a)"}; target skills: ${(profile?.goals ?? []).join(", ") || "(n/a)"}\n\nSITUATION (in the learner's words):\n"""${description.trim()}"""\n\nProduce the scenario JSON.`,
-  }, llm);
-
-  const skillIds = new Set(SKILLS.map((s) => s.id));
-  const ctxIds = new Set(CONTEXTS.map((c) => c.id));
-  const compIds = new Set(COMPETENCIES.map((c) => c.id));
-  const skills = (raw.skills ?? []).filter((k) => skillIds.has(k)) as SkillId[];
-  if (!skills.length) skills.push("communication");
-  const competencies = Array.from(new Set([...(raw.competencies ?? []).filter((c) => compIds.has(c)), ...skills.map((k) => skillById(k).competency)])) as CompetencyId[];
-  const context = (ctxIds.has(raw.context) ? raw.context : "workplace") as ContextId;
-  const junk = /占位|placeholder|未使用|unused|n\/a|none/i;
-  const characters = (raw.characters ?? [])
-    .filter((c) => c && (c.id === "you" || !(junk.test(`${c.name?.zh ?? ""} ${c.name?.en ?? ""} ${c.role?.zh ?? ""} ${c.role?.en ?? ""}`) || (!c.personality?.zh && !c.personality?.en))))
-    .map((c, i) => ({ ...c, id: c.id || `c${i}`, hue: typeof c.hue === "number" ? c.hue : (i * 97) % 360 }));
-  if (!characters.some((c) => c.id === "you")) characters.unshift({ id: "you", name: { zh: "你", en: "You" }, role: { zh: "你自己", en: "Yourself" }, personality: { zh: "", en: "" }, stance: { zh: "", en: "" }, playable: true, hue: 40 });
-  const npc = characters.find((c) => c.id !== "you");
-  // Mirror the single generated language into the other key so every L field is complete.
-  const mirror = (o: unknown): unknown => {
-    if (Array.isArray(o)) return o.map(mirror);
-    if (o && typeof o === "object") {
-      const rec = o as Record<string, unknown>;
-      if ("zh" in rec && "en" in rec && Object.keys(rec).length === 2) {
-        const zh = String(rec.zh ?? "");
-        const en = String(rec.en ?? "");
-        return { zh: zh || en, en: en || zh };
-      }
-      return Object.fromEntries(Object.entries(rec).map(([k, v]) => [k, mirror(v)]));
-    }
-    return o;
-  };
-  const mirrored = mirror({ ...raw, characters }) as typeof raw & { characters: typeof characters };
-  const scenario: Scenario = {
-    ...mirrored,
-    id: `custom-${Date.now().toString(36)}`,
-    skills,
-    competencies,
-    context,
-    characters: mirrored.characters,
-    difficulty: ([1, 2, 3].includes(raw.difficulty) ? raw.difficulty : 2) as 1 | 2 | 3,
-    minutes: raw.minutes || 4,
-    maxTurns: Math.max(6, Math.min(10, raw.maxTurns || 8)),
-    relationship: raw.relationship?.length ? raw.relationship : ["peer"],
-    opening: mirrored.opening?.characterId && characters.some((c) => c.id === mirrored.opening.characterId) ? mirrored.opening : { characterId: npc?.id ?? "npc", text: mirrored.opening?.text ?? { zh: "……", en: "..." } },
-    keywords: raw.keywords ?? [],
-    // the model picks from the allow-list; anything else falls back to the
-    // context default in `scenarioIconName`, so a bad name can never render.
-    icon: isScenarioIcon(raw.icon) ? raw.icon : undefined,
-    source: "Learner-described situation (generated)",
-    custom: true,
-  };
-  return { scenario };
+/** Only bilingual mirroring is presentation normalization. Missing actors,
+ * objectives or facts are never manufactured to make an invalid draft pass. */
+function mirror(value:unknown):unknown{
+ if(Array.isArray(value))return value.map(mirror);
+ if(value&&typeof value==='object'){
+  const object=value as Record<string,unknown>;
+  if('zh' in object&&'en' in object&&Object.keys(object).length===2&&typeof object.zh==='string'&&typeof object.en==='string')return {zh:object.zh||object.en,en:object.en||object.zh};
+  return Object.fromEntries(Object.entries(object).map(([key,value])=>[key,mirror(value)]));
+ }
+ return value;
+}
+export async function runRehearse(input:RehearseInput,llm:LLM,model:string):Promise<{scenario:Scenario}>{
+ const {description,lang,profile}=input;
+ if(!RehearsalDescriptionSchema.safeParse(description).success)throw new LLMError(pick({zh:`请用 8–${MAX_REHEARSAL_CHARS} 字描述这场对话。`,en:`Describe the situation in 8–${MAX_REHEARSAL_CHARS} characters.`},lang),400);
+ const schema=z.preprocess(raw=>raw&&typeof raw==='object'&&!Array.isArray(raw)?mirror({...raw,id:`custom-${crypto.randomUUID()}`,source:'Learner-described situation (generated)',custom:true}):raw,
+  ScenarioSchema.refine(s=>s.characters.length<=3&&s.objectives.length>=2&&s.objectives.length<=3&&s.maxTurns>=6&&s.maxTurns<=10&&s.skills.length<=3&&s.characters.filter(c=>c.id!=='you').every(c=>!!c.hidden?.zh.trim()&&!!c.hidden?.en.trim()&&!!c.personality.zh.trim()&&!!c.personality.en.trim()&&!!c.stance.zh.trim()&&!!c.stance.en.trim()),'Use 1-2 NPCs with simulated motives, 2-3 original aims and a 6-10 turn initial setup'));
+ const scenario=await validatedJSON({model,thinking:false,maxTokens:6000,system:rehearseSystem(lang),user:`LEARNER: ${profile?.name||'(anonymous)'}; about: ${profile?.bio||'(n/a)'}; target skills: ${(profile?.goals??[]).join(',')||'(n/a)'}\n\nSITUATION (the learner's words):\n${description.trim()}\nProduce the scenario JSON without adding facts about the learner.`},llm,schema,lang);
+ return {scenario:scenario as Scenario};
 }

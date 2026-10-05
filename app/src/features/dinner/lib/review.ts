@@ -3,12 +3,13 @@ import {COMPETENCIES,skillById,type ContextId,type SkillId} from '@/data/taxonom
 import type {Session,ChatMessage} from '@/lib/types';
 import type {SceneContext} from '@/lib/scene-context';
 import {l,pick,scenarios} from './content';
-import {SaveSchema,type Save} from './engine';
+import {SaveSchema,opening,type Save} from './engine';
 import {dinnerTranscript} from './transcript';
 import {actionEvidence} from './drama';
-import {variantFor,storyScenario,type VariantId} from './story';
+import {variantFor,storyScenario,agendasForVariant,factsForVariant,type VariantId} from './story';
 import {tableEvidence} from './tableEvidence';
 import {publicSceneBrief} from './briefing';
+import {DinnerContentSchema} from './content-snapshot';
 
 const skills:Record<VariantId,SkillId[]>={
   'work-toast':['communication','resolving-conflicts','ethical-responsibility'],
@@ -31,7 +32,7 @@ export function dinnerReviewContent(raw:Save) {
   const scene=storyScenario(scenarios.find(s=>s.id===save.scenarioId)!,variant),lang=save.lang;
   const source=tableEvidence[variant.id],targetSkills=skills[variant.id],brief=publicSceneBrief(variant.id,save.briefVersion);
   const hue=COMPETENCIES.find(c=>c.id==='relationship-skills')!.hue;
-  const scenario:PracticeScenario={
+  const scenario:PracticeScenario=save.contentSnapshot?{...save.contentSnapshot.publicScenario,maxTurns:save.maxTurns}: {
     id:`3d-${variant.id}`,custom:true,title:variant.title,hook:source.pressure,
     background:l(`${scene.room.zh}。${variant.setup.zh}\n${brief.lines.map(v=>v.zh).join('\n')}\n${brief.unknown.zh}\n${scene.characters.map(c=>`${c.name.zh}：${c.description.zh}`).join('\n')}`,`${scene.room.en}. ${variant.setup.en}\n${brief.lines.map(v=>v.en).join('\n')}\n${brief.unknown.en}\n${scene.characters.map(c=>`${c.name.en}: ${c.description.en}`).join('\n')}`),
     context:contexts[scene.id],contextType:scene.category,skills:targetSkills,
@@ -43,6 +44,8 @@ export function dinnerReviewContent(raw:Save) {
     opening:{characterId:scene.characters[variant.speaker].id,text:variant.opening},
     source:`Original fiction: ${brief.source.path}`,keywords:[variant.id,...targetSkills],
   };
+  // Names/roles used to render old transcript evidence also come from its snapshot.
+  if(save.contentSnapshot)scene.characters=scene.characters.map(c=>{const stored=save.contentSnapshot!.direction.cast.find(x=>x.id===c.id)!;return {...c,name:stored.name,role:stored.role,description:stored.description};});
   const messages:ChatMessage[]=dinnerTranscript(save.messages,save.dinner?.records??[],scene,lang)
     .filter(line=>line.role!=='action').map(line=>({id:line.id,role:line.role==='user'?'learner':'npc',characterId:line.role==='user'?'you':line.speakerId,text:line.text,ts:0}));
   let turn=0;
@@ -70,4 +73,10 @@ export function matchesDinnerReview(session:Session,save:Save) {
 
 export function dinnerReplayUrl(context:SceneContext) {
   return `/3d?scene=${encodeURIComponent(context.sceneId)}&opening=${encodeURIComponent(context.openingId)}&restart=1`;
+}
+
+export function captureDinnerContent(scenarioId:Save['scenarioId'],variantId:VariantId,maxTurns:number,briefVersion?:1){
+ const variant=variantFor(scenarioId,variantId),scene=storyScenario(scenarios.find(s=>s.id===scenarioId)!,variant),brief=publicSceneBrief(variant.id,briefVersion),agendas=agendasForVariant(variant);
+ const save:Save={version:1,scenarioId,variantId,maxTurns,briefVersion,messages:[opening(scene,'zh',variantId)],started:false,complete:false,lang:'zh',draft:''};
+ return DinnerContentSchema.parse({version:1,publicScenario:dinnerReviewContent(save).scenario,direction:{title:variant.title,setup:variant.setup,goal:variant.goal,cast:scene.characters.map((c,i)=>({id:c.id,name:c.name,role:c.role,description:c.description,agenda:agendas[i]})),facts:{zh:factsForVariant(variant,'zh'),en:factsForVariant(variant,'en')},brief:{role:brief.role,unknown:brief.unknown,lines:brief.lines}}});
 }

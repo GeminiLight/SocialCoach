@@ -1,21 +1,8 @@
 import { LLMError } from "./llm-core";
 
-/**
- * Protection for the deployment's own model quota.
- *
- * A public URL with a server-side key is an open LLM proxy, and one practice
- * session is 12–14 model calls — a single script can drain a quota in minutes.
- *
- * Two layers, because they fail differently:
- *   per-IP    stops one visitor monopolising the shared quota. Defeatable by
- *             anyone who can vary their source address, so it is not security.
- *   global    the actual backstop: a hard ceiling on what this deployment can
- *             spend in a day, no matter how many addresses show up.
- *
- * State is in memory. On one long-lived server that is exactly right. On
- * serverless it resets per instance, so the effective limit is looser than
- * configured — there the global cap is the number that matters.
- */
+/** Per-process request throttling for fairness, never a cross-instance or
+ * monetary guarantee. shared-budget reserves each actual model call atomically;
+ * deployments should also set a hard monetary ceiling at their provider. */
 
 const HOUR = 3_600_000;
 const DAY = 86_400_000;
@@ -27,7 +14,7 @@ const num = (v: string | undefined, fallback: number) => {
 
 /** ~3 practice sessions per hour from one address. */
 const PER_IP = num(process.env.RATE_LIMIT_PER_IP, 45);
-/** Whole-deployment ceiling for a day. */
+/** Best-effort per-instance request ceiling. */
 const GLOBAL_DAILY = num(process.env.RATE_LIMIT_GLOBAL_DAILY, 2000);
 const DISABLED = process.env.RATE_LIMIT_DISABLED === "true";
 

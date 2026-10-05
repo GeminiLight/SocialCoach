@@ -17,7 +17,7 @@ import { t, tList } from "@/lib/i18n";
 import { assessStream, reflectStream } from "@/lib/client-api";
 import { track } from "@/lib/analytics/track";
 import { buildSession } from "@/lib/session-utils";
-import type { Report, Session } from "@/lib/types";
+import type { Report, Session,Reflection } from "@/lib/types";
 import type { Character } from "@/data/corpus/types";
 import { PracticeJourney } from "./PracticeJourney";
 import { TurnMap } from "./TurnMap";
@@ -70,7 +70,7 @@ export function Debrief({ session }: { session: Session }) {
       );
       if(controller.signal.aborted)return;
       applyReport(session.id, final);
-      track({ name: "debrief_view", ts: Date.now(), session: session.id, scenario: sc.custom ? "custom" : sc.id, stars: final.stars, outcome: final.outcome, scoring_version: final.scoringVersion, rated: final.scoringVersion === 2 ? !!final.ratings?.length : true });
+      track({ name: "debrief_view", ts: Date.now(), session: session.id, scenario:session.sceneContext?sc.id:sc.custom ? "custom" : sc.id, mode:session.sceneContext?"3d":sc.custom?"rehearse":"text",practice:session.sceneContext?.practiceId, stars: final.stars, outcome: final.outcome, scoring_version: final.scoringVersion, rated: final.scoringVersion === 2 ? !!final.ratings?.length : true });
       setPartial(null);
     } catch (e) {
       if(controller.signal.aborted)return;
@@ -185,8 +185,6 @@ function cjkGap(name: string) {
 function HiddenReveal({
   session,
   characters,
-  outcomeKey,
-  objectivesMet,
   ready,
   err,
   onRetry,
@@ -203,7 +201,6 @@ function HiddenReveal({
 }) {
   const lang = useLang();
   const router = useRouter();
-  const got = session.revealedAtTurn;
   const ease = [0.16, 1, 0.3, 1] as const;
 
   return (
@@ -211,8 +208,7 @@ function HiddenReveal({
       <PracticeJourney phase={2} onBack={() => router.push("/")} />
       <div className="flex-1 flex flex-col justify-center gap-7 py-14">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease }} className="flex flex-col gap-2">
-          <Stars n={objectivesMet} of={session.objectiveDone.length} />
-          <h1 className="display text-[26px] leading-tight text-ink-2">{t(lang, outcomeKey as "pr_ended_success")}</h1>
+          <h1 className="display text-[26px] leading-tight text-ink-2">{t(lang,"pr_reveal_review")}</h1>
         </motion.div>
 
         {characters.map((c, i) => (
@@ -228,6 +224,7 @@ function HiddenReveal({
             <blockquote className="bg-slab text-slab-ink rounded-2xl px-5 py-4 text-[17px] leading-relaxed">
               {c.hidden![lang]}
             </blockquote>
+            {(session.disclosures??[]).filter(d=>d.characterId===c.id&&session.messages.some(m=>m.id===d.messageId&&m.role==="npc"&&m.characterId===c.id&&m.text.includes(d.quote))).map(d=><p key={d.messageId} className="text-[13px] text-ink-2">{t(lang,"pr_reveal_quote",{n:d.turn})} “{d.quote}”</p>)}
           </motion.section>
         ))}
 
@@ -237,11 +234,9 @@ function HiddenReveal({
           transition={{ duration: 0.5, delay: 0.35 + characters.length * 0.5 + 0.35 }}
           className="dotted pt-5 flex flex-col gap-1.5"
         >
-          <p className={clsx("text-[15px] font-semibold", got ? "text-moss" : "text-ink")}>
-            {got ? t(lang, "pr_reveal_got_it", { n: got }) : t(lang, "pr_reveal_missed")}
-          </p>
+          <p className="text-[15px] font-semibold">{t(lang,"pr_reveal_context")}</p>
           <p className="text-[13.5px] text-ink-3 leading-relaxed lg:max-w-[var(--measure)]">
-            {t(lang, got ? "pr_reveal_got_why" : "pr_reveal_missed_why")}
+            {t(lang,"pr_reveal_context_detail")}
           </p>
         </motion.div>
       </div>
@@ -449,7 +444,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
           <Section id="review-reflect" title={t(lang, "rp_reflect")} sub={t(lang, "rp_reflect_sub")}>
             <div className="flex flex-col gap-4">
               {questions.map((q, i) => (
-                <ReflectItem key={i} session={session} question={q} idx={i} addReflection={addReflection} updateReflection={updateReflection} summary={report.summary ?? ""} />
+                <ReflectItem key={`${session.id}:${lang}:${q}`} session={session} question={q} idx={i} addReflection={addReflection} updateReflection={updateReflection} summary={report.summary ?? ""} />
               ))}
             </div>
           </Section>
@@ -571,31 +566,38 @@ function KnowledgeCard({ kind, title, source, saved, onSave, onAsk, children }: 
   );
 }
 
-function ReflectItem({ session, question, idx, addReflection, updateReflection, summary }: { session: Session; question: string; idx: number; addReflection: (id: string, r: { question: string; answer: string }) => void; updateReflection: (id: string, idx: number, patch: { coachReply?: string }) => void; summary: string }) {
+function ReflectItem({ session, question, idx, addReflection, updateReflection, summary }: { session: Session; question: string; idx: number; addReflection: (id: string, r: Reflection) => void; updateReflection: (id: string, idx: number, patch: { coachReply?: string;answer?:string;revision?:string }) => void; summary: string }) {
   const lang = useLang();
   const canUseModel = useCanUseModel();
   const existing = useMemo(() => session.reflections.find((r) => r.question === question), [session.reflections, question]);
   const rIdx = session.reflections.findIndex((r) => r.question === question);
   const [text, setText] = useState(existing?.answer ?? "");
   const [busy, setBusy] = useState(false);
+  const [error,setError]=useState<string|null>(null);
   const [live, setLive] = useState<string | null>(null);
-  const strip = (x: string) => x.replace(/\*\*(.+?)\*\*/g, "$1").replace(/(^|\s)\*(\S.*?)\*/g, "$1$2");
+  const request=useRef<AbortController|null>(null);
+  useEffect(()=>()=>request.current?.abort(),[session.id,question,lang]);
 
   const submit = async () => {
     const answer = text.trim();
     if (!answer || busy || !canUseModel) return;
-    setBusy(true);
+    setBusy(true);setError(null);
+    const controller=new AbortController();request.current?.abort();request.current=controller;
+    const revision=crypto.randomUUID();
     let index = rIdx;
     if (index === -1) {
-      addReflection(session.id, { question, answer });
+      addReflection(session.id, { question, answer,revision });
       track({ name: "reflect", ts: Date.now(), session: session.id, index: idx });
       index = session.reflections.length;
     }
+    if(rIdx!==-1)updateReflection(session.id,index,{answer,revision,coachReply:undefined});
+    const current=()=>!controller.signal.aborted&&useApp.getState().sessions.find(s=>s.id===session.id)?.reflections[index]?.revision===revision;
     try {
-      const reply = await reflectStream({ scenario: session.scenario, question, answer, lang, summary }, (acc) => setLive(strip(acc)));
-      updateReflection(session.id, index, { coachReply: strip(reply).trim() });
-    } catch {
-      updateReflection(session.id, index, { coachReply: undefined });
+      const reply = await reflectStream({ scenario: session.scenario, question, answer, lang, summary,learnerCharacterId:session.learnerCharacterId,messages:session.messages.filter(m=>m.role==="learner"||m.role==="npc").map(({id,role,characterId,text,ts})=>({id,role,characterId,text,ts})) }, (acc) => {if(current())setLive(acc);},controller.signal);
+      if(current())updateReflection(session.id, index, { coachReply: reply.trim() });
+    } catch(e) {
+      if(current())setError(e instanceof Error?e.message:t(lang,"error_generic"));
+      if(current())updateReflection(session.id, index, { coachReply: undefined });
     } finally {
       setBusy(false);
       setLive(null);
@@ -614,11 +616,12 @@ function ReflectItem({ session, question, idx, addReflection, updateReflection, 
       ) : (
         <>
           <div className="flex items-end gap-2">
-            <textarea aria-label={question} value={text} onChange={(e) => setText(e.target.value)} rows={2} placeholder={t(lang, "rp_reflect_ph")} className="flex-1 px-3.5 py-2.5 rounded-2xl bg-card border border-line text-[14px] leading-relaxed placeholder:text-ink-3 focus:border-ink transition-colors" disabled={busy} />
+            <textarea aria-label={question} maxLength={4000} value={text} onChange={(e) => setText(e.target.value)} rows={2} placeholder={t(lang, "rp_reflect_ph")} className="flex-1 px-3.5 py-2.5 rounded-2xl bg-card border border-line text-[14px] leading-relaxed placeholder:text-ink-3 focus:border-ink transition-colors" disabled={busy} />
             <button onClick={submit} disabled={!text.trim() || busy || !canUseModel} aria-label={t(lang, "rp_send")} className="press h-11 w-11 shrink-0 rounded-full bg-ink text-paper inline-flex items-center justify-center disabled:opacity-30">
               {busy && !reply ? <Spinner /> : <Send size={16} />}
             </button>
           </div>
+          {error&&<p role="alert" className="text-[13px] text-danger">{error}</p>}
           {reply && <p className="bubble-coach px-4 py-3 text-[14px] leading-relaxed">{reply}</p>}
         </>
       )}

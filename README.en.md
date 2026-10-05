@@ -144,6 +144,8 @@ For OpenAI-compatible endpoints that require `max_completion_tokens`, set `LLM_O
 
 </details>
 
+Production shared generation also requires `LLM_BUDGET_REDIS_URL` and `LLM_BUDGET_REDIS_TOKEN` for atomic anonymous token reservations. Without them, production uses the existing BYOK path. Set a monetary ceiling at the model provider too; token reservations are not a price guarantee. Local development can use the configured server key. See [quality and budget notes](wiki/reviews/review-2026-10-06-repo-quality.md).
+
 ## Deployment
 
 | Option | Setup |
@@ -170,7 +172,7 @@ docker compose up -d --build
 
 The Dockerfiles include Next.js static assets in the standalone build. The Caddy configuration sets `flush_interval -1` for streaming responses.
 
-[`lib/rate-limit.ts`](app/src/lib/rate-limit.ts) limits model calls per IP and per deployment. Counters are in memory: they reset on restart and are not shared across instances. Keep the Compose deployment to one app instance; use shared rate limiting if you scale beyond it.
+[`lib/rate-limit.ts`](app/src/lib/rate-limit.ts) supplies per-instance request fairness. `shared-budget.ts` reserves each model call, including repair and SDK retry capacity, against a shared daily token ceiling and concurrency limit. Its counters contain no dialogue or device identity. Vercel and both Docker builds run the free quality gate before building.
 
 </details>
 

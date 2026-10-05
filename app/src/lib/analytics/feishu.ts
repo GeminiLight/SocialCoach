@@ -19,6 +19,10 @@ export const analyticsConfigured = () => feishuAppConfigured() && !!(process.env
 /** Bitable field type codes. */
 const TEXT = 1, NUMBER = 2, SELECT = 3, DATE = 5, CHECKBOX = 7;
 export const FIELDS: { field_name: string; type: number; property?: Record<string, unknown> }[] = [
+  { field_name: "模式", type: SELECT },
+  { field_name: "阶段", type: SELECT },
+  { field_name: "练习关联", type: TEXT },
+  { field_name: "耗时毫秒", type: NUMBER },
   { field_name: "事件", type: SELECT },
   { field_name: "时间", type: DATE, property: { date_formatter: "yyyy/MM/dd HH:mm", auto_fill: false } },
   { field_name: "设备", type: TEXT },
@@ -63,6 +67,9 @@ export function toFields(e: TrackEvent, batch: Pick<TrackBatch, "device" | "lang
     "平台": deploymentName(),
     "版本": buildVersion(),
   };
+  if(e.name==="practice_stage")Object.assign(row,{"会话":e.practice,"练习关联":e.practice,"场景":e.scenario,"模式":e.mode,"阶段":e.stage,"耗时毫秒":e.duration_ms,"回合":e.turns,"自带模型":e.byok});
+  if(e.name==="debrief_view"&&e.mode)row["模式"]=e.mode;
+  if(e.name==="debrief_view"&&e.practice)row["练习关联"]=e.practice;
   if (e.name === "app_open") Object.assign(row, { "有档案": e.profile, "设备类型": e.ua, "独立窗口": e.standalone });
   if (e.name === "briefing_view") Object.assign(row, { "会话": e.session, "场景": e.scenario, "来源": e.origin });
   if (e.name === "session_start") Object.assign(row, { "会话": e.session, "场景": e.scenario, "来源": e.origin, "情境": e.context, "难度": e.difficulty, "限时": e.timed, "等待秒": e.wait_s });

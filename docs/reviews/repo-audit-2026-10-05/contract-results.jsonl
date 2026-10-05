@@ -1,0 +1,7 @@
+{"test":"pattern","sameSessionUnderTwoTitles":true,"inventedQuoteSuffixAccepted":true}
+{"test":"patternRepeatedScenario","twoActualSessionsSameTitleDetected":false}
+{"test":"generatedScenario","taskReturnedSuccess":true,"npcCount":0,"hasObjectives":false,"sessionCreationError":"Cannot read properties of undefined (reading 'map')"}
+{"test":"simulationMeta","unearnedObjectivesAndDisclosureAccepted":true,"npcDidNotAgree":true}
+{"test":"reflection","unquotedJudgmentAccepted":true}
+{"test":"proficiency","repeatedLevel":1,"delta":0.5,"afterFiveSameLowRatings":5}
+{"test":"quota","thrown":true,"memoryContainsNewMessage":true,"diskUnchanged":true,"storageIssue":null}

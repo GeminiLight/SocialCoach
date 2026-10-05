@@ -14,7 +14,7 @@ RUN corepack enable
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # No credentials at build time: every model setting is read at runtime.
-RUN pnpm build
+RUN pnpm check && pnpm build
 
 # ── run ───────────────────────────────────────────────────────────
 FROM node:22-alpine AS runner
@@ -30,5 +30,5 @@ COPY --from=build --chown=next:nodejs /app/public ./public
 
 USER next
 EXPOSE 3000
-# The rate limiter keeps its counters in memory, so run exactly one instance.
+# Request fairness is per instance; shared model budgets are reserved atomically.
 CMD ["node", "server.js"]

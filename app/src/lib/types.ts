@@ -122,6 +122,7 @@ export interface Reflection {
   question: string;
   answer: string;
   coachReply?: string;
+  revision?:string;
 }
 
 export interface DebriefReply {
@@ -172,6 +173,7 @@ export interface Session {
   stanceTrail?: number[];
   /** 1-based learner turn on which the hidden motive came out. Absent means it never did. */
   revealedAtTurn?: number;
+  disclosures?:{characterId:string;messageId:string;quote:string;turn:number}[];
   /** The reveal screen is a one-time moment; don't replay it on revisit. */
   revealSeen?: boolean;
   /**
@@ -183,6 +185,7 @@ export interface Session {
 }
 
 export interface RoleplayMeta {
+  objectiveEvidence?:{index:number;learnerQuote:string;npcQuote?:string}[];
   objectives: boolean[];
   ended: boolean;
   closure?: Closure;
@@ -196,4 +199,5 @@ export interface RoleplayMeta {
   stance?: number;
   /** True on the turn an NPC says their hidden motive out loud. */
   revealed?: boolean;
+  disclosures?:{characterId:string;quote:string}[];
 }

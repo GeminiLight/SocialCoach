@@ -6,7 +6,9 @@ import type { Scenario } from "@/data/corpus/types";
 import type { ChatMessage, Profile, Proficiency, Reflection, Report, Session } from "@/lib/types";
 import type { PatternResult } from "@/lib/tasks/types";
 import { DEVICE_KEY, OPEN_DAY_KEY } from "@/lib/analytics/keys";
-import {creditPracticeReport} from '@/lib/scene-credit';
+import {parseArchive} from '@/lib/archive';
+import {estimateProficiency} from '@/lib/proficiency';
+import {createArchiveStorage,type SaveIssue} from './archive-storage';
 
 export type Theme = "system" | "light" | "dark";
 
@@ -51,6 +53,9 @@ interface AppState {
   /** Read failures are shown before practice; the unreadable bytes stay intact. */
   storageIssue: "unreadable" | "unavailable" | null;
   /** In-memory onboarding choice, shared with global dialogs. */
+  saveIssue:SaveIssue|null;
+  retrySave:()=>void;
+  restoreArchive:(archive:ReturnType<typeof parseArchive>,replace:boolean)=>Promise<boolean>;
   onboardingLang: Lang | undefined;
   profile: Profile | null;
   /**
@@ -101,6 +106,7 @@ export const todayKey = (d = new Date()) => {
 const initial = {
   hydrated: false,
   storageIssue: null,
+  saveIssue:null,
   onboardingLang: undefined as Lang | undefined,
   profile: null,
   proficiency: {},
@@ -116,23 +122,21 @@ const initial = {
   settings: { tts: true },
 };
 
-// A failed read must not be followed by an initialization write that destroys
-// the only recoverable copy. This flag is intentionally not persisted.
-let storageBlocked = false;
-const appStorage = createJSONStorage(() => {
-  if (typeof window === "undefined") throw new Error("Browser storage is not available during server rendering.");
-  return {
-    getItem: (name: string) => localStorage.getItem(name),
-    setItem: (name: string, value: string) => { if (!storageBlocked) localStorage.setItem(name, value); },
-    removeItem: (name: string) => localStorage.removeItem(name),
-  };
+const archiveStorage=createArchiveStorage(issue=>{
+ queueMicrotask(()=>{if(useApp.getState().saveIssue!==issue)useApp.setState({saveIssue:issue});});
+});
+const appStorage=createJSONStorage(()=>{
+ if(typeof window==='undefined')throw new Error('Browser storage is not available during server rendering.');
+ return archiveStorage;
 });
 
 export const useApp = create<AppState>()(
   persist(
-    (set) => ({
+    (set,get) => ({
       ...initial,
       setHydrated: () => set({ hydrated: true, storageIssue: null }),
+      retrySave:()=>{archiveStorage.retry();set({saveIssue:null});},
+      restoreArchive:async(archive,replace)=>{if(replace)archiveStorage.reset(true);set({...archive,sessions:archive.sessions as Session[],proficiency:estimateProficiency(archive.sessions as Session[],archive.proficiency),hydrated:true,storageIssue:null});await archiveStorage.settled();await Promise.resolve();return get().saveIssue===null;},
       setProfile: (profile) => set({ profile }),
       updateProfile: (p) => set((s) => ({ profile: s.profile ? { ...s.profile, ...p } : s.profile })),
       setLang: (lang) => set((s) => ({ onboardingLang: lang, profile: s.profile ? { ...s.profile, lang } : s.profile })),
@@ -170,19 +174,14 @@ export const useApp = create<AppState>()(
         })),
       applyReport: (id, report) =>
         set((s) => {
-          const prof = { ...s.proficiency };
-          const sess = s.sessions.find((x) => x.id === id);
-          // Only an ended, unassessed scene may apply a report. Late or repeated
-          // model completions must never change proficiency/history again.
-          if (!sess || sess.status !== "ended" || sess.report) return s;
-          const creditedReport=creditPracticeReport(sess,report,s.sessions);
-          const allowed = new Set<SkillId>([...(s.profile?.goals ?? []), ...(sess?.scenario.skills ?? [])]);
-          for (const [k, v] of Object.entries(creditedReport.deltas)) {
-            const key = k as SkillId;
-            if (!allowed.has(key)) continue;
-            const cur = prof[key] ?? 2.5;
-            prof[key] = Math.min(5, Math.max(1, +(cur + (v ?? 0)).toFixed(2)));
-          }
+          const sess=s.sessions.find(x=>x.id===id);
+          if(!sess||sess.status!=='ended'||sess.report)return s;
+          const creditedReport={...report};
+          const reviewed=s.sessions.map(x=>x.id===id?{...x,report:creditedReport,status:'assessed' as const}:x);
+          const prof=estimateProficiency(reviewed,s.proficiency);
+          // Changes are derived from verified recent observations. A model's
+          // proposed reward cannot alter ability, including on legacy reports.
+          creditedReport.deltas=Object.fromEntries(Object.entries(prof).filter(([k,v])=>v!==s.proficiency[k as SkillId]).map(([k,v])=>[k,+((v??2.5)-(s.proficiency[k as SkillId]??2.5)).toFixed(2)]));
           const day = todayKey();
           return {
             proficiency: prof,
@@ -201,7 +200,7 @@ export const useApp = create<AppState>()(
       setSettings: (p) => set((s) => ({ settings: { ...s.settings, ...p } })),
       setPatternInsight: (result, from) => set({ patternInsight: { result, from, at: Date.now() } }),
       reset: () => {
-        storageBlocked = false;
+        archiveStorage.reset(true);
         try {
           // Clear only this app's tab state, including unsent practice drafts.
           for (const key of Object.keys(sessionStorage)) {
@@ -220,7 +219,7 @@ export const useApp = create<AppState>()(
         profile: s.profile,
         onboardingLang:s.onboardingLang,
         proficiency: s.proficiency,
-        sessions: s.sessions.slice(0, 200),
+        sessions: s.sessions,
         customScenarios: s.customScenarios,
         bookmarks: s.bookmarks,
         practiceDays: s.practiceDays,
@@ -233,14 +232,18 @@ export const useApp = create<AppState>()(
         // call on every visit to Growth, which is what caching it prevents.
         patternInsight: s.patternInsight,
       }),
+      merge:(persisted,current)=>{
+        if(persisted===undefined)return current;
+        const archive=parseArchive(persisted);
+        return {...current,...archive,proficiency:estimateProficiency(archive.sessions as Session[],archive.proficiency)} as AppState;
+      },
       onRehydrateStorage: () => (state, error) => {
         if (error) {
-          storageBlocked = true;
           // Initial hydration can fail before the exported store is assigned.
           queueMicrotask(() => useApp.setState({ hydrated: true, storageIssue: error instanceof SyntaxError ? "unreadable" : "unavailable" }));
           return;
         }
-        storageBlocked = false;
+        archiveStorage.reset();
         state?.setHydrated();
       },
     },
@@ -269,3 +272,14 @@ export function computeStreak(days: string[]): number {
 export const useLang = (): Lang => useApp((s) => s.profile?.lang ?? s.onboardingLang ?? (typeof navigator !== "undefined" && !navigator.language.startsWith("zh") ? "en" : "zh"));
 export const useGoals = (): SkillId[] => useApp((s) => s.profile?.goals ?? []);
 export const useContexts = (): ContextId[] => useApp((s) => s.profile?.contexts ?? []);
+
+/** Other windows may publish new records; retain unsaved local work on conflict. */
+export function observeArchiveChanges(){
+ const listener=(event:StorageEvent)=>{
+  if(event.key!=='socialcoach.v1'||!archiveStorage.changed(event.newValue))return;
+  if(archiveStorage.dirty()||useApp.getState().saveIssue||!archiveStorage.acceptsRemote(event.oldValue)){useApp.setState({saveIssue:'conflict'});return;}
+  void useApp.persist.rehydrate();
+ };
+ window.addEventListener('storage',listener);
+ return ()=>window.removeEventListener('storage',listener);
+}

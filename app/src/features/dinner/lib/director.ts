@@ -1,3 +1,4 @@
+import {DinnerContentSchema} from "./content-snapshot";
 import { z } from 'zod';
 import { jsonCall, LLMError, type LLM } from '@/lib/llm-core';
 import { scenarios, pick } from './content';
@@ -12,7 +13,7 @@ import { sceneFactError } from './fact-boundary';
 import {supportedClosingProposal} from '@/lib/practice-policy';
 
 export const DinnerInputSchema = z.object({
-  briefVersion:z.literal(1).optional(),scenarioId:z.enum(['work','family','school','elevator','office']), variantId:VariantIdSchema.optional(),
+  contentSnapshot:DinnerContentSchema.optional(),briefVersion:z.literal(1).optional(),scenarioId:z.enum(['work','family','school','elevator','office']), variantId:VariantIdSchema.optional(),
   maxTurns:DinnerLengthSchema.default(DEFAULT_DINNER_TURNS), targetId:z.string().max(30).optional(),
   lang:z.enum(['zh','en']), text:z.string().trim().min(1).max(500),
   history:z.array(MessageSchema).min(1).max(MAX_DINNER_TURNS*2-1),
@@ -29,7 +30,7 @@ export function parseDinnerInput(input: unknown) {
   const {scenarioId,history,dinner,maxTurns,targetId,heard}=body;
   const scene=scenarios.find(s=>s.id===scenarioId)!;
   const turn=history.filter(m=>m.role==='user').length;
-  const save=SaveSchema.safeParse({version:1,scenarioId,maxTurns,variantId:body.variantId,targetId,messages:history,lang,started:true,complete:false,draft:''});
+  const save=SaveSchema.safeParse({version:1,contentSnapshot:body.contentSnapshot,scenarioId,maxTurns,variantId:body.variantId,targetId,messages:history,lang,started:true,complete:false,draft:''});
   if(!save.success)throw invalid('对话记录或剧情状态不完整，请刷新后再试。','The conversation or story state is incomplete. Refresh and try again.');
   if(turn>=maxTurns)throw invalid('这一段已到设定回合数，点击继续聊再开口。','This segment has reached its turn limit. Choose Continue before speaking again.');
   const ids=scene.characters.map(c=>c.id);
@@ -46,7 +47,8 @@ export function dinnerPrompt(body:DinnerInput) {
   const {scenarioId,lang,history,maxTurns}=body;
   const variant=variantFor(scenarioId,body.variantId);
   const scene=storyScenario(scenarios.find(s=>s.id===scenarioId)!,variant);
-  const brief=publicSceneBrief(variant.id,body.briefVersion);
+  const brief=body.contentSnapshot?.direction.brief??publicSceneBrief(variant.id,body.briefVersion);
+  const frozen=body.contentSnapshot?.direction;
   const turn=history.filter(m=>m.role==='user').length+1;
   const previous=[...history].reverse().find(m=>m.role==='npc');
   const addressed=addressedCharacter(scene,body.text,body.targetId);
@@ -54,13 +56,13 @@ export function dinnerPrompt(body:DinnerInput) {
   const availableEvents=availableStoryEvents(variant,turn,history,body.text,[...usedEvents].filter((id):id is NonNullable<typeof id>=>!!id));
   return `You direct a fictional, goal-focused 3D social rehearsal for SocialCoach. Respond in ${lang==='zh'?'Simplified Chinese':'English'}.
 SPACE: ${scene.space??'dinner'}. ${scene.space==='elevator'?'A stopped elevator and its lobby, not a moving ride. All three remain in place. Nobody loses hearing because the player steps aside or closes a door.':scene.space==='office'?'An office with desks and a whiteboard. No dinner, cups, alcohol or restaurant. Raising a hand requests the floor but does not automatically secure it.':'A dinner table in a private room.'}
-STORY: ${pick(variant.title,lang)}. Setup: ${pick(variant.setup,lang)}. Player aim: ${pick(variant.goal,lang)}.
+STORY: ${pick(frozen?.title??variant.title,lang)}. Setup: ${pick(frozen?.setup??variant.setup,lang)}. Player aim: ${pick(frozen?.goal??variant.goal,lang)}.
 ${SCENE_CRAFT}
 ${arcDirection(variant.id,lang)}
-CAST AND INDEPENDENT AGENDAS: ${JSON.stringify(scene.characters.map((c,i)=>({id:c.id,name:pick(c.name,lang),role:pick(c.role,lang),description:pick(c.description,lang),agenda:pick(agendasForVariant(variant)[i],lang)})))}.
+CAST AND INDEPENDENT AGENDAS: ${JSON.stringify((frozen?.cast??scene.characters.map((c,i)=>({...c,agenda:agendasForVariant(variant)[i]}))).map(c=>({id:c.id,name:pick(c.name,lang),role:pick(c.role,lang),description:pick(c.description,lang),agenda:pick(c.agenda,lang)})))}.
 ${scene.space?'FACT BOUNDARY: Do not invent an existing report deadline, employment policy, penalty, prior agreement, complete handoff checklist or already-checked data. A new time or task can be proposed explicitly, never claimed as an established requirement. Use the exact handed-over artifacts and requested deliverables in the opening evidence. Do not add handoff artifacts or client requirements. A teammate knows only the supplied material; missing log access, checklist completeness and test results remain unknown unless stated in this transcript. Do not add an HR conversation to the incident opening, an incident to the privacy opening, or the 18:30 delivery deadline to the interrupted-meeting opening.':''}
 PLAYER ROLE: ${pick(brief.role,lang)}. PUBLIC UNKNOWN/CHOICES: ${pick(brief.unknown,lang)}.
-CANONICAL FACTS: ${JSON.stringify(factsForVariant(variant,lang))}.
+CANONICAL FACTS: ${JSON.stringify(frozen?.facts[lang]??factsForVariant(variant,lang))}.
 KNOWLEDGE LIMIT: Unchecked is not unavailable, inaccessible, untested or verified. Don't invent an NPC's access rights, schedule, named artifact or a new status update. Keep the failing tests failing until an actual player statement establishes a new result. NPCs can OFFER their own next action explicitly, not claim an offscreen action happened. In the HR-privacy opening there is no assigned document to hand over; work planning is a proposed discussion only.
 CONSTRAINTS AND AGREEMENTS: No report deadline or staffing schedule is supplied for either elevator opening. Do not invent “must report tonight” or “month-end staffing” as existing pressure. Offer a work-planning conversation or a reporting time instead. Missing logs here does not mean anyone lacks log access or cannot log in. An NPC can decline to take a task without inventing permissions as an excuse. Proposed checks at a new time are allowed; “tomorrow is my only available slot” is an invented restriction. When a time or owner is changed by later dialogue, use the latest actual agreement, not an obsolete earlier proposal. Keep the owner straight: Zhou's acceptance of a check does not make the player promise to perform it. If Chen has already offered to lead a remedy, it is proposed by Chen, not “nobody has been named”; whether the player accepted it can still be unconfirmed.
 DATA AND CONSENT: Office data remains unchecked in this conversation; Rui cannot claim to have checked a part, found a source sheet, or verified numbers offscreen. Their next check can be offered as an action after this conversation, with the result unknown. Likewise, “I can discuss the demo / 可以谈演示” is not accepting demo ownership; asking to reduce Q&A is not accepting Q&A. When naming the player's commitments, retain conditions and uncertainty and check their own words, not another NPC's assignment. Don't invent a promised task merely to create a gap.

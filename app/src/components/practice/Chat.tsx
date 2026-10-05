@@ -261,7 +261,7 @@ export function Chat({ session }: { session: Session }) {
           const prev = s0.stanceTrail ?? [];
           return { messages: [...s0.messages, ...replies], objectiveDone: done,
             stanceTrail: [...prev, typeof meta?.stance === "number" ? meta.stance : (prev.at(-1) ?? 20)],
-            ...(meta?.revealed && !s0.revealedAtTurn ? { revealedAtTurn: Math.max(1, turnsUsed) } : {}),
+            disclosures:[...(s0.disclosures??[]),...(meta?.disclosures??[]).flatMap(d=>{const reply=replies.find(m=>m.characterId===d.characterId&&m.text.includes(d.quote));return reply?[{...d,messageId:reply.id,turn:Math.max(1,turnsUsed)}]:[]})],
             closure };
         });
       } catch (e) {
@@ -513,7 +513,7 @@ export function Chat({ session }: { session: Session }) {
           </summary>
           <div className="pb-4 flex flex-col gap-4 max-h-[30dvh] overflow-y-auto">
             <Stance name={stanceName} value={stance} prev={prevStance} lang={lang} />
-            <Objectives items={objectives} done={session.objectiveDone} label={t(lang, "pr_objectives")} layout="stack" />
+            <Objectives items={objectives} done={session.objectiveDone} label={t(lang, "pr_objectives_estimate")} layout="stack" />
           </div>
         </details>
       </header>
@@ -675,7 +675,7 @@ export function Chat({ session }: { session: Session }) {
         <div className="dotted" />
         <section className="flex flex-col gap-3">
           <span className="eyebrow">{t(lang, "pr_objectives")}</span>
-          <Objectives items={objectives} done={session.objectiveDone} label={t(lang, "pr_objectives")} layout="stack" />
+          <Objectives items={objectives} done={session.objectiveDone} label={t(lang, "pr_objectives_estimate")} layout="stack" />
         </section>
         <div className="dotted" />
         <section className="flex flex-col gap-3">

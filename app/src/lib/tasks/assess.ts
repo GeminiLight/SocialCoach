@@ -7,6 +7,7 @@ import type { ChatMessage, Report } from "@/lib/types";
 import { SKILLS, type Lang, type SkillId } from "@/data/taxonomy";
 import type { AssessInput } from "./types";
 import {validateSceneContext,sanitizeSceneNotes,SCENE_ASSESS_POLICY,type SceneContext} from '../scene-context';
+import {ReportSchema} from '../archive';
 import {checkAssessment} from './assessment-check';
 
 const skillIds = new Set(SKILLS.map((s) => s.id));
@@ -41,12 +42,6 @@ export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theorie
     whyThis: str(raw.knowledge?.whyThis),
   };
   const deltas: Report["deltas"] = {};
-  for (const r of ratings) {
-    // A quote and a positive demonstration are prerequisites for progression.
-    const v = Number(raw.deltas?.[r.skill]);
-    if (r.level === 0 || !Number.isFinite(v)) continue;
-    deltas[r.skill] = +Math.max(0, Math.min(scenario.skills.includes(r.skill) ? 0.5 : 0.2, v)).toFixed(2);
-  }
   const results=list(raw.objectiveResults);
   const objectiveResults=results.length===scenario.objectives.length&&results.every((r,i)=>r&&r.index===i&&['met','unmet','unknown'].includes(r.status)&&hasQuote(r.evidence,spoken)&&str(r.reason)&&(!r.npcEvidence||hasQuote(r.npcEvidence,npcSpoken)))?results:undefined;
   const outcome = objectiveResults?goalOutcome(objectiveResults.map(r=>r.status==='met')):raw.outcome === "success" || raw.outcome === "partial" || raw.outcome === "failure" ? raw.outcome : goalOutcome(objectiveDone);
@@ -60,7 +55,7 @@ export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theorie
     strengths, weaknesses,
     alternatives: list(raw.alternatives).filter((a) => a && hasQuote(a.original, spoken) && str(a.better) && str(a.why)),
     knowledge,
-    reflectionQuestions: list(raw.reflectionQuestions).filter((q) => str(q)).slice(0, 3),
+    reflectionQuestions: [...new Set(list(raw.reflectionQuestions).filter((q) => str(q)))].slice(0, 3),
     nextStep: str(raw.nextStep), deltas,
   };
 }
@@ -76,12 +71,12 @@ export async function runAssess(input: AssessInput, llm: LLM, smartModel: string
   try{sceneContext=validateSceneContext(input.sceneContext,messages);}catch{throw new LLMError(pick({zh:'现场记录与原话不一致，请重新打开复盘。',en:'The scene record does not match the transcript. Please reopen the debrief.'},lang),400);}
   const name = input.learnerName || pick(scenario.characters.find((c) => c.id === learnerCharacterId)!.name, lang);
   const transcript = transcriptBlock(messages, scenario, lang, name);
-  const learnerText = messages.filter((m) => m.role === "learner").map((m) => m.text).join(" ");
+  const learnerText = messages.filter(m=>m.role === "learner"||m.role === "npc").map(m=>m.text).join(" ");
 
   const kb = retrieveKnowledge({
     skills: [...scenario.skills, ...(scenario.relatedSkills ?? []), ...goals],
     context: scenario.context,
-    query: `${scenario.keywords.join(" ")} ${learnerText.slice(0, 400)}`,
+    query: `${scenario.keywords.join(" ")} ${learnerText}`,
     acquisition: true,
     performance: true,
   });
@@ -143,6 +138,7 @@ export async function runAssess(input: AssessInput, llm: LLM, smartModel: string
     const report=sanitizeReport(raw,scenario,kb.theories,kb.cases,messages,goals,lang,input.objectiveDone,sceneContext);
     // A blank object or an entirely fabricated quote is not a completed review.
     if(!report.verdictEvidence||!report.verdict||!report.ratings?.length||!report.objectiveResults)throw new Error('The report needs actual learner quotations, one communication rating and one evidence-backed status for each original objective');
+    if(!ReportSchema.safeParse(report).success)throw new Error("The report contains incomplete or invalid fields.");
     return report;
   };
   let text=run.text(),report:Report,formatRepairUsed=false;

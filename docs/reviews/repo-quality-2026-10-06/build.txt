@@ -1,0 +1,46 @@
+$ node scripts/prepare-local-reading.mjs
+Prepared 10 local reading assets (26 MB), loaded on demand.
+$ next build
+▲ Next.js 16.3.4 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 145ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1286ms
+  Running TypeScript ...
+  Finished TypeScript in 3.8s ...
+  Collecting page data using 14 workers ...
+  Generating static pages using 14 workers (0/22) ...
+  Generating static pages using 14 workers (5/22)
+  Generating static pages using 14 workers (10/22)
+  Generating static pages using 14 workers (16/22)
+✓ Generating static pages using 14 workers (22/22) in 331ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /3d
+├ ƒ /api/assess
+├ ƒ /api/debrief-chat
+├ ƒ /api/dinner/direct
+├ ƒ /api/feedback
+├ ƒ /api/health
+├ ƒ /api/hint
+├ ƒ /api/pattern
+├ ƒ /api/reflect
+├ ƒ /api/rehearse
+├ ƒ /api/roleplay
+├ ƒ /api/schedule
+├ ƒ /api/track
+├ ○ /arena
+├ ○ /learn
+├ ○ /onboarding
+├ ƒ /practice/[id]
+├ ○ /progress
+├ ○ /rehearse
+└ ○ /settings
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

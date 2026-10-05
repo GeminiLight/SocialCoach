@@ -1,0 +1,53 @@
+// Isolated browser and synthetic fixtures only. All model and telemetry requests intercepted.
+import {execFileSync} from 'node:child_process';
+import {writeFileSync} from 'node:fs';
+import {SCENARIOS} from '../../../app/src/data/corpus';
+import {buildSession} from '../../../app/src/lib/session-utils';
+const name=`socialcoach-quality-${process.pid}`;
+const browser=(args:string[],input?:string)=>{const r=JSON.parse(execFileSync('agent-browser',['--session',name,'--json',...args],{input,encoding:'utf8',timeout:45000}));if(!r.success)throw Error(JSON.stringify(r.error));return r.data;};
+const evaluate=(code:string)=>browser(['eval','--stdin'],code).result;
+const wait=(code:string)=>browser(['wait','--fn',code]);
+const click=(text:string)=>evaluate(`Array.from(document.querySelectorAll('button')).find(b=>b.textContent.trim()===${JSON.stringify(text)})?.click();true`);
+const check=(name:string,value:unknown)=>{if(!value)throw Error(name);console.log('PASS '+name);};
+const root='/Users/geminilight/projects/research/SocialCoach/docs/reviews/repo-quality-2026-10-06';
+const scene=SCENARIOS.find(s=>s.skills.includes('communication'))!,question='你当时如何理解对方？',oldAnswer='我以为他只是随口问问。',answer='我意识到这会影响我的周末安排。';
+const quote='我现在不能答应，需要先确认自己的安排。';
+const report={scoringVersion:2,ratings:[{skill:'communication',level:1,evidence:quote,reason:'需要进一步澄清'}],stars:1,outcome:'partial',verdictEvidence:quote,verdict:'先确认安排',summary:'先确认自己的安排。',strengths:[],weaknesses:[],alternatives:[],knowledge:{theoryIds:[],caseIds:[],whyThis:''},reflectionQuestions:[question],nextStep:'确认范围。',deltas:{}};
+const practice={...buildSession(scene,'arena','zh'),id:'quality-reflect',status:'assessed',revealSeen:true,messages:[{id:'m',role:'learner',text:quote,ts:1}],report,reflections:[{question,answer:oldAnswer}]};
+const state={profile:{name:'Quality Fixture',bio:'',goals:['communication'],contexts:[],lang:'zh',createdAt:1},sessions:[practice],proficiency:{communication:2.5},settings:{tts:false,telemetry:false,theme:'light'},customScenarios:[],bookmarks:[],practiceDays:[],todaySessionId:null,todayDate:null,patternInsight:null};
+const disk=()=>evaluate("JSON.parse(localStorage.getItem('socialcoach.v1')).state");
+try{
+ browser(['open','about:blank']);
+ browser(['network','route','**/api/health*','--body','{"state":"available","serverKey":true,"requireByok":false}']);
+ browser(['network','route','**/api/track','--body','{}']);browser(['network','route','**/api/feedback','--body','{"available":false}']);
+ browser(['network','route','**/api/reflect','--body',JSON.stringify({reply:`“${answer}”\n\n你正在确认自己的安排。`})]);
+ browser(['open','http://localhost:3101/onboarding']);wait("document.querySelector('h1')!==null");
+ evaluate(`localStorage.setItem('socialcoach.v1',${JSON.stringify(JSON.stringify({state,version:0}))});true`);
+ browser(['open','http://localhost:3101/practice/quality-reflect']);wait(`document.querySelector('textarea[aria-label="${question}"]')!==null`);
+ evaluate("window.qualityQuota=true;window.qualityOriginalSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='socialcoach.v1'&&window.qualityQuota)throw new DOMException('synthetic quota','QuotaExceededError');return window.qualityOriginalSet.call(this,k,v);};true");
+ browser(['fill',`textarea[aria-label="${question}"]`,answer]);evaluate(`document.querySelector('textarea[aria-label="${question}"]').parentElement.querySelector('button').click();true`);
+ wait("document.body.textContent.includes('设备存储空间不足')");check('quota failure is visible and the original disk answer is intact',disk().sessions[0].reflections[0].answer===oldAnswer);
+ browser(['screenshot',root+'/quota-visible.png','--full']);
+ evaluate('window.qualityQuota=false;true');click('重新保存');wait(`JSON.parse(localStorage.getItem('socialcoach.v1')).state.sessions[0].reflections[0].answer===${JSON.stringify(answer)}`);
+ wait("!document.body.textContent.includes('这次进度尚未保存到设备')");check('retry persists the edited answer and its matching quoted reply',disk().sessions[0].reflections[0].coachReply?.includes(answer));
+ browser(['set','viewport','430','932']);browser(['screenshot',root+'/reflection-mobile.png','--full']);
+ const imported={...practice,id:'quality-imported',reflections:[]};
+ const filename='/tmp/socialcoach-quality-import.json';writeFileSync(filename,JSON.stringify({state:{...state,sessions:[imported]},version:0}));
+ browser(['open','http://localhost:3101/settings']);wait("document.querySelector('input[type=file][aria-label=恢复备份]')!==null");
+ browser(['upload','input[type=file][aria-label=恢复备份]',filename]);wait("document.body.textContent.includes('备份包含 1 场练习')");
+ check('backup is previewed before any mutation',disk().sessions.length===1);click('下载当前档案并准备恢复');click('确认下载已保存，再恢复');wait("JSON.parse(localStorage.getItem('socialcoach.v1')).state.sessions.length===2");check('merge preserves the original and adds the imported practice',disk().sessions.some(s=>s.id==='quality-reflect')&&disk().sessions.some(s=>s.id==='quality-imported'));
+ writeFileSync(filename,JSON.stringify({state:{...state,sessions:[{...imported,messages:[{id:'different',role:'learner',text:'另一个版本。',ts:1}]}]},version:0}));
+ browser(['upload','input[type=file][aria-label=恢复备份]',filename]);wait("document.body.textContent.includes('备份包含 1 场练习')");click('下载当前档案并准备恢复');click('确认下载已保存，再恢复');wait("document.body.textContent.includes('有同 ID、内容不同的记录')");
+ check('ambiguous ID collision does not overwrite either current practice',disk().sessions.find(s=>s.id==='quality-imported').messages[0].text===quote);
+ browser(['set','viewport','1280','900']);wait("!document.getAnimations().some(a=>a.playState==='running'&&a.effect.getTiming().iterations!==Infinity)");browser(['screenshot',root+'/restore-conflict.png','--full']);
+ const firstTabs=browser(['tab','list']);
+ browser(['tab','new','http://localhost:3101/settings']);wait("document.body.textContent.includes('这个窗口暂时不能保存')");
+ check('a second window cannot overwrite the archive',evaluate("document.body.textContent.includes('这个窗口暂时不能保存')"));
+ browser(['screenshot',root+'/second-window.png','--full']);
+ // Stable tab ids are returned by the documented tab inventory.
+ const tabs=Array.isArray(firstTabs)?firstTabs:firstTabs.tabs;
+ browser(['tab','close',tabs[0].tabId]);
+ click('下载本窗口进度');click('已下载，读取设备档案');wait("!document.body.textContent.includes('这个窗口暂时不能保存')");
+ check('closing the original writer allows the second window to resume saving',disk().sessions.length===2);
+ const capabilities=evaluate('({webLocks:!!navigator.locks})');check('cross-window writes use native Web Locks in the tested browser',capabilities.webLocks);
+}finally{browser(['close']);}

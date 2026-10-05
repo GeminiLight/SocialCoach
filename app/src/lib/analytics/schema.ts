@@ -11,15 +11,16 @@ import { z } from "zod";
  * question is answered with a field on an existing event wherever it can be.
  */
 const ts = z.number().int().min(0);
-const session = z.string().regex(/^[a-z0-9]{4,40}$/);
+const session = z.string().regex(/^[a-z0-9-]{4,40}$/);
 /** A corpus id, or the literal `custom` — never the text of a generated scenario. */
 const scenario = z.string().regex(/^[a-z0-9-]{1,80}$/);
 const outcome = z.enum(["success", "partial", "failure"]);
 const origin = z.enum(["scheduled", "arena", "rehearse"]);
 
-export const TASKS = ["schedule", "roleplay", "hint", "assess", "reflect", "debrief-chat", "rehearse", "pattern"] as const;
+export const TASKS = ["schedule", "roleplay", "hint", "assess", "reflect", "debrief-chat", "rehearse", "pattern", "dinner"] as const;
 
 export const eventSchema = z.discriminatedUnion("name", [
+  z.object({name:z.literal("practice_stage"),ts,mode:z.literal("3d"),practice:z.string().uuid(),scenario,stage:z.enum(["loaded","started","first_reply","review","restart"]),duration_ms:z.number().int().min(0).max(300000),turns:z.number().int().min(0).max(24),byok:z.boolean()}).strict(),
   /**
    * Once per device per day, from the client, with or without a profile:
    * the funnel needs the visitors who never finished onboarding, retention
@@ -61,7 +62,7 @@ export const eventSchema = z.discriminatedUnion("name", [
   }).strict(),
   /** The report was produced and shown. */
   z.object({ name: z.literal("debrief_view"), ts, session, scenario, stars: z.number().int().min(0).max(3), outcome,
-    scoring_version: z.literal(2).optional(), rated: z.boolean().optional(),
+    scoring_version: z.literal(2).optional(), rated: z.boolean().optional(),mode:z.enum(["text","3d","rehearse"]).optional(),practice:z.string().uuid().optional(),
   }).strict(),
   /** A Socratic question was answered — the report was read, not just generated. */
   z.object({ name: z.literal("reflect"), ts, session, index: z.number().int().min(0).max(9) }).strict(),

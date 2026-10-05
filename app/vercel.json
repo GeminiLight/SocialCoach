@@ -1,0 +1,1 @@
+{"buildCommand":"pnpm check && pnpm build"}

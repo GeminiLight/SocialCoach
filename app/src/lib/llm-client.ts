@@ -146,7 +146,7 @@ export function makeByokLLM(c: ByokConfig): LLM {
           const stream = await oa.chat.completions.create({
             ...openaiArgs(o, c.smartModel, c.tokenParam),
             stream: true,
-          } as Parameters<typeof oa.chat.completions.create>[0] & { stream: true });
+          } as Parameters<typeof oa.chat.completions.create>[0] & { stream: true }, {signal:o.signal});
           for await (const chunk of stream) {
             const choice = chunk.choices[0];
             if (choice?.delta?.refusal) refusal = true;
@@ -160,7 +160,7 @@ export function makeByokLLM(c: ByokConfig): LLM {
           return;
         }
         const an = await anthropicClient(c);
-        const stream = an.messages.stream(anthropicArgs(o, c.smartModel));
+        const stream = an.messages.stream(anthropicArgs(o, c.smartModel), {signal:o.signal});
         for await (const ev of stream) {
           if (ev.type === "content_block_delta" && ev.delta.type === "text_delta" && ev.delta.text) {
             acc += ev.delta.text;

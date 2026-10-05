@@ -4,6 +4,8 @@ import { parsePartialJSON } from "./partial-json";
 import type { Scenario } from "@/data/corpus/types";
 import type { Lang } from "@/data/taxonomy";
 import { pick } from './i18n';
+import type {ChatMessage} from "./types";
+import {hasQuote,goalOutcome} from "./practice-policy";
 import type { SpeechGuard } from './roleplay-facts';
 
 export class RoleplayFactError extends LLMError {
@@ -29,7 +31,7 @@ function completeObject(raw: string) {
 }
 
 /** Validate one JSON reply, then retain the public text-stream protocol. */
-export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang,guard?:SpeechGuard) {
+export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang,guard?:SpeechGuard,history:ChatMessage[]=[]) {
   const cast = scenario.characters.filter((c) => c.id !== learnerId);
   const ids = cast.map((c) => c.id);
   // A captured model draft used "characterId":"lead":"沈星". Remove ONLY
@@ -45,8 +47,10 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
     },
   );
   const meta = z.object({
+    objectiveEvidence:z.array(z.object({index:z.number().int().min(0).max(scenario.objectives.length-1),learnerQuote:z.string().min(1).max(1200),npcQuote:z.string().max(1200).optional()})).max(scenario.objectives.length).optional(),
     objectives: z.array(z.boolean()).length(scenario.objectives.length), ended: z.boolean(),
-    stance: z.number().int().min(0).max(100), revealed: z.boolean(), note: z.string().max(300).optional(),
+    stance: z.number().int().min(0).max(100), revealed: z.boolean(),
+    disclosures:z.array(z.object({characterId:z.string(),quote:z.string().min(1).max(2000)})).max(cast.length).optional(), note: z.string().max(300).optional(),
     outcome: z.enum(["success", "partial", "failure"]).nullable().optional(),
     closure: z.object({ kind: z.enum(["agreement", "boundary", "deferred", "withdrawal"]), learnerQuote: z.string().optional(), npcQuote: z.string().min(1) }).optional(),
   });
@@ -64,6 +68,13 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
     if (result.data.utterances.some((u) => /^@@/mu.test(u.text))) throw failure();
     const reason=guard?.(result.data.utterances);
     if(reason)throw new RoleplayFactError(reason,lang);
+    const learnerWords=history.filter(m=>m.role==='learner').map(m=>m.text);
+    const npcWords=[...history.filter(m=>m.role==='npc').map(m=>m.text),...result.data.utterances.map(u=>u.text)];
+    result.data.meta.objectiveEvidence=(result.data.meta.objectiveEvidence??[]).filter(e=>hasQuote(e.learnerQuote,learnerWords)&&(!e.npcQuote||hasQuote(e.npcQuote,npcWords)));
+    result.data.meta.objectives=result.data.meta.objectives.map((v,i)=>v&&result.data.meta.objectiveEvidence!.some(e=>e.index===i));
+    if(result.data.meta.outcome&&result.data.meta.outcome!==goalOutcome(result.data.meta.objectives))result.data.meta.outcome=null;
+    result.data.meta.disclosures=(result.data.meta.disclosures??[]).filter(d=>cast.some(c=>c.id===d.characterId&&c.hidden)&&result.data.utterances.some(u=>u.characterId===d.characterId&&u.text.includes(d.quote)));
+    result.data.meta.revealed=result.data.meta.disclosures.length>0;
     return result.data;
   };
   return {
@@ -82,7 +93,14 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
         const result = utterance.safeParse(u);
         return result.success ? [result.data] : [];
       }).slice(0, 2);
-      return lines.length ? serialize({ meta: checkedMeta.data, utterances: lines }) : "";
+      const learnerWords=history.filter(m=>m.role==='learner').map(m=>m.text),npcWords=history.filter(m=>m.role==='npc').map(m=>m.text);
+      const proof=(checkedMeta.data.objectiveEvidence??[]).filter(e=>hasQuote(e.learnerQuote,learnerWords)&&(!e.npcQuote||hasQuote(e.npcQuote,npcWords)));
+      // New public proof needs the completed spoken line. This prevents a
+      // provisional claim from flashing before the supporting words exist.
+      if(checkedMeta.data.disclosures?.length||(checkedMeta.data.objectiveEvidence??[]).some(e=>e.npcQuote&&!hasQuote(e.npcQuote,npcWords))){if(!completeObject(raw))return '';try{return serialize(checked(raw));}catch{return '';}}
+      const previewMeta={...checkedMeta.data,objectiveEvidence:proof,objectives:checkedMeta.data.objectives.map((v,i)=>v&&proof.some(e=>e.index===i)),disclosures:[],revealed:false};
+      if(previewMeta.outcome&&previewMeta.outcome!==goalOutcome(previewMeta.objectives))previewMeta.outcome=null;
+      return lines.length ? serialize({meta:previewMeta,utterances:lines}) : '';
     },
     complete(raw: string): string {
       // extractJSON can repair a truncated tail for coach notes. A spoken

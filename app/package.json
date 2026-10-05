@@ -9,7 +9,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:dinner": "tsx --test tests/dinner/*.test.ts tests/dinner/*.test.tsx"
+    "test:dinner": "tsx --test tests/dinner/*.test.ts tests/dinner/*.test.tsx",
+    "test:core": "tsx --test tests/core/*.test.ts && node scripts/check-core.mjs",
+    "check": "pnpm lint && next typegen && tsc --noEmit && pnpm test:core && pnpm test:dinner"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.123.0",

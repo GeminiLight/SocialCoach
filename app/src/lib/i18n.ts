@@ -221,11 +221,16 @@ const dict = {
   pr_stance_almost: { zh: "快松口了", en: "nearly there" },
   pr_stance_agreed: { zh: "同意了", en: "agreed" },
   pr_stance_back: { zh: "退回去了", en: "pulled back" },
-  pr_stance_label: { zh: "对方的立场", en: "Where they stand" },
+  pr_stance_label: { zh: "对方的立场 · 模拟估计", en: "Their stance · simulation estimate" },
 
   // The reveal: what the other side never said out loud.
-  pr_reveal_eyebrow: { zh: "对方没说出口的", en: "What they never said" },
-  pr_reveal_never: { zh: "{name}一直没说的是", en: "What {name} never said out loud" },
+  pr_objectives_estimate:{zh:"原目标 · 模拟进度，复盘将核对",en:"Initial aims · simulation estimates, checked in debrief"},
+  pr_reveal_review:{zh:"回看这场练习的角色设定",en:"Review this practice’s character setup"},
+  pr_reveal_quote:{zh:"模拟记录的相关发言 · 第 {n} 回合",en:"Related line in the simulation · turn {n}"},
+  pr_reveal_context:{zh:"设定帮助理解阻力，原话才支持评价。",en:"The setup explains resistance; actual words support assessment."},
+  pr_reveal_context_detail:{zh:"不必问出每个人的私有设定。合理拒绝、保留边界或修复关系都可以是有效行动，具体表现将在复盘中核对。",en:"You do not need to uncover everyone’s private setup. Refusing, maintaining a boundary or repairing a relationship can be effective; the debrief checks your actual behavior."},
+  pr_reveal_eyebrow: { zh: "角色的私有设定", en: "Private character setup" },
+  pr_reveal_never: { zh: "{name}的模拟设定", en: "{name}’s simulated setup" },
   pr_reveal_got_it: { zh: "你在第 {n} 回合问出来了。", en: "You got it out of them on turn {n}." },
   pr_reveal_missed: { zh: "这一局你没问出来。", en: "You never got there this time." },
   pr_reveal_missed_why: { zh: "它不会主动说。要靠一个好问题、一次共情，或者先让对方觉得安全。", en: "They will not volunteer it. It takes a good question, real empathy, or making it safe enough to say." },
@@ -311,7 +316,7 @@ const dict = {
   rp_map_hold: { zh: "没动", en: "held" },
   rp_map_loss: { zh: "对方更抗拒了", en: "more resistant" },
   rp_map_no_line: { zh: "这一回合你没有开口。", en: "You did not speak on this turn." },
-  rp_map_hint_loss: { zh: "第 {n} 回合对方的立场退回去了。点一下看你当时说了什么。", en: "They pulled back on turn {n}. Tap it to see what you said." },
+  rp_map_hint_loss: { zh: "第 {n} 回合对方的立场 · 模拟估计退回去了。点一下看你当时说了什么。", en: "They pulled back on turn {n}. Tap it to see what you said." },
   rp_map_hint_clean: { zh: "对方的意愿没有下降。这个走势不代表沟通评分，点任意一格看当时说了什么。", en: "Their willingness did not fall. This is not your communication score; tap any turn to read it back." },
 
   // The cross-session habit. Named as a finding, never as a diagnosis.
@@ -405,7 +410,7 @@ const dict = {
   pg_journal: { zh: "反思日志", en: "Reflection journal" },
   pg_empty: { zh: "还没有练习记录。完成第一次练习后，这里会开始生长。", en: "No practice yet. This page starts growing after your first session." },
   pg_add_goal: { zh: "添加目标", en: "Add goal" },
-  pg_estimate: { zh: "估计值，随练习校准", en: "Estimates; calibrate with practice" },
+  pg_estimate: { zh: "最近独立练习的表现估计；不同难度需结合原话看", en: "Recent independent practice estimates; interpret difficulty with the quoted evidence" },
   pg_footprint: { zh: "练习足迹", en: "Practice footprint" },
   pg_footprint_sub: { zh: "填墨的格子是练过的那天。", en: "Filled cells are days you practised." },
   pg_footprint_streak: { zh: "当前连续 {n} 天", en: "{n}-day streak" },

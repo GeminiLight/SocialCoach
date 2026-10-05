@@ -14,7 +14,7 @@ export const debriefInputSchema = z.object({
   sceneContext:SceneContextSchema.optional(),
   lang: z.enum(["zh", "en"]),
   practice: z.object({ title: text(1000), background: text(8000), roles: z.array(z.object({ name: text(200), role: text(500), learner: z.boolean() })).max(12) }),
-  transcript: z.array(z.object({ role: z.enum(["learner", "npc"]), name: text(200), text: text(8000) })).max(100),
+  transcript: z.array(z.object({ role: z.enum(["learner", "npc"]), name: text(200), text: text(8000) })).max(301),
   report: z.object({
     verdict: text(2000), summary: text(6000), nextStep: text(2000),
     strengths: z.array(evidenceItem).max(20), weaknesses: z.array(evidenceItem.extend({ whyItMatters: text(2000) })).max(20),

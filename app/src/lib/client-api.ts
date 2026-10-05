@@ -1,11 +1,13 @@
 import type { Scenario } from "@/data/corpus/types";
 import type { Lang } from "@/data/taxonomy";
-import type { Adaptation, Prescription, Profile, Proficiency, Report, RetrievalTrace, RoleplayMeta } from "./types";
+import type { Adaptation, Prescription, Profile, Report, RetrievalTrace, RoleplayMeta } from "./types";
 import { parsePartialJSON } from "./partial-json";
 import { byokConfig } from "./byok";
 import { withModelAccess } from "./model-access";
 import { readModelFailure, type ModelIssue } from "./model-status";
 import { makeByokLLM } from "./llm-client";
+import {taskLLM} from "./task-runtime";
+import {taskInput,TaskInputSchemas} from "./task-input";
 import type { LLM } from "./llm-core";
 import { runSchedule } from "./tasks/schedule";
 import { runRehearse } from "./tasks/rehearse";
@@ -60,7 +62,7 @@ function reportFailure(task: Task, e: unknown, byok: boolean) {
 }
 
 /** Run a task and record its failure before rethrowing it unchanged. */
-async function watched<T>(task: Task, byok: boolean, lang: Lang, run: () => Promise<T>): Promise<T> {
+export async function watched<T>(task: Task, byok: boolean, lang: Lang, run: () => Promise<T>): Promise<T> {
   try {
     return await withModelAccess(lang, run);
   } catch (e) {
@@ -84,7 +86,7 @@ async function safeFetch(url: string, init: RequestInit, lang?: Lang) {
 }
 
 async function post<T>(url: string, body: unknown, signal?: AbortSignal): Promise<T> {
-  const res = await safeFetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal }, (body as { lang?: Lang })?.lang);
+  const res = await safeFetch(url, { method: "POST", headers: { "Content-Type": "application/json","Accept-Language":(body as {lang?:Lang})?.lang??"zh" }, body: JSON.stringify(body), signal }, (body as { lang?: Lang })?.lang);
   if (!res.ok) {
     let msg = res.statusText;
     let issue: ModelIssue | null | undefined;
@@ -109,22 +111,15 @@ export async function debriefChat(body: DebriefChatInput, signal?: AbortSignal):
   const o = own();
   return watched("debrief-chat", !!o, body.lang, async () => {
     signal?.throwIfAborted();
-    const reply = o ? await runDebriefChat(body, o.llm, o.fast) : await post<DebriefReply>("/api/debrief-chat", body, signal);
+    const reply = o ? await runDebriefChat(body,taskLLM(o.llm,"debrief-chat",signal,undefined,body.lang),o.fast,signal) : await post<DebriefReply>("/api/debrief-chat", body, signal);
     signal?.throwIfAborted();
     return reply;
   });
 }
 
-export function schedule(body: {
-  profile: Profile;
-  proficiency: Proficiency;
-  history: { scenarioId: string; title: string; skills: string[]; context: string; outcome?: string; stars?: number; at: number }[];
-  lang: Lang;
-  scenarioId?: string;
-  scenario?: Scenario;
-}, signal?: AbortSignal) {
+export function schedule(body:ScheduleInput, signal?:AbortSignal) {
   const o = own();
-  return watched("schedule", !!o, body.lang, () => (o ? runSchedule(body as ScheduleInput, o.llm, o.fast) : post<ScheduleResult>("/api/schedule", body, signal)));
+  return watched("schedule", !!o, body.lang, () => (o ? runSchedule(taskInput(TaskInputSchemas.schedule,body),taskLLM(o.llm,"schedule",signal,undefined,body.lang), o.fast) : post<ScheduleResult>("/api/schedule", body, signal)));
 }
 
 /**
@@ -141,7 +136,7 @@ export async function assessStream(
     signal?.throwIfAborted();
     if (o) {
       let acc = "";
-      return runAssess(body, o.llm, o.smart, (d) => {
+      return runAssess(taskInput(TaskInputSchemas["assess"],body), taskLLM(o.llm,"assess",signal,undefined,body.lang), o.smart, (d) => {
         signal?.throwIfAborted();
         acc += d;
         const p = parsePartialJSON<Report>(acc);
@@ -166,18 +161,18 @@ export async function assessStream(
 
 export function hint(body: TurnInput) {
   const o = own();
-  return watched("hint", !!o, body.lang, () => (o ? runHint(body, o.llm, o.fast) : post<{ hint: string }>("/api/hint", body)));
+  return watched("hint", !!o, body.lang, () => (o ? runHint(taskInput(TaskInputSchemas["hint"],body), taskLLM(o.llm,"hint",undefined,undefined,body.lang), o.fast) : post<{ hint: string }>("/api/hint", body)));
 }
 
 export function rehearse(body: { description: string; lang: Lang; profile?: Partial<Profile> }) {
   const o = own();
-  return watched("rehearse", !!o, body.lang, () => (o ? runRehearse(body, o.llm, o.fast) : post<{ scenario: Scenario }>("/api/rehearse", body)));
+  return watched("rehearse", !!o, body.lang, () => (o ? runRehearse(taskInput(TaskInputSchemas["rehearse"],body), taskLLM(o.llm,"rehearse",undefined,undefined,body.lang), o.fast) : post<{ scenario: Scenario }>("/api/rehearse", body)));
 }
 
 /** The habit across several sessions. Uses the smart model: it reads more and matters more. */
 export function pattern(body: PatternInput) {
   const o = own();
-  return watched("pattern", !!o, body.lang, () => (o ? runPattern(body, o.llm, o.smart) : post<PatternResult>("/api/pattern", body)));
+  return watched("pattern", !!o, body.lang, () => (o ? runPattern(taskInput(TaskInputSchemas["pattern"],body), taskLLM(o.llm,"pattern",undefined,undefined,body.lang), o.smart) : post<PatternResult>("/api/pattern", body)));
 }
 
 const ERR = "\n@@error\n";
@@ -196,7 +191,7 @@ export async function roleplayStream(body: TurnInput, onText: (full: string) => 
   return watched("roleplay", !!o, body.lang, async () => {
     if (o) {
       let acc = "";
-      return runRoleplay(body, o.llm, o.fast, (d) => {
+      return runRoleplay(taskInput(TaskInputSchemas["roleplay"],body), taskLLM(o.llm,"roleplay",signal,undefined,body.lang), o.fast, (d) => {
         acc += d;
         onText(acc);
       });
@@ -208,27 +203,19 @@ export async function roleplayStream(body: TurnInput, onText: (full: string) => 
   });
 }
 
-/** The coach's reply to a reflection answer. */
-export async function reflectStream(body: ReflectInput, onText: (full: string) => void): Promise<string> {
-  const o = own();
-  return watched("reflect", !!o, body.lang, async () => {
-    if (o) {
-      let acc = "";
-      return runReflect(body, o.llm, o.fast, (d) => {
-        acc += d;
-        onText(acc);
-      });
-    }
-    const full = await streamText("/api/reflect", body, onText);
-    const err = full.indexOf(ERR);
-    if (err !== -1) throw streamFailure(full.slice(err + ERR.length).trim());
-    return full;
-  });
+/** Delivers only a verified reflection. JSON transport keeps literal protocol
+ * markers in a learner quotation from being mistaken for stream errors. */
+export async function reflectStream(body:ReflectInput,onText:(full:string)=>void,signal?:AbortSignal):Promise<string>{
+ const o=own();
+ return watched('reflect',!!o,body.lang,async()=>{
+  const reply=o?await runReflect(taskInput(TaskInputSchemas.reflect,body),taskLLM(o.llm,'reflect',signal,undefined,body.lang),o.fast,undefined,signal):(await post<{reply:string}>('/api/reflect',{...body,responseFormat:'json'},signal)).reply;
+  signal?.throwIfAborted();if(typeof reply!=='string')throw new ApiError('Invalid reflection reply',502,'http');onText(reply);return reply;
+ });
 }
 
 /** Stream plain text from an endpoint; calls onText with the accumulated text. */
 export async function streamText(url: string, body: unknown, onText: (full: string) => void, signal?: AbortSignal): Promise<string> {
-  const res = await safeFetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal }, (body as { lang?: Lang })?.lang);
+  const res = await safeFetch(url, { method: "POST", headers: { "Content-Type": "application/json","Accept-Language":(body as {lang?:Lang})?.lang??"zh" }, body: JSON.stringify(body), signal }, (body as { lang?: Lang })?.lang);
   if (!res.ok || !res.body) {
     let msg = res.statusText;
     let issue: ModelIssue | null | undefined;
@@ -331,6 +318,7 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
       const st = typeof j.stance === "number" ? j.stance : NaN;
       out.meta = {
         objectives: Array.isArray(j.objectives) ? j.objectives.map((v) => v === true) : [],
+        objectiveEvidence:j.objectiveEvidence,
         ended: j.ended === true,
         closure: j.closure,
         outcome: j.outcome === "success" || j.outcome === "partial" || j.outcome === "failure" ? j.outcome : null,
@@ -338,6 +326,7 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
         // A model that omits the field, or answers with prose, must not move the meter.
         stance: Number.isFinite(st) ? Math.max(0, Math.min(100, Math.round(st))) : undefined,
         revealed: j.revealed === true,
+        disclosures:Array.isArray(j.disclosures)?j.disclosures.filter(d=>d&&typeof d.characterId==="string"&&typeof d.quote==="string"):[],
       };
     } catch {
       out.meta = null; // still streaming

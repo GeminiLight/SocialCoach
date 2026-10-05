@@ -1,0 +1,8 @@
+PASS quota failure is visible and the original disk answer is intact
+PASS retry persists the edited answer and its matching quoted reply
+PASS backup is previewed before any mutation
+PASS merge preserves the original and adds the imported practice
+PASS ambiguous ID collision does not overwrite either current practice
+PASS a second window cannot overwrite the archive
+PASS closing the original writer allows the second window to resume saving
+PASS cross-window writes use native Web Locks in the tested browser

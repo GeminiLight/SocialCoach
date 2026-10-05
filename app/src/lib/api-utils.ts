@@ -20,24 +20,18 @@ export const asLang = (v: unknown): Lang => (v === "en" ? "en" : "zh");
  * only the model's raw output. Failures mid-stream are appended as
  * `\n@@error\n<{error,status,modelIssue}>` because headers have already been sent.
  */
-export function taskStream<T>(run: (onDelta: (d: string) => void) => Promise<T>, opts: { final?: boolean } = {}) {
-  const enc = new TextEncoder();
-  const body = new ReadableStream<Uint8Array>({
-    async start(controller) {
-      try {
-        const result = await run((d) => controller.enqueue(enc.encode(d)));
-        if (opts.final) controller.enqueue(enc.encode(`\n@@final\n${JSON.stringify(result)}`));
-      } catch (e) {
-        const { status, message, modelIssue } = toHttpError(e);
-        observeServerFailure(modelIssue);
-        console.error("[api]", status, message);
-        controller.enqueue(enc.encode(`\n@@error\n${JSON.stringify({ error: message, status, modelIssue: modelIssue ?? null })}`));
-      } finally {
-        controller.close();
-      }
-    },
-  });
-  return new Response(body, {
-    headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store", "X-Accel-Buffering": "no" },
-  });
+export function taskStream<T>(run:(onDelta:(d:string)=>void,signal:AbortSignal)=>Promise<T>,opts:{final?:boolean;signal?:AbortSignal}={}){
+ const enc=new TextEncoder(),abort=new AbortController();
+ const signal=opts.signal?AbortSignal.any([opts.signal,abort.signal]):abort.signal;
+ let cancelled=false;
+ const body=new ReadableStream<Uint8Array>({
+  async start(controller){
+   const emit=(text:string)=>{if(!cancelled&&!signal.aborted)controller.enqueue(enc.encode(text));};
+   try{const result=await run(emit,signal);if(opts.final)emit(`\n@@final\n${JSON.stringify(result)}`);}
+   catch(error){if(!cancelled&&!signal.aborted){const {status,message,modelIssue}=toHttpError(error);observeServerFailure(modelIssue);emit(`\n@@error\n${JSON.stringify({error:message,status,modelIssue:modelIssue??null})}`);}}
+   finally{if(!cancelled)controller.close();}
+  },
+  cancel(){cancelled=true;abort.abort();},
+ });
+ return new Response(body,{headers:{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store','X-Accel-Buffering':'no'}});
 }

@@ -1,5 +1,6 @@
 'use client';
-import { withModelAccess } from '@/lib/model-access';
+import {watched} from '@/lib/client-api';
+import {taskLLM} from '@/lib/task-runtime';
 import type { ModelIssue } from '@/lib/model-status';
 
 class DinnerRequestError extends Error {
@@ -12,12 +13,12 @@ import { validateReply } from './engine';
 
 export async function directDinner(input: DinnerInput, signal: AbortSignal) {
   const own = byokConfig();
-  return withModelAccess(input.lang, async () => {
+  return watched("dinner",!!own,input.lang, async () => {
   // Credentials travel directly to the chosen provider, just like the main app.
   if (own) {
     const [{runDinner},{makeByokLLM}]=await Promise.all([import('./director'),import('@/lib/llm-client')]);
     signal.throwIfAborted();
-    return runDinner(input, makeByokLLM(own), own.fastModel.trim(), signal);
+    return runDinner(input, taskLLM(makeByokLLM(own),"dinner",signal,undefined,input.lang), own.fastModel.trim(), signal);
   }
   const response = await fetch('/api/dinner/direct', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },

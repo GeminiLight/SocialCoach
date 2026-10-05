@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-10-04 | Current stage: B -->
+<!-- Last verified: 2026-10-06 | Current stage: B -->
 
 # API 参考
 
@@ -176,7 +176,7 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 {"scoringVersion":2,"ratings":[{"skill":"communication","level":2,"evidence":"实际用户原话","reason":"情境中的效果"}],"verdictEvidence":"实际用户原话","stars":2,"outcome":"partial","verdict":"你拿到了时间点，代价是把底线交了出去。","summary":"…",
  "strengths":[…],"weaknesses":[…],
  "alternatives":[…],"knowledge":{"theoryIds":[…],"caseIds":[…],"whyThis":"…"},
- "reflectionQuestions":["…","…"],"nextStep":"…","deltas":{"communication":0.4}}
+ "reflectionQuestions":["…","…"],"nextStep":"…","deltas":{}}
 ```
 
 | 字段 | 类型 | 说明 |
@@ -191,10 +191,10 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 | `weaknesses[].deficit` | `"acquisition" \| "performance"` | **产品定位的核心字段**，不会 vs 会但没做到 |
 | `weaknesses[].evidence` | `string` | 必须是转录里的原话 |
 | `knowledge` | `{theoryIds, caseIds, whyThis}` | 由 `retrieveKnowledge()` 检索，非模型编造 |
-| `deltas` | `Proficiency` | 有界、非负；服务端 clamp 后才发出 |
+| `deltas` | `Proficiency` | API 返回空对象；设备 store 按近期独立证据估计变化，不接受单场模型奖励，可为负 |
 | `sceneNotes` | `{evidence, observationId, note}[]?` | 3D 补充点评，最多三条；引文必须来自该 observationId 对应的同一次用户发言 |
 
-共享任务层会校验技能范围、引文确实来自用户（沉默事件只用于行为条目）、去重评分、过滤无证据评价/改写，并限定有证据的技能增量。引文存在不等于解释必然正确，语义公正性仍需行为评测。NPC 私有设定与预设成功/失败模板不传入复盘。
+共享任务层会校验技能范围、引文确实来自用户（沉默事件只用于行为条目）、去重评分、过滤无证据评价/改写，并由设备端按独立证据更新估计。引文存在不等于解释必然正确，语义公正性仍需行为评测。NPC 私有设定与预设成功/失败模板不传入复盘。
 
 `SceneContext = {kind:"3d", practiceId?:UUID, sceneId, openingId, observations:[{id,turn,learnerQuote,facts:string[]}], actions?:[{id,afterTurn,action}]}`。turn 为从 1 起的用户发言序号；afterTurn 为已完成的用户发言数，0 表示开口前。最多 24 组观察 / 动作；观察须精确匹配同一回合原话，ID 不重复，动作不能在转录之外的未来回合。仅含发言时的地点 / 坐立、明确对象和实际动作，不传镜头、NPC 私有设定、未发草稿或声音表情推断。3D 没有逐目标追踪，不传空数组冒充失败；点评仍核对真实转录。
 
@@ -246,14 +246,14 @@ practiceId 标识设备上的同一局，继续后仍沿用、重练才更换；
 
 **请求：** `{ lang, goals: SkillId[], sessions: PatternSession[] }`
 
-`PatternSession` 是把一场练习压平成「可以据以立论的证据」：`{ title, at, outcome?, verdict?, gaveGroundOn: number[], turns, weaknesses: {behavior, evidence, skill, deficit}[] }`。`gaveGroundOn` 是 `stanceTrail` 里下降的那些回合号——同一个回合号在不同场次反复出现，往往就是同一个习惯。
+`PatternSession` 是把一场练习压平成「可以据以立论的证据」：`{ sessionId, practiceId?, title, at, outcome?, verdict?, gaveGroundOn: number[], turns, weaknesses: {messageId, behavior, evidence, skill, deficit}[] }`。`gaveGroundOn` 是 `stanceTrail` 里下降的那些回合号——立场变化只提供检查线索，不能据此判用户失误或习惯。
 
-**响应：** `{ found, pattern, why, evidence: {title, quote}[], skill?, nextStep }`，`found: false` 时其余字段为空。
+**响应：** `{ found, pattern, why, evidence: {sessionId, messageId, title, quote}[], skill?, nextStep }`，`found: false` 时其余字段为空。
 
 **两条守卫写在代码里而不是 prompt 里**（`src/lib/tasks/pattern.ts`）：
 
-1. 每条 `quote` 必须真的出现在请求发出的 `evidence` 里（标点与空白归一化后比对），编造的引文一律丢弃。
-2. 存活的引文必须横跨**至少两个不同场次**，否则退回 `found: false`。
+1. 每条 quote 按 sessionId/messageId 在指定原话中定位。标点容错只用于定位，返回真实字面片段；反向包含、错绑与跨场兜底不通过。
+2. 存活引文必须横跨至少两个独立 sessionId；同 practiceId 的快照算同一局。同标题不影响成立。
 
 这两条不能只靠 prompt，因为这段话比任何单场复盘都更有说服力，编造出来的破坏也更大。回归测试见 `app/scripts/check-pattern-guard.ts`（5 个断言，含「改了标点的真引文不算编造」这条假警报）。
 
@@ -319,3 +319,14 @@ BYOK 在浏览器运行同一任务，密钥不发送到此路由。可用性复
 `/api/assess` 保留现有流格式，但只有完整结构、引文与独立语义检查通过后才发正文/`@@final`。完整格式最多修复一次；语义最多修订两次、每次复核整个报告，仅合并被指出有问题的顶层字段。修订后尚未用过的格式修复预算可以使用。总计至多一个初稿、一次格式修复、两次语义修订与三次语义检查；拒绝/网络错误不消耗这些修复来盲重试。verdictEvidence 不得引用 NPC；修复提示一次列明错误引文字段与实际原句。常规引号/已知 NPC 标签只有在正文逐字匹配时才可剥去，不能拼接或模糊修复。解释中显式归给用户的引文也核对逐字内容；书名与假设新说法不当成用户原话。语义核对关注已回答/未接受、意图改变、未知权限、未来安排与已完成事件、改写时可用信息及自主权。仍失败返回 502/可重试任务错误，不生成空报告、不触发模型不可用门控、不计熟练度；原转录保留。中断/拒绝/服务商错误保持原类型。需要特别注意：核对模型通过仍不代替人工语义验收。
 
 3D `briefVersion:1` 表示新局公共资料；省略时沿用旧局背景，不补入办公室默认项目。`closure.kind` 与文字版同为 agreement/boundary/deferred/withdrawal；前三种需要当前用户和本轮主回复/插话中的实际引文，单方离场允许缺用户引文。它只提供暂停选择，不能直接评分或强制复盘。档案可附 `continuedAtTurn`，用于记录用户已经选择继续的收尾。预算延长保持完整历史，最大仍为 24。
+
+## 质量修订协议（2026-10-06，本地）
+
+- 所有 LLM 请求按共享 schema 验证，入口逐块读取并限制为 192,000 字节；缺 Content-Length 不绕过。场景/角色/转录不完整返回 400，过长 413，不调用模型。托管与 BYOK 有相同任务 deadline/调用次数和 256,000 输入字节预算；流取消传 SDK。
+- roleplay `meta.objectiveEvidence?:{index,learnerQuote,npcQuote?}[]` 只支持真实原话；无对应证据的 true 变 false，不作为最终判定。`disclosures?:{characterId,quote}[]` 必须来自这个角色本轮台词，才保存消息/回合指针；`revealed` 由存活的证据计算，旧全局标记不再生成行为评价。目标/立场显示为模拟估计，含引文仍不保证解释正确。
+- reflect 请求增加 `learnerCharacterId?`、`messages?`、`responseFormat?:"json"`。新客户端请求 JSON，响应 `{reply:string}`；旧客户端可沿用文本协议。回复必须先引用本次答案的字面片段，理论/策略用检索到的来源；通过验证才交付。编辑重试按本地 reflection revision 绑定，不写回旧答案。
+- pattern 按 `sessionId/messageId` 定位，只在指定证据中查找并恢复原转录片段；不跨场兜底，不接受“原话加编造后缀”。至少两独立局；同标题合法，同一 practiceId 快照不重复。
+- 排程 history 可带 sessionId/practiceId、diagnosis、nextStep、reflections；原话、模型诊断与自述分开解释。场景和适配输出经完整 schema 验证，最多一次有界 schema 修复，不补 NPC/开场占位。
+- dinner 新请求/存档可带 `contentSnapshot`，公开场景与私有方向分开；模拟读取原角色/开场事实，复盘只读公开快照。旧档缺快照兼容，但不承诺历史内容已冻结。
+- track 增加严格 `practice_stage`，仅 `{mode:"3d",practice:uuid,scenario,stage,duration_ms,turns,byok}`；stage 为 loaded/started/first_reply/review/restart。debrief_view 可带 mode/practice，session 接受 UUID。模型调用运维信息不包含对话/设备身份。
+- 生产共享模型必须有共享预算配置，未配时 GET health 的 requireByok 为 true。预算服务不可用返回 503，日预留用尽 429 quota，并发满 429 rate_limit；修复和 SDK 重试容量纳入预留。金额上限需供应商配置，详见 [预算边界](./reviews/review-2026-10-06-repo-quality.md#发布前预算配置)。

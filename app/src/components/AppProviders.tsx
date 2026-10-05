@@ -2,7 +2,7 @@
 import { MotionConfig } from "framer-motion";
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useApp, useLang } from "@/store/useApp";
+import { observeArchiveChanges,useApp, useLang } from "@/store/useApp";
 import { useByok } from "@/lib/byok";
 import { promptUnavailableSharedModel, refreshModelAccess, syncModelConfiguration, useCanUseModel, useModelAccess } from "@/lib/model-access";
 import { ModelSheet } from "./ModelSheet";
@@ -11,6 +11,7 @@ import { Toaster } from "./ui";
 import { trackOpen } from "@/lib/analytics/track";
 import { DinnerAnnouncement } from "./DinnerEntry";
 import { StorageRecovery } from "./StorageRecovery";
+import {SaveNotice} from "./SaveNotice";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const hydrated = useApp((s) => s.hydrated);
@@ -63,6 +64,8 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     else document.documentElement.setAttribute("data-theme", t);
   }, [settings.theme]);
 
+  useEffect(()=>observeArchiveChanges(),[]);
+
   // Once per day, profile or not; the flag separates visitors from learners.
   useEffect(() => {
     if (hydrated && !storageIssue) trackOpen(!!profile);
@@ -77,7 +80,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <MotionConfig reducedMotion="user">
     <div className={dinner ? "sheet sheet-immersive" : "sheet"}>
-      {hydrated ? storageIssue ? <StorageRecovery issue={storageIssue} /> : children : <div className="min-h-dvh" />}
+      {hydrated ? storageIssue ? <><SaveNotice/><StorageRecovery issue={storageIssue} /></> : <><SaveNotice/>{children}</> : <div className="min-h-dvh" />}
       <ModelSheet open={hydrated && !storageIssue && byok.sheetOpen} onClose={byok.closeSheet} />
       {hydrated && !storageIssue && !dinner && <FeedbackWidget />}
       <DinnerAnnouncement enabled={hydrated && !storageIssue && !!profile && path === "/" && canUseModel && !byok.sheetOpen && !unfinished} />

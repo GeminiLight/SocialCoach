@@ -1,5 +1,9 @@
-/* eslint-disable react-hooks/immutability -- Three.js cameras, meshes and the room simulation are mutable resources; React renders their separate snapshots. */
 'use client';
+import {track} from '@/lib/analytics/track';
+import {captureDinnerContent} from "./lib/review";
+import type {DinnerContent} from "./lib/content-snapshot";
+/* eslint-disable react-hooks/immutability -- Three.js cameras, meshes and the room simulation are mutable resources; React renders their separate snapshots. */
+
 import Link from 'next/link';
 import {useApp,useLang} from '@/store/useApp';
 import {useRouter} from 'next/navigation';
@@ -46,13 +50,16 @@ function freshRequest(){return !!requestedScene()&&new URLSearchParams(window.lo
 function initial(lang:Lang){
   const existing=readInitial();if(existing.corrupt||!freshRequest())return existing;
   const id=requestedScene()!,variant=variantFor(id,requestedOpening());const scene=storyScenario(scenarios.find(s=>s.id===id)!,variant);
-  return {save:SaveSchema.parse({version:1,briefVersion:BRIEF_VERSION,scenarioId:id,variantId:variant.id,messages:[opening(scene,lang,variant.id)],started:false,complete:false,lang,draft:''}),corrupt:null};
+  return {save:SaveSchema.parse({version:1,contentSnapshot:captureDinnerContent(id,variant.id,DEFAULT_DINNER_TURNS,BRIEF_VERSION),briefVersion:BRIEF_VERSION,scenarioId:id,variantId:variant.id,messages:[opening(scene,lang,variant.id)],started:false,complete:false,lang,draft:''}),corrupt:null};
 }
 function download(data:unknown,name:string) { const blob=new Blob([typeof data==='string'?data:JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000); }
 
 export default function App() {
   const mainLang=useLang();
   const router=useRouter();
+  const enteredAt=useRef(0);
+  useEffect(()=>{enteredAt.current=Date.now();},[]);
+  const seenStages=useRef(new Set<string>());
   const [openingReview,setOpeningReview]=useState(false);
   const [reviewError,setReviewError]=useState(false);
   const reviewRequest=useRef(false);
@@ -66,7 +73,12 @@ export default function App() {
   const [scenarioId,setScenarioId]=useState<Scenario['id']>(boot.save?.scenarioId??'work');
   const [variantId,setVariantId]=useState<VariantId>(boot.save?.variantId??variantFor(scenarioId).id);
   const variant=variantFor(scenarioId,variantId);
-  const scenario=useMemo(()=>storyScenario(scenarios.find(s=>s.id===scenarioId)!,variantFor(scenarioId,variantId)),[scenarioId,variantId]);
+  const [contentSnapshot,setContentSnapshot]=useState<DinnerContent|undefined>(()=>boot.save?boot.save.contentSnapshot:captureDinnerContent(scenarioId,variantId,DEFAULT_DINNER_TURNS,BRIEF_VERSION));
+  const scenario=useMemo(()=>{
+   const current=storyScenario(scenarios.find(s=>s.id===scenarioId)!,variantFor(scenarioId,variantId));
+   if(!contentSnapshot)return current;
+   return {...current,title:contentSnapshot.direction.title,goal:contentSnapshot.direction.goal,characters:current.characters.map(c=>{const frozen=contentSnapshot.direction.cast.find(x=>x.id===c.id)!;return {...c,name:frozen.name,role:frozen.role,description:frozen.description};})};
+  },[scenarioId,variantId,contentSnapshot]);
   const [maxTurns,setMaxTurns]=useState(boot.save?.maxTurns??DEFAULT_DINNER_TURNS);
   const [targetId,setTargetId]=useState<string|undefined>(boot.save?.targetId);
   const [view,setView]=useState<ViewMode>(boot.save?.view??'first');
@@ -130,7 +142,7 @@ export default function App() {
   const currentSpeakerId=playback.beat?.speakerId??dialogueSpeakerId;
   const speaker=scenario.characters.find(c=>c.id===dialogueSpeakerId)!;
   const evidence=tableEvidence[variant.id];
-  const brief=publicSceneBrief(variant.id,briefVersion);
+  const brief=contentSnapshot?{...publicSceneBrief(variant.id,briefVersion),...contentSnapshot.direction.brief,aims:contentSnapshot.publicScenario.objectives}:publicSceneBrief(variant.id,briefVersion);
   const selected=scenario.characters.find(c=>c.id===selectedId);
   const baseReactions=latestNPC.reactions??opening(scenario,lang,variantId).reactions!;
   const reactions=scenario.characters.map((c,i)=>{const r=baseReactions.find(r=>r.characterId===c.id)!;const beat=actorBeat(dinner,i,scenarioId);return {...r,gesture:beat.raise>.25?'toast' as const:moment&&(dinner.phase!=='settled'||turn===0)&&r.gesture==='toast'?'idle' as const:r.gesture};});
@@ -166,10 +178,10 @@ export default function App() {
   useEffect(()=>{const query=matchMedia('(prefers-reduced-motion: reduce)');const change=()=>setReduced(query.matches);query.addEventListener('change',change);return ()=>query.removeEventListener('change',change);},[]);
   useEffect(()=>{
     if(corrupt){saveScheduler.cancel();return;}
-    const fields=[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,reviewSessionId,practiceId,continuedAtTurn,briefVersion];
+    const fields=[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,reviewSessionId,practiceId,continuedAtTurn,briefVersion,contentSnapshot];
     const urgent=fields.some((value,index)=>value!==durableFields.current[index]);durableFields.current=fields;
-    saveScheduler.request(()=>{const save:Save={version:1,briefVersion,practiceId,reviewSessionId,scenarioId,variantId,maxTurns,continuedAtTurn,targetId,messages,started,complete,lang,draft,view,room:snapshot(world),dinner:snapshotDrama(drama)};try {localStorage.setItem(SAVE_KEY,JSON.stringify(save));setStorageError(false);}catch {setStorageError(true);}},urgent);
-  },[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room,dinner,corrupt,world,drama,saveScheduler,reviewSessionId,practiceId,continuedAtTurn,briefVersion]);
+    saveScheduler.request(()=>{const save:Save={version:1,briefVersion,contentSnapshot,practiceId,reviewSessionId,scenarioId,variantId,maxTurns,continuedAtTurn,targetId,messages,started,complete,lang,draft,view,room:snapshot(world),dinner:snapshotDrama(drama)};try {localStorage.setItem(SAVE_KEY,JSON.stringify(save));setStorageError(false);}catch {setStorageError(true);}},urgent);
+  },[scenarioId,variantId,maxTurns,targetId,messages,started,complete,lang,draft,view,room,dinner,corrupt,world,drama,saveScheduler,reviewSessionId,practiceId,continuedAtTurn,briefVersion,contentSnapshot]);
   useEffect(()=>{const flush=()=>saveScheduler.flush();const hidden=()=>{if(document.hidden)flush();};window.addEventListener('pagehide',flush);document.addEventListener('visibilitychange',hidden);return()=>{flush();saveScheduler.cancel();window.removeEventListener('pagehide',flush);document.removeEventListener('visibilitychange',hidden);};},[saveScheduler]);
   useEffect(()=>()=>{reviewGeneration.current++;controller.current?.abort();void toggleRoom(false);},[]);
   useEffect(()=>{if(started&&seated&&!modal&&!complete&&!busy&&!gazeEnabled&&matchMedia('(pointer: fine)').matches)input.current?.focus({preventScroll:true});},[started,seated,modal,complete,busy,gazeEnabled]);
@@ -186,8 +198,16 @@ export default function App() {
 
   useEffect(()=>{const change=()=>setFullscreen(!!document.fullscreenElement);document.addEventListener('fullscreenchange',change);return ()=>document.removeEventListener('fullscreenchange',change);},[]);
 
+  useEffect(()=>{
+    const stage=sceneReady?(turn?'first_reply':started?'started':'loaded'):undefined;
+    if(!stage)return;
+    const key=practiceId+':'+stage;if(seenStages.current.has(key))return;seenStages.current.add(key);
+    track({name:'practice_stage',ts:Date.now(),mode:'3d',practice:practiceId,scenario:`3d-${variantId}`,stage,duration_ms:Math.min(300000,Date.now()-enteredAt.current),turns:turn,byok:!!useByok.getState().enabled});
+  },[sceneReady,started,turn,practiceId,variantId]);
+
   function reset(id:Scenario['id'],storyId:VariantId=variantFor(id).id,length=DEFAULT_DINNER_TURNS) {
-    setPracticeId(crypto.randomUUID());setBriefVersion(BRIEF_VERSION);
+    track({name:"practice_stage",ts:Date.now(),mode:"3d",practice:practiceId,scenario:`3d-${variantId}`,stage:"restart",duration_ms:0,turns:turn,byok:!!useByok.getState().enabled});enteredAt.current=Date.now();
+    setPracticeId(crypto.randomUUID());setBriefVersion(BRIEF_VERSION);setContentSnapshot(captureDinnerContent(id,storyId,length,BRIEF_VERSION));
     reviewGeneration.current++;reviewRequest.current=false;setOpeningReview(false);speech.cancel();setReviewSessionId(undefined);setReviewError(false);const nextVariant=variantFor(id,storyId);const next=storyScenario(scenarios.find(s=>s.id===id)!,nextVariant);const nextWorld=createWorld(next);
     setWorld(nextWorld);const nextDrama=createDrama();setDrama(nextDrama);setDinner(snapshotDrama(nextDrama));updateRoom(snapshot(nextWorld),nextWorld.event);
     movementInput.current={x:0,z:0};setScenarioId(id);setVariantId(nextVariant.id);setMaxTurns(length);setTargetId(undefined);setNextScene(id);setNextVariant(nextVariant.id);setNextLength(length);
@@ -195,15 +215,15 @@ export default function App() {
   }
   function closeReview(next:'history'|null=null){reviewGeneration.current++;reviewRequest.current=false;setOpeningReview(false);setModal(next);}
   function extendDinner(){if(busy||turn>=maxTurns&&maxTurns>=MAX_DINNER_TURNS)return;if(turn>=maxTurns)setMaxTurns(nextDinnerLimit(maxTurns));setContinuedAtTurn(turn);setComplete(false);setStarted(true);setError(null);closeReview();}
-  function switchLanguage() {speech.cancel();const next=lang==='zh'?'en':'zh';setLang(next);if(!turn)setMessages([opening(scenario,next,variantId)]);}
-  function exportDinner() {download({version:1,briefVersion,product:'SocialCoach',variantId,maxTurns,continuedAtTurn,targetId,scenario:pick(scenario.title,lang),source:scenario.source,mode:'model',lang,messages,view,room,dinner,exportedAt:new Date().toISOString()},`SocialCoach-${scenarioId}-${new Date().toISOString().slice(0,10)}.json`);}
+  function switchLanguage() {speech.cancel();const next=lang==='zh'?'en':'zh';setLang(next);if(!turn)setMessages([contentSnapshot?{...opening(scenario,next,variantId),speakerId:contentSnapshot.publicScenario.opening.characterId,text:pick(contentSnapshot.publicScenario.opening.text,next)}:opening(scenario,next,variantId)]);}
+  function exportDinner() {download({version:1,briefVersion,contentSnapshot,product:'SocialCoach',variantId,maxTurns,continuedAtTurn,targetId,scenario:pick(scenario.title,lang),source:scenario.source,mode:'model',lang,messages,view,room,dinner,exportedAt:new Date().toISOString()},`SocialCoach-${scenarioId}-${new Date().toISOString().slice(0,10)}.json`);}
   async function submit(text=draft) {
     const value=text.trim();if(!model||speech.isActive()||sending.current||!value||complete||turn>=maxTurns||!started||corrupt)return;
     speech.cancel();
     const observedRoom=roomContext(world),observedDinner=dinnerContext(drama),heard=momentDialogue?{speakerId:currentSpeakerId,text:momentDialogue.text,cue:momentDialogue.cue}:undefined;sending.current=true;setBusy(true);setError(null);
     controller.current=new AbortController();const timeout=setTimeout(()=>controller.current?.abort(),35000);
     try {
-      const reply=await directDinner({briefVersion,scenarioId,variantId,maxTurns,targetId,lang,text:value,history:messages,room:observedRoom,dinner:observedDinner,heard},controller.current.signal);
+      const reply=await directDinner({briefVersion,contentSnapshot,scenarioId,variantId,maxTurns,targetId,lang,text:value,history:messages,room:observedRoom,dinner:observedDinner,heard},controller.current.signal);
       setReviewSessionId(undefined);setMessages(previous=>[...previous,{role:'user',text:value,room:observedRoom,dinner:observedDinner,heard,targetId},{role:'npc',speakerId:reply.speakerId,text:reply.text,cue:reply.cue,reactions:reply.reactions,story:reply.story,interjection:reply.interjection,closure:reply.closure,mode:'model'}]);setDraft('');settleForSpeech(drama);setDinner(snapshotDrama(drama));
       if(reply.closure||turn+1>=maxTurns)setComplete(true);
     } catch(e) { if(!controller.current?.signal.aborted||document.contains(shell.current)){setDraft(value);setError(e instanceof Error&&e.name!=='AbortError'?e.message:t('error'));} } finally {clearTimeout(timeout);sending.current=false;setBusy(false);controller.current=null;}
@@ -212,7 +232,7 @@ export default function App() {
     if(!turn||busy||corrupt||reviewRequest.current)return;
     const generation=++reviewGeneration.current;
     speech.cancel();reviewRequest.current=true;setOpeningReview(true);setReviewError(false);
-    const save:Save={version:1,briefVersion,practiceId,scenarioId,variantId,maxTurns,continuedAtTurn,targetId,messages,started,complete,lang,draft,view,room:snapshot(world),dinner:snapshotDrama(drama)};
+    const save:Save={version:1,briefVersion,contentSnapshot,practiceId,scenarioId,variantId,maxTurns,continuedAtTurn,targetId,messages,started,complete,lang,draft,view,room:snapshot(world),dinner:snapshotDrama(drama)};
     try{
       const {buildDinnerReview,matchesDinnerReview}=await import('./lib/review');
       if(generation!==reviewGeneration.current)return;
@@ -224,6 +244,7 @@ export default function App() {
       saveScheduler.request(()=>localStorage.setItem(SAVE_KEY,JSON.stringify({...save,complete:true,reviewSessionId:session.id})),true);
       if(document.fullscreenElement)await document.exitFullscreen().catch(()=>{});
       if(generation!==reviewGeneration.current)return;
+      track({name:"practice_stage",ts:Date.now(),mode:"3d",practice:practiceId,scenario:`3d-${variantId}`,stage:"review",duration_ms:Math.min(300000,Date.now()-enteredAt.current),turns:turn,byok:!!useByok.getState().enabled});
       router.push(`/practice/${session.id}`);
     }catch{if(generation===reviewGeneration.current)setReviewError(true);}finally{if(generation===reviewGeneration.current){reviewRequest.current=false;setOpeningReview(false);}}
   }
@@ -302,7 +323,7 @@ export default function App() {
       {started&&!complete&&turn>0&&<button className="scene-finish-link" disabled={busy} onClick={()=>{setComplete(true);setModal('report');}}>{t('end')}<ArrowRight size={15}/></button>}
     </Modal>}
     {modal==='history'&&<ConversationHistory messages={messages} records={dinner.records} scenario={scenario} lang={lang} onClose={()=>setModal(null)} onExport={exportDinner} onReview={()=>setModal('report')}/>}
-    {(modal==='brief'||modal==='evidence')&&<Modal title={t('tableBrief')} lang={lang} onClose={()=>setModal(null)}><SceneBrief scenario={scenario} variantId={variantId} version={briefVersion} lang={lang}/><div className="modal-actions"><button className="primary-button" onClick={()=>setModal(null)}>{t('backToTable')}<ArrowRight size={17}/></button></div></Modal>}
+    {(modal==='brief'||modal==='evidence')&&<Modal title={t('tableBrief')} lang={lang} onClose={()=>setModal(null)}><SceneBrief scenario={scenario} variantId={variantId} version={briefVersion} snapshot={contentSnapshot?.publicScenario} briefSnapshot={contentSnapshot?.direction.brief} lang={lang}/><div className="modal-actions"><button className="primary-button" onClick={()=>setModal(null)}>{t('backToTable')}<ArrowRight size={17}/></button></div></Modal>}
     {modal==='about'&&<Modal title={t('aboutTitle')} lang={lang} onClose={()=>setModal(null)}><div className="about-content"><p>{t('aboutBody')}</p><p>{scenario.space?pick({zh:'拖动或用方向键环顾，WASD、点击空地或摇杆走动。走向人物会持续关注 TA；自由环顾后可恢复关注发言人。在场的人都能听见，走近不等于私下说。人物保持自己的位置，不会跟着你走。电梯停在本层，可开关门；办公室可走到白板旁、查看资料。',en:'Drag or use arrow keys to look; WASD, the floor or joystick to walk. Walking over keeps attention on that person. Resume speaker attention after free look. Everyone nearby can hear; walking closer is not private. People stay in place. The elevator remains on this floor with working doors; the office has a whiteboard and readable notes.'},lang):t('movementAbout')}</p><p>{t('voiceAbout')}</p><p>{t('voiceOutputAbout')}</p><div className="about-mode"><div><strong>{model?t('live'):pick(M.title,lang)}</strong><p>{t('modelAbout')}</p></div></div><h3>{t('source')}</h3><p>{t('sourceDetail')}</p><ul>{scenarios.map(s=><li key={s.id}>{pick(s.source.title,lang)}</li>)}</ul><p className="privacy-note">{t('privacyAbout')}</p></div></Modal>}
     {modal==='scenes'&&<Modal title={t('scenes')} lang={lang} onClose={()=>setModal(null)}><div className="scene-picker">{scenarios.map(s=><button className={`scene-choice ${nextScene===s.id?'chosen':''}`} aria-pressed={nextScene===s.id} key={s.id} onClick={()=>{setNextScene(s.id);setNextVariant(variantFor(s.id).id);}}><span className="scene-choice-top">{pick(s.category,lang)}<span>{nextScene===s.id&&<Check size={17}/>}</span></span><strong>{pick(s.room,lang)}</strong></button>)}</div><fieldset className="dinner-story-picker"><legend>{t('chooseOpening')}</legend>{variants.filter(v=>v.scene===nextScene).map(v=><button key={v.id} className="dinner-story-choice" aria-pressed={nextVariant===v.id} onClick={()=>setNextVariant(v.id)}><strong>{pick(v.title,lang)}</strong><span>{pick(tableEvidence[v.id].pressure,lang)}</span></button>)}</fieldset><div className="dinner-length" role="group" aria-label={t('practiceLength')}>{[8,12,18].map(n=><button key={n} aria-pressed={nextLength===n} onClick={()=>setNextLength(n)}>{n} {t('turn')}</button>)}</div>{turn>0&&<div className="switch-note"><p>{t('newDinner')}</p><button className="text-button" onClick={exportDinner}><Download size={15}/>{t('download')}</button></div>}<div className="modal-actions">{started&&!complete&&<button className="text-button" onClick={()=>setModal(null)}>{t('continue')}</button>}<button className="primary-button" onClick={()=>reset(nextScene,nextVariant,nextLength)}>{t('newStory')}<ArrowRight size={17}/></button></div></Modal>}
     {modal==='report'&&<DinnerReviewEntry lang={lang} scenario={scenario} messages={messages} complete={complete} hasReview={!!reviewSessionId} opening={openingReview} error={reviewError} onClose={()=>closeReview()} onReview={()=>void openReview()} onHistory={()=>closeReview('history')} onExport={exportDinner} onExtend={complete&&(turn<maxTurns||maxTurns<MAX_DINNER_TURNS)?extendDinner:undefined} onRestart={()=>reset(scenarioId,variantId)}/>}

@@ -1,0 +1,11 @@
+[repo]/app/src/store/useApp.ts:223
+        sessions: s.sessions.slice(0, 200),
+                             ^
+
+TypeError: Cannot read properties of null (reading 'slice')
+    at Object.partialize ([repo]/app/src/store/useApp.ts:223:30)
+    at setItem ([repo]/app/node_modules/.pnpm/zustand@5.0.15_@types+react@19.2.18_react@19.2.8_use-sync-external-store@1.7.0_react@19.2.8_/node_modules/zustand/middleware.js:361:27)
+    at api.setState ([repo]/app/node_modules/.pnpm/zustand@5.0.15_@types+react@19.2.18_react@19.2.8_use-sync-external-store@1.7.0_react@19.2.8_/node_modules/zustand/middleware.js:370:12)
+    at <anonymous> ([repo]/app/src/store/useApp.ts:240:39)
+
+Node.js v24.20.0

@@ -22,7 +22,7 @@ async function main() {
     const full = await runRoleplay({ scenario, learnerCharacterId: "you", lang: "zh", messages: [{ id: "l", role: "learner", text: "我还想确认分工。", ts: 1 }], turnLimit: 20 }, llm, "fixture", (d) => { accumulated += d; });
     assert.equal(accumulated, full, `stream chunks of ${chunkSize} must equal the durable reply`);
     const parsed = parseRoleplay(full, ["cheng", "lead"]);
-    assert.deepEqual(parsed.meta?.objectives, meta.objectives);
+    assert.deepEqual(parsed.meta?.objectives,meta.objectives.map(()=>false),"unsupported simulation claims must be discarded");
     assert.deepEqual(parsed.utterances, utterances);
     checks++;
   }

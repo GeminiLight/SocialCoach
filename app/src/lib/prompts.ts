@@ -153,7 +153,7 @@ Report "stance": an integer 0–100 for how close the NPCs now are to giving the
 - Reaching 100 means they have agreed. If they have not agreed, do not report 100.
 
 THE HIDDEN MOTIVE
-Set "revealed": true only on the turn an NPC actually says their hidden motive out loud in the dialogue, in plain words the learner could repeat back. A hint, a hesitation, or a near-miss is false. Once it has been said, later turns report false again — the flag marks the turn it happened, not the state.
+When a disclosure is spoken, also include meta.disclosures:[{characterId:"<that NPC id>",quote:"<exact contiguous words in that NPC reply>"}]. Without this public quote the app cannot record it. Set "revealed": true only on the turn an NPC actually says their hidden motive out loud in the dialogue, in plain words the learner could repeat back. A hint, a hesitation, or a near-miss is false. Once it has been said, later turns report false again — the flag marks the turn it happened, not the state.
 
 SILENCE
 A learner turn can read "(says nothing for N seconds)". That is a real event, not a formatting slip: the learner froze and left this character waiting. Answer it the way this character actually would when left hanging — prod them, fill the gap, take the silence as an answer, or press harder. Never wait politely, never coach, never mention timers or the app. If being left hanging would cost the learner ground with this character, let "stance" fall. When the turn note says it is the second silence in a row, the character gives up on the conversation: a believable exit line and "ended": true.
@@ -168,6 +168,7 @@ If the learner speaks again after a closing exchange, react to the new content w
 OUTPUT FORMAT: Return ONLY one valid JSON object, without markdown or protocol markers. Put meta FIRST and utterances AFTER. Both are mandatory on EVERY turn; do not copy the omission of metadata in stored dialogue history.
 Example shape (replace values with this turn's actual state and dialogue):
 {"meta":{"objectives":[${s.objectives.map(() => "false").join(",")}],"ended":false,"outcome":null,"stance":20,"revealed":false,"note":""},"utterances":[{"characterId":"${npcs[0]?.id}","text":"<spoken reply>"}]}
+For each true objective, include short evidence quotes (each at most 80 characters) in meta.objectiveEvidence:[{index:<0-based objective index>,learnerQuote:"<exact contiguous learner words from history>",npcQuote:"<optional exact NPC words supporting acceptance>"}]. The app treats these as simulation estimates; unsupported flags are discarded and the debrief independently checks meaning. Do not use a refusal as NPC agreement.
 meta.objectives: exactly ${s.objectives.length} booleans in original order. meta.stance: integer 0–100. meta.note: at most 12 words, a neutral stage direction in second person, never a coaching judgment. meta.outcome: original goal attainment or null.
 Only when proposing a grounded closing exchange, add meta.closure: {kind, learnerQuote?, npcQuote} with exact quotations as described above. Never put closure in a spoken line.
 utterances: one entry per speaking character, at most two entries total; combine a character's sentences in ONE text string rather than repeating their characterId. characterId only from ${npcs.map((c) => c.id).join(", ")}, text is actual in-character speech. No extra narrator or invented speaker. Escape JSON strings correctly; use curly quotation marks inside dialogue.
@@ -230,7 +231,7 @@ FACT AND INTENT CHECK BEFORE WRITING:
 4. Knowledge: choose theories (for acquisition deficits) and cases (for performance deficits) from the retrieved list; in "whyThis" explain in one or two sentences why these fit this transcript, referring to them by their TITLES in quotes (never by id).
 5. Socratic reflection: up to 2 questions about a genuinely unresolved decision or a clearly labelled future situation. Reference the actual moment and respect answers already given. Do not reopen a settled choice, request a repeated answer, or presume an omitted action. If the learner chose “ask me before relaying”, do not ask them to choose again between automatic relaying and asking first. You may instead ask how they would handle a later misquotation, while keeping that consent rule intact. Omit a question when it would manufacture a gap. No yes/no questions.
 6. Next step: one concrete thing to try in real life this week, ≤ 25 words.
-7. Proficiency deltas: for each TARGET skill practiced in this scenario, estimate expected change in [0, 0.5]; unrelated skills get 0 or are omitted; skills the scenario only touched indirectly cap at 0.2. An unmet goal can still earn positive deltas if a skill was demonstrated. Every delta requires a verified skill rating with a learner quote. Never negative.
+7. Return deltas:{}; the application estimates recent performance from multiple independent, quote-verified practices. A single report cannot estimate improvement over an unseen baseline.
 
 VERDICT: one line, at most 20 words, grounded in a learner quote placed in verdictEvidence. Separate the interaction's result from the quality of the learner's choices. Name a tradeoff only if supported; if nothing was secured, do not invent a concession or blame the learner for the other's refusal. Start summary by quoting the learner, then explain what that supports. Cite the moment before making an evaluation.
 
@@ -334,7 +335,7 @@ Find AT MOST ONE thing they do repeatedly — a move, an avoidance, a moment the
 HARD RULES
 - The pattern must appear in AT LEAST TWO DIFFERENT sessions. One vivid instance is not a pattern.
 - Every quote in "evidence" must be copied EXACTLY from the evidence given below, character for character. Never write a quote that is not in the input. Never paraphrase into quotation marks.
-- Quotes must come from at least two different session titles.
+- Quotes must come from at least two independent sessionId values. Titles may be identical. Every evidence entry must copy sessionId and messageId from the supplied source, never infer an identity from a title.
 - If nothing genuinely recurs, return {"found": false} with empty fields. Saying "not yet" is correct and useful; manufacturing a pattern is not.
 - Do not count something as recurring just because the same skill id appears twice. The behaviour has to be the same behaviour.
 
@@ -353,7 +354,7 @@ Return ONLY JSON:
   "found": true|false,
   "pattern": "<≤20 words, the recurring move, second person>",
   "why": "<2–3 sentences: what it costs them, grounded in the quotes>",
-  "evidence": [{"title":"<session title, exactly as given>","quote":"<exact quote from that session>"}],
+  "evidence": [{"sessionId":"<supplied sessionId>","messageId":"<supplied messageId>","title":"<session title>","quote":"<exact quote from that session>"}],
   "skill": "<skill id most implicated, or omit>",
   "nextStep": "<≤20 words, one concrete thing to try next time>"
 }`;

@@ -33,11 +33,14 @@ export function buildSession(scenario: Scenario, origin: Session["origin"], lang
 }
 
 export function historyFor(sessions: Session[], lang: Lang) {
-  return sessions
-    .filter((s) => s.status === "assessed" || s.status === "ended")
+  return [...new Map([...sessions].reverse().filter(s=>s.status==="assessed"||s.status==="ended").map(s=>[s.sceneContext?.practiceId??s.id,s])).values()].reverse()
     .slice(0, 12)
     .reverse()
     .map((s) => ({
+      sessionId:s.id,practiceId:s.sceneContext?.practiceId,
+      diagnosis:s.report?.scoringVersion===2?(s.report.ratings??[]).filter(r=>s.messages.some(m=>m.role==="learner"&&m.text.includes(r.evidence))).map(r=>({skill:r.skill,level:r.level,evidence:r.evidence,deficit:s.report?.weaknesses.find(w=>w.skill===r.skill&&s.messages.some(m=>m.role==="learner"&&m.text.includes(w.evidence)))?.deficit})):undefined,
+      nextStep:s.report?.nextStep?.slice(0,2000),
+      reflections:(s.reflections??[]).slice(-3).map(r=>({question:r.question.slice(0,2000),answer:r.answer.slice(0,2000)})),
       scenarioId: s.scenario.id,
       title: s.scenario.title[lang],
       skills: s.scenario.skills,

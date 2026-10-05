@@ -46,12 +46,12 @@ async function main() {
   const prepare = () => useApp.setState({ sessions: [session], proficiency: { communication: 2 }, practiceDays: [], profile: null });
   prepare();
   useApp.getState().applyReport(session.id, report);
-  check("first report applies its single bounded update", () => {
-    assert.equal(useApp.getState().proficiency.communication, 2.2);
+  check("a report without quoted ratings cannot apply a model-proposed reward", () => {
+    assert.equal(useApp.getState().proficiency.communication, 2);
     assert.equal(useApp.getState().sessions[0].status, "assessed");
   });
   useApp.getState().applyReport(session.id, report);
-  check("the same report cannot raise proficiency twice", () => assert.equal(useApp.getState().proficiency.communication, 2.2));
+  check("the same unobserved report cannot alter proficiency", () => assert.equal(useApp.getState().proficiency.communication, 2));
   prepare();
   useApp.getState().applyReport("missing-session", report);
   check("a late report for a missing session cannot alter practice history", () => {

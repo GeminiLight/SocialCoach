@@ -2,7 +2,8 @@ import type {Report,Session} from './types';
 import type {SkillId} from '@/data/taxonomy';
 import {hasQuote} from './practice-policy';
 
-/** Continued 3D snapshots share one practice, so earlier evidence cannot earn progress twice. */
+/** Historical reward compatibility helper. New ability estimates use proficiency.ts
+ * and count one observation per practice; this no longer updates the live store. */
 export function creditPracticeReport(session:Session,report:Report,sessions:Session[]):Report {
   const practiceId=session.sceneContext?.practiceId;
   if(!practiceId)return report;
