@@ -1,0 +1,41 @@
+[
+  {
+    "path": "/",
+    "http": 200
+  },
+  {
+    "path": "/3d",
+    "http": 200
+  },
+  {
+    "path": "/settings",
+    "http": 200
+  },
+  {
+    "static_resources": 22,
+    "passed": true
+  },
+  {
+    "path": "/api/health",
+    "http": 200,
+    "serverKey": true,
+    "requireByok": false,
+    "state": "available"
+  },
+  {
+    "path": "/api/roleplay",
+    "http": 200,
+    "seconds": 4.42,
+    "passed": true,
+    "response_chars": 224,
+    "synthetic": true
+  },
+  {
+    "path": "/api/dinner/direct",
+    "http": 200,
+    "seconds": 5.11,
+    "passed": true,
+    "response_chars": 402,
+    "synthetic": true
+  }
+]

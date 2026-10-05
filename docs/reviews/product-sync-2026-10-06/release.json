@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-06",
+  "github": {
+    "commit": "d92e586a934782abf340890043b84dc64ebc03df",
+    "pr": "https://github.com/GeminiLight/SocialCoach/pull/10",
+    "merged": true,
+    "quality_workflow": 37360002049,
+    "quality_result": "success"
+  },
+  "vercel": {
+    "deployment": "dpl_7QtdChVwdZXYaNA9knryHzvC1GhG",
+    "state": "READY",
+    "production": true,
+    "aliases": [
+      "socialcoach-ai.vercel.app",
+      "socialcoach-app.vercel.app"
+    ]
+  },
+  "modelscope": {
+    "commit": "a0a6381c879f1c8ee3bad3ef61026adca491a90f",
+    "image": "363578-a0a6381c-2026-10-06-03-02-13",
+    "state": "Running",
+    "hardware": "platform/2v-cpu-16g-mem",
+    "visibility": "public",
+    "matched_files": 371,
+    "default_model_available": true
+  },
+  "budget": {
+    "plan": "Free",
+    "auto_upgrade": false,
+    "same_service_on_both_platforms": true,
+    "real_rest_tests": "passed",
+    "dialogue_storage": false
+  },
+  "academic_material": "excluded",
+  "verification_limitations": [
+    "ModelScope checks used the authenticated dedicated backend; public iframe and real mobile hardware were not re-tested.",
+    "Vercel acceptance used platform readiness and aliases; no deployed URL was fetched.",
+    "Provider monetary cap and broad model semantic effectiveness were not verified."
+  ],
+  "synthetic_generation_requests": 3,
+  "probe_correction": "The first roleplay check used a literal placeholder instead of the actual NPC marker; the check was corrected without changing application code."
+}
