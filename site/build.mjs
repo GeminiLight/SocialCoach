@@ -876,6 +876,7 @@ const researchHtml = (p) => {
 <a class="btn btn-ghost btn-sm" href="${site.arxivUrl}">${icon("external", 16)}${esc(pick(research.links.arxiv, l))}</a>
 <a class="btn btn-ghost btn-sm" href="${p.rel}${site.localPdf}">${icon("file", 16)}${esc(pick(research.links.pdf, l))}</a>
 <a class="btn btn-ghost btn-sm" href="${site.repoUrl}">${icon("code", 16)}${esc(pick(research.links.code, l))}</a>
+<a class="btn btn-ghost btn-sm" href="${site.supplementaryUrl}">${icon("external", 16)}${esc(pick(research.links.supplementary, l))}</a>
 <a class="btn btn-ghost btn-sm" href="#bibtex">${icon("quote", 16)}${esc(pick(research.links.bibtex, l))}</a>
 </div>
 </div>
@@ -963,8 +964,8 @@ for (const p of guidePages) {
 for (const f of readdirSync(join(here, "assets"))) copyFileSync(join(here, "assets", f), join(out, "assets", f));
 
 const pdfSrc = join(root, "docs", "social-coach-paper.pdf");
-if (existsSync(pdfSrc)) copyFileSync(pdfSrc, join(out, site.localPdf));
-else console.warn("warn: docs/social-coach-paper.pdf not found; citation_pdf_url will 404");
+if (!existsSync(pdfSrc)) throw new Error("Missing docs/social-coach-paper.pdf; cannot publish the paper sitemap entry");
+copyFileSync(pdfSrc, join(out, site.localPdf));
 
 writeFileSync(join(out, ".nojekyll"), "");
 
@@ -982,6 +983,9 @@ ${allPages.map((q) => {
     const alt = [`    <xhtml:link rel="alternate" hreflang="zh-CN" href="${pair.zh}"/>`, `    <xhtml:link rel="alternate" hreflang="en" href="${pair.en}"/>`, `    <xhtml:link rel="alternate" hreflang="x-default" href="${pair.zh}"/>`].join("\n");
     return `  <url>\n    <loc>${q.url}</loc>\n${alt}\n  </url>`;
   }).join("\n")}
+  <url>
+    <loc>${SITE_URL}/${site.localPdf}</loc>
+  </url>
 </urlset>
 `,
 );
@@ -1017,6 +1021,8 @@ ${guides.map((g) => `- ${pick(g.title, "en")}: ${guideUrl(g.id, "en")} (中文: 
 ## Research
 
 - Paper: ${research.paperTitle}. arXiv:${site.arxivId} (cs.HC, 2026). ${site.arxivUrl}
+- Paper PDF: ${SITE_URL}/${site.localPdf}
+- Supplementary materials: ${site.supplementaryUrl}
 - The paper studies the research system and an internal research platform; the product is its productised version with a smaller, source-checked corpus (${SCENARIOS.length} scenarios, 42 strategies, 30 cases), distinct from the paper's 43,170-entry research corpus.
 `,
 );
