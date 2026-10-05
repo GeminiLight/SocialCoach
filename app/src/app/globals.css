@@ -714,6 +714,8 @@ aside.lg\:border-dashed { border-left: 0; }
   --dinner-font-display: 'Noto Serif SC', 'Songti SC', 'STSong', Georgia, serif;
   --dinner-radius: 12px;
   --dinner-radius-sm: 6px;
+  --dinner-dialogue-width: 760px;
+  --dinner-recipient-width: 192px;
   --dinner-ease-out: cubic-bezier(.16,1,.3,1);
   --dinner-scene-wall: oklch(.86 .023 83);
   --dinner-scene-wallInset: oklch(.73 .027 78);
@@ -829,7 +831,7 @@ aside.lg\:border-dashed { border-left: 0; }
   --dinner-ink:var(--dinner-hud-ink);--dinner-ink-secondary:var(--dinner-hud-secondary);--dinner-ink-muted:var(--dinner-hud-muted);
   --dinner-line:var(--dinner-hud-line);--dinner-line-soft:var(--dinner-hud-line);--dinner-scene-overlay:var(--dinner-hud-raised);
   --dinner-accent:var(--dinner-hud-accent);--dinner-accent-ink:var(--dinner-hud-raised);--dinner-green:var(--dinner-hud-green);--dinner-error:var(--dinner-hud-error);
-  position:absolute;bottom:17px;left:50%;transform:translateX(-50%);width:min(700px,calc(100% - 48px));z-index:25;
+  position:absolute;bottom:17px;left:50%;transform:translateX(-50%);width:min(var(--dinner-dialogue-width),calc(100% - 48px));z-index:25;
   padding:10px 18px 2px;background:var(--dinner-hud-surface);color:var(--dinner-ink);border:1px solid var(--dinner-hud-line);border-radius:var(--dinner-radius);box-shadow:0 4px 20px var(--dinner-hud-shadow);
 }
 .dinner-experience .dialogue { text-align:center; animation:dinner-rise 280ms var(--dinner-ease-out); max-height:220px; overflow-y:auto; padding:8px 12px 0; scrollbar-width:thin; }
@@ -1245,6 +1247,17 @@ aside.lg\:border-dashed { border-left: 0; }
   .dinner-experience .conversation {width:min(650px,calc(100% - 48px));bottom:3px;}
   .dinner-experience .exploration {bottom:20px;}
   .dinner-experience .movement-dock {max-height:calc(100dvh - 120px);}
+}
+
+@media (min-width:601px) {
+  /* Keep the people and table visible: addressee and draft share one row. */
+  .dinner-experience .is-seated .reply-composer {display:grid;grid-template-columns:var(--dinner-recipient-width) minmax(0,1fr);align-items:start;}
+  .dinner-experience .is-seated .dinner-recipient {margin:0 0 0 12px;min-height:60px;gap:6px;}
+  .dinner-experience .is-seated .recipient-select {min-width:0;}
+  .dinner-experience .is-seated .recipient-select select {width:100%;max-width:110px;}
+  .dinner-experience .is-seated .reply-composer .input-wrap {gap:8px;padding:8px 8px 8px 0;}
+  .dinner-experience .is-seated textarea {min-height:44px;height:44px;padding:10px 0;}
+  .dinner-experience .is-seated .reply-form {padding-top:10px;}
 }
 
 /* Public scene brief: one source for identity, facts, people and movement. */

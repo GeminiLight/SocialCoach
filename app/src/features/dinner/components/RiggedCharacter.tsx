@@ -64,10 +64,14 @@ export function RiggedCharacter({character,actor,world,reaction,active,onSelect,
     if(!player&&actor.seated&&presenceState.tableAttention>0){const a=presenceState.tableAttention;target.x=MathUtils.lerp(target.x,actor.x+Math.sin(actor.heading),a);target.z=MathUtils.lerp(target.z,actor.z+Math.cos(actor.heading),a);target.eye=MathUtils.lerp(target.eye,1.75,a);}
     const gaze=gazePose(actor,target,root.current.rotation.y);
     const turn=(bone:Bone|undefined,x:number,y:number,z=0)=>presentationTurn(bone,rig.presentation,rotations,x,y,z);
-    turn(rig.bones.spine_03,0,gaze.torso*.6);turn(rig.bones.neck_01,0,gaze.head*.15);
+    // Respiration belongs to the connected rig, never the actor's world root.
+    // Explicit gestures and walking keep their authored silhouette.
+    const breathing=actor.moving?0:presenceState.breath;
+    turn(rig.bones.spine_02,breathing*1.7,0);
+    turn(rig.bones.spine_03,-breathing*.7,gaze.torso*.6);turn(rig.bones.neck_01,0,gaze.head*.15);
     turn(rig.bones.head,gaze.pitch+(reaction?.gesture==='nod'?presenceState.emphasis*.04:0),gaze.head*.85);
     if(actor.moving&&!reduced){const stride=Math.sin(timing.time*8)*.26;turn(rig.bones.thigh_l,stride,0);turn(rig.bones.thigh_r,-stride,0);turn(rig.bones.upperarm_l,-stride*.5,0);turn(rig.bones.upperarm_r,stride*.5,0);}
-    for(const face of rig.faces){const dict=face.morphTargetDictionary!,values=face.morphTargetInfluences!;for(const [name,value] of Object.entries({blink:1-presenceState.blink,jawOpen:presenceState.speech*.24,browInnerUp:presenceState.emphasis*.14,smile:reaction?.emotion==='supportive'?.10:0})){if(dict[name]!==undefined)values[dict[name]]=value;}}
+    for(const face of rig.faces){const dict=face.morphTargetDictionary!,values=face.morphTargetInfluences!;for(const [name,value] of Object.entries({blink:1-presenceState.blink,jawOpen:presenceState.speech*.24,browInnerUp:presenceState.emphasis*.14,smile:reaction?.emotion==='supportive'?.10:0})){if(dict[name]!==undefined)values[dict[name]]=name==='smile'?MathUtils.lerp(values[dict[name]],value,smoothing):value;}}
     root.current.updateMatrixWorld(true);
     if(held.current&&rig.bones.hand_r){
       rig.bones.hand_r.getWorldQuaternion(rotations.parent);rotations.target.setFromEuler(rotations.euler.set(beat.sip*.14,root.current.rotation.y,0));
@@ -80,7 +84,7 @@ export function RiggedCharacter({character,actor,world,reaction,active,onSelect,
   return <group ref={root} name={`dinner-actor-${actor.id}`} position={[actor.x,0,actor.z]} rotation={[0,actor.heading,0]} onClick={event=>{event.stopPropagation();if(event.delta<5&&!player)onSelect();}}>
     <primitive object={rig.scene} dispose={null}/>
     {rig.bones.hand_r&&createPortal(<group ref={held} scale={1/metric.scale} position={[0,.065,0]}>
-      <group ref={cup} visible={false} position={wine?[0,-.12,.075]:[0,.01,.095]}><AssetCup palette={p} wine={wine}/></group>
+      <group ref={cup} visible={false} position={wine?[.05,-.06,-.02]:[-.09,.04,-.02]}><AssetCup palette={p} wine={wine}/></group>
       <group ref={phone} visible={false} position={[0,.16,.07]}><Phone p={p} kind={scenario.id==='school'?'photo':scenario.id==='family'?'intro':'calendar'} lang={lang}/></group>
     </group>,rig.bones.hand_r)}
   </group>;

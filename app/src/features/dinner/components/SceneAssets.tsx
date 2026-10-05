@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { useFrame, type ThreeEvent } from '@react-three/fiber';
+import { useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { Group, Mesh, MeshStandardMaterial } from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
@@ -8,10 +8,26 @@ import { l, type Lang, type Scenario } from '../lib/content';
 import { operateLift, walkPlayer, type World } from '../lib/room';
 import { Sign } from './PlaceEnvironment';
 import { RoomWindows, OfficeScreens } from './RoomSurfaces';
+import { sceneSurface } from '../lib/sceneSurface';
 
 useGLTF.setDecoderPath('/3d/draco/');
 export const assetUrl = (name:string) => `/3d/v2/${name}.glb`;
-export function useSceneAsset(name:string) { return useGLTF(assetUrl(name),true); }
+export const preloadPlayerAsset = () => useGLTF.preload(assetUrl('player'),true);
+export function useSceneAsset(name:string) {
+  const asset=useGLTF(assetUrl(name),true),{gl,invalidate}=useThree();
+  useEffect(()=>{
+    // Filtering only: keep the cached photograph and GPU allocation shared.
+    const anisotropy=Math.min(8,gl.capabilities.getMaxAnisotropy());
+    asset.scene.traverse(object=>{
+      if(!(object instanceof Mesh))return;
+      for(const material of Array.isArray(object.material)?object.material:[object.material]) {
+        const surface=material as MeshStandardMaterial;
+        for(const texture of [surface.map,surface.normalMap,surface.roughnessMap])if(texture&&texture.anisotropy!==anisotropy){texture.anisotropy=anisotropy;texture.needsUpdate=true;}
+      }
+    });invalidate();
+  },[asset.scene,gl,invalidate]);
+  return asset;
+}
 
 /** Geometry/textures stay in the loader cache; transforms and materials belong
  * to each instance. Never dispose a cached texture when switching a scene. */
@@ -19,7 +35,9 @@ export function instantiateAsset(source:Group,p:Palette) {
   const scene=clone(source),materials=new Set<MeshStandardMaterial>();
   scene.traverse(object=>{
     if(!(object instanceof Mesh))return;
-    object.castShadow=object.name!=='Ceiling'&&object.name!=='Floor';object.receiveShadow=true;
+    const surface=sceneSurface(object),floorDetail=(Array.isArray(object.material)?object.material:[object.material]).some(material=>/^sc:floorJoint(?:\.\d+)?$/.test(material.name));
+    object.userData.walkable=surface==='Floor'||floorDetail;
+    object.castShadow=surface!=='Ceiling'&&!object.userData.walkable;object.receiveShadow=true;
     // Skinned bounds change when seated or raising a cup.
     if('isSkinnedMesh' in object)object.frustumCulled=false;
     object.material=(Array.isArray(object.material)?object.material:[object.material]).map(material=>{
@@ -67,8 +85,8 @@ export function AssetRoom({p,world,scenario,lang,paused,onEvidence,surfaces}:{p:
   useFrame(()=>{if(kind==='elevator')doors.forEach((door,i)=>{if(door)door.position.x=(i===0?-1:1)*(.875+(world.lift?.openness??1)*1.72);});});
   const click=(event:ThreeEvent<MouseEvent>)=>{
     event.stopPropagation();if(paused||event.delta>=5)return;
-    const name=event.object.name;
-    if(name==='Floor')walkPlayer(world,{x:event.point.x,z:event.point.z});
+    const name=sceneSurface(event.object);
+    if(name==='Floor'||event.object.userData.walkable)walkPlayer(world,{x:event.point.x,z:event.point.z});
     else if(name.startsWith('LiftOpen'))operateLift(world,'open');
     else if(name.startsWith('LiftClosed'))operateLift(world,'closed');
     else if(name.startsWith('EvidenceDocument')||name==='OfficeBoard')onEvidence();

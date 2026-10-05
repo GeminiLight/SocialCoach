@@ -6,6 +6,13 @@ export const wrapAngle=(value:number)=>Math.atan2(Math.sin(value),Math.cos(value
 const clamp=(value:number,min:number,max:number)=>Math.max(min,Math.min(max,value));
 export const eyeHeight=(actor:Actor)=>castEyeHeight(actor.id,actor.seated);
 export const playerEyeHeight=(actor:Actor)=>castEyeHeight('player',actor.seated);
+/** Aim at the usable scene, above the dialogue, instead of the full canvas.
+ * Projection shifts the frame without moving the player or rotating their gaze. */
+export function dialogueFraming(width:number,height:number,hudHeight:number) {
+  const header=height<=560?60:width<=600?64:82,bottom=height<=560?3:width<=600?8:17;
+  const sceneBottom=Math.max(header+120,height-hudHeight-bottom);
+  return clamp(height*.5-(header+sceneBottom)*.5,0,height*.28);
+}
 export function attentionSubject(world:World,speakerId=world.speakerId):Actor|undefined {
   if(world.attentionMode==='free')return;
   return world.npcs.find(n=>n.id===(world.attentionMode==='person'?world.lookTarget:speakerId));
@@ -53,7 +60,7 @@ export function cameraPose(world:World,view:ViewMode,aspect:number,lookOffset=0)
   const p=world.player,subject=attentionSubject(world),yaw=world.viewYaw+(view==='first'?lookOffset:0),pitch=world.viewPitch;
   const forward={x:Math.sin(yaw),z:Math.cos(yaw)},right={x:-Math.cos(yaw),z:Math.sin(yaw)};
   const portrait=aspect<=1.25;
-  const fov=view==='first'?(portrait?Math.min(p.seated?96:92,2*Math.atan(Math.tan(Math.PI*33/180)/aspect)*180/Math.PI):world.layout.kind==='dinner'?55:68):(portrait?2*Math.atan(Math.tan(Math.PI*19/180)/aspect)*180/Math.PI:50);
+  const fov=view==='first'?(portrait?Math.min(p.seated?75:80,2*Math.atan(Math.tan(Math.PI*33/180)/aspect)*180/Math.PI):world.layout.kind==='dinner'?48:68):(portrait?2*Math.atan(Math.tan(Math.PI*19/180)/aspect)*180/Math.PI:48);
   if(view==='first') {
     const eye=playerEyeHeight(p);
     return {position:[p.x,eye,p.z],target:[p.x+forward.x*6,eye+Math.tan(pitch)*6,p.z+forward.z*6],fov};

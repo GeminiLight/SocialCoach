@@ -7,11 +7,11 @@ import { emotions, gestures, pick, ui, type Character, type Lang, type Scenario 
 import { getPalette } from '../lib/palette';
 import { snapshot, roomUiKey, stepWorld, focusConversation, freeLook, type World, type ViewMode, type RoomSave, type RoomEvent, type Point } from '../lib/room';
 import { l } from '../lib/content';
-import { attentionSubject, eyeHeight, cameraPose, constrainCamera, trackAttention, wrapAngle } from '../lib/attention';
+import { attentionSubject, eyeHeight, cameraPose, constrainCamera, dialogueFraming, trackAttention, wrapAngle } from '../lib/attention';
 import {actorActionLabel,type Drama} from '../lib/drama';
 import {TableCups,ScenarioObjects,PlayerHands} from './DinnerProps';
 import {RiggedCharacter} from './RiggedCharacter';
-import {AssetRoom,useSceneAsset} from './SceneAssets';
+import {AssetRoom,useSceneAsset,preloadPlayerAsset} from './SceneAssets';
 import {RenderBudget} from './RenderBudget';
 import {RoomLighting} from './RoomLighting';
 import {useDinnerSurfaces} from '../lib/surfaces';
@@ -124,7 +124,9 @@ function CameraRig({props,heading,lookOffset}:{props:SceneProps;heading:RefObjec
     if(Math.abs(lookOffset.current)<.0001)lookOffset.current=0;
     const pose=cameraPose(props.world,props.view,size.width/size.height,lookOffset.current);
     const perspective=camera as PerspectiveCamera;
-    perspective.fov=MathUtils.lerp(perspective.fov,pose.fov,props.reduced?1:1-Math.exp(-10*Math.min(dt,.05)));const offset=props.started?Math.min(size.height*(props.scenario.space?.22:.15),Math.max(0,props.hudHeight-190)*.45+(props.scenario.space&&props.view==='first'?(size.width>600?40:20):0)):0;framingOffset.current=MathUtils.lerp(framingOffset.current,offset,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));sideOffset.current=MathUtils.lerp(sideOffset.current,size.width/size.height<=1.25&&!props.world.player.seated?-56:0,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));perspective.setViewOffset(size.width,size.height,sideOffset.current,framingOffset.current,size.width,size.height);perspective.updateProjectionMatrix();
+    perspective.fov=MathUtils.lerp(perspective.fov,pose.fov,props.reduced?1:1-Math.exp(-10*Math.min(dt,.05)));
+    const offset=dialogueFraming(size.width,size.height,props.hudHeight);
+    framingOffset.current=MathUtils.lerp(framingOffset.current,offset,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));sideOffset.current=MathUtils.lerp(sideOffset.current,size.width/size.height<=1.25&&!props.world.player.seated?-56:0,props.reduced?1:1-Math.exp(-8*Math.min(dt,.05)));perspective.setViewOffset(size.width,size.height,sideOffset.current,framingOffset.current,size.width,size.height);perspective.updateProjectionMatrix();
     position.set(pose.position[0],pose.position[1],pose.position[2]);target.set(pose.target[0],pose.target[1],pose.target[2]);
     camera.position.lerp(position,props.reduced?1:1-Math.exp(-14*Math.min(dt,.05)));if(props.view==='third')camera.position.fromArray(constrainCamera(props.world,camera.position.toArray()));camera.lookAt(target);
     const aimX=.5-sideOffset.current/size.width,aimY=.5-framingOffset.current/size.height;
@@ -156,7 +158,16 @@ function AssetReady({scenario,view,onReady}:{scenario:Scenario;view:ViewMode;onR
   useSceneAsset(scenario.characters[2].id);
   useSceneAsset('props');
   useSceneAsset(view==='third'?'player':'hand-grip');
-  useEffect(()=>{onReady(true);return()=>onReady(false);},[onReady]);
+  useEffect(()=>{
+    onReady(true);
+    // Decode only the shared player after the room is usable; never preload
+    // every cast. Respect an explicitly data-saving browser connection.
+    const connection=(navigator as Navigator&{connection?:{saveData?:boolean}}).connection;
+    if(connection?.saveData)return()=>onReady(false);
+    const prime=()=>preloadPlayerAsset();
+    if(window.requestIdleCallback){const id=window.requestIdleCallback(prime,{timeout:1200});return()=>{window.cancelIdleCallback(id);onReady(false);};}
+    const id=window.setTimeout(prime,150);return()=>{window.clearTimeout(id);onReady(false);};
+  },[onReady]);
   return null;
 }
 
@@ -191,7 +202,7 @@ export default function DinnerScene(props: SceneProps) {
 
     {props.scenario.characters.map((c,i)=><RiggedCharacter key={c.id} character={c} actor={props.world.npcs[i]} world={props.world} reaction={props.reactions.find(r=>r.characterId===c.id)} active={props.speaking&&props.speakerId===c.id} onSelect={()=>props.onSelect(c.id)} p={p} reduced={props.reduced} drama={props.drama} index={i} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} />)}
     {props.view==='third'&&<RiggedCharacter character={playerCharacter} actor={props.world.player} world={props.world} active={false} onSelect={()=>{}} p={p} reduced={props.reduced} drama={props.drama} index={3} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} lookOffset={lookOffset} player/>}
-    {props.view==='first'&&<PlayerHands p={p} drama={props.drama} lang={props.lang} scenario={props.scenario} world={props.world} hudHeight={props.hudHeight}/>}
+    {props.view==='first'&&<PlayerHands p={p} drama={props.drama} lang={props.lang} scenario={props.scenario} hudHeight={props.hudHeight}/>}
     <ContactShadows position={[0,.02,0]} opacity={.24} scale={14} blur={2.5} far={4.5} resolution={256} frames={1} color={p.dark} />
     <CameraRig props={props} heading={heading} lookOffset={lookOffset}/>
     <ProjectLabels elements={labels} world={props.world} speakerId={props.speakerId} selectedId={props.selectedId} view={props.view}/>

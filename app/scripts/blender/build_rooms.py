@@ -78,23 +78,35 @@ def curve(name,points,r,pigment,metal=0):
  spline=data.splines.new('BEZIER');spline.bezier_points.add(len(points)-1)
  for bp,v in zip(spline.bezier_points,points):bp.co=xyz(v);bp.handle_left_type='AUTO';bp.handle_right_type='AUTO'
  o=bpy.data.objects.new(name,data);bpy.context.collection.objects.link(o);o.data.materials.append(material(pigment,.45,metal));return o
-def lathe(name,at,profile,pigment,rough=.35,metal=0):
+def lathe(name,at,profile,pigment,rough=.35,metal=0,top_surface=False):
  segments=48;verts=[];faces=[]
  for radius,height in profile:
   for i in range(segments):a=i*math.tau/segments;verts.append(xyz((at[0]+radius*math.cos(a),at[1]+height,at[2]+radius*math.sin(a))))
  for j in range(len(profile)-1):
-  for i in range(segments):faces.append((j*segments+i,j*segments+(i+1)%segments,(j+1)*segments+(i+1)%segments,(j+1)*segments+i))
+  for i in range(segments):
+   face=(j*segments+i,(j+1)*segments+i,(j+1)*segments+(i+1)%segments,j*segments+(i+1)%segments)
+   faces.append(tuple(reversed(face)) if top_surface else face)
  mesh=bpy.data.meshes.new(name);mesh.from_pydata(verts,[],faces);mesh.update()
  uv=mesh.uv_layers.new(name='Turned surface UV')
  for face in mesh.polygons:
   j=face.index//segments;i=face.index%segments
-  coordinates=[(i/segments,j/(len(profile)-1)),((i+1)/segments,j/(len(profile)-1)),((i+1)/segments,(j+1)/(len(profile)-1)),(i/segments,(j+1)/(len(profile)-1))]
+  coordinates=[(i/segments,j/(len(profile)-1)),(i/segments,(j+1)/(len(profile)-1)),((i+1)/segments,(j+1)/(len(profile)-1)),((i+1)/segments,j/(len(profile)-1))]
+  if top_surface:coordinates.reverse()
   for index,coordinate in zip(face.loop_indices,coordinates):uv.data[index].uv=coordinate
+  # Outside rises, inside falls; top sheets / ribbons reverse that profile.
+  # glTF format validation cannot detect a consistently inside-out surface.
+  dr=profile[j+1][0]-profile[j][0];dh=profile[j+1][1]-profile[j][1]
+  if face.area>1e-9:
+   radial=Vector((face.center.x-at[0],face.center.y+at[2],0))
+   if abs(dh)>1e-7 and radial.length>1e-7:
+    assert face.normal.dot(radial)*dh*(-1 if top_surface else 1)>0,name+' has reversed side normals'
+   elif abs(dr)>1e-7:
+    assert face.normal.z*dr*(-1 if top_surface else 1)<0,name+' has reversed horizontal normals'
  o=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(o);finish(o,name,material(pigment,rough,metal));return o
 def plate(at,r=.35,pigment='porcelain'):
  # A thin porcelain rim and shallow well, rather than a solid white disc.
  dish=lathe('Glazed plate',at,[(0,0),(.08,0),(.09,.018),(r*.7,.026),(r,.052),(r,.060),(r*.95,.066),(r*.68,.045),(0,.04)],pigment,.24)
- lathe('Painted glaze ring',at,[(r*.85,.059),(r*.875,.061)],'ceramic',.24)
+ lathe('Painted glaze ring',at,[(r*.85,.059),(r*.875,.061)],'ceramic',.24,top_surface=True)
  return dish
 
 def leaf(at,a,length=.22):
@@ -149,6 +161,15 @@ def fish(at):
   xx=x-.13+i*.052
   curve('Scallion garnish',[(xx-.04,y+.07,z-.04),(xx,y+.085,z),(xx+.035,y+.072,z+.06)],.006,'green' if i%2 else 'rice')
 def bowl(at,r=.23):return lathe('Ceramic bowl',at,[(.08,0),(.1,.014),(.12,.05),(r,.17),(r,.19),(r-.014,.195),(.11,.07),(.065,.034),(0,.034)],'ceramic')
+def spoon(at,heading):
+ before=set(bpy.context.scene.objects)
+ cup=lathe('Porcelain spoon bowl',(0,0,0),[(0,0),(.055,0),(.078,.018),(.086,.031),(.083,.037),(.072,.030),(.032,.012),(0,.012)],'porcelain',.24)
+ cup.scale=(.66,1.25,.65)
+ curve('Porcelain spoon handle',[(0,.021,.075),(0,.017,.22),(0,.027,.40)],.012,'porcelain')
+ root=bpy.data.objects.new('Spoon placement',None);bpy.context.collection.objects.link(root);root.location=xyz(at);root.rotation_euler.z=heading
+ for obj in set(bpy.context.scene.objects)-before:
+  if obj!=root:obj.parent=root
+
 def chair(at,heading,kind):
  before=set(bpy.context.scene.objects);wood=kind!='school' and kind!='office';seat='chair' if kind=='work' else 'oat' if kind=='family' else 'terracotta' if kind=='school' else 'charcoal'
  box('Seat cushion',(0,.99,0),(1.0,.17,.92),seat,.065,rough=.91)
@@ -219,12 +240,15 @@ def table(kind):
  if kind=='work':
   # A fitted banquet linen quiets the large foreground without hiding the
   # existing table edge, physical dishes, turntable or navigation anchors.
-  lathe('Fitted banquet linen',(0,1.713,0),[(0,0),(2.60,0),(2.673,-.018),(2.684,-.16)],'napkin',.94)
+  lathe('Fitted banquet linen',(0,1.713,0),[(0,0),(2.60,0),(2.673,-.018),(2.684,-.16)],'napkin',.94,top_surface=True)
  cylinder('Lazy susan',(0,1.736,0),1.54,.035,'ceramic' if kind=='family' else 'porcelain',rough=.22)
  seats=[(0,-3.05,0),(-2.65,-1.55,1.04),(2.65,-1.55,-1.04),(0,3.55,math.pi)]
  for x,z,a in seats:
   chair((x,0,z),a,kind);r=math.hypot(x,z);sx=x/r*2.14;sz=z/r*2.14
-  plate((sx,1.70,sz));bowl((sx,1.745,sz),.19)
+  # Individual woven settings make the edge of a lived-in table readable.
+  box('Woven placemat',(sx,1.716,sz),(.91,.014,.70),'wallInset' if kind=='work' else 'napkin',.018,rotation=a,rough=.96)
+  plate((sx,1.724,sz));bowl((sx,1.765,sz),.19)
+  spoon((sx+.36*math.cos(a),1.724,sz-.18*math.sin(a)),a)
   cx=sx-.38*math.cos(a);cz=sz+.38*math.sin(a)
   box('Folded linen',(cx,1.73,cz),(.23,.035,.43),'napkin',.015,rotation=a,rough=.98)
   for side in [-.04,.04]:
@@ -250,13 +274,13 @@ def table(kind):
     box('Braised meat',(px,1.855+(i%2)*.012,pz),(.115+(i%3)*.008,.068,.095),'food',.026,rotation=a,rough=.42)
     glaze=box('Meat glaze',(px,1.892+(i%2)*.012,pz),(.10,.013,.086),'tea',.012,rotation=a,rough=.22)
     if i%2==0:curve('Spring onion',[(px-.04,1.91,pz-.03),(px,1.927,pz),(px+.025,1.919,pz+.04)],.007,'green')
-   elif food=='soup' and i<6:sphere('Soup garnish',(px,1.937,pz),(.033,.015,.02),'green',.42)
+   elif food=='soup' and i<6:sphere('Soup garnish',(px,1.992,pz),(.033,.010,.02),'green',.42)
    elif food=='noodles':
     for j in range(5):
      curve('Noodle strand',[(px-.06,1.824+j*.009,pz-.035),(px+.01,1.842+j*.009,pz+.015),(px+.07,1.831+j*.009,pz-.045)],.005,'rice')
   if food=='fish':fish((x,1.872,z))
   if food=='soup':
-   bowl((x,1.82,z),.35);cylinder('Clear broth',(x,1.927,z),.287,.014,'tea',rough=.25)
+   bowl((x,1.82,z),.35);cylinder('Clear broth',(x,1.985,z),.273,.008,'tea',rough=.25)
  # Plate feet contact the lazy susan rather than floating above it.
  for obj in set(bpy.context.scene.objects)-before_meals:obj.location.z-=.018
  teapot=(-1.5,1.73,-.92);sphere('Teapot body',(teapot[0],teapot[1]+.13,teapot[2]),(.20,.15,.19),'ceramic');cylinder('Teapot lid',(teapot[0],teapot[1]+.278,teapot[2]),.135,.022,'ceramic');sphere('Lid knob',(teapot[0],teapot[1]+.308,teapot[2]),(.035,.026,.035),'brass')
@@ -365,11 +389,16 @@ def props():
  curve('Tea handle',[(.11,.04,0),(.16,.08,0),(.16,.14,0),(.11,.17,0)],.011,'porcelain')
  cylinder('Tea liquid',(0,.15,0),.098,.012,'tea',rough=.20)
  lathe('WineGlass',(1,0,0),[(0,.20),(.032,.20),(.054,.22),(.079,.25),(.092,.30),(.096,.36),(.091,.367),(.088,.36),(.085,.30),(.072,.25),(.046,.225),(0,.216)],'porcelain',.12)
- cylinder('Wine stem',(1,.114,0),.012,.20,'porcelain',rough=.12,vertices=16);cylinder('Wine base',(1,.012,0),.095,.021,'porcelain',rough=.12);cylinder('Wine liquid',(1,.27,0),.078,.055,'tea',rough=.20)
+ cylinder('Wine stem',(1,.114,0),.012,.20,'porcelain',rough=.12,vertices=16);cylinder('Wine base',(1,.012,0),.075,.021,'porcelain',rough=.12)
+ lathe('Wine liquid',(1,0,0),[(0,.217),(.005,.218),(.043,.226),(.068,.252),(.078,.282),(0,.282)],'wine',.20)
  for o in bpy.context.scene.objects:
-  if o.location.x>.7:o.location.x-=1
-  elif o.type=='MESH' and o.name=='WineGlass':
-   for v in o.data.vertices:v.co.x-=1
+  # Every part uses the cup's origin, whether coordinates live in its mesh
+  # (turned surfaces) or object transform (cylinders).
+  if o.name.startswith('Wine'):o.location.x-=1
+ bpy.context.view_layer.update()
+ for o in bpy.context.scene.objects:
+  if o.type=='MESH' and o.name.startswith('Wine'):
+   assert all(abs((o.matrix_world@Vector(v)).x)<.2 for v in o.bound_box),o.name+' is detached from its vessel'
  for o in bpy.context.scene.objects:
   o['dynamic']=True
   if o.name.startswith('Wine') and 'liquid' not in o.name:

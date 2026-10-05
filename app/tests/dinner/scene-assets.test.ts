@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { Matrix4, Quaternion, Vector3 } from 'three';
 import { avatarMetrics } from '../../src/features/dinner/lib/avatarAssets';
 import { scenarios } from '../../src/features/dinner/lib/content';
 import { eyeHeight } from '../../src/features/dinner/lib/attention';
@@ -49,4 +50,23 @@ test('room exports preserve interactive surfaces and manifest integrity',()=>{
     const important=space==='elevator'?['LiftDoorLeft','LiftDoorRight','LiftOpen','LiftClosed']:space==='office'?['OfficeBoard']:[];
     for(const name of important)assert.ok(names.includes(name),`${space}: lost ${name} interaction`);
   }
+});
+
+test('cup bodies, handles and liquid share one usable origin',()=>{
+  const {gltf}=load('props.glb');let checked=0;
+  const visit=(index:number,parent:Matrix4)=>{
+    const node=gltf.nodes[index],local=node.matrix?new Matrix4().fromArray(node.matrix):new Matrix4().compose(new Vector3().fromArray(node.translation??[0,0,0]),new Quaternion().fromArray(node.rotation??[0,0,0,1]),new Vector3().fromArray(node.scale??[1,1,1]));
+    const world=parent.clone().multiply(local);
+    if(node.mesh!==undefined&&/^(Tea|Wine)/.test(node.name))for(const primitive of gltf.meshes[node.mesh].primitives) {
+      const position=gltf.accessors[primitive.attributes.POSITION];assert.ok(position.min&&position.max,`${node.name} has no bounds`);
+      for(const x of [position.min[0],position.max[0]])for(const y of [position.min[1],position.max[1]])for(const z of [position.min[2],position.max[2]]) {
+        const p=new Vector3(x,y,z).applyMatrix4(world);
+        assert.ok(Math.abs(p.x)<.2&&Math.abs(p.z)<.2&&p.y>-.01&&p.y<.45,`${node.name} is detached: ${p.toArray()}`);
+      }
+      checked++;
+    }
+    for(const child of node.children??[])visit(child,world);
+  };
+  for(const root of gltf.scenes[gltf.scene??0].nodes)visit(root,new Matrix4());
+  assert.ok(checked>=7,'Check the complete wine and tea vessels');
 });

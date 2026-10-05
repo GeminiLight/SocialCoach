@@ -175,7 +175,7 @@ export default function App() {
   useEffect(()=>{if(started&&seated&&!modal&&!complete&&!busy&&!gazeEnabled&&matchMedia('(pointer: fine)').matches)input.current?.focus({preventScroll:true});},[started,seated,modal,complete,busy,gazeEnabled]);
   useEffect(()=>{
     const field=input.current;if(!field)return;
-    const grow=()=>{field.style.height='auto';field.style.height=`${Math.min(112,Math.max(52,field.scrollHeight))}px`;};
+    const grow=()=>{field.style.height='auto';const minimum=matchMedia('(min-width: 601px)').matches?44:52;field.style.height=`${Math.min(112,Math.max(minimum,field.scrollHeight))}px`;};
     grow();let width=field.clientWidth;
     const observer=new ResizeObserver(()=>{if(field.clientWidth!==width){width=field.clientWidth;grow();}});
     observer.observe(field);return ()=>observer.disconnect();

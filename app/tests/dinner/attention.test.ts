@@ -4,7 +4,7 @@ import {PerspectiveCamera,Vector3} from 'three';
 import {scenarios} from '../../src/features/dinner/lib/content';
 import {opening} from '../../src/features/dinner/lib/engine';
 import {createWorld,focusPerson,focusConversation,freeLook,goNear,snapshot,stepWorld} from '../../src/features/dinner/lib/room';
-import {attentionSubject,bearing,cameraPose,gazePose,playerEyeHeight,trackAttention,turnToward,wrapAngle} from '../../src/features/dinner/lib/attention';
+import {attentionSubject,bearing,cameraPose,dialogueFraming,eyeHeight,gazePose,playerEyeHeight,trackAttention,turnToward,wrapAngle} from '../../src/features/dinner/lib/attention';
 const scene=scenarios[0];
 const reactions=opening(scene,'zh').reactions!;
 test('attention stays on the approached person throughout walking and after arrival',()=>{
@@ -27,6 +27,32 @@ test('third-person camera leaves a clear view of the approached face beside the 
 });
 test('conversation follows a new speaker but a chosen person keeps priority',()=>{
   const world=createWorld(scene);world.speakerId=scene.characters[1].id;trackAttention(world,.05,true);assert.equal(attentionSubject(world)?.id,scene.characters[1].id);focusPerson(world,scene.characters[0].id);world.speakerId=scene.characters[2].id;trackAttention(world,.05,true);assert.equal(attentionSubject(world)?.id,scene.characters[0].id);
+});
+
+test('a seated landscape view keeps every dining face inside the frame',()=>{
+  for(const scene of scenarios.filter(s=>!s.space))for(const aspect of [1280/720,1024/768,1440/900]) {
+    const world=createWorld(scene);trackAttention(world,0,true);
+    for(const view of ['first','third'] as const) {
+      const pose=cameraPose(world,view,aspect),camera=new PerspectiveCamera(pose.fov,aspect,.1,60);
+      camera.position.set(...pose.position as [number,number,number]);camera.lookAt(...pose.target as [number,number,number]);camera.updateMatrixWorld();
+      for(const actor of world.npcs) {
+        const face=new Vector3(actor.x,eyeHeight(actor),actor.z).project(camera);
+        assert.ok(Math.abs(face.x)<.9&&Math.abs(face.y)<.75&&face.z>0&&face.z<1,`${scene.id} ${view}: ${actor.id} ${face.toArray()}`);
+      }
+    }
+  }
+});
+
+test('the focused face stays above the dialogue for desktop, phone and long drafts',()=>{
+  for(const [width,height,hud] of [[1280,720,250],[390,844,310],[390,844,410],[896,414,240]])for(const scene of scenarios) {
+    const world=createWorld(scene);trackAttention(world,0,true);
+    const pose=cameraPose(world,'first',width/height),camera=new PerspectiveCamera(pose.fov,width/height,.1,60);
+    camera.position.set(...pose.position as [number,number,number]);camera.lookAt(...pose.target as [number,number,number]);
+    camera.setViewOffset(width,height,0,dialogueFraming(width,height,hud),width,height);camera.updateMatrixWorld();
+    const subject=attentionSubject(world)!,face=new Vector3(subject.x,eyeHeight(subject),subject.z).project(camera);
+    const y=(.5-face.y*.5)*height;
+    assert.ok(y>90&&y<height-hud-30,`${scene.id} ${width}×${height}: ${y}`);
+  }
 });
 
 test('non-dinner opening speakers can be framed before play without moving characters or advancing time',()=>{

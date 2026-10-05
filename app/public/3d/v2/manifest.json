@@ -330,9 +330,9 @@
     },
     {
       "file": "props.glb",
-      "bytes": 41464,
-      "sha256": "00d1200e5d99aad105d3eda3b320669a12d946be56afa9c9fe3106e89dd7cdef",
-      "triangles": 5184,
+      "bytes": 39632,
+      "sha256": "c1941e7c9c939d95c201760c744b768f1d977cfd7543fbe45c6980f7afd4a162",
+      "triangles": 4900,
       "drawCalls": 7,
       "generator": "Khronos glTF Blender I/O v5.2.40"
     },
@@ -374,10 +374,10 @@
     },
     {
       "file": "room-family.glb",
-      "bytes": 2346108,
-      "sha256": "1fb261810b16218c5f50744f25f0e2c9246492a1224c847a57e4cc1fbeed721c",
-      "triangles": 113868,
-      "drawCalls": 49,
+      "bytes": 2358852,
+      "sha256": "e8016bb692bf00f8c841ed988fb8f8d566c76d7afae7002dcbda559578312580",
+      "triangles": 119228,
+      "drawCalls": 50,
       "generator": "Khronos glTF Blender I/O v5.2.40"
     },
     {
@@ -390,18 +390,18 @@
     },
     {
       "file": "room-school.glb",
-      "bytes": 1120628,
-      "sha256": "ba09fbd7d8d0a6e97598a426b926f3b4d113795a05918f2bb0123ea471e308bd",
-      "triangles": 113076,
-      "drawCalls": 40,
+      "bytes": 1141940,
+      "sha256": "60eb42517a7f0a6b48f0bd3ff4b5c6fd8e9451b82046d087a686a2ab7434f9b8",
+      "triangles": 118436,
+      "drawCalls": 41,
       "generator": "Khronos glTF Blender I/O v5.2.40"
     },
     {
       "file": "room-work.glb",
-      "bytes": 1214740,
-      "sha256": "89ea7e02d7fd080ca460a6d9f1ac80d508ffe1ed31bc430cbb1b76043e4c2793",
-      "triangles": 125140,
-      "drawCalls": 52,
+      "bytes": 1234596,
+      "sha256": "588d287e64991b32c49cb349caa520dd9003e926f25cf61861fe7d9ab4d3475e",
+      "triangles": 130500,
+      "drawCalls": 53,
       "generator": "Khronos glTF Blender I/O v5.2.40"
     },
     {
