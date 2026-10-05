@@ -1,0 +1,34 @@
+{
+  "application_commit": "c2a8211c16b97127a6f6af4795455b51d2bd554e",
+  "application_source": "d55a2b2b5d97c58f48e6f223f16a2b170fe6f318",
+  "date": "2026-10-06",
+  "vercel": {
+    "id": "dpl_BvVhD3XpV5jkPCya3ZPqETT5Epxk",
+    "readyState": "READY",
+    "target": "production",
+    "alias": [
+      "socialcoach-ai.vercel.app",
+      "socialcoach-app.vercel.app",
+      "socialcoach-geminilights-projects.vercel.app",
+      "socialcoach-git-main-geminilights-projects.vercel.app"
+    ],
+    "meta": {
+      "githubCommitRef": "main",
+      "githubCommitSha": "c2a8211c16b97127a6f6af4795455b51d2bd554e",
+      "githubCommitMessage": "fix: include local reading preparation in Docker builds",
+      "githubRepo": "SocialCoach",
+      "githubOrg": "GeminiLight"
+    }
+  },
+  "modelscope": {
+    "commit": "e6e52759",
+    "state": "Running",
+    "source_public_files": 255,
+    "verified_assets": 27
+  },
+  "checks": {
+    "dinner": 231,
+    "build": "pass",
+    "browser_visual": "blocked by IAB and Chrome connection timeouts"
+  }
+}

@@ -1,0 +1,213 @@
+[
+  {
+    "path": "3d/v2/kai.glb",
+    "http": 200,
+    "bytes": 1722804,
+    "sha256": "3cfe539ee9e667f11eb20399311fa75c449bbb442973904e2a1ec8f6cad1f788",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/chen.glb",
+    "http": 200,
+    "bytes": 1789972,
+    "sha256": "0dc5dbc3d0d9e0ca3bb4bacd849ac6f720fb7eda95f77ee8fc347e4074341bba",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/hand-grip.glb",
+    "http": 200,
+    "bytes": 49820,
+    "sha256": "5cd27c1065d7de7b64f0cf37a516096f8f505a2fbae9ecc5d35fed28808251b4",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/room-school.glb",
+    "http": 200,
+    "bytes": 677924,
+    "sha256": "45599c8db58499b2e2751f54a0d7dbe0343174ed75abb14df37f61e6cb74595a",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/rui.glb",
+    "http": 200,
+    "bytes": 1781252,
+    "sha256": "01609215d99efb5e89dd15a5587d3711d95c80f4157495206fdfd0e613a17164",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/room-elevator.glb",
+    "http": 200,
+    "bytes": 119508,
+    "sha256": "1ecb2903a1ed9ec0a5ba5a6983ad9cc4a8fc7c3f6e45b44c9c453880afbcce73",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/zhou.glb",
+    "http": 200,
+    "bytes": 1821116,
+    "sha256": "6eab6b0dcbd691fb65264e7889e10ee6199f7b0569e5502c2ba7a569c43daea2",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/he.glb",
+    "http": 200,
+    "bytes": 1790076,
+    "sha256": "0799ab65fafa63bbe4806f5d319075531a8ddd70d42e55b860437c76c8492fe8",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/dad.glb",
+    "http": 200,
+    "bytes": 1809984,
+    "sha256": "68815eb2d86b3c025a32631cc8d6565b9ed7912ccf42cda0b45ea55e7cedcbbb",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/room-family.glb",
+    "http": 200,
+    "bytes": 685624,
+    "sha256": "0388b616ad9b77266892dfeccd9966131fb307061cfb4d56b30e81b9c1c69a93",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/cheng.glb",
+    "http": 200,
+    "bytes": 1775752,
+    "sha256": "f0cb440fc366af3b1d555daa79c4723436a6b5e22ab2d035281c53e9ca27ebd6",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/yue.glb",
+    "http": 200,
+    "bytes": 1773196,
+    "sha256": "015ed87f498760613023ada68d184f2d3394492dd7373bb2c06b7dea6eea49ad",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/room-work.glb",
+    "http": 200,
+    "bytes": 768620,
+    "sha256": "40de659f0598c781f7ea8e905f2182a6fd7dd921dc70f65b3c10be85f52bc831",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/props.glb",
+    "http": 200,
+    "bytes": 39632,
+    "sha256": "2b8284b604f07e1cf2c15408307a1bc5566f3602899e2aef1ee35dc3da1eddb4",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/player.glb",
+    "http": 200,
+    "bytes": 1734112,
+    "sha256": "5626e954f2cd4d2cc1df142dd26f99ce46d62ee8b2fb820fb1a1889a1c3d6168",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/ning.glb",
+    "http": 200,
+    "bytes": 1774668,
+    "sha256": "93f44f61e604f7566fba43402678e366831ae843d5bebfa04db9f36f7fdfbdd3",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/room-office.glb",
+    "http": 200,
+    "bytes": 373008,
+    "sha256": "b7cc4a9e2cd481a1763fe9ed3f5c93ad4b6019a7c1d72169572654b211746222",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/aunt.glb",
+    "http": 200,
+    "bytes": 1757948,
+    "sha256": "0f2e442d4f1df2e030e7cb03e56befc10a5ea3ef8b18fae4eee04ef832ab666e",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/qiao.glb",
+    "http": 200,
+    "bytes": 1752592,
+    "sha256": "5db527d8d41145343b88f5ec89e6fc85e66b7cf949beb527d20ce5211d7edb70",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/senior.glb",
+    "http": 200,
+    "bytes": 1712436,
+    "sha256": "05b12047da33a39ab78d57f862c1fac6732a2d24f5b6b2f5801ba68d91122be7",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/hand-open.glb",
+    "http": 200,
+    "bytes": 48852,
+    "sha256": "bb458c7019fc105108325a342ffcd65e3a45cea136633d3a1d8c210e1edfff27",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/mom.glb",
+    "http": 200,
+    "bytes": 1764996,
+    "sha256": "a21c9eeebc297c4cdd9a1d285b3eea79040a17c611e2a92aec40139677c0dbad",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/fang.glb",
+    "http": 200,
+    "bytes": 1910816,
+    "sha256": "4ff15ceb4b5f00bbf8a3d87648e3da290f2445e24a99910c030f306f850e923b",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/lin.glb",
+    "http": 200,
+    "bytes": 1938192,
+    "sha256": "7ffb009773a091d920faf4255172820ead79db7743f094180ed2bea53d3d2a0e",
+    "matches": true
+  },
+  {
+    "path": "3d/v2/manifest.json",
+    "http": 200,
+    "bytes": 13465,
+    "sha256": "9517dbf82a6c4d3e888d0e95b019bba9f3eba5ed9a586b9a9026172609ba7e76",
+    "matches": true
+  },
+  {
+    "path": "3d/art/work-landscape-reference.webp",
+    "http": 200,
+    "bytes": 230332,
+    "sha256": "cebf44c51ae4d6d98cfc55ef005c0e30422875b5dbc036f11e5dcb1e8e1f500d",
+    "matches": true
+  },
+  {
+    "path": "images/dinner-home-preview-bright.jpg",
+    "http": 200,
+    "bytes": 109385,
+    "sha256": "745e72f0fad6423894641ac0ea31565fcfea4ac7a1274e3de1583dd9200b101b",
+    "matches": true
+  },
+  {
+    "path": "/",
+    "http": 200,
+    "bytes": 12067
+  },
+  {
+    "path": "/3d",
+    "http": 200,
+    "bytes": 11467
+  },
+  {
+    "path": "/api/health",
+    "http": 200,
+    "bytes": 58,
+    "health": {}
+  },
+  {
+    "path": "/local-reading/manifest.json",
+    "http": 200,
+    "bytes": 29224,
+    "localReadingFiles": 185
+  }
+]

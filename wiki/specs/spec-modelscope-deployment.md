@@ -1,6 +1,6 @@
 # ModelScope 创空间部署
 
-状态：已公开部署，ModelScope 返回 Running（2026-10-05）；教练 IP、新版工作区界面与紧凑语言切换已同步到 Vercel / ModelScope。最新验收范围见文末。
+状态：已公开部署，ModelScope 返回 Running（2026-10-06）；当前成人动画 3D 样段、室内光照 / 构图、倾斜选人与反馈修订已同步到 Vercel / ModelScope。最新验收范围见文末。
 
 本地验证：隔离目录使用锁定依赖完成生产构建与 TypeScript 检查；standalone 服务在 7860 端口启动，首页、设置、场景目录、health 和 manifest 均返回 HTTP 200。云端 Docker 构建及启动均通过。
 
@@ -8,8 +8,8 @@
 
 - 空间：[GeminiLight/SocialCoach](https://modelscope.cn/studios/GeminiLight/SocialCoach)。公开，Apache-2.0，免费 `platform/2v-cpu-16g-mem`。
 - 应用 host：`https://geminilight-socialcoach.ms.show`。自动化 API 检查使用平台提示的专用地址 `https://studio-geminilight-socialcoach.api-inference.modelscope.net`，该地址需要 ModelScope Bearer token，不能当作无需认证的普通分享链接。
-- 空间 Git：`https://modelscope.cn/studios/GeminiLight/SocialCoach.git`，分支 `master`，当前应用部署提交 `71b01e3`（2026-10-05，教练 IP 与语言切换精修，对应 GitHub 应用提交 `8b337d5`）。通过独立克隆同步应用必需文件，未将本地 Git 历史、环境变量或其他文档上传。
-- 同步步骤（本机钥匙串已有推送凭证）：克隆空间仓库；`rsync -a --delete` 主仓库的 `app/src/`、`app/public/`，复制 `app/` 下的 `next.config.ts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`postcss.config.mjs`、`tsconfig.json`、`next-env.d.ts`，以及根目录 `Dockerfile`、`.dockerignore`、`LICENSE`；不带 `app/scripts`、`.env*`、`AGENTS.md`、eslint 配置；空间自己的 `README.md`（含卡片 frontmatter）不动。提交后 `git push origin master`。**推送不会自动重建**：2026-09-10 推送 `ceee413` 后 25 分钟空间仍在跑旧构建。重建走 OpenAPI：`POST https://modelscope.cn/openapi/v1/studios/GeminiLight/SocialCoach/deploy`，`Authorization: Bearer <token>`，token 就是本机 git 钥匙串里 modelscope.cn 的密码（`printf 'protocol=https\nhost=modelscope.cn\n\n' | git credential fill`），不要落盘。状态用 `GET …/studios/GeminiLight/SocialCoach`（Building → Running），日志 `GET …/logs/build` 与 `…/logs/run`。
+- 空间 Git：`https://modelscope.cn/studios/GeminiLight/SocialCoach.git`，分支 `master`，当前应用部署提交 `e6e5275`（2026-10-06，对应 GitHub 应用提交 `c2a8211`）。通过独立克隆同步应用必需文件，未将本地 Git 历史、环境变量或其他文档上传。
+- 同步步骤（本机钥匙串已有推送凭证）：克隆空间仓库；`rsync -a --delete` 主仓库的 `app/src/`、`app/public/`，复制 `app/` 下的 `next.config.ts`、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`postcss.config.mjs`、`tsconfig.json`、`next-env.d.ts`，以及根目录 `Dockerfile`、`.dockerignore`、`LICENSE`；仅带构建必需的 `app/scripts/prepare-local-reading.mjs`（`.dockerignore` 同步放行该文件），不带其他 `app/scripts`、`.env*`、`AGENTS.md`、eslint 配置；空间自己的 `README.md`（含卡片 frontmatter）不动。提交后 `git push origin master`。**推送不会自动重建**：2026-09-10 推送 `ceee413` 后 25 分钟空间仍在跑旧构建。重建走 OpenAPI：`POST https://modelscope.cn/openapi/v1/studios/GeminiLight/SocialCoach/deploy`，`Authorization: Bearer <token>`，token 就是本机 git 钥匙串里 modelscope.cn 的密码（`printf 'protocol=https\nhost=modelscope.cn\n\n' | git credential fill`），不要落盘。状态用 `GET …/studios/GeminiLight/SocialCoach`（Building → Running），日志 `GET …/logs/build` 与 `…/logs/run`。
 - 环境变量：非敏感配置在明文变量 `GET/POST/PUT …/variables`（`{"key","value"}`），敏感值在 `…/secrets`（只回 key）。空间现有布局：`LLM_API_KEY`、`FEEDBACK_FEISHU_APP_SECRET` 是 secret，其余 LLM / 限流 / 飞书 app id、base token、table id、`FEEDBACK_DEPLOYMENT=ModelScope` 都是明文变量。完整端点见本机 skill `~/.claude/skills/modelscope-studio`。
 - 统计：2026-09-10 通过 API 加明文变量 `ANALYTICS_FEISHU_TABLE_PREFIX=events`（复用已有 `FEEDBACK_FEISHU_*`）并触发重建；没有它 `/api/track` 报不可用，客户端不发。
 - 模型沿用本机 `app/.env.local` 中的 LLM 配置，`LLM_API_KEY` 放入 Secrets；未同步 Vercel 令牌。限流为每 IP 每小时 45 次、全站每日 2000 次；计数在内存，重启后会重置。
@@ -159,3 +159,14 @@
 - 专用认证 API 与不带凭证的公共 host 均检查首页、欢迎页、设置、场景、3D、manifest、health、小猫 WebP，8 项返回 200；每侧 22 个引用资源全部 200。线上小猫文件 SHA-256 与源文件一致，新语言选择 CSS 与教练组件资源已确认；免费 health 检查返回 `available`。本次未执行计费推理、发送测试反馈或上传练习记录。
 - 公开全屏入口在实际 Chromium 中显示小猫教练，两个语言选项各 50×44px、间距 4px；中英切换与 iframe 刷新后的偏好保留通过。首次系统代理下连接中断，同机直连与仅该测试浏览器禁用代理后通过；未改系统代理或关闭证书校验。本轮不替代整轮练习与手机端验收。
 - [发布核对原件](../../docs/reviews/modelscope-ui-2026-10-05/README.md)。
+
+
+## 当前 3D 样段与已验证版本发布（2026-10-06）
+
+- 用户授权先发布当前版本。应用源码 `d55a2b2`，发布补丁 `c2a8211` 仅补齐 Docker 构建所需的本地文档读取准备脚本。工作区中尚在进行的架构审核改动未进入发布包。
+- Vercel GitHub main 自动生产发布 `dpl_BvVhD3XpV5jkPCya3ZPqETT5Epxk`，平台 Ready，正式别名 `socialcoach-ai.vercel.app` / `socialcoach-app.vercel.app` 已关联到 `c2a8211`。
+- ModelScope `e6e5275`，独立克隆同步已提交的应用文件，`app/src` / `app/public` 共 255 文件逐个一致；自动生成的文档读取资源由构建准备脚本产生，不把构建输出反向同步到 Git。显式重建镜像 `363578-e6e52759-2026-10-06-00-33-42`，成功标记、7860 启动 Ready 与 Running 均已确认。
+- 公开性、原免费硬件及既有环境配置保留。国内专用认证后端：首页、`/3d`、health 和文档读取资源清单均 200；24 GLB、3D 清单、山水纹理和首页预览共 27 项线上字节 / SHA256 与发布源完全一致。
+- 隔离正式构建 / 类型检查和 231 项饭局测试通过。内置浏览器及已连接 Chrome 均连接超时，本次未完成线上画面的人工复核，也未重跑线上模型对话。平台状态和素材核对不替代这一项。
+- 发布范围包括当前成人动画造型、暖色房间与紧凑职场桌椅、两视角、手机倾斜选人与反馈修订。人物品质与 A 参考图的差距仍待改善，真实手机体验验收仍待补；免费生成的白模没有作为默认 NPC 发布。
+- [本轮发布证据](../../docs/reviews/release-2026-10-06/README.md)。
