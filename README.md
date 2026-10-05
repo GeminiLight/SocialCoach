@@ -24,7 +24,7 @@
 
 ---
 
-[News](#news) · [3D 实景练习](#3d-实景练习) · [文字练习](#你可以练什么) · [怎么练](#如何开始一场练习) · [核心功能](#核心功能) · [本地运行](#快速开始) · [部署](#部署) · [研究](#研究)
+[News](#news) · [开始练习](#开始一场练习) · [3D 实景](#3d-实景练习) · [练习场景](#你可以练什么) · [核心功能](#核心功能) · [学习依据](#社交技能与社交情绪学习sel) · [本地运行](#本地运行) · [部署](#部署) · [研究](#研究)
 
 ## News
 
@@ -35,6 +35,32 @@
 | **2026-10-03** | **[SocialCoach 3D 上线](#3d-实景练习)。** 走进饭局、电梯口或办公室，用文字或语音练习难开口的对话。 |
 | **2026-09-09** | **[在线体验网站上线](https://socialcoach.aurax.live)。** 中英双语，无需注册，打开就能练一场对话。 |
 | **2026-09-03** | **[SocialCoach 首个版本发布](https://github.com/GeminiLight/SocialCoach/commit/bae956fc4eef36063c975fd4b980c7daf170223c)。** 个性化安排练习，在真实情境中对练，再根据自己的原话复盘。 |
+
+## 开始一场练习
+
+1. **选一场对话。** 选择想练的技能，或带来你真正需要面对的情境，了解自己的角色和这次想达成的目标。
+2. **进入对练。** 对方有自己的诉求、顾虑和底线，会追问、提出异议，也会坚持立场。
+3. **复盘，再试一次。** 看教练如何结合你的原话给出反馈，尝试另一种回应，把收获带进下一次练习。
+
+<table align="center">
+<tr>
+<th width="33%">1 · 找到适合的练习</th>
+<th width="33%">2 · 进入情境对话</th>
+<th width="33%">3 · 看懂自己的表现</th>
+</tr>
+<tr>
+<td><a href="docs/screenshots/screenshot-01-home-zh.png"><img src="docs/screenshots/screenshot-01-home-zh.png" width="260" alt="首页推荐拒绝临时加班的练习，并说明它为什么适合当前目标"></a></td>
+<td><a href="docs/screenshots/screenshot-02-pushback-zh.png"><img src="docs/screenshots/screenshot-02-pushback-zh.png" width="260" alt="在对练中回应经理的要求和进一步追问"></a></td>
+<td><a href="docs/screenshots/screenshot-03-evidence-debrief-zh.png"><img src="docs/screenshots/screenshot-03-evidence-debrief-zh.png" width="260" alt="复盘引用用户原话，解释表达的问题，并给出更清楚的边界表达建议"></a></td>
+</tr>
+<tr>
+<td><sub>根据你的目标，安排下一场练习。</sub></td>
+<td><sub>在来回交谈中练习回应与协商。</sub></td>
+<td><sub>从自己的原话里找到改进方向。</sub></td>
+</tr>
+</table>
+
+<p align="center"><a href="https://socialcoach.aurax.live"><strong>开始一场练习 →</strong></a></p>
 
 ## 3D 实景练习
 
@@ -63,36 +89,6 @@
 
 文字练习至少从 12 个用户回合开始，可以每次增加 8 回合继续同一场对话，保留此前的内容和承诺，由你决定何时结束并复盘。
 
-## 社交技能与社交情绪学习（SEL）
-
-SocialCoach 是聚焦社交技能练习的 AI 学习工具。它参考 [CASEL 的五类社交与情绪学习能力](https://casel.org/what-is-sel/)，将 34 项技能组织为自我觉察、自我管理、社会觉察、人际关系技能和负责任的决策。你可以在困难对话中反复练习，再根据自己的原话复盘。它是面向个人的练习工具，不是经过认证的学校课程，也不是临床评估。更具体的能力与练习说明见[双语官网](https://tianfuwang.tech/SocialCoach/)。
-
-## 如何开始一场练习
-
-1. **选一场对话。** 选择想练的技能，或带来你真正需要面对的情境，了解自己的角色和这次想达成的目标。
-2. **进入对练。** 对方有自己的诉求、顾虑和底线，会追问、提出异议，也会坚持立场。
-3. **复盘，再试一次。** 看教练如何结合你的原话给出反馈，尝试另一种回应，把收获带进下一次练习。
-
-<table align="center">
-<tr>
-<th width="33%">1 · 找到适合的练习</th>
-<th width="33%">2 · 进入情境对话</th>
-<th width="33%">3 · 看懂自己的表现</th>
-</tr>
-<tr>
-<td><a href="docs/screenshots/screenshot-01-home-zh.png"><img src="docs/screenshots/screenshot-01-home-zh.png" width="260" alt="首页推荐拒绝临时加班的练习，并说明它为什么适合当前目标"></a></td>
-<td><a href="docs/screenshots/screenshot-02-pushback-zh.png"><img src="docs/screenshots/screenshot-02-pushback-zh.png" width="260" alt="在对练中回应经理的要求和进一步追问"></a></td>
-<td><a href="docs/screenshots/screenshot-03-evidence-debrief-zh.png"><img src="docs/screenshots/screenshot-03-evidence-debrief-zh.png" width="260" alt="复盘引用用户原话，解释表达的问题，并给出更清楚的边界表达建议"></a></td>
-</tr>
-<tr>
-<td><sub>根据你的目标，安排下一场练习。</sub></td>
-<td><sub>在来回交谈中练习回应与协商。</sub></td>
-<td><sub>从自己的原话里找到改进方向。</sub></td>
-</tr>
-</table>
-
-<p align="center"><a href="https://socialcoach.aurax.live"><strong>开始一场对话 →</strong></a></p>
-
 ## 核心功能
 
 - **有真实反应的对练。** 角色根据自己的立场回应，对话能否推进取决于具体交流，礼貌本身不会让对方自动同意。也可以开启限时应答，练习压力下的表达。
@@ -102,9 +98,13 @@ SocialCoach 是聚焦社交技能练习的 AI 学习工具。它参考 [CASEL �
 - **看见长期变化。** 围绕复盘继续向教练提问，回看对话，并从不同场次的原话中识别自己反复出现的沟通模式。
 - **按自己的方式使用。** 无需注册，练习记录可导出。支持自带模型与自部署，移动优先界面可以安装为 PWA。
 
-## 快速开始
+## 社交技能与社交情绪学习（SEL）
 
-直接使用可[打开 SocialCoach](https://socialcoach.aurax.live)。本地运行需要 **Node.js 22+**、**pnpm 11**，以及 Anthropic 或 OpenAI 兼容模型服务的凭证。
+SocialCoach 是聚焦社交技能练习的 AI 学习工具。它参考 [CASEL 的五类社交与情绪学习能力](https://casel.org/what-is-sel/)，将 34 项技能组织为自我觉察、自我管理、社会觉察、人际关系技能和负责任的决策。你可以在困难对话中反复练习，再根据自己的原话复盘。它是面向个人的练习工具，不是经过认证的学校课程，也不是临床评估。更具体的能力与练习说明见[双语官网](https://tianfuwang.tech/SocialCoach/)。
+
+## 本地运行
+
+本地运行需要 **Node.js 22+**、**pnpm 11**，以及 Anthropic 或 OpenAI 兼容模型服务的凭证。
 
 ```bash
 git clone https://github.com/GeminiLight/SocialCoach.git
