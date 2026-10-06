@@ -1,0 +1,175 @@
+{
+  "commit": "d7691c5",
+  "dinner": [
+    {
+      "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+      "mode": "script",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "pressing",
+          "gesture": "toast"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "chen",
+      "story": {
+        "topic": "toast"
+      },
+      "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？"
+    },
+    {
+      "dinner": {
+        "eventId": "work-toast",
+        "phase": "waiting",
+        "previous": []
+      },
+      "role": "user",
+      "room": {
+        "npcs": [
+          {
+            "characterId": "chen",
+            "posture": "seated"
+          },
+          {
+            "characterId": "lin",
+            "posture": "seated"
+          },
+          {
+            "characterId": "zhou",
+            "posture": "seated"
+          }
+        ],
+        "posture": "seated",
+        "zone": "table"
+      },
+      "text": "陈总，我开车来的，今天不喝酒。我可以用茶向林姐表达谢意。"
+    },
+    {
+      "cue": "陈总举起杯子。",
+      "interjection": {
+        "speakerId": "lin",
+        "text": "茶我接了。周三上线到底能不能给个准话？"
+      },
+      "mode": "model",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "neutral",
+          "gesture": "toast"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "thinking",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "chen",
+      "story": {
+        "beat": "respect",
+        "topic": "toast"
+      },
+      "text": "开车不喝，这理由我认。茶也举一下，谢意到位就行。"
+    }
+  ],
+  "shortReplies": true,
+  "source": "protected Vercel preview",
+  "text": [
+    {
+      "characterId": "michael",
+      "id": "opening",
+      "role": "npc",
+      "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+      "ts": 1791269826460
+    },
+    {
+      "id": "ke4nh0jr6gea",
+      "role": "learner",
+      "text": "今晚我不能留下来。我可以先确认客户最急需哪几页，明早上班后优先处理。",
+      "ts": 1791282211714
+    },
+    {
+      "characterId": "michael",
+      "id": "24xcnznm6hv7",
+      "role": "npc",
+      "text": "明早九点前就得交，明早再处理谁来得及？客户那边催得很急。",
+      "ts": 1791282214704
+    },
+    {
+      "characterId": "michael",
+      "id": "3vhn5us96ia9",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "note": "你给出明确拒绝和明早优先方案，Michael 追问范围",
+        "objectiveEvidence": [],
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 25
+      },
+      "role": "npc",
+      "text": "行，你说「先确认哪几页」——那你今晚能不能就定下来到底改哪几页？明早我直接按你说的排版。",
+      "ts": 1791282214704
+    },
+    {
+      "id": "ypnptr0s78e3",
+      "role": "learner",
+      "text": "请您确认客户最需要的是哪几页。我明早八点开始，八点一刻请您过一遍，九点前发出。今晚我还是不能留下。",
+      "ts": 1791282247995
+    },
+    {
+      "characterId": "michael",
+      "id": "vggthksk7a04",
+      "role": "npc",
+      "text": "明早八点开始，八点一刻我过一遍？时间太紧了，我不确定够不够。",
+      "ts": 1791282251020
+    },
+    {
+      "characterId": "michael",
+      "id": "cd8t48y67aen",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "note": "Michael 给出时间线但未确认页数",
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "今晚我还是不能留下"
+          }
+        ],
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 30
+      },
+      "role": "npc",
+      "text": "你到底能改几页？客户要的是完整方案，不是两三页吧？",
+      "ts": 1791282251020
+    }
+  ]
+}

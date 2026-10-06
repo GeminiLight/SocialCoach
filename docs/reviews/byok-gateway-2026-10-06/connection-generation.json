@@ -1,0 +1,17 @@
+{
+  "status": 200,
+  "seconds": 2.87,
+  "message_keys": [
+    "content",
+    "role",
+    "reasoning_content"
+  ],
+  "finish_reason": "stop",
+  "text": "连接测试成功。",
+  "reasoning_characters": 173,
+  "usage": {
+    "completion_tokens": 105,
+    "prompt_tokens": 28,
+    "total_tokens": 133
+  }
+}
