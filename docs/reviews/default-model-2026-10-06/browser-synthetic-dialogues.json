@@ -1,0 +1,224 @@
+{
+  "commit": "c800aa2d18db164e0ccee9fffb97096cc9171d2b",
+  "dinner": [
+    {
+      "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+      "mode": "script",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "pressing",
+          "gesture": "toast"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "chen",
+      "story": {
+        "topic": "toast"
+      },
+      "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？"
+    },
+    {
+      "dinner": {
+        "eventId": "work-toast",
+        "phase": "waiting",
+        "previous": []
+      },
+      "role": "user",
+      "room": {
+        "npcs": [
+          {
+            "characterId": "chen",
+            "posture": "seated"
+          },
+          {
+            "characterId": "lin",
+            "posture": "seated"
+          },
+          {
+            "characterId": "zhou",
+            "posture": "seated"
+          }
+        ],
+        "posture": "seated",
+        "zone": "table"
+      },
+      "text": "陈总，我开车来的，今天不喝酒。我可以用茶向林姐表达谢意。"
+    },
+    {
+      "cue": "陈总点了点头。",
+      "interjection": {
+        "speakerId": "lin",
+        "text": "茶可以。具体说，周三能交付哪几项？两项失败测试谁复测？"
+      },
+      "mode": "model",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "neutral",
+          "gesture": "nod"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "thinking",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "chen",
+      "story": {
+        "beat": "bridge",
+        "topic": "toast"
+      },
+      "text": "开车就不喝了。敬茶的礼数到位，面子有了；林总，周三上线你按可验收范围再核一遍。"
+    },
+    {
+      "dinner": {
+        "eventId": "work-toast",
+        "phase": "settled",
+        "previous": []
+      },
+      "role": "user",
+      "room": {
+        "npcs": [
+          {
+            "characterId": "chen",
+            "posture": "seated"
+          },
+          {
+            "characterId": "lin",
+            "posture": "seated"
+          },
+          {
+            "characterId": "zhou",
+            "posture": "seated"
+          }
+        ],
+        "posture": "seated",
+        "zone": "table"
+      },
+      "text": "林姐，周三先交核心流程，验收标准今天一起确认；扩展部分另排时间。这样你们能先验证业务吗？"
+    },
+    {
+      "cue": "林姐朝你倾身。",
+      "interjection": {
+        "speakerId": "zhou",
+        "text": "我只确认自己参与的测试：退款回调、批量导入都还没复测。"
+      },
+      "mode": "model",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "thinking",
+          "gesture": "fold"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "pressing",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "thinking",
+          "gesture": "idle"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "lin",
+      "story": {
+        "beat": "message",
+        "topic": "scope"
+      },
+      "text": "可以这样谈：核心流程要逐条列清，验收标准今晚写进纪要。退款回调、批量导入不在周三范围，除非复测通过。"
+    }
+  ],
+  "personalKeyConfigured": false,
+  "source": "Vercel production",
+  "text": [
+    {
+      "characterId": "michael",
+      "id": "opening",
+      "role": "npc",
+      "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+      "ts": 1791269826460
+    },
+    {
+      "id": "nh5vcm524ixy",
+      "role": "learner",
+      "text": "今晚我不能留下来。我可以先确认客户最急需哪几页，明早上班后优先处理。",
+      "ts": 1791283801318
+    },
+    {
+      "characterId": "michael",
+      "id": "5zno0qk64lt0",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "note": "你在确认需求范围，Michael 尚未接受",
+        "objectiveEvidence": [],
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 25
+      },
+      "role": "npc",
+      "text": "明早九点客户就到，上班后再弄根本来不及。你先说清楚，哪几页算最急？",
+      "ts": 1791283805707
+    },
+    {
+      "id": "r89vra7o5y7u",
+      "role": "learner",
+      "text": "请您确认客户最需要的是哪几页。我明早八点开始，八点一刻请您过一遍，九点前发出。今晚我还是不能留下。",
+      "ts": 1791283867770
+    },
+    {
+      "characterId": "michael",
+      "id": "rst9pvh961ez",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "note": "你在问清范围，方案尚未被接受",
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "今晚我还是不能留下。"
+          },
+          {
+            "index": 2,
+            "learnerQuote": "请您确认客户最需要的是哪几页。"
+          }
+        ],
+        "objectives": [
+          true,
+          false,
+          true
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 40
+      },
+      "role": "npc",
+      "text": "其实客户明早只要先看前三页……但你得改完再让我过目。我九点前还要开会，流程不能乱。",
+      "ts": 1791283872840
+    }
+  ]
+}

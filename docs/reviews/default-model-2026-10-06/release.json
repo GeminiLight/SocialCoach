@@ -1,0 +1,24 @@
+{
+  "github_app_commit": "c800aa2d18db164e0ccee9fffb97096cc9171d2b",
+  "vercel_deployment": "dpl_C7zNjd1nkvSuCEZ9MgmqFa9hBW7V",
+  "vercel_state": "READY",
+  "vercel_production_url": "https://socialcoach-ai.vercel.app",
+  "modelscope_commit": "2970d13cfe88a1b64fbf80d08846c9c76c79b3ff",
+  "modelscope_state": "Running",
+  "build_files_matched": 371,
+  "provider": "openai",
+  "base_url": "https://tokendance.space/gateway/v1",
+  "fast_model": "ling-3.1-flash",
+  "smart_model": "ling-3.1-flash",
+  "short_task_thinking": "disabled",
+  "token_parameter": "max_tokens",
+  "daily_reservation_limit": 2000000,
+  "concurrency": 8,
+  "secret_storage": "platform secret, server only",
+  "byok_ui_browser_checks": false,
+  "default_ui_browser_checks": true,
+  "modelscope_public_entry_checks": {
+    "browser": "net::ERR_CONNECTION_CLOSED",
+    "direct_get": 403
+  }
+}
