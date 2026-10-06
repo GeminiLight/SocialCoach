@@ -1,0 +1,34 @@
+[
+  {
+    "platform": "Vercel",
+    "mode": "2d",
+    "status": 200,
+    "seconds": 8.975,
+    "ok": true,
+    "body": "@@meta\n{\"objectives\":[false,false,false],\"ended\":false,\"stance\":30,\"revealed\":false,\"note\":\"你表明生日并追问交付范围\",\"outcome\":null,\"objectiveEvidence\":[],\"disclosures\":[]}\n@@michael\n生日啊……我知道，可客户明早要的是整份方案。你先说清楚：明早他们到底要哪几页？你要是能说准，咱们再谈。"
+  },
+  {
+    "platform": "Vercel",
+    "mode": "3d",
+    "status": 200,
+    "seconds": 6.655,
+    "ok": true,
+    "body": "{\"speakerId\":\"chen\",\"text\":\"开车就不勉强。茶敬林总，心意到了就行。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"neutral\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"neutral\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"beat\":\"bridge\"},\"replyTo\":\"陈总，我开车来的，今天不喝酒。我可以用茶向林姐表达谢意。\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"谢谢。不过周三到底能上线哪些功能？\"}}"
+  },
+  {
+    "platform": "ModelScope",
+    "mode": "2d",
+    "status": 200,
+    "seconds": 3.397,
+    "ok": true,
+    "body": "@@meta\n{\"objectives\":[false,false,false],\"ended\":false,\"stance\":35,\"revealed\":false,\"note\":\"你表明缺席并反问交付范围\",\"outcome\":null,\"objectiveEvidence\":[],\"disclosures\":[]}\n@@michael\n生日啊……行，我记下了。但第三部分改动最多，明早不重做客户肯定追问。到底哪部分不能拖，你得说清楚。"
+  },
+  {
+    "platform": "ModelScope",
+    "mode": "3d",
+    "status": 200,
+    "seconds": 2.738,
+    "ok": true,
+    "body": "{\"speakerId\":\"chen\",\"text\":\"开车就不勉强。茶也行，先敬林总一杯；但周三上线的事，你接着说明白。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"neutral\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"beat\":\"bridge\"},\"replyTo\":\"我开车来的，今天不喝酒。我可以用茶向林姐表达谢意。\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"茶我领了。周三到底能交什么，先说清范围。\"}}"
+  }
+]

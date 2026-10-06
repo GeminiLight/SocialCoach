@@ -51,6 +51,15 @@ async function openaiClient(c: ByokConfig): Promise<OpenAI> {
       baseURL: c.baseUrl.trim() || undefined,
       dangerouslyAllowBrowser: true,
       maxRetries: 1,
+      // Compatible gateways may allow Authorization/Content-Type in CORS but
+      // reject the SDK's optional diagnostics before any request is sent.
+      fetch: (input, init) => {
+        const headers = new Headers(init?.headers ?? (input instanceof Request ? input.headers : undefined));
+        for (const name of [...headers.keys()]) {
+          if (name.startsWith("x-stainless-")) headers.delete(name);
+        }
+        return fetch(input, { ...init, headers });
+      },
     });
     clients.set(c, cached);
   }
@@ -117,7 +126,7 @@ export function makeByokLLM(c: ByokConfig): LLM {
       if (c.provider === "openai") {
         const oa = await openaiClient(c);
         const res = await oa.chat.completions.create(
-          openaiArgs(o, c.smartModel, c.tokenParam) as Parameters<typeof oa.chat.completions.create>[0] & { stream?: false },
+          openaiArgs(o, c.smartModel, c.tokenParam, c.disableThinking) as Parameters<typeof oa.chat.completions.create>[0] & { stream?: false },
           { signal: o.signal },
         );
         const choice = "choices" in res ? res.choices[0] : undefined;
@@ -144,7 +153,7 @@ export function makeByokLLM(c: ByokConfig): LLM {
         if (c.provider === "openai") {
           const oa = await openaiClient(c);
           const stream = await oa.chat.completions.create({
-            ...openaiArgs(o, c.smartModel, c.tokenParam),
+            ...openaiArgs(o, c.smartModel, c.tokenParam, c.disableThinking),
             stream: true,
           } as Parameters<typeof oa.chat.completions.create>[0] & { stream: true }, {signal:o.signal});
           for await (const chunk of stream) {

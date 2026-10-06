@@ -25,7 +25,7 @@ function ModelForm({ onClose }: { onClose: () => void }) {
   const controller = useRef<AbortController | null>(null);
   useEffect(() => () => { controller.current?.abort(); }, []);
   const update = (patch: Partial<ByokConfig>) => { setDraft(d => ({ ...d, ...patch })); setCheck(null); };
-  const config: ByokConfig = { enabled: true, provider: draft.provider, tokenParam: draft.tokenParam, apiKey: draft.apiKey.trim(), baseUrl: draft.baseUrl.trim(), fastModel: draft.fastModel.trim(), smartModel: draft.smartModel.trim() || draft.fastModel.trim() };
+  const config: ByokConfig = { enabled: true, provider: draft.provider, tokenParam: draft.tokenParam, disableThinking: !!draft.disableThinking, apiKey: draft.apiKey.trim(), baseUrl: draft.baseUrl.trim(), fastModel: draft.fastModel.trim(), smartModel: draft.smartModel.trim() || draft.fastModel.trim() };
   const validAddress = !config.baseUrl || (() => { try { return ["https:", "http:"].includes(new URL(config.baseUrl).protocol); } catch { return false; } })();
   const save = (result: ModelCheck) => { useByok.getState().set(config); acceptModelCheck(result); onClose(); };
   const connect = async () => {
@@ -42,7 +42,7 @@ function ModelForm({ onClose }: { onClose: () => void }) {
   return <div className="flex flex-col gap-5 pt-1 pb-2">
     <p className="text-[14px] text-ink-3 leading-relaxed">{pick(access.source === "server" && access.state === "unavailable" && access.issue !== "setup" ? M.sharedUnavailableIntro : M.intro, lang)}</p>
     <fieldset disabled={busy} className="flex flex-col gap-5 disabled:opacity-70">
-      <div><p className="eyebrow mb-2">{pick(M.provider, lang)}</p><div className="flex flex-wrap gap-2">{(["anthropic", "openai"] as Provider[]).map(provider => <Chip key={provider} active={draft.provider === provider} onClick={() => update({ provider, fastModel: DEFAULT[provider], smartModel: "", baseUrl: "" })}>{provider === "anthropic" ? "Anthropic" : "OpenAI"}</Chip>)}</div></div>
+      <div><p className="eyebrow mb-2">{pick(M.provider, lang)}</p><div className="flex flex-wrap gap-2">{(["anthropic", "openai"] as Provider[]).map(provider => <Chip key={provider} active={draft.provider === provider} onClick={() => update({ provider, fastModel: DEFAULT[provider], smartModel: "", baseUrl: "", disableThinking: false })}>{provider === "anthropic" ? "Anthropic" : "OpenAI"}</Chip>)}</div></div>
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2 mb-2"><label htmlFor="model-key" className="eyebrow">API Key</label><a href={draft.provider === "openai" ? "https://platform.openai.com/api-keys" : "https://platform.claude.com/"} target="_blank" rel="noopener noreferrer" className="text-[12px] underline underline-offset-4 text-ink-3">{pick(M.website, lang)}</a></div>
         <div className="relative"><input id="model-key" type={visible ? "text" : "password"} autoComplete="off" spellCheck={false} value={draft.apiKey} onChange={e => update({ apiKey: e.target.value })} className={`${input} pr-12`} placeholder="sk-…" /><button type="button" aria-label={pick(visible ? M.hideKey : M.showKey, lang)} onClick={() => setVisible(v => !v)} className="press absolute right-0 top-0 h-11 w-11 inline-flex items-center justify-center text-ink-3">{visible ? <EyeOff size={16} /> : <Eye size={16} />}</button></div>
@@ -52,6 +52,7 @@ function ModelForm({ onClose }: { onClose: () => void }) {
         <label className="flex flex-col gap-2"><span className="eyebrow">{pick(M.endpoint, lang)}</span><input type="url" value={draft.baseUrl} onChange={e => update({ baseUrl: e.target.value })} spellCheck={false} className={input} placeholder="https://…" /><span className="text-[12px] text-ink-3">{pick(M.endpointHint, lang)}</span></label>
         <label className="flex flex-col gap-2"><span className="eyebrow">{pick(M.reportModel, lang)}</span><input value={draft.smartModel} onChange={e => update({ smartModel: e.target.value })} spellCheck={false} className={input} placeholder={pick(M.sameModel, lang)} /></label>
         {draft.provider === "openai" && <label className="flex flex-col gap-2"><span className="eyebrow">{pick(M.tokenParam, lang)}</span><select className={input} value={draft.tokenParam} onChange={e => update({ tokenParam: e.target.value as ByokConfig["tokenParam"] })}><option>max_tokens</option><option>max_completion_tokens</option></select></label>}
+        {draft.provider === "openai" && <div><label className="press flex min-h-11 items-center gap-3 text-[13px]"><input type="checkbox" checked={!!draft.disableThinking} onChange={e => update({ disableThinking: e.target.checked })} className="h-4 w-4" />{pick(M.disableThinking, lang)}</label><p className="text-[12px] leading-relaxed text-ink-3">{pick(M.disableThinkingHint, lang)}</p></div>}
       </div></details>
     </fieldset>
     {!validAddress && <p role="status" className="text-[13px] text-danger">{pick(M.invalidAddress, lang)}</p>}

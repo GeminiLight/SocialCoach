@@ -1,0 +1,62 @@
+{
+  "checked_at": "2026-10-06T15:05:11.339449+08:00",
+  "synthetic_only": true,
+  "provider_generation_not_reached": true,
+  "shared_budget": {
+    "used_reserved_tokens": 1982532,
+    "daily_ceiling": 2000000,
+    "remaining_reserved_tokens": 17468,
+    "active_requests": 0,
+    "reset_beijing": "2026-10-07T08:00:00+08:00"
+  },
+  "fresh_metadata_health": {
+    "Vercel": "available",
+    "ModelScope": "available"
+  },
+  "api_checks": [
+    {
+      "platform": "Vercel",
+      "mode": "2d",
+      "status": 200,
+      "body": "\n@@error\n{\"error\":\"Model connection: quota.\",\"status\":429,\"modelIssue\":\"quota\"}",
+      "seconds": 1.77
+    },
+    {
+      "platform": "Vercel",
+      "mode": "3d",
+      "status": 429,
+      "body": "{\"error\":\"Model connection: quota.\",\"modelIssue\":\"quota\"}",
+      "seconds": 1.87
+    },
+    {
+      "platform": "ModelScope",
+      "mode": "2d",
+      "status": 200,
+      "body": "\n@@error\n{\"error\":\"Model connection: quota.\",\"status\":429,\"modelIssue\":\"quota\"}",
+      "seconds": 0.72
+    },
+    {
+      "platform": "ModelScope",
+      "mode": "3d",
+      "status": 429,
+      "body": "{\"error\":\"Model connection: quota.\",\"modelIssue\":\"quota\"}",
+      "seconds": 0.85
+    }
+  ],
+  "browser_checks": {
+    "Vercel_3d": "quota error, opening and draft preserved",
+    "Vercel_2d": "quota error, learner words retained, no NPC fabricated"
+  },
+  "budget_changed": false,
+  "approval_pending": "One additional reopening of today’s shared pool, at most 2,000,000 additional reserved tokens.",
+  "limitations": [
+    "These failures occurred at the application shared-budget gate. They do not prove provider credit is exhausted.",
+    "Personal BYOK configuration was not accessed.",
+    "No real user practice archive was accessed."
+  ],
+  "configuration_check": {
+    "modelscope_budget_matches_linked_db": true,
+    "daily_limit": "2000000",
+    "concurrency": "8"
+  }
+}

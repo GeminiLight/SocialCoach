@@ -1,0 +1,18 @@
+[
+  {
+    "variant": "thinking_disabled",
+    "status": 200,
+    "text": "连接测试成功。",
+    "reasoning_characters": 0,
+    "finish": "stop",
+    "total_tokens": 34
+  },
+  {
+    "variant": "enable_thinking_false",
+    "status": 200,
+    "text": "连接测试成功。",
+    "reasoning_characters": 0,
+    "finish": "stop",
+    "total_tokens": 34
+  }
+]
