@@ -68,6 +68,29 @@ test('telling an NPC not to repeat is not permission to replay the earlier line'
  assert.equal((await runDinner(input,model,'test')).text,'那我就照实转达，不过我还得想想怎么开口。');assert.equal(calls,2);
 });
 
+for(const [lang,text,fresh] of [
+ ['zh','你怎么又重复原话？请回答问题。','我问的是你愿不愿意让我照实转达，不是说你答应了。'],
+ ['zh','你为什么又把那句再说一遍？请直接回答。','我还想听听你的打算，介绍的事你可以明确拒绝。'],
+ ['en','Why did you repeat that quote? Please answer the question.','I still want an answer, but you can refuse the introduction.'],
+ ['en',"I don't need another quote. Please answer my question.",'I want to know what I should tell the person who offered the introduction.'],
+] as const) {
+ test(`a repetition complaint cannot authorize replay: ${lang} ${text}`,async()=>{
+  const scene=scenarios.find(s=>s.id==='family')!,history=[opening(scene,lang,'family-introduction')];
+  const input={scenarioId:'family',variantId:'family-introduction',maxTurns:12,lang,targetId:'aunt',text,history};
+  let calls=0;const model:LLM={chatText:async()=>JSON.stringify({replyTo:text.slice(0,25),speakerId:'aunt',text:++calls===1?history[0].text:fresh,reactions:history[0].reactions}),chatStream:()=>{throw Error('Unexpected');}};
+  assert.equal((await runDinner(input,model,'test')).text,fresh);assert.equal(calls,2);assert.equal(history.length,1);
+ });
+}
+
+for(const text of ['Aunt, please repeat your last line.','Aunt, could you quote your exact words?','Why did you repeat that quote? Please repeat your last line so I can compare.']) {
+ test(`an explicit English quotation request keeps the replay exemption: ${text}`,async()=>{
+  const scene=scenarios.find(s=>s.id==='family')!,history=[opening(scene,'en','family-introduction')];
+  const input={scenarioId:'family',variantId:'family-introduction',maxTurns:12,lang:'en',targetId:'aunt',text,history};
+  let calls=0;const model:LLM={chatText:async()=>{calls++;return JSON.stringify({replyTo:text.slice(0,25),speakerId:'aunt',text:history[0].text,reactions:history[0].reactions});},chatStream:()=>{throw Error('Unexpected');}};
+  assert.equal((await runDinner(input,model,'test')).text,history[0].text);assert.equal(calls,1);
+ });
+}
+
 test('one spoken exchange cannot invent an expired speaking slot',()=>{
  assert.ok(sceneFactError('office-interruption','一分钟到了。谁去查、查多久，给个数。',['先让我说一分钟。','先查访问，再试两名客服。']));
  assert.ok(sceneFactError('office-interruption',"Your minute is up. We need to decide now.",['Let me speak for one minute.']));

@@ -136,7 +136,11 @@ export async function runDinner(input:unknown,llm:LLM,model:string,signal?:Abort
       // acknowledgments and explicit requests to repeat remain legitimate.
       const normalize=(text:string)=>text.normalize('NFC').replace(/\s+/gu,'');
       const lastPlayer=[...body.history].reverse().find(m=>m.role==='user')?.text;
-      const repeatRequest=/(?:原话|复述|再说一遍|\brepeat\b|\bquote\b|\bsay .* again\b)/iu.test(body.text)&&!/(?:别|不要|不必|不用)(?:再|继续|老是|一直|又)?(?:复述|重复|原话|再说一遍)|\b(?:do not|don['’]t|stop)\s+(?:repeat(?:ing)?|quot(?:e|ing)|say(?:ing)? .* again)\b/iu.test(body.text);
+      // Mentioning repetition (including a complaint) does not request it.
+      // A separate explicit request still works after an earlier question.
+      const repeatRequest=body.text.split(/[。！？.!?\n]/u).some(part=>
+        /(?:再说一遍|(?:请|麻烦)(?:你)?(?:再)?(?:复述|重复)|(?:复述|重复)(?:一下|一遍|一次)|(?:^|[,，])\s*(?:please\s+)?(?:repeat|quote)\b|\b(?:can|could|would|will)\s+you\s+(?:please\s+)?(?:repeat|quote)\b|\bplease\s+say\b[^.!?]*\bagain\b)/iu.test(part)&&
+        !/(?:别|不要|不必|不用)(?:再|继续|老是|一直|又)?(?:复述|重复|原话|再说一遍)|(?:为什么|为何|怎么|干嘛).{0,16}(?:复述|重复|原话|再说)|\bwhy\b[^.!?]*\b(?:repeat|quote|quoting|say)\b|\b(?:do not|don['’]t|stop)\s+(?:repeat(?:ing)?|quot(?:e|ing)|say(?:ing)? .* again)\b/iu.test(part));
       if(!repeatRequest&&normalize(body.text)!==normalize(lastPlayer??'')){
         const recent=body.history.filter(m=>m.role==='npc').slice(-3).flatMap(m=>[{speakerId:m.speakerId,text:m.text},...(m.interjection?[m.interjection]:[])]);
         const replay=[{speakerId:reply.speakerId,text:reply.text},...(reply.interjection?[reply.interjection]:[])].some(line=>[...normalize(line.text)].length>=30&&recent.some(old=>old.speakerId===line.speakerId&&normalize(old.text)===normalize(line.text)));
