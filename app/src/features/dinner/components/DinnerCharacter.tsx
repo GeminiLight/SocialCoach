@@ -152,7 +152,7 @@ export function DinnerCharacter({ character, actor, world, reaction, active, onS
     torso.current.rotation.x = MathUtils.lerp(torso.current.rotation.x, gesture === 'lean' ? .12 : actor.seated?-.008:0, speed);
     torso.current.rotation.z=MathUtils.lerp(torso.current.rotation.z,actor.moving||toast>.01||phoneAmount>.01?0:appearance.restTilt,speed);
     head.current.rotation.y = MathUtils.lerp(head.current.rotation.y, gaze.head, speed);
-    head.current.rotation.x = MathUtils.lerp(head.current.rotation.x,gaze.pitch+(gesture==='nod'&&!reduced?Math.sin(Math.min(1,timing.elapsed/1.4)*Math.PI)*.035:emotion==='annoyed'?-.025:0)+pose.emphasis*.012*appearance.energy,speed);
+    head.current.rotation.x = MathUtils.lerp(head.current.rotation.x,gaze.pitch+(gesture==='nod'&&!actor.moving?pose.nod:emotion==='annoyed'?-.025:0)+pose.emphasis*.012*appearance.energy,speed);
     const residual=wrapAngle(Math.atan2(gazeTarget.x-actor.x,gazeTarget.z-actor.z)-root.current.rotation.y-torso.current.rotation.y-head.current.rotation.y);
     if(pupils.current){
       pupils.current.offset.x=MathUtils.lerp(pupils.current.offset.x,MathUtils.clamp(-residual*.16,-.09,.09),speed);

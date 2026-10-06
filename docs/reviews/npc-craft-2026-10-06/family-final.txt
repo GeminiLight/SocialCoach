@@ -1,0 +1,13 @@
+family-introduction/main 1: aunt [permission] 什么报名表，人家正经孩子。看照片就是看照片，你要觉得行，咱们再谈加联系方式，一步归一步。
+family-introduction/main 2: mom [care] 我Know，我哪敢替你答应。我就是想知道，你以后的事，还愿不愿意跟我说两句，别什么都等大姨来转述。 | aunt: 行行，转述这活儿我也不爱干。
+family-introduction/main 3: aunt [relay] 连照片都不看？行，我头一回听你把话说死。那我只能实话回人家：不考虑相亲。这话我原样带出去，你别嫌难听。 | dad: 先吃饭吧，菜都凉了。
+family-introduction/main 4: dad [relay] 我没打算替你圆。你说了不考虑，人家问起，就照这句。忙不忙的，那是别人家的说辞，我不学。 | mom: 那以后再有这种事，你直接跟我说一声，行吗？
+family-introduction/main 5: aunt [relay] 就照原话：孩子说了不考虑相亲，照片也没看。不多添一句，也不替你说什么忙。你要觉得哪个字不对，现在提。
+family-introduction/main 6: mom [care] 行，安排我不管了。我就是怕啊——你什么都是别人转述，我连你过得咋样都是听来的。你的事，你点头我才说，行不？ | dad: 说定了就好，吃饭。
+family-introduction/main 7: mom [care] 道歉我收下，妈不怪你。不相亲是你的事，我不掺和。我就想着，往后你每回跟我说一句近况，我就知足。
+family-introduction/main 8: aunt [relay] 行，那我不说“以后再说”。我就带一句：不考虑相亲，没有余地。这说法你认了吧？
+family-introduction/main 9: dad [future] 我可以做到我这儿：下回谁先来问，我先说一句，这事得问本人。我只能管我自己这张嘴，替不了你妈和大姨。
+family-introduction/main 10: mom [care] 哎，这话我爱听。就咱俩聊，你说的我不往外传，我保证。
+family-introduction/main 11: aunt [future] 不会。说出去的就是“不考虑相亲，没有余地”，后半句没了。往后有这种事，我先问你本人，不先端照片上桌。
+family-introduction/main 12: dad [future] 我明白的是：不相亲，照片没看，联系方式也没加。饭是饭，决定是决定，我没混。
+{"out":"/tmp/socialcoach-craft-family-introduction.json","cases":1,"failed":0,"completedTurns":12}

@@ -1,0 +1,11 @@
+{
+  "scope": "8 fixed 3D inputs, first candidate round only",
+  "baseline_bytes": 165128,
+  "candidate_bytes": 159649,
+  "change_percent": -3.32,
+  "notes": [
+    "Input bytes, not billed tokens.",
+    "Later school/language instructions add text; not a final latency or price benchmark.",
+    "Text NPC prompt grew; no whole-system speedup claimed."
+  ]
+}

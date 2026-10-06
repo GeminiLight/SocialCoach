@@ -1,0 +1,210 @@
+{
+  "model": "glm-5.3-flash",
+  "results": [
+    {
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "school",
+        "variantId": "school-credit",
+        "maxTurns": 12,
+        "targetId": "kai",
+        "lang": "zh",
+        "text": "阿凯，咱俩的代码部分写清楚就行，你真核对过提交记录吗？",
+        "history": [
+          {
+            "role": "npc",
+            "text": "这个奖主要靠我带队。合照就写“队友负责执行”，没意见吧？",
+            "speakerId": "senior",
+            "cue": "许学长把奖杯拉近，先举杯。小月和阿凯对视一下，才抬起自己的杯子。",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "senior",
+                "emotion": "pressing",
+                "gesture": "toast"
+              },
+              {
+                "characterId": "yue",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "kai",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "credit"
+            }
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "kai",
+        "text": "还没看过记录，现在说不准。我可以吃完翻一下提交历史，咱俩的部分我能对。别的我不敢替谁确认。",
+        "cue": "阿凯朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "kai",
+            "emotion": "thinking",
+            "gesture": "lean"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "signoff"
+        },
+        "replyTo": "你真核对过提交记录吗？",
+        "interjection": {
+          "speakerId": "yue",
+          "text": "翻完顺便把设计那行也定下来，别又写'执行'。"
+        }
+      }
+    },
+    {
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "school",
+        "variantId": "school-credit",
+        "maxTurns": 12,
+        "targetId": "kai",
+        "lang": "zh",
+        "text": "阿凯，咱俩的代码部分写清楚就行，你真核对过提交记录吗？",
+        "history": [
+          {
+            "role": "npc",
+            "text": "这个奖主要靠我带队。合照就写“队友负责执行”，没意见吧？",
+            "speakerId": "senior",
+            "cue": "许学长把奖杯拉近，先举杯。小月和阿凯对视一下，才抬起自己的杯子。",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "senior",
+                "emotion": "pressing",
+                "gesture": "toast"
+              },
+              {
+                "characterId": "yue",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "kai",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "credit"
+            }
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "kai",
+        "text": "还没查过。代码的提交记录我可以饭后翻一下，咱俩谁写了哪块能对上，但别的部分我说不准。",
+        "cue": "阿凯朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "kai",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "signoff"
+        },
+        "replyTo": "你真核对过提交记录吗？"
+      }
+    },
+    {
+      "input": {
+        "briefVersion": 1,
+        "scenarioId": "school",
+        "variantId": "school-credit",
+        "maxTurns": 12,
+        "targetId": "kai",
+        "lang": "zh",
+        "text": "阿凯，咱俩的代码部分写清楚就行，你真核对过提交记录吗？",
+        "history": [
+          {
+            "role": "npc",
+            "text": "这个奖主要靠我带队。合照就写“队友负责执行”，没意见吧？",
+            "speakerId": "senior",
+            "cue": "许学长把奖杯拉近，先举杯。小月和阿凯对视一下，才抬起自己的杯子。",
+            "mode": "script",
+            "reactions": [
+              {
+                "characterId": "senior",
+                "emotion": "pressing",
+                "gesture": "toast"
+              },
+              {
+                "characterId": "yue",
+                "emotion": "neutral",
+                "gesture": "idle"
+              },
+              {
+                "characterId": "kai",
+                "emotion": "neutral",
+                "gesture": "idle"
+              }
+            ],
+            "story": {
+              "topic": "credit"
+            }
+          }
+        ]
+      },
+      "output": {
+        "speakerId": "kai",
+        "text": "还没核对过。提交记录在，我可以回头拉出来看一遍，但不代表我能替全队签字。",
+        "cue": "阿凯看向你。",
+        "reactions": [
+          {
+            "characterId": "kai",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "senior",
+            "emotion": "pressing",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "yue",
+            "emotion": "supportive",
+            "gesture": "lean"
+          }
+        ],
+        "story": {
+          "topic": "evidence",
+          "beat": "signoff"
+        },
+        "replyTo": "你真核对过提交记录吗？"
+      }
+    }
+  ]
+}

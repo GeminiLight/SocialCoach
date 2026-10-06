@@ -51,5 +51,8 @@ test('the director repairs oversized interjections while keeping the selected ad
  const llm:LLM={chatText:async o=>{attempts++;payload=String(o.messages[0].content);prompt=JSON.stringify(o.system);return JSON.stringify(attempts===1?{...answer,interjection:{speakerId:'senior',text:'长'.repeat(46)}}:answer);},chatStream:()=>{throw new Error('Unexpected');}};
  const result=await runDinner({scenarioId:'school',variantId:'school-credit',lang:'zh',text,history,targetId:'yue'},llm,'selected-model');
  assert.equal(attempts,2);assert.equal(result.speakerId,'yue');assert.deepEqual(result.interjection,answer.interjection);
- assert.ok(payload.includes(reply.interjection.text));assert.ok(prompt.includes('队友负责执行'));assert.ok(prompt.includes('REPAIR REQUIRED'));assert.ok(prompt.includes('NO MATCHMAKING'));assert.ok(prompt.includes('test reproduction count'));assert.ok(prompt.includes("player's gender"));
+ assert.ok(payload.includes(reply.interjection.text));assert.ok(prompt.includes('队友负责执行'));assert.ok(prompt.includes('REPAIR REQUIRED'));
+ // A school repair must retain its own facts without another opening's
+ // matchmaking or office-data instructions.
+ assert.ok(!prompt.includes('NO MATCHMAKING'));assert.ok(!prompt.includes('Office data remains unchecked'));
 });

@@ -70,7 +70,7 @@ export function RiggedCharacter({character,actor,world,reaction,active,onSelect,
     const breathing=actor.moving?0:presenceState.breath;
     turn(rig.bones.spine_02,breathing*1.7,0);
     turn(rig.bones.spine_03,-breathing*.7,gaze.torso*.6);turn(rig.bones.neck_01,0,gaze.head*.15);
-    turn(rig.bones.head,gaze.pitch+(reaction?.gesture==='nod'?presenceState.emphasis*.04:0),gaze.head*.85);
+    turn(rig.bones.head,gaze.pitch+(reaction?.gesture==='nod'&&!actor.moving?presenceState.nod:0),gaze.head*.85);
     if(actor.moving&&!reduced){const stride=Math.sin(timing.time*8)*.26;turn(rig.bones.thigh_l,stride,0);turn(rig.bones.thigh_r,-stride,0);turn(rig.bones.upperarm_l,-stride*.5,0);turn(rig.bones.upperarm_r,stride*.5,0);}
     const expression=facialExpression(player?'neutral':reaction?.emotion);
     for(const face of rig.faces){const dict=face.morphTargetDictionary!,values=face.morphTargetInfluences!;for(const [name,value] of Object.entries({...expression,blink:1-presenceState.blink,jawOpen:presenceState.speech*.34,browInnerUp:expression.browInnerUp+presenceState.emphasis*.10,mouthPress:expression.mouthPress*(1-presenceState.speech)})){if(dict[name]!==undefined)values[dict[name]]=name==='blink'||name==='jawOpen'?value:MathUtils.lerp(values[dict[name]],value,smoothing);}}

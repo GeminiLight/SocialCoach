@@ -110,5 +110,5 @@ Voices: ${arc.voices}
 Conditional developments: ${JSON.stringify(arc.pressures)}
 Landing: ${arc.landing}
 Choose at most ONE applicable development after answering the current player. These are opportunities, not a required order. Follow the player's alternate goal or return to an earlier unresolved point. Do not play an inapplicable development to fill time. Use story.beat only when you actually play that development; it describes the reply, not success, consent or a score. Previous beats are in history.story. A repeated beat needs a new concrete issue; don't repeat its earlier demand. An old save without beats has no missing turns: infer only from its real dialogue.
-${pick({zh:'中文口吻：陈总短促、林姐务实，小周谨慎；亲戚有口头话，同学别说公文，办公室别说酒桌话。不用“我理解你的感受”“建立一个机制”等助理腔。',en:'Speak in the selected character’s register. Family sounds like family, students like students. Avoid assistant phrases such as “I understand your feelings” or “establish a mechanism.”'},lang)}`;
+${pick({zh:'按当前人物的口吻说话。亲戚有口头话，同学别说公文，办公室别说酒桌话。不用“我理解你的感受”“建立一个机制”等助理腔。',en:'Speak in the selected character’s register. Family sounds like family, students like students. Avoid assistant phrases such as “I understand your feelings” or “establish a mechanism.”'},lang)}`;
 }

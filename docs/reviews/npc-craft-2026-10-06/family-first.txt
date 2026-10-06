@@ -1,0 +1,13 @@
+family-introduction/main 1: aunt [permission] 哎哟哪是报名表。看照片就是看照片，加了微信慢慢聊，见面再说嘛。那你要不要先看看照片？ | dad: 先吃饭，菜都凉了。
+family-introduction/main 2: mom [care] 妈没说你答应了。妈就是想知道你到底怎么想的，别让我夹在中间猜。
+family-introduction/main 3: aunt [relay] 不看就不看，非逼你干嘛。那我怎么跟你王姨那边交代？就说“孩子不愿意”，行不行？ | dad: 就照实说，别绕。
+family-introduction/main 4: dad [relay] 我没说你忙，我说的是照实讲。愿不愿意是你自己的话，我不替你说。 | aunt: 照实说多难听，好歹说“暂时不愿意”吧？
+family-introduction/main 5: aunt [relay] 我就说：孩子本人讲了，不考虑相亲，照片也不看。一个字不添，一个字不减。
+family-introduction/main 6: mom [care] 妈的担心就是你什么都不跟妈说。安排不安排，妈不掺和了，可你平时吃饭睡觉的事，愿意跟我念叨两句吗？
+family-introduction/main 7: mom [care] 行，妈听到了，不委屈了。不相亲这事妈不拦，平时的事你想说就说，妈听着。
+family-introduction/main 8: aunt [relay] 哎，我刚才不是说了嘛，一个字不添一个字不减：不考虑相亲，照片不看。放心，不会给你改成什么“以后再说”。
+family-introduction/main 9: dad [future] 提醒的话我能说：下次这种事先问问本人。但我不替你大姨保证，她听不听是她的事。 | aunt: 说得好像我不问似的，我这不当面问了你嘛。
+family-introduction/main 10: mom [care] 好，饭后妈就跟你俩人聊，说出去不说。你要是不想讲哪件，妈也不追着问。 | dad: 那这局算说开了，先吃饭吧。
+family-introduction/main 11: aunt [future] 不会。你说了照片不看，我这次就不提了。转述也是照原话，不会再绕回照片上。
+family-introduction/main 12: dad [-] 我明白的是：不相亲、照片不看，这话没变。刚才只是叫大家吃饭，没别的意思。
+{"out":"/tmp/socialcoach-craft-family-introduction.json","cases":1,"failed":0,"completedTurns":12}

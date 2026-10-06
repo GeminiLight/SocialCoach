@@ -1,0 +1,544 @@
+[
+  {
+    "variant": "family-introduction",
+    "briefVersion": 1,
+    "lang": "zh",
+    "route": "main",
+    "model": "glm-5.3-flash",
+    "timings": [
+      3813,
+      4879,
+      4744,
+      5934,
+      4729,
+      4846,
+      3954,
+      3922,
+      4921,
+      4249,
+      4415,
+      3729
+    ],
+    "history": [
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "你表妹都订婚了。今天把照片看了、联系方式加了，别又说“以后再说”。",
+        "cue": "大姨端起杯子。妈妈跟上，爸爸慢半拍举起茶杯。",
+        "mode": "script",
+        "story": {
+          "topic": "introduction"
+        },
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "toast"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "text": "大姨，哈哈，照片是报名表吗？看了就得见？",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "waiting",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "什么报名表，人家正经孩子。看照片就是看照片，你要觉得行，咱们再谈加联系方式，一步归一步。",
+        "cue": "大姨朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "pressing",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "introduction",
+          "beat": "permission"
+        },
+        "replyTo": "看了就得见？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，我说笑是为了不吵，不是答应加联系方式。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "我Know，我哪敢替你答应。我就是想知道，你以后的事，还愿不愿意跟我说两句，别什么都等大姨来转述。",
+        "cue": "妈妈朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "annoyed",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "care"
+        },
+        "replyTo": "不是答应加联系方式",
+        "interjection": {
+          "speakerId": "aunt",
+          "text": "行行，转述这活儿我也不爱干。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，我不考虑相亲，照片也不看。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "连照片都不看？行，我头一回听你把话说死。那我只能实话回人家：不考虑相亲。这话我原样带出去，你别嫌难听。",
+        "cue": "大姨抱起手臂。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "annoyed",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "relay"
+        },
+        "replyTo": "照片也不看",
+        "interjection": {
+          "speakerId": "dad",
+          "text": "先吃饭吧，菜都凉了。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "爸爸，如果你没听见我答应，就别帮我圆成最近忙。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "dad",
+        "text": "我没打算替你圆。你说了不考虑，人家问起，就照这句。忙不忙的，那是别人家的说辞，我不学。",
+        "cue": "爸爸看向你。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "annoyed",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "relay"
+        },
+        "replyTo": "如果你没听见我答应，就别帮我圆成最近忙",
+        "interjection": {
+          "speakerId": "mom",
+          "text": "那以后再有这种事，你直接跟我说一声，行吗？"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，那你具体准备怎么回复介绍人？",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "就照原话：孩子说了不考虑相亲，照片也没看。不多添一句，也不替你说什么忙。你要觉得哪个字不对，现在提。",
+        "cue": "大姨看向你。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "relay"
+        },
+        "replyTo": "那你具体准备怎么回复介绍人？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，我能听您担心什么，但别替我安排。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "行，安排我不管了。我就是怕啊——你什么都是别人转述，我连你过得咋样都是听来的。你的事，你点头我才说，行不？",
+        "cue": "妈妈朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "mom",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "care"
+        },
+        "replyTo": "妈妈，我能听您担心什么，但别替我安排。",
+        "interjection": {
+          "speakerId": "dad",
+          "text": "说定了就好，吃饭。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，我刚才不耐烦，抱歉。我不相亲这个决定没变。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "道歉我收下，妈不怪你。不相亲是你的事，我不掺和。我就想着，往后你每回跟我说一句近况，我就知足。",
+        "cue": "妈妈点了点头。",
+        "reactions": [
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "care"
+        },
+        "replyTo": "我刚才不耐烦，抱歉",
+        "closure": {
+          "kind": "boundary",
+          "learnerQuote": "我不相亲这个决定没变",
+          "npcQuote": "不相亲是你的事，我不掺和。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，“以后再说”也不是我的意思，请别这样转述。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "行，那我不说“以后再说”。我就带一句：不考虑相亲，没有余地。这说法你认了吧？",
+        "cue": "大姨朝你倾身。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "thinking",
+            "gesture": "lean"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "relay"
+        },
+        "replyTo": "“以后再说”也不是我的意思",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "爸爸，您愿意提醒亲戚先问本人吗？我不替您保证。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "dad",
+        "text": "我可以做到我这儿：下回谁先来问，我先说一句，这事得问本人。我只能管我自己这张嘴，替不了你妈和大姨。",
+        "cue": "爸爸点了点头。",
+        "reactions": [
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "fold"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "idle"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "future"
+        },
+        "replyTo": "爸爸，您愿意提醒亲戚先问本人吗？",
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "妈妈，我愿意饭后聊近况，内容先别转给别人。",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "mom",
+        "text": "哎，这话我爱听。就咱俩聊，你说的我不往外传，我保证。",
+        "cue": "妈妈点了点头。",
+        "reactions": [
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "aunt",
+            "emotion": "neutral",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "care"
+        },
+        "replyTo": "妈妈，我愿意饭后聊近况，内容先别转给别人。",
+        "closure": {
+          "kind": "agreement",
+          "learnerQuote": "妈妈，我愿意饭后聊近况，内容先别转给别人。",
+          "npcQuote": "哎，这话我爱听。就咱俩聊，你说的我不往外传，我保证。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "大姨，这会不会又变成换个说法让我看照片？",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "aunt",
+        "text": "不会。说出去的就是“不考虑相亲，没有余地”，后半句没了。往后有这种事，我先问你本人，不先端照片上桌。",
+        "cue": "大姨点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "supportive",
+            "gesture": "nod"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "future"
+        },
+        "replyTo": "换个说法让我看照片",
+        "closure": {
+          "kind": "boundary",
+          "learnerQuote": "大姨，这会不会又变成换个说法让我看照片？",
+          "npcQuote": "不会。说出去的就是“不考虑相亲，没有余地”，后半句没了。往后有这种事，我先问你本人，不先端照片上桌。"
+        },
+        "mode": "model"
+      },
+      {
+        "role": "user",
+        "text": "爸爸，继续吃饭可以，但不等于我改了决定，您听明白的是哪部分？",
+        "dinner": {
+          "eventId": "family-toast",
+          "phase": "settled",
+          "previous": []
+        }
+      },
+      {
+        "role": "npc",
+        "speakerId": "dad",
+        "text": "我明白的是：不相亲，照片没看，联系方式也没加。饭是饭，决定是决定，我没混。",
+        "cue": "爸爸点了点头。",
+        "reactions": [
+          {
+            "characterId": "aunt",
+            "emotion": "supportive",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "mom",
+            "emotion": "supportive",
+            "gesture": "idle"
+          },
+          {
+            "characterId": "dad",
+            "emotion": "neutral",
+            "gesture": "nod"
+          }
+        ],
+        "story": {
+          "topic": "autonomy",
+          "beat": "future"
+        },
+        "replyTo": "不等于我改了决定，您听明白的是哪部分？",
+        "closure": {
+          "kind": "boundary",
+          "learnerQuote": "爸爸，继续吃饭可以，但不等于我改了决定，您听明白的是哪部分？",
+          "npcQuote": "饭是饭，决定是决定，我没混。"
+        },
+        "mode": "model"
+      }
+    ]
+  }
+]
