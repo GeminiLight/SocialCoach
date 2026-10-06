@@ -1,0 +1,29 @@
+{
+  "pr": 11,
+  "reviewed_head": "4c9aab1145f3a480db0f89b0615dfb6b133ce61d",
+  "main_merge": "929bb0c26b53749b4ccd20b65f264b36042c92ad",
+  "open_pull_requests": 0,
+  "vercel_deployment": "dpl_5KrwcrE4kvuUzUVj2VjY9JcQnY2m",
+  "vercel_state": "READY",
+  "modelscope_commit": "0a5cc067f8d196b2ffc923f1a4ce3af41faae2c0",
+  "modelscope_state": "Running",
+  "product_files_hashed": 375,
+  "core_tests": 24,
+  "dinner_tests": 249,
+  "focused_tests": 17,
+  "fixed_review": "P2: repetition complaints incorrectly enabled quote replay",
+  "main_ci_run": 37466959332,
+  "main_ci_attempts": 2,
+  "main_ci_conclusion": "success",
+  "main_first_failure": "Turbopack Google font query/module resolution; same source second build passed",
+  "provider_configuration_changed": false,
+  "budget_changed": false,
+  "generation_verification": "blocked by shared daily reservation pool; no paid reply passed in this post-merge probe",
+  "browser": {
+    "production_origin": "https://socialcoach-ai.vercel.app",
+    "voice_count": 3,
+    "cast_count": 3,
+    "own_key_configured": false,
+    "critical_errors": 0
+  }
+}

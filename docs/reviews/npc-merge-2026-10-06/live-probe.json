@@ -1,0 +1,12 @@
+[
+  {
+    "platform": "Vercel",
+    "fixture": "mom-repair",
+    "kind": "3d",
+    "status": 429,
+    "ok": false,
+    "seconds": 1.987,
+    "body": "{\"error\":\"Model connection: quota.\",\"modelIssue\":\"quota\"}",
+    "expected": "Respond as a hurt mother, repair tone gradually; apology is not permission or an instant emotional reset."
+  }
+]

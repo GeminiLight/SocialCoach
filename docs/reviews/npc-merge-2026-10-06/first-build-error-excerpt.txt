@@ -1,0 +1,20 @@
+quality	Run pnpm build	2026-10-06T12:57:47.7823963Z Error: Turbopack build failed with 16 errors:
+quality	Run pnpm build	2026-10-06T12:57:47.7825606Z Error: Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+quality	Run pnpm build	2026-10-06T12:57:47.7834634Z next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7839775Z - next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7840688Z Error while looking up import map: next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7843404Z - next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7849817Z Error: Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+quality	Run pnpm build	2026-10-06T12:57:47.7857121Z next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7872553Z - next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7873271Z Error while looking up import map: next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7875500Z - next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7880821Z Error: Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+quality	Run pnpm build	2026-10-06T12:57:47.7889599Z next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7894060Z - next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7894756Z Error while looking up import map: next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7896853Z - next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7901195Z Error: Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+quality	Run pnpm build	2026-10-06T12:57:47.7909517Z next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7914168Z - next/font/google queries have exactly one entry
+quality	Run pnpm build	2026-10-06T12:57:47.7915071Z Error while looking up import map: next/font/google queries have exactly one entry
