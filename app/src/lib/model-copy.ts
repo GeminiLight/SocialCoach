@@ -7,6 +7,8 @@ export const M = {
   hideKey: { zh: "隐藏密钥", en: "Hide key" },
   invalidAddress: { zh: "请填写完整的 http:// 或 https:// 地址。", en: "Enter a complete http:// or https:// address." },
   tokenParam: { zh: "Token 参数", en: "Token parameter" },
+  disableThinking: { zh: "短对话关闭额外推理", en: "Disable extra reasoning for short replies" },
+  disableThinkingHint: { zh: "仅用于支持关闭推理的兼容服务。服务不支持时请关闭此选项。", en: "Only for compatible services that support disabling reasoning. Leave off if unsupported." },
   title: { zh: "接入模型", en: "Connect a model" },
   intro: { zh: "填入你的 API Key，就能继续练习。", en: "Add your API key to continue practicing." },
   sharedUnavailableIntro: { zh: "默认模型暂时不可用。你可以填入自己的 API Key，继续练习。", en: "The default model is unavailable. Add your own API key to continue practicing." },

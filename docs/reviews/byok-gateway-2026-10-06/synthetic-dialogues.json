@@ -1,0 +1,323 @@
+{
+  "dinner": [
+    {
+      "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+      "mode": "script",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "pressing",
+          "gesture": "toast"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "neutral",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "chen",
+      "story": {
+        "topic": "toast"
+      },
+      "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？"
+    },
+    {
+      "dinner": {
+        "eventId": "work-toast",
+        "phase": "waiting",
+        "previous": []
+      },
+      "role": "user",
+      "room": {
+        "npcs": [
+          {
+            "characterId": "chen",
+            "posture": "seated"
+          },
+          {
+            "characterId": "lin",
+            "posture": "seated"
+          },
+          {
+            "characterId": "zhou",
+            "posture": "seated"
+          }
+        ],
+        "posture": "seated",
+        "zone": "table"
+      },
+      "text": "陈总，我开车来的，今天不喝酒。我可以用茶向林姐表达谢意。"
+    },
+    {
+      "cue": "陈总点了点头。",
+      "interjection": {
+        "speakerId": "lin",
+        "text": "茶我领了。周三到底交付哪些，你回我一句实的。"
+      },
+      "mode": "model",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "neutral",
+          "gesture": "nod"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "pressing",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "chen",
+      "story": {
+        "beat": "bridge",
+        "topic": "toast"
+      },
+      "text": "开车来的就不喝，这我认。茶敬林总，可以，心意到了。"
+    },
+    {
+      "dinner": {
+        "eventId": "work-toast",
+        "phase": "settled",
+        "previous": []
+      },
+      "role": "user",
+      "room": {
+        "npcs": [
+          {
+            "characterId": "chen",
+            "posture": "seated"
+          },
+          {
+            "characterId": "lin",
+            "posture": "seated"
+          },
+          {
+            "characterId": "zhou",
+            "posture": "seated"
+          }
+        ],
+        "posture": "seated",
+        "zone": "table"
+      },
+      "targetId": "lin",
+      "text": "林姐，周三先交核心流程，验收标准今天一起确认；扩展部分另排时间。这样你们能先验证业务吗？"
+    },
+    {
+      "cue": "林姐朝你倾身。",
+      "interjection": {
+        "speakerId": "zhou",
+        "text": "这两项我还没见复测结果，只能按未通过算。"
+      },
+      "mode": "model",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "pressing",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "thinking",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "neutral",
+          "gesture": "fold"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "lin",
+      "story": {
+        "beat": "message",
+        "topic": "scope"
+      },
+      "text": "核心先交、扩展另排，方向可以。哪几项算核心、验收标准，今天得定下来；退款回调和批量导入还没过，周三能不能上要看复测。"
+    },
+    {
+      "dinner": {
+        "eventId": "work-toast",
+        "phase": "settled",
+        "previous": []
+      },
+      "role": "user",
+      "room": {
+        "npcs": [
+          {
+            "characterId": "chen",
+            "posture": "seated"
+          },
+          {
+            "characterId": "lin",
+            "posture": "seated"
+          },
+          {
+            "characterId": "zhou",
+            "posture": "seated"
+          }
+        ],
+        "posture": "seated",
+        "zone": "table"
+      },
+      "targetId": "lin",
+      "text": "林姐，那两项先标未通过。我们今天确定核心清单和验收标准，复测通过后再确认上线时间，我不先承诺周三全量上线。"
+    },
+    {
+      "cue": "林姐朝你倾身。",
+      "interjection": {
+        "speakerId": "zhou",
+        "text": "复测我来接可以，但两点结果我只能到点才知。"
+      },
+      "mode": "model",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "pressing",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "thinking",
+          "gesture": "lean"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "thinking",
+          "gesture": "fold"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "lin",
+      "story": {
+        "beat": "message",
+        "topic": "scope"
+      },
+      "text": "标未通过可以，清单和标准今天定；复测谁来做、几点出结果，你定，我按这个向客户回。"
+    }
+  ],
+  "text": [
+    {
+      "characterId": "michael",
+      "id": "opening",
+      "role": "npc",
+      "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+      "ts": 1791269826460
+    },
+    {
+      "id": "e1k6iuw0n0pp",
+      "role": "learner",
+      "text": "今晚我不能留下来。我可以先确认客户最急需哪几页，明早上班后优先处理。",
+      "ts": 1791281304925
+    },
+    {
+      "characterId": "michael",
+      "id": "ezipona7nv2j",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "note": "你明确拒绝，Michael追问明早时间并试探方案",
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "今晚我不能留下来"
+          }
+        ],
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 30
+      },
+      "role": "npc",
+      "text": "今晚不行，我听到了。但客户明早九点就登录，明早做等于没做。你明早最早几点能到？要是能赶在八点半前，我重新排一下顺序——前面几页才是他这次的重点。",
+      "ts": 1791281344284
+    },
+    {
+      "id": "dabqsu8pui08",
+      "role": "learner",
+      "text": "我明早八点到，先处理客户最需要的部分。请明确具体哪几页，以及您要几点过一遍。",
+      "ts": 1791281653928
+    },
+    {
+      "characterId": "michael",
+      "id": "ilmo40nhujcw",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "note": "你给出八点方案，Michael追问页数并动摇",
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "今晚我不能留下来"
+          },
+          {
+            "index": 1,
+            "learnerQuote": "我明早八点到，先处理客户最需要的部分"
+          }
+        ],
+        "objectives": [
+          true,
+          true,
+          false
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 45
+      },
+      "role": "npc",
+      "text": "八点到的话……我八点一刻过来跟你过一遍，十点前我发给客户。可「最需要的部分」是哪几页，你得说具体，别又给我一整版。",
+      "ts": 1791281656327
+    },
+    {
+      "id": "9r75za7iv4zw",
+      "role": "learner",
+      "text": "您刚才说客户九点要看，不是十点。我们按九点前发出倒排；请您确认必须改的页数，我八点开始处理。",
+      "ts": 1791281683724
+    },
+    {
+      "characterId": "michael",
+      "id": "p0de3s7lv7ea",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "note": "你指出时间矛盾，Michael改口并承认页数有限",
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "今晚我不能留下来"
+          },
+          {
+            "index": 1,
+            "learnerQuote": "我明早八点到，先处理客户最需要的部分"
+          }
+        ],
+        "objectives": [
+          true,
+          true,
+          false
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 60
+      },
+      "role": "npc",
+      "text": "好吧，是我记岔了——客户其实只要看前三页，不是九点的完整版。那就按九点前发出倒排：你八点来改前三页，我八点一刻过来过一遍，九点前我发。十点那个是我顺口说的，别管了。",
+      "ts": 1791281686946
+    }
+  ]
+}

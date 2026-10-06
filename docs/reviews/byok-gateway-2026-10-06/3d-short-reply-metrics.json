@@ -1,0 +1,20 @@
+[
+  {
+    "content": "{\n  \"replyTo\": \"我不先承诺周三全量上线\",\n  \"speakerId\": \"lin\",\n  \"text\": \"标未通过可以，清单和标准今天定；复测谁来做、几点出结果，你定，我按这个向客户回。\",\n  \"reactions\": [\n    {\"characterId\": \"chen\", \"emotion\": \"pressing\", \"gesture\": \"lean\"},\n    {\"characterId\": \"lin\", \"emotion\": \"thinking\", \"gesture\": \"lean\"},\n    {\"characterId\": \"zhou\", \"emotion\": \"thinking\", \"gesture\": \"fold\"}\n  ],\n  \"story\": {\"topic\": \"scope\", \"beat\": \"message\"},\n  \"interjection\": {\n    \"speakerId\": \"zhou\",\n    \"text\": \"复测我来接可以，但两点结果我只能到点才知。\"\n  }\n}",
+    "finish": "stop",
+    "reasoningCharacters": 0,
+    "seconds": 3.8616999999880792,
+    "status": 200,
+    "thinking": {
+      "type": "disabled"
+    },
+    "usage": {
+      "completion_tokens": 202,
+      "prompt_tokens": 4761,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 4963
+    }
+  }
+]

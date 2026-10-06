@@ -22,6 +22,8 @@ export interface ByokConfig {
   fastModel: string;
   smartModel: string;
   tokenParam: TokenParam;
+  /** Opt-in for compatible endpoints that support thinking:{type:"disabled"}. */
+  disableThinking?: boolean;
 }
 
 const EMPTY: ByokConfig = {
@@ -32,6 +34,7 @@ const EMPTY: ByokConfig = {
   fastModel: "",
   smartModel: "",
   tokenParam: "max_tokens",
+  disableThinking: false,
 };
 
 interface ByokState extends ByokConfig {
@@ -68,6 +71,7 @@ export const useByok = create<ByokState>()(
         fastModel: s.fastModel,
         smartModel: s.smartModel,
         tokenParam: s.tokenParam,
+        disableThinking: s.disableThinking,
       }),
       onRehydrateStorage: () => (state) => state && (state.hydrated = true),
     },

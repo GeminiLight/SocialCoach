@@ -1,0 +1,41 @@
+[
+  {
+    "content": "{\"meta\":{\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"今晚我不能留下来\"},{\"index\":1,\"learnerQuote\":\"我明早八点到，先处理客户最需要的部分\"}],\"objectives\":[true,true,false],\"ended\":false,\"outcome\":null,\"note\":\"你给出八点方案，Michael追问页数并动摇\",\"stance\":45,\"revealed\":false,\"disclosures\":[]},\"utterances\":[{\"characterId\":\"michael\",\"text\":\"八点到的话……我八点一刻过来跟你过一遍，十点前我发给客户。可「最需要的部分」是哪几页，你得说具体，别又给我一整版。\"}]}",
+    "finishes": [
+      "stop"
+    ],
+    "reasoningCharacters": 0,
+    "seconds": 2.3798999999761583,
+    "status": 200,
+    "stream": true,
+    "thinking": {
+      "type": "disabled"
+    },
+    "usage": {
+      "completion_tokens": 138,
+      "prompt_tokens": 3810,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3948
+    }
+  },
+  {
+    "content": "{\"meta\":{\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"今晚我不能留下来\"},{\"index\":1,\"learnerQuote\":\"我明早八点到，先处理客户最需要的部分\"}],\"objectives\":[true,true,false],\"ended\":false,\"outcome\":null,\"note\":\"你指出时间矛盾，Michael改口并承认页数有限\",\"stance\":60,\"revealed\":true,\"disclosures\":[{\"characterId\":\"michael\",\"quote\":\"其实他要看的就前三页\"}]},\"utterances\":[{\"characterId\":\"michael\",\"text\":\"好吧，是我记岔了——客户其实只要看前三页，不是九点的完整版。那就按九点前发出倒排：你八点来改前三页，我八点一刻过来过一遍，九点前我发。十点那个是我顺口说的，别管了。\"}]}",
+    "finishes": [
+      "stop"
+    ],
+    "reasoningCharacters": 0,
+    "seconds": 3.1981999999880792,
+    "status": 200,
+    "stream": true,
+    "thinking": {
+      "type": "disabled"
+    },
+    "usage": {
+      "completion_tokens": 171,
+      "prompt_tokens": 3988,
+      "total_tokens": 4159
+    }
+  }
+]

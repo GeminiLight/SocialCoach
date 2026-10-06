@@ -1,0 +1,59 @@
+[
+  {
+    "requestId": "19265.231",
+    "status": 200,
+    "stream": true,
+    "max_tokens": 1800,
+    "visible_content": null,
+    "reasoning_characters": null,
+    "finishes": null,
+    "usage": null,
+    "response_body_retained": false
+  },
+  {
+    "requestId": "19265.232",
+    "status": 200,
+    "stream": false,
+    "max_tokens": 1800,
+    "visible_content": "{\"meta\":{\"objectives\":[true,false,false],\"ended\":false,\"outcome\":null,\"stance\":30,\"revealed\":false,\"note\":\"你明确拒绝，Michael追问明早时间并试探方案\",\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"今晚我不能留下来\"}]},\"utterances\":[{\"characterId\":\"michael\",\"text\":\"今晚不行，我听到了。但客户明早九点就登录，明早做等于没做。你明早最早几点能到？要是能赶在八点半前，我重新排一下顺序——前面几页才是他这次的重点。\"}]}",
+    "reasoning_characters": 6394,
+    "finishes": [
+      "stop"
+    ],
+    "usage": {
+      "completion_tokens": 1758,
+      "prompt_tokens": 3706,
+      "total_tokens": 5464
+    }
+  },
+  {
+    "requestId": "19265.233",
+    "status": 200,
+    "stream": true,
+    "max_tokens": 1800,
+    "visible_content": null,
+    "reasoning_characters": null,
+    "finishes": null,
+    "usage": null,
+    "response_body_retained": false
+  },
+  {
+    "requestId": "19265.234",
+    "status": 200,
+    "stream": false,
+    "max_tokens": 1800,
+    "visible_content": "",
+    "reasoning_characters": 7512,
+    "finishes": [
+      "length"
+    ],
+    "usage": {
+      "completion_tokens": 1800,
+      "prompt_tokens": 3871,
+      "total_tokens": 5671,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      }
+    }
+  }
+]
