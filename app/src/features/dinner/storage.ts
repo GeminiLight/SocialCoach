@@ -21,7 +21,7 @@ export function createDinnerStorage(notify:(issue:DinnerSaveIssue|null)=>void,st
         owned=true;const hold=new Promise<void>(done=>{release=done;});resolve(true);
         await hold;if(generation===ticket)owned=false;
       }).catch(()=>{if(active&&generation===ticket)issue('unavailable');resolve(false);});
-    });
+    }).catch(()=>{if(active&&generation===ticket)issue('unavailable');return false;});
     return pending;
   };
   const changed=(event:StorageEvent)=>{

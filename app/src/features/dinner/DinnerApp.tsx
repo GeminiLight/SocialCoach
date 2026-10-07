@@ -227,7 +227,8 @@ export default function App() {
   function exportDinner() {download({version:1,briefVersion,contentSnapshot,product:'SocialCoach',variantId,maxTurns,continuedAtTurn,targetId,scenario:pick(scenario.title,lang),source:scenario.source,mode:'model',lang,messages,view,room,dinner,exportedAt:new Date().toISOString()},`SocialCoach-${scenarioId}-${new Date().toISOString().slice(0,10)}.json`);}
   async function submit(text=draft) {
     const value=text.trim();if(!model||storageError||speech.isActive()||sending.current||!value||complete||turn>=maxTurns||!started||corrupt)return;
-    if(!await saveStorage.save(JSON.stringify(currentSave())))return;
+    sending.current=true;
+    if(!await saveStorage.save(JSON.stringify(currentSave()))){sending.current=false;return;}
     speech.cancel();
     const observedRoom=roomContext(world),observedDinner=dinnerContext(drama),heard=momentDialogue?{speakerId:currentSpeakerId,text:momentDialogue.text,cue:momentDialogue.cue}:undefined;sending.current=true;setBusy(true);setError(null);
     controller.current=new AbortController();const timeout=setTimeout(()=>controller.current?.abort(),35000);
