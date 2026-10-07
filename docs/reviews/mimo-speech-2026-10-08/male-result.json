@@ -1,0 +1,9 @@
+{
+  "deployment": "https://socialcoach-fbh9g2yh7-geminilights-projects.vercel.app",
+  "sample": "male",
+  "seconds": 9.84,
+  "exit_code": 0,
+  "http_metrics": "200 5.857576 6.538836 audio/wav",
+  "bytes": 299564,
+  "wav_header_valid": true
+}

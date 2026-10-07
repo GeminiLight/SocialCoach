@@ -1,0 +1,8 @@
+{
+  "sample": "female",
+  "seconds": 10.73,
+  "exit_code": 0,
+  "http_metrics": "200 6.432855 7.231463 audio/wav",
+  "bytes": 407084,
+  "wav_header_valid": true
+}

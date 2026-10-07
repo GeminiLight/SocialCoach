@@ -1,0 +1,64 @@
+{
+  "status": "real_audio_generated",
+  "samples": [
+    {
+      "file": "mimo-boss-male.wav",
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width": 2,
+      "duration_seconds": 6.24,
+      "non_silent": true,
+      "deployment": "https://socialcoach-fbh9g2yh7-geminilights-projects.vercel.app",
+      "sample": "male",
+      "seconds": 9.84,
+      "exit_code": 0,
+      "http_metrics": "200 5.857576 6.538836 audio/wav",
+      "bytes": 299564,
+      "wav_header_valid": true
+    },
+    {
+      "file": "mimo-manager-female.wav",
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width": 2,
+      "duration_seconds": 8.48,
+      "non_silent": true,
+      "sample": "female",
+      "seconds": 10.73,
+      "exit_code": 0,
+      "http_metrics": "200 6.432855 7.231463 audio/wav",
+      "bytes": 407084,
+      "wav_header_valid": true
+    },
+    {
+      "file": "mimo-boss-male-stream.wav",
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width": 2,
+      "duration_seconds": 4.16,
+      "non_silent": true,
+      "sample": "streaming-male",
+      "seconds": 7.44,
+      "exit_code": 0,
+      "http_metrics": "200 3.597461 4.287603 audio/wav",
+      "bytes": 199724,
+      "wav_header_valid": true,
+      "streaming_metrics": [
+        "content-type: audio/wav",
+        "server-timing: speech_first;dur=1346, speech_total;dur=2090",
+        "x-speech-chunks: 13"
+      ]
+    }
+  ],
+  "current_formal_npc_voice": "browser SpeechSynthesis",
+  "formal_voice_replaced": false,
+  "subjective_quality_feedback": "pending_user_listening",
+  "streaming_first_audio_ms": 1346,
+  "streaming_pcm_chunks": 13,
+  "streaming_provider_total_ms": 2090,
+  "client_streaming_playback_implemented": false,
+  "inference_calls": 3,
+  "first_test_deployment": "dpl_GttFpUCmkaiYHTE6phxGJAVBAken",
+  "stream_test_deployment": "dpl_9AcTZoeWYLaUfXd68rocgMeRUPG8",
+  "credential_values_recorded": false
+}

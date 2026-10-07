@@ -1,0 +1,13 @@
+{
+  "sample": "streaming-male",
+  "seconds": 7.44,
+  "exit_code": 0,
+  "http_metrics": "200 3.597461 4.287603 audio/wav",
+  "bytes": 199724,
+  "wav_header_valid": true,
+  "streaming_metrics": [
+    "content-type: audio/wav",
+    "server-timing: speech_first;dur=1346, speech_total;dur=2090",
+    "x-speech-chunks: 13"
+  ]
+}
