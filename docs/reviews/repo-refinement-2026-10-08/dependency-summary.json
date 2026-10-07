@@ -1,0 +1,28 @@
+{
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 1,
+    "critical": 0
+  },
+  "advisories": [
+    {
+      "module_name": "braces",
+      "severity": "high",
+      "github_advisory_id": "GHSA-vfj7-8cjw-p6xm",
+      "patched_versions": null,
+      "findings": [
+        {
+          "version": "3.0.3",
+          "paths": [
+            ".>eslint-config-next>@next/eslint-plugin-next>fast-glob>micromatch>braces"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    }
+  ]
+}

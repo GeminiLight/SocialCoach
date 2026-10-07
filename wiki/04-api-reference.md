@@ -22,7 +22,7 @@
 
 - 所有路由都是 Node runtime，无鉴权（本产品无账号体系）。
 - `lang` 由 `asLang()` 收敛：只有 `"en"` 判为英文，其余一律 `"zh"`。
-- 错误统一走 `fail(e)` → `{ "error": "<message>", "modelIssue": "<category>" | null }`，状态码由 `toHttpError()` 映射。
+- 错误统一走 `fail(e)` → `{ "error": "<message>", "modelIssue": "<category>" | null, retryAt?:<UTC milliseconds> }`，状态码由 `toHttpError()` 映射。
 - 三条流式路由的错误在流内以 `\n@@error\n{"error":"…","status":401,"modelIssue":"credentials"}` 追加，HTTP 状态码仍是 200 —— **客户端必须解析流尾，不能只看状态码**。
 
 ---
@@ -31,11 +31,15 @@
 
 ### `GET /api/health`
 
-返回 `{serverKey:boolean, requireByok:boolean, state:"available"|"unverified"|"unavailable", issue?:ModelIssue}`，只返回安全状态，不返回密钥、地址或服务商原始错误。`ModelIssue` 为 `setup|credentials|quota|model|rate_limit|service|network`。缺少部署密钥 / 强制 BYOK 返回 unavailable/setup。
+返回 `{serverKey:boolean, requireByok:boolean, state:"available"|"unverified"|"unavailable", issue?:ModelIssue, resetAt?:number, budgetRemaining?:number, budgetLimit?:number}`，只返回安全状态，不返回密钥、地址或服务商原始错误。`ModelIssue` 为 `setup|credentials|quota|shared_quota|shared_busy|model|rate_limit|service|network`。缺少部署密钥 / 强制 BYOK 返回 unavailable/setup。
 
 通过服务商认证的 `GET /models`，必要时 `GET /models/{id}` 验证 fast / smart 两档名称和别名；总时限 5 秒、零重试，只读取元数据。绝不退回生成调用。某档未确认时继续核对另一档，不用弱模型的成功推定强模型可用，也不因弱模型未确认而跳过强模型。任一档明确认证、额度、限流或模型不存在返回 unavailable；两档均未发现明确故障但至少一档不支持元数据、CORS 或超时，返回 unverified，允许用户在实际练习中确认。此检查不保证余额或生成权限。
 
-同一进程缓存 120 秒、合并并发检查；实际模型失败在进程内保留 120 秒，浏览器另有独立的即时失败状态。单用户限流不写入全站观察。`?retry=1` 可显式重新免费检查，不自动重试付费生成。Vercel 实例间不共享内存观察。
+先只读核对中央共享预算：低于任何任务的最低预留返回 shared_quota，有效并发满返回 shared_busy；检查不修改计数。resetAt 与错误 retryAt 是 UTC 毫秒，可在客户端按本地时区显示。budgetLimit / budgetRemaining 是保守预留口径，不是供应商余额。特定任务仍按完整上下文预留，metadata available 不能保证其成功。
+
+元数据在同一进程缓存 120 秒、合并并发检查；实际模型失败在进程内保留 120 秒，浏览器另有独立的即时失败状态。单用户限流不写入全站观察。`?retry=1` 可显式重新免费检查，不自动重试付费生成。Vercel 实例间不共享内存观察。
+
+共享额度不足返回 429/shared_quota，可带 retryAt；共享并发满为 429/shared_busy。供应商余额与限流继续使用 quota / rate_limit。API 日志只记录状态与类别，不记录错误正文或用户原话。
 
 HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如格式 / 引文校验，不因此禁用模型。新版客户端兼容旧版纯文本 `@@error`。方案和验收见 [模型连接](./archive/specs/spec-model-availability.md)。
 
@@ -332,3 +336,5 @@ BYOK 在浏览器运行同一任务，密钥不发送到此路由。可用性复
 - dinner 新请求/存档可带 `contentSnapshot`，公开场景与私有方向分开；模拟读取原角色/开场事实，复盘只读公开快照。旧档缺快照兼容，但不承诺历史内容已冻结。
 - track 增加严格 `practice_stage`，仅 `{mode:"3d",practice:uuid,scenario,stage,duration_ms,turns,byok}`；stage 为 loaded/started/first_reply/review/restart。debrief_view 可带 mode/practice，session 接受 UUID。模型调用运维信息不包含对话/设备身份。
 - 生产共享模型必须有共享预算配置，未配时 GET health 的 requireByok 为 true。预算服务不可用返回 503，日预留用尽 429 quota，并发满 429 rate_limit；修复和 SDK 重试容量纳入预留。金额上限需供应商配置，详见 [预算边界](./reviews/review-2026-10-06-repo-quality.md#发布前预算配置)。
+
+2026-10-08：文字模拟 meta.note 已从公开流与客户端投影移除；旧字段仍可存在于历史档案，不能当作公开教练评价。台词的行首 @@ 控制标记在预览与最终校验一致拒绝。

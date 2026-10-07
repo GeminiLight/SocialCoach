@@ -6,7 +6,7 @@ import { createContext, useContext, useEffect, useId, useRef, type ButtonHTMLAtt
 import { workspaceMotion } from "@/lib/motion";
 import { AvatarFigure } from "@/data/avatars";
 import { SlowModelNotice, SLOW_MODEL_WAIT_MS } from "./SlowModelNotice";
-import { useLang } from "@/store/useApp";
+import { useInterfaceLang as useLang } from "@/lib/ui-language";
 import { t } from "@/lib/i18n";
 import { useCanUseModel } from "@/lib/model-access";
 import { M } from "@/lib/model-copy";

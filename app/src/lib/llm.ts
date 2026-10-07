@@ -4,6 +4,7 @@ import OpenAI from "openai";
 import { modelIssue, type ModelIssue, type ModelMetadata } from "./model-status";
 import {
   anthropicArgs,
+  modelBaseUrl,
   extractJSON,
   LLMError,
   jsonCall as coreJsonCall,
@@ -36,10 +37,7 @@ export type { ChatOpts, LLM, Provider, SystemPart, TextRun };
 const raw = (process.env.LLM_PROVIDER ?? "anthropic").trim().toLowerCase();
 export const PROVIDER: Provider = raw === "openai" ? "openai" : "anthropic";
 
-const BASE_URL =
-  process.env.LLM_BASE_URL ||
-  (PROVIDER === "openai" ? process.env.OPENAI_BASE_URL : process.env.ANTHROPIC_BASE_URL) ||
-  undefined;
+const BASE_URL = modelBaseUrl(process.env.LLM_BASE_URL || (PROVIDER === "openai" ? process.env.OPENAI_BASE_URL : process.env.ANTHROPIC_BASE_URL) || "",PROVIDER) || undefined;
 
 const API_KEY =
   process.env.LLM_API_KEY ||
@@ -199,9 +197,9 @@ function httpError(e: unknown): { status: number; message: string } {
   return { status: 500, message: e instanceof Error ? e.message : "Unknown error" };
 }
 
-export function toHttpError(e: unknown): { status: number; message: string; modelIssue?: ModelIssue } {
+export function toHttpError(e: unknown): { status: number; message: string; modelIssue?: ModelIssue;retryAt?:number } {
   const result = httpError(e);
   const issue = modelIssue(e) ?? ((e instanceof Anthropic.APIError || e instanceof OpenAI.APIError) && e.status === 400 ? "model" : undefined);
   // Model errors expose only a safe category. Provider payloads can echo keys.
-  return { ...result, message: issue ? `Model connection: ${issue}.` : result.message.replaceAll(API_KEY || "\u0000", "[redacted]"), modelIssue: issue };
+  return { ...result, message: issue ? `Model connection: ${issue}.` : result.message.replaceAll(API_KEY || "\u0000", "[redacted]"), modelIssue: issue,...(e instanceof LLMError&&Number.isFinite(e.retryAt)?{retryAt:e.retryAt}:{}) };
 }

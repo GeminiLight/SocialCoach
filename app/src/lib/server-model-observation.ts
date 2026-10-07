@@ -4,7 +4,7 @@ import type { ModelCheck, ModelIssue } from "./model-status";
 let observation: { check: ModelCheck; at: number } | undefined;
 export function clearServerObservation() { observation = undefined; }
 export function observeServerFailure(issue?: ModelIssue) {
-  if (issue === "rate_limit") return; // Per-visitor limits must not disable everyone.
+  if (issue === "rate_limit"||issue==='shared_quota'||issue==='shared_busy') return; // Shared counters are read authoritatively; visitor limits do not disable everyone.
   if (issue) observation = { check: { state: "unavailable", issue }, at: Date.now() };
 }
 export function observedServerHealth(): ModelCheck | undefined {

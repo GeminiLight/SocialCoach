@@ -3,7 +3,7 @@ import { MotionConfig } from "framer-motion";
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { observeArchiveChanges,useApp, useLang } from "@/store/useApp";
-import { useByok } from "@/lib/byok";
+import { observeByokChanges,useByok } from "@/lib/byok";
 import { promptUnavailableSharedModel, refreshModelAccess, syncModelConfiguration, useCanUseModel, useModelAccess } from "@/lib/model-access";
 import { ModelSheet } from "./ModelSheet";
 import { FeedbackWidget } from "./Feedback";
@@ -12,6 +12,7 @@ import { trackOpen } from "@/lib/analytics/track";
 import { DinnerAnnouncement } from "./DinnerEntry";
 import { StorageRecovery } from "./StorageRecovery";
 import {SaveNotice} from "./SaveNotice";
+import {useDinnerUiLanguage} from '@/lib/ui-language';
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const hydrated = useApp((s) => s.hydrated);
@@ -23,8 +24,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const immersiveReview=useApp(s=>s.sessions.some(session=>path===`/practice/${session.id}`&&session.sceneContext?.kind==='3d'&&(session.status==='ended'||session.status==='assessed')));
   const byok = useByok();
-  const lang = useLang();
+  const mainLang=useLang(),sceneLang=useDinnerUiLanguage(s=>s.lang);
   const dinner = path === "/3d";
+  const lang=dinner&&sceneLang?sceneLang:mainLang;
   const learning = path === "/learn";
   const canUseModel = useCanUseModel();
   const modelAccess = useModelAccess();
@@ -38,7 +40,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     syncModelConfiguration();
     void refreshModelAccess();
     return useByok.subscribe((next, previous) => {
-      if (["enabled", "provider", "baseUrl", "apiKey", "fastModel", "smartModel", "tokenParam"].some(key => next[key as keyof typeof next] !== previous[key as keyof typeof previous])) {
+      if (["enabled", "provider", "baseUrl", "apiKey", "fastModel", "smartModel", "tokenParam", "disableThinking"].some(key => next[key as keyof typeof next] !== previous[key as keyof typeof previous])) {
         syncModelConfiguration();
         void refreshModelAccess();
       }
@@ -66,6 +68,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   }, [settings.theme]);
 
   useEffect(()=>observeArchiveChanges(),[]);
+  useEffect(()=>observeByokChanges(),[]);
 
   // Once per day, profile or not; the flag separates visitors from learners.
   useEffect(() => {
@@ -81,8 +84,8 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <MotionConfig reducedMotion="user">
     <div className={dinner ? "sheet sheet-immersive" : "sheet"}>
-      {hydrated ? storageIssue ? <><SaveNotice/><StorageRecovery issue={storageIssue} /></> : <><SaveNotice/>{children}</> : <div className="min-h-dvh" />}
-      <ModelSheet open={hydrated && !storageIssue && byok.sheetOpen} onClose={byok.closeSheet} />
+      {hydrated ? storageIssue ? <><SaveNotice lang={lang}/><StorageRecovery issue={storageIssue} /></> : <><SaveNotice lang={lang}/>{children}</> : <div className="min-h-dvh" />}
+      <ModelSheet open={hydrated && !storageIssue && byok.sheetOpen} onClose={byok.closeSheet} lang={lang} />
       {hydrated && !storageIssue && !dinner && <FeedbackWidget />}
       <DinnerAnnouncement enabled={hydrated && !storageIssue && !!profile && path === "/" && canUseModel && !byok.sheetOpen && !unfinished} />
       <Toaster />
