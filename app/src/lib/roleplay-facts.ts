@@ -11,7 +11,18 @@ export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):Sp
  if(scenarioId==='declining-extra-hours'){
   const known=messages.filter(m=>m.role==='learner').map(m=>m.text.toLowerCase());
   return utterances=>{
-   for(const {text} of utterances)for(const clause of text.match(/[^。！？.!?\n;；]+[。！？.!?]?/gu)??[]){
+   for(const {text} of utterances){
+    // Check the factual part before a following question ("who covers it?").
+    // Manager preferences remain distinct from an established client demand.
+    for(const part of text.match(/[^，,。！？.!?\n;；]+[，,。！？.!?;；]?/gu)??[]){
+     if(/[？?]\s*$/u.test(part)||/(?:如果|假如|要是|若|不是|不代表|并非|没(?:有)?要求|不能说)|\b(?:if|whether|not|(?:does|did|is|are|has|have)n['’]t)\b/iu.test(part))continue;
+     const clientDemand=/(?:客户.{0,40}(?:点名|要求|指定|要|必须)|\bclient\b.{0,70}\b(?:asked|requests?|requested|demands?|demanded|requires?|required|wants?|wanted|needs?|needed|told|insists?|insisted)\b)/iu.test(part);
+     const full=/(?:整份|整套|全套|所有|全部|整个)|\b(?:full|entire|whole|all)\b/iu.test(part);
+     const rewrite=/(?:重做|重写|从头.{0,5}(?:做|改)|重新.{0,5}(?:做|写|改))|\b(?:redo|redone|rewrite|rewritten|rebuild|overhaul)\b/iu.test(part);
+     const fact=part.trim().replace(/[，,。！？.!?;；]$/u,'').toLowerCase();
+     if(clientDemand&&full&&rewrite&&!known.some(line=>line.includes(fact)))return 'The opening establishes a section-three redo and a client review at nine tomorrow. It does not establish a client demand to redo the entire deck. Keep the manager’s own broader preferences separate; do not attribute an invented scope to the client or reveal private facts early.';
+    }
+    for(const clause of text.match(/[^。！？.!?\n;；]+[。！？.!?]?/gu)??[]){
     // Questions and conditional handoff proposals keep availability unknown.
     if(/[？?]\s*$/u.test(clause)||/(?:如果|要是|假如|若|要不|建议|提议|不如|先问|先确认|需要确认)|\b(?:if|whether|ask|check|could|might|propose)\b/iu.test(clause))continue;
     const fact=clause.trim().replace(/[。！？.!?]$/u,'').toLowerCase();
@@ -20,6 +31,7 @@ export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):Sp
     if(!/\bLily\b/iu.test(clause))continue;
     const claimed=/Lily.{0,35}(?:今天|今晚|明早|明天|加班|有空).{0,30}(?:加班|有空|能(?:看|做|接)|可以(?:看|做|接)|负责)/iu.test(clause)||/\bLily\s+(?:is\s+(?:not\s+)?(?:working|available)|will\s+(?:work|take|handle|review)|can\s+(?:take|handle|review)|has\s+(?:agreed|time))\b/iu.test(clause);
     if(claimed&&!established)return "Lily's availability and work schedule have not been confirmed. Ask or propose a conditional handoff; do not invent her hours, agreement or ability to take the remaining work.";
+    }
    }
   };
  }

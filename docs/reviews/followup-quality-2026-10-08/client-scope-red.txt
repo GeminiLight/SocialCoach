@@ -1,0 +1,28 @@
+✖ a manager cannot turn section-three edits into a confirmed client-wide rewrite (0.8885ms)
+✔ an unconfirmed teammate schedule cannot become a handoff arrangement (0.872333ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.917875
+
+✖ failing tests:
+
+test at tests/core/third-party-facts.test.ts:5:1
+✖ a manager cannot turn section-three edits into a confirmed client-wide rewrite (0.8885ms)
+  AssertionError [ERR_ASSERTION]: 生日？那我尽量往前赶……可客户点名要整份方案重做，你不在谁顶？明早九点可不是我定的。
+      at TestContext.<anonymous> (/Users/geminilight/.codex/worktrees/byok-gateway-connection/SocialCoach/app/tests/core/third-party-facts.test.ts:7:231)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

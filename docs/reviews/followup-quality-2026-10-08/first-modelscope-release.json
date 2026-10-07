@@ -1,0 +1,21 @@
+{
+  "status": "Running",
+  "runtimeStatus": "Running",
+  "created_at": "2026-10-07T21:19:08.000Z",
+  "last_modified": "2026-10-07T21:16:02.000Z",
+  "hardware": "platform/2v-cpu-16g-mem",
+  "source": "8b8685e83d5893a0155aadb455632e2c86005aba",
+  "mirror": "4fa583c7be25703f4724700a3c803665f75b8290",
+  "buildExcerpts": [
+    "2026-10-08 05:16:07 [INFO] https://www.modelscope.cn/studios/GeminiLight/SocialCoach.git.master.lastCommitId=4fa583c7be25703f4724700a3c803665f75b8290\n",
+    "2026-10-08 05:18:03 [INFO] #13 79.30   Creating an optimized production build ...\n",
+    "2026-10-08 05:18:18 [INFO] #13 93.70 ✓ Compiled successfully in 13.7s\n",
+    "2026-10-08 05:18:51 [INFO] pushing image: mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-4fa583c7-2026-10-08-05-16-04\n",
+    "2026-10-08 05:19:00 [INFO] 363578-4fa583c7-2026-10-08-05-16-04: digest: sha256:b74120d04f9ad17e04e75d6716c624e2554809b9c1f5e8d2200d793a6818357e size: 2414\n",
+    "2026-10-08 05:19:00 [INFO] docker rmi mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-4fa583c7-2026-10-08-05-16-04\n",
+    "2026-10-08 05:19:00 [INFO] Untagged: mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-4fa583c7-2026-10-08-05-16-04\n",
+    "2026-10-08 05:19:00 [INFO] 镜像公网地址：mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-4fa583c7-2026-10-08-05-16-04\n",
+    "2026-10-08 05:19:00 [INFO] 镜像VPC地址：mshub-registry-vpc.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-4fa583c7-2026-10-08-05-16-04\n",
+    "2026-10-08 05:19:00 [SUCCESS] run step successfully!\n"
+  ]
+}
