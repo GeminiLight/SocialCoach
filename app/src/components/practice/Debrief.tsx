@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { clsx } from "clsx";
 import { Bookmark, ChevronDown, RotateCcw, Share2, Send, MessageSquareText } from "lucide-react";
 import { BottomBar, Button, IconButton, Marginalia, Stages, Stars, Spinner } from "@/components/ui";
+import { SlowModelNotice } from "@/components/SlowModelNotice";
 import { SkillTag, Level } from "@/components/SkillBits";
 import { CaseBody, TheoryBody } from "@/components/Knowledge";
 import { DebriefAssistant, type DebriefAssistantHandle } from "./DebriefAssistant";
@@ -147,7 +148,7 @@ export function Debrief({ session }: { session: Session }) {
                   <Button requiresModel variant="secondary" onClick={() => { setErr(null); void run(); }}>{t(lang, "retry")}</Button>
                 </div>
               ) : (
-                canUseModel ? <Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} slowAfterMs={60000} /> : <p className="text-[14px] text-ink-3">{pick(M.pending, lang)}</p>
+                canUseModel ? <Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} /> : <p className="text-[14px] text-ink-3">{pick(M.pending, lang)}</p>
               )}
             </div>
           </div>
@@ -622,6 +623,7 @@ function ReflectItem({ session, question, idx, addReflection, updateReflection, 
             </button>
           </div>
           {error&&<p role="alert" className="text-[13px] text-danger">{error}</p>}
+          {busy && <SlowModelNotice />}
           {reply && <p className="bubble-coach px-4 py-3 text-[14px] leading-relaxed">{reply}</p>}
         </>
       )}

@@ -7,6 +7,7 @@ import { track } from "@/lib/analytics/track";
 import { motion } from "framer-motion";
 import { RefreshCw } from "lucide-react";
 import { Button, Spinner } from "@/components/ui";
+import { SlowModelNotice } from "@/components/SlowModelNotice";
 import { useApp, useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
 import { pattern as patternApi } from "@/lib/client-api";
@@ -133,6 +134,7 @@ export function PatternCard() {
         )}
       </div>
 
+      {busy && <SlowModelNotice className="mb-3" />}
       {!canUseModel && !cached ? <p className="text-[14px] text-slab-ink/70">{pick(M.pending, lang)}</p> : err ? (
         <div className="flex flex-col gap-3 items-start">
           <p className="text-[14px] leading-relaxed">{err}</p>

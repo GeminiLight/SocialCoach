@@ -94,7 +94,7 @@ export function Briefing({ session }: { session: Session }) {
             )}
 
         {adapting && !err && canUseModel ? (
-          <div className="card p-5"><Stages title={t(lang, "pr_preparing")} steps={tList(lang, "home_scheduling_steps").slice(3)} slowAfterMs={25000} /></div>
+          <div className="card p-5"><Stages title={t(lang, "pr_preparing")} steps={tList(lang, "home_scheduling_steps").slice(3)} /></div>
         ) : (
           <>
             <p className="text-[16px] leading-relaxed text-ink">{session.adaptation?.briefing ?? sc.background[lang]}</p>

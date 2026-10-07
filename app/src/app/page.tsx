@@ -151,7 +151,7 @@ export default function Home() {
               )}
               {loading && (
                 <div className="card p-6 lg:p-8 min-h-80 flex flex-col justify-center gap-7">
-                  <Stages title={t(lang, "home_scheduling")} steps={tList(lang, "home_scheduling_steps")} slowAfterMs={25000} />
+                  <Stages title={t(lang, "home_scheduling")} steps={tList(lang, "home_scheduling_steps")} />
                   {/* The first thing anyone sees on their first visit of the day used
                       to be ten seconds of a four-step checklist. The wait is the
                       right length; what was wrong is that it carried nothing. Last

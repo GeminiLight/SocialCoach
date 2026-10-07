@@ -1,0 +1,7 @@
+{
+  "fast_response_no_reminder": true,
+  "old_timer_no_reminder": true,
+  "own_model_no_recommendation": true,
+  "own_mock_requests": 1,
+  "inference_calls": 0
+}

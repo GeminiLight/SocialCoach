@@ -20,6 +20,7 @@ import type { Character } from "@/data/corpus/types";
 import type { Lang } from "@/data/taxonomy";
 import { canListen, recognitionError, speak, stopSpeaking, unlockSpeech } from "@/lib/speech";
 import { PracticeJourney } from "./PracticeJourney";
+import { SlowModelNotice } from "@/components/SlowModelNotice";
 import { useSessionDraft } from "@/lib/use-session-draft";
 import { Stance } from "./Stance";
 import { clockMarks, PatiencePicker, useReplyClock, type ClockStage } from "./ReplyClock";
@@ -628,6 +629,7 @@ export function Chat({ session }: { session: Session }) {
             )}
           </AnimatePresence>
         </div>
+        {(busy || hintBusy) && <SlowModelNotice className="mb-2" />}
         {voiceNote && <p className="text-[12px] text-ink-3 px-1 pb-1.5">{voiceNote}</p>}
         <div className="flex items-end gap-2">
           <button onClick={askHint} disabled={!canUseModel || busy || hintBusy || ending || needsRecovery} aria-label={t(lang, "pr_hint")} title={t(lang, "pr_hint")} className="press h-11 w-11 shrink-0 rounded-full border border-line-strong inline-flex items-center justify-center text-ink-2 disabled:opacity-40">

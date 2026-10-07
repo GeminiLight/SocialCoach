@@ -1,0 +1,14 @@
+{
+  "status": "verified_locally",
+  "production": "pending",
+  "checks": {
+    "core": 29,
+    "dinner": 249,
+    "lint": "passed",
+    "types": "passed",
+    "production_build": "passed",
+    "browser_slow_wait": "passed",
+    "fast_and_personal_model": "passed"
+  },
+  "shared_daily_budget_preserved": 100000000
+}

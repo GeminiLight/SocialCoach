@@ -1,0 +1,25 @@
+{
+  "state": {
+    "box": {
+      "bottom": 744.953125,
+      "height": 60,
+      "left": 12,
+      "right": 378,
+      "top": 684.953125,
+      "width": 366,
+      "x": 12,
+      "y": 684.953125
+    },
+    "count": 1,
+    "hasOriginal": true,
+    "hint": "等待有点久。自己的模型服务可能更快。\n\n接入自己的模型",
+    "overflow": false
+  },
+  "a11y": {
+    "inapplicable": 81,
+    "incomplete": 0,
+    "passes": 7,
+    "violations": 0
+  },
+  "inference_calls": 0
+}
