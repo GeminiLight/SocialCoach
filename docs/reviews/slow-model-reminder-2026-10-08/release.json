@@ -53,5 +53,22 @@
   "shared_daily_budget_configuration_preserved": 100000000,
   "shared_concurrency_preserved": 8,
   "research_files_included": false,
-  "ui_validation_inference_calls": 0
+  "ui_validation_inference_calls": 0,
+  "model_setup_clock_fix": {
+    "status": "verified_locally",
+    "publishing": "pending",
+    "configuration_open": {
+      "requests": 1,
+      "silences": 0
+    },
+    "configuration_closed": {
+      "requests": 2,
+      "silences": 1
+    },
+    "budget_seconds": 10,
+    "wait_seconds_each": 14,
+    "lint": "passed",
+    "types": "passed",
+    "production_build": "passed"
+  }
 }

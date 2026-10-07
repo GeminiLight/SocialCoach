@@ -14,7 +14,7 @@ import { lastSpoken, npcsOf, silenceStreak } from "@/lib/session-utils";
 import { continuePractice, practiceCheckpoint, practiceTurnLimit, supportedClosure } from "@/lib/practice-policy";
 import { uid } from "@/lib/format";
 import { track } from "@/lib/analytics/track";
-import { byokConfig } from "@/lib/byok";
+import { byokConfig, useByok } from "@/lib/byok";
 import type { ChatMessage, Session } from "@/lib/types";
 import type { Character } from "@/data/corpus/types";
 import type { Lang } from "@/data/taxonomy";
@@ -28,6 +28,7 @@ import { clockMarks, PatiencePicker, useReplyClock, type ClockStage } from "./Re
 export function Chat({ session }: { session: Session }) {
   const lang = useLang();
   const canUseModel = useCanUseModel();
+  const modelSheetOpen = useByok(s => s.sheetOpen);
   const router = useRouter();
   const { profile, settings, setSettings, appendMessage, updateSession } = useApp();
   const sc = session.scenario;
@@ -350,7 +351,7 @@ export function Chat({ session }: { session: Session }) {
     budgetMs: patience * 1000,
     armed,
     // Sheets, the mic and a hint on its way are not the learner's thinking.
-    paused: !canUseModel || endOpen || clockOpen || voiceNotice || hintBusy || listening || !!err || needsRecovery,
+    paused: !canUseModel || modelSheetOpen || endOpen || clockOpen || voiceNotice || hintBusy || listening || !!err || needsRecovery,
     turnKey: armed ? last.id : null,
     waitForSpeech: settings.tts,
     onStage,
