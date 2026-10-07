@@ -35,6 +35,8 @@
 
 成功返回 `audio/wav`，不缓存、不落盘；失败只返回安全的双语提示，不把语音失败写成文字模型失效。单次 20 秒、无提供商重试、响应上限 8 MB；复用原请求节流和共享预算，按模型最大输出 8,192 token 保守预留。专用 `NPC_SPEECH_API_KEY` / `NPC_SPEECH_BASE_URL` 须成对配置；未配置时，只允许复用同一个 TokenDance HTTPS 网关的默认密钥，不将其他服务商凭证发送到该网关。具体声音、速度及后续启用决策以实际试听结果为准。
 
+试听可附加 `stream:true`，向提供商请求 PCM16 SSE，记录真实首个音频事件并保留所有音频块的顺序，再封装为可播放 WAV。当前此模式仍在服务端收集完整音频，不应把它写成客户端已实现低延迟流式播放；`Server-Timing` 与 `X-Speech-Chunks` 用于实际延迟核对。
+
 ### `GET /api/health`
 
 返回 `{serverKey:boolean, requireByok:boolean, state:"available"|"unverified"|"unavailable", issue?:ModelIssue}`，只返回安全状态，不返回密钥、地址或服务商原始错误。`ModelIssue` 为 `setup|credentials|quota|model|rate_limit|service|network`。缺少部署密钥 / 强制 BYOK 返回 unavailable/setup。

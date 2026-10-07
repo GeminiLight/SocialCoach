@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { speechConfiguration, speechPayload, speechResponse, SpeechInputSchema } from "@/lib/speech-synthesis";
+import { speechConfiguration, speechPayload, speechResponse, speechStreamResponse, SpeechInputSchema } from "@/lib/speech-synthesis";
 import { readTaskBody } from "@/lib/task-input";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { reserveSharedBudget } from "@/lib/shared-budget";
@@ -27,14 +27,15 @@ export async function POST(request: Request) {
     stage = "budget";
     release = await reserveSharedBudget({ system: payload.messages[0].content, messages: [{ role: "user", content: input.text }], maxTokens: 8192, lang: input.lang, signal });
     stage = "provider";
+    const startedAt = Date.now();
     const response = await fetch(`${configuration.base}/chat/completions`, {
       method: "POST", headers: { Authorization: `Bearer ${configuration.key}`, "Content-Type": "application/json" },
       body: JSON.stringify(payload), signal, cache: "no-store",
     });
     stage = response.ok ? "audio" : "provider";
-    const audio = await speechResponse(response);
+    const result = input.stream ? await speechStreamResponse(response, startedAt) : { audio: await speechResponse(response), firstAudioMs: Date.now() - startedAt, chunks: 1 };
     signal.throwIfAborted();
-    return new Response(new Blob([audio.buffer as ArrayBuffer], { type: "audio/wav" }), { headers: { "Content-Type": "audio/wav", "Cache-Control": "private, no-store" } });
+    return new Response(new Blob([result.audio.buffer as ArrayBuffer], { type: "audio/wav" }), { headers: { "Content-Type": "audio/wav", "Cache-Control": "private, no-store", "Server-Timing": `speech_first;dur=${result.firstAudioMs}, speech_total;dur=${Date.now() - startedAt}`, "X-Speech-Chunks": String(result.chunks) } });
   } catch (error) {
     console.warn("[speech]", { stage, upstreamStatus: (error as { upstreamStatus?: number })?.upstreamStatus, category: (error as { modelIssue?: string })?.modelIssue });
     // Voice failure must not disable the independently functioning dialogue model.
