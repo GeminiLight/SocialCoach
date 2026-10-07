@@ -4,9 +4,9 @@
 
 ## 现有检查
 
-- [quality-check.log](./quality-check.log)：lint、类型、24 core＋249 dinner 测试及现有检查。
-- [production-build.log](./production-build.log)：应用正式构建通过。
-- [site-build.log](./site-build.log)、[site-seo.log](./site-seo.log)：12 个官网页面、13 个地图目标含公开论文文件，通过。
+- [quality-check.txt](./quality-check.txt)：lint、类型、24 core＋249 dinner 测试及现有检查。
+- [production-build.txt](./production-build.txt)：应用正式构建通过。
+- [site-build.txt](./site-build.txt)、[site-seo.txt](./site-seo.txt)：12 个官网页面、13 个地图目标含公开论文文件，通过。
 - [inventory.txt](./inventory.txt)：327 文件清单，非逐行覆盖声明。
 - [dependency-summary.json](./dependency-summary.json)：审计元数据、公告 ID、修复范围与依赖路径；10 条记录、5 个包，非十个已可利用入口。
 
