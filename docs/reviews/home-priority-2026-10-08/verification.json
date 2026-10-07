@@ -1,0 +1,171 @@
+{
+  "matrix": [
+    {
+      "lang": "zh",
+      "width": 390,
+      "theme": "light",
+      "state": {
+        "card": {
+          "bottom": 426.4375,
+          "height": 211.875,
+          "left": 24,
+          "right": 366,
+          "top": 214.5625,
+          "width": 342,
+          "x": 24,
+          "y": 214.5625
+        },
+        "custom": "/rehearse",
+        "first": "home-daily-practice",
+        "hasPrimaryCustom": false,
+        "overflow": false,
+        "primary": "primary",
+        "secondary": {
+          "bottom": 547.4375,
+          "height": 97,
+          "left": 24,
+          "right": 366,
+          "top": 450.4375,
+          "width": 342,
+          "x": 24,
+          "y": 450.4375
+        }
+      },
+      "a11y": {
+        "inapplicable": 76,
+        "incomplete": 1,
+        "passes": 11,
+        "violations": 0
+      },
+      "primary_button_contrast": 15.98827135081672
+    },
+    {
+      "lang": "en",
+      "width": 390,
+      "theme": "dark",
+      "state": {
+        "card": {
+          "bottom": 442.125,
+          "height": 211.875,
+          "left": 24,
+          "right": 366,
+          "top": 230.25,
+          "width": 342,
+          "x": 24,
+          "y": 230.25
+        },
+        "custom": "/rehearse",
+        "first": "home-daily-practice",
+        "hasPrimaryCustom": false,
+        "overflow": false,
+        "primary": "primary",
+        "secondary": {
+          "bottom": 639.875,
+          "height": 173.75,
+          "left": 24,
+          "right": 366,
+          "top": 466.125,
+          "width": 342,
+          "x": 24,
+          "y": 466.125
+        }
+      },
+      "a11y": {
+        "inapplicable": 76,
+        "incomplete": 1,
+        "passes": 11,
+        "violations": 0
+      },
+      "primary_button_contrast": 15.834280361186536
+    },
+    {
+      "lang": "zh",
+      "width": 1440,
+      "theme": "dark",
+      "state": {
+        "card": {
+          "bottom": 402.0625,
+          "height": 209.25,
+          "left": 273.59375,
+          "right": 1118.40625,
+          "top": 192.8125,
+          "width": 844.8125,
+          "x": 273.59375,
+          "y": 192.8125
+        },
+        "custom": "/rehearse",
+        "first": "home-daily-practice",
+        "hasPrimaryCustom": false,
+        "overflow": false,
+        "primary": "primary",
+        "secondary": {
+          "bottom": 501.9375,
+          "height": 75.875,
+          "left": 273.59375,
+          "right": 1118.40625,
+          "top": 426.0625,
+          "width": 844.8125,
+          "x": 273.59375,
+          "y": 426.0625
+        }
+      },
+      "a11y": {
+        "inapplicable": 76,
+        "incomplete": 1,
+        "passes": 11,
+        "violations": 0
+      },
+      "primary_button_contrast": 15.834280361186536
+    },
+    {
+      "lang": "en",
+      "width": 1440,
+      "theme": "light",
+      "state": {
+        "card": {
+          "bottom": 313.0625,
+          "height": 209.25,
+          "left": 273.59375,
+          "right": 1118.40625,
+          "top": 103.8125,
+          "width": 844.8125,
+          "x": 273.59375,
+          "y": 103.8125
+        },
+        "custom": "/rehearse",
+        "first": "home-daily-practice",
+        "hasPrimaryCustom": false,
+        "overflow": false,
+        "primary": "primary",
+        "secondary": {
+          "bottom": 412.9375,
+          "height": 75.875,
+          "left": 273.59375,
+          "right": 1118.40625,
+          "top": 337.0625,
+          "width": 844.8125,
+          "x": 273.59375,
+          "y": 337.0625
+        }
+      },
+      "a11y": {
+        "inapplicable": 76,
+        "incomplete": 1,
+        "passes": 11,
+        "violations": 0
+      },
+      "primary_button_contrast": 15.98827135081672
+    }
+  ],
+  "generation_flow": true,
+  "loading_has_one_secondary_path": true,
+  "today_scene_persisted": true,
+  "rehearsal_link_works": true,
+  "inference_calls": 0,
+  "unfinished_practice_preserved": {
+    "daily": "pidxkmawq9h8",
+    "duplicated": 0,
+    "href": "/practice/pidxkmawq9h8",
+    "secondary": 1
+  }
+}

@@ -508,13 +508,10 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
   background: color-mix(in oklch, var(--scene-ochre-paper) 50%, var(--paper));
   border: 1px solid color-mix(in oklch, var(--scene-ochre-color) 18%, var(--paper));
 }
-.rehearsal-invitation { background: var(--surface-rest); border: 0; border-radius: var(--radius); padding: 24px; }
-.rehearsal-invitation > div:first-child > svg { display: none; }
-.rehearsal-invitation.is-primary a { background: var(--action); color: var(--accent-ink); border-color: var(--action); }
-.rehearsal-invitation.is-primary a:hover { background: var(--action-hover); }
+.home-daily-invitation { background: var(--surface-rest); border-radius: var(--radius-lg); }
+.home-rehearsal-secondary { padding: 12px 4px; }
 .home-page .today-feature { min-height: 340px; }
-.home-page .home-resume > span:last-child,
-.home-page .rehearsal-invitation a { border-radius: var(--radius-sm); }
+.home-page .home-resume > span:last-child { border-radius: var(--radius-sm); }
 .home-page .takeaway-note { border: 0; padding: 20px 4px; }
 .home-page .home-resume { border: 0; border-radius: var(--radius); box-shadow: var(--shadow-paper); }
 .home-page .home-practice-layout > div > section > div.border-y { border: 0; }

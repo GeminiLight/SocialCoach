@@ -1,0 +1,8 @@
+{
+  "status": "verified_locally",
+  "publication": "pending",
+  "lint": "passed",
+  "types": "passed",
+  "production_build": "passed",
+  "inference_calls": 0
+}
