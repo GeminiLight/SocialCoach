@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Bookmark, ChevronDown, Search, X } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Bookmark, ChevronDown, Play, Search, X } from "lucide-react";
 import { clsx } from "clsx";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import { workspaceMotion } from "@/lib/motion";
@@ -12,20 +13,32 @@ import { CASES, SCENARIOS, THEORIES } from "@/data/corpus";
 import type { Case, Scenario, Theory } from "@/data/corpus/types";
 import { skillById, type Lang } from "@/data/taxonomy";
 import { useApp, useLang } from "@/store/useApp";
-import { t } from "@/lib/i18n";
+import { pick, t } from "@/lib/i18n";
+import { VIDEO_LESSONS, matchesVideo, type VideoLesson as VideoItem } from "@/data/video-lessons";
+import { VideoLesson, videoTime } from "@/components/VideoLesson";
 import { useIsDesktop } from "@/lib/use-media";
 import { CaseBody, TheoryBody } from "@/components/Knowledge";
 import { buildSession } from "@/lib/session-utils";
 import { ScenarioCover } from "@/components/ScenarioCover";
+import { LanguagePicker } from "@/components/LanguagePicker";
+
+type LibraryItem = Theory | Case | VideoItem;
+function isVideo(item: LibraryItem): item is VideoItem { return "video" in item; }
+function itemPreview(item: LibraryItem, lang: Lang) {
+  return isVideo(item) ? pick(item.synopsis, lang) : "principle" in item ? item.principle[lang] : item.takeaway[lang];
+}
+function itemSource(item: LibraryItem, lang: Lang) {
+  return isVideo(item) ? pick(item.source.label, lang) : `${item.source.book} · ${item.source.author}`;
+}
 
 export default function Learn() {
   const lang = useLang();
   const reduced = useReducedMotion();
   const router = useRouter();
   const starting = useRef(false);
-  const { bookmarks, toggleBookmark, profile, addSession } = useApp();
+  const { bookmarks, toggleBookmark, profile, addSession, setLang } = useApp();
   const desktop = useIsDesktop();
-  const [tab, setTab] = useState<"theories" | "cases" | "saved">("theories");
+  const [tab, setTab] = useState<"videos" | "theories" | "cases" | "saved">("videos");
   const [q, setQ] = useState("");
   const [open, setOpen] = useState<string | null>(null);
   const reading = useRef<HTMLElement>(null);
@@ -59,15 +72,16 @@ export default function Learn() {
       ...x.skills.map((k) => skillById(k).name[lang]),
     ]),
   );
+  const videos = VIDEO_LESSONS.filter(video => matchesVideo(video, q));
   const goals = profile?.goals ?? [];
   const relevance = (skills: string[]) => (skills.some((k) => goals.includes(k as never)) ? 0 : 1);
 
-  const items: (Theory | Case)[] =
-    tab === "theories"
+  const items: LibraryItem[] =
+    tab === "videos" ? videos : tab === "theories"
       ? [...theories].sort((a, b) => relevance(a.skills) - relevance(b.skills))
       : tab === "cases"
         ? [...cases].sort((a, b) => relevance(a.skills) - relevance(b.skills))
-        : [...theories, ...cases].filter((x) => bookmarks.includes(x.id));
+        : [...videos, ...theories, ...cases].filter((x) => bookmarks.includes(x.id));
 
   /* On desktop the library is master/detail, so something is always open: the
      item you picked, or the first one once a new tab or query changes the list. */
@@ -75,12 +89,19 @@ export default function Learn() {
   useEffect(() => {
     reading.current?.scrollTo({ top: 0, behavior: "instant" });
   }, [selected?.id]);
+  useEffect(() => {
+    if (desktop || !open || !VIDEO_LESSONS.some(video => video.id === open)) return;
+    document.getElementById(`knowledge-${open}`)?.querySelector(".video-lesson")?.scrollIntoView({ block: "start", behavior: reduced ? "instant" : "smooth" });
+  }, [open, desktop, reduced]);
 
   return (
-    <Shell>
+    <Shell showModelNotice={false}>
       <Page className="learn-page pt-4 lg:pt-9 flex flex-col gap-5 lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-x-10 lg:gap-y-8 lg:items-start">
         <header className="lg:col-span-2 border-b border-line pb-6">
-          <p className="eyebrow text-teal mb-3">{t(lang, "ln_title")}</p>
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <p className="eyebrow text-teal">{t(lang, "ln_title")}</p>
+            <LanguagePicker lang={lang} onChange={setLang} />
+          </div>
           <h1 className="display text-[30px] lg:text-[38px] leading-tight text-balance">{t(lang, "ln_heading")}</h1>
           <p className="text-[14px] text-ink-3 mt-3 leading-relaxed">{t(lang, "ln_sub")}</p>
         </header>
@@ -108,7 +129,10 @@ export default function Learn() {
               </button>
             )}
           </label>
-          <ChoiceGroup className="library-tabs grid grid-cols-3 gap-1.5 shrink-0 [&>button]:px-2 [&>button]:text-[12px] [&>button]:justify-center">
+          <ChoiceGroup className="library-tabs grid grid-cols-4 gap-1 shrink-0 [&>button]:px-1 [&>button]:text-[11px] lg:[&>button]:text-[12px] [&>button]:justify-center">
+            <Chip active={tab === "videos"} onClick={() => setTab("videos")}>
+              {t(lang, "ln_videos")} <span className="num">{VIDEO_LESSONS.length}</span>
+            </Chip>
             <Chip active={tab === "theories"} onClick={() => setTab("theories")}>
               {t(lang, "ln_theories")} <span className="num">{THEORIES.length}</span>
             </Chip>
@@ -116,7 +140,7 @@ export default function Learn() {
               {t(lang, "ln_cases")} <span className="num">{CASES.length}</span>
             </Chip>
             <Chip active={tab === "saved"} onClick={() => setTab("saved")}>
-              <Bookmark size={14} />
+              <Bookmark size={14} className="hidden lg:block" />
               {t(lang, "ln_saved")} {bookmarks.length > 0 && <span className="num">{bookmarks.length}</span>}
             </Chip>
           </ChoiceGroup>
@@ -133,7 +157,7 @@ export default function Learn() {
                   className="press min-h-11 px-4 rounded-full bg-ink text-paper text-[13px]"
                   onClick={() => {
                     setQ("");
-                    if (!q.trim()) setTab("theories");
+                    if (!q.trim()) setTab("videos");
                   }}
                 >
                   {t(lang, q.trim() ? "ln_clear" : "ln_browse")}
@@ -146,6 +170,7 @@ export default function Learn() {
           <ul className="flex flex-col gap-2 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
             {items.map((it) => {
               const isTheory = "principle" in it;
+              const video = isVideo(it);
               const isOpen = open === it.id;
               const isSelected = selected?.id === it.id;
               const saved = bookmarks.includes(it.id);
@@ -164,9 +189,9 @@ export default function Learn() {
                     className="press w-full text-left p-4 flex flex-col gap-2.5"
                   >
                     <div className="flex items-center gap-2 flex-wrap">
-                      <KindMark theory={isTheory} />
-                      <span className={clsx("eyebrow", isTheory ? "text-teal" : "text-accent-deep")}>
-                        {isTheory ? t(lang, "rp_theory") : t(lang, "rp_case")}
+                      <KindMark theory={isTheory} video={video} />
+                      <span className={clsx("eyebrow", isTheory || video ? "text-teal" : "text-accent-deep")}>
+                        {video ? t(lang, "ln_videos") : isTheory ? t(lang, "rp_theory") : t(lang, "rp_case")}
                       </span>
                       {saved && <Bookmark size={13} className="ml-auto text-teal" fill="currentColor" aria-hidden />}
                       <ChevronDown
@@ -175,15 +200,21 @@ export default function Learn() {
                         aria-hidden
                       />
                     </div>
-                    <p className="display text-[18px] leading-snug">{it.title[lang]}</p>
-                    <p className={clsx("text-[13px] text-ink-3 line-clamp-2 leading-snug", isOpen && "hidden lg:line-clamp-2")}>
-                      {isTheory ? (it as Theory).principle[lang] : (it as Case).takeaway[lang]}
-                    </p>
+                    <div className={video ? "video-library-intro" : "contents"}>
+                      {video && <span className="video-library-poster"><Image src={it.video.cover} alt="" fill sizes="96px" /></span>}
+                      <span className={video ? "video-library-description" : "contents"}>
+                        <span className="display block text-[18px] leading-snug">{it.title[lang]}</span>
+                        <span className={clsx("block text-[13px] text-ink-3 line-clamp-2 leading-snug", isOpen && "hidden lg:line-clamp-2")}>
+                          {itemPreview(it, lang)}
+                        </span>
+                      </span>
+                    </div>
                     <span className="dotted mt-1 w-full" aria-hidden />
                     <div className="flex items-baseline justify-between gap-3 w-full">
                       <span className="text-[11px] text-ink-3 truncate">
-                        <em>{it.source.book}</em> · {it.source.author}
+                        {itemSource(it, lang)}
                       </span>
+                      {video && <span className="text-[11px] text-ink-3 num shrink-0">{videoTime(Math.ceil(it.video.seconds))}</span>}
                       {isTheory && (
                         <span className="text-[11px] text-ink-3 num shrink-0">
                           {t(lang, "ln_steps", { n: (it as Theory).howTo.length })}
@@ -201,7 +232,10 @@ export default function Learn() {
                   >
                     <div className="overflow-hidden">
                       <div className="px-4 pb-4 flex flex-col gap-4">
-                        <ItemBody it={it} lang={lang} saved={saved} onSave={() => toggleBookmark(it.id)} onPractice={start} />
+                        {(!video || (isOpen && !desktop)) && <ItemBody it={it} lang={lang} saved={saved} onSave={() => toggleBookmark(it.id)} onPractice={start} onClose={() => {
+                          setOpen(null);
+                          document.querySelector<HTMLButtonElement>(`button[aria-controls="knowledge-${it.id}"]`)?.focus();
+                        }} />}
                       </div>
                     </div>
                   </div>
@@ -221,9 +255,9 @@ export default function Learn() {
           >
             <motion.div key={selected.id} initial={reduced ? false : { opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={reduced ? { duration: 0 } : workspaceMotion.surface}>
             <header className="flex flex-col gap-3 mb-6 border-b border-line pb-5">
-              <span className={clsx("eyebrow inline-flex items-center gap-2", "principle" in selected ? "text-teal" : "text-accent-deep")}>
-                <KindMark theory={"principle" in selected} />
-                {"principle" in selected ? t(lang, "rp_theory") : t(lang, "rp_case")}
+              <span className={clsx("eyebrow inline-flex items-center gap-2", "principle" in selected || isVideo(selected) ? "text-teal" : "text-accent-deep")}>
+                <KindMark theory={"principle" in selected} video={isVideo(selected)} />
+                {isVideo(selected) ? t(lang, "ln_videos") : "principle" in selected ? t(lang, "rp_theory") : t(lang, "rp_case")}
               </span>
               <h2 className="display text-[26px] leading-tight">{selected.title[lang]}</h2>
             </header>
@@ -239,7 +273,8 @@ export default function Learn() {
 }
 
 /** The body of a theory or case — same content in the phone accordion and the desktop pane. */
-function ItemBody({ it, lang, saved, onSave, onPractice }: { it: Theory | Case; lang: Lang; saved: boolean; onSave: () => void; onPractice: (scene: Scenario) => void }) {
+function ItemBody({ it, lang, saved, onSave, onPractice, onClose }: { it: LibraryItem; lang: Lang; saved: boolean; onSave: () => void; onPractice: (scene: Scenario) => void; onClose?: () => void }) {
+  if (isVideo(it)) return <VideoLesson lesson={it} lang={lang} saved={saved} onSave={onSave} onClose={onClose} />;
   const isTheory = "principle" in it;
   const related = SCENARIOS.map((scene) => ({ scene, overlap: it.skills.filter((skill) => scene.skills.includes(skill)).length }))
     .filter(({ overlap }) => overlap > 0)
@@ -291,7 +326,8 @@ function ItemBody({ it, lang, saved, onSave, onPractice }: { it: Theory | Case; 
  * Theory and case need to differ at a glance, not just by label colour:
  * a theory is a set of rules, a case is something somebody said.
  */
-function KindMark({ theory }: { theory: boolean }) {
+function KindMark({ theory, video = false }: { theory: boolean; video?: boolean }) {
+  if (video) return <Play size={15} className="shrink-0 text-teal" aria-hidden />;
   if (theory) {
     return (
       <svg width={15} height={15} viewBox="0 0 16 16" aria-hidden className="shrink-0">

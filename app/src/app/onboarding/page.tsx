@@ -103,8 +103,8 @@ export default function Onboarding() {
                 <h1 className="display whitespace-pre-line">{t(lang, "ob_welcome_title")}</h1>
                 <p className="welcome-description text-[14px] text-ink-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "ob_welcome_body")}</p>
                 <div className="onboarding-welcome-actions flex flex-col gap-2">
-                  <Button block size="lg" onClick={() => startNow("/rehearse")}>{t(lang, "ob_rehearse")}<ArrowRight size={18} /></Button>
-                  <Button block variant="secondary" onClick={() => startNow("/arena")}>{t(lang, "ob_browse")}</Button>
+                  <Button block size="lg" onClick={() => startNow("/arena")}>{t(lang, "ob_browse")}<ArrowRight size={18} /></Button>
+                  <Button block variant="secondary" onClick={() => startNow("/rehearse")}>{t(lang, "ob_rehearse")}</Button>
                   <div className="welcome-other-actions">
                     <button onClick={() => setStep(1)} className="press min-h-11 text-[12px] text-ink-2 rounded-[var(--radius-sm)]">{t(lang, "ob_personalize")}</button>
                     <Link href="/3d" prefetch={false} className="press min-h-11 inline-flex items-center gap-1.5 text-[12px] text-ink-2 rounded-[var(--radius-sm)]">{t(lang, "ob_dinner_short")}<ArrowUpRight size={14} /></Link>

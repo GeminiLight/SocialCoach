@@ -1,0 +1,129 @@
+{
+  "matrix": [
+    {
+      "language": "zh",
+      "viewport": 1440,
+      "theme": "light",
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      },
+      "screenshot": "desktop-zh-light.png"
+    },
+    {
+      "language": "zh",
+      "viewport": 1440,
+      "theme": "dark",
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      },
+      "screenshot": "desktop-zh-dark.png"
+    },
+    {
+      "language": "zh",
+      "viewport": 360,
+      "theme": "light",
+      "counts": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 34,
+        "violations": 0
+      },
+      "screenshot": "mobile-zh-light.png"
+    },
+    {
+      "language": "zh",
+      "viewport": 360,
+      "theme": "dark",
+      "counts": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 34,
+        "violations": 0
+      },
+      "screenshot": "mobile-zh-dark.png"
+    },
+    {
+      "language": "en",
+      "viewport": 1440,
+      "theme": "light",
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      },
+      "screenshot": "desktop-en-light.png"
+    },
+    {
+      "language": "en",
+      "viewport": 1440,
+      "theme": "dark",
+      "counts": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      },
+      "screenshot": "desktop-en-dark.png"
+    },
+    {
+      "language": "en",
+      "viewport": 360,
+      "theme": "light",
+      "counts": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 34,
+        "violations": 0
+      },
+      "screenshot": "mobile-en-light.png"
+    },
+    {
+      "language": "en",
+      "viewport": 360,
+      "theme": "dark",
+      "counts": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 34,
+        "violations": 0
+      },
+      "screenshot": "mobile-en-dark.png"
+    }
+  ],
+  "verified_interactions": [
+    "guest learning access without model setup",
+    "one paused video with zero MP4 requests before user interaction",
+    "chapter seek starts real playback at 30s; native duration is 56.533333s",
+    "English track loads 20 cues and is selected after UI language change",
+    "keyboard navigation reaches transcript timestamps with visible focus",
+    "video bookmark appears in the shared saved list and survives reload",
+    "empty search recovery",
+    "theory and case tabs remain readable and remove the video player",
+    "closing the mobile accordion unmounts its playing video",
+    "cold first-load failure preserves transcript and practice link",
+    "cold retry resumes the requested 30s chapter",
+    "interrupted cached/range playback error at 54.378667s resumes at that position after retry",
+    "practice handoff opens the existing 3D confirmation with work-toast selected"
+  ],
+  "practice_selected": [
+    "职场\n望江阁 · 项目庆功宴",
+    "敬酒之后，还得谈交付\n酒杯还在等你，周三的交付承诺也已经摆上了桌。",
+    "12 回合"
+  ],
+  "practice_snapshot": "- dialog \"换场景\" [ref=e525] clickable [onclick]\n  - heading \"换场景\" [level=2, ref=e532]\n  - button \"关闭\" [ref=e533]\n  - button \"职场 望江阁 · 项目庆功宴\" [ref=e526]\n  - button \"家庭 团圆厅 · 家庭聚餐\" [ref=e527]\n  - button \"学校 春和厅 · 赛后聚餐\" [ref=e528]\n  - button \"电梯口 12 楼 · 电梯等候区\" [ref=e529]\n  - button \"办公室 项目组 · 开放办公室\" [ref=e530]\n  - button \"敬酒之后，还得谈交付 酒杯还在等你，周三的交付承诺也已经摆上了桌。\" [ref=e534]\n  - button \"领导已经替你答应了 陈总已经替你说了“肯定上线”。两个失败测试还没过。\" [ref=e535]\n  - button \"8 回合\" [ref=e536]\n  - button \"12 回合\" [ref=e537]\n  - button \"18 回合\" [ref=e538]\n  - button \"开一局新的\" [ref=e531]",
+  "scope": "Chromium desktop / mobile viewport; production and physical-device playback not verified",
+  "paid_model_requests": 0,
+  "telemetry_intercepted": true,
+  "test_recovery_notes": [
+    "mobile heading hierarchy fixed after axe finding",
+    "cached media delayed injected network failure; a fresh browser verified first-load error",
+    "3D selection inspected after rendered dialog was ready, not immediately after URL change"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "original_name": "刚从HR出来领导当众问你是不是要走.mp4",
+  "original_bytes": 20239103,
+  "original_sha256": "c39bacea14718b4c347c90be273d8194a6d538f0e06bfa45f0ecde640a5928a8",
+  "web_assets": {
+    "elevator-hr.zh.vtt": {
+      "bytes": 1657,
+      "sha256": "d0d64283557bdf78ab83ae76a262896188aee9f23236085774f600229b8f359d"
+    },
+    "elevator-hr.en.vtt": {
+      "bytes": 1863,
+      "sha256": "5d7d9f24683aac3fb2caadaf0325d31a7ee501a2f1bcc8ba82e76d90a013d7f0"
+    },
+    "elevator-hr.mp4": {
+      "bytes": 5056742,
+      "sha256": "5bf4d3500d76d534e07dded89e343358af7fb5ce07822b47748b8b77723bd8c0"
+    },
+    "elevator-hr-poster.png": {
+      "bytes": 1204281,
+      "sha256": "faa8dc3352652558779e1e30a08aec313e1b8731c296a84d1da1a736fcabe73b"
+    },
+    "elevator-hr-frame.jpg": {
+      "bytes": 45123,
+      "sha256": "7499809102ec6ac8d040fe9a5c632c597e0de9fb737d8636edfb9d26d22cf39a"
+    }
+  },
+  "frame_count": 1505,
+  "fps": 30,
+  "captions": 17,
+  "source": "User supplied film; dialogue and cuts checked against final production source, not estimated storyboard duration"
+}

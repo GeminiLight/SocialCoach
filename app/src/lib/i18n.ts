@@ -84,7 +84,7 @@ const dict = {
   nav_home: { zh: "今日", en: "Today" },
   nav_arena: { zh: "练习场", en: "Arena" },
   nav_progress: { zh: "成长", en: "Growth" },
-  nav_learn: { zh: "知识", en: "Learn" },
+  nav_learn: { zh: "学习", en: "Learn" },
   nav_me: { zh: "我", en: "Me" },
   // The wordmark is "SocialCoach" in both languages. A product with one name
   // is easier to search for, to say out loud and to link to than a product
@@ -419,13 +419,13 @@ const dict = {
 
   // learn
   ln_heading: { zh: "把懂得的，变成说得出的。", en: "Turn understanding into words." },
-  ln_results: { zh: "{n} 条可阅读", en: "{n} items to explore" },
-  ln_saved_empty: { zh: "给值得重读的内容，留个书签。", en: "Keep a bookmark for your next read." },
-  ln_saved_hint: { zh: "打开理论或案例，点击收藏，就能在这里找到它。", en: "Open a theory or case and save it to find it here." },
-  ln_search_empty: { zh: "暂时没有匹配的内容", en: "No matching reads yet" },
-  ln_search_hint: { zh: "试试技能名、书名，或换一个关键词。", en: "Try a skill, a book title, or another keyword." },
+  ln_results: { zh: "{n} 条学习内容", en: "{n} items to explore" },
+  ln_saved_empty: { zh: "给值得再看的内容，留个书签。", en: "Save something to come back to." },
+  ln_saved_hint: { zh: "打开视频、理论或案例，点击收藏，就能在这里找到它。", en: "Open a video, theory or case and save it to find it here." },
+  ln_search_empty: { zh: "暂时没有匹配的内容", en: "No matching content yet" },
+  ln_search_hint: { zh: "试试场景、技能名、书名，或换一个关键词。", en: "Try a scene, a skill, a book title, or another keyword." },
   ln_clear: { zh: "清除搜索", en: "Clear search" },
-  ln_browse: { zh: "浏览理论", en: "Browse theories" },
+  ln_browse: { zh: "浏览学习内容", en: "Browse learning content" },
   ln_reading: { zh: "正在阅读", en: "Reading" },
   st_heading: { zh: "让练习，更适合你。", en: "Make practice your own." },
   st_intro: { zh: "调整你的目标、阅读偏好和练习方式。", en: "Tune your goals, reading preferences, and practice setup." },
@@ -438,10 +438,11 @@ const dict = {
   st_export_hint: { zh: "下载一份资料与练习记录备份，包含 3D 现场记录。", en: "Download a backup of your profile and practice records, including 3D scenes." },
   st_goal_hint: { zh: "已选 {n} 项；至少保留一项，修改立即保存。", en: "{n} selected. Keep at least one; changes save immediately." },
   st_voice_hint: { zh: "对话时自动朗读对方的台词。", en: "Automatically read the other person’s lines during practice." },
-  ln_title: { zh: "知识库", en: "Knowledge" },
+  ln_title: { zh: "学习", en: "Learn" },
   ln_source_link: { zh: "查看方法依据", en: "Read the source" },
   ln_steps: { zh: "{n} 步做法", en: "{n} steps" },
-  ln_sub: { zh: "理论说「为什么」，案例说「怎么做」。每一条都有出处。", en: "Theory says why; cases show how. Every item cites its source." },
+  ln_sub: { zh: "看一段示范，读清关键选择，再自己练一遍。每条内容都有来源。", en: "Watch a demonstration, understand the choices, then try them yourself. Every item has a source." },
+  ln_videos: { zh: "视频", en: "Videos" },
   ln_theories: { zh: "理论", en: "Theories" },
   ln_cases: { zh: "案例", en: "Cases" },
   ln_saved: { zh: "已收藏", en: "Saved" },
@@ -455,7 +456,7 @@ const dict = {
   ln_scene_prepare: { zh: "准备这场对话", en: "Prepare this conversation" },
   ln_bookmark: { zh: "收藏", en: "Save" },
   ln_bookmarked: { zh: "已收藏", en: "Saved" },
-  ln_search_ph: { zh: "搜索理论与案例", en: "Search theories and cases" },
+  ln_search_ph: { zh: "搜索视频、理论与案例", en: "Search videos, theories and cases" },
 
   // settings
   st_title: { zh: "我", en: "Me" },

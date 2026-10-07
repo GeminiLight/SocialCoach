@@ -1,0 +1,29 @@
+{
+  "original_name": "饭局上领导替你答应了.mp4",
+  "original_sha256": "eb8c6324ea805f491219ac7b4d54239a529edb5b81156c7ba6fc87cacd1bfcf9",
+  "original_bytes": 36560265,
+  "web_assets": {
+    "dinner-toast.mp4": {
+      "bytes": 10666103,
+      "sha256": "240bda192d782b1920d8af986f3014ef03ec424df11d6af10f2965c417d0555a"
+    },
+    "dinner-toast.en.vtt": {
+      "bytes": 2111,
+      "sha256": "5f5594141727710f25d7f2697cedab698262a4aa1e564908d0512f316e096325"
+    },
+    "dinner-toast-poster.png": {
+      "bytes": 531295,
+      "sha256": "cfc5b19caf2400ffece677c6447576c8772225125aeaa42a4b407ba72c141b77"
+    },
+    "dinner-toast.zh.vtt": {
+      "bytes": 1876,
+      "sha256": "e3086b76dbd2af1acf42c869638015f8198b4d87846ed4497d972e6d927c7b7f"
+    },
+    "dinner-toast-frame.jpg": {
+      "bytes": 72585,
+      "sha256": "44262f670a8abe2e441b35f190955f083a30d61b0548477ed3b22521f2757f36"
+    }
+  },
+  "encoding": "720x1280 H.264/AAC; CRF 23; faststart; original audiovisual content retained",
+  "timeline": "1696 frames at 30fps = 56.533333s; final video, not the earlier storyboard"
+}

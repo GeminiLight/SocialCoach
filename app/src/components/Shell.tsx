@@ -80,13 +80,13 @@ export function NavRail() {
 }
 
 /** Standard page frame: bottom tabs on phone and tablet, left rail on desktop. */
-export function Shell({ children }: { children: React.ReactNode }) {
+export function Shell({ children, showModelNotice = true }: { children: React.ReactNode; showModelNotice?: boolean }) {
   const lang = useLang();
   return (
     <div className="lg:grid lg:grid-cols-[var(--rail-w)_1fr]">
       <a href="#main-content" className="skip-link">{t(lang, "skip_content")}</a>
       <NavRail />
-      <div id="main-content" tabIndex={-1} className="pb-28 pt-safe min-w-0 lg:pb-16 lg:mx-auto lg:w-full lg:max-w-[var(--content-max)]"><ModelAccessNotice className="app-model-notice mx-5 mt-4 lg:mx-10" />{children}</div>
+      <div id="main-content" tabIndex={-1} className="pb-28 pt-safe min-w-0 lg:pb-16 lg:mx-auto lg:w-full lg:max-w-[var(--content-max)]">{showModelNotice && <ModelAccessNotice className="app-model-notice mx-5 mt-4 lg:mx-10" />}{children}</div>
       <TabBar />
     </div>
   );

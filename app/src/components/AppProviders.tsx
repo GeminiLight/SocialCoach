@@ -25,15 +25,16 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   const byok = useByok();
   const lang = useLang();
   const dinner = path === "/3d";
+  const learning = path === "/learn";
   const canUseModel = useCanUseModel();
   const modelAccess = useModelAccess();
 
   useEffect(() => {
-    if (hydrated && byok.hydrated && !storageIssue) promptUnavailableSharedModel();
-  }, [hydrated, byok.hydrated, storageIssue, modelAccess.state, modelAccess.source, modelAccess.issue, modelAccess.epoch]);
+    if (hydrated && byok.hydrated && !storageIssue && !learning) promptUnavailableSharedModel();
+  }, [hydrated, byok.hydrated, storageIssue, learning, modelAccess.state, modelAccess.source, modelAccess.issue, modelAccess.epoch]);
 
   useEffect(() => {
-    if (!byok.hydrated) return;
+    if (!byok.hydrated || learning) return;
     syncModelConfiguration();
     void refreshModelAccess();
     return useByok.subscribe((next, previous) => {
@@ -42,12 +43,12 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
         void refreshModelAccess();
       }
     });
-  }, [byok.hydrated]);
+  }, [byok.hydrated, learning]);
 
   useEffect(() => {
     if (!hydrated || storageIssue) return;
-    if (!profile && path !== "/onboarding" && !dinner&&!immersiveReview) router.replace("/onboarding");
-  }, [hydrated, storageIssue, profile, path, dinner,immersiveReview, router]);
+    if (!profile && path !== "/onboarding" && !dinner && !learning && !immersiveReview) router.replace("/onboarding");
+  }, [hydrated, storageIssue, profile, path, dinner, learning, immersiveReview, router]);
 
   useEffect(() => {
     // Follow the resolved language, not just an explicit choice: before

@@ -1,0 +1,100 @@
+{
+  "matrix": [
+    {
+      "lang": "zh",
+      "width": 1440,
+      "theme": "light",
+      "state": {
+        "label": "进入这场电梯对话",
+        "overflow": false,
+        "paused": true,
+        "source": "/videos/learning/elevator-hr.mp4",
+        "target": "/3d?scene=elevator&opening=elevator-privacy"
+      },
+      "a11y": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      }
+    },
+    {
+      "lang": "en",
+      "width": 1440,
+      "theme": "dark",
+      "state": {
+        "label": "Try this elevator conversation",
+        "overflow": false,
+        "paused": true,
+        "source": "/videos/learning/elevator-hr.mp4",
+        "target": "/3d?scene=elevator&opening=elevator-privacy"
+      },
+      "a11y": {
+        "inapplicable": 53,
+        "incomplete": 0,
+        "passes": 35,
+        "violations": 0
+      }
+    },
+    {
+      "lang": "zh",
+      "width": 360,
+      "theme": "dark",
+      "state": {
+        "label": "进入这场电梯对话",
+        "overflow": false,
+        "paused": true,
+        "source": "/videos/learning/elevator-hr.mp4",
+        "target": "/3d?scene=elevator&opening=elevator-privacy"
+      },
+      "a11y": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 34,
+        "violations": 0
+      }
+    },
+    {
+      "lang": "en",
+      "width": 360,
+      "theme": "light",
+      "state": {
+        "label": "Try this elevator conversation",
+        "overflow": false,
+        "paused": true,
+        "source": "/videos/learning/elevator-hr.mp4",
+        "target": "/3d?scene=elevator&opening=elevator-privacy"
+      },
+      "a11y": {
+        "inapplicable": 54,
+        "incomplete": 0,
+        "passes": 34,
+        "violations": 0
+      }
+    }
+  ],
+  "media": {
+    "duration": 50.176,
+    "time": 27.520272,
+    "tracks": [
+      {
+        "lang": "zh",
+        "mode": "disabled"
+      },
+      {
+        "cues": 17,
+        "lang": "en",
+        "mode": "showing"
+      }
+    ]
+  },
+  "saved_after_reload": true,
+  "practice_selected": [
+    "电梯口\n12 楼 · 电梯等候区",
+    "HR 的谈话，要当众交代？\n离职只是猜测，谈话内容还没有公开。",
+    "12 回合"
+  ],
+  "practice_snapshot": "- dialog \"换场景\" [ref=e277] clickable [onclick]\n  - heading \"换场景\" [level=2, ref=e284]\n  - button \"关闭\" [ref=e285]\n  - button \"职场 望江阁 · 项目庆功宴\" [ref=e278]\n  - button \"家庭 团圆厅 · 家庭聚餐\" [ref=e279]\n  - button \"学校 春和厅 · 赛后聚餐\" [ref=e280]\n  - button \"电梯口 12 楼 · 电梯等候区\" [ref=e281]\n  - button \"办公室 项目组 · 开放办公室\" [ref=e282]\n  - button \"HR 的谈话，要当众交代？ 离职只是猜测，谈话内容还没有公开。\" [ref=e286]\n  - button \"原因没查，先让你认错 账号打不开，原因还没查，归因已经要上报。\" [ref=e287]\n  - button \"8 回合\" [ref=e288]\n  - button \"12 回合\" [ref=e289]\n  - button \"18 回合\" [ref=e290]\n  - button \"开一局新的\" [ref=e283]",
+  "inference_blocked": true,
+  "health_mocked_for_handoff_ui": true
+}
