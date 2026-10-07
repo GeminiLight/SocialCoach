@@ -24,7 +24,7 @@ export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):Sp
      const fact=part.trim().replace(/[，,。！？.!?;；]$/u,'').toLowerCase();
      if(clientDemand&&full&&rewrite&&!known.some(line=>line.includes(fact)))return 'The opening establishes a section-three redo and a client review at nine tomorrow. It does not establish a client demand to redo the entire deck. Keep the manager’s own broader preferences separate; do not attribute an invented scope to the client or reveal private facts early.';
      const broadAnswer=/(?:整份|整套|全套|全部|所有页|每一?页)|\b(?:(?:full|whole|entire) (?:deck|thing)|all (?:the )?(?:slides?|pages?)|every (?:slide|page))\b/iu.test(part);
-     const ownPreference=/(?:我(?:自己|个人)?(?:想|要|希望|打算|需要))|\b(?:I (?:want|need|prefer|would)|my (?:request|preference)|for me)\b/iu.test(part);
+     const ownPreference=/(?:我(?:自己|个人)?(?:想|要|希望|打算|需要))|\b(?:I (?:want|need|prefer|would)|I['’]d (?:like|prefer|want|rather)|my (?:request|preference)|for me)\b/iu.test(part);
      const unconfirmed=/(?:先确认|待确认|还没(?:确认|核实))|\b(?:confirm|verify|whether|unknown)\b/iu.test(part);
      if(asksClientScope&&broadAnswer&&!ownPreference&&!unconfirmed&&!known.some(line=>!/[？?]/u.test(line)&&line.includes(fact)))return 'The learner is asking for the actual client scope. An answer such as “the whole thing” or “every slide” asserts an unestablished client-wide requirement even without repeating the word client. Keep your own preferences separate and the actual client facts consistent with your private knowledge; withholding a fact must not invent a contradictory requirement.';
     }
