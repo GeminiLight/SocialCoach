@@ -1,14 +1,57 @@
 {
-  "status": "verified_locally",
-  "production": "pending",
+  "status": "published",
+  "source": "3cd3a63d21c061381609e2bcbbd059f0b7415cc8",
+  "vercel": {
+    "deployment_id": "dpl_CiTNuvsKvfkmQNhzaALf5uuJGZet",
+    "deployment_url": "https://socialcoach-7n1567xhb-geminilights-projects.vercel.app",
+    "state": "Ready",
+    "aliases": [
+      "https://socialcoach-ai.vercel.app",
+      "https://socialcoach-app.vercel.app"
+    ],
+    "quality_run": 37667489023,
+    "quality_conclusion": "success",
+    "live_browser_wait_flow": {
+      "long_wait": true,
+      "one_reminder": true,
+      "setup_without_navigation": true,
+      "no_duplicate_request": true,
+      "original_context_retained": true,
+      "removed_on_completion": true,
+      "inference_calls": 0
+    }
+  },
+  "modelscope": {
+    "mirror_commit": "4f8dca7cbf8dcd9b52f2cfa66a17ec213c8c75cb",
+    "state": "Running",
+    "runtime_created_at": "2026-10-07T18:37:56.000Z",
+    "ready_log": [
+      "[2026-10-08 02:38:38] [su]: ✓ Ready in 0ms\n"
+    ],
+    "product_inputs_matched": 386,
+    "live_page_and_bundle": {
+      "page_status": 200,
+      "static_assets": 21,
+      "all_static_assets_200": true,
+      "new_wait_component_in_live_bundle": true,
+      "bilingual_copy_in_live_bundle": true,
+      "health": {
+        "serverKey": true,
+        "requireByok": false,
+        "state": "available"
+      },
+      "inference_calls": 0
+    }
+  },
   "checks": {
     "core": 29,
     "dinner": 249,
     "lint": "passed",
     "types": "passed",
-    "production_build": "passed",
-    "browser_slow_wait": "passed",
-    "fast_and_personal_model": "passed"
+    "production_build": "passed"
   },
-  "shared_daily_budget_preserved": 100000000
+  "shared_daily_budget_configuration_preserved": 100000000,
+  "shared_concurrency_preserved": 8,
+  "research_files_included": false,
+  "ui_validation_inference_calls": 0
 }
