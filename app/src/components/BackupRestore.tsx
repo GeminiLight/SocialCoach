@@ -26,7 +26,8 @@ export function BackupRestore(){
  const [quarantined,setQuarantined]=useState<string|null>(null);
  const downloadOriginal=(text:string)=>{const url=URL.createObjectURL(new Blob([text],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='SocialCoach-3D-original.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
  const [backup,setBackup]=useState<Awaited<ReturnType<typeof decodeBackup>>|null>(null),[error,setError]=useState<string|null>(null),[ready,setReady]=useState(false),[mode,setMode]=useState<'merge'|'replace'>('merge');
- const choose=async(file:File)=>{setError(null);setReady(false);try{if(file.size>20*1024*1024)throw Error('size');const {decodeBackup}=await import('@/lib/backup');setBackup(await decodeBackup(await file.text()));}catch{setError(pick(copy.error,lang));}};
+ const selection=useRef(0);
+ const choose=async(file:File)=>{const ticket=++selection.current;setBackup(null);setError(null);setReady(false);try{if(file.size>20*1024*1024)throw Error('size');const {decodeBackup}=await import('@/lib/backup');const result=await decodeBackup(await file.text());if(ticket===selection.current)setBackup(result);}catch{if(ticket===selection.current)setError(pick(copy.error,lang));}};
  const prepare=async()=>{try{const {downloadArchive}=await import('@/lib/backup');downloadArchive(parseArchive(useApp.getState()));setReady(true);}catch{setError(pick(copy.error,lang));}};
  const restore=async()=>{if(!backup||!ready)return;try{
   const {mergeArchives}=await import('@/lib/backup');
@@ -40,7 +41,7 @@ export function BackupRestore(){
   {dinner&&!backup&&<button disabled={!!saveIssue} className="press underline px-4 min-h-11" onClick={()=>{try{localStorage.setItem(DINNER_SAVE_KEY,dinner);setDinner(null);}catch{setError(pick(copy.error,lang));}}}>{pick({zh:'主档案已保存，恢复备份中的 3D 局',en:'Main archive saved; restore its 3D practice'},lang)}</button>}
   {error&&!backup&&<p role="status" className="px-4 pb-3 text-[13px] text-ink-2">{error}</p>}
   {quarantined&&!backup&&<div className="px-4 pb-3 text-[13px] text-ink-2"><p>{pick(copy.damagedDinner,lang)}</p><button className="press underline min-h-11" onClick={()=>downloadOriginal(quarantined)}>{pick(copy.downloadDinner,lang)}</button></div>}
-  <Sheet open={!!backup} onClose={()=>{setBackup(null);setReady(false);}} title={pick(copy.title,lang)}><div className="flex flex-col gap-4 pt-2">
+  <Sheet open={!!backup} onClose={()=>{selection.current++;setBackup(null);setReady(false);}} title={pick(copy.title,lang)}><div className="flex flex-col gap-4 pt-2">
    <p>{pick(copy.summary,lang).replace('{n}',String(backup?.archive.sessions.length??0)).replace('{m}',String(backup?.archive.customScenarios.length??0))}</p><p className="text-[13px] text-ink-2">{pick(copy.privacy,lang)}</p>
    <fieldset className="flex flex-col gap-2"><label><input type="radio" name="restore-mode" checked={mode==='merge'} onChange={()=>{setMode('merge');setReady(false);}}/> {pick(copy.merge,lang)}</label><label><input type="radio" name="restore-mode" checked={mode==='replace'} onChange={()=>{setMode('replace');setReady(false);}}/> {pick(copy.replace,lang)}</label></fieldset>
    <p className="text-[13px] text-ink-2">{pick(copy.mergeNote,lang)}</p>

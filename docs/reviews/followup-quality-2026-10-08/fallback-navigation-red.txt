@@ -1,0 +1,33 @@
+✔ fallback coordination keeps the read and write in one serialized operation (0.427625ms)
+✔ main archive fallback writes settle before restore and never overwrite an interleaved tab (1.24525ms)
+✖ a queued fallback draft finishes on page unmount but cannot authorize a late model call (0.442208ms)
+✔ an old 3D writer cannot overwrite a saved draft or resurrect a deleted record (0.123875ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 183.011
+
+✖ failing tests:
+
+test at tests/dinner/storage-conflicts.test.ts:42:1
+✖ a queued fallback draft finishes on page unmount but cannot authorize a late model call (0.442208ms)
+  AssertionError [ERR_ASSERTION]: an already queued local draft survives client-side navigation
+  + actual - expected
+  
+  + 'old'
+  - 'final draft'
+  
+      at TestContext.<anonymous> (/Users/geminilight/.codex/worktrees/byok-gateway-connection/SocialCoach/app/tests/dinner/storage-conflicts.test.ts:49:9)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'old',
+    expected: 'final draft',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

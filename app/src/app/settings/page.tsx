@@ -33,7 +33,6 @@ export default function Settings() {
     setSettings,
     setLang,
     updateProfile,
-    setProficiency,
     reset,
     customScenarios,
     bookmarks,
@@ -72,7 +71,6 @@ export default function Settings() {
     const has = profile.goals.includes(id);
     if (has && profile.goals.length <= 1) return;
     updateProfile({ goals: has ? profile.goals.filter((g) => g !== id) : [...profile.goals, id] });
-    if (!has && proficiency[id] == null) setProficiency({ ...proficiency, [id]: 2.5 });
   };
 
   return (

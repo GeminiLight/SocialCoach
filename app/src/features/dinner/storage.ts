@@ -1,10 +1,11 @@
+import {storageWriteCoordinator} from '@/lib/storage-write';
 export const DINNER_SAVE_KEY = 'socialcoach-dinner-v1';
 export const DINNER_LAUNCH_KEY = 'socialcoach.3d-launch.v1';
 export type DinnerSaveIssue='conflict'|'quota'|'unavailable';
 
 /** Independent writer for the 3D record. External restores/deletions invalidate
  * this snapshot; camera changes must never overwrite a newer practice. */
-export function createDinnerStorage(notify:(issue:DinnerSaveIssue|null)=>void,storage:()=>Storage=()=>localStorage){
+export function createDinnerStorage(notify:(issue:DinnerSaveIssue|null)=>void,storage:()=>Storage=()=>localStorage,serialize=storageWriteCoordinator<boolean>('socialcoach.dinner')){
   let original:string|null=null,unreadable=false,blocked=false,active=true,generation=0;
   let owned=false,release:(()=>void)|undefined,pending:Promise<boolean>|undefined;
   try{original=storage().getItem(DINNER_SAVE_KEY);}catch{unreadable=true;}
@@ -35,12 +36,17 @@ export function createDinnerStorage(notify:(issue:DinnerSaveIssue|null)=>void,st
       const ticket=generation;
       if(!owned&&locks()&&!await acquire())return false;
       if(!active||ticket!==generation)return false;
-      try{
+      const coordinated=!locks()&&serialize;
+      // Finish an already queued local write across a client-side navigation.
+      // The snapshot comparison still rejects a newer tab's write or deletion.
+      const write=()=>{if(blocked||(!coordinated&&(!active||ticket!==generation)))return false;try{
         const disk=storage().getItem(DINNER_SAVE_KEY);
         if(disk!==original&&disk!==value){issue('conflict');return false;}
         if(disk!==value)storage().setItem(DINNER_SAVE_KEY,value);
-        original=value;notify(null);return true;
-      }catch(error){issue((error as Error).name==='QuotaExceededError'?'quota':'unavailable');return false;}
+        original=value;if(active)notify(null);return true;
+      }catch(error){issue((error as Error).name==='QuotaExceededError'?'quota':'unavailable');return false;}};
+      try{const saved=coordinated?await coordinated(write):write();return saved&&active&&ticket===generation;}
+      catch{if(active&&ticket===generation)issue('unavailable');return false;}
     },
     retry(){if(!unreadable){blocked=false;if(!owned)pending=undefined;}},
     dispose(){active=false;generation++;release?.();release=undefined;owned=false;pending=undefined;if(typeof window!=='undefined')window.removeEventListener('storage',changed);},

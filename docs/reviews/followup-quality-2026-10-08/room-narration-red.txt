@@ -1,0 +1,30 @@
+✖ returning to the table describes the player without inventing group movement (5.864042ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 191.383583
+
+✖ failing tests:
+
+test at tests/dinner/room.test.ts:10:1
+✖ returning to the table describes the player without inventing group movement (5.864042ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(!/大家准备回到|Everyone heads back/u.test(description))
+  
+      at TestContext.<anonymous> (/Users/geminilight/.codex/worktrees/byok-gateway-connection/SocialCoach/app/tests/dinner/room.test.ts:14:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

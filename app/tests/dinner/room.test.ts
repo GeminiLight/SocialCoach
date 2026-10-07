@@ -2,10 +2,18 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { scenarios } from '../../src/features/dinner/lib/content';
 import { opening, SaveSchema, scriptedReply, validateReply } from '../../src/features/dinner/lib/engine';
-import { createWorld, distance, findPath, goNear, goHome, inviteNpc, movePosition, PLAYER_HOME, roomContext, snapshot, stepWorld, walkable, walkPlayer, type World } from '../../src/features/dinner/lib/room';
+import { createWorld, distance, eventText, findPath, goNear, goHome, inviteNpc, movePosition, PLAYER_HOME, roomContext, snapshot, stepWorld, walkable, walkPlayer, type World } from '../../src/features/dinner/lib/room';
 const scene=scenarios[0];
 const reactions=opening(scene,'zh').reactions!;
 function run(world:World,seconds:number){for(let i=0;i<seconds*30;i++)stepWorld(world,1/30,{x:0,z:0},Math.PI,reactions);}
+
+test('returning to the table describes the player without inventing group movement',()=>{
+ const world=createWorld(scene);walkPlayer(world,{x:3.7,z:2.5});run(world,12);goHome(world);
+ for(const lang of ['zh','en'] as const){
+  const description=eventText(world.event,scene,lang);
+  assert.ok(!/大家准备回到|Everyone heads back/u.test(description));
+ }
+});
 
 test('movement cannot tunnel through table, furniture or room walls',()=>{
   const north=movePosition({x:0,z:3.55},0,-20,0);assert.ok(north.z>=3.08);

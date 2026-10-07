@@ -1,0 +1,37 @@
+✖ Anthropic full message endpoints and versioned bases produce one v1 route (103.741084ms)
+✔ a pasted completion endpoint keeps the gateway prefix without duplicating the route (104.219917ms)
+✔ browser OpenAI metadata and generations work with standard gateway CORS headers (3.998334ms)
+✔ compatible reasoning can be disabled for short tasks while default configurations and other tasks keep their request shape (1.578958ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 335.183291
+
+✖ failing tests:
+
+test at tests/core/byok-transport.test.ts:6:1
+✖ Anthropic full message endpoints and versioned bases produce one v1 route (103.741084ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'https://audit.invalid/gateway/v1/messages/v1/models?limit=100',
+  +   'https://audit.invalid/gateway/v1/messages/v1/messages'
+  -   'https://audit.invalid/gateway/v1/models?limit=100',
+  -   'https://audit.invalid/gateway/v1/messages'
+    ]
+  
+      at TestContext.<anonymous> (/Users/geminilight/.codex/worktrees/byok-gateway-connection/SocialCoach/app/tests/core/byok-transport.test.ts:15:11)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'https://audit.invalid/gateway/v1/messages/v1/models?limit=100', 'https://audit.invalid/gateway/v1/messages/v1/messages' ],
+    expected: [ 'https://audit.invalid/gateway/v1/models?limit=100', 'https://audit.invalid/gateway/v1/messages' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

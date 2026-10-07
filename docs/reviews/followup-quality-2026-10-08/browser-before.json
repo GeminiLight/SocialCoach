@@ -1,0 +1,21 @@
+{
+  "fixture": "synthetic profile; no real learner archive",
+  "base": "https://socialcoach-ai.vercel.app",
+  "beforeCommit": "ce79fd1",
+  "observations": [
+    {
+      "route": "/settings",
+      "action": "Add identifying-emotions as a goal",
+      "expected": "proficiency stays empty until self-rating or quoted assessment",
+      "actual": {
+        "identifying-emotions": 2.5
+      }
+    },
+    {
+      "route": "/settings",
+      "action": "Select healthy backup then invalid backup",
+      "expected": "old preview cleared; restore disabled",
+      "actual": "old one-practice backup still shown alongside invalid-file error, prepare and confirm remain usable"
+    }
+  ]
+}
