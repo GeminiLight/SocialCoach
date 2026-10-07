@@ -1,0 +1,812 @@
+[
+  {
+    "turn": 1,
+    "user": "陈总，我开车来的，今天不喝酒。我可以用茶表达敬意。",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "zh",
+      "text": "陈总，我开车来的，今天不喝酒。我可以用茶表达敬意。",
+      "history": [
+        {
+          "role": "npc",
+          "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 5.72,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"开车不喝，这理由我认。茶也行，但林总面前还放着周三上线，你敬完得把话说清。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"pressing\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"beat\":\"respect\"},\"replyTo\":\"陈总，我开车来的，今天不喝酒。\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"茶可以，但周三到底能不能上？\"}}"
+  },
+  {
+    "turn": 2,
+    "user": "我可以先敬林姐，但酒我不会喝。您更在意这杯酒还是项目交付？",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "zh",
+      "text": "我可以先敬林姐，但酒我不会喝。您更在意这杯酒还是项目交付？",
+      "history": [
+        {
+          "role": "npc",
+          "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "陈总，我开车来的，今天不喝酒。我可以用茶表达敬意。"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "开车不喝，这理由我认。茶也行，但林总面前还放着周三上线，你敬完得把话说清。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "respect"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶可以，但周三到底能不能上？"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 4.65,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"酒不喝了，我认。敬林总可以，周三上线得给个能带回去的说法。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"pressing\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"beat\":\"bridge\"},\"replyTo\":\"我可以先敬林姐，但酒我不会喝。您更在意这杯酒还是项目交付？\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"敬我可以，但周三到底包括哪些，不包括哪些？\"}}"
+  },
+  {
+    "turn": 3,
+    "user": "车钥匙可不会替我吹酒精测试。我们用茶继续谈，好吗？",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "zh",
+      "text": "车钥匙可不会替我吹酒精测试。我们用茶继续谈，好吗？",
+      "history": [
+        {
+          "role": "npc",
+          "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "陈总，我开车来的，今天不喝酒。我可以用茶表达敬意。"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "开车不喝，这理由我认。茶也行，但林总面前还放着周三上线，你敬完得把话说清。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "respect"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶可以，但周三到底能不能上？"
+          }
+        },
+        {
+          "role": "user",
+          "text": "我可以先敬林姐，但酒我不会喝。您更在意这杯酒还是项目交付？"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "酒不喝了，我认。敬林总可以，周三上线得给个能带回去的说法。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "敬我可以，但周三到底包括哪些，不包括哪些？"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 5.53,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"行，茶敬林总。酒到此为止，但周三上线你得说清：哪部分能交，哪部分还不能。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"pressing\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"beat\":\"bridge\"},\"replyTo\":\"车钥匙可不会替我吹酒精测试\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"茶我接了。周三包括哪些、不包括哪些，说清楚我再带回去。\"}}"
+  },
+  {
+    "turn": 4,
+    "user": "刚才玩笑可能显得不够郑重。敬意在，酒我仍不喝。周三先演示最关键的部分。",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "zh",
+      "text": "刚才玩笑可能显得不够郑重。敬意在，酒我仍不喝。周三先演示最关键的部分。",
+      "history": [
+        {
+          "role": "npc",
+          "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "陈总，我开车来的，今天不喝酒。我可以用茶表达敬意。"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "开车不喝，这理由我认。茶也行，但林总面前还放着周三上线，你敬完得把话说清。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "respect"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶可以，但周三到底能不能上？"
+          }
+        },
+        {
+          "role": "user",
+          "text": "我可以先敬林姐，但酒我不会喝。您更在意这杯酒还是项目交付？"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "酒不喝了，我认。敬林总可以，周三上线得给个能带回去的说法。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "敬我可以，但周三到底包括哪些，不包括哪些？"
+          }
+        },
+        {
+          "role": "user",
+          "text": "车钥匙可不会替我吹酒精测试。我们用茶继续谈，好吗？"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "行，茶敬林总。酒到此为止，但周三上线你得说清：哪部分能交，哪部分还不能。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶我接了。周三包括哪些、不包括哪些，说清楚我再带回去。"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 5.11,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"茶敬林总，酒到此为止。周三只演示定下的部分，别把没过的说成能上。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"pressing\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"beat\":\"risk\"},\"replyTo\":\"刚才玩笑可能显得不够郑重。敬意在，酒我仍不喝。周三先演示最关键的部分。\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"关键部分是哪块？退款回调和批量导入算不算在内？\"}}"
+  },
+  {
+    "turn": 5,
+    "user": "完整上线我不能现在拍胸脯。我可以说明已确认的范围与风险，请林姐一起确认。",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "zh",
+      "text": "完整上线我不能现在拍胸脯。我可以说明已确认的范围与风险，请林姐一起确认。",
+      "history": [
+        {
+          "role": "npc",
+          "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "陈总，我开车来的，今天不喝酒。我可以用茶表达敬意。"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "开车不喝，这理由我认。茶也行，但林总面前还放着周三上线，你敬完得把话说清。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "respect"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶可以，但周三到底能不能上？"
+          }
+        },
+        {
+          "role": "user",
+          "text": "我可以先敬林姐，但酒我不会喝。您更在意这杯酒还是项目交付？"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "酒不喝了，我认。敬林总可以，周三上线得给个能带回去的说法。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "敬我可以，但周三到底包括哪些，不包括哪些？"
+          }
+        },
+        {
+          "role": "user",
+          "text": "车钥匙可不会替我吹酒精测试。我们用茶继续谈，好吗？"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "行，茶敬林总。酒到此为止，但周三上线你得说清：哪部分能交，哪部分还不能。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶我接了。周三包括哪些、不包括哪些，说清楚我再带回去。"
+          }
+        },
+        {
+          "role": "user",
+          "text": "刚才玩笑可能显得不够郑重。敬意在，酒我仍不喝。周三先演示最关键的部分。"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "茶敬林总，酒到此为止。周三只演示定下的部分，别把没过的说成能上。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "关键部分是哪块？退款回调和批量导入算不算在内？"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 9.24,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"行，酒不喝就到这。周三别讲整包上线，只讲已确认部分；没过的那两项，得标成风险。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"pressing\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"deadline\",\"beat\":\"risk\"},\"replyTo\":\"完整上线我不能现在拍胸脯。我可以说明已确认的范围与风险，请林姐一起确认。\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"已确认的是哪部分？退款回调、批量导入先不算进去吗？\"}}"
+  },
+  {
+    "turn": 6,
+    "user": "我们接着说验收条件。谁确认范围，剩余风险何时再看？",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "zh",
+      "text": "我们接着说验收条件。谁确认范围，剩余风险何时再看？",
+      "history": [
+        {
+          "role": "npc",
+          "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "陈总，我开车来的，今天不喝酒。我可以用茶表达敬意。"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "开车不喝，这理由我认。茶也行，但林总面前还放着周三上线，你敬完得把话说清。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "respect"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶可以，但周三到底能不能上？"
+          }
+        },
+        {
+          "role": "user",
+          "text": "我可以先敬林姐，但酒我不会喝。您更在意这杯酒还是项目交付？"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "酒不喝了，我认。敬林总可以，周三上线得给个能带回去的说法。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "敬我可以，但周三到底包括哪些，不包括哪些？"
+          }
+        },
+        {
+          "role": "user",
+          "text": "车钥匙可不会替我吹酒精测试。我们用茶继续谈，好吗？"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "行，茶敬林总。酒到此为止，但周三上线你得说清：哪部分能交，哪部分还不能。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "茶我接了。周三包括哪些、不包括哪些，说清楚我再带回去。"
+          }
+        },
+        {
+          "role": "user",
+          "text": "刚才玩笑可能显得不够郑重。敬意在，酒我仍不喝。周三先演示最关键的部分。"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "茶敬林总，酒到此为止。周三只演示定下的部分，别把没过的说成能上。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "关键部分是哪块？退款回调和批量导入算不算在内？"
+          }
+        },
+        {
+          "role": "user",
+          "text": "完整上线我不能现在拍胸脯。我可以说明已确认的范围与风险，请林姐一起确认。"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "行，酒不喝就到这。周三别讲整包上线，只讲已确认部分；没过的那两项，得标成风险。",
+          "cue": "陈总举起杯子。",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "deadline",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "已确认的是哪部分？退款回调、批量导入先不算进去吗？"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 5.22,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"范围由林姐确认，上线口径由我向客户交代。小周，你只说这两项测试现在能不能复测。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"pressing\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"thinking\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"deadline\",\"beat\":\"message\"},\"replyTo\":\"我们接着说验收条件。谁确认范围，剩余风险何时再看？\",\"interjection\":{\"speakerId\":\"zhou\",\"text\":\"退款回调和批量导入还没复测，我现在不能给通过时间。\"}}"
+  }
+]

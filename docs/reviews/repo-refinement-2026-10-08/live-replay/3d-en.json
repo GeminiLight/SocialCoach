@@ -1,0 +1,812 @@
+[
+  {
+    "turn": 1,
+    "user": "Mr. Chen, I drove here, so I will not drink alcohol. I can show respect with tea.",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "en",
+      "text": "Mr. Chen, I drove here, so I will not drink alcohol. I can show respect with tea.",
+      "history": [
+        {
+          "role": "npc",
+          "text": "A toast to Ms. Lin. Everyone has a cup waiting for you. You will not join?",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 4.73,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"Driving settles it; no pressure to drink. Raise the tea to Ms. Lin so the table sees the guest acknowledged. Then Wednesday still needs a real scope.\",\"cue\":\"Mr. Chen raises a cup.\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"neutral\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"beat\":\"bridge\"},\"replyTo\":\"I drove here, so I will not drink alcohol\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"Thanks for the tea. What does Wednesday actually include?\"}}"
+  },
+  {
+    "turn": 2,
+    "user": "I can toast Ms. Lin first, but I will not drink wine. Is the drink or the delivery more important to you?",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "en",
+      "text": "I can toast Ms. Lin first, but I will not drink wine. Is the drink or the delivery more important to you?",
+      "history": [
+        {
+          "role": "npc",
+          "text": "A toast to Ms. Lin. Everyone has a cup waiting for you. You will not join?",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "Mr. Chen, I drove here, so I will not drink alcohol. I can show respect with tea."
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "Driving settles it; no pressure to drink. Raise the tea to Ms. Lin so the table sees the guest acknowledged. Then Wednesday still needs a real scope.",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "Thanks for the tea. What does Wednesday actually include?"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 8.06,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"The drink is done; the tea honored Ms. Lin. Delivery matters, but Wednesday isn't agreed yet. What scope can you verify before we commit anything?\",\"cue\":\"Mr. Chen raises a cup.\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"neutral\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"thinking\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"scope\",\"beat\":\"risk\"},\"replyTo\":\"Is the drink or the delivery more important to you?\",\"interjection\":{\"speakerId\":\"zhou\",\"text\":\"Two checks still fail: refund callback timeouts and batch import permissions. I can only report what I retest.\"}}"
+  },
+  {
+    "turn": 3,
+    "user": "My car keys cannot take a breath test for me. Can we keep talking over tea?",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "en",
+      "text": "My car keys cannot take a breath test for me. Can we keep talking over tea?",
+      "history": [
+        {
+          "role": "npc",
+          "text": "A toast to Ms. Lin. Everyone has a cup waiting for you. You will not join?",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "Mr. Chen, I drove here, so I will not drink alcohol. I can show respect with tea."
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "Driving settles it; no pressure to drink. Raise the tea to Ms. Lin so the table sees the guest acknowledged. Then Wednesday still needs a real scope.",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "Thanks for the tea. What does Wednesday actually include?"
+          }
+        },
+        {
+          "role": "user",
+          "text": "I can toast Ms. Lin first, but I will not drink wine. Is the drink or the delivery more important to you?"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "The drink is done; the tea honored Ms. Lin. Delivery matters, but Wednesday isn't agreed yet. What scope can you verify before we commit anything?",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "zhou",
+            "text": "Two checks still fail: refund callback timeouts and batch import permissions. I can only report what I retest."
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 4.85,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"Agreed, tea is fine and your keys are yours. What I still need: which part of Wednesday you can verify, given the two failing checks?\",\"cue\":\"Mr. Chen raises a cup.\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"neutral\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"thinking\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"scope\",\"beat\":\"risk\"},\"replyTo\":\"Can we keep talking over tea?\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"Tea works. Priorities: refund callbacks first or permissions?\"}}"
+  },
+  {
+    "turn": 4,
+    "user": "My joke may have sounded casual. The respect is there, but I still will not drink. We can demonstrate the critical part on Wednesday.",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "en",
+      "text": "My joke may have sounded casual. The respect is there, but I still will not drink. We can demonstrate the critical part on Wednesday.",
+      "history": [
+        {
+          "role": "npc",
+          "text": "A toast to Ms. Lin. Everyone has a cup waiting for you. You will not join?",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "Mr. Chen, I drove here, so I will not drink alcohol. I can show respect with tea."
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "Driving settles it; no pressure to drink. Raise the tea to Ms. Lin so the table sees the guest acknowledged. Then Wednesday still needs a real scope.",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "Thanks for the tea. What does Wednesday actually include?"
+          }
+        },
+        {
+          "role": "user",
+          "text": "I can toast Ms. Lin first, but I will not drink wine. Is the drink or the delivery more important to you?"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "The drink is done; the tea honored Ms. Lin. Delivery matters, but Wednesday isn't agreed yet. What scope can you verify before we commit anything?",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "zhou",
+            "text": "Two checks still fail: refund callback timeouts and batch import permissions. I can only report what I retest."
+          }
+        },
+        {
+          "role": "user",
+          "text": "My car keys cannot take a breath test for me. Can we keep talking over tea?"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "Agreed, tea is fine and your keys are yours. What I still need: which part of Wednesday you can verify, given the two failing checks?",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "Tea works. Priorities: refund callbacks first or permissions?"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 4.52,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"The respect stands, and no one asks you to drink. A demonstration on Wednesday is a proposal, not a passing result. Name which failing check it covers.\",\"cue\":\"Mr. Chen raises a cup.\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"neutral\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"thinking\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"scope\",\"beat\":\"message\"},\"replyTo\":\"The respect is there, but I still will not drink.\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"If callbacks are shown first, permissions stay unresolved. Which one does Wednesday cover?\"}}"
+  },
+  {
+    "turn": 5,
+    "user": "I cannot promise the full launch now. I can state the confirmed scope and risks, and ask Ms. Lin to verify them.",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "en",
+      "text": "I cannot promise the full launch now. I can state the confirmed scope and risks, and ask Ms. Lin to verify them.",
+      "history": [
+        {
+          "role": "npc",
+          "text": "A toast to Ms. Lin. Everyone has a cup waiting for you. You will not join?",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "Mr. Chen, I drove here, so I will not drink alcohol. I can show respect with tea."
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "Driving settles it; no pressure to drink. Raise the tea to Ms. Lin so the table sees the guest acknowledged. Then Wednesday still needs a real scope.",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "Thanks for the tea. What does Wednesday actually include?"
+          }
+        },
+        {
+          "role": "user",
+          "text": "I can toast Ms. Lin first, but I will not drink wine. Is the drink or the delivery more important to you?"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "The drink is done; the tea honored Ms. Lin. Delivery matters, but Wednesday isn't agreed yet. What scope can you verify before we commit anything?",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "zhou",
+            "text": "Two checks still fail: refund callback timeouts and batch import permissions. I can only report what I retest."
+          }
+        },
+        {
+          "role": "user",
+          "text": "My car keys cannot take a breath test for me. Can we keep talking over tea?"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "Agreed, tea is fine and your keys are yours. What I still need: which part of Wednesday you can verify, given the two failing checks?",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "Tea works. Priorities: refund callbacks first or permissions?"
+          }
+        },
+        {
+          "role": "user",
+          "text": "My joke may have sounded casual. The respect is there, but I still will not drink. We can demonstrate the critical part on Wednesday."
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "The respect stands, and no one asks you to drink. A demonstration on Wednesday is a proposal, not a passing result. Name which failing check it covers.",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "message"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "If callbacks are shown first, permissions stay unresolved. Which one does Wednesday cover?"
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 8.49,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"That is honest: a stated scope and risk, not a launch promise. Say it plainly to Ms. Lin: which items are confirmed, which checks still fail, and who verifies what before Wednesday.\",\"cue\":\"Mr. Chen raises a cup.\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"neutral\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"thinking\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"scope\",\"beat\":\"message\"},\"replyTo\":\"I cannot promise the full launch now.\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"Then I need the exact scope sentence and the open risks, not \\\"working on it.\\\"\"}}"
+  },
+  {
+    "turn": 6,
+    "user": "Let us continue with the acceptance conditions. Who confirms scope, and when do we review the remaining risks?",
+    "request": {
+      "briefVersion": 1,
+      "scenarioId": "work",
+      "variantId": "work-toast",
+      "maxTurns": 12,
+      "targetId": "chen",
+      "lang": "en",
+      "text": "Let us continue with the acceptance conditions. Who confirms scope, and when do we review the remaining risks?",
+      "history": [
+        {
+          "role": "npc",
+          "text": "A toast to Ms. Lin. Everyone has a cup waiting for you. You will not join?",
+          "speakerId": "chen",
+          "cue": "陈总先举杯。林姐跟上，小周迟疑片刻。三道目光最后落到你身上。",
+          "mode": "script",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "pressing",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "neutral",
+              "gesture": "idle"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "story": {
+            "topic": "toast"
+          }
+        },
+        {
+          "role": "user",
+          "text": "Mr. Chen, I drove here, so I will not drink alcohol. I can show respect with tea."
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "Driving settles it; no pressure to drink. Raise the tea to Ms. Lin so the table sees the guest acknowledged. Then Wednesday still needs a real scope.",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "neutral",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "toast",
+            "beat": "bridge"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "Thanks for the tea. What does Wednesday actually include?"
+          }
+        },
+        {
+          "role": "user",
+          "text": "I can toast Ms. Lin first, but I will not drink wine. Is the drink or the delivery more important to you?"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "The drink is done; the tea honored Ms. Lin. Delivery matters, but Wednesday isn't agreed yet. What scope can you verify before we commit anything?",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "zhou",
+            "text": "Two checks still fail: refund callback timeouts and batch import permissions. I can only report what I retest."
+          }
+        },
+        {
+          "role": "user",
+          "text": "My car keys cannot take a breath test for me. Can we keep talking over tea?"
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "Agreed, tea is fine and your keys are yours. What I still need: which part of Wednesday you can verify, given the two failing checks?",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "risk"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "Tea works. Priorities: refund callbacks first or permissions?"
+          }
+        },
+        {
+          "role": "user",
+          "text": "My joke may have sounded casual. The respect is there, but I still will not drink. We can demonstrate the critical part on Wednesday."
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "The respect stands, and no one asks you to drink. A demonstration on Wednesday is a proposal, not a passing result. Name which failing check it covers.",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "message"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "If callbacks are shown first, permissions stay unresolved. Which one does Wednesday cover?"
+          }
+        },
+        {
+          "role": "user",
+          "text": "I cannot promise the full launch now. I can state the confirmed scope and risks, and ask Ms. Lin to verify them."
+        },
+        {
+          "role": "npc",
+          "speakerId": "chen",
+          "text": "That is honest: a stated scope and risk, not a launch promise. Say it plainly to Ms. Lin: which items are confirmed, which checks still fail, and who verifies what before Wednesday.",
+          "cue": "Mr. Chen raises a cup.",
+          "reactions": [
+            {
+              "characterId": "chen",
+              "emotion": "neutral",
+              "gesture": "toast"
+            },
+            {
+              "characterId": "lin",
+              "emotion": "thinking",
+              "gesture": "lean"
+            },
+            {
+              "characterId": "zhou",
+              "emotion": "thinking",
+              "gesture": "idle"
+            }
+          ],
+          "mode": "model",
+          "story": {
+            "topic": "scope",
+            "beat": "message"
+          },
+          "interjection": {
+            "speakerId": "lin",
+            "text": "Then I need the exact scope sentence and the open risks, not \"working on it.\""
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "seconds": 4.27,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"You state the confirmed scope; Zhou confirms only the tests they own; I cannot promise the launch. Propose a review time — a time is not a passing result.\",\"cue\":\"Mr. Chen raises a cup.\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"neutral\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"zhou\",\"emotion\":\"thinking\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"deadline\",\"beat\":\"message\"},\"replyTo\":\"Who confirms scope, and when do we review the remaining risks?\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"Name the time, then: who retests callbacks, and who checks permissions?\"}}"
+  }
+]

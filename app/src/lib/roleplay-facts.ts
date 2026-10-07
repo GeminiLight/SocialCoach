@@ -8,6 +8,19 @@ const afterReport = /(?:报告.{0,8}(?:交完|提交)(?:之后|以后|后)|(?:�
 /** Narrow evidence guard for a reproduced mistake, not a general consent classifier.
  * Source: office-quick-favor.simulationFacts and the scene-craft replay. */
 export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):SpeechGuard|undefined {
+ if(scenarioId==='declining-extra-hours'){
+  const known=messages.filter(m=>m.role==='learner').map(m=>m.text.toLowerCase());
+  return utterances=>{
+   for(const {text} of utterances)for(const clause of text.match(/[^。！？.!?\n;；]+[。！？.!?]?/gu)??[]){
+    if(!/\bLily\b/iu.test(clause))continue;
+    // Questions and conditional handoff proposals keep availability unknown.
+    if(/[？?]\s*$/u.test(clause)||/(?:如果|要是|假如|若|要不|建议|提议|不如|先问|先确认|需要确认)|\b(?:if|whether|ask|check|could|might|propose)\b/iu.test(clause))continue;
+    const claimed=/Lily.{0,35}(?:今天|今晚|明早|明天|加班|有空).{0,30}(?:加班|有空|能(?:看|做|接)|可以(?:看|做|接)|负责)/iu.test(clause)||/\bLily\s+(?:is\s+(?:not\s+)?(?:working|available)|will\s+(?:work|take|handle|review)|can\s+(?:take|handle|review)|has\s+(?:agreed|time))\b/iu.test(clause);
+    const fact=clause.trim().replace(/[。！？.!?]$/u,'').toLowerCase();
+    if(claimed&&!known.some(line=>line.includes(fact)))return "Lily's availability and work schedule have not been confirmed. Ask or propose a conditional handoff; do not invent her hours, agreement or ability to take the remaining work.";
+   }
+  };
+ }
  if(scenarioId!=='office-quick-favor')return undefined;
  let offered=false,beforeOffered=false;
  for(const m of messages){

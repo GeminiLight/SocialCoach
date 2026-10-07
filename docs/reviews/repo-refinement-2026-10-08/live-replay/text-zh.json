@@ -1,0 +1,1316 @@
+[
+  {
+    "turn": 1,
+    "user": "今晚我不能留下，父亲生日的安排已经定了。",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "今晚我不能留下，父亲生日的安排已经定了。",
+          "ts": 2
+        }
+      ],
+      "lang": "zh"
+    },
+    "status": 200,
+    "seconds": 4.11,
+    "raw": "@@meta\n{\"objectives\":[false,false,false],\"ended\":false,\"stance\":22,\"revealed\":false,\"outcome\":null,\"objectiveEvidence\":[],\"disclosures\":[]}\n@@michael\n啊……父亲的生日，好吧，我懂。但你知道客户明早等着，我这边真没人可派。大家都还在拼，就这一晚，行不行？"
+  },
+  {
+    "turn": 2,
+    "user": "我能明早早点来处理最急的部分。客户明早究竟需要看到什么？",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "今晚我不能留下，父亲生日的安排已经定了。",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "啊……父亲的生日，好吧，我懂。但你知道客户明早等着，我这边真没人可派。大家都还在拼，就这一晚，行不行？",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "我能明早早点来处理最急的部分。客户明早究竟需要看到什么？",
+          "ts": 4
+        }
+      ],
+      "lang": "zh"
+    },
+    "status": 200,
+    "seconds": 4.87,
+    "raw": "@@meta\n{\"objectives\":[false,false,false],\"ended\":false,\"stance\":30,\"revealed\":false,\"disclosures\":[],\"outcome\":null,\"objectiveEvidence\":[]}\n@@michael\n明早早点来……能到什么程度？八点行不行？我问过你，客户要的其实只是前——算了，你先说明早能做完哪些，我才好跟客户讲。"
+  },
+  {
+    "turn": 3,
+    "user": "要不把范围先缩到客户要看的那部分？",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "今晚我不能留下，父亲生日的安排已经定了。",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "啊……父亲的生日，好吧，我懂。但你知道客户明早等着，我这边真没人可派。大家都还在拼，就这一晚，行不行？",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "我能明早早点来处理最急的部分。客户明早究竟需要看到什么？",
+          "ts": 4
+        },
+        {
+          "id": "audit-npc-2",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "明早早点来……能到什么程度？八点行不行？我问过你，客户要的其实只是前——算了，你先说明早能做完哪些，我才好跟客户讲。",
+          "ts": 5,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 30,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null,
+            "objectiveEvidence": []
+          }
+        },
+        {
+          "id": "audit-user-3",
+          "role": "learner",
+          "text": "要不把范围先缩到客户要看的那部分？",
+          "ts": 6
+        }
+      ],
+      "lang": "zh"
+    },
+    "status": 200,
+    "seconds": 4.64,
+    "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":1,\"learnerQuote\":\"要不把范围先缩到客户要看的那部分？\"}],\"objectives\":[false,false,false],\"ended\":false,\"stance\":35,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@michael\n嗯，缩范围是个思路。其实客户只要先看前三页，剩下的是他们下周才审的。那你明早几点能到？前三页里最急的是哪块？"
+  },
+  {
+    "turn": 4,
+    "user": "这份方案再重要，也不能替我给父亲吹蜡烛。咱们把今晚必须做的说清。",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "今晚我不能留下，父亲生日的安排已经定了。",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "啊……父亲的生日，好吧，我懂。但你知道客户明早等着，我这边真没人可派。大家都还在拼，就这一晚，行不行？",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "我能明早早点来处理最急的部分。客户明早究竟需要看到什么？",
+          "ts": 4
+        },
+        {
+          "id": "audit-npc-2",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "明早早点来……能到什么程度？八点行不行？我问过你，客户要的其实只是前——算了，你先说明早能做完哪些，我才好跟客户讲。",
+          "ts": 5,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 30,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null,
+            "objectiveEvidence": []
+          }
+        },
+        {
+          "id": "audit-user-3",
+          "role": "learner",
+          "text": "要不把范围先缩到客户要看的那部分？",
+          "ts": 6
+        },
+        {
+          "id": "audit-npc-3",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "嗯，缩范围是个思路。其实客户只要先看前三页，剩下的是他们下周才审的。那你明早几点能到？前三页里最急的是哪块？",
+          "ts": 7,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 1,
+                "learnerQuote": "要不把范围先缩到客户要看的那部分？"
+              }
+            ],
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 35,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-4",
+          "role": "learner",
+          "text": "这份方案再重要，也不能替我给父亲吹蜡烛。咱们把今晚必须做的说清。",
+          "ts": 8
+        }
+      ],
+      "lang": "zh"
+    },
+    "status": 200,
+    "seconds": 4.4,
+    "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":1,\"learnerQuote\":\"把范围先缩到客户要看的那部分\"}],\"objectives\":[false,false,false],\"ended\":false,\"stance\":40,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@michael\n……行，我听明白了。那就只说今晚必须做的：前三页。你明早几点能开工？我好告诉客户时间。"
+  },
+  {
+    "turn": 5,
+    "user": "刚才玩笑可能不合时宜。交付我会负责，但今晚不留下的决定不变。",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "今晚我不能留下，父亲生日的安排已经定了。",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "啊……父亲的生日，好吧，我懂。但你知道客户明早等着，我这边真没人可派。大家都还在拼，就这一晚，行不行？",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "我能明早早点来处理最急的部分。客户明早究竟需要看到什么？",
+          "ts": 4
+        },
+        {
+          "id": "audit-npc-2",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "明早早点来……能到什么程度？八点行不行？我问过你，客户要的其实只是前——算了，你先说明早能做完哪些，我才好跟客户讲。",
+          "ts": 5,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 30,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null,
+            "objectiveEvidence": []
+          }
+        },
+        {
+          "id": "audit-user-3",
+          "role": "learner",
+          "text": "要不把范围先缩到客户要看的那部分？",
+          "ts": 6
+        },
+        {
+          "id": "audit-npc-3",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "嗯，缩范围是个思路。其实客户只要先看前三页，剩下的是他们下周才审的。那你明早几点能到？前三页里最急的是哪块？",
+          "ts": 7,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 1,
+                "learnerQuote": "要不把范围先缩到客户要看的那部分？"
+              }
+            ],
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 35,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-4",
+          "role": "learner",
+          "text": "这份方案再重要，也不能替我给父亲吹蜡烛。咱们把今晚必须做的说清。",
+          "ts": 8
+        },
+        {
+          "id": "audit-npc-4",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "……行，我听明白了。那就只说今晚必须做的：前三页。你明早几点能开工？我好告诉客户时间。",
+          "ts": 9,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 1,
+                "learnerQuote": "把范围先缩到客户要看的那部分"
+              }
+            ],
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 40,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-5",
+          "role": "learner",
+          "text": "刚才玩笑可能不合时宜。交付我会负责，但今晚不留下的决定不变。",
+          "ts": 10
+        }
+      ],
+      "lang": "zh"
+    },
+    "status": 200,
+    "seconds": 4.32,
+    "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":1,\"learnerQuote\":\"把范围先缩到客户要看的那部分\"}],\"objectives\":[false,false,false],\"ended\":false,\"stance\":44,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@michael\n没事，玩笑归玩笑。那么说明早：前三页，你几点能开始？最急的是哪块？"
+  },
+  {
+    "turn": 6,
+    "user": "我们接着确认谁做剩余部分，以及什么时候检查进展。",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "今晚我不能留下，父亲生日的安排已经定了。",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "啊……父亲的生日，好吧，我懂。但你知道客户明早等着，我这边真没人可派。大家都还在拼，就这一晚，行不行？",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "我能明早早点来处理最急的部分。客户明早究竟需要看到什么？",
+          "ts": 4
+        },
+        {
+          "id": "audit-npc-2",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "明早早点来……能到什么程度？八点行不行？我问过你，客户要的其实只是前——算了，你先说明早能做完哪些，我才好跟客户讲。",
+          "ts": 5,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 30,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null,
+            "objectiveEvidence": []
+          }
+        },
+        {
+          "id": "audit-user-3",
+          "role": "learner",
+          "text": "要不把范围先缩到客户要看的那部分？",
+          "ts": 6
+        },
+        {
+          "id": "audit-npc-3",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "嗯，缩范围是个思路。其实客户只要先看前三页，剩下的是他们下周才审的。那你明早几点能到？前三页里最急的是哪块？",
+          "ts": 7,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 1,
+                "learnerQuote": "要不把范围先缩到客户要看的那部分？"
+              }
+            ],
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 35,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-4",
+          "role": "learner",
+          "text": "这份方案再重要，也不能替我给父亲吹蜡烛。咱们把今晚必须做的说清。",
+          "ts": 8
+        },
+        {
+          "id": "audit-npc-4",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "……行，我听明白了。那就只说今晚必须做的：前三页。你明早几点能开工？我好告诉客户时间。",
+          "ts": 9,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 1,
+                "learnerQuote": "把范围先缩到客户要看的那部分"
+              }
+            ],
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 40,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-5",
+          "role": "learner",
+          "text": "刚才玩笑可能不合时宜。交付我会负责，但今晚不留下的决定不变。",
+          "ts": 10
+        },
+        {
+          "id": "audit-npc-5",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "没事，玩笑归玩笑。那么说明早：前三页，你几点能开始？最急的是哪块？",
+          "ts": 11,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 1,
+                "learnerQuote": "把范围先缩到客户要看的那部分"
+              }
+            ],
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 44,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-6",
+          "role": "learner",
+          "text": "我们接着确认谁做剩余部分，以及什么时候检查进展。",
+          "ts": 12
+        }
+      ],
+      "lang": "zh"
+    },
+    "status": 200,
+    "seconds": 4.54,
+    "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":1,\"learnerQuote\":\"把范围先缩到客户要看的那部分\"}],\"objectives\":[false,false,false],\"ended\":false,\"stance\":48,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@michael\n剩余的……Lily 今天加班到七点，她明早能看剩下的。你明早先做前三页，几点？我九点在办公室核对进展。"
+  }
+]

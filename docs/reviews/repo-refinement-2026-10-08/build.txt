@@ -2,10 +2,10 @@ $ node scripts/prepare-local-reading.mjs
 Prepared 10 local reading assets (26 MB), loaded on demand.
 $ next build
 ▲ Next.js 16.3.6 (Turbopack)
-✓ Running next.config.ts took 15ms
+✓ Running next.config.ts took 53ms
 
   Creating an optimized production build ...
-✓ Compiled successfully in 1312ms
+✓ Compiled successfully in 1320ms
   Running TypeScript ...
   Finished TypeScript in 4.7s ...
   Collecting page data using 14 workers ...
@@ -13,7 +13,7 @@ $ next build
   Generating static pages using 14 workers (5/22) 
   Generating static pages using 14 workers (10/22) 
   Generating static pages using 14 workers (16/22) 
-✓ Generating static pages using 14 workers (22/22) in 337ms
+✓ Generating static pages using 14 workers (22/22) in 281ms
   Finalizing page optimization ...
 
 Route (app)
