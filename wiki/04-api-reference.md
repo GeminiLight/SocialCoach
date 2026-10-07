@@ -29,6 +29,8 @@
 
 ## 模型连接
 
+个人模型的 `baseUrl` 与部署侧地址共用 `modelBaseUrl()`：OpenAI 完整 `/chat/completions` 地址去掉该路由，Anthropic 完整 `/v1/messages` 或末尾 `/v1` 去掉 SDK 会追加的部分，保留网关前缀。SDK 元数据与实际生成使用同一规范化结果；不改模型名称或协议。
+
 ### `GET /api/health`
 
 返回 `{serverKey:boolean, requireByok:boolean, state:"available"|"unverified"|"unavailable", issue?:ModelIssue, resetAt?:number, budgetRemaining?:number, budgetLimit?:number}`，只返回安全状态，不返回密钥、地址或服务商原始错误。`ModelIssue` 为 `setup|credentials|quota|shared_quota|shared_busy|model|rate_limit|service|network`。缺少部署密钥 / 强制 BYOK 返回 unavailable/setup。
