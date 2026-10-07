@@ -1,0 +1,14 @@
+{
+  "entry": "https://modelscope.cn/studios/GeminiLight/SocialCoach?mode=full",
+  "network": "Direct test-browser session; system proxy unchanged",
+  "onboarding_priority_seen": true,
+  "learning_navigation_worked": true,
+  "renamed_title_seen": true,
+  "video_source": "/videos/learning/elevator-hr.mp4",
+  "source_label": "当众问离职 · 查看场景来源",
+  "native_pause_control_seen": true,
+  "loading_notice_empty": true,
+  "snapshot": "- link \"跳到主要内容\" [ref=e56]\n- navigation \"主导航\" [ref=e57]\n  - link \"SocialCoach 你的情商练习场\" [ref=e58]\n  - link \"今日\" [ref=e61]\n  - link \"练习场\" [ref=e62]\n  - link \"成长\" [ref=e63]\n  - link \"学习\" [ref=e64]\n  - link \"我\" [ref=e65]\n  - link \"3D 实景 3D\" [ref=e59]\n  - link \"排练真实对话\" [ref=e60]\n- button \"中文\" [ref=e69]\n- button \"English\" [ref=e70]\n- heading \"把懂得的，变成说得出的。\" [level=1, ref=e66]\n- searchbox \"搜索视频、理论与案例\" [ref=e71]\n- button \"视频 2\" [ref=e72]\n- button \"理论 42\" [ref=e73]\n- button \"案例 30\" [ref=e74]\n- button \"已收藏\" [ref=e75]\n- button \"视频 饭局上，领导替你答应了 一杯酒，一个替你答应的日期。看三种回应，再自己接住这场压力。 饭局承诺 0:57\" [ref=e84]\n- button \"视频 领导当众问：是不是要离职？ 电梯口，旁人都在听。看三种回应，练习把私事与工作安排分开。 当众问离职 0:51\" [ref=e85]\n- heading \"领导当众问：是不是要离职？\" [level=2, ref=e98]\n- button \"暂停\" [ref=e106]\n- slider \"volume\" [ref=e116]: 100\n- button \"静音\" [ref=e109]\n- button \"进入全屏模式\" [ref=e107]\n- button \"显示更多媒体控件\" [ref=e108]\n- slider \"视频时间进度条\" [ref=e99]: 27.5\n- button \"0:00 当众被追问\" [ref=e100]\n- button \"0:10 慌着解释\" [ref=e101]\n- button \"0:20 反问顶回去\" [ref=e102]\n- button \"0:27 换个说法\" [ref=e103]\n- button \"收藏这段视频\" [ref=e96]\n- region \"从示范到自己的回应\" [ref=e97]\n  - heading \"01 说明边界，不补私人细节\" [level=3, ref=e110]\n  - button \"“和 HR 聊的是我自己的事，这儿不方便说。” · 0:28\" [ref=e111]\n  - heading \"02 工作安排另说，只讲真实情况\" [level=3, ref=e112]\n  - button \"“项目我照常推进。” · 0:34\" [ref=e113]\n  - heading \"03 给一个更合适的沟通场合\" [level=3, ref=e114]\n  - button \"“您要是不放心，下午约十分钟？” · 0:34\" [ref=e115]\n- link \"进入这场电梯对话\" [ref=e104]\n- link \"查看场景来源\" [ref=e105]\n- button \"反馈\" [ref=e15]",
+  "inference_calls": 0,
+  "telemetry_intercepted": true
+}

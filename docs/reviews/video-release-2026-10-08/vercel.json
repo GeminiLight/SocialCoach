@@ -1,0 +1,14 @@
+{
+  "source": "e84da2d98b467282010d9ab777ceec6147412383",
+  "deployment_id": "dpl_8wXiQCd9up23PzfgC7wGeWE4TjGV",
+  "deployment_url": "https://socialcoach-2s41vehya-geminilights-projects.vercel.app",
+  "state": "Ready",
+  "target": "production",
+  "aliases": [
+    "https://socialcoach-ai.vercel.app",
+    "https://socialcoach-app.vercel.app"
+  ],
+  "quality_run": 37656792384,
+  "quality_conclusion": "success",
+  "verification": "Vercel platform state / aliases and GitHub CI; no deployed URL fetched per deployment skill"
+}

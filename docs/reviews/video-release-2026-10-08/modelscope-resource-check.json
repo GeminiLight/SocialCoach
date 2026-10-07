@@ -1,0 +1,73 @@
+{
+  "checked_at": "2026-10-07T17:15:05.243324+00:00",
+  "access": "authenticated ModelScope dedicated API",
+  "pages_and_resources": [
+    {
+      "path": "/learn",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/onboarding",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "content_type": "application/json"
+    },
+    {
+      "path": "/videos/learning/dinner-toast.zh.vtt",
+      "status": 200,
+      "content_type": "text/vtt; charset=UTF-8"
+    },
+    {
+      "path": "/videos/learning/dinner-toast.en.vtt",
+      "status": 200,
+      "content_type": "text/vtt; charset=UTF-8"
+    },
+    {
+      "path": "/videos/learning/elevator-hr.zh.vtt",
+      "status": 200,
+      "content_type": "text/vtt; charset=UTF-8"
+    },
+    {
+      "path": "/videos/learning/elevator-hr.en.vtt",
+      "status": 200,
+      "content_type": "text/vtt; charset=UTF-8"
+    },
+    {
+      "path": "/videos/learning/dinner-toast-frame.jpg",
+      "status": 200,
+      "content_type": "image/jpeg"
+    },
+    {
+      "path": "/videos/learning/elevator-hr-frame.jpg",
+      "status": 200,
+      "content_type": "image/jpeg"
+    }
+  ],
+  "matched_subtitles_and_frames": true,
+  "static_chunks": 20,
+  "static_chunks_all_200": true,
+  "renamed_title_and_short_labels_in_live_bundle": true,
+  "video_ranges": [
+    {
+      "path": "/videos/learning/dinner-toast.mp4",
+      "status": 206,
+      "content_range": "bytes 0-1023/10666103"
+    },
+    {
+      "path": "/videos/learning/elevator-hr.mp4",
+      "status": 206,
+      "content_range": "bytes 0-1023/5056742"
+    }
+  ],
+  "health": {
+    "state": "available",
+    "serverKey": true,
+    "requireByok": false
+  },
+  "inference_calls": 0
+}

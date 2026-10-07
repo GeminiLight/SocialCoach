@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-07T17:15:00.147422+00:00",
+  "status": "Running",
+  "hardware": "platform/2v-cpu-16g-mem",
+  "visibility": "public",
+  "sdk_type": "docker",
+  "runtime_created_at": "2026-10-07T17:12:51.000Z",
+  "mirror_commit": "27ebb81be5f08f2434adf19eace88d2fe20ba3d2",
+  "build": {
+    "image_tags": [
+      "363578-27ebb81b-2026-10-08-01-10-27"
+    ],
+    "total_logs": 1,
+    "selected_lines": [
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ├ ○ /learn",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ├ ○ /onboarding",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ├ ƒ /practice/[id]",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ├ ○ /progress",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ├ ○ /rehearse",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 └ ○ /settings",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ○  (Static)   prerendered as static content",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ƒ  (Dynamic)  server-rendered on demand",
+      "2026-10-08 01:12:22 [INFO] #12 71.21 ",
+      "2026-10-08 01:12:22 [INFO] #12 DONE 71.4s",
+      "2026-10-08 01:12:27 [INFO] #18 DONE 4.9s",
+      "2026-10-08 01:12:46 [INFO] 363578-27ebb81b-2026-10-08-01-10-27: digest: sha256:941151fa78fe2904f9be25f7c89d21d09005794d9ca178bc9bb39d3dd5b43651 size: 2414"
+    ]
+  },
+  "run": {
+    "image_tags": [],
+    "total_logs": 26,
+    "selected_lines": [
+      "[2026-10-08 01:13:37] [su]: - Network:       http://0.0.0.0:7860",
+      "[2026-10-08 01:13:37] [su]: ✓ Ready in 0ms"
+    ]
+  }
+}
