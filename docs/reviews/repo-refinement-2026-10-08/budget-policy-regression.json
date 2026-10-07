@@ -1,0 +1,26 @@
+{
+  "isolated_test_namespaces_only": true,
+  "no_model_generation": true,
+  "results": [
+    {
+      "source": "original",
+      "env_limit": 2,
+      "central_policy": 100,
+      "before_used": 10,
+      "reservation": 5,
+      "result": 0,
+      "after_used": 10,
+      "day_cap": 2
+    },
+    {
+      "source": "fixed",
+      "env_limit": 2,
+      "central_policy": 100,
+      "before_used": 10,
+      "reservation": 5,
+      "result": 1,
+      "after_used": 15,
+      "day_cap": 100
+    }
+  ]
+}
