@@ -12,12 +12,14 @@ export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):Sp
   const known=messages.filter(m=>m.role==='learner').map(m=>m.text.toLowerCase());
   return utterances=>{
    for(const {text} of utterances)for(const clause of text.match(/[^。！？.!?\n;；]+[。！？.!?]?/gu)??[]){
-    if(!/\bLily\b/iu.test(clause))continue;
     // Questions and conditional handoff proposals keep availability unknown.
     if(/[？?]\s*$/u.test(clause)||/(?:如果|要是|假如|若|要不|建议|提议|不如|先问|先确认|需要确认)|\b(?:if|whether|ask|check|could|might|propose)\b/iu.test(clause))continue;
-    const claimed=/Lily.{0,35}(?:今天|今晚|明早|明天|加班|有空).{0,30}(?:加班|有空|能(?:看|做|接)|可以(?:看|做|接)|负责)/iu.test(clause)||/\bLily\s+(?:is\s+(?:not\s+)?(?:working|available)|will\s+(?:work|take|handle|review)|can\s+(?:take|handle|review)|has\s+(?:agreed|time))\b/iu.test(clause);
     const fact=clause.trim().replace(/[。！？.!?]$/u,'').toLowerCase();
-    if(claimed&&!known.some(line=>line.includes(fact)))return "Lily's availability and work schedule have not been confirmed. Ask or propose a conditional handoff; do not invent her hours, agreement or ability to take the remaining work.";
+    const established=known.some(line=>line.includes(fact));
+    if(!established&&(/\bthird (?:night|day) (?:running|in a row)\b|连续三(?:天|晚)|第三(?:天|晚)/iu.test(clause)||/(?:剩下|其余|其他).{0,25}(?:下周|下个周)|\b(?:remaining|rest|other)\b.{0,35}\bnext week\b/iu.test(clause)))return 'The scenario records the third overtime request this month, not consecutive late deliveries. The remaining review date is unknown. Do not invent either timeline; keep proposals conditional.';
+    if(!/\bLily\b/iu.test(clause))continue;
+    const claimed=/Lily.{0,35}(?:今天|今晚|明早|明天|加班|有空).{0,30}(?:加班|有空|能(?:看|做|接)|可以(?:看|做|接)|负责)/iu.test(clause)||/\bLily\s+(?:is\s+(?:not\s+)?(?:working|available)|will\s+(?:work|take|handle|review)|can\s+(?:take|handle|review)|has\s+(?:agreed|time))\b/iu.test(clause);
+    if(claimed&&!established)return "Lily's availability and work schedule have not been confirmed. Ask or propose a conditional handoff; do not invent her hours, agreement or ability to take the remaining work.";
    }
   };
  }
