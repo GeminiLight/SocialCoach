@@ -1,0 +1,35 @@
+✖ a direct client-scope question cannot be answered with an invented whole-deck requirement (2.782458ms)
+✔ a manager cannot turn section-three edits into a confirmed client-wide rewrite (0.557916ms)
+✔ an invented client scope stays out of previews and durable replies (3.66575ms)
+✔ an unconfirmed teammate schedule cannot become a handoff arrangement (0.44ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 225.861209
+
+✖ failing tests:
+
+test at tests/core/third-party-facts.test.ts:7:1
+✖ a direct client-scope question cannot be answered with an invented whole-deck requirement (2.782458ms)
+  AssertionError [ERR_ASSERTION]: I’d like to check the whole deck myself. The client only needs the first three slides tomorrow.
+  + actual - expected
+  
+  + 'The learner is asking for the actual client scope. An answer such as “the whole thing” or “every slide” asserts an unestablished client-wide requirement even without repeating the word client. Keep your own preferences separate and the actual client facts consistent with your private knowledge; withholding a fact must not invent a contradictory requirement.'
+  - undefined
+  
+      at TestContext.<anonymous> (/Users/geminilight/.codex/worktrees/byok-gateway-connection/SocialCoach/app/tests/core/third-party-facts.test.ts:10:370)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'The learner is asking for the actual client scope. An answer such as “the whole thing” or “every slide” asserts an unestablished client-wide requirement even without repeating the word client. Keep your own preferences separate and the actual client facts consistent with your private knowledge; withholding a fact must not invent a contradictory requirement.',
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
