@@ -55,8 +55,8 @@
   "research_files_included": false,
   "ui_validation_inference_calls": 0,
   "model_setup_clock_fix": {
-    "status": "verified_locally",
-    "publishing": "pending",
+    "status": "published",
+    "publishing": "complete",
     "configuration_open": {
       "requests": 1,
       "silences": 0
@@ -69,6 +69,20 @@
     "wait_seconds_each": 14,
     "lint": "passed",
     "types": "passed",
-    "production_build": "passed"
-  }
+    "production_build": "passed",
+    "source": "2289a1492c814fda37b59f7e80518b1231ae108b",
+    "vercel_deployment_id": "dpl_H51YKnYd3ZwsGvHvyrDt2u7hCS65",
+    "vercel_url": "https://socialcoach-nniye8bqu-geminilights-projects.vercel.app",
+    "vercel_state": "Ready",
+    "quality_run": 37671352540,
+    "quality_conclusion": "success",
+    "modelscope_mirror_commit": "2a7e96d1703b4b5db2f06f80e22f9987bf77a010",
+    "modelscope_runtime": {
+      "status": "Running",
+      "runtime_created_at": "2026-10-07T19:05:15.000Z"
+    },
+    "source_hash_matched": true,
+    "vercel_live_clock_flow_verified": true
+  },
+  "current_application_source": "2289a1492c814fda37b59f7e80518b1231ae108b"
 }

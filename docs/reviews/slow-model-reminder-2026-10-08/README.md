@@ -20,3 +20,5 @@
 ![英文深色排练](./rehearse-mobile-en-dark.png)
 
 双平台已发布：应用源 `3cd3a63`，Vercel Ready、正式别名关联、质量 CI 成功；线上浏览器验证提醒、配置入口及完成清理通过。ModelScope 镜像 `4f8dca7` Running，386 个运行输入与主线一致，公开资源的专用接口检查通过，新双语组件已在实时页面引用的代码中确认。当前 1 亿日预算和并发 8 的配置保留。完整原件在 [release.json](./release.json) 与 [live-wait-check.json](./live-wait-check.json)。方案见 [等待提醒](../../../wiki/archive/specs/spec-slow-model-reminder.md)。
+
+计时暂停跟进修订 `2289a14` 已同步双站：Vercel Ready、质量 CI 成功且线上计时流程再验收通过，ModelScope 镜像 `2a7e96d` 的新实例 Running，单个运行源码改动与主线一致。当前应用源码以该提交为准；[线上计时原件](./live-clock-check.json)。
