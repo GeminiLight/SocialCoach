@@ -1,0 +1,30 @@
+✖ a direct client-scope question cannot be answered with an invented whole-deck requirement (1.885084ms)
+✔ a manager cannot turn section-three edits into a confirmed client-wide rewrite (0.843375ms)
+✔ an invented client scope stays out of previews and durable replies (5.978584ms)
+✔ an unconfirmed teammate schedule cannot become a handoff arrangement (0.528041ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 208.801708
+
+✖ failing tests:
+
+test at tests/core/third-party-facts.test.ts:7:1
+✖ a direct client-scope question cannot be answered with an invented whole-deck requirement (1.885084ms)
+  AssertionError [ERR_ASSERTION]: The whole thing, more or less. They flagged it as a review, so every slide is on the table.
+      at TestContext.<anonymous> (/Users/geminilight/.codex/worktrees/byok-gateway-connection/SocialCoach/app/tests/core/third-party-facts.test.ts:9:138)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

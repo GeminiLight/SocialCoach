@@ -10,6 +10,8 @@ const afterReport = /(?:报告.{0,8}(?:交完|提交)(?:之后|以后|后)|(?:�
 export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):SpeechGuard|undefined {
  if(scenarioId==='declining-extra-hours'){
   const known=messages.filter(m=>m.role==='learner').map(m=>m.text.toLowerCase());
+  const lastQuestion=[...messages].reverse().find(m=>m.role==='learner')?.text??'';
+  const asksClientScope=/(?:客户|\bclient\b)/iu.test(lastQuestion)&&/(?:哪|范围|真正|实际)|\b(?:which|what|scope|actually)\b/iu.test(lastQuestion);
   return utterances=>{
    for(const {text} of utterances){
     // Check the factual part before a following question ("who covers it?").
@@ -21,6 +23,10 @@ export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):Sp
      const rewrite=/(?:重做|重写|从头.{0,5}(?:做|改)|重新.{0,5}(?:做|写|改))|\b(?:redo|redone|rewrite|rewritten|rebuild|overhaul)\b/iu.test(part);
      const fact=part.trim().replace(/[，,。！？.!?;；]$/u,'').toLowerCase();
      if(clientDemand&&full&&rewrite&&!known.some(line=>line.includes(fact)))return 'The opening establishes a section-three redo and a client review at nine tomorrow. It does not establish a client demand to redo the entire deck. Keep the manager’s own broader preferences separate; do not attribute an invented scope to the client or reveal private facts early.';
+     const broadAnswer=/(?:整份|整套|全套|全部|所有页|每一?页)|\b(?:(?:full|whole|entire) (?:deck|thing)|all (?:the )?(?:slides?|pages?)|every (?:slide|page))\b/iu.test(part);
+     const ownPreference=/(?:我(?:自己|个人)?(?:想|要|希望|打算|需要))|\b(?:I (?:want|need|prefer|would)|my (?:request|preference)|for me)\b/iu.test(part);
+     const unconfirmed=/(?:先确认|待确认|还没(?:确认|核实))|\b(?:confirm|verify|whether|unknown)\b/iu.test(part);
+     if(asksClientScope&&broadAnswer&&!ownPreference&&!unconfirmed&&!known.some(line=>!/[？?]/u.test(line)&&line.includes(fact)))return 'The learner is asking for the actual client scope. An answer such as “the whole thing” or “every slide” asserts an unestablished client-wide requirement even without repeating the word client. Keep your own preferences separate and the actual client facts consistent with your private knowledge; withholding a fact must not invent a contradictory requirement.';
     }
     for(const clause of text.match(/[^。！？.!?\n;；]+[。！？.!?]?/gu)??[]){
     // Questions and conditional handoff proposals keep availability unknown.

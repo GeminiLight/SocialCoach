@@ -4,6 +4,12 @@ import {roleplaySpeechGuard} from '../../src/lib/roleplay-facts';
 import {roleplayOutput,RoleplayFactError} from '../../src/lib/roleplay-output';
 import {SCENARIOS} from '../../src/data/corpus';
 
+test('a direct client-scope question cannot be answered with an invented whole-deck requirement',()=>{
+ const guard=roleplaySpeechGuard('declining-extra-hours',[{id:'scope',role:'learner',text:'Which part did the client actually ask us to redo?',ts:1}])!;
+ for(const text of ['The whole thing, more or less. They flagged it as a review, so every slide is on the table.','整份都要，每一页都得改。'])assert.ok(guard([{characterId:'michael',text}]),text);
+ for(const text of ['I want to check the full deck myself. The client only needs the first three slides tomorrow.','我自己想整份查一遍。客户实际先要哪几页，我可以和你确认。','We need to confirm the scope before calling every slide a requirement.'])assert.equal(guard([{characterId:'michael',text}]),undefined,text);
+});
+
 test('a manager cannot turn section-three edits into a confirmed client-wide rewrite',()=>{
  const guard=roleplaySpeechGuard('declining-extra-hours',[])!;
  for(const text of ['生日？那我尽量往前赶……可客户点名要整份方案重做，你不在谁顶？明早九点可不是我定的。','The client demanded that we redo the entire deck. Who handles it if you leave?','The client wants a full rewrite; how is that going to happen without you?'])assert.ok(guard([{characterId:'michael',text}]),text);
