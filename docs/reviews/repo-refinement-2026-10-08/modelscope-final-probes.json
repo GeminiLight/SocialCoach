@@ -1,0 +1,14 @@
+[
+  {
+    "route": "roleplay",
+    "status": 200,
+    "seconds": 4.3,
+    "raw": "@@meta\n{\"objectives\":[false,false,false],\"ended\":false,\"stance\":25,\"revealed\":false,\"outcome\":null,\"objectiveEvidence\":[],\"disclosures\":[]}\n@@michael\n啊，父亲的生日……行，我记下了今晚你有事。不过明早九点客户就在这儿了，方案总得有人改完。你先说清楚，明早到底要交哪部分？我这边好安排。"
+  },
+  {
+    "route": "dinner/direct",
+    "status": 200,
+    "seconds": 4.34,
+    "raw": "{\"speakerId\":\"chen\",\"text\":\"开车就不劝了。茶也行，先敬林总。周三上线的事，敬完这杯接着说。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"pressing\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"neutral\",\"gesture\":\"nod\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"beat\":\"bridge\"},\"replyTo\":\"陈总，我开车来的，今天不喝酒。我可以用茶向林姐表达谢意。\"}"
+  }
+]

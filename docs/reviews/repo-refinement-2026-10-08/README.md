@@ -14,3 +14,5 @@
 - site-build.txt / site-seo.txt：12 个双语产品页与 13 个地图目标（含公开论文）通过。
 
 早期浏览器回归受旧构建资源和会话重新启动影响，不作为产品失败；清理并启动正式 standalone 后重复关键流程。桌面 Chromium / 模拟视口不代替真实 iPhone、微信或读屏。
+
+最终代码 main ad7225ba，PR #13 / #14 均合并。release.json 记录两站最终版本；fact-boundary-live-retest.json 与 modelscope-final-probes.json 为新边界发布后的真实请求。原始历史中的未知事实未当作新的安排证据。

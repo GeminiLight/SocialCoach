@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-10-06 | Current stage: B -->
+<!-- Last verified: 2026-10-08 | Current stage: B -->
 
 # 系统架构
 
