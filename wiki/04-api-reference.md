@@ -29,6 +29,12 @@
 
 ## 模型连接
 
+### 试验性 NPC 语音 `GET /api/speech` / `POST /api/speech`（2026-10-08）
+
+仅为 MiMo 实际试听准备，当前 NPC 自动朗读仍使用原浏览器声音。GET 返回 `{configured:boolean}`，表示部署凭证与地址是否齐备，不证明音频生成可用。POST 接收 `{text:string,lang:"zh"|"en",voice:"白桦"|"苏打"|"茉莉"|"冰糖"|"Mia"|"Chloe"|"Milo"|"Dean",tone?:"neutral"|"firm"|"gentle"}`；文本 1–500 字符、未知字段拒绝，最终 assistant 消息必须为原始台词。模型固定为 `mimo-v2.5-tts`、输出 WAV、不启用文本优化或声音克隆。
+
+成功返回 `audio/wav`，不缓存、不落盘；失败只返回安全的双语提示，不把语音失败写成文字模型失效。单次 20 秒、无提供商重试、响应上限 8 MB；复用原请求节流和共享预算，按模型最大输出 8,192 token 保守预留。专用 `NPC_SPEECH_API_KEY` / `NPC_SPEECH_BASE_URL` 须成对配置；未配置时，只允许复用同一个 TokenDance HTTPS 网关的默认密钥，不将其他服务商凭证发送到该网关。具体声音、速度及后续启用决策以实际试听结果为准。
+
 ### `GET /api/health`
 
 返回 `{serverKey:boolean, requireByok:boolean, state:"available"|"unverified"|"unavailable", issue?:ModelIssue}`，只返回安全状态，不返回密钥、地址或服务商原始错误。`ModelIssue` 为 `setup|credentials|quota|model|rate_limit|service|network`。缺少部署密钥 / 强制 BYOK 返回 unavailable/setup。
