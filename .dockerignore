@@ -6,6 +6,8 @@
 !app/package.json
 !app/pnpm-lock.yaml
 !app/pnpm-workspace.yaml
+!app/patches/
+!app/patches/**
 !app/next.config.ts
 !app/next-env.d.ts
 !app/postcss.config.mjs

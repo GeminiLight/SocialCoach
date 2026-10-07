@@ -3,6 +3,20 @@ import {test} from 'node:test';
 import {checkByokConnection, makeByokLLM} from '../../src/lib/llm-client';
 import type {ByokConfig} from '../../src/lib/byok';
 
+test('Anthropic full message endpoints and versioned bases produce one v1 route',async()=>{
+ const original=globalThis.fetch;
+ try{
+  for(const base of ['https://audit.invalid/gateway/v1/messages/','https://audit.invalid/gateway/v1','https://audit.invalid/gateway']){
+   const urls:string[]=[];
+   globalThis.fetch=async input=>{const url=String(input);urls.push(url);return url.includes('/models')?Response.json({data:[{id:'test-chat'}],has_more:false}):Response.json({id:'test',type:'message',role:'assistant',model:'test-chat',content:[{type:'text',text:'ok'}],stop_reason:'end_turn',usage:{input_tokens:1,output_tokens:1}});};
+   const config:ByokConfig={enabled:true,provider:'anthropic',baseUrl:base,apiKey:'synthetic-test-key',fastModel:'test-chat',smartModel:'test-chat',tokenParam:'max_tokens'};
+   assert.deepEqual(await checkByokConnection(config),{state:'available'});
+   assert.equal(await makeByokLLM(config).chatText({system:'test',messages:[{role:'user',content:'test'}],maxTokens:20}),'ok');
+   assert.deepEqual(urls,['https://audit.invalid/gateway/v1/models?limit=100','https://audit.invalid/gateway/v1/messages']);
+  }
+ }finally{globalThis.fetch=original;}
+});
+
 test('a pasted completion endpoint keeps the gateway prefix without duplicating the route',async()=>{
  const original=globalThis.fetch,urls:string[]=[];
  globalThis.fetch=async input=>{const url=String(input);urls.push(url);return url.endsWith('/models')?Response.json({data:[{id:'test-chat'}]}):Response.json({choices:[{message:{content:'ok'},finish_reason:'stop'}]});};

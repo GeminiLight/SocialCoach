@@ -10,7 +10,7 @@
 |---|---|
 | 框架 | Next.js 16.3.6（App Router）· React 19.2.8 · TypeScript 5 |
 | 样式 | Tailwind v4（`@tailwindcss/postcss`）+ `globals.css` 里的 OKLCH design token |
-| 状态 | 主档案 Zustand 5 + 受保护 persist；独立 3D 写入器；个人模型仅在显式配置动作保存 |
+| 状态 | 主档案 Zustand 5 + 受保护 persist；独立 3D 写入器；个人模型仅在显式配置动作保存。无 Web Locks 时，以设备内 IndexedDB 短事务串行执行快照比较和 localStorage 写入；协调库不存练习或密钥，失败停止写入 |
 | 动效 | Framer Motion 13 |
 | 校验 | Zod 4 |
 | LLM | Anthropic / OpenAI 兼容 SDK，共用请求与任务契约、fast / smart 两档 |
