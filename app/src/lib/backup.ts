@@ -14,14 +14,19 @@ export async function decodeBackup(text:string){
  const avatar=raw.avatar as {seed?:unknown;portrait?:unknown;image?:unknown}|undefined;
  const settings=source.settings??(avatar?{tts:true,avatarSeed:avatar.seed,avatarPortrait:avatar.portrait,avatarImage:validAvatarImage(avatar.image)?avatar.image:undefined}:undefined);
  const archive=parseArchive({...source,settings});
- let dinner:string|undefined;
+ let dinner:string|undefined,dinnerOriginal:string|undefined,dinnerIssue:'unreadable'|'invalid'|undefined;
  if(raw.dinner3d!==undefined&&raw.dinner3d!==null){
   const {SaveSchema}=await import('@/features/dinner/lib/engine');
   const parsed=SaveSchema.safeParse(raw.dinner3d);
-  if(!parsed.success)throw new Error('backup-dinner');
-  dinner=JSON.stringify(parsed.data);
+  if(parsed.success)dinner=JSON.stringify(parsed.data);
+  else{
+   const preserved=raw.dinner3d as {unreadable?:unknown};
+   const unreadable=typeof preserved?.unreadable==='string';
+   dinnerOriginal=unreadable?preserved.unreadable as string:JSON.stringify(raw.dinner3d);
+   dinnerIssue=unreadable?'unreadable':'invalid';
+  }
  }
- return {archive,dinner};
+ return {archive,dinner,dinnerOriginal,dinnerIssue};
 }
 /** Different records sharing an ID are ambiguous. Preserve both input files
  * and require explicit replacement rather than silently choosing a branch. */

@@ -1,0 +1,77 @@
+{
+  "origin": "https://socialcoach-ai.vercel.app",
+  "source_commit": "a1b10f1e3c75cd3a4fcf4948830af6f30a7efc46",
+  "synthetic_only": true,
+  "draft_cross_tab": [
+    {
+      "draft": "标签 B 的新草稿，应该保留",
+      "stage": "B saved"
+    },
+    {
+      "diskDraft": "标签 A 的旧草稿",
+      "stage": "A camera change",
+      "visibleDraft": "标签 A 的旧草稿"
+    },
+    {
+      "diskDraft": "标签 A 的旧草稿",
+      "stage": "B before reload",
+      "visibleDraft": "标签 B 的新草稿，应该保留"
+    },
+    {
+      "diskDraft": "标签 B 的新草稿，应该保留",
+      "stage": "B after reload",
+      "visibleDraft": "标签 B 的新草稿，应该保留"
+    },
+    {
+      "draft": "标签 B 的新草稿，应该保留",
+      "stage": "B closed"
+    },
+    {
+      "diskDraft": "标签 A 的旧草稿",
+      "stage": "A camera change after B closed"
+    },
+    {
+      "diskDraft": "标签 A 的旧草稿",
+      "stage": "New tab after loss",
+      "visibleDraft": "标签 A 的旧草稿"
+    }
+  ],
+  "credential_reset": {
+    "steps": [
+      "Tab 1: Settings owns main archive; disabled synthetic credentials present",
+      "Tab 2: open /3d; retains the credentials in memory",
+      "Tab 1: confirm Clear all data in the actual UI",
+      "Tab 1: localStorage socialcoach.llm.v1 is null",
+      "Tab 2: More > Connect a model"
+    ],
+    "after_actual_ui_clear": null,
+    "after_old_tab_opens_model_sheet": {
+      "enabled": false,
+      "restoredKey": "synthetic-old-audit-key"
+    }
+  },
+  "provider_form": {
+    "before_same_chip_click": {
+      "fastModel": "ling-3.1-flash",
+      "baseUrl": "https://audit.invalid/v1"
+    },
+    "after_same_chip_click": {
+      "fastModel": "gpt-4.1-mini",
+      "baseUrl": ""
+    }
+  },
+  "language": {
+    "navigator_language": "zh-CN",
+    "scene_language_after_switch": "en",
+    "scene_model_button": "Connect a model",
+    "model_dialog_title": "接入模型",
+    "model_dialog_summary": "其他设置"
+  },
+  "offline": {
+    "service_worker_controller_before": true,
+    "registration_count": 1,
+    "action": "set offline on, reload /3d",
+    "result": "chrome-error://chromewebdata/",
+    "restored_online": true
+  }
+}

@@ -8,7 +8,7 @@ import { dinnerBackup, DINNER_SAVE_KEY, DINNER_LAUNCH_KEY } from "@/features/din
 import { Button, Chip, Page, SectionTitle, Sheet, Switch, useToast } from "@/components/ui";
 import { useModelAccess } from "@/lib/model-access";
 import { M } from "@/lib/model-copy";
-import { isReady, STORAGE_KEY, useByok } from "@/lib/byok";
+import { isReady, useByok } from "@/lib/byok";
 import { stopSpeaking, unlockSpeech } from "@/lib/speech";
 import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
 import { t, pick } from "@/lib/i18n";
@@ -339,12 +339,11 @@ export default function Settings() {
             block
             variant="danger"
             onClick={() => {
-              byok.clear();
               try {
-                localStorage.removeItem(STORAGE_KEY);
+                byok.clear();
                 localStorage.removeItem(DINNER_SAVE_KEY);
                 localStorage.removeItem(DINNER_LAUNCH_KEY);
-              } catch {}
+              } catch {toast(pick({zh:'设备未能清除数据，请保留备份并重试。',en:'Device data could not be cleared. Keep your backup and retry.'},lang));return;}
               reset();
               setConfirm(false);
             }}

@@ -58,7 +58,12 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
   const schema = z.object({ meta, utterances: z.array(utterance).min(1).max(2) });
   const failure = () => new LLMError(lang === "zh" ? "这次回复的场景信息不完整，你的话已保留，请重试。" : "This reply has incomplete scene information. Your words are saved; please retry.", 502);
   type Reply = z.infer<typeof schema>;
-  const serialize = (r: Reply) => `@@meta\n${JSON.stringify(r.meta)}\n${r.utterances.map((u) => `@@${u.characterId}\n${u.text}`).join("\n")}`;
+  const serialize = (r: Reply) => {
+    // A simulator's free-form note is not public evidence or a coach verdict.
+    // Keep it out of both the streamed preview and the durable projection.
+    const publicMeta={...r.meta};delete publicMeta.note;
+    return `@@meta\n${JSON.stringify(publicMeta)}\n${r.utterances.map((u) => `@@${u.characterId}\n${u.text}`).join("\n")}`;
+  };
   const checked=(raw:string)=>{
     if (!completeObject(raw)) throw failure();
     let value: unknown;
@@ -93,6 +98,7 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
         const result = utterance.safeParse(u);
         return result.success ? [result.data] : [];
       }).slice(0, 2);
+      if(lines.some(u=>/^@@/mu.test(u.text)))return '';
       const learnerWords=history.filter(m=>m.role==='learner').map(m=>m.text),npcWords=history.filter(m=>m.role==='npc').map(m=>m.text);
       const proof=(checkedMeta.data.objectiveEvidence??[]).filter(e=>hasQuote(e.learnerQuote,learnerWords)&&(!e.npcQuote||hasQuote(e.npcQuote,npcWords)));
       // New public proof needs the completed spoken line. This prevents a

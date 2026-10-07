@@ -3,6 +3,17 @@ import {test} from 'node:test';
 import {checkByokConnection, makeByokLLM} from '../../src/lib/llm-client';
 import type {ByokConfig} from '../../src/lib/byok';
 
+test('a pasted completion endpoint keeps the gateway prefix without duplicating the route',async()=>{
+ const original=globalThis.fetch,urls:string[]=[];
+ globalThis.fetch=async input=>{const url=String(input);urls.push(url);return url.endsWith('/models')?Response.json({data:[{id:'test-chat'}]}):Response.json({choices:[{message:{content:'ok'},finish_reason:'stop'}]});};
+ try{
+  const config:ByokConfig={enabled:true,provider:'openai',baseUrl:'https://audit.invalid/gateway/v1/chat/completions/',apiKey:'synthetic-test-key',fastModel:'test-chat',smartModel:'test-chat',tokenParam:'max_tokens'};
+  await checkByokConnection(config);
+  await makeByokLLM(config).chatText({system:'test',messages:[{role:'user',content:'test'}],maxTokens:20});
+  assert.deepEqual(urls,['https://audit.invalid/gateway/v1/models','https://audit.invalid/gateway/v1/chat/completions']);
+ }finally{globalThis.fetch=original;}
+});
+
 test('browser OpenAI metadata and generations work with standard gateway CORS headers', async () => {
   const original = globalThis.fetch;
   const requests: {url: string; body: Record<string, unknown> | null}[] = [];

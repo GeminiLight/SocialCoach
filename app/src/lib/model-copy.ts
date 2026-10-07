@@ -5,6 +5,7 @@ import type { ModelIssue } from "./model-status";
 export const M = {
   showKey: { zh: "显示密钥", en: "Show key" },
   hideKey: { zh: "隐藏密钥", en: "Hide key" },
+  saveFailed:{zh:'配置没有保存。设备存储不可用，或另一窗口已修改配置；请关闭后重新打开并确认。',en:'Settings were not saved. Device storage is unavailable or another window changed them. Close and reopen to confirm.'},
   invalidAddress: { zh: "请填写完整的 http:// 或 https:// 地址。", en: "Enter a complete http:// or https:// address." },
   tokenParam: { zh: "Token 参数", en: "Token parameter" },
   disableThinking: { zh: "短对话关闭额外推理", en: "Disable extra reasoning for short replies" },
@@ -16,6 +17,9 @@ export const M = {
   setup: { zh: "练习需要连接一个模型。", en: "Connect a model to start practicing." },
   credentials: { zh: "模型密钥已失效，请更新或换用自己的密钥。", en: "The model key is invalid. Update it or connect your own." },
   quota: { zh: "当前模型的额度已用完。补充额度或换用自己的密钥后，即可继续。", en: "The model’s credit has run out. Add credit or connect your own key to continue." },
+  shared_quota:{zh:'这次任务所需额度超出了今天的共享池余量。共享池每天北京时间 08:00 更新，也可以接入自己的模型。',en:'This task exceeds the remaining shared daily budget. It renews at 00:00 UTC; you can also connect your own model.'},
+  shared_busy:{zh:'共享模型的并发请求已满。稍等片刻再试，或接入自己的模型。',en:'All shared model slots are busy. Retry shortly or connect your own model.'},
+  renewsAt:{zh:'下次共享日额度更新：{time}。',en:'Shared daily budget renews: {time}.'},
   model: { zh: "模型配置不可用，请检查模型名称和连接设置。", en: "The model configuration is unavailable. Check its name and connection settings." },
   rate_limit: { zh: "请求有些频繁，稍等片刻再试。也可以接入自己的模型。", en: "Too many requests. Wait a moment and retry, or connect your own model." },
   service: { zh: "模型服务暂时不可用。可以稍后重试，或接入自己的模型。", en: "The model service is temporarily unavailable. Retry later or connect your own model." },
@@ -23,12 +27,13 @@ export const M = {
   browse: { zh: "场景、知识和已有记录仍可查看。", en: "You can still browse scenarios, lessons and saved practice." },
   retry: { zh: "重新检查", en: "Check again" },
   disabled: { zh: "接入可用的模型后继续", en: "Connect an available model to continue" },
-  provider: { zh: "服务商", en: "Provider" },
+  provider: { zh: "接口类型", en: "API format" },
   website: { zh: "获取 API Key ↗", en: "Get an API key ↗" },
   name: { zh: "模型名称", en: "Model name" },
   advanced: { zh: "其他设置", en: "More settings" },
-  endpoint: { zh: "API 地址", en: "API address" },
-  endpointHint: { zh: "使用兼容服务时填写；官方服务留空即可。", en: "For a compatible service. Leave blank for the official API." },
+  endpoint: { zh: "基础 API 地址", en: "Base API URL" },
+  endpointHint: { zh: "兼容服务可填 https://你的服务/gateway/v1；粘贴完整对话地址会自动取基础地址。官方服务留空即可。", en: "For compatible services, use a base such as https://your-service/gateway/v1. A pasted chat endpoint is converted to its base. Leave blank for the official API." },
+  normalizedAddress:{zh:"将使用基础地址：{url}",en:"Base address to use: {url}"},
   reportModel: { zh: "复盘模型（可选）", en: "Review model (optional)" },
   sameModel: { zh: "默认使用上面的模型", en: "Uses the model above by default" },
   connect: { zh: "检查并保存", en: "Check and save" },
@@ -41,4 +46,9 @@ export const M = {
   connected: { zh: "已连接", en: "Connected" },
   unknown: { zh: "尚未确认", en: "Not yet verified" },
 };
-export const modelMessage = (issue: ModelIssue, lang: Lang) => pick(M[issue], lang);
+export const modelMessage = (issue: ModelIssue, lang: Lang,resetAt?:number) => {
+  const message=pick(M[issue],lang);
+  if(issue!=='shared_quota'||!resetAt||!Number.isFinite(resetAt))return message;
+  const time=new Intl.DateTimeFormat(lang==='zh'?'zh-CN':'en',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'}).format(resetAt);
+  return `${message} ${pick(M.renewsAt,lang).replace('{time}',time)}`;
+};
