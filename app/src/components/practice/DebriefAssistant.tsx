@@ -6,6 +6,7 @@ import { ArrowUp, Square } from "lucide-react";
 import { CoachMascot } from "@/components/CoachMascot";
 import { CASES, THEORIES } from "@/data/corpus";
 import { Button, Spinner } from "@/components/ui";
+import { SlowModelNotice } from "@/components/SlowModelNotice";
 import { useApp, useLang } from "@/store/useApp";
 import { debriefChat } from "@/lib/client-api";
 import { buildDebriefInput, DEBRIEF_QUESTION_LIMIT } from "@/lib/debrief-chat";
@@ -99,6 +100,7 @@ export function DebriefAssistant({ session, ref }: { session: Session; ref?: Ref
         </div>
       )}
       {pending && <p role="status" className="flex items-center gap-2 text-[13px] text-ink-3"><Spinner />{t(lang, "da_busy")}</p>}
+      {pending && <SlowModelNotice />}
       {error && <div role="alert" className="rounded-2xl bg-danger-soft p-3 text-[13px] text-danger leading-relaxed"><p>{error}</p><button onClick={submit} disabled={!canUseModel} className="press min-h-11 underline underline-offset-4">{t(lang, "da_retry")}</button></div>}
       <form onSubmit={e => { e.preventDefault(); void submit(); }} className="flex flex-col gap-2">
         <label htmlFor="debrief-question" className="sr-only">{t(lang, "da_input")}</label>

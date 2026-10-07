@@ -898,6 +898,9 @@ aside.lg\:border-dashed { border-left: 0; }
 .dinner-experience .take-seat>p>span { display:block; color:var(--dinner-accent); font-size:10px; margin-bottom:3px; }
 .dinner-experience .primary-button { display:inline-flex; align-items:center; justify-content:center; gap:18px; min-height:48px; padding:10px 22px; color:var(--dinner-accent-ink); background:var(--dinner-accent); border-radius:var(--dinner-radius-sm); font-size:13px; font-weight:600; flex-shrink:0; }
 .dinner-experience .reply-form { position:relative; padding-top:13px; }
+.dinner-experience .model-wait-notice { margin:8px 0 6px; background:var(--dinner-surface); }
+.dinner-experience .model-wait-notice p { color:var(--dinner-ink-secondary); }
+.dinner-experience .model-wait-notice button { color:var(--dinner-ink); }
 .dinner-experience .input-wrap { display:flex; align-items:center; gap:16px; padding:9px 10px 9px 18px; border:1px solid var(--dinner-line); border-radius:var(--dinner-radius-sm); background:var(--dinner-scene-overlay); }
 .dinner-experience .input-wrap:focus-within { border-color:var(--dinner-accent); }
 .dinner-experience textarea { resize:none; display:block; border:0; outline:none; width:100%; min-width:0; min-height:52px; height:52px; max-height:112px; background:none; color:var(--dinner-ink); font-size:14px; line-height:1.65; padding:12px 0; scrollbar-width:thin; }

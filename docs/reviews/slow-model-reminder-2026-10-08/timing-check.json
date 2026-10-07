@@ -1,0 +1,9 @@
+{
+  "long_wait": true,
+  "one_reminder": true,
+  "setup_without_navigation": true,
+  "no_duplicate_request": true,
+  "original_context_retained": true,
+  "removed_on_completion": true,
+  "inference_calls": 0
+}

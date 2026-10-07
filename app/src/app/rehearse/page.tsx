@@ -142,7 +142,7 @@ export default function Rehearse() {
                   )}
                   {busy && (
                     <div role="status" className="card p-5">
-                      <Stages title={t(lang, "rh_generating")} steps={tList(lang, "rh_gen_steps")} slowAfterMs={40000} />
+                      <Stages title={t(lang, "rh_generating")} steps={tList(lang, "rh_gen_steps")} />
                     </div>
                   )}
                 </section>

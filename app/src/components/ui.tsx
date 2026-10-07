@@ -2,10 +2,10 @@
 import { clsx } from "clsx";
 import { motion, AnimatePresence, LayoutGroup, useReducedMotion } from "framer-motion";
 import { create } from "zustand";
-import { createContext, useContext, useEffect, useId, useRef, useState, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useId, useRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { workspaceMotion } from "@/lib/motion";
 import { AvatarFigure } from "@/data/avatars";
-import { isReady, openModelSheet, useByok } from "@/lib/byok";
+import { SlowModelNotice, SLOW_MODEL_WAIT_MS } from "./SlowModelNotice";
 import { useInterfaceLang as useLang } from "@/lib/ui-language";
 import { t } from "@/lib/i18n";
 import { useCanUseModel } from "@/lib/model-access";
@@ -164,21 +164,10 @@ export function Stars({ n, of = 3, size = 18 }: { n: number; of?: number; size?:
 /* ───────────── Staged loader ───────────── */
 /**
  * Context for an LLM wait, without claiming unreported stage completion.
- * Past `slowAfterMs` it also offers to switch
- * to the learner's own model — set that per call site to mean "slower than
- * usual for this task", not "this task takes a while", or the offer is noise.
+ * A quiet configuration link appears after a short wait for the shared model.
  */
-export function Stages({ steps, title, slowAfterMs = 25000 }: { steps: string[]; title: string; slowAfterMs?: number }) {
+export function Stages({ steps, title, slowAfterMs = SLOW_MODEL_WAIT_MS }: { steps: string[]; title: string; slowAfterMs?: number }) {
   const lang = useLang();
-  const ownModel = isReady(useByok());
-  const [slow, setSlow] = useState(false);
-  // A long wait is the moment the offer actually means something. Say nothing to
-  // someone already on their own endpoint — their slowness is not ours to explain.
-  useEffect(() => {
-    if (ownModel) return;
-    const id = setTimeout(() => setSlow(true), slowAfterMs);
-    return () => clearTimeout(id);
-  }, [ownModel, slowAfterMs]);
   return (
     <div className="flex flex-col gap-5" role="status" aria-live="polite">
       <div className="flex items-center gap-3">
@@ -196,14 +185,7 @@ export function Stages({ steps, title, slowAfterMs = 25000 }: { steps: string[];
           ))}
         </ul>
       </div>
-      {slow && !ownModel && (
-        <div className="dotted pt-3 flex items-center justify-between gap-3">
-          <span className="text-[12px] text-ink-3">{t(lang, "pr_slow_note")}</span>
-          <button onClick={openModelSheet} className="press shrink-0 min-h-11 px-3 rounded-full border border-dashed border-line-strong text-[12px] font-medium text-ink-2 hover:bg-inset">
-            {t(lang, "pr_slow_action")}
-          </button>
-        </div>
-      )}
+      <SlowModelNotice delayMs={slowAfterMs} />
     </div>
   );
 }

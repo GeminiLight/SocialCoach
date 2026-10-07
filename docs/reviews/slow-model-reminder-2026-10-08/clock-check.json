@@ -1,0 +1,10 @@
+{
+  "dialogOpen": true,
+  "requests": 1,
+  "silences": 0,
+  "resumes_after_close": {
+    "dialogOpen": false,
+    "requests": 2,
+    "silences": 1
+  }
+}

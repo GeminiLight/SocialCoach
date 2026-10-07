@@ -6,7 +6,7 @@ import { observeServerFailure } from "./server-model-observation";
 export function fail(e: unknown) {
   const { status, message, modelIssue,retryAt } = toHttpError(e);
   observeServerFailure(modelIssue);
-  console.error("[api]", status, message);
+  console.error("[api]", status, modelIssue ?? "task_error"); // Never log learner words or provider payloads.
   return NextResponse.json({ error: message, modelIssue: modelIssue ?? null,...(retryAt?{retryAt}:{}) }, { status });
 }
 
