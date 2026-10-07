@@ -27,7 +27,7 @@
 
 ## 检查和证据
 
-源码修订及 main 集成后，lint、路由类型、TypeScript、42 core＋250 dinner 测试和现有 check-core 检查通过，应用正式构建通过。官网 12 页和 13 个地图目标（含公开论文）通过。失败反例先验证，再做对应修复；不是用无关绿灯替代原症状。
+源码修订及 main 集成后，lint、路由类型、TypeScript、43 core＋250 dinner 测试和现有 check-core 检查通过，应用正式构建通过。官网 12 页和 13 个地图目标（含公开论文）通过。失败反例先验证，再做对应修复；不是用无关绿灯替代原症状。
 
 生产依赖审计报告无已知公告。全量仍有 `eslint-config-next → @next/eslint-plugin-next → fast-glob → micromatch → braces 3.0.3`：公告未公布修复版本，不能凭空指定升级或宣称全量零风险。该路径是 lint 工具链；保留公告跟踪，CI 检查和记录后续变化。Next 与 sharp 的升级根据其 [官方 Next 公告](https://github.com/vercel/next.js/security/advisories/GHSA-vcvr-r3jv-pc5j)、[官方 sharp 公告](https://github.com/lovell/sharp/security/advisories/GHSA-wq5f-xc86-pv6w)，本轮未执行漏洞利用测试。
 
@@ -37,7 +37,7 @@
 
 额度恢复后的正式主站文字/3D 生成各一条已成功。它们发生在新代码发布之前，只证明恢复可用，不能作为新投影/长期语义的通过证据。新代码发布及后续真实回放单独记录。
 
-完整原件在 [修订证据](../../docs/reviews/repo-refinement-2026-10-08/README.md)。PR：[ #13](https://github.com/GeminiLight/SocialCoach/pull/13)。发布核对进行中。
+完整原件在 [修订证据](../../docs/reviews/repo-refinement-2026-10-08/README.md)。PR：[ #13](https://github.com/GeminiLight/SocialCoach/pull/13)。PR #13 已合并，主站部署 `dpl_9e6B1kfCPgKbPAEp6HAaXZqv2a1J` Ready；国内镜像 `53d61a4` Running，两端 health 返回中央 1 亿与相同余量。
 
 ## 仍需验证
 
@@ -47,3 +47,9 @@
 - braces 上游补丁与 lint 生态兼容性。
 
 本轮是实现者复核与直接回归，不宣称第三方独立审计。fix-bug 流程无需修改；项目经验记入 Wiki，不更新全局技能。
+
+## 发布后真实回放
+
+四条中英文字/3D 各六回合，24 次正式主站回复均被接受，覆盖拒绝、有限让步、反问、玩笑、修复与续聊。保留每个请求/回复原件，见 live-replay。人工阅读发现文字中文第六回合虚构了 Lily 加班到七点和次日可接手；已补该场景的窄事实边界：未确认的同事时间/接手能力不作为安排，提议和问题允许，用户明确给出的原话允许。真实复测随发布记录追加。24 次接受不等于语义全对。首轮诊断驱动未及时保存失败原件，不计为发布验收；正式重做已先保存再判断。
+
+同次阅读还发现“本月第三次加班请求”被说成“连续第三晚延期”、其余内容被指定为“下周审核”。同一窄边界补这些未确认时序，保留问题/提议与用户已给出原话；不能把角色拟人性建立在新增确定事实之上。

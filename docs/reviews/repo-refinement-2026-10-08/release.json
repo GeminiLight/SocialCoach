@@ -1,0 +1,17 @@
+{
+  "main_code_commit": "c10eb0cfdb243408ec419d3a3e9b3841a3a9b549",
+  "pr": "https://github.com/GeminiLight/SocialCoach/pull/13",
+  "vercel_deployment": "dpl_9e6B1kfCPgKbPAEp6HAaXZqv2a1J",
+  "vercel_ready": true,
+  "modelscope_commit": "53d61a4",
+  "modelscope_running": true,
+  "modelscope_runtime_created": "2026-10-07T20:18:16.000Z",
+  "daily_policy": 100000000,
+  "counter_reset": false,
+  "concurrency": 8,
+  "accepted_reply_count": 24,
+  "semantic_findings": [
+    "At turn 6 of text-zh, Michael invented Lily working until seven and her availability tomorrow. A narrow fact boundary and explicit proposal/question regression are being added."
+  ],
+  "live_device_coverage": "Desktop and API only; real phones pending."
+}
