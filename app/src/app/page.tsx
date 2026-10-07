@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Check, Clock3, PenLine, RefreshCw } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Clock3, RefreshCw } from "lucide-react";
 import { DinnerEntry } from "@/components/DinnerEntry";
 import { CoachMascot } from "@/components/CoachMascot";
 import { Shell } from "@/components/Shell";
@@ -77,21 +77,15 @@ export default function Home() {
   const recent = sessions.filter((s) => s.status === "assessed").slice(0, 3);
 
   const rehearsalInvitation = (
-    <section className={`rehearsal-invitation ${!todaySession && !unfinished ? "is-primary" : ""} rounded-[var(--radius)] p-5 lg:p-7 flex flex-col gap-5`}>
-              <div className="flex items-start gap-3">
-                <PenLine size={21} className="text-accent-deep shrink-0 mt-1" aria-hidden />
-                <div className="min-w-0">
-                  <h2 className="display text-[23px] lg:text-[26px] leading-snug">{t(lang, "home_rehearse_title")}</h2>
-                  <p className="text-[14px] text-ink-2 mt-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_rehearse_sub")}</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <Link href="/rehearse" className="press inline-flex items-center justify-center gap-3 min-h-12 px-5 rounded-full text-[14px] font-semibold bg-card border border-line-strong hover:bg-inset">
-                  {t(lang, "home_rehearse_action")}<ArrowRight size={17} aria-hidden />
-                </Link>
-                <p className="text-[12px] text-ink-3 leading-relaxed">{t(lang, "home_rehearse_steps")}</p>
-              </div>
-            </section>
+    <section className="home-rehearsal-secondary flex flex-wrap items-center justify-between gap-x-5 gap-y-2">
+      <div className="min-w-0 flex-1 basis-56">
+        <h2 className="display text-[18px] leading-snug text-ink-2">{t(lang, "home_rehearse_title")}</h2>
+        <p className="text-[13px] text-ink-3 mt-1.5 leading-relaxed">{t(lang, "home_rehearse_sub")}</p>
+      </div>
+      <Link href="/rehearse" className="press inline-flex items-center gap-2 min-h-11 px-2 rounded-[var(--radius-sm)] text-[13px] font-medium text-ink-2 hover:bg-inset">
+        {t(lang, "home_rehearse_action")}<ArrowUpRight size={15} aria-hidden />
+      </Link>
+    </section>
   );
 
   return (
@@ -138,15 +132,13 @@ export default function Home() {
 
         <div className="home-practice-layout flex flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,1fr)_var(--margin-w)] xl:gap-8 xl:items-start">
           <div className="flex flex-col gap-6 min-w-0">
-            {!todaySession && !loading && rehearsalInvitation}
-
             {/* Today card */}
-            <section aria-live="polite" aria-busy={loading}>
+            <section className="home-daily-practice" aria-live="polite" aria-busy={loading}>
               {!todaySession && !loading && !error && (
-                <div className="py-5 border-y border-line flex flex-col gap-3">
-                  <h2 className="display text-[20px]">{t(lang, "home_plan_title")}</h2>
-                  <p className="text-[13px] text-ink-3 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_plan_body")}</p>
-                  <Button requiresModel variant="secondary" onClick={planToday} className="self-start"><RefreshCw size={16} />{t(lang, "home_plan_action")}</Button>
+                <div className="home-daily-invitation flex flex-col gap-4 p-6 lg:p-8">
+                  <h2 className="display text-[25px] lg:text-[28px] leading-snug">{t(lang, "home_plan_title")}</h2>
+                  <p className="text-[14px] text-ink-2 leading-relaxed max-w-[var(--measure)]">{t(lang, "home_plan_body")}</p>
+                  <Button requiresModel variant={unfinished ? "secondary" : "primary"} onClick={planToday} className="self-start mt-1">{t(lang, "home_plan_action")}<ArrowRight size={17} /></Button>
                 </div>
               )}
               {loading && (
@@ -186,7 +178,7 @@ export default function Home() {
               )}
             </section>
 
-            {(todaySession || loading) && rehearsalInvitation}
+            {rehearsalInvitation}
 
             {recent[0]?.report?.nextStep && recent[0].report.verdictEvidence && (
               <section className="takeaway-note flex flex-col gap-3 py-5 border-y border-line">
