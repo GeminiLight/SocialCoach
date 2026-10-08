@@ -63,6 +63,7 @@
 | A34 | NPC 口吻与连续反应精修 | ✅ 双平台已发布，扩样待验 | 文字 / 3D 共用表演方向、15 位人物口吻快照、最近反应、场景指令收敛、有限听者点头、复读 / 时间 / 称谓 / 语言边界；程序与真实合成回放见 [方案](./specs/spec-npc-craft.md)、[评审](./reviews/review-2026-10-06-npc-craft.md)；PR #11 合并及 P2 复播误判修订、249 项 3D 检查见 [合并发布记录](../docs/reviews/npc-merge-2026-10-06/README.md) |
 
 | A35 | 视频观摩与同场景练习 | ✅ 双平台已发布，真机待验 | 用户提供的职场饭局与 HR 电梯两条动画；原生播放 / 双语字幕 / 时间戳拆解 / 统一检索与收藏 / 游客入口 / 3D 确认；8 种浏览器组合和真实播放、重试与跳转已验证；2026-10-08 发布与国内公开播放复核 → [发布记录](../docs/reviews/video-release-2026-10-08/README.md)； [方案](./specs/spec-video-learning.md)、[验收](../docs/reviews/video-learning-2026-10-07/README.md) |
+| A36 | NPC 自然语音与等待上限 | ✅ 双平台已发布，真机待验 | MiMo PCM 实时播放；3.5 秒首样本截止 / 一分钟降级冷却；文字先显示、开麦 / 发言 / 切页取消、设备选择与个人模型零共享请求；真实网页约 3.26 秒调度首声、国内首段音频约 2.08 秒，314 项检查 → [方案](./archive/specs/spec-natural-npc-speech.md)、[实测与发布](../docs/reviews/mimo-speech-2026-10-08/README.md) |
 
 ### Stage B — 定位与对外物料
 

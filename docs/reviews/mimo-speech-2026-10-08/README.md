@@ -33,3 +33,8 @@
 正式 Vercel 网页真实 3D 开场（非网络模拟）于请求后 **3,258.8 ms** 调度到 WebAudio 开始播放，200 / 上游首块 2,066 ms，未降级，输入可用。这个值包含浏览器调度与网络，仍不表示所有用户设备的实际听感延迟；记录见 [网页流式](./browser-live-stream.json)。ModelScope 新运行时 `2026-10-08T02:15:10.000Z` 的认证真实接口 200，首客户端音频 **2,079.0 ms**、整段 3,042.7 ms、上游首块 1,063 ms，222,720 PCM 字节；见 [国内流式](./modelscope-live-stream.json)。
 
 首次 GitHub 质量流程 `37716506812` 在依赖审计失败，语音测试未出现失败；新审计指出 Next.js `<16.3.8` 的 [GHSA-cjq9-62q9-8jv4](https://github.com/advisories/GHSA-cjq9-62q9-8jv4)。本次同步升级 Next.js / eslint-config-next 至 16.3.8，再跑完整检查与构建，保留原有审计门槛。没有将首次失败写成发布通过。
+
+
+## 最终发布
+
+源码 `2cc456ca152bc7ae8b003d3cf50b80ee493071ee`：GitHub 质量流程 `37717434878` 成功，Next.js 16.3.8 / 314 项 Node 检查及构建通过，生产依赖审计五级计数均为 0。Vercel `dpl_HwNQkwYKL4hYBPA34mFuyLS4RSaH` Ready 并已绑定正式两个入口；ModelScope 镜像提交 `54195db3e9cc24f32190cd10e019b8fedbc3ed93`，运行时 `2026-10-08T02:23:37.000Z` Running，构建记录确认同一个提交与 Next.js 16.3.8。两端免费 GET health / speech 状态核对见 [最终发布](./release.json)。这些配置检查不替代上方真实音频与浏览器交互证据。

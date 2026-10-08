@@ -1,0 +1,41 @@
+{
+  "source": "2cc456ca152bc7ae8b003d3cf50b80ee493071ee",
+  "vercelDeployment": "dpl_HwNQkwYKL4hYBPA34mFuyLS4RSaH",
+  "vercelUrl": "https://socialcoach-ai.vercel.app",
+  "modelscopeMirror": "54195db3e9cc24f32190cd10e019b8fedbc3ed93",
+  "modelscopeRuntimeCreatedAt": "2026-10-08T02:23:37.000Z",
+  "modelscopeRuntimeStatus": "Running",
+  "next": "16.3.8",
+  "ci": {
+    "id": 37717434878,
+    "conclusion": "success"
+  },
+  "probes": [
+    {
+      "platform": "vercel",
+      "path": "/api/health",
+      "status": 200,
+      "state": "available",
+      "requireByok": false
+    },
+    {
+      "platform": "vercel",
+      "path": "/api/speech",
+      "status": 200,
+      "configured": true
+    },
+    {
+      "platform": "modelscope",
+      "path": "/api/health",
+      "status": 200,
+      "state": "available",
+      "requireByok": false
+    },
+    {
+      "platform": "modelscope",
+      "path": "/api/speech",
+      "status": 200,
+      "configured": true
+    }
+  ]
+}
