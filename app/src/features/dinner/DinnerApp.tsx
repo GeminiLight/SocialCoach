@@ -10,6 +10,7 @@ import {useRouter} from 'next/navigation';
 import {useByok,openModelSheet} from '@/lib/byok';
 import {useCanUseModel} from '@/lib/model-access';
 import {ModelAccessNotice} from '@/components/ModelAccessNotice';
+import {GitHubLink} from '@/components/GitHubLink';
 import {SlowModelNotice} from '@/components/SlowModelNotice';
 import {M} from '@/lib/model-copy';
 import {useDinnerUiLanguage} from '@/lib/ui-language';
@@ -332,6 +333,7 @@ export default function App() {
         <button onClick={()=>{setModal(null);openModelSheet();}}><span className={`mode-dot ${model?'live':''}`}/><span>{pick(M.title,lang)}</span><ArrowRight size={15}/></button>
       </div>
       <p className="scene-options-guide">{t('mobileLookHint')}</p>
+      <GitHubLink lang={lang}/>
       {started&&!complete&&turn>0&&<button className="scene-finish-link" disabled={busy} onClick={()=>{setComplete(true);setModal('report');}}>{t('end')}<ArrowRight size={15}/></button>}
     </Modal>}
     {modal==='history'&&<ConversationHistory messages={messages} records={dinner.records} scenario={scenario} lang={lang} onClose={()=>setModal(null)} onExport={exportDinner} onReview={()=>setModal('report')}/>}

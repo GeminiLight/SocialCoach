@@ -7,6 +7,7 @@ import { ArrowRight, ArrowUpRight, Check, Clock3, RefreshCw } from "lucide-react
 import { DinnerEntry } from "@/components/DinnerEntry";
 import { CoachMascot } from "@/components/CoachMascot";
 import { Shell } from "@/components/Shell";
+import { GitHubLink } from "@/components/GitHubLink";
 import { Button, Page, SectionTitle, Stages, Stars } from "@/components/ui";
 import { Level, SkillTag } from "@/components/SkillBits";
 import { computeStreak, todayKey, useApp, useLang } from "@/store/useApp";
@@ -108,13 +109,16 @@ export default function Home() {
             <p className="text-[14px] text-ink-3 mt-3">{t(lang, "home_intro")}</p>
             </div>
           </div>
-          <Link
-            href="/arena"
-            className="press flex items-center gap-2 min-h-11 text-[13px] font-medium text-ink-2 rounded-full px-3 hover:bg-inset"
-          >
-            {t(lang, "home_browse")}
-            <ArrowUpRight size={16} />
-          </Link>
+          <div className="flex flex-wrap items-center gap-2">
+            <GitHubLink lang={lang} className="lg:hidden" />
+            <Link
+              href="/arena"
+              className="press flex items-center gap-2 min-h-11 text-[13px] font-medium text-ink-2 rounded-full px-3 hover:bg-inset"
+            >
+              {t(lang, "home_browse")}
+              <ArrowUpRight size={16} />
+            </Link>
+          </div>
         </header>
         {unfinished && (
           <Link

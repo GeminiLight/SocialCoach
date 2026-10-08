@@ -14,6 +14,7 @@ import { useApp, useLang } from "@/store/useApp";
 import { openModelSheet } from "@/lib/byok";
 import { BottomBar, Button, Chip } from "@/components/ui";
 import { BrandMark } from "@/components/BrandMark";
+import { GitHubLink } from "@/components/GitHubLink";
 import { LanguagePicker } from "@/components/LanguagePicker";
 import { CoachMascot } from "@/components/CoachMascot";
 import { workspaceMotion } from "@/lib/motion";
@@ -109,6 +110,7 @@ export default function Onboarding() {
                     <button onClick={() => setStep(1)} className="press min-h-11 text-[12px] text-ink-2 rounded-[var(--radius-sm)]">{t(lang, "ob_personalize")}</button>
                     <Link href="/3d" prefetch={false} className="press min-h-11 inline-flex items-center gap-1.5 text-[12px] text-ink-2 rounded-[var(--radius-sm)]">{t(lang, "ob_dinner_short")}<ArrowUpRight size={14} /></Link>
                   </div>
+                  <GitHubLink lang={lang} className="self-start" />
                 </div>
               </div>
             </div>

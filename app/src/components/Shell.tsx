@@ -6,6 +6,7 @@ import { clsx } from "clsx";
 import { House, MessagesSquare, ChartNoAxesCombined, BookOpen, UserRound, PenLine, ArrowUpRight, HardDrive } from "lucide-react";
 import { DinnerEntry } from "./DinnerEntry";
 import { BrandMark } from "./BrandMark";
+import { GitHubLink } from "./GitHubLink";
 import { useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
 
@@ -74,6 +75,7 @@ export function NavRail() {
         <PenLine size={16} className="shrink-0" aria-hidden />
         <span>{t(lang, "rh_title")}</span><ArrowUpRight size={15} className="ml-auto shrink-0" />
       </Link>
+      <GitHubLink lang={lang} className="mt-1 self-start" />
       <p className="flex gap-2 items-start px-2 mt-5 text-[11px] text-ink-3 leading-relaxed"><HardDrive size={13} className="shrink-0 mt-0.5" />{t(lang, "nav_local")}</p>
     </nav>
   );

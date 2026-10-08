@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { Check, Download, Monitor, Moon, Pencil, Sun, Trash2, ChevronRight, HardDrive, SlidersHorizontal } from "lucide-react";
 import { SkillTag } from "@/components/SkillBits";
 import { Shell } from "@/components/Shell";
+import { GitHubLink } from "@/components/GitHubLink";
 import { dinnerBackup, DINNER_SAVE_KEY, DINNER_LAUNCH_KEY } from "@/features/dinner/storage";
 import { Button, Chip, Page, SectionTitle, Sheet, Switch, useToast } from "@/components/ui";
 import { useModelAccess } from "@/lib/model-access";
@@ -251,6 +252,10 @@ export default function Settings() {
           <section className="flex flex-col gap-2">
             <SectionTitle>{t(lang, "st_about")}</SectionTitle>
             <FeedbackButton className="self-start mb-2" />
+            <div>
+              <GitHubLink lang={lang} className="self-start" />
+              <p className="px-3 text-[12px] text-ink-3 leading-relaxed">{t(lang, "github_hint")}</p>
+            </div>
             <p className="text-[13px] text-ink-3 leading-relaxed lg:max-w-[var(--measure)]">{t(lang, "st_about_body")}</p>
             <a
               className="text-[13px] text-teal underline underline-offset-2"
