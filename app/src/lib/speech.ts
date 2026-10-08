@@ -99,6 +99,7 @@ function pcmSink(audio: AudioContext, onStart?: () => void): PcmSink {
 
 /** Read the final, validated line only. Personal-model mode stays on device. */
 export function playNpcLine(text: string, lang: Lang, speaker?: SpeakerVoice, onStart?: () => void): SpeechHandle {
+  useByok.getState().synchronize();
   const fallback = () => deviceSpeech(text, lang, speaker, onStart);
   const natural = useApp.getState().settings.voiceEngine !== "system" && !useByok.getState().enabled && text.length <= 500 && context?.state === "running" && Date.now() >= naturalRetryAt;
   const voice = lang === "zh" ? speaker?.feminine ? speaker.age === "young" ? "冰糖" : "茉莉" : speaker?.age === "young" ? "苏打" : "白桦" : speaker?.feminine ? speaker.age === "young" ? "Mia" : "Chloe" : speaker?.age === "young" ? "Milo" : "Dean";

@@ -19,6 +19,7 @@ import { contextById } from "@/data/taxonomy";
 import { learnerSeed } from "@/data/avatars";
 import { arenaReturnPath } from "@/lib/arena-location";
 import { practiceTurnLimit } from "@/lib/practice-policy";
+import { unlockSpeech } from "@/lib/speech";
 
 
 export function Briefing({ session }: { session: Session }) {
@@ -62,6 +63,7 @@ export function Briefing({ session }: { session: Session }) {
   const timed = !!settings.timed;
   const enter = () => {
     if (adapting || !canUseModel) return;
+    if (settings.tts) unlockSpeech();
     const startedAt = Date.now();
     updateSession(session.id, { status: "active", startedAt, timed });
     track({ name: "session_start", ts: startedAt, session: session.id, scenario: sc.custom ? "custom" : sc.id, origin: session.origin, context: sc.context, difficulty: sc.difficulty, timed, wait_s: shownAt.current ? Math.max(0, Math.round((startedAt - shownAt.current) / 1000)) : 0 });
