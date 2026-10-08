@@ -78,7 +78,7 @@ Deployment（部署方式表、Compose 折叠步骤）
 Data and privacy（本地记录、模型调用、可选统计与反馈）
 Architecture（简化数据流 + 源码入口 + 技术栈与设计）
 Research（论文说明 + 默认展开的 BibTeX，可手动收起）
-Contributing → Friends → License / 使用边界
+Community and feedback → Contributing → Contributors → Star history → Friends → License / 使用边界
 ```
 
 | 决策点 | 选择 | 原因 |

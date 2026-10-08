@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
 
 ---
 
-[News](#news) · [Start practicing](#start-a-practice-session) · [3D practice](#3d-practice) · [Scenarios](#what-you-can-practice) · [Features](#key-features) · [Learning foundations](#social-skills-and-social-and-emotional-learning-sel) · [Run locally](#run-locally) · [Deployment](#deployment) · [Research](#research)
+[News](#news) · [Start practicing](#start-a-practice-session) · [3D practice](#3d-practice) · [Scenarios](#what-you-can-practice) · [Features](#key-features) · [Learning foundations](#social-skills-and-social-and-emotional-learning-sel) · [Run locally](#run-locally) · [Deployment](#deployment) · [Research](#research) · [Contributors](#contributors)
 
 ## News
 
@@ -252,6 +252,14 @@ The group QR code is valid **before October 12, 2026**. You can also add me on W
 Bug reports, translations, and contributions are welcome. For bugs, include reproduction steps, your browser, and model configuration without API keys or private conversations.
 
 For corpus contributions, start in [`app/src/data/corpus/`](app/src/data/corpus). Keep entries bilingual, provide a `source`, and label teaching examples. For development, read [`AGENTS.md`](AGENTS.md) and [`app/AGENTS.md`](app/AGENTS.md).
+
+## Contributors
+
+Thanks to everyone who has contributed to SocialCoach! Click the avatar list to see the full contribution history.
+
+<a href="https://github.com/GeminiLight/SocialCoach/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=GeminiLight/SocialCoach" alt="Round avatars of SocialCoach contributors">
+</a>
 
 ## Star history
 

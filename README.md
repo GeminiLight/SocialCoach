@@ -24,7 +24,7 @@
 
 ---
 
-[News](#news) · [开始练习](#开始一场练习) · [3D 实景](#3d-实景练习) · [练习场景](#你可以练什么) · [核心功能](#核心功能) · [学习依据](#社交技能与社交情绪学习sel) · [本地运行](#本地运行) · [部署](#部署) · [研究](#研究)
+[News](#news) · [开始练习](#开始一场练习) · [3D 实景](#3d-实景练习) · [练习场景](#你可以练什么) · [核心功能](#核心功能) · [学习依据](#社交技能与社交情绪学习sel) · [本地运行](#本地运行) · [部署](#部署) · [研究](#研究) · [Contributors](#contributors)
 
 ## News
 
@@ -248,6 +248,14 @@ SocialCoach 基于 Wang 等人的论文 [*SocialCoach: Personalized Social Skill
 欢迎提交问题反馈、翻译和改进。报告 bug 时，请附上复现步骤、浏览器与模型配置，并去除 API key 和私人对话。
 
 语料贡献从 [`app/src/data/corpus/`](app/src/data/corpus) 开始：内容保持中英双语，提供 `source`，并明确标注教学示例。参与开发前请阅读 [`AGENTS.md`](AGENTS.md) 与 [`app/AGENTS.md`](app/AGENTS.md)。
+
+## Contributors
+
+感谢所有为 SocialCoach 做出贡献的朋友！点击头像列表查看完整贡献记录。
+
+<a href="https://github.com/GeminiLight/SocialCoach/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=GeminiLight/SocialCoach" alt="SocialCoach 贡献者的圆形头像列表">
+</a>
 
 ## Star 趋势
 
