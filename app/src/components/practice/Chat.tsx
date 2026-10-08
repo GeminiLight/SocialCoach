@@ -18,7 +18,7 @@ import { byokConfig, useByok } from "@/lib/byok";
 import type { ChatMessage, Session } from "@/lib/types";
 import type { Character } from "@/data/corpus/types";
 import type { Lang } from "@/data/taxonomy";
-import { canListen, recognitionError, speak, stopSpeaking, unlockSpeech } from "@/lib/speech";
+import { canListen, recognitionError, speak, stopSpeaking, pauseSpeaking, unlockSpeech } from "@/lib/speech";
 import { PracticeJourney } from "./PracticeJourney";
 import { SlowModelNotice } from "@/components/SlowModelNotice";
 import { useSessionDraft } from "@/lib/use-session-draft";
@@ -129,11 +129,10 @@ export function Chat({ session }: { session: Session }) {
   // TTS for completed NPC lines. Every unspoken line is queued, in order: a turn
   // can contain more than one character speaking.
   useEffect(() => {
-    if (!settings.tts) {
+    if (!settings.tts || busy) {
       stopSpeaking();
       return;
     }
-    if (busy) return;
     for (const m of session.messages) {
       if (m.role !== "npc" || !m.text) continue;
       if (historyRef.current.has(m.id) || spokenRef.current.has(m.id)) continue;
@@ -141,6 +140,12 @@ export function Chat({ session }: { session: Session }) {
       speak(m.text, lang);
     }
   }, [session.messages, busy, settings.tts, lang]);
+
+  useEffect(() => {
+    const update = () => pauseSpeaking(modelSheetOpen || endOpen || clockOpen || voiceNotice || document.hidden);
+    update(); document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, [modelSheetOpen, endOpen, clockOpen, voiceNotice]);
 
   // ── fix: leaving mid-sentence used to keep talking, and the mic could stay open ──
   useEffect(
@@ -294,6 +299,7 @@ export function Chat({ session }: { session: Session }) {
       const last = live && lastSpoken(live.messages);
       if (!canUseModel || !text || busyRef.current || endingRef.current || !live || live.status !== "active" || last?.role === "learner" || last?.role === "event") return;
       cancelListening();
+      stopSpeaking();
       setErr(null);
       setNote(null);
       setFloor(false);
@@ -389,6 +395,7 @@ export function Chat({ session }: { session: Session }) {
 
   const startListening = () => {
     if (recRef.current) return;
+    stopSpeaking();
     type SR = new () => { lang: string; interimResults: boolean; continuous: boolean; onresult: ((e: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null; onend: (() => void) | null; onerror: ((e: { error?: string }) => void) | null; start: () => void; stop: () => void; abort: () => void };
     const w = window as unknown as { SpeechRecognition?: SR; webkitSpeechRecognition?: SR };
     const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition;

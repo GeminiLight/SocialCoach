@@ -7,6 +7,7 @@ export const SpeechInputSchema = z.object({
   voice: z.enum(["白桦", "苏打", "茉莉", "冰糖", "Mia", "Chloe", "Milo", "Dean"]),
   tone: z.enum(["neutral", "firm", "gentle"]).default("neutral"),
   stream: z.boolean().default(false),
+  delivery: z.enum(["wav", "pcm"]).default("wav"),
 }).strict();
 export type SpeechInput = z.infer<typeof SpeechInputSchema>;
 
@@ -23,6 +24,7 @@ export function speechConfiguration(env: Readonly<Record<string, string | undefi
 }
 
 export function speechPayload(input: SpeechInput) {
+  const streaming = input.stream || input.delivery === "pcm";
   const tone = { neutral: "自然、平实", firm: "沉稳、有立场，但不要喊叫", gentle: "温和、自然，避免播音腔" }[input.tone];
   const style = input.lang === "zh"
     ? `像面对面聊天一样说普通话，${tone}。语速适中，按语义自然停顿。逐字朗读台词，不加词，不改词，不读提示。`
@@ -30,8 +32,8 @@ export function speechPayload(input: SpeechInput) {
   return {
     model: SPEECH_MODEL,
     messages: [{ role: "user", content: style }, { role: "assistant", content: input.text }],
-    audio: { format: input.stream ? "pcm16" : "wav", voice: input.voice },
-    stream: input.stream,
+    audio: { format: streaming ? "pcm16" : "wav", voice: input.voice },
+    stream: streaming,
   };
 }
 
@@ -65,14 +67,13 @@ export async function speechResponse(response: Response): Promise<Uint8Array> {
   return speechAudio(JSON.parse(new TextDecoder().decode(bytes)));
 }
 
-/** Record the real first audio event; collecting here also makes a playable WAV sample. */
-export async function speechStreamResponse(response: Response, startedAt = Date.now()): Promise<{ audio: Uint8Array; firstAudioMs: number; chunks: number }> {
+/** Yield real audio immediately. This iterator owns and closes the provider reader. */
+export async function* speechPcm(response: Response): AsyncGenerator<Uint8Array> {
   if (!response.ok) throw Object.assign(new Error("Speech provider unavailable"), { upstreamStatus: response.status });
   const reader = response.body?.getReader();
   if (!reader) throw new Error("Missing speech audio");
   const decoder = new TextDecoder();
-  const pcm: Uint8Array[] = [];
-  let buffer = "", transferred = 0, size = 0, firstAudioMs = -1, done = false;
+  let buffer = "", transferred = 0, size = 0, done = false;
   const event = (frame: string) => {
     const data = frame.split(/\r?\n/).filter(line => line.startsWith("data:")).map(line => line.slice(5).trimStart()).join("\n");
     if (!data) return;
@@ -85,26 +86,36 @@ export async function speechStreamResponse(response: Response, startedAt = Date.
     if (!size && Buffer.from(bytes.slice(0, 4)).toString("ascii") === "RIFF") throw new Error("Expected PCM audio, received WAV");
     size += bytes.length;
     if (size > 4_000_000) throw new Error("Speech response too large");
-    if (firstAudioMs === -1) firstAudioMs = Date.now() - startedAt;
-    pcm.push(bytes);
+    return bytes;
   };
   try {
     while (!done) {
       const part = await reader.read();
-      if (part.done) { buffer += decoder.decode(); if (buffer.trim()) event(buffer); break; }
+      if (part.done) { buffer += decoder.decode(); if (buffer.trim()) { const bytes = event(buffer); if (bytes) yield bytes; } break; }
       transferred += part.value.length;
       if (transferred > 8_000_000) throw new Error("Speech response too large");
       buffer += decoder.decode(part.value, { stream: true });
       let boundary: RegExpMatchArray | null;
       while ((boundary = buffer.match(/\r?\n\r?\n/))) {
         const end = boundary.index!;
-        event(buffer.slice(0, end));
+        const bytes = event(buffer.slice(0, end));
         buffer = buffer.slice(end + boundary[0].length);
+        if (bytes) yield bytes;
         if (done) break;
       }
     }
   } finally { await reader.cancel().catch(() => {}); reader.releaseLock(); }
   if (!size || size % 2 !== 0) throw new Error("Missing PCM audio");
+}
+
+/** Collect only for evaluation / downloads; live practice uses speechPcm directly. */
+export async function speechStreamResponse(response: Response, startedAt = Date.now()): Promise<{ audio: Uint8Array; firstAudioMs: number; chunks: number }> {
+  const pcm: Uint8Array[] = [];
+  let size = 0, firstAudioMs = -1;
+  for await (const bytes of speechPcm(response)) {
+    if (firstAudioMs === -1) firstAudioMs = Date.now() - startedAt;
+    size += bytes.length; pcm.push(bytes);
+  }
   const wave = Buffer.alloc(44 + size);
   wave.write("RIFF", 0); wave.writeUInt32LE(36 + size, 4); wave.write("WAVEfmt ", 8);
   wave.writeUInt32LE(16, 16); wave.writeUInt16LE(1, 20); wave.writeUInt16LE(1, 22);

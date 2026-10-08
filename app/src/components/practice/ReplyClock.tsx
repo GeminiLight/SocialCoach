@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { t } from "@/lib/i18n";
 import { PATIENCE_OPTIONS, type Patience } from "@/store/useApp";
 import type { Lang } from "@/data/taxonomy";
+import { speechBusy } from "@/lib/speech";
 
 /**
  * 0 — quiet. 1 — they look at you. 2 — they are losing patience.
@@ -37,14 +38,6 @@ const SETTLE_FIRST_MS = 2000;
 const SETTLE_MS = 900;
 /** A stuck `speechSynthesis.speaking` must not hold the scene hostage. */
 const SPEECH_WAIT_CAP_MS = 20000;
-
-const speechBusy = () => {
-  try {
-    return typeof speechSynthesis !== "undefined" && (speechSynthesis.speaking || speechSynthesis.pending);
-  } catch {
-    return false;
-  }
-};
 
 /**
  * The other side's patience, as a clock the learner cannot see the digits of.

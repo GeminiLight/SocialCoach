@@ -184,6 +184,13 @@ export default function Settings() {
                   label={t(lang, "st_voice")}
                 />
               </Row>
+              {settings.tts && <Row label={t(lang, "st_voice_engine")} hint={t(lang, "st_voice_engine_hint")}>
+                <div className="inline-flex rounded-full bg-paper-2 p-0.5 text-[12px] font-medium">
+                  {(["natural", "system"] as const).map(engine => <button key={engine} aria-pressed={(settings.voiceEngine ?? "natural") === engine} onClick={() => { stopSpeaking(); unlockSpeech(); setSettings({ voiceEngine: engine }); }} className={clsx("press px-3 min-h-11 rounded-full", (settings.voiceEngine ?? "natural") === engine ? "bg-ink text-paper" : "text-ink-3")}>
+                    {t(lang, engine === "natural" ? "st_voice_natural" : "st_voice_system")}
+                  </button>)}
+                </div>
+              </Row>}
               <Row label={t(lang, "pr_clock_title")} hint={t(lang, "pr_clock_explain", clockMarks(settings.patience ?? DEFAULT_PATIENCE))}>
                 <Switch checked={!!settings.timed} onChange={(v) => setSettings({ timed: v })} label={t(lang, "pr_clock_title")} />
               </Row>

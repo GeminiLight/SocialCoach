@@ -14,6 +14,8 @@ export type Theme = "system" | "light" | "dark";
 
 export interface Settings {
   tts: boolean;
+  /** Natural streaming voice with a bounded wait; system voice needs no speech service. */
+  voiceEngine?: "natural" | "system";
   /** "system" follows the OS; the other two pin it. */
   theme?: Theme;
   /** The learner has been told that voice input uploads audio to their browser's vendor. */

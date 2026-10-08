@@ -2,6 +2,17 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { speechAudio, speechConfiguration, speechPayload, speechResponse, speechStreamResponse, SpeechInputSchema } from "../../src/lib/speech-synthesis";
 
+test("live PCM is yielded before the provider finishes and cancellation closes its reader", async () => {
+  const speech = await import("../../src/lib/speech-synthesis");
+  assert.equal(typeof speech.speechPcm, "function", "live playback needs incremental PCM");
+  let cancelled = false;
+  const body = new ReadableStream({ start(c) { c.enqueue(new TextEncoder().encode('data: {"choices":[{"delta":{"audio":{"data":"AAECAw=="}}}]}\n\n')); }, cancel() { cancelled = true; } });
+  const iterator = speech.speechPcm(new Response(body));
+  assert.deepEqual((await iterator.next()).value, new Uint8Array([0, 1, 2, 3]));
+  await iterator.return(undefined);
+  assert.equal(cancelled, true);
+});
+
 test("speech does not send another provider's key to the speech gateway", () => {
   assert.equal(speechConfiguration({ LLM_PROVIDER: "openai", LLM_BASE_URL: "https://open.bigmodel.cn/v1", LLM_API_KEY: "other-provider" }), null);
   assert.equal(speechConfiguration({ LLM_PROVIDER: "openai", LLM_BASE_URL: "https://tokendance.space/gateway/v1", LLM_API_KEY: "test-key" })?.base, "https://tokendance.space/gateway/v1");
