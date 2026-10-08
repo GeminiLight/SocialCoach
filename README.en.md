@@ -32,10 +32,11 @@ https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
 
 ## News
 
-<!-- Keep up to three major release milestones, newest first; omit routine fixes. Keep README.md in sync. -->
+<!-- Keep up to four major release milestones, newest first; omit routine fixes. Keep README.md in sync. -->
 
 | Date | Major update |
 |---|---|
+| **2026-10-08** | **[Social skills video lessons launched](https://socialcoach-ai.vercel.app/learn).** Watch different responses at a dinner or elevator lobby, then practice the same scenario. |
 | **2026-10-03** | **[SocialCoach in 3D](#3d-practice).** Step into a dinner, elevator lobby, or office and practice difficult conversations by typing or speaking. |
 | **2026-09-09** | **[Live demo website launched](https://socialcoach.aurax.live).** Practice in Chinese or English, with no sign-up required. |
 | **2026-09-03** | **[First SocialCoach release](https://github.com/GeminiLight/SocialCoach/commit/bae956fc4eef36063c975fd4b980c7daf170223c).** Personalized practice scheduling, realistic role-play, and feedback grounded in your own words. |
