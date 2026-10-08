@@ -1,0 +1,172 @@
+{
+  "fixture": false,
+  "events": [
+    {
+      "type": "request",
+      "at": 42343.09999990463
+    },
+    {
+      "type": "audio/pcm;rate=24000;channels=1",
+      "at": 45555.299999952316,
+      "status": 200,
+      "timing": "speech_first;dur=2066"
+    },
+    {
+      "type": "schedule",
+      "at": 45561.89999997616,
+      "when": 3.2560000000000002,
+      "now": 3.216,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 45650.699999928474,
+      "when": 3.4160000000000004,
+      "now": 3.3066666666666666,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 45669.5,
+      "when": 3.586541666666667,
+      "now": 3.3226666666666667,
+      "state": "running"
+    },
+    {
+      "type": "ended",
+      "at": 45762
+    },
+    {
+      "type": "schedule",
+      "at": 45890.299999952316,
+      "when": 3.7360000000000007,
+      "now": 3.546666666666667,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 45892.5,
+      "when": 4.056000000000001,
+      "now": 3.546666666666667,
+      "state": "running"
+    },
+    {
+      "type": "ended",
+      "at": 45932.299999952316
+    },
+    {
+      "type": "schedule",
+      "at": 45954.199999928474,
+      "when": 4.376000000000001,
+      "now": 3.6106666666666665,
+      "state": "running"
+    },
+    {
+      "type": "ended",
+      "at": 46081.699999928474
+    },
+    {
+      "type": "schedule",
+      "at": 46360.199999928474,
+      "when": 4.6960000000000015,
+      "now": 4.016,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 46361.5,
+      "when": 5.016000000000002,
+      "now": 4.016,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 46367.799999952316,
+      "when": 5.6560000000000015,
+      "now": 4.021333333333334,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 46368.39999997616,
+      "when": 7.788750000000002,
+      "now": 4.021333333333334,
+      "state": "running"
+    },
+    {
+      "type": "ended",
+      "at": 46401.699999928474
+    },
+    {
+      "type": "schedule",
+      "at": 46419,
+      "when": 8.536000000000001,
+      "now": 4.074666666666666,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 46573.799999952316,
+      "when": 8.856000000000002,
+      "now": 4.229333333333333,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 46641.299999952316,
+      "when": 9.176000000000002,
+      "now": 4.293333333333333,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 46642.199999928474,
+      "when": 9.517208333333336,
+      "now": 4.298666666666667,
+      "state": "running"
+    },
+    {
+      "type": "ended",
+      "at": 46722.5
+    },
+    {
+      "type": "ended",
+      "at": 47041.699999928474
+    },
+    {
+      "type": "ended",
+      "at": 47361.59999990463
+    },
+    {
+      "type": "ended",
+      "at": 48001.699999928474
+    },
+    {
+      "type": "ended",
+      "at": 50134.89999997616
+    },
+    {
+      "type": "ended",
+      "at": 50881.699999928474
+    },
+    {
+      "type": "ended",
+      "at": 51201.59999990463
+    },
+    {
+      "type": "ended",
+      "at": 51523.09999990463
+    },
+    {
+      "type": "ended",
+      "at": 51863
+    },
+    {
+      "type": "ended",
+      "at": 52161.699999928474
+    }
+  ],
+  "composerEnabled": true,
+  "firstScheduledSpeechMs": 3258.8000000715256,
+  "nativeFallback": false
+}

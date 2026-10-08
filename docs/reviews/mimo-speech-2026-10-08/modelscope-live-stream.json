@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "firstClientAudioMs": 2079.0,
+  "fullTransferMs": 3042.7,
+  "bytes": 222720,
+  "serverTiming": "speech_first;dur=1063",
+  "contentType": "audio/pcm;rate=24000;channels=1",
+  "runtimeCreatedAt": "2026-10-08T02:15:10.000Z",
+  "authenticated": true
+}
