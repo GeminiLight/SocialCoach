@@ -1,0 +1,6 @@
+$ pnpm lint && next typegen && tsc --noEmit && pnpm test:core && pnpm test:dinner
+$ eslint
+Generating route types...
+✓ Types generated successfully
+.next/dev/types/validator.ts(98,39): error TS2307: Cannot find module '../../../src/app/pr-review-fixture/page.js' or its corresponding type declarations.
+[ELIFECYCLE] Command failed with exit code 2.

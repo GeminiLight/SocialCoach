@@ -33,7 +33,15 @@ export function buildSession(scenario: Scenario, origin: Session["origin"], lang
 }
 
 export function historyFor(sessions: Session[], lang: Lang) {
-  return [...new Map([...sessions].reverse().filter(s=>s.status==="assessed"||s.status==="ended").map(s=>[s.sceneContext?.practiceId??s.id,s])).values()].reverse()
+  const latest = new Map<string, Session>();
+  // Keep each practice's newest completed snapshot in recency order. Updating
+  // an existing Map key would leave a continuation at its original position.
+  for (const session of [...sessions].sort((a, b) => b.startedAt - a.startedAt)) {
+    if (session.status !== "assessed" && session.status !== "ended") continue;
+    const id = session.sceneContext?.practiceId ?? session.id;
+    if (!latest.has(id)) latest.set(id, session);
+  }
+  return [...latest.values()]
     .slice(0, 12)
     .reverse()
     .map((s) => ({

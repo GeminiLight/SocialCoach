@@ -25,6 +25,9 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inflight = useRef(false);
+  // Restored archives may be stored oldest-first. Display recency without
+  // rewriting device records or conflating independent continuation snapshots.
+  const orderedSessions = useMemo(() => [...sessions].sort((a, b) => b.startedAt - a.startedAt), [sessions]);
 
   const today = todayKey();
   const todaySession = useMemo(
@@ -32,10 +35,10 @@ export default function Home() {
     [sessions, todaySessionId, todayDate, today],
   );
   const streak = computeStreak(practiceDays);
-  const unfinished = sessions.find((s) => s.status === "active" || s.status === "ended");
+  const unfinished = orderedSessions.find((s) => s.status === "active" || s.status === "ended");
   /** Last session's verdict, to fill today's wait with something worth reading. */
   const lastVerdict = useMemo(() => {
-    const last = sessions.find((x) => x.status === "assessed" && x.report?.verdict && x.report.verdictEvidence);
+    const last = orderedSessions.find((x) => x.status === "assessed" && x.report?.verdict && x.report.verdictEvidence);
     if (!last) return null;
     const trail = last.stanceTrail ?? [];
     const gaveGroundOn: number[] = [];
@@ -43,7 +46,7 @@ export default function Home() {
       if (v < (i === 0 ? 20 : trail[i - 1])) gaveGroundOn.push(i + 1);
     });
     return { evidence: last.report!.verdictEvidence, verdict: last.report!.verdict, title: last.scenario.title[lang], gaveGroundOn };
-  }, [sessions, lang]);
+  }, [orderedSessions, lang]);
 
   const hour = new Date().getHours();
   const greet = hour < 12 ? "home_greeting_morning" : hour < 18 ? "home_greeting_afternoon" : "home_greeting_evening";
@@ -74,7 +77,7 @@ export default function Home() {
   }, [pruneSessions]);
 
   if (!profile) return null;
-  const recent = sessions.filter((s) => s.status === "assessed").slice(0, 3);
+  const recent = orderedSessions.filter((s) => s.status === "assessed").slice(0, 3);
 
   const rehearsalInvitation = (
     <section className="home-rehearsal-secondary flex flex-wrap items-center justify-between gap-x-5 gap-y-2">

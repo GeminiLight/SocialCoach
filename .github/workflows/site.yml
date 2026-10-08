@@ -12,6 +12,8 @@ on:
     branches: [main]
     paths:
       - "site/**"
+      - "app/src/data/corpus/**"
+      - "app/src/data/taxonomy.ts"
       - "docs/social-coach-paper.pdf"
       - ".github/workflows/site.yml"
   workflow_dispatch:
@@ -19,27 +21,36 @@ on:
     branches: [main]
     paths:
       - "site/**"
+      - "app/src/data/corpus/**"
+      - "app/src/data/taxonomy.ts"
       - "docs/social-coach-paper.pdf"
       - ".github/workflows/site.yml"
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  # PR validation must not cancel an in-progress Pages publication.
+  group: ${{ github.event_name == 'pull_request' && format('site-{0}', github.ref) || 'pages' }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     outputs:
       enabled: ${{ steps.check.outputs.enabled }}
     steps:
-      # Until Pages is switched on in Settings this run ends green with a notice
-      # instead of a red X on every push that touches site/.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # A PR only validates the site. A push or manual run also checks whether
+      # Pages is configured; forks without Pages still build and verify below.
       - id: check
+        if: github.event_name != 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -47,22 +58,17 @@ jobs:
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           else
             echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::GitHub Pages is not enabled. Settings → Pages → Source: GitHub Actions, then re-run this workflow."
+            echo "::notice::GitHub Pages is not enabled. The site will be validated without publishing. To publish, select Settings → Pages → Source: GitHub Actions, then re-run this workflow."
           fi
-      - if: steps.check.outputs.enabled == 'true'
-        uses: actions/checkout@v4
-      - if: steps.check.outputs.enabled == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
       - if: steps.check.outputs.enabled == 'true'
         id: pages
         uses: actions/configure-pages@v5
-      - if: steps.check.outputs.enabled == 'true'
+      - name: Build and verify site
         run: |
-          site_base="$PAGES_BASE_URL"
-          SITE_URL="https://${site_base#*://}" node site/build.mjs
-          SITE_URL="https://${site_base#*://}" python3 site/verify-seo.py
+          site_base="${PAGES_BASE_URL:-$(node --input-type=module -e 'import { site } from "./site/content.mjs"; process.stdout.write(site.defaultUrl)')}"
+          export SITE_URL="https://${site_base#*://}"
+          node site/build.mjs
+          python3 site/verify-seo.py
         env:
           PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
       - if: steps.check.outputs.enabled == 'true'
@@ -74,6 +80,9 @@ jobs:
     needs: build
     if: needs.build.outputs.enabled == 'true' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

@@ -1,0 +1,117 @@
+[
+  {
+    "headRefOid": "97a058fbb85e88a0fd5e7851e82eb8ac9ccfb565",
+    "isDraft": false,
+    "number": 19,
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T08:32:21Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/GeminiLight/SocialCoach/actions/runs/37740105166/job/113221517323",
+        "name": "quality",
+        "startedAt": "2026-10-08T08:30:25Z",
+        "status": "COMPLETED",
+        "workflowName": "application quality"
+      },
+      {
+        "__typename": "StatusContext",
+        "context": "Vercel",
+        "startedAt": "2026-10-08T08:34:54Z",
+        "state": "SUCCESS",
+        "targetUrl": "https://vercel.com/geminilights-projects/socialcoach/A41bTbwMC3ettBi7U3osKj2ip3BK"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T08:34:55Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://vercel.com/github",
+        "name": "Vercel Preview Comments",
+        "startedAt": "2026-10-08T08:34:55Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "title": "Fix share quote selection and image retry"
+  },
+  {
+    "headRefOid": "e66ef7ed994ad7aeef6f3fc09ff44488c8205525",
+    "isDraft": false,
+    "number": 21,
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T08:37:57Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/GeminiLight/SocialCoach/actions/runs/37745422849/job/113224087536",
+        "name": "build",
+        "startedAt": "2026-10-08T08:37:25Z",
+        "status": "COMPLETED",
+        "workflowName": "site"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T08:37:57Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://github.com/GeminiLight/SocialCoach/actions/runs/37745422849/job/113224303339",
+        "name": "deploy",
+        "startedAt": "2026-10-08T08:37:57Z",
+        "status": "COMPLETED",
+        "workflowName": "site"
+      },
+      {
+        "__typename": "StatusContext",
+        "context": "Vercel",
+        "startedAt": "2026-10-08T08:37:34Z",
+        "state": "SUCCESS",
+        "targetUrl": "https://vercel.com/geminilights-projects/socialcoach/4wZZfnSqq9vattzaCKLWg8nXS8kt"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T08:37:35Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://vercel.com/github",
+        "name": "Vercel Preview Comments",
+        "startedAt": "2026-10-08T08:37:35Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "title": "ci: validate site builds independently of Pages"
+  },
+  {
+    "headRefOid": "e6619fb71aafc3cd431660d899fafdfa4405b0de",
+    "isDraft": false,
+    "number": 22,
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T08:31:45Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/GeminiLight/SocialCoach/actions/runs/37746813243/job/113221527142",
+        "name": "quality",
+        "startedAt": "2026-10-08T08:30:26Z",
+        "status": "COMPLETED",
+        "workflowName": "application quality"
+      },
+      {
+        "__typename": "StatusContext",
+        "context": "Vercel",
+        "startedAt": "2026-10-08T08:39:32Z",
+        "state": "SUCCESS",
+        "targetUrl": "https://vercel.com/geminilights-projects/socialcoach/Bmc1SRYG76sM42mxShgZ4cNjrr6X"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T08:39:33Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://vercel.com/github",
+        "name": "Vercel Preview Comments",
+        "startedAt": "2026-10-08T08:39:33Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "title": "fix: preserve recent continuations in recommendation history"
+  }
+]

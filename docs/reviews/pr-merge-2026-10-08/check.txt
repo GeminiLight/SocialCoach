@@ -1,0 +1,476 @@
+$ pnpm lint && next typegen && tsc --noEmit && pnpm test:core && pnpm test:dinner
+$ eslint
+Generating route types...
+✓ Types generated successfully
+$ tsx --test tests/core/*.test.ts && node scripts/check-core.mjs
+✔ the latest continuation remains in the eight most recent independent observations (0.833834ms)
+✔ an exported unreadable 3D original does not block a healthy main archive (21.601458ms)
+✔ a bad 3D schema is quarantined while invalid main archives still fail (0.755416ms)
+✔ free-form private stage notes never enter the public roleplay projection (2.309375ms)
+✔ an older server packet cannot surface its private note in the current client (0.229333ms)
+✔ streamed utterances cannot emit protocol control markers before final validation (0.882958ms)
+✔ a free metadata retry cannot hide shared exhaustion or shared concurrency (349.331458ms)
+✔ opening a model sheet cannot resurrect credentials removed by another window (44.141708ms)
+✔ a corrupt credential envelope never silently selects the shared model (11.522041ms)
+✔ Anthropic full message endpoints and versioned bases produce one v1 route (195.403833ms)
+✔ a pasted completion endpoint keeps the gateway prefix without duplicating the route (130.878458ms)
+✔ browser OpenAI metadata and generations work with standard gateway CORS headers (4.380417ms)
+✔ compatible reasoning can be disabled for short tasks while default configurations and other tasks keep their request shape (1.772833ms)
+✔ every existing corpus scenario satisfies the shared contract (7.526334ms)
+✔ valid JSON with null sessions, invalid reports or a future version fails without merge (3.4515ms)
+✔ legacy archives are accepted and unverifiable cached patterns are invalidated (0.739208ms)
+✔ five low ratings cannot reach full proficiency; later evidence can correct a high estimate (0.316583ms)
+✔ continued snapshots are one observation, and scheduling gets quoted diagnosis separately from self-report (0.549834ms)
+✔ quota and stale-window writes preserve disk and allow a successful retry (0.508667ms)
+✔ a frozen 3D opening keeps its public facts and private direction on review and continuation (3.066167ms)
+✔ the real store protects a malformed envelope and keeps unsaved messages through quota recovery (8.115666ms)
+✔ backup preview accepts both export formats, strips credentials and rejects unsupported versions (0.907708ms)
+✔ backup merge keeps current preferences, adds independent records, and refuses ambiguous ID collisions (0.808125ms)
+✔ lint brace walkers reject excessive string and AST depth before exhausting the stack (2.564542ms)
+✔ the lint patch preserves normal nesting, ranges, quotes and escaped literal braces (1.046084ms)
+✔ a failed static response is never kept in the service worker cache (12.737541ms)
+✔ offline navigation has an explicit recovery page instead of a browser error (0.826208ms)
+✔ activation only retires SocialCoach caches (0.406542ms)
+✔ same-title independent sessions can support a pattern (1.213458ms)
+✔ a quote with a fabricated suffix cannot support a pattern (0.253042ms)
+✔ one practice saved twice is not two independent instances (0.078667ms)
+✔ an incomplete generated scenario fails at the task boundary (4.954458ms)
+✔ one task cancellation reaches every repair and stops further model calls (1.165708ms)
+✔ all repairs share one call and input budget (0.709208ms)
+✔ missing content-length cannot bypass the body limit and malformed JSON is a 400 (15.062541ms)
+✔ production generation requires shared budget and reservation covers SDK retries (0.102375ms)
+✔ reflection never emits an unquoted draft and verified replies lead with actual words (4.43225ms)
+✔ a global revealed flag cannot invent a per-character public disclosure (1.241167ms)
+✔ new analytics accept UUID practice association but reject dialogue or private fields (0.822417ms)
+✔ reflection cannot cite an older turn instead of the submitted answer (0.467333ms)
+✔ a resumed practice is the newest scheduling history item (0.905292ms)
+✔ the newest continuation survives the twelve-practice recommendation limit (0.235541ms)
+✔ repeated snapshots do not displace independent practices from history (0.173083ms)
+✔ restored history is ordered by time without mutating stored sessions (0.195792ms)
+✔ first PCM plays before completion; odd network boundaries preserve sample order (25.484542ms)
+✔ slow first audio falls back once; a late response cannot start playing (17.562625ms)
+✔ explicit cancellation drops audio and never invokes the fallback (0.4165ms)
+✔ a failed stream after speech starts never repeats the full line with another voice (5.497542ms)
+✔ pausing also pauses prepared audio and the fallback inherits that pause (1.074708ms)
+✔ live PCM is yielded before the provider finishes and cancellation closes its reader (17.084917ms)
+✔ speech does not send another provider's key to the speech gateway (0.248333ms)
+✔ the exact NPC line is the final assistant message, not an instruction or polished text (1.781417ms)
+✔ text-only completions, malformed base64 and non-WAV bytes cannot become audio (1.340709ms)
+✔ provider failures and large chunked responses remain bounded (1.35675ms)
+✔ fragmented SSE audio preserves sample order and rejects text-only streams (0.931417ms)
+✔ a direct client-scope question cannot be answered with an invented whole-deck requirement (4.114042ms)
+✔ a manager cannot turn section-three edits into a confirmed client-wide rewrite (0.263833ms)
+✔ an invented client scope stays out of previews and durable replies (5.541834ms)
+✔ an unconfirmed teammate schedule cannot become a handoff arrangement (0.59675ms)
+✔ video lessons have real media, a source and a matching playable opening (0.650166ms)
+✔ chapters follow the actual cut, including the rewind boundaries (0.130416ms)
+✔ video search works with either language and scene keywords (0.306709ms)
+✔ video bookmarks survive the existing local archive round trip (2.120917ms)
+✔ the HR video is searchable and leads to the privacy opening, not the dinner (0.205ms)
+ℹ tests 64
+ℹ suites 0
+ℹ pass 64
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 466.047958
+{
+  "scenarios": 58,
+  "theories": 42,
+  "cases": 30,
+  "contexts": {
+    "workplace": 18,
+    "family": 9,
+    "friendship": 8,
+    "romantic": 6,
+    "education": 6,
+    "public": 5,
+    "party": 6
+  },
+  "addedDifficulty": {
+    "1": 1,
+    "2": 8,
+    "3": 3
+  }
+}
+Scheduling, bilingual session creation, and debrief knowledge retrieval passed.
+pattern guard: 5/5 passed
+PASS private NPC information is isolated from briefings, hints and assessments
+PASS every corpus scene preserves core skills/context even with repeats
+PASS no lexical matches or empty goal list cannot manufacture success
+PASS bare failure / success / ended flags cannot terminate a conversation
+PASS mutual deferral can close with no original goals achieved
+PASS fabricated, stale, missing, and wrong-speaker closure quotes are rejected
+PASS an NPC may explicitly withdraw without learner agreement
+PASS protocol requires actual booleans and preserves closure
+PASS a malformed stage note never becomes an object in the UI
+PASS good communication can earn three stars despite zero goal attainment
+PASS getting all goals does not rescue poor communication
+PASS invented evidence, duplicate ratings, and unpracticed skills cannot inflate scores
+PASS outcome fallback is independent of quality; legacy stars are marked in history
+practice policy: 19 checks passed, including all 58 corpus scenes
+[extractJSON] unparseable model JSON { characters: 223 }
+[extractJSON] unparseable model JSON { characters: 225 }
+[extractJSON] unparseable model JSON { characters: 15 }
+18 structured roleplay / streaming checks passed.
+PASS a report deadline and limited help do not establish a post-report appointment
+PASS a recap cannot move the report deadline onto help before the deadline either
+PASS an explicit proposal or denial stays playable
+PASS the learner may actually offer that time, including rejecting a larger scope
+PASS NPC suggestions are not consent and later revocation is retained
+PASS a conditional offer or a question about an assignment is not an unconditional appointment
+PASS other scenes retain their existing streaming path
+PASS an unconfirmed appointment never flashes as a visible preview
+PASS one bounded repair keeps the same player turn and only shows the corrected reply
+PASS a second invalid draft remains unseen and unsaved
+10 roleplay fact checks passed.
+PASS failed storage presents recovery instead of a blank screen
+PASS unreadable raw backup is not overwritten by initialization or UI choices
+PASS read retries can recover when storage is repaired or reallowed
+PASS a report without quoted ratings cannot apply a model-proposed reward
+PASS the same unobserved report cannot alter proficiency
+PASS a late report for a missing session cannot alter practice history
+PASS a late report cannot assess an active conversation
+PASS public payload omits all private NPC fields, scoring and coach hints
+PASS Chinese concept queries retrieve the actual sourced theory without relying on report IDs
+PASS English concept queries retrieve the sourced theory
+PASS reply preserves verified evidence and resolves only existing source IDs
+PASS paragraph arrays normalize to readable text for both hosted and BYOK
+PASS model sees only the public view and citation content
+PASS practice/report remain unchanged
+PASS rejects fabricated quote
+PASS rejects NPC quote
+PASS rejects missing quote
+PASS rejects invented source
+PASS rejects known but unretrieved source
+PASS rejects wrong response shape
+PASS invalid inputs are rejected before spending model quota
+PASS follow-ups include the most recent six exchanges and preserve the full local history
+PASS the model receives prior answers for multi-turn questions
+PASS one repair revalidates a fresh reply instead of replacing invented evidence
+PASS no learner words permits concept-only guidance without fabricated evidence
+PASS malformed model output diagnostics do not log practice content
+debrief assistant: 23 contract checks passed
+PASS legacy six-turn scenes start with twelve and remain open after six
+PASS reaching twelve is an optional checkpoint, not a status transition
+PASS continuation retains the full transcript and adds eight turns
+PASS another segment can be continued again without resetting the record
+PASS a grounded acknowledged boundary proposes review without ending
+PASS all initial objectives achieved is not an automatic stopping condition
+PASS refresh/export retains the extended limit and checkpoint acknowledgement
+PASS an unanswered or interrupted learner turn requires recovery, not continuation
+PASS acknowledging an old checkpoint cannot hide a new closing reply
+PASS two timed silences stay reviewable and do not repeat after continue/refresh
+PASS invalid budgets cannot shorten a legacy scene or inject a system instruction
+PASS private factual anchors reach simulation but never learner coaching views
+PASS authored play remains private and survives a device round trip
+PASS server/BYOK shared task uses extended budget and preserves earlier commitments
+14 continuation checks passed.
+PASS metadata verifies models without a completion
+PASS classifies 401/credentials
+PASS classifies 403/credentials
+PASS classifies 402/quota
+PASS classifies 429/quota
+PASS classifies 429/rate_limit
+PASS unsupported metadata and CORS do not falsely reject a compatible service
+PASS aliases resolve once through metadata
+PASS missing model differs from unsupported endpoint
+PASS fast model failure is detected even when the other model is available
+PASS smart model failure is detected even when the other model is available
+PASS an inconclusive fast check cannot hide a confirmed smart failure
+PASS both distinct model aliases are checked before returning an inconclusive result
+PASS unsupported metadata for both models remains unverified without generation
+PASS task validation differs from credit failure and provider secrets stay private
+PASS stream errors retain status and support legacy text
+PASS per-visitor limits cannot disable everyone
+PASS confirmed shared failure opens once; uncertain checks and own failures do not
+PASS recovery allows a new failure prompt while a tab dismissal survives reload
+PASS blocked tab storage still permits configuration and deduplicates prompts
+PASS connection check sends GET /models only
+PASS openai metadata verifies both fast and smart configuration without inference
+PASS anthropic metadata verifies both fast and smart configuration without inference
+PASS auth failure blocks the next generation without fallback
+PASS explicit free retry restores access
+PASS old failure cannot disable replacement settings
+PASS incomplete own settings do not fall back to the shared key
+PASS cancellation preserves working access
+PASS parallel success cannot erase quota failure
+29 checks passed; no paid calls.
+PASS failed storage presents recovery instead of a blank screen
+PASS unreadable raw backup is not overwritten by initialization or UI choices
+PASS read retries can recover when storage is repaired or reallowed
+PASS a report without quoted ratings cannot apply a model-proposed reward
+PASS the same unobserved report cannot alter proficiency
+PASS a late report for a missing session cannot alter practice history
+PASS a late report cannot assess an active conversation
+$ tsx --test tests/dinner/*.test.ts tests/dinner/*.test.tsx
+✔ the garment is a complete closed surface with no truncated triangle buffer or open shoulder seams (367.804ms)
+✔ cuff vertices follow only their forearm, while the center of the chest stays anchored (153.886125ms)
+✔ turning the head keeps the lower neck inside the collar and moves facial features rigidly (57.764375ms)
+✔ seated knees deform one continuous trouser surface with fixed hip anchors (1.972416ms)
+✔ replacing a material during a toast preserves the original bind pose (44.052667ms)
+[extractJSON] unparseable model JSON { characters: 11 }
+✔ a pending game invitation cannot be described as already joining, even when the model approves (3.052792ms)
+✔ a malformed semantic check shows the saved-transcript failure without another model retry (4.710875ms)
+✔ malformed report has one format repair before anything reaches the UI (33.86225ms)
+✔ format repair cannot manufacture an empty successful assessment or retry indefinitely (1.752125ms)
+✔ a real quote is not enough when a claim attributes the NPC tea proposal to the learner (2.3775ms)
+✔ an unresolved fact check is a visible failure and earns no unverified report (2.248083ms)
+✔ refusal, provider failure and cancellation are not format retries (24.051708ms)
+✔ unknown original aims cannot manufacture success and do not reduce communication ratings (0.244167ms)
+✔ format repair identifies the invalid objective quotation and supplies literal source lines (2.19625ms)
+✔ a paraphrased internal check quotation cannot discard a valid identified error (1.983833ms)
+✔ the semantic check sees retrieved knowledge and can request a supported knowledge correction (1.693041ms)
+✔ a supported alternative needs no explanation in the internal check, while other false claims still trigger repair (1.991ms)
+✔ an exact NPC quotation with its known speaker label does not need a model format repair (1.389ms)
+✔ format repair names a verdict mistakenly quoting the NPC and supplies learner source lines (3.076625ms)
+✔ semantic correction preserves validated unrelated fields even if a model rewrites their quotations (1.389333ms)
+✔ a second distinct semantic issue can be repaired within an explicit two-revision ceiling (4.662541ms)
+✔ quotation marks used as formatting need no model repair when the entire inner quote is literal (1.653708ms)
+✔ wrapping an altered or joined quote cannot make it verified (1.725333ms)
+✔ the single format repair receives every invalid required quotation, not only the first one (1.768166ms)
+✔ a checker approval cannot validate altered words explicitly attributed to the learner (0.294583ms)
+✔ attention stays on the approached person throughout walking and after arrival (58.087375ms)
+✔ manual looking remains free until attention is explicitly resumed and saves restore it (3.869542ms)
+✔ short smooth turns cross the pi boundary without spinning around (0.091959ms)
+✔ both camera views keep the player and approached face in portrait and landscape framing (43.648791ms)
+✔ a seated character looks upward at a standing visitor with limited torso and neck rotation (0.174208ms)
+✔ third-person camera leaves a clear view of the approached face beside the player head (13.817166ms)
+✔ conversation follows a new speaker but a chosen person keeps priority (0.176458ms)
+✔ a seated landscape view keeps every dining face inside the frame (0.500958ms)
+✔ the focused face stays above the dialogue for desktop, phone and long drafts (0.594458ms)
+✔ non-dinner opening speakers can be framed before play without moving characters or advancing time (0.825917ms)
+✔ third-person cameras stay in the lobby at the panel and inside the cabin after entering (3.970208ms)
+✔ a locally saved portrait image renders in place of the selected preset (16.674125ms)
+✔ external URLs and active image content fall back to the local preset (1.413458ms)
+✔ all portrait surfaces have finite positions and normals within a small geometry budget (419.09725ms)
+✔ front skin seam has continuous lighting rather than a split down the nose (96.895291ms)
+✔ eye apertures follow each cheek and remain in front of the skin (25.869209ms)
+✔ hair stays outside the forehead instead of revealing jagged skin through the fringe (34.569125ms)
+✔ shirt fronts and concave lapels stay outside the curved torso at triangle interiors (2.298416ms)
+✔ new office practices carry the same usable project facts into generation and review (4.096833ms)
+✔ older saved practices do not acquire a new fictional project halfway through (0.312125ms)
+✔ public cast descriptions stay inside their own opening rather than leaking another scene (0.357916ms)
+✔ legacy portrait builds keep the head attached for their retained surfaces (451.284125ms)
+✔ all three casts remain in view when following their individual eye heights (2.119833ms)
+✔ a long monologue cannot enter a new dinner turn, while old transcripts stay intact (6.096458ms)
+✔ one concise rewrite keeps the condition and current question, with no truncation (1.145625ms)
+✔ English spoken replies have a word budget as well as a character budget (0.834ms)
+✔ history includes the opening and whole original lines; gestures never fabricate speech (0.241541ms)
+✔ legacy spoken action interjections appear once in chronological order (0.455125ms)
+✔ 3D uses the shared JSON task and selected fast model, with no SDK structured format (6.758125ms)
+✔ unknown or duplicate room actors never reach a model (1.544709ms)
+✔ only paired dialogue from the scene cast is accepted (0.56575ms)
+✔ observed choices reach the director without implying drinking or a concession (2.260292ms)
+✔ future events cannot be passed off as completed actions (0.164958ms)
+✔ a model cannot invent actors or omit reactions (0.636083ms)
+✔ cancellation stops before the provider and rejects late responses (0.270791ms)
+✔ provider failures propagate without silently substituting scripted dialogue (0.279709ms)
+✔ a natural closing proposal survives only with both current spoken quotations (2.413292ms)
+✔ a closing NPC interjection can supply the actual closing quotation (0.829083ms)
+✔ later moments require an explicit narrative invitation, never a fixed turn number (0.587834ms)
+✔ the leader raises first, others follow, then look toward the player (0.2465ms)
+✔ choosing preserves cup continuity and never makes the player drink (0.38675ms)
+✔ a declined toast lowers bystanders first, with no forced drinking or timeout choice (0.138666ms)
+✔ explicit pause freezes the moment; pending approaches keep bodies alive without choosing (0.141792ms)
+✔ cups and a passed phone require physical proximity before evidence or inventory changes (0.424083ms)
+✔ all physical choices produce bilingual resistant replies and observed-action evidence (30.999291ms)
+✔ refresh preserves actual actions; impossible scene, phase and fabricated action evidence fail (2.329042ms)
+✔ trophy moves toward the captain only once dinner begins and returns to the center for a team photo (0.231917ms)
+✔ per-utterance physical evidence cannot be changed by later choices or mutable world state (0.150167ms)
+✔ all dinner branches have exactly one reaction per real character in both languages (7.588541ms)
+✔ polite refusal does not remove NPC resistance on the first turn (0.145583ms)
+✔ bridge actions and yielding lead to different concrete consequences (0.095ms)
+✔ supporting characters answer when addressed, without mechanical turn rotation (0.374208ms)
+✔ English boundaries and bridge proposals choose appropriate branches (0.614708ms)
+✔ model replies cannot invent speakers, duplicate NPCs, or use unknown animations (0.587708ms)
+✔ structured extraction tolerates fences but rejects incomplete JSON (0.502208ms)
+✔ local restore rejects an unpaired user turn and unknown cast (28.475833ms)
+✔ restore preserves a supported closing proposal and the user decision to continue (7.715333ms)
+✔ saved and exported user evidence preserves literal words (0.2695ms)
+✔ an irritated lead keeps the same resistance when closing a dinner (0.116791ms)
+✔ a physical choice is acknowledged once instead of repeated on later turns (0.619041ms)
+✔ tea proposals are not treated as consent to drink wine (0.414209ms)
+✔ unclear replies do not invent agreement, previous delays, tea or a private conversation (0.540542ms)
+✔ deadline action replies belong to the teammate and do not pretend to be the client (0.236458ms)
+✔ a project proposal or family bridge does not invent tea or a private-talk offer (0.063792ms)
+✔ another person can interject without inventing a fourth NPC, impersonating the main speaker, or consuming a player turn (4.832875ms)
+✔ interjections appear after the main reply in playback and verbatim history (0.638584ms)
+✔ pausing a conversation does not skip to the other speaker or jump after a hidden-tab delay (0.091958ms)
+✔ ordinary spoken toasts raise and rest on a finite clock (0.07525ms)
+✔ waiting people lower their cups without forcing a response; a late toast resumes smoothly (0.585959ms)
+✔ the director repairs oversized interjections while keeping the selected addressee and full prior side dialogue (3.018875ms)
+✔ desktop Enter sends but Shift+Enter keeps a line break (0.390291ms)
+✔ confirming Chinese composition never sends, including legacy composition events (0.068208ms)
+✔ mobile return keeps a line break; explicit keyboard shortcut still sends (0.049792ms)
+✔ joystick respects the centre dead zone and screen directions (0.757625ms)
+✔ invalid joystick dimensions never send invalid movement into the scene (0.097209ms)
+✔ keyboard movement stops on release and does not accelerate diagonally (0.097792ms)
+✔ releasing the joystick stops the player while NPC positions remain independent (0.597167ms)
+✔ attachment limits and formats are checked before any parser runs (0.596625ms)
+✔ text attachments remain literal source material and reject binary/non-UTF8 data (0.145291ms)
+✔ DOCX extraction rejects encrypted and excessive decompressed archives before inflation (187.428167ms)
+✔ reset removes a local portrait and the new rehearsal draft, preserving another app’s data (27.337083ms)
+✔ each character’s last observed emotion survives a speaker change without inventing a new state (4.312666ms)
+✔ family rehearsal does not receive another opening’s concrete work constraints (0.953791ms)
+✔ new cast voices are frozen with the practice and a legacy snapshot remains readable (10.356792ms)
+✔ an exact long NPC replay gets one unseen repair and preserves the current player turn (3.07525ms)
+✔ asking for the exact earlier line can repeat it; it does not spend a repair (0.92575ms)
+✔ telling an NPC not to repeat is not permission to replay the earlier line (0.448708ms)
+✔ a repetition complaint cannot authorize replay: zh 你怎么又重复原话？请回答问题。 (4.954291ms)
+✔ a repetition complaint cannot authorize replay: zh 你为什么又把那句再说一遍？请直接回答。 (0.899834ms)
+✔ a repetition complaint cannot authorize replay: en Why did you repeat that quote? Please answer the question. (0.880875ms)
+✔ a repetition complaint cannot authorize replay: en I don't need another quote. Please answer my question. (1.694ms)
+✔ an explicit English quotation request keeps the replay exemption: Aunt, please repeat your last line. (1.251917ms)
+✔ an explicit English quotation request keeps the replay exemption: Aunt, could you quote your exact words? (1.457541ms)
+✔ an explicit English quotation request keeps the replay exemption: Why did you repeat that quote? Please repeat your last line so I can compare. (0.786875ms)
+✔ one spoken exchange cannot invent an expired speaking slot (1.399ms)
+✔ a shortened surname-aunt form cannot invent an unnamed introducer (0.148125ms)
+✔ an unrequested mixed-language filler is repaired before the Chinese NPC line is visible (0.386625ms)
+✔ a private content snapshot cannot duplicate one NPC while omitting the other two (0.900417ms)
+✔ static batching preserves transformed geometry, normals and shared material ownership (2.343167ms)
+✔ transparent surfaces, physical materials and different shadow / shading properties are not combined (12.474583ms)
+✔ pixel ratio responds to sustained low frame rates within bounded quality, with a stable middle band (0.120084ms)
+✔ camera settling noise does not refresh the whole UI, but actual movement and focus changes do (0.426375ms)
+✔ animation saves coalesce, while edits and leaving the page capture the exact latest pose (0.201583ms)
+✔ an unreadable save cancels delayed writes and cannot be overwritten by a lifecycle flush (0.064083ms)
+✔ thirty seconds of a waiting animation produce a few UI transitions instead of per-tick snapshots (3.786209ms)
+✔ compact model context preserves every utterance, interjection, observed location and action (28.1505ms)
+✔ the director derives cues without waiting for model narration and still validates identities (3.463333ms)
+✔ new rooms have their own postures, furniture and reachable conversation positions (117.212542ms)
+✔ office route goes around desks and reaches the actual whiteboard (2.29125ms)
+✔ elevator doors animate, block navigation, pause and reopen around a person (25.589375ms)
+✔ room restore preserves office standing and elevator doors; foreign layouts and poses are rejected (7.030458ms)
+✔ new physical choices require arrival, record actual zones and never fabricate consent or NPC speech (5.778709ms)
+✔ four openings have isolated facts, valid current contexts and food-free gesture contracts (4.786375ms)
+✔ presence freezes while paused and resumes without a wall-clock jump (1.651125ms)
+✔ speech and listener glance finish once per line; new speaker retriggers the cue (5.6935ms)
+✔ lead pressure, event gaze, and reduced motion take precedence over listener glances (0.111958ms)
+✔ brief downward listener attention ends and never overrides active speech or a dinner event (0.280125ms)
+✔ a listening acknowledgment nods once, stays finite and yields to reduced motion or physical events (0.124625ms)
+✔ old work saves re-seat people at the new real table while preserving conversation, draft and free look (5.111625ms)
+✔ new work poses survive restoration and standing does not create invalid saves (0.452292ms)
+✔ the compact work profile cannot be attached to another scene (0.452833ms)
+✔ optional fields supplement a short free description without inventing omitted facts (0.47ms)
+✔ legacy drafts restore and malformed drafts do not overwrite their only usable text (1.316458ms)
+✔ the same context length boundary applies to server and browser task inputs (0.497917ms)
+✔ resizing a narrow or hidden split never creates reversed accessibility bounds (0.478375ms)
+✔ a desktop split preserves both transcript and review minimum widths (0.165959ms)
+[zustand persist middleware] Unable to update item 'socialcoach.v1', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'socialcoach.v1', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'socialcoach.v1', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'socialcoach.v1', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'socialcoach.v1', the given storage is currently unavailable.
+[zustand persist middleware] Unable to update item 'socialcoach.v1', the given storage is currently unavailable.
+✔ work-toast / zh: completed 3D evidence enters the common report without private state (8.883625ms)
+✔ work-toast / en: completed 3D evidence enters the common report without private state (1.033792ms)
+✔ work-deadline / zh: completed 3D evidence enters the common report without private state (0.793041ms)
+✔ work-deadline / en: completed 3D evidence enters the common report without private state (0.472958ms)
+✔ family-introduction / zh: completed 3D evidence enters the common report without private state (0.498834ms)
+✔ family-introduction / en: completed 3D evidence enters the common report without private state (0.385792ms)
+✔ family-privacy / zh: completed 3D evidence enters the common report without private state (0.724333ms)
+✔ family-privacy / en: completed 3D evidence enters the common report without private state (0.533416ms)
+✔ school-credit / zh: completed 3D evidence enters the common report without private state (0.482375ms)
+✔ school-credit / en: completed 3D evidence enters the common report without private state (0.765542ms)
+✔ school-workload / zh: completed 3D evidence enters the common report without private state (0.430792ms)
+✔ school-workload / en: completed 3D evidence enters the common report without private state (0.189ms)
+✔ elevator-privacy / zh: completed 3D evidence enters the common report without private state (0.494125ms)
+✔ elevator-privacy / en: completed 3D evidence enters the common report without private state (0.393209ms)
+✔ elevator-blame / zh: completed 3D evidence enters the common report without private state (0.320041ms)
+✔ elevator-blame / en: completed 3D evidence enters the common report without private state (0.174ms)
+✔ office-overtime / zh: completed 3D evidence enters the common report without private state (0.354959ms)
+✔ office-overtime / en: completed 3D evidence enters the common report without private state (0.274875ms)
+✔ office-interruption / zh: completed 3D evidence enters the common report without private state (0.316625ms)
+✔ office-interruption / en: completed 3D evidence enters the common report without private state (0.171917ms)
+✔ opening alone cannot generate an assessment; legacy saves and a cached report link remain readable (0.375417ms)
+✔ interjections are preserved once and a continued conversation invalidates the cached report (0.598833ms)
+✔ physical actions stay distinct from words and only preceding observed actions attach to a spoken turn (1.188084ms)
+✔ scene feedback rejects fabricated, NPC-only, wrong-turn and unknown observations (0.992042ms)
+✔ 3D uses the existing assessment task, verified ratings and knowledge retrieval; text reports stay compatible (6.687584ms)
+✔ 3D follow-up assistant sees public observations and exact words, retaining the shared quote and source checks (2.48975ms)
+✔ continuing one 3D practice credits only additional progress, preserving earlier reports and new practices (1.046291ms)
+✔ the shared store applies continued 3D progress once and leaves ordinary text practice independent (8.205291ms)
+✔ gaze stays bounded over repeated constant pose samples without losing the seated pose (12.7975ms)
+✔ setup, cleanup, setup preserves reusable mixer bindings and actions (0.428042ms)
+✔ display turns on one actor never alter another actor or world position (0.554ms)
+✔ returning to the table describes the player without inventing group movement (4.79675ms)
+✔ movement cannot tunnel through table, furniture or room walls (0.482709ms)
+✔ paths go around the table and do not cut furniture corners (12.182917ms)
+✔ player reaches a selected floor destination and returns to a real seat (1.346792ms)
+✔ diagonal movement is normalized and paused rooms stay still (0.592541ms)
+✔ an annoyed NPC refuses an invitation, while another can approach and return (3.345ms)
+✔ departing never makes the seated cast follow, including the pressing lead in every scene (9.408916ms)
+✔ walking over stops beside each chair at a social distance with no furniture crossings (13.689916ms)
+✔ an accepted invitation goes to the invitation spot, then returns when the player leaves (5.003458ms)
+✔ calling someone already within conversation distance keeps them seated (10.753667ms)
+✔ view and spatial evidence restore without breaking older saves or accepting unknown cast (4.553375ms)
+✔ standing is acknowledged in visible cues without appending a report to every spoken line (8.493375ms)
+✔ an invitation withdrawn by departure never makes a seated guest chase the player (0.160292ms)
+✔ every live cast has a self-contained rig, neutral expressions and seated / standing action clips (29.523625ms)
+✔ all live actors use one animation art direction with opaque sculpted hair and complete facial controls (20.266708ms)
+✔ camera anchors follow the anatomical export for all distinct casts (4.866375ms)
+✔ room exports preserve interactive surfaces and manifest integrity (35.427916ms)
+✔ cup bodies, handles and liquid share one usable origin (0.765834ms)
+✔ a partial win and its actual development survive save/restore and the next model payload (4.5345ms)
+✔ legacy transcripts without development ids retain their actual words, without guessed progress (0.491792ms)
+✔ another opening’s development and user-authored fake progress cannot enter a save (0.778125ms)
+✔ a development from another opening is repaired on the same turn, and a second invalid draft stays unsaved (5.0855ms)
+✔ known cross-opening leaks are blocked without rejecting an actual player-supplied artifact (3.727459ms)
+✔ a valid answer to an already active opening moment is kept without replaying it or making a second request (1.565625ms)
+✔ a development copied into topic is classified locally without accepting a foreign subject or changing speech (3.000666ms)
+✔ multi-material floor and ceiling primitives keep their surface semantics (0.918958ms)
+✔ control groups work through child meshes without making unrelated objects floors (0.228417ms)
+✔ a default share has no practice title, learner name, private quote or local report URL (0.5015ms)
+✔ unsupported native sharing leaves the prepared file available for download (0.565041ms)
+✔ cancel is quiet and genuine share errors remain recoverable (0.585333ms)
+✔ the image preserves full Chinese passages without truncating or overlapping the next region (1.229833ms)
+✔ long English words and pasted line breaks fit without dropping text (0.362166ms)
+✔ copying confirms the actual write and gives a bounded fallback when the browser never responds (23.448084ms)
+✔ Chinese final results append once, revisions stay outside the saved draft (0.7895ms)
+✔ English preserves the typed prefix and spaces separate final segments (0.155375ms)
+✔ stop waits for the final result and never submits it (0.152ms)
+✔ cancel drops provisional words, preserves confirmed text and invalidates old callbacks (0.108417ms)
+✔ permission, no microphone, network, language and no-speech errors retain final drafts (0.224791ms)
+✔ unsupported and throwing browsers keep typing available without starting a session (0.125458ms)
+✔ 500 character limit stops recording without overrunning the existing save format (0.089292ms)
+✔ repeated start clicks do not create multiple microphone sessions; empty end is explicit (0.064ms)
+✔ missing start/end events have bounded recovery and release the microphone (0.710042ms)
+✔ editing adopts visible provisional words, releases capture and ignores every late callback (0.211584ms)
+✔ editing can interrupt permission startup and a pending final result (0.185875ms)
+✔ editing respects English spaces and the draft limit without repeating confirmed words (0.183416ms)
+✔ explicit stop keeps visible words when the browser ends without a final result (0.145625ms)
+✔ fallback coordination keeps the read and write in one serialized operation (0.523333ms)
+✔ main archive fallback writes settle before restore and never overwrite an interleaved tab (1.694792ms)
+✔ a queued fallback draft finishes on page unmount but cannot authorize a late model call (0.100833ms)
+✔ an old 3D writer cannot overwrite a saved draft or resurrect a deleted record (0.148042ms)
+✔ fifth, twelfth, eighteenth and twenty-fourth turns can be requested and restored (7.486292ms)
+✔ old completed four-turn saves remain readable and can be extended without replacing evidence (0.589583ms)
+✔ driving boundary, follow-up and named teammate stay connected past turn four (1.474791ms)
+✔ all ten openings have bilingual 18-turn trajectories with retained topic and no foreign actors (8.541375ms)
+✔ turn number alone cannot interrupt dialogue and a gesture cannot insert a canned NPC claim (0.777ms)
+✔ privacy and workload openings cannot accidentally start the old toast (0.330792ms)
+✔ exact earlier utterances, action interjections and current context all reach the model (3.5155ms)
+✔ unavailable events, wrong addressed speaker and foreign topics fail visibly (1.953666ms)
+✔ third-person mentions are not mistaken for an addressee; explicit selection wins (0.211167ms)
+✔ closing instructions follow selected length, never assume four turns (0.400166ms)
+✔ a full segment restores as paused even if interrupted before its completion flag persisted (0.124709ms)
+✔ an invalid draft is repaired once with the same player turn, never saved as a reply (0.300583ms)
+✔ a refusal prevents the phone moment and unrelated opening facts stay out of the prompt (0.179083ms)
+✔ stage directions describe rendered gestures instead of invented eating or phone actions (0.126084ms)
+✔ offline phone and photo moments follow explicit interest, not elapsed turns (0.169875ms)
+✔ screen gravity handles left/right, landscape and upright Euler flips continuously (1.361833ms)
+✔ first sample calibrates current hold, tremors are ignored, extremes bounded and hold centres again (0.874375ms)
+✔ typing, background, new view and screen rotation rebase without changing the room (1.027875ms)
+✔ permission runs in the click stack; denial, missing hardware and insecure contexts never attach (0.125917ms)
+✔ late granted permissions and old samples cannot revive a stopped or disposed session (0.128167ms)
+✔ a device API without useful readings times out and removes its listener (0.284916ms)
+✔ gaze ignores offscreen / ambiguous faces and never changes recipients while sweeping past (0.141666ms)
+ℹ tests 254
+ℹ suites 0
+ℹ pass 254
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 815.967792
