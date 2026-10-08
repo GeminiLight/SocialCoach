@@ -1,0 +1,47 @@
+{
+  "fixture": true,
+  "events": [
+    {
+      "type": "request",
+      "at": 190.90000009536743,
+      "body": {
+        "text": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+        "lang": "zh",
+        "voice": "白桦",
+        "tone": "neutral",
+        "delivery": "pcm"
+      }
+    },
+    {
+      "type": "firstPCM",
+      "at": 492.60000002384186
+    },
+    {
+      "type": "schedule",
+      "at": 494.2000000476837,
+      "when": 0.33866666666666667,
+      "now": 0.2986666666666667,
+      "state": "running"
+    },
+    {
+      "type": "ended",
+      "at": 1037.7000000476837
+    },
+    {
+      "type": "lastPCM",
+      "at": 1192.9000000953674
+    },
+    {
+      "type": "schedule",
+      "at": 1193.1000000238419,
+      "when": 1.0373333333333332,
+      "now": 0.9973333333333333,
+      "state": "running"
+    },
+    {
+      "type": "ended",
+      "at": 1734.2000000476837
+    }
+  ],
+  "composerEnabled": true
+}

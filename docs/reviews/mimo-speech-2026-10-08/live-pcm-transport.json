@@ -1,0 +1,14 @@
+{
+  "curlExit": 0,
+  "timing": "200 3.291191 4.030869 207360",
+  "headers": [
+    "content-type: audio/pcm;rate=24000;channels=1",
+    "server-timing: speech_first;dur=1776"
+  ],
+  "deployment": "dpl_FyXbzuC7GAgZCxjNX2CVCE3Nco86",
+  "firstClientByteSeconds": 3.291191,
+  "fullTransferSeconds": 4.030869,
+  "pcmBytes": 207360,
+  "audioDurationSeconds": 4.32,
+  "sampleRate": 24000
+}

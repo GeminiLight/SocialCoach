@@ -37,7 +37,7 @@ GET 返回 `{configured:boolean}`，仅表示配置齐备，不证明音频生�
 
 默认 WAV 下载；`stream:true` 为试听收集上游 PCM SSE 后封装 WAV，附真实 `Server-Timing` / `X-Speech-Chunks`。练习使用 `delivery:"pcm"`，直接转发音频块，`audio/pcm;rate=24000;channels=1` / PCM16LE / 单声道，先验证真实首块再发成功响应，不等整段生成。`Server-Timing.speech_first` 为上游首块耗时，不能等同用户实际首声。流完成 / 断开取消上游并释放并发预留。
 
-不缓存、不落盘；20 秒服务端上限、无提供商重试、8 MB 上游 / 4 MB PCM 上限。复用原节流和共享预算（8,192 输出 token 保守预留）；配置 `NPC_SPEECH_API_KEY` / `NPC_SPEECH_BASE_URL` 必须成对，或仅复用同一个 TokenDance HTTPS 网关的默认凭证。语音错误不污染文字模型可用性。浏览器首次样本等待上限 3.5 秒，慢连接降级设备朗读并冷却一分钟，取消不复播，已出声的断流不重读整句。个人模型 / 设备模式不走共享语音。见 [语音方案](./specs/spec-natural-npc-speech.md)。
+不缓存、不落盘；20 秒服务端上限、无提供商重试、8 MB 上游 / 4 MB PCM 上限。复用原节流和共享预算（8,192 输出 token 保守预留）；配置 `NPC_SPEECH_API_KEY` / `NPC_SPEECH_BASE_URL` 必须成对，或仅复用同一个 TokenDance HTTPS 网关的默认凭证。语音错误不污染文字模型可用性。浏览器首次样本等待上限 3.5 秒，慢连接降级设备朗读并冷却一分钟，取消不复播，已出声的断流不重读整句。个人模型 / 设备模式不走共享语音。见 [语音方案](./archive/specs/spec-natural-npc-speech.md)。
 
 ### `GET /api/health`
 

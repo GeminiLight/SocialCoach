@@ -1,0 +1,50 @@
+{
+  "fixture": true,
+  "firstDelayMs": 1500,
+  "events": [
+    {
+      "type": "stop",
+      "at": 123074.70000004768
+    },
+    {
+      "type": "stop",
+      "at": 123074.70000004768
+    },
+    {
+      "type": "schedule",
+      "at": 123142,
+      "now": 73.59466666666667,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 123142,
+      "now": 73.59466666666667,
+      "state": "running"
+    },
+    {
+      "type": "ended",
+      "at": 123142.10000002384
+    },
+    {
+      "type": "ended",
+      "at": 123142.10000002384
+    },
+    {
+      "type": "request",
+      "at": 123143.20000004768,
+      "body": {
+        "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+        "lang": "zh",
+        "voice": "白桦",
+        "tone": "neutral",
+        "delivery": "pcm"
+      }
+    },
+    {
+      "type": "abort",
+      "at": 123259.29999995232
+    }
+  ],
+  "composerEnabled": true
+}

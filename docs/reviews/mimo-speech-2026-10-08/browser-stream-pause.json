@@ -1,0 +1,82 @@
+{
+  "fixture": true,
+  "firstDelayMs": 300,
+  "tailDelayMs": 700,
+  "events": [
+    {
+      "type": "schedule",
+      "at": 49477.299999952316,
+      "now": 0,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 49477.299999952316,
+      "now": 0,
+      "state": "running"
+    },
+    {
+      "type": "request",
+      "at": 49548,
+      "body": {
+        "text": "来，敬林总。大家都举杯了，就等你了。你这杯不跟，是不给我面子？",
+        "lang": "zh",
+        "voice": "白桦",
+        "tone": "neutral",
+        "delivery": "pcm"
+      }
+    },
+    {
+      "type": "firstPCM",
+      "at": 49850.200000047684
+    },
+    {
+      "type": "schedule",
+      "at": 49850.799999952316,
+      "when": 0.38666666666666666,
+      "now": 0.3466666666666667,
+      "state": "running"
+    },
+    {
+      "type": "schedule",
+      "at": 49850.799999952316,
+      "when": 0.38666666666666666,
+      "now": 0.3466666666666667,
+      "state": "running"
+    },
+    {
+      "type": "lastPCM",
+      "at": 50551.799999952316
+    },
+    {
+      "type": "schedule",
+      "at": 50552.200000047684,
+      "when": 0.8866666666666667,
+      "now": 0.39466666666666667,
+      "state": "suspended"
+    },
+    {
+      "type": "schedule",
+      "at": 50552.200000047684,
+      "when": 0.8866666666666667,
+      "now": 0.39466666666666667,
+      "state": "suspended"
+    },
+    {
+      "type": "ended",
+      "at": 65372
+    },
+    {
+      "type": "ended",
+      "at": 65372
+    },
+    {
+      "type": "ended",
+      "at": 65868
+    },
+    {
+      "type": "ended",
+      "at": 65868
+    }
+  ]
+}

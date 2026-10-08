@@ -389,4 +389,4 @@ AppProviders 在确认默认 API 不可用时自动打开可关闭的配置弹�
 
 最终接受的 NPC 台词 → `/api/speech`（同网关凭证、共享预算、固定 MiMo TTS）→ 24 kHz PCM16LE 实时转发 → 浏览器独立 AudioContext 按顺序播放。文字 / 输入先显示；语音不参与剧情判断、评分或档案正文。设备保留 `settings.voiceEngine`（缺省 natural）与原朗读开关；个人模型、设备模式、未解锁音频直接沿设备朗读，不向共享 TTS 发送个人模型台词。
 
-`speech-playback.ts` 统一首块 3.5 秒截止、取消、降级、不复播；`speech.ts` 管 WebAudio / 设备音色、2D 队列与朗读忙态，3D 播放沿同一个生命周期并保留主回复 / 插话顺序。暂停只影响朗读 context，房间声独立；开麦 / 发送 / 切页撤销旧声音和请求。共享预算只存匿名计数，语音原文 / 音频不在服务器持久化。接口配置检测不替代实际生成验收。见 [方案](./specs/spec-natural-npc-speech.md)。
+`speech-playback.ts` 统一首块 3.5 秒截止、取消、降级、不复播；`speech.ts` 管 WebAudio / 设备音色、2D 队列与朗读忙态，3D 播放沿同一个生命周期并保留主回复 / 插话顺序。暂停只影响朗读 context，房间声独立；开麦 / 发送 / 切页撤销旧声音和请求。共享预算只存匿名计数，语音原文 / 音频不在服务器持久化。接口配置检测不替代实际生成验收。见 [方案](./archive/specs/spec-natural-npc-speech.md)。
