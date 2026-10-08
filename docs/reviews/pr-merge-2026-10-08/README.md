@@ -6,4 +6,5 @@
 - home-*：乱序恢复后的真实首页前后与设备顺序。
 - history-before.txt：旧实现三项失败；新实现四项通过。
 - fixture-type-cache-failure.txt：删除临时路由后遗留 dev 类型的首轮失败；随后清理生成物再跑。
-- 最终工程检查、托管检查与平台身份完成后补入。
+- check.txt / build.txt / site-build.txt：64 core + 254 dinner、正式构建和 12 页 / 13 地图目标检查。
+- production-* / modelscope-release.json / release.json：实际发布身份、线上首页和分享；共享日池当时只余 6,442，生成仍被门控。

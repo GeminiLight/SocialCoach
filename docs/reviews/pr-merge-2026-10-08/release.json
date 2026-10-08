@@ -1,0 +1,85 @@
+{
+  "source": "6c9296301dd103b083239f51453920e112faa0e6",
+  "tree": "035fbb55b7c4b29ec0ed28223d30183ebbac6cb2",
+  "prs": [
+    {
+      "mergeCommit": {
+        "oid": "d237cec6781df7a704aa4f7302158ec2b35e81f9"
+      },
+      "mergedAt": "2026-10-08T09:16:26Z",
+      "number": 19,
+      "state": "MERGED",
+      "title": "Fix share quote selection and image retry"
+    },
+    {
+      "mergeCommit": {
+        "oid": "d237cec6781df7a704aa4f7302158ec2b35e81f9"
+      },
+      "mergedAt": "2026-10-08T09:16:26Z",
+      "number": 21,
+      "state": "MERGED",
+      "title": "ci: validate site builds independently of Pages"
+    },
+    {
+      "mergeCommit": {
+        "oid": "849e38e080a19edcae62fabeb8e72b4300e09157"
+      },
+      "mergedAt": "2026-10-08T09:16:26Z",
+      "number": 22,
+      "state": "MERGED",
+      "title": "fix: preserve recent continuations in recommendation history"
+    },
+    {
+      "mergeCommit": {
+        "oid": "6c9296301dd103b083239f51453920e112faa0e6"
+      },
+      "mergedAt": "2026-10-08T09:16:24Z",
+      "number": 23,
+      "state": "MERGED",
+      "title": "fix: integrate reviewed sharing, site and recommendation fixes"
+    }
+  ],
+  "vercel": {
+    "id": "dpl_6zZQHzX7aV7yrbNnoRFpYDqqMjWh",
+    "state": "READY",
+    "alias": "https://socialcoach-ai.vercel.app"
+  },
+  "modelscope": {
+    "status": "Running",
+    "runtimeStatus": "Running",
+    "created_at": "2026-10-08T09:24:22.000Z",
+    "source": "6c9296301dd103b083239f51453920e112faa0e6",
+    "mirror": "b58dd400f314d84675a3314f5f7fbb8dc437b679",
+    "excerpts": [
+      "2026-10-08 17:21:48 [INFO] https://www.modelscope.cn/studios/GeminiLight/SocialCoach.git.master.lastCommitId=b58dd400f314d84675a3314f5f7fbb8dc437b679\n",
+      "2026-10-08 17:23:20 [INFO] #13 51.35 # tests 254\n",
+      "2026-10-08 17:23:20 [INFO] #13 51.35 # pass 254\n",
+      "2026-10-08 17:23:20 [INFO] #13 51.35 # fail 0\n",
+      "2026-10-08 17:23:31 [INFO] #13 63.19 ✓ Compiled successfully in 10.0s\n",
+      "2026-10-08 17:23:52 [INFO] pushing image: mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-b58dd400-2026-10-08-17-21-45\n",
+      "2026-10-08 17:24:14 [INFO] 363578-b58dd400-2026-10-08-17-21-45: digest: sha256:e6980ce66120cc2d7e0e89f07527006ef3caa3ca14dd4be0776f01774c26226f size: 2414\n",
+      "2026-10-08 17:24:14 [INFO] docker rmi mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-b58dd400-2026-10-08-17-21-45\n",
+      "2026-10-08 17:24:14 [INFO] Untagged: mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-b58dd400-2026-10-08-17-21-45\n",
+      "2026-10-08 17:24:14 [INFO] 镜像公网地址：mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-b58dd400-2026-10-08-17-21-45\n",
+      "2026-10-08 17:24:14 [INFO] 镜像VPC地址：mshub-registry-vpc.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-b58dd400-2026-10-08-17-21-45\n",
+      "2026-10-08 17:24:14 [SUCCESS] run step successfully!\n"
+    ],
+    "health": {
+      "serverKey": true,
+      "requireByok": false,
+      "state": "unavailable",
+      "issue": "shared_quota",
+      "resetAt": 1791504000000,
+      "budgetRemaining": 6442,
+      "budgetLimit": 100000000
+    }
+  },
+  "checks": {
+    "core": 64,
+    "dinner": 254,
+    "sitePages": 12,
+    "sitemapTargets": 13,
+    "build": "pass"
+  },
+  "healthLimit": "shared pool exhausted; no budget adjustment or reset in this task"
+}

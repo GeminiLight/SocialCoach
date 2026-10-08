@@ -1,0 +1,9 @@
+{
+  "serverKey": true,
+  "requireByok": false,
+  "state": "unavailable",
+  "issue": "shared_quota",
+  "resetAt": 1791504000000,
+  "budgetRemaining": 6442,
+  "budgetLimit": 100000000
+}
