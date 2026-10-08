@@ -1,0 +1,46 @@
+[
+  {
+    "color": "lab(93.0931 0.985712 6.84124)",
+    "dialogWidth": 375,
+    "focusOutline": "solid",
+    "height": 44,
+    "label": "SocialCoach on GitHub (opens in a new tab)",
+    "rel": "noopener noreferrer",
+    "target": "_blank",
+    "viewport": 375,
+    "width": 113.796875
+  },
+  {
+    "color": "lab(93.0931 0.985712 6.84124)",
+    "dialogWidth": 375,
+    "focusOutline": "solid",
+    "height": 44,
+    "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+    "rel": "noopener noreferrer",
+    "target": "_blank",
+    "viewport": 375,
+    "width": 113.796875
+  },
+  {
+    "color": "lab(93.0931 0.985712 6.84124)",
+    "dialogWidth": 400,
+    "focusOutline": "solid",
+    "height": 44,
+    "label": "SocialCoach on GitHub (opens in a new tab)",
+    "rel": "noopener noreferrer",
+    "target": "_blank",
+    "viewport": 1440,
+    "width": 113.796875
+  },
+  {
+    "color": "lab(93.0931 0.985712 6.84124)",
+    "dialogWidth": 400,
+    "focusOutline": "solid",
+    "height": 44,
+    "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+    "rel": "noopener noreferrer",
+    "target": "_blank",
+    "viewport": 1440,
+    "width": 113.796875
+  }
+]

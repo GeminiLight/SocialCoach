@@ -1,0 +1,522 @@
+[
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 24,
+        "y": 735.921875
+      }
+    ],
+    "path": "/onboarding",
+    "scrollWidth": 375,
+    "theme": "light",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 24,
+        "y": 137.0460662841797
+      }
+    ],
+    "path": "/",
+    "scrollWidth": 375,
+    "theme": "light",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 24,
+        "y": 1829.28125
+      }
+    ],
+    "path": "/settings",
+    "scrollWidth": 375,
+    "theme": "light",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 217.59375,
+        "y": 677.90625
+      }
+    ],
+    "path": "/onboarding",
+    "scrollWidth": 1440,
+    "theme": "light",
+    "viewport": {
+      "height": 1000,
+      "width": 1440
+    }
+  },
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 16,
+        "y": 886.125
+      }
+    ],
+    "path": "/",
+    "scrollWidth": 1440,
+    "theme": "light",
+    "viewport": {
+      "height": 1000,
+      "width": 1440
+    }
+  },
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 24,
+        "y": 735.921875
+      }
+    ],
+    "path": "/onboarding",
+    "scrollWidth": 375,
+    "theme": "dark",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 24,
+        "y": 138.470703125
+      }
+    ],
+    "path": "/",
+    "scrollWidth": 375,
+    "theme": "dark",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 24,
+        "y": 1829.28125
+      }
+    ],
+    "path": "/settings",
+    "scrollWidth": 375,
+    "theme": "dark",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 217.59375,
+        "y": 677.90625
+      }
+    ],
+    "path": "/onboarding",
+    "scrollWidth": 1440,
+    "theme": "dark",
+    "viewport": {
+      "height": 1000,
+      "width": 1440
+    }
+  },
+  {
+    "lang": "zh-CN",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach GitHub 开源项目（在新标签页中打开）",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "查看源码、反馈问题与参与贡献",
+        "width": 111.78125,
+        "x": 16,
+        "y": 886.125
+      }
+    ],
+    "path": "/",
+    "scrollWidth": 1440,
+    "theme": "dark",
+    "viewport": {
+      "height": 1000,
+      "width": 1440
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 24,
+        "y": 758.671875
+      }
+    ],
+    "path": "/onboarding",
+    "scrollWidth": 375,
+    "theme": "light",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 24,
+        "y": 160.1554718017578
+      }
+    ],
+    "path": "/",
+    "scrollWidth": 375,
+    "theme": "light",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 24,
+        "y": 1949.53125
+      }
+    ],
+    "path": "/settings",
+    "scrollWidth": 375,
+    "theme": "light",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 217.59375,
+        "y": 690.09375
+      }
+    ],
+    "path": "/onboarding",
+    "scrollWidth": 1440,
+    "theme": "light",
+    "viewport": {
+      "height": 1000,
+      "width": 1440
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(44.2899 2.95562 6.1824)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 16,
+        "y": 868.25
+      }
+    ],
+    "path": "/",
+    "scrollWidth": 1440,
+    "theme": "light",
+    "viewport": {
+      "height": 1000,
+      "width": 1440
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 24,
+        "y": 758.671875
+      }
+    ],
+    "path": "/onboarding",
+    "scrollWidth": 375,
+    "theme": "dark",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 24,
+        "y": 160.1592559814453
+      }
+    ],
+    "path": "/",
+    "scrollWidth": 375,
+    "theme": "dark",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 24,
+        "y": 1949.53125
+      }
+    ],
+    "path": "/settings",
+    "scrollWidth": 375,
+    "theme": "dark",
+    "viewport": {
+      "height": 812,
+      "width": 375
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 217.59375,
+        "y": 690.09375
+      }
+    ],
+    "path": "/onboarding",
+    "scrollWidth": 1440,
+    "theme": "dark",
+    "viewport": {
+      "height": 1000,
+      "width": 1440
+    }
+  },
+  {
+    "lang": "en",
+    "links": [
+      {
+        "color": "lab(59.985 1.52996 4.70998)",
+        "focusOutline": "solid",
+        "height": 44,
+        "href": "https://github.com/GeminiLight/SocialCoach",
+        "label": "SocialCoach on GitHub (opens in a new tab)",
+        "rel": "noopener noreferrer",
+        "target": "_blank",
+        "text": "GitHub",
+        "title": "Explore the code, report issues, or contribute",
+        "width": 111.78125,
+        "x": 16,
+        "y": 868.25
+      }
+    ],
+    "path": "/",
+    "scrollWidth": 1440,
+    "theme": "dark",
+    "viewport": {
+      "height": 1000,
+      "width": 1440
+    }
+  }
+]
