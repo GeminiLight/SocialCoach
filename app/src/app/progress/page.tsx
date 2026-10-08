@@ -17,7 +17,7 @@ import { compColor, relDate } from "@/lib/format";
 
 export default function Progress() {
   const lang = useLang();
-  const { profile, proficiency, sessions, practiceDays, updateProfile, setProficiency } = useApp();
+  const { profile, proficiency, sessions, practiceDays, updateProfile } = useApp();
   const streak = computeStreak(practiceDays);
   const [addOpen, setAddOpen] = useState(false);
   const done = useMemo(() => sessions.filter((s) => s.status === "assessed"), [sessions]);
@@ -41,7 +41,6 @@ export default function Progress() {
   const addGoal = (id: SkillId) => {
     if (profile.goals.includes(id)) return;
     updateProfile({ goals: [...profile.goals, id] });
-    if (proficiency[id] == null) setProficiency({ ...proficiency, [id]: 2.5 });
   };
 
   return (

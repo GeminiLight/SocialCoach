@@ -4,10 +4,10 @@ import type { Lang } from "@/data/taxonomy";
 import { observeServerFailure } from "./server-model-observation";
 
 export function fail(e: unknown) {
-  const { status, message, modelIssue } = toHttpError(e);
+  const { status, message, modelIssue,retryAt } = toHttpError(e);
   observeServerFailure(modelIssue);
-  console.error("[api]", status, message);
-  return NextResponse.json({ error: message, modelIssue: modelIssue ?? null }, { status });
+  console.error("[api]", status, modelIssue ?? "task_error"); // Never log learner words or provider payloads.
+  return NextResponse.json({ error: message, modelIssue: modelIssue ?? null,...(retryAt?{retryAt}:{}) }, { status });
 }
 
 export const asLang = (v: unknown): Lang => (v === "en" ? "en" : "zh");
@@ -28,7 +28,7 @@ export function taskStream<T>(run:(onDelta:(d:string)=>void,signal:AbortSignal)=
   async start(controller){
    const emit=(text:string)=>{if(!cancelled&&!signal.aborted)controller.enqueue(enc.encode(text));};
    try{const result=await run(emit,signal);if(opts.final)emit(`\n@@final\n${JSON.stringify(result)}`);}
-   catch(error){if(!cancelled&&!signal.aborted){const {status,message,modelIssue}=toHttpError(error);observeServerFailure(modelIssue);emit(`\n@@error\n${JSON.stringify({error:message,status,modelIssue:modelIssue??null})}`);}}
+   catch(error){if(!cancelled&&!signal.aborted){const {status,message,modelIssue,retryAt}=toHttpError(error);observeServerFailure(modelIssue);emit(`\n@@error\n${JSON.stringify({error:message,status,modelIssue:modelIssue??null,...(retryAt?{retryAt}:{})})}`);}}
    finally{if(!cancelled)controller.close();}
   },
   cancel(){cancelled=true;abort.abort();},

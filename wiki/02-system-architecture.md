@@ -1,4 +1,4 @@
-<!-- Last verified: 2026-10-06 | Current stage: B -->
+<!-- Last verified: 2026-10-08 | Current stage: B -->
 
 # 系统架构
 
@@ -8,19 +8,19 @@
 
 | 层 | 技术 |
 |---|---|
-| 框架 | Next.js 16.3.4（App Router）· React 19.2.8 · TypeScript 5 |
+| 框架 | Next.js 16.3.6（App Router）· React 19.2.8 · TypeScript 5 |
 | 样式 | Tailwind v4（`@tailwindcss/postcss`）+ `globals.css` 里的 OKLCH design token |
-| 状态 | Zustand 5（`persist` 到 localStorage） |
+| 状态 | 主档案 Zustand 5 + 受保护 persist；独立 3D 写入器；个人模型仅在显式配置动作保存。无 Web Locks 时，以设备内 IndexedDB 短事务串行执行快照比较和 localStorage 写入；协调库不存练习或密钥，失败停止写入 |
 | 动效 | Framer Motion 13 |
 | 校验 | Zod 4 |
-| LLM | `@anthropic-ai/sdk` 0.123，双模型路由（fast / smart） |
+| LLM | Anthropic / OpenAI 兼容 SDK，共用请求与任务契约、fast / smart 两档 |
 | 存储 | **无数据库、无账号**。练习档案在 localStorage；未提交的排练描述在当前标签页 sessionStorage |
 | 部署 | Vercel，Node runtime API routes，Root Directory = `app` |
 | 国内体验入口 | ModelScope `GeminiLight/SocialCoach`，根目录 Dockerfile，Node standalone 单进程，`0.0.0.0:7860`；密钥通过平台 Secrets 注入 |
 | 统一分享入口 | `socialcoach.aurax.live`，Cloudflare 按访问 IP 做 302：`CN` → 魔搭创空间，其他地区 → Vercel；跳转后保留各站点原有域名和本地档案 |
 | 包管理 | pnpm 11.24 |
 
-服务端是单进程应用，无后台 worker / daemon / 定时任务。可选的附件识别在浏览器的本地 worker 中完成。
+ModelScope standalone 为单进程；Vercel 可运行多个实例。实例内缓存只作连接观察，共享日额度和并发由匿名 Redis 原子操作协调。没有后台任务或服务端练习档案。可选的附件识别在浏览器的本地 worker 中完成。
 
 ## 用户反馈（2026-09-09）
 
@@ -32,10 +32,10 @@
 SocialCoach/
 ├── app/                          Next.js 应用（Vercel Root Directory）
 │   ├── src/app/
-│   │   ├── api/                  6 条 LLM 路由 → 详见 ./04-api-reference.md
-│   │   ├── layout.tsx            metadata（含对外文案，改动需三处同步）
+│   │   ├── api/                  12 条 API 路由（9 个模型任务 + health / feedback / track） → 详见 ./04-api-reference.md
+│   │   ├── layout.tsx            metadata（主句与 README / manifest / 官网同源）
 │   │   ├── globals.css           OKLCH design token 的唯一来源
-│   │   └── {onboarding,arena,rehearse,progress,learn,settings}/  8 个页面路由
+│   │   └── {onboarding,arena,rehearse,progress,learn,settings}/  9 个页面路由（含首页、practice 与 /3d）
 │   │       └── practice/[id]/    简报 → 对话 → 复盘，单路由三阶段
 │   ├── src/components/           Shell / Radar / Knowledge / practice/{Chat,Briefing,Debrief}
 │   ├── src/data/
@@ -43,7 +43,7 @@ SocialCoach/
 │   │   └── corpus/               theories(42) · cases(30) · scenarios-a(16)+b(18)+c(12)+d(12)
 │   ├── src/lib/                  llm · prompts · retrieval · types · i18n · api-utils
 │   │                             partial-json · format · session-utils · client-api · use-media
-│   ├── src/store/useApp.ts       全部客户端状态
+│   ├── src/store/useApp.ts       文字档案、资料与设置；byok / dinner 独立
 │   ├── public/manifest.webmanifest  PWA（含对外文案）
 │   └── .impeccable.md            设计 brief → 详见 ./03-design-principle.md
 ├── docs/
@@ -77,7 +77,7 @@ profile/goals/proficiency/history
         │
         ▼  POST /api/roleplay          （流式，每回合一次；未显示台词的格式失败最多修复一次）
   模型输出 {meta,utterances} JSON → roleplay-output.ts 校验、转换为原文本协议
-  文本协议：开头 @@meta {objectives,ended,closure?,outcome,stance,revealed,note}，之后 @@<characterId> + 台词
+  文本协议：开头 @@meta {objectives,ended,closure?,outcome,stance,revealed}，之后 @@<characterId> + 台词
   模型历史保留每次真实 meta 与台词；旧记录无 meta 时只发送已有台词，不伪造过去进度
   stance 存进 session.stanceTrail，revealed 存 session.revealedAtTurn
   JSON 片段转换为文本流供客户端预览，完整回复才写入 messages，最后一条 NPC 保存本轮 meta
@@ -238,7 +238,7 @@ type ChatRole = "learner" | "npc" | "coach" | "event";   // event = 房间里发
 | `LLM_FAST_MODEL` | 对话 / 提示 / 排程 / 生成场景 | `claude-sonnet-5` |
 | `LLM_SMART_MODEL` | 复盘报告 | `claude-opus-5` |
 
-客户端 `Anthropic` 实例是单例，`maxRetries: 2`，`timeout: 120_000`（`src/lib/llm.ts`）。
+服务端按当前协议复用 Anthropic 或 OpenAI SDK 实例，`maxRetries: 2`，`timeout: 120_000`（`src/lib/llm.ts`）。
 
 ## 构建命令
 
@@ -371,3 +371,22 @@ AppProviders 在确认默认 API 不可用时自动打开可关闭的配置弹�
 ## 视频学习（2026-10-07）
 
 `data/video-lessons.ts` 的已核对静态内容 → `/learn` 统一索引 / 检索 → `VideoLesson` 原生视频、字幕、转录与引用式拆解 → 既有 `/3d` 的场景 / 开局确认。观看不经过 LLM；学习区允许本地游客，不触发模型检查或自动接入弹窗，AI 路径继续使用原门控。视频书签进入既有 `bookmarks` 字符串数组及档案导出，未增加学习数据库或持久化播放状态。VTT 由开发脚本生成并随 public 素材提供，播放只在用户操作后请求 MP4。见 [视频模块](./specs/spec-video-learning.md)。
+
+## 保存、预算与公开输出边界（2026-10-08）
+
+- 共享预算的中央键 `socialcoach:{model-budget}:daily-limit` 是日上限的权威值；当前经用户批准为 **100,000,000** 个保守预留单位，两站合计、并发 8。环境变量只在政策键不存在时初始化。普通调用不降低政策；显式管理操作保留已用计数并留审计。UTC 日界（北京时间 08:00）换日。每日 cap 键兼容旧统计，旧实例对该键的写入不能改动新实现采用的政策。预留仍覆盖未知使用量和 SDK 重试，不宣称它等于账单 token。
+- 免费 health 先读预算与有效并发，不预留额度、不调用生成；metadata 缓存与共享池快照分开。available 不保证特定长上下文请求一定够额度，实际任务按完整输入原子预留。shared_quota / shared_busy 与供应商 quota / rate_limit 分开；错误可带安全的 retryAt。
+- 主档案继续沿用 archive-storage；3D 单独用 Web Locks 单写者、写前原字节比较和 storage 失效监听。冲突保留内存、下载与重新读取入口，停止提交/录音/世界动作，不能以切视角重新写入旧记录。无 Web Locks 平台使用比较与事件保护，真实旧平台并发仍待验。
+- byok 不再因弹窗开关写回整份配置；显式保存检查设备版本和表单 revision，删除/外部更新清空旧窗口状态并取消旧表单。坏配置要求用户修复或明确选择默认模型，不能自动转用共享池。密钥仍不进入档案或备份。
+- 备份独立解析主档案和 3D；坏 3D 原件隔离下载，健康主档案继续恢复。能力估计先按 practice 身份选最新快照，再按时间取八次观察。
+- 模拟自由备注不进入服务器/个人模型的公开投影，也不被新版客户端接纳。预览和最终输出均拒绝台词中的协议标记。历史原话不重写。
+- 活动 3D 界面语言供共享弹窗/控件使用，历史台词语言独立。PWA 只缓存成功的同源静态资源（有界），不缓存 API/练习档案；网络导航失败提供双语恢复页，原记录留在设备。实体手机与真正断网仍待补验。
+
+验证与发布状态见 [本轮修订](./reviews/review-2026-10-08-repo-refinement.md)。
+
+
+## NPC 自然语音（2026-10-08）
+
+最终接受的 NPC 台词 → `/api/speech`（同网关凭证、共享预算、固定 MiMo TTS）→ 24 kHz PCM16LE 实时转发 → 浏览器独立 AudioContext 按顺序播放。文字 / 输入先显示；语音不参与剧情判断、评分或档案正文。设备保留 `settings.voiceEngine`（缺省 natural）与原朗读开关；个人模型、设备模式、未解锁音频直接沿设备朗读，不向共享 TTS 发送个人模型台词。
+
+`speech-playback.ts` 统一首块 3.5 秒截止、取消、降级、不复播；`speech.ts` 管 WebAudio / 设备音色、2D 队列与朗读忙态，3D 播放沿同一个生命周期并保留主回复 / 插话顺序。暂停只影响朗读 context，房间声独立；开麦 / 发送 / 切页撤销旧声音和请求。共享预算只存匿名计数，语音原文 / 音频不在服务器持久化。接口配置检测不替代实际生成验收。见 [方案](./specs/spec-natural-npc-speech.md)。

@@ -99,6 +99,7 @@ export const SCENARIOS_A: Scenario[] = [
   },
   {
     id: "declining-extra-hours",
+    simulationFacts: L("开场要求今晚重做第三部分，客户明早九点看方案。经理可以要求内部完整自查，但不能把自己的更大范围要求说成客户已点名整份重做。保留私有事实的透露条件；Lily 的工时和可接手范围尚未确认。", "The opening asks for a section-three redo tonight and a client review at nine tomorrow. The manager may want a full internal check, but must not attribute an entire-deck rewrite to the client as an established demand. Preserve the private disclosure condition. Lily’s hours and available handoff scope remain unconfirmed."),
     title: L("拒绝临时加班", "Declining Extra Hours"),
     hook: L("下班前十分钟，经理让你今晚留下帮忙，而你早有安排。", "Ten minutes before you leave, your manager asks you to stay late — again."),
     background: L(

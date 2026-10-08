@@ -1,0 +1,31 @@
+[
+  {
+    "label": "fresh_metadata_before",
+    "status": 200,
+    "body": {
+      "serverKey": true,
+      "requireByok": false,
+      "state": "available"
+    },
+    "seconds": 10.11
+  },
+  {
+    "label": "default_generation",
+    "status": 429,
+    "body": {
+      "error": "Model connection: quota.",
+      "modelIssue": "quota"
+    },
+    "seconds": 5.31
+  },
+  {
+    "label": "fresh_metadata_after",
+    "status": 200,
+    "body": {
+      "serverKey": true,
+      "requireByok": false,
+      "state": "available"
+    },
+    "seconds": 3.479
+  }
+]

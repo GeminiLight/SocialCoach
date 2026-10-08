@@ -1,0 +1,66 @@
+{
+  "draft": "",
+  "messages": [
+    {
+      "dinner": {
+        "eventId": "work-toast",
+        "phase": "waiting",
+        "previous": []
+      },
+      "role": "user",
+      "room": {
+        "npcs": [
+          {
+            "characterId": "chen",
+            "posture": "seated"
+          },
+          {
+            "characterId": "lin",
+            "posture": "seated"
+          },
+          {
+            "characterId": "zhou",
+            "posture": "seated"
+          }
+        ],
+        "posture": "seated",
+        "zone": "table"
+      },
+      "text": "陈总，我开车来的，今天以茶表达谢意。"
+    },
+    {
+      "cue": "陈总举起杯子。",
+      "interjection": {
+        "speakerId": "lin",
+        "text": "谢意收到。周三到底能交什么？"
+      },
+      "mode": "model",
+      "reactions": [
+        {
+          "characterId": "chen",
+          "emotion": "neutral",
+          "gesture": "toast"
+        },
+        {
+          "characterId": "lin",
+          "emotion": "thinking",
+          "gesture": "idle"
+        },
+        {
+          "characterId": "zhou",
+          "emotion": "neutral",
+          "gesture": "idle"
+        }
+      ],
+      "role": "npc",
+      "speakerId": "chen",
+      "story": {
+        "beat": "bridge",
+        "topic": "toast"
+      },
+      "text": "开车就不劝了，这杯我领了。茶也行，把谢意带到人前。"
+    }
+  ],
+  "started": true,
+  "url": "https://socialcoach-ai.vercel.app/3d"
+}

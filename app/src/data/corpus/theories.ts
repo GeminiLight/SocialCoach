@@ -126,14 +126,14 @@ export const THEORIES: Theory[] = [
   },
   {
     id: "batna-and-anchor",
-    title: L("准备好底线与首个数字", "Know Your BATNA, Set the Anchor"),
-    source: { book: "Getting to Yes / Never Split the Difference", author: "Fisher & Ury; Chris Voss" },
+    title: L("确定替代方案、底线与目标数字", "Know Your BATNA, Floor and Target"),
+    source: { book: "Getting to Yes / Never Split the Difference", author: "Fisher & Ury; Chris Voss",url:"https://www.pon.harvard.edu/tag/reservation-price/" },
     principle: L(
-      "没有底线（最佳替代方案）的人，会在压力下接受任何结果。带着市场数据、具体成果和一个明确数字进入谈薪，既给对方向上争取的「弹药」，也锚定了讨论区间。",
-      "Without a BATNA (best alternative), you accept whatever is offered under pressure. Enter a salary talk with market data, concrete results, and an explicit number — you both anchor the range and give your manager ammunition to fight upward.",
+      "最佳替代方案（BATNA）是谈不成时你还能采取的具体行动；底线是你愿意接受的最低条件。先比较替代方案，再结合市场信息与自己的优先事项确定底线和目标数字。谈薪时用具体成果说明请求，并询问对方的限制。",
+      "Your BATNA is the best action available if no agreement is reached. Your reservation value is the least acceptable deal. Evaluate the alternatives before setting your floor and target, using market information and your priorities. Explain your request with concrete results and ask about the other side’s constraints.",
     ),
     howTo: [
-      L("准备三件事：市场区间、你的三个可量化成果、你的目标数字与底线。", "Prepare three things: the market band, three quantified results, your target number and floor."),
+      L("列出谈不成时的可行选项，选出最佳替代方案；再准备市场信息、具体成果、目标数字和可接受底线。", "List feasible actions if talks fail and select the best alternative. Then prepare market information, concrete results, your target and your reservation value."),
       L("先说成果与市场，再说数字；说完数字后停顿，不要自己填补沉默。", "Lead with results and market, then the number; after the number, pause — don't fill the silence."),
       L("被推迟时，问「要做到什么，才能在 X 日期前拿到结果？」", "When deferred, ask 'what would need to be true for a decision by <date>?'"),
     ],
@@ -262,11 +262,11 @@ export const THEORIES: Theory[] = [
   },
   {
     id: "gottman-soft-startup",
-    title: L("温和开场：前三分钟决定对话走向", "The Softened Start-Up"),
-    source: { book: "The Seven Principles for Making Marriage Work", author: "John Gottman" },
+    title: L("温和开场：给冲突留出继续谈的空间", "The Softened Start-Up"),
+    source: { book: "The Seven Principles for Making Marriage Work", author: "John Gottman",url:"https://www.gottman.com/blog/softening-startup/" },
     principle: L(
-      "研究显示，一场对话前三分钟的语气，96% 情况下预示了它的结局。以批评或蔑视开场（「你从来不……」），几乎必然引发防御。以「我」为主语、描述而非评判、表达欣赏的开场，则给了对话机会。",
-      "Research shows the first three minutes predict the outcome of a conversation 96% of the time. Opening with criticism or contempt ('you never...') almost guarantees defensiveness. Starting with 'I', describing rather than judging, and adding appreciation gives the talk a chance.",
+      "Gottman 对伴侣冲突讨论的研究发现，开场方式与之后的互动走向有关。批评或蔑视容易让对方防御。可以用「我」描述具体情境与需要，表达真实的欣赏；如果开场很冲，也可以先承认，再重新开始。",
+      "In Gottman’s research on couples’ conflict discussions, the opening was associated with how the discussion unfolded. Criticism or contempt can raise defensiveness. Describe the specific situation and your need, and express real appreciation. If the opening went badly, acknowledge it and start again.",
     ),
     howTo: [
       L("用「我」开头，描述情境而不是评价对方。", "Start with 'I', describe the situation, don't evaluate the person."),
@@ -503,8 +503,8 @@ export const THEORIES: Theory[] = [
     title: L("面对偏见言论：用问题代替标签", "Answer Prejudice with a Question, Not a Label"),
     source: { book: "Think Again", author: "Adam Grant" },
     principle: L(
-      "给一个人贴标签（「你这是歧视」）会让他为身份而战，立场更硬。真诚的问题（「你是从哪里得出这个印象的？」「有没有例外？」）让他不得不审视自己推理的依据，这是改变观点唯一可能的入口。",
-      "Labeling a person ('that's bigoted') makes them fight for their identity and harden. A sincere question ('where does that impression come from?' 'any exceptions you've seen?') forces them to examine their own reasoning — the only real doorway to changing a mind.",
+      "给人贴标签可能让对方忙于维护自己的身份。先说明你不同意，再真诚地问「你是从哪里得出这个印象的？」「有没有例外？」可以让双方看清依据，给重新考虑留下空间。对方也可能拒绝回答，你可以决定是否继续。",
+      "A personal label can put someone on the defensive. State your disagreement, then ask sincerely about their evidence or exceptions. This can make the reasoning clearer and leave room to reconsider. They may refuse to answer; you can decide whether to continue.",
     ),
     howTo: [
       L("先表明你看法不同，简短。", "Briefly state that you see it differently."),

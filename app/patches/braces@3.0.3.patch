@@ -1,0 +1,102 @@
+diff --git a/lib/assert-depth.js b/lib/assert-depth.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..e56b380aa922cc41c94200efc4e1f2bf84c3cf00
+--- /dev/null
++++ b/lib/assert-depth.js
+@@ -0,0 +1,19 @@
++'use strict';
++
++// Local mitigation for GHSA-vfj7-8cjw-p6xm. Bound all public AST entry points,
++// including caller-supplied trees; do not recurse while validating a tree.
++module.exports = ast => {
++  const stack = [{ node: ast, depth: 0 }];
++  const seen = new WeakSet();
++  while (stack.length > 0) {
++    const { node, depth } = stack.pop();
++    if (!node || typeof node !== 'object') continue;
++    if (depth > 101 || seen.has(node)) {
++      throw new SyntaxError('Nesting depth exceeds limit (100)');
++    }
++    seen.add(node);
++    if (Array.isArray(node.nodes)) {
++      for (const child of node.nodes) stack.push({ node: child, depth: depth + 1 });
++    }
++  }
++};
+diff --git a/lib/compile.js b/lib/compile.js
+index dce69beb90ece5c3b0ca234a949418f9f34eedbc..2f337e4a33e16c987c15dadf26517f3c9ee303f3 100644
+--- a/lib/compile.js
++++ b/lib/compile.js
+@@ -1,9 +1,12 @@
+ 'use strict';
+ 
++const assertDepth = require('./assert-depth');
++
+ const fill = require('fill-range');
+ const utils = require('./utils');
+ 
+ const compile = (ast, options = {}) => {
++  assertDepth(ast);
+   const walk = (node, parent = {}) => {
+     const invalidBlock = utils.isInvalidBrace(parent);
+     const invalidNode = node.invalid === true && options.escapeInvalid === true;
+diff --git a/lib/expand.js b/lib/expand.js
+index 35b2c41d6afdb8f0197959e26079f266e48370d3..7edccacf8045a3a3ceefc74e2d0a722a468d7cf4 100644
+--- a/lib/expand.js
++++ b/lib/expand.js
+@@ -1,5 +1,7 @@
+ 'use strict';
+ 
++const assertDepth = require('./assert-depth');
++
+ const fill = require('fill-range');
+ const stringify = require('./stringify');
+ const utils = require('./utils');
+@@ -31,6 +33,7 @@ const append = (queue = '', stash = '', enclose = false) => {
+ };
+ 
+ const expand = (ast, options = {}) => {
++  assertDepth(ast);
+   const rangeLimit = options.rangeLimit === undefined ? 1000 : options.rangeLimit;
+ 
+   const walk = (node, parent = {}) => {
+diff --git a/lib/parse.js b/lib/parse.js
+index 3a6988e629f52aee6609dc5ec290a5e9ff47cecb..76176b72fc213b35b848eb20bda487d92ab80733 100644
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -143,6 +143,9 @@ const parse = (input, options = {}) => {
+      */
+ 
+     if (value === CHAR_LEFT_PARENTHESES) {
++      if (stack.length > 100) {
++        throw new SyntaxError('Nesting depth exceeds limit (100)');
++      }
+       block = push({ type: 'paren', nodes: [] });
+       stack.push(block);
+       push({ type: 'text', value });
+@@ -195,6 +198,9 @@ const parse = (input, options = {}) => {
+      */
+ 
+     if (value === CHAR_LEFT_CURLY_BRACE) {
++      if (stack.length > 100) {
++        throw new SyntaxError('Nesting depth exceeds limit (100)');
++      }
+       depth++;
+ 
+       const dollar = prev.value && prev.value.slice(-1) === '$' || block.dollar === true;
+diff --git a/lib/stringify.js b/lib/stringify.js
+index 8bcf872c31894f81a8c64d9202fd607e4fd7ea2b..a00ac3ad0ba8914ef39fe3f88f646a69703ab2f4 100644
+--- a/lib/stringify.js
++++ b/lib/stringify.js
+@@ -1,8 +1,11 @@
+ 'use strict';
+ 
++const assertDepth = require('./assert-depth');
++
+ const utils = require('./utils');
+ 
+ module.exports = (ast, options = {}) => {
++  assertDepth(ast);
+   const stringify = (node, parent = {}) => {
+     const invalidBlock = options.escapeInvalid && utils.isInvalidBrace(parent);
+     const invalidNode = node.invalid === true && options.escapeInvalid === true;

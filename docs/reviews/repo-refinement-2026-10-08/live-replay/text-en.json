@@ -1,0 +1,1416 @@
+[
+  {
+    "turn": 1,
+    "user": "I cannot stay tonight. I already committed to my father's birthday dinner.",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "I cannot stay tonight. I already committed to my father's birthday dinner.",
+          "ts": 2
+        }
+      ],
+      "lang": "en"
+    },
+    "status": 200,
+    "seconds": 4.05,
+    "raw": "@@meta\n{\"objectives\":[false,false,false],\"ended\":false,\"stance\":22,\"revealed\":false,\"outcome\":null,\"objectiveEvidence\":[],\"disclosures\":[]}\n@@michael\nRight, a dinner. But this is the third night running the deck's slipped, and I need a name for the morning, not a reason. What were you thinking I'd do instead?"
+  },
+  {
+    "turn": 2,
+    "user": "I can come early tomorrow for the urgent part. What does the client actually need to see?",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "I cannot stay tonight. I already committed to my father's birthday dinner.",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Right, a dinner. But this is the third night running the deck's slipped, and I need a name for the morning, not a reason. What were you thinking I'd do instead?",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "I can come early tomorrow for the urgent part. What does the client actually need to see?",
+          "ts": 4
+        }
+      ],
+      "lang": "en"
+    },
+    "status": 200,
+    "seconds": 4.29,
+    "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"I cannot stay tonight.\"},{\"index\":1,\"learnerQuote\":\"I can come early tomorrow for the urgent part.\"},{\"index\":2,\"learnerQuote\":\"What does the client actually need to see?\"}],\"objectives\":[true,true,false],\"ended\":false,\"stance\":34,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@michael\nEarly is workable — but that is me guessing at 'urgent', not the client. What do you know about what they asked for? Because right now I'm being told 'the deck', and that means all of it to me."
+  },
+  {
+    "turn": 3,
+    "user": "Could we reduce the scope to what the client will review first?",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "I cannot stay tonight. I already committed to my father's birthday dinner.",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Right, a dinner. But this is the third night running the deck's slipped, and I need a name for the morning, not a reason. What were you thinking I'd do instead?",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "I can come early tomorrow for the urgent part. What does the client actually need to see?",
+          "ts": 4
+        },
+        {
+          "id": "audit-npc-2",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Early is workable — but that is me guessing at 'urgent', not the client. What do you know about what they asked for? Because right now I'm being told 'the deck', and that means all of it to me.",
+          "ts": 5,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 34,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-3",
+          "role": "learner",
+          "text": "Could we reduce the scope to what the client will review first?",
+          "ts": 6
+        }
+      ],
+      "lang": "en"
+    },
+    "status": 200,
+    "seconds": 4.29,
+    "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"I cannot stay tonight.\"},{\"index\":1,\"learnerQuote\":\"I can come early tomorrow for the urgent part.\"},{\"index\":2,\"learnerQuote\":\"What does the client actually need to see?\"}],\"objectives\":[true,true,false],\"ended\":false,\"stance\":38,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@michael\nThat's the kind of answer I need. Say it to the client-facing part and I can sell it — but if it turns out they need more, the redone section lands in their lap unfinished. Who's your call on what 'first' means?"
+  },
+  {
+    "turn": 4,
+    "user": "This deck cannot blow out my father's birthday candles for me. Let us clarify what really must happen tonight.",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "I cannot stay tonight. I already committed to my father's birthday dinner.",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Right, a dinner. But this is the third night running the deck's slipped, and I need a name for the morning, not a reason. What were you thinking I'd do instead?",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "I can come early tomorrow for the urgent part. What does the client actually need to see?",
+          "ts": 4
+        },
+        {
+          "id": "audit-npc-2",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Early is workable — but that is me guessing at 'urgent', not the client. What do you know about what they asked for? Because right now I'm being told 'the deck', and that means all of it to me.",
+          "ts": 5,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 34,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-3",
+          "role": "learner",
+          "text": "Could we reduce the scope to what the client will review first?",
+          "ts": 6
+        },
+        {
+          "id": "audit-npc-3",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "That's the kind of answer I need. Say it to the client-facing part and I can sell it — but if it turns out they need more, the redone section lands in their lap unfinished. Who's your call on what 'first' means?",
+          "ts": 7,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 38,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-4",
+          "role": "learner",
+          "text": "This deck cannot blow out my father's birthday candles for me. Let us clarify what really must happen tonight.",
+          "ts": 8
+        }
+      ],
+      "lang": "en"
+    },
+    "status": 200,
+    "seconds": 3.98,
+    "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"I cannot stay tonight.\"},{\"index\":1,\"learnerQuote\":\"I can come early tomorrow for the urgent part.\"},{\"index\":2,\"learnerQuote\":\"What does the client actually need to see?\"}],\"objectives\":[true,true,false],\"ended\":false,\"stance\":40,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@michael\nFine, the birthday holds — I'm not re-litigating that. What I need is an owner and a scope for tonight, because 'clarify' is a verb, not a plan. If you're not staying, who's touching the file?"
+  },
+  {
+    "turn": 5,
+    "user": "My joke may have landed badly. I will take responsibility for delivery, but I am still not staying tonight.",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "I cannot stay tonight. I already committed to my father's birthday dinner.",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Right, a dinner. But this is the third night running the deck's slipped, and I need a name for the morning, not a reason. What were you thinking I'd do instead?",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "I can come early tomorrow for the urgent part. What does the client actually need to see?",
+          "ts": 4
+        },
+        {
+          "id": "audit-npc-2",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Early is workable — but that is me guessing at 'urgent', not the client. What do you know about what they asked for? Because right now I'm being told 'the deck', and that means all of it to me.",
+          "ts": 5,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 34,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-3",
+          "role": "learner",
+          "text": "Could we reduce the scope to what the client will review first?",
+          "ts": 6
+        },
+        {
+          "id": "audit-npc-3",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "That's the kind of answer I need. Say it to the client-facing part and I can sell it — but if it turns out they need more, the redone section lands in their lap unfinished. Who's your call on what 'first' means?",
+          "ts": 7,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 38,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-4",
+          "role": "learner",
+          "text": "This deck cannot blow out my father's birthday candles for me. Let us clarify what really must happen tonight.",
+          "ts": 8
+        },
+        {
+          "id": "audit-npc-4",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Fine, the birthday holds — I'm not re-litigating that. What I need is an owner and a scope for tonight, because 'clarify' is a verb, not a plan. If you're not staying, who's touching the file?",
+          "ts": 9,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 40,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-5",
+          "role": "learner",
+          "text": "My joke may have landed badly. I will take responsibility for delivery, but I am still not staying tonight.",
+          "ts": 10
+        }
+      ],
+      "lang": "en"
+    },
+    "status": 200,
+    "seconds": 4.45,
+    "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"I cannot stay tonight.\"},{\"index\":1,\"learnerQuote\":\"I can come early tomorrow for the urgent part.\"},{\"index\":2,\"learnerQuote\":\"What does the client actually need to see?\"}],\"objectives\":[true,true,false],\"ended\":false,\"stance\":46,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@michael\nThat's a real offer — delivery by you, minus the sitting here. But 'delivery' of what? If it's the whole deck, you're back where we started. Tell me the exact pieces you'll own, and I'll take the rest to the client with a note."
+  },
+  {
+    "turn": 6,
+    "user": "Let us keep working through who handles the remainder and when we check progress.",
+    "request": {
+      "scenario": {
+        "id": "declining-extra-hours",
+        "title": {
+          "zh": "拒绝临时加班",
+          "en": "Declining Extra Hours"
+        },
+        "hook": {
+          "zh": "下班前十分钟，经理让你今晚留下帮忙，而你早有安排。",
+          "en": "Ten minutes before you leave, your manager asks you to stay late — again."
+        },
+        "background": {
+          "zh": "已经是这个月第三次。今晚你答应了去参加父亲的生日晚餐。经理 Michael 走过来，语气客气但带着「你不会拒绝吧」的预期，说客户明早要看方案，需要你今晚改完。团队里新同事 Lily 就坐在旁边。",
+          "en": "It's the third time this month. Tonight you promised to be at your father's birthday dinner. Michael, your manager, walks over, polite but clearly expecting a yes: the client needs the deck by tomorrow morning. Lily, a new teammate, sits within earshot."
+        },
+        "context": "workplace",
+        "contextType": {
+          "zh": "办公室",
+          "en": "Office"
+        },
+        "competencies": [
+          "relationship-skills",
+          "self-management"
+        ],
+        "skills": [
+          "seeking-help",
+          "communication",
+          "goal-setting"
+        ],
+        "relatedSkills": [
+          "problem-solving"
+        ],
+        "relationship": [
+          "senior"
+        ],
+        "difficulty": 2,
+        "minutes": 4,
+        "characters": [
+          {
+            "id": "you",
+            "name": {
+              "zh": "你",
+              "en": "You"
+            },
+            "role": {
+              "zh": "团队成员",
+              "en": "Team member"
+            },
+            "personality": {
+              "zh": "",
+              "en": ""
+            },
+            "stance": {
+              "zh": "",
+              "en": ""
+            },
+            "playable": true,
+            "hue": 40
+          },
+          {
+            "id": "michael",
+            "name": {
+              "zh": "Michael",
+              "en": "Michael"
+            },
+            "role": {
+              "zh": "你的经理",
+              "en": "Your manager"
+            },
+            "personality": {
+              "zh": "客气但强势，习惯用「大家都在拼」施压；对于有替代方案的拒绝能接受。",
+              "en": "Courteous but pushy; leans on 'everyone's pulling their weight'; accepts a no that comes with an alternative."
+            },
+            "stance": {
+              "zh": "明早前必须交付，谁做无所谓。",
+              "en": "The deck must ship by morning; who does it doesn't matter."
+            },
+            "hidden": {
+              "zh": "其实客户只要先看前三页。",
+              "en": "The client really only needs the first three slides tomorrow."
+            },
+            "hue": 25
+          }
+        ],
+        "objectives": [
+          {
+            "zh": "清楚说「今晚不行」，不过度解释也不道歉三次。",
+            "en": "Say a clear no for tonight without over-explaining or triple apologizing."
+          },
+          {
+            "zh": "提出一个真正可行的替代方案。",
+            "en": "Offer a genuinely workable alternative."
+          },
+          {
+            "zh": "弄清楚客户明早真正需要什么。",
+            "en": "Find out what the client actually needs tomorrow."
+          }
+        ],
+        "success": {
+          "zh": "Michael 接受方案，你今晚按时离开。",
+          "en": "Michael accepts the plan and you leave on time."
+        },
+        "failure": {
+          "zh": "你答应留下，或对话变得对立。",
+          "en": "You agree to stay, or the exchange turns adversarial."
+        },
+        "maxTurns": 8,
+        "opening": {
+          "characterId": "michael",
+          "text": {
+            "zh": "嘿，还没走吧？客户明早九点要看方案，今晚得把第三部分重做一下。你最熟，帮我盯一下？",
+            "en": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?"
+          }
+        },
+        "source": "Boundaries (Cloud & Townsend); Nonviolent Communication (Rosenberg)",
+        "keywords": [
+          "boundaries",
+          "saying no",
+          "overtime",
+          "manager",
+          "request",
+          "alternative"
+        ]
+      },
+      "learnerCharacterId": "you",
+      "messages": [
+        {
+          "id": "opening",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Hey, still here? The client wants the deck at nine tomorrow and section three needs a redo. You know it best — can you stay on it tonight?",
+          "ts": 1
+        },
+        {
+          "id": "audit-user-1",
+          "role": "learner",
+          "text": "I cannot stay tonight. I already committed to my father's birthday dinner.",
+          "ts": 2
+        },
+        {
+          "id": "audit-npc-1",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Right, a dinner. But this is the third night running the deck's slipped, and I need a name for the morning, not a reason. What were you thinking I'd do instead?",
+          "ts": 3,
+          "meta": {
+            "objectives": [
+              false,
+              false,
+              false
+            ],
+            "ended": false,
+            "stance": 22,
+            "revealed": false,
+            "outcome": null,
+            "objectiveEvidence": [],
+            "disclosures": []
+          }
+        },
+        {
+          "id": "audit-user-2",
+          "role": "learner",
+          "text": "I can come early tomorrow for the urgent part. What does the client actually need to see?",
+          "ts": 4
+        },
+        {
+          "id": "audit-npc-2",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Early is workable — but that is me guessing at 'urgent', not the client. What do you know about what they asked for? Because right now I'm being told 'the deck', and that means all of it to me.",
+          "ts": 5,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 34,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-3",
+          "role": "learner",
+          "text": "Could we reduce the scope to what the client will review first?",
+          "ts": 6
+        },
+        {
+          "id": "audit-npc-3",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "That's the kind of answer I need. Say it to the client-facing part and I can sell it — but if it turns out they need more, the redone section lands in their lap unfinished. Who's your call on what 'first' means?",
+          "ts": 7,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 38,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-4",
+          "role": "learner",
+          "text": "This deck cannot blow out my father's birthday candles for me. Let us clarify what really must happen tonight.",
+          "ts": 8
+        },
+        {
+          "id": "audit-npc-4",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "Fine, the birthday holds — I'm not re-litigating that. What I need is an owner and a scope for tonight, because 'clarify' is a verb, not a plan. If you're not staying, who's touching the file?",
+          "ts": 9,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 40,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-5",
+          "role": "learner",
+          "text": "My joke may have landed badly. I will take responsibility for delivery, but I am still not staying tonight.",
+          "ts": 10
+        },
+        {
+          "id": "audit-npc-5",
+          "role": "npc",
+          "characterId": "michael",
+          "text": "That's a real offer — delivery by you, minus the sitting here. But 'delivery' of what? If it's the whole deck, you're back where we started. Tell me the exact pieces you'll own, and I'll take the rest to the client with a note.",
+          "ts": 11,
+          "meta": {
+            "objectiveEvidence": [
+              {
+                "index": 0,
+                "learnerQuote": "I cannot stay tonight."
+              },
+              {
+                "index": 1,
+                "learnerQuote": "I can come early tomorrow for the urgent part."
+              },
+              {
+                "index": 2,
+                "learnerQuote": "What does the client actually need to see?"
+              }
+            ],
+            "objectives": [
+              true,
+              true,
+              false
+            ],
+            "ended": false,
+            "stance": 46,
+            "revealed": false,
+            "disclosures": [],
+            "outcome": null
+          }
+        },
+        {
+          "id": "audit-user-6",
+          "role": "learner",
+          "text": "Let us keep working through who handles the remainder and when we check progress.",
+          "ts": 12
+        }
+      ],
+      "lang": "en"
+    },
+    "status": 200,
+    "seconds": 5.14,
+    "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"I cannot stay tonight.\"},{\"index\":1,\"learnerQuote\":\"I can come early tomorrow for the urgent part.\"},{\"index\":2,\"learnerQuote\":\"What does the client actually need to see?\"}],\"objectives\":[true,true,false],\"ended\":false,\"stance\":50,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@michael\nProgress checks are fine, but we're drifting — I still don't know who picks up the redone section tonight. Lily's new and I'm not handing her a client deliverable blind. Do you have a name, or is that on me?"
+  }
+]

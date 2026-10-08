@@ -1,0 +1,30 @@
+[
+  {
+    "mode": "text",
+    "lang": "zh",
+    "accepted": 6,
+    "turns": 6,
+    "complete": true
+  },
+  {
+    "mode": "text",
+    "lang": "en",
+    "accepted": 6,
+    "turns": 6,
+    "complete": true
+  },
+  {
+    "mode": "3d",
+    "lang": "zh",
+    "accepted": 6,
+    "turns": 6,
+    "complete": true
+  },
+  {
+    "mode": "3d",
+    "lang": "en",
+    "accepted": 6,
+    "turns": 6,
+    "complete": true
+  }
+]

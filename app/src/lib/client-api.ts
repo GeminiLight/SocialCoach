@@ -43,7 +43,7 @@ type Task = Extract<TrackEvent, { name: "api_error" }>["task"];
 
 /** A failed call, with the number analytics needs and the message the learner sees. */
 export class ApiError extends Error {
-  constructor(message: string, public readonly status: number, public readonly kind: "http" | "network" | "stream", public readonly modelIssue?: ModelIssue | null) {
+  constructor(message: string, public readonly status: number, public readonly kind: "http" | "network" | "stream", public readonly modelIssue?: ModelIssue | null,public readonly retryAt?:number) {
     super(message);
   }
 }
@@ -90,12 +90,13 @@ async function post<T>(url: string, body: unknown, signal?: AbortSignal): Promis
   if (!res.ok) {
     let msg = res.statusText;
     let issue: ModelIssue | null | undefined;
+    let retryAt:number|undefined;
     try {
       const failure = readModelFailure(JSON.stringify(await res.json()));
       msg = failure.error || msg;
-      issue = failure.modelIssue;
+      issue = failure.modelIssue;retryAt=failure.retryAt;
     } catch {}
-    throw new ApiError(msg, res.status, "http", issue);
+    throw new ApiError(msg, res.status, "http", issue,retryAt);
   }
   return (await res.json()) as T;
 }
@@ -178,7 +179,7 @@ export function pattern(body: PatternInput) {
 const ERR = "\n@@error\n";
 function streamFailure(raw: string) {
   const failure = readModelFailure(raw);
-  return new ApiError(failure.error, failure.status, "stream", failure.modelIssue);
+  return new ApiError(failure.error, failure.status, "stream", failure.modelIssue,failure.retryAt);
 }
 
 /**
@@ -219,12 +220,13 @@ export async function streamText(url: string, body: unknown, onText: (full: stri
   if (!res.ok || !res.body) {
     let msg = res.statusText;
     let issue: ModelIssue | null | undefined;
+    let retryAt:number|undefined;
     try {
       const failure = readModelFailure(JSON.stringify(await res.json()));
       msg = failure.error || msg;
-      issue = failure.modelIssue;
+      issue = failure.modelIssue;retryAt=failure.retryAt;
     } catch {}
-    throw new ApiError(msg, res.status, "http", issue);
+    throw new ApiError(msg, res.status, "http", issue,retryAt);
   }
   const reader = res.body.getReader();
   const dec = new TextDecoder();
@@ -322,7 +324,6 @@ export function parseRoleplay(raw: string, validIds: string[]): ParsedTurn {
         ended: j.ended === true,
         closure: j.closure,
         outcome: j.outcome === "success" || j.outcome === "partial" || j.outcome === "failure" ? j.outcome : null,
-        note: typeof j.note === "string" ? j.note : undefined,
         // A model that omits the field, or answers with prose, must not move the meter.
         stance: Number.isFinite(st) ? Math.max(0, Math.min(100, Math.round(st))) : undefined,
         revealed: j.revealed === true,

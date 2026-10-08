@@ -1,0 +1,28 @@
+[
+  {
+    "id": "9v8e3kzoplip",
+    "role": "learner",
+    "text": "今晚我不能留下。客户明早真正需要先看哪几页？",
+    "ts": 1791412435249
+  },
+  {
+    "characterId": "michael",
+    "id": "jtsaz4h2por2",
+    "meta": {
+      "disclosures": [],
+      "ended": false,
+      "objectiveEvidence": [],
+      "objectives": [
+        false,
+        false,
+        false
+      ],
+      "outcome": null,
+      "revealed": false,
+      "stance": 30
+    },
+    "role": "npc",
+    "text": "我理解你今晚有事，但客户明早九点要看，方案得完整。重做第三部分大概要三小时，你最熟，别人接不上。",
+    "ts": 1791412439664
+  }
+]

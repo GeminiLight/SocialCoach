@@ -6,7 +6,15 @@ import {hasQuote} from './practice-policy';
  * prior observations keep a single model judgment from rewriting the profile.
  * Difficulty is reported as coverage, not an invented psychometric correction. */
 export function estimateProficiency(sessions:Session[],baseline:Proficiency):Proficiency{
- const independent=[...new Map([...sessions].sort((a,b)=>b.startedAt-a.startedAt).filter(s=>s.report?.scoringVersion===2).reverse().map(s=>[s.sceneContext?.practiceId??s.id,s])).values()].reverse();
+ const latest=new Map<string,Session>();
+ // Select in recency order. Replacing a Map value does not move its key, so
+ // deduplication in oldest-first order would misplace a new continuation.
+ for(const session of [...sessions].sort((a,b)=>b.startedAt-a.startedAt)){
+  if(session.report?.scoringVersion!==2)continue;
+  const id=session.sceneContext?.practiceId??session.id;
+  if(!latest.has(id))latest.set(id,session);
+ }
+ const independent=latest.values();
  const observations=new Map<SkillId,number[]>();
  for(const s of independent){
   const seen=new Set<SkillId>();

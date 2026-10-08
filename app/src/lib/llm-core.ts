@@ -12,6 +12,17 @@ import type { ModelIssue } from "./model-status";
 
 export type Provider = "anthropic" | "openai";
 export type TokenParam = "max_tokens" | "max_completion_tokens";
+/** SDKs append their own API route. Keep the gateway prefix when pasting an endpoint. */
+export function modelBaseUrl(value:string,provider:Provider):string{
+  const trimmed=value.trim();
+  if(!trimmed)return '';
+  try{
+    const url=new URL(trimmed);
+    if(provider==='openai')url.pathname=url.pathname.replace(/\/chat\/completions\/?$/u,'');
+    else url.pathname=url.pathname.replace(/\/v1(?:\/messages)?\/?$/u,'');
+    return url.toString().replace(/\/$/u,'');
+  }catch{return trimmed;}
+}
 
 /** A system prompt part. `cache` asks the provider to cache this prefix if it can. */
 export interface SystemPart {
@@ -96,6 +107,7 @@ export function openaiArgs(o: ChatOpts, fallbackModel: string, tokenParam: Token
 }
 
 export class LLMError extends Error {
+  retryAt?:number;
   constructor(message: string, public status = 502, public retryable = false, public modelIssue?: ModelIssue) {
     super(message);
   }

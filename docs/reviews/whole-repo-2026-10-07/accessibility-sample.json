@@ -1,0 +1,124 @@
+{
+  "axeVersion": "4.12.1",
+  "counts": {
+    "inapplicable": 50,
+    "incomplete": 1,
+    "passes": 39,
+    "violations": 1
+  },
+  "violations": [
+    {
+      "help": "ARIA role should be appropriate for the element",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/aria-allowed-role?application=axeAPI",
+      "id": "aria-allowed-role",
+      "impact": "minor",
+      "nodeCount": 1,
+      "nodes": [
+        {
+          "failureSummary": "Fix any of the following:\n  ARIA role alert is not allowed for given element",
+          "html": "<aside role=\"alert\" class=\"bg-card border-b border-line px-5 py-3 flex flex-col gap-2\">",
+          "target": [
+            "aside"
+          ]
+        }
+      ],
+      "tags": [
+        "cat.aria",
+        "best-practice"
+      ]
+    }
+  ],
+  "incomplete": [
+    {
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodeCount": 14,
+      "nodes": [
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+          "html": "<strong>SocialCoach<span class=\"brand-version\">3D</span></strong>",
+          "target": [
+            "span:nth-child(2) > strong"
+          ]
+        },
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+          "html": "<span class=\"brand-version\">3D</span>",
+          "target": [
+            ".brand-version"
+          ]
+        },
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+          "html": "<p><span class=\"room-dot\"></span>River Room · Project dinner<time>19:42</time></p>",
+          "target": [
+            ".scene-context > p"
+          ]
+        },
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+          "html": "<time>19:42</time>",
+          "target": [
+            "time"
+          ]
+        },
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+          "html": "<span class=\"attention-status\" data-mode=\"conversation\" data-target=\"chen\">",
+          "target": [
+            ".attention-status"
+          ]
+        },
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+          "html": "<button class=\"exploration-toggle\" aria-expanded=\"false\" aria-controls=\"movement-dock\" aria-label=\"Stand & explore\">",
+          "target": [
+            ".exploration-toggle"
+          ]
+        },
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+          "html": "<strong>Mr. Chen</strong>",
+          "target": [
+            ".speaker-line > strong"
+          ]
+        },
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+          "html": "<button type=\"button\" class=\"moment-trigger\" aria-expanded=\"false\" aria-controls=\"scene-action-choices\" title=\"This toast has an audience\">",
+          "target": [
+            ".moment-trigger"
+          ]
+        },
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+          "html": "<button type=\"button\" class=\"evidence-trigger\" title=\"Launch notes\">",
+          "target": [
+            ".evidence-trigger"
+          ]
+        },
+        {
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+          "html": "<p class=\"spoken-line\">A toast to Ms. Lin. Everyone has a cup up—we’re waiting for you. You won’t join?</p>",
+          "target": [
+            ".spoken-line"
+          ]
+        }
+      ],
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ]
+    }
+  ]
+}

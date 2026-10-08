@@ -3,6 +3,7 @@ FROM node:22-alpine AS deps
 WORKDIR /app
 RUN corepack enable
 COPY app/package.json app/pnpm-lock.yaml app/pnpm-workspace.yaml ./
+COPY app/patches/ ./patches/
 RUN pnpm install --frozen-lockfile
 
 FROM node:22-alpine AS build
@@ -24,5 +25,5 @@ COPY --from=build --chown=next:nodejs /app/public ./public
 COPY LICENSE ./LICENSE
 USER next
 EXPOSE 7860
-# Keep one process: rate-limit counters live in memory.
+# The shared daily budget is coordinated in Redis across deployments.
 CMD ["node", "server.js"]

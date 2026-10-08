@@ -5,7 +5,7 @@ import { openModelSheet, useByok } from "@/lib/byok";
 import { useCanUseModel, useModelAccess } from "@/lib/model-access";
 import { M } from "@/lib/model-copy";
 import { pick } from "@/lib/i18n";
-import { useLang } from "@/store/useApp";
+import { useInterfaceLang as useLang } from "@/lib/ui-language";
 import type { Lang } from "@/data/taxonomy";
 
 export const SLOW_MODEL_WAIT_MS = 8_000;

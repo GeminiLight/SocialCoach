@@ -1,0 +1,33 @@
+{
+  "archive": {
+    "bookmarks": [
+      "B"
+    ],
+    "sessions": []
+  },
+  "dbs": [
+    {
+      "name": "socialcoach-write-guard-v1",
+      "version": 1
+    }
+  ],
+  "dinner": "B",
+  "results": [
+    {
+      "dinnerSaved": true,
+      "id": "B",
+      "issues": [
+        null,
+        null
+      ]
+    },
+    {
+      "dinnerSaved": false,
+      "id": "A",
+      "issues": [
+        "conflict",
+        "conflict"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-10-07T18:43:03.182269+00:00",
+  "central_daily_policy": 100000000,
+  "used_preserved": 4225479,
+  "remaining": 95774521,
+  "changed": true,
+  "reset_counter": false,
+  "concurrency": 8
+}

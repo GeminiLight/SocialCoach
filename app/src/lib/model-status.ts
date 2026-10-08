@@ -1,11 +1,14 @@
 /** Safe, portable status codes. Never contain an endpoint, key or provider payload. */
-export type ModelIssue = "setup" | "credentials" | "quota" | "model" | "rate_limit" | "service" | "network";
+export type ModelIssue = "setup" | "credentials" | "quota" | "shared_quota" | "shared_busy" | "model" | "rate_limit" | "service" | "network";
 export type ModelCheck = {
   state: "available" | "unverified" | "unavailable";
   issue?: ModelIssue;
+  resetAt?: number;
+  budgetRemaining?: number;
+  budgetLimit?:number;
 };
 
-const issues: ModelIssue[] = ["setup", "credentials", "quota", "model", "rate_limit", "service", "network"];
+const issues: ModelIssue[] = ["setup", "credentials", "quota", "shared_quota", "shared_busy", "model", "rate_limit", "service", "network"];
 export const isModelIssue = (v: unknown): v is ModelIssue => issues.includes(v as ModelIssue);
 
 /** Provider codes beat prose; an ordinary 429 is not evidence of an empty balance. */
@@ -63,13 +66,14 @@ export async function checkModelConnection(metadata: ModelMetadata, models: stri
   }
 }
 
-export function readModelFailure(raw: string): { error: string; status: number; modelIssue?: ModelIssue | null } {
+export function readModelFailure(raw: string): { error: string; status: number; modelIssue?: ModelIssue | null; retryAt?:number } {
   try {
     const value = JSON.parse(raw);
     if (typeof value.error === "string") return {
       error: value.error,
       status: typeof value.status === "number" ? value.status : 200,
       ...(isModelIssue(value.modelIssue) || value.modelIssue === null ? { modelIssue: value.modelIssue } : {}),
+      ...(typeof value.retryAt==='number'&&Number.isFinite(value.retryAt)?{retryAt:value.retryAt}:{}),
     };
   } catch {}
   return { error: raw, status: 200, modelIssue: modelIssue({ message: raw }) };

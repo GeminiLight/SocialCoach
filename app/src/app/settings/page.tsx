@@ -8,7 +8,7 @@ import { dinnerBackup, DINNER_SAVE_KEY, DINNER_LAUNCH_KEY } from "@/features/din
 import { Button, Chip, Page, SectionTitle, Sheet, Switch, useToast } from "@/components/ui";
 import { useModelAccess } from "@/lib/model-access";
 import { M } from "@/lib/model-copy";
-import { isReady, STORAGE_KEY, useByok } from "@/lib/byok";
+import { isReady, useByok } from "@/lib/byok";
 import { stopSpeaking, unlockSpeech } from "@/lib/speech";
 import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
 import { t, pick } from "@/lib/i18n";
@@ -33,7 +33,6 @@ export default function Settings() {
     setSettings,
     setLang,
     updateProfile,
-    setProficiency,
     reset,
     customScenarios,
     bookmarks,
@@ -72,7 +71,6 @@ export default function Settings() {
     const has = profile.goals.includes(id);
     if (has && profile.goals.length <= 1) return;
     updateProfile({ goals: has ? profile.goals.filter((g) => g !== id) : [...profile.goals, id] });
-    if (!has && proficiency[id] == null) setProficiency({ ...proficiency, [id]: 2.5 });
   };
 
   return (
@@ -185,7 +183,7 @@ export default function Settings() {
                 />
               </Row>
               {settings.tts && <Row label={t(lang, "st_voice_engine")} hint={t(lang, "st_voice_engine_hint")}>
-                <div className="inline-flex rounded-full bg-paper-2 p-0.5 text-[12px] font-medium">
+                <div className="inline-flex rounded-full bg-paper-deep p-0.5 text-[12px] font-medium">
                   {(["natural", "system"] as const).map(engine => <button key={engine} aria-pressed={(settings.voiceEngine ?? "natural") === engine} onClick={() => { stopSpeaking(); unlockSpeech(); setSettings({ voiceEngine: engine }); }} className={clsx("press px-3 min-h-11 rounded-full", (settings.voiceEngine ?? "natural") === engine ? "bg-ink text-paper" : "text-ink-3")}>
                     {t(lang, engine === "natural" ? "st_voice_natural" : "st_voice_system")}
                   </button>)}
@@ -346,12 +344,11 @@ export default function Settings() {
             block
             variant="danger"
             onClick={() => {
-              byok.clear();
               try {
-                localStorage.removeItem(STORAGE_KEY);
+                byok.clear();
                 localStorage.removeItem(DINNER_SAVE_KEY);
                 localStorage.removeItem(DINNER_LAUNCH_KEY);
-              } catch {}
+              } catch {toast(pick({zh:'设备未能清除数据，请保留备份并重试。',en:'Device data could not be cleared. Keep your backup and retry.'},lang));return;}
               reset();
               setConfirm(false);
             }}

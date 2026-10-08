@@ -1,0 +1,32 @@
+{
+  "main_code_commit": "c10eb0cfdb243408ec419d3a3e9b3841a3a9b549",
+  "pr": "https://github.com/GeminiLight/SocialCoach/pull/13",
+  "vercel_deployment": "dpl_9e6B1kfCPgKbPAEp6HAaXZqv2a1J",
+  "vercel_ready": true,
+  "modelscope_commit": "53d61a4",
+  "modelscope_running": true,
+  "modelscope_runtime_created": "2026-10-07T20:18:16.000Z",
+  "daily_policy": 100000000,
+  "counter_reset": false,
+  "concurrency": 8,
+  "accepted_reply_count": 24,
+  "semantic_findings": [
+    "At turn 6 of text-zh, Michael invented Lily working until seven and her availability tomorrow. A narrow fact boundary and explicit proposal/question regression are being added."
+  ],
+  "live_device_coverage": "Desktop and API only; real phones pending.",
+  "final_main_code_commit": "ad7225ba272b46923f1a997ff88c78fbde5ae12a",
+  "fact_boundary_pr": "https://github.com/GeminiLight/SocialCoach/pull/14",
+  "final_vercel_deployment": "dpl_AG7ixf1H5ak2nmAXDHtAigxkZSjS",
+  "final_modelscope_commit": "70b4173",
+  "final_modelscope_running": true,
+  "final_modelscope_runtime_created": "2026-10-07T20:39:02.000Z",
+  "fact_boundary_retest": {
+    "zh": 200,
+    "en": 200
+  },
+  "domestic_final_probes": {
+    "roleplay": 200,
+    "dinner/direct": 200
+  },
+  "fact_boundary_limits": "Narrow reproduced timeline/availability guard, not a general truth classifier."
+}

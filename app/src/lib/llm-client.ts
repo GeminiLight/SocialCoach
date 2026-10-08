@@ -1,6 +1,7 @@
 "use client";
 import {
   anthropicArgs,
+  modelBaseUrl,
   LLMError,
   openaiArgs,
   type ChatOpts,
@@ -31,7 +32,7 @@ async function anthropicClient(c: ByokConfig): Promise<Anthropic> {
     const { default: Ctor } = await import("@anthropic-ai/sdk");
     cached.anthropic = new Ctor({
       apiKey: c.apiKey.trim(),
-      baseURL: c.baseUrl.trim() || undefined,
+      baseURL: modelBaseUrl(c.baseUrl,c.provider) || undefined,
       // The learner's own key, in the learner's own browser. The SDK adds
       // `anthropic-dangerous-direct-browser-access` for us.
       dangerouslyAllowBrowser: true,
@@ -48,7 +49,7 @@ async function openaiClient(c: ByokConfig): Promise<OpenAI> {
     const { default: Ctor } = await import("openai");
     cached.openai = new Ctor({
       apiKey: c.apiKey.trim(),
-      baseURL: c.baseUrl.trim() || undefined,
+      baseURL: modelBaseUrl(c.baseUrl,c.provider) || undefined,
       dangerouslyAllowBrowser: true,
       maxRetries: 1,
       // Compatible gateways may allow Authorization/Content-Type in CORS but

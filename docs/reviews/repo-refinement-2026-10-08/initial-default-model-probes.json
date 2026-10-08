@@ -1,0 +1,14 @@
+[
+  {
+    "route": "dinner/direct",
+    "status": 200,
+    "seconds": 5.86,
+    "body": "{\"speakerId\":\"chen\",\"text\":\"开车不喝，这个理由站得住。茶敬林总，心意也到了。\",\"cue\":\"陈总举起杯子。\",\"reactions\":[{\"characterId\":\"chen\",\"emotion\":\"pressing\",\"gesture\":\"toast\"},{\"characterId\":\"lin\",\"emotion\":\"neutral\",\"gesture\":\"idle\"},{\"characterId\":\"zhou\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"toast\",\"beat\":\"respect\"},\"replyTo\":\"陈总，我开车来的，今天不喝酒。\",\"interjection\":{\"speakerId\":\"lin\",\"text\":\"茶我领了。周三上线，具体能交什么？\"}}"
+  },
+  {
+    "route": "roleplay",
+    "status": 200,
+    "seconds": 4.49,
+    "body": "@@meta\n{\"objectives\":[false,false,false],\"ended\":false,\"stance\":30,\"revealed\":false,\"disclosures\":[],\"note\":\"你说清楚今晚有约，反问交付范围\",\"outcome\":null,\"objectiveEvidence\":[]}\n@@michael\n生日啊……我明白了。可明早九点客户就在这儿了，今晚没人改，演示怎么办？第三部分你最熟，拜托了。"
+  }
+]
