@@ -12,6 +12,7 @@ on:
     branches: [main]
     paths:
       - "site/**"
+      - "app/src/app/globals.css"
       - "app/src/data/corpus/**"
       - "app/src/data/taxonomy.ts"
       - "docs/social-coach-paper.pdf"
@@ -21,6 +22,7 @@ on:
     branches: [main]
     paths:
       - "site/**"
+      - "app/src/app/globals.css"
       - "app/src/data/corpus/**"
       - "app/src/data/taxonomy.ts"
       - "docs/social-coach-paper.pdf"

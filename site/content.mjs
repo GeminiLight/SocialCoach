@@ -28,17 +28,17 @@ export const site = {
 
 export const meta = {
   title: L(
-    "SocialCoach — AI 社交技能训练与社交情绪学习",
-    "SocialCoach — AI Social Skills Practice & SEL",
+    "SocialCoach — 你的 AI 情商教练 · 对话排练与 3D 实景",
+    "SocialCoach — Your AI Social Skills Coach · Practice & 3D Scenes",
   ),
   description: L(
-    "SocialCoach 是面向社交与情绪学习（SEL）的 AI 社交技能练习工具。与有自己目标的角色对练困难对话，获得引用你原话的个性化反馈。覆盖沟通、情绪调节与冲突处理；无需注册。",
-    "SocialCoach is an AI learning tool for social skills and social and emotional learning (SEL). Practice difficult conversations through realistic role-play and get personalized feedback grounded in your own words. No account required.",
+    "想说的话，说出来。SocialCoach 陪你练习难开口的对话：58 个场景、3D 饭局与办公室、视频示范，以及引用原话的复盘。无需注册，支持自己的模型。",
+    "Practice difficult conversations with SocialCoach: 58 scenarios, 3D dinners and offices, video demonstrations, and feedback grounded in your own words. No account required. Bring your own model or use the shared quota.",
   ),
 };
 
 export const nav = {
-  how: L("流程", "Flow"),
+  how: L("怎么练", "How it works"),
   learning: L("社交技能", "Social skills"),
   trust: L("依据", "Sources"),
   privacy: L("隐私", "Privacy"),
@@ -55,160 +55,25 @@ export const nav = {
 export const hero = {
   pill: L("来自同名研究论文", "From the research paper"),
   pillTag: "arXiv:2606.04155",
-  eyebrow: L("SocialCoach", "SocialCoach"),
+  eyebrow: L("你的专属 AI 情商教练", "Your personal AI social skills coach"),
   h1: L("想说的话，说出来。", "Say the thing you’ve been not saying."),
-  h1Alt: L("Say the thing you’ve been not saying.", "想说的话，说出来。"),
   sub: L(
-    "和不会轻易让步的 AI 角色先练一次困难对话。结束后，教练引用你的原话，告诉你是还不会，还是会但在压力下没做到。无需注册。",
-    "Rehearse a difficult conversation against an AI character who pushes back. The debrief quotes what you actually said and shows whether you did not know the move or could not execute it under pressure. No account required.",
+    "下班加活、饭局劝酒、朋友借钱不还。先和有自己立场的 AI 练一次，再从你说过的话里，找到下一次可以做得更好的地方。",
+    "A last-minute task. A toast you want to decline. A friend who still owes you. Practise with an AI character who has a position of their own, then revisit your words and try another response.",
   ),
-  ctaPrimary: L("练一场对话", "Rehearse your conversation"),
+  ctaPrimary: L("选一场对话，开始练习", "Choose a conversation"),
   ctaDebrief: L("先看一次真实复盘", "See a real debrief"),
   ctaHow: L("看看它怎么练", "See how it works"),
   micro: [
     { icon: "enter", text: L("无需注册", "No account") },
     { icon: "device", text: L("记录留在设备上", "History stays on your device") },
-    { icon: "clock", text: L("每轮约三分钟", "About three minutes a round") },
+    { icon: "globe", text: L("中文 / English", "Chinese / English") },
   ],
   radarAria: L("五项 CASEL 能力的雷达图装饰", "Decorative radar of the five CASEL competencies"),
   screenshotAlt: L("SocialCoach 首页：今日训练与选择理由", "SocialCoach home: today's practice and why it was picked"),
 };
 
-export const marquee = {
-  aria: L("场景一览", "Scenario overview"),
-  eyebrow: L("{n} 个双语场景 · {c} 类生活情境", "{n} bilingual scenarios · {c} contexts"),
-  all: L("全部场景", "All scenarios"),
-};
-
-export const gap = {
-  no: "01",
-  eyebrow: L("问题所在", "The problem"),
-  title: L("知道该怎么说，不等于说得出来", "Knowing what to say is not the same as saying it"),
-  lead: L(
-    "你大概知道应该先问、不要指责。问题出在*对方叹气、反驳或沉默之后*：脑内预演和收藏的建议，都没有这个压力。",
-    "You know to open with a question instead of an accusation. The trouble starts *after the sigh, the pushback, or the silence*. Rehearsing in your head, and every article you saved, never had that pressure.",
-  ),
-  hooks: [
-    L(
-      "你不是不知道怎么拒绝。你是不知道老板*再追问一句*时，自己还能不能拒绝。",
-      "You know how to say no. What you don't know is whether you still can *after your manager asks one more time*.",
-    ),
-    L(
-      "加薪谈话在脑子里很顺，因为脑子里的老板从不说*「今年真的没预算」*。",
-      "The raise conversation goes smoothly in your head, because the manager in your head never says *“there's really no budget this year.”*",
-    ),
-    L(
-      "提醒朋友还钱最难的不是第一句，是他笑着说*「朋友之间别这么急」*之后。",
-      "The hard part of asking a friend for the money back isn't the first line. It's what comes after *“come on, we're friends.”*",
-    ),
-  ],
-  deficits: [
-    {
-      label: L("不会", "Didn't know the move"),
-      tag: "acquisition",
-      fix: L("配一条有出处的策略", "A sourced strategy"),
-      body: L(
-        "还没掌握这个动作。需要的是知道该做什么，配一条有出处的策略。",
-        "You haven't got the move yet. What you need is the move itself, with a sourced strategy attached.",
-      ),
-    },
-    {
-      label: L("会，但没做到", "Knew it, and folded"),
-      tag: "performance",
-      fix: L("在压力下再练一次", "Another rep, under pressure"),
-      body: L(
-        "知道该怎么说，但在压力下没做出来。需要的是重复次数，不是再一条建议。",
-        "You knew what to say and didn't, under pressure. What you need is reps, not another tip.",
-      ),
-    },
-  ],
-  deficitNote: L(
-    "这两种情况的解法完全不同。复盘会告诉你这一次是哪一种。",
-    "The fix for each is completely different. The debrief tells you which one this was.",
-  ),
-};
-
-export const how = {
-  no: "02",
-  eyebrow: L("流程", "Flow"),
-  title: L("一次训练，四步", "One round, four steps"),
-  openScreenshot: L("打开完整产品截图", "Open full product screenshot"),
-  steps: [
-    {
-      id: "choose",
-      icon: "scene",
-      title: L("选一场对话", "Pick a conversation"),
-      screenshotAlt: L("场景目录：按情境与技能选择要练的对话", "Scenario collection: choose a conversation by context and skill"),
-      body: L(
-        "58 个双语场景，覆盖职场、家庭、朋友、亲密关系、学校、陌生人和社交场合。也可以描述你明天那场真实对话，约 15 秒生成一个定制场景。",
-        "58 bilingual scenarios across work, family, friendship, romance, school, strangers and social occasions. Or describe the real conversation you have coming up and get a custom scenario in about 15 seconds.",
-      ),
-    },
-    {
-      id: "pushback",
-      icon: "pushback",
-      title: L("对方会反驳", "The other side pushes back"),
-      screenshotAlt: L("对练中：经理继续施压，目标进度与剩余回合可见", "Mid-practice: the manager keeps pushing; goal progress and turns left are visible"),
-      body: L(
-        "角色有自己的目标、立场，和没说出口的顾虑。文字对练可以追问、改口或继续谈，由你决定何时复盘。态度好不会让它自动让步。",
-        "Characters have their own goals, positions and concerns they haven't voiced. In text practice, follow up, change your mind or keep talking; you decide when to debrief. Politeness doesn't buy automatic agreement.",
-      ),
-    },
-    {
-      id: "debrief",
-      icon: "quote",
-      title: L("复盘先引用你的原话", "The debrief quotes you first"),
-      body: L(
-        "每条判断先引用你刚才说过的话，再区分是不会，还是会但没做到，再给出处和下一次的动作。没有证据的评价不会出现。",
-        "Every point cites the line you actually said, then says whether you didn't know the move or couldn't land it, then gives the source and the next move. No evidence, no verdict.",
-      ),
-      screenshotAlt: L("复盘报告：引用原话、归因、出处和下一步", "Debrief report: quoted line, attribution, source and next move"),
-    },
-    {
-      id: "next",
-      icon: "radar",
-      title: L("下一次练什么，它替你选", "It picks tomorrow's practice"),
-      screenshotAlt: L("今日推荐：展示推荐场景及为什么适合这次练习", "Today's pick: a recommended scenario and why it fits this practice"),
-      body: L(
-        "5 项 CASEL 能力 × 34 项社交技能 × 7 类情境的技能图谱，根据这次结果安排下一次训练，并用雷达记录变化。",
-        "A skill map of 5 CASEL competencies × 34 social skills × 7 context types decides what you're served next, and a radar tracks the change.",
-      ),
-    },
-  ],
-};
-
-export const learning = {
-  no: "03",
-  eyebrow: L("社交与情绪学习 · SEL", "Social and emotional learning · SEL"),
-  title: L("用 AI 练习社交与情绪能力", "AI social skills practice for social and emotional learning"),
-  lead: L(
-    "社交与情绪学习（SEL）不只关乎知道什么是好的沟通，也关乎在被拒绝、误解或催促时还能做出来。SocialCoach 把 34 项社交技能组织在 CASEL 的五类能力下，让你在有来有回的对话里练习，并根据自己的原话复盘。",
-    "Social and emotional learning (SEL) includes applying social and emotional skills when a conversation gets difficult. SocialCoach organizes 34 social skills around the five CASEL competencies, then lets you practice them in conversations with pushback and review your own words.",
-  ),
-  examples: [
-    {
-      icon: "gauge",
-      title: L("管理情绪与压力", "Manage emotions under pressure"),
-      body: L("被追问时放慢节奏，说清自己的感受与底线。", "Slow down when challenged, then name your feelings and boundaries."),
-    },
-    {
-      icon: "radar",
-      title: L("理解对方的立场", "Understand another perspective"),
-      body: L("先准确复述对方的顾虑，再表达自己的请求。", "Restate the other person's concern before making your request."),
-    },
-    {
-      icon: "pushback",
-      title: L("沟通并处理冲突", "Communicate through conflict"),
-      body: L("面对不同意的回应，继续协商具体的下一步。", "Keep negotiating a concrete next step when the other person disagrees."),
-    },
-  ],
-  note: L(
-    "技能分类参考 CASEL 的社交与情绪学习框架。SocialCoach 是个人对练工具，不是经过认证的学校课程。",
-    "The skill map draws on CASEL's social and emotional learning framework. SocialCoach is an individual practice tool, not a certified school curriculum.",
-  ),
-  source: L("了解 CASEL 的 SEL 框架", "Explore CASEL's SEL framework"),
-  sourceUrl: "https://casel.org/what-is-sel/",
-};
+export const learning = { sourceUrl: "https://casel.org/what-is-sel/" };
 
 export const trust = {
   no: "04",
@@ -247,8 +112,8 @@ export const privacy = {
       icon: "device",
       title: L("记录留在设备上", "History lives on your device"),
       body: L(
-        "无账号、无用户数据库。练习记录随时导出或重置；每次生成只把当次对话发给你选的模型服务。",
-        "No account, no user database. Export or reset your history any time; each turn sends only that conversation to the model provider you chose.",
+        "练习档案保存在当前浏览器，可导出、恢复或重置。生成内容时，相关对话与练习信息会发给所用的模型服务。",
+        "Practice history stays in this browser and can be exported, restored or reset. Generating content sends relevant conversation and practice context to the selected model service.",
       ),
     },
     {
@@ -263,8 +128,8 @@ export const privacy = {
       icon: "box",
       title: L("可以自己部署", "Self-hostable"),
       body: L(
-        "一台小机器加 Docker Compose 就能跑起来，语料和技能图谱都在仓库里。",
-        "One small box and Docker Compose. The corpus and the skill map ship in the repository.",
+        "应用以 Apache 2.0 开源，支持 Docker Compose、Vercel 等部署方式。产品语料和技能图谱随代码提供。",
+        "The application is open source under Apache 2.0. Deploy with Docker Compose, Vercel and other platforms; the product corpus and skill map ship with the code.",
       ),
     },
   ],
@@ -276,17 +141,21 @@ export const faq = {
   title: L("常见问题", "Frequently asked questions"),
   items: [
     {
+      q: L("需要注册或付费吗？", "Do I need an account or a paid plan?"),
+      a: L("无需注册。场景和学习内容可以直接浏览；AI 对练使用共享模型额度，额度或服务不可用时，可在设置里接入自己的模型。自带模型的费用由相应服务商收取。", "No account is required. Browse scenarios and learning material directly. AI practice uses a shared model quota; if it is exhausted or unavailable, connect your own model in settings. Your provider charges for your own model usage."),
+    },
+    {
       q: L("这和直接让 ChatGPT 扮演老板有什么不同？", "How is this different from asking ChatGPT to play my manager?"),
       a: L(
-        "通用聊天模型可以演一次。SocialCoach 把训练约束固定下来：角色有独立目标和隐藏动机，不会提前泄漏答案；文字练习分段可续聊，并记录未达成的目标；结束后每条判断先引用本次对话原话，再给归因、来源和下一次训练。",
-        "A general chat model can play a role once. SocialCoach fixes the training constraints: characters have their own objective and a hidden motive and won't leak the answer; text practice uses extendable segments and records unmet objectives; afterwards every point quotes the transcript first, then gives attribution, a source and the next practice.",
+        "通用聊天模型可以演一次。SocialCoach 把训练约束固定下来：角色有独立目标，部分角色还有隐藏顾虑，不会提前泄漏答案；文字练习分段可续聊，并记录未达成的目标；结束后每条判断先引用本次对话原话，再给归因、来源和下一次训练。",
+        "A general chat model can play a role once. SocialCoach fixes the training constraints: characters have their own objectives, sometimes with an unspoken concern and won't leak the answer; text practice uses extendable segments and records unmet objectives; afterwards every point quotes the transcript first, then gives attribution, a source and the next practice.",
       ),
     },
     {
       q: L("为什么角色有时不让步？", "Why won't the character give in?"),
       a: L(
-        "因为它有自己的目标和一件没说出口的顾虑。让步的条件写在场景里，而不是写在你的态度里。真实对话也是这样。",
-        "Because it has an objective of its own and an unspoken concern. The conditions for yielding are written into the scenario, not into your tone. Real conversations work the same way.",
+        "角色会根据自己的目标和眼前的对话作出回应。礼貌不保证对方同意；你可以协商、修复，也可以守住边界。复盘会分别看沟通表现和对话结果。",
+        "Characters respond according to their goals and the conversation. Politeness does not guarantee agreement. You can negotiate, repair a misunderstanding or hold a boundary; the debrief considers communication and the outcome separately.",
       ),
     },
     {
@@ -299,8 +168,8 @@ export const faq = {
     {
       q: L("我的私人对话保存在哪里？", "Where do my conversations go?"),
       a: L(
-        "在你的设备上。没有账号和用户数据库，可以随时导出或重置。生成回复时只把当次对话发给你选的模型服务，也可以换成自己的 API key 或本地端点。",
-        "On your device. There is no account and no user database, and you can export or reset it at any time. Generating a reply sends only that conversation to the model provider you chose, and you can swap in your own API key or a local endpoint.",
+        "练习记录保存在当前浏览器，可导出、恢复或重置。生成内容时，相关上下文会发送给你选择的模型服务。匿名使用统计可在设置中关闭；主动提交的反馈会发送给团队。",
+        "Practice history is stored in this browser and can be exported, restored or reset. Relevant context is sent to the selected model service when generating content. Anonymous usage statistics can be disabled in settings; feedback you submit is sent to the team.",
       ),
     },
     {
@@ -402,4 +271,58 @@ export const footer = {
     "For everyday practice and reflection, not clinical assessment or hiring. If there is risk of harm to yourself or others, contact local emergency services and a professional.",
   ),
   copyright: L("© 2026 SocialCoach 作者", "© 2026 the SocialCoach authors"),
+};
+
+
+// Homepage presentation, October 2026. Screenshots and excerpts are documented in assets/README.md.
+export const experience = {
+  nav3d: L("3D 现场", "3D scenes"), navVideos: L("视频示范", "Watch & learn"),
+  open3d: L("进入 3D 现场", "Enter a 3D scene"),
+  rehearse: L("有自己的处境？排练真实对话", "Have a situation in mind? Rehearse it"),
+  preview: L("产品实景（局部）· 职场饭局", "In the app · Work dinner (cropped)"),
+  previewAlt: L("SocialCoach 3D 职场饭局，三位人物围坐，等待你的回应", "A SocialCoach 3D work dinner with three characters waiting for your response"),
+  previewQuote: L("大家都举杯了，就等你了。", "Everyone has a cup up—we’re waiting for you."),
+  coach: L("陪你练习，也陪你复盘。", "Here for the practice. Here for the debrief."),
+  updated: L("现已支持 3D 实景与视频学习", "Now with 3D scenes and video lessons"),
+  sceneCount: L("个场景", "scenarios"),
+  coachAlt: L("SocialCoach 的猫咪教练", "The SocialCoach cat coach"),
+  pathsTitle: L("从你最近遇到的那件事开始", "Start with something on your mind"),
+  paths: ["declining-extra-hours", "salary-raise", "friend-borrowed-money"],
+  tryScene: L("练这场对话", "Practise this conversation"),
+  practiceEyebrow: L("对练与复盘", "Practice & reflection"),
+  practiceTitle: L("第一句之后，\n对方还会接着问。", "After your opening line,\nthey’ll have another question."),
+  practiceLead: L("角色有自己的立场。你可以追问、拒绝、改口，也可以继续谈。结束后，教练回到你的原话，和你一起看清刚才发生了什么。", "Characters have positions of their own. Ask, decline, reconsider or keep talking. When you finish, revisit your own words with the coach and see what happened."),
+  flow: [
+    { title: L("选一场，或带来自己的处境", "Pick a scene, or bring your own"), body: L("58 个双语场景覆盖 7 类生活情境，也可以描述你真正要面对的那场对话。", "58 bilingual scenarios across seven everyday contexts, plus custom rehearsals for the conversation ahead of you.") },
+    { title: L("开口，接住下一句", "Speak, then handle the reply"), body: L("用文字或语音组织回应。想增加压力，可以开启限时应答；还没谈完，就继续聊。", "Respond in text or use voice input. Add timed replies for more pressure, or keep the conversation going when you need to.") },
+    { title: L("回到原话，再试一次", "Revisit your words. Try again."), body: L("看具体反馈、尝试改写、继续问教练。练习记录也会帮助安排接下来练什么。", "Read specific feedback, try another phrasing and ask the coach follow-up questions. Your practice history helps shape what comes next.") },
+  ],
+  arenaAlt: L("当前 SocialCoach 场景目录：按情境选择，搜索或筛选要练的对话", "The current SocialCoach scenario collection with search and context filters"),
+  arenaCaption: L("现有场景直接开练，也可以排练自己的真实处境。", "Choose an existing scene, or rehearse your own situation."),
+  evidenceLabel: L("一段示例对练中的原话", "An excerpt from a demo practice"),
+  evidenceQuote: L("啊……好的，我看看。不过我今晚其实有点事，可能会晚一点开始，可以吗？", "Oh… okay, let me take a look. I do have something tonight though, so I might start a bit late, is that all right?"),
+  evidenceTitle: L("想表达「今晚不行」，\n却说成了「晚一点开始」。", "You meant “not tonight.”\nYou said “a bit late.”"),
+  evidenceBody: L("这次复盘回到「我看看」和「可以吗」：你的边界还没说清，对方仍有继续催促的空间。把具体措辞找出来，下一次才知道从哪里改。", "This debrief revisits “let me take a look” and “is that all right?” The boundary was still unclear, leaving room for more pressure. A specific line gives you something concrete to work on."),
+  evidenceNote: L("示例摘录；每次反馈根据当次对话生成。", "Demo excerpt. Feedback is generated from each practice conversation."),
+  evidenceLink: L("查看这次复盘的原始截图", "See the original debrief screenshot"),
+  nextTitle: L("练完了，还能接着问。", "The conversation with your coach continues."),
+  nextBody: L("为什么这句话没说清？如果对方继续追问呢？复盘里的教练可以围绕本次对话继续解释，也会从不同场次的原话中寻找反复出现的问题。", "Why was that line unclear? What if they keep asking? Ask follow-up questions about this practice, and look for recurring patterns across your past conversations."),
+  sceneTitle: L("走进现场，\n练习一桌人的压力。", "Step into the room.\nPractise with everyone listening."),
+  sceneLead: L("职场、家庭、学校饭局，还有电梯口和办公室。面对不同人物的立场，选择回应谁、说什么，处理旁人的插话。", "Work, family and school dinners, an elevator lobby and an office. Respond to different people, choose whom to address and handle interruptions."),
+  sceneImageAlt: L("SocialCoach 3D 电梯口场景局部：三位人物与当前对话", "A cropped view of three characters and the conversation in SocialCoach’s 3D elevator lobby"),
+  sceneCaption: L("电梯口：刚从 HR 出来，同事和领导都在场。", "At the elevator: you have just left HR, with your boss and colleagues nearby."),
+  scenePoints: [L("文字或语音开口", "Text or voice input"), L("切换视角、走动与现场动作", "Change perspective, move and act"), L("练完同样可以引用原话复盘", "Debrief with quotes from your conversation")],
+  videoTitle: L("先看一段，\n再换你来回应。", "Watch a scene.\nThen take your turn."),
+  videoLead: L("同一个难题，看看不同回应怎样改变对话。视频配有中英字幕、关键选择的拆解，以及对应的 3D 练习入口。", "See how different responses change the same conversation. Videos include Chinese and English captions, a breakdown of key choices and a link to the matching 3D practice."),
+  videoNote: L("SocialCoach 原创虚构示范 · 中文配音 / 中英字幕", "Original fictional demonstrations · Chinese audio / Chinese and English captions"),
+  watch: L("前往视频课堂", "Explore video lessons"),
+  videos: [
+    { id: "dinner-toast", title: L("饭局上，领导替你答应了", "Your boss promises on your behalf"), body: L("酒可以拒绝，没确认的交付日期也需要说清楚。", "Decline the drink and clarify a deadline you never agreed to."), duration: "0:57", scene: "work", opening: "work-toast" },
+    { id: "elevator-hr", title: L("领导当众问：是不是要离职？", "Your boss asks: are you leaving?"), body: L("旁人都在听。把私人边界和工作安排分别说清楚。", "Everyone is listening. Separate private boundaries from work commitments."), duration: "0:51", scene: "elevator", opening: "elevator-privacy" },
+  ],
+  videoPractice: L("进入对应的 3D 练习", "Try the matching 3D practice"),
+  library: L("继续看 42 条策略与 30 个案例", "Explore 42 strategies and 30 cases"),
+  closeTitle: L("把那场难开口的对话，\n先在这里练一遍。", "Give that difficult conversation\na first try here."),
+  closeBody: L("和老板谈加薪，请朋友还钱，或把一件拖了很久的事说清楚。从你现在最想练的那场开始。", "Ask for a raise, bring up an unpaid loan or finally talk through something you have put off. Start with the conversation that matters to you."),
+  sourceNote: L("技能分类参考 CASEL 的社交与情绪学习框架。", "The skill map draws on CASEL’s social and emotional learning framework."),
 };

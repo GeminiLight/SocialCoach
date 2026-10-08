@@ -122,6 +122,8 @@ Community and feedback → Contributing → Contributors → Star history → Fr
 
 ## B9: 官网
 
+2026-10-09 首页更新：从真实困难对话进入对练、原话复盘、3D 现场与视频示范；论文和五个双语指南继续保留。首屏改用当前正式应用的 3D 局部截图和猫咪教练，两支视频使用产品已有素材；共享额度和生成数据流说明与应用一致。`home.mjs` 管理首页内容区，`design-tokens.mjs` 构建时读应用色板；工作流增加色板变更触发，地图检查同时校验内部资源、锚点和当前语言链接。详见 [本次验收](./reviews/review-2026-10-09-pages-refresh.md)。下文保留早期设计决策记录。
+
 `site/` 是独立于 `app/` 的纯静态一页站：`content.mjs`（`L(zh, en)` 文案）+ `build.mjs`（零依赖）→ `dist/`，中文在 `/`，英文在 `/en/`。用户要求「前面 highlight 有论文，最后一节 Research 链接论文」，对应首屏的 arXiv 药丸和末节「这个产品来自一篇论文」。
 
 | 决策点 | 选择 | 原因 | 放弃的方案 |
