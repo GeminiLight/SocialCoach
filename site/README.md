@@ -9,7 +9,7 @@ SocialCoach 的对外官网：中英双语、纯静态，独立于 `app/` 的 Ne
 | `build.mjs` | 零依赖构建：`node site/build.mjs` → `dist/`（首页中文在 `/`、英文在 `/en/`；情境页在 `/guides/{id}/` 与 `/en/guides/{id}/`），附 `sitemap.xml` / `robots.txt` / `llms.txt` / JSON-LD / hreflang。场景标题、简介及来源直接读 `app/src/data/corpus/scenarios-*.ts`，情境分类读 `taxonomy.ts`，支持多行双语与已知出处工厂；缺字段、场景数量与文案不一致或不存在对应语料时构建失败 |
 | `scripts/og.mjs` | 用 `app/node_modules` 里的 sharp 生成 1200×630 社交预览图到 `assets/og-{zh,en}.png`，改文案后重跑一次并提交 |
 | `assets/` | `icon.svg`（与 `app/public/icon.svg` 同源）、OG 图、产品截图 |
-| `../.github/workflows/site.yml` | 推送到 `main` 且改动了 `site/**` 时构建并发布到 GitHub Pages |
+| `../.github/workflows/site.yml` | 官网、场景语料、分类或论文 PDF 变更时运行构建与地图检查；`main` 推送在已启用 GitHub Pages 时发布 |
 
 ## 本地预览
 
@@ -20,9 +20,9 @@ open site/dist/index.html          # 或 npx serve site/dist
 
 ## 部署
 
-网站地图包含全部中英文页面及本地论文 PDF；缺少 `docs/social-coach-paper.pdf` 时构建会失败，避免发布失效的引用与地图记录。研究区的「补充材料 / Supplementary materials」入口指向现有补充材料站。PR 先运行构建与地图检查，通过后合并到 `main` 才部署。
+网站地图包含全部中英文页面及本地论文 PDF；缺少 `docs/social-coach-paper.pdf` 时构建会失败，避免发布失效的引用与地图记录。研究区的「补充材料 / Supplementary materials」入口指向现有补充材料站。命中上述变更路径的 PR 会运行构建与地图检查，通过后合并到 `main` 才部署；未启用 Pages 的 Fork 也会验证构建。PR 检查使用 `content.mjs` 的默认站点地址，不依赖 Pages 配置，也不会取消正在进行的发布。
 
-用 GitHub Pages 的 **GitHub Actions** 来源，不需要 `gh-pages` 分支：仓库 Settings → Pages → Source 选 "GitHub Actions"，之后每次改 `site/` 推送即发布。绑自有域名后 `configure-pages` 会把域名传给构建；工作流统一把它转成 HTTPS，使 canonical、hreflang、sitemap、OG 和 JSON-LD 使用同一地址。
+用 GitHub Pages 的 **GitHub Actions** 来源，不需要 `gh-pages` 分支：仓库 Settings → Pages → Source 选 "GitHub Actions"，之后改动 `site/**`、`app/src/data/corpus/**`、`app/src/data/taxonomy.ts` 或论文 PDF 并推送到 `main` 即发布。绑自有域名后 `configure-pages` 会把域名传给构建；工作流统一把它转成 HTTPS，使 canonical、hreflang、sitemap、OG 和 JSON-LD 使用同一地址。
 
 本地构建默认以 `https://tianfuwang.tech/SocialCoach` 为站点地址，用 `SITE_URL=https://example.com node site/build.mjs` 覆盖。线上应用入口由 `content.mjs` 的 `site.appUrl` 配置。
 
