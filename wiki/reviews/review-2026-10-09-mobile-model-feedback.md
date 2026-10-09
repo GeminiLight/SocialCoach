@@ -17,6 +17,10 @@
 
 截图和原始结果：[手机首页反馈入口](../../docs/reviews/mobile-model-feedback-2026-10-09/home-mobile-feedback.png)、[模型接入](../../docs/reviews/mobile-model-feedback-2026-10-09/model-mobile-editable.png)、[浏览器组合](../../docs/reviews/mobile-model-feedback-2026-10-09/browser-checks.json)。
 
+## 发布复核
+
+PR #29 已合并，应用源 `e1c7260`；Vercel `dpl_E2uatVs8hjbacgoawPvnh5PeWnjF` Ready，ModelScope 镜像源 `19df046`、410 个产品输入与主线逐项一致、Running。主站 WebKit 与国内公开嵌入页 Chromium 的 375px 手机视口均确认反馈按钮可打开表单、模型 ID 可清空后逐字输入、API 地址直接可见；验证后取消个人模型编辑，没有真实反馈提交或保存个人模型。原件：[主站](../../docs/reviews/mobile-model-feedback-2026-10-09/live-main.json)、[国内站](../../docs/reviews/mobile-model-feedback-2026-10-09/live-studio.json)。
+
 边界：WebKit 与手机视口不能替代真实 iPhone 微信内核验；用户报告的“不能输入”硬故障未在本次可用环境中复现。本次修订改善可发现性、清空与输入交互，不宣称已定位某个微信版本的内核问题。
 
 Skill evolution：无需修改技能；该经验按本仓库入口与验收记录维护。

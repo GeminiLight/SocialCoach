@@ -1,0 +1,13 @@
+{
+  "deployment": "main",
+  "engine": "WebKit",
+  "viewport": 375,
+  "feedbackVisible": true,
+  "feedbackFormOpened": true,
+  "modelExampleIsPlaceholder": true,
+  "customModelTyped": true,
+  "clearFocus": true,
+  "baseUrlVisible": true,
+  "realFeedbackSent": false,
+  "personalModelSaved": false
+}
