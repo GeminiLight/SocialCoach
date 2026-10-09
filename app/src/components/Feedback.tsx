@@ -50,9 +50,9 @@ const useFeedback = create<{ open: boolean; rating?: Feedback["rating"]; show: (
   open: false, show: (rating) => set({ open: true, rating }), close: () => set({ open: false }),
 }));
 
-export function FeedbackButton({ className = "", compact = false }: { className?: string; compact?: boolean }) {
+export function FeedbackButton({ className = "", compact = false, plain = false }: { className?: string; compact?: boolean; plain?: boolean }) {
   const lang = useLang();
-  return <button type="button" aria-label={pick(copy.entry, lang)} className={`press inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line bg-card ${compact ? "px-3 sm:px-4" : "px-4"} text-[13px] font-medium text-ink-2 ${className}`} onClick={() => useFeedback.getState().show()}><MessageSquare size={16} /><span className={compact ? "hidden sm:inline" : undefined}>{pick(copy.entry, lang)}</span></button>;
+  return <button type="button" aria-label={pick(copy.entry, lang)} className={`press inline-flex min-h-11 items-center justify-center gap-2 text-[13px] font-medium ${plain ? "min-w-11 px-2 rounded-[var(--radius-sm)] text-ink-3 hover:bg-inset hover:text-ink" : `rounded-full border border-line bg-card ${compact ? "px-3 sm:px-4" : "px-4"} text-ink-2`} ${className}`} onClick={() => useFeedback.getState().show()}>{!plain && <MessageSquare size={16} aria-hidden />}<span className={compact && !plain ? "hidden sm:inline" : undefined}>{pick(copy.entry, lang)}</span></button>;
 }
 
 export function FeedbackPrompt() {

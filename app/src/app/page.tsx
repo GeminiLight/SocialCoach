@@ -8,6 +8,7 @@ import { DinnerEntry } from "@/components/DinnerEntry";
 import { CoachMascot } from "@/components/CoachMascot";
 import { Shell } from "@/components/Shell";
 import { GitHubLink } from "@/components/GitHubLink";
+import { FeedbackButton } from "@/components/Feedback";
 import { Button, Page, SectionTitle, Stages, Stars } from "@/components/ui";
 import { Level, SkillTag } from "@/components/SkillBits";
 import { computeStreak, todayKey, useApp, useLang } from "@/store/useApp";
@@ -111,6 +112,7 @@ export default function Home() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <GitHubLink lang={lang} className="lg:hidden" />
+            <FeedbackButton plain className="lg:hidden" />
             <Link
               href="/arena"
               className="press flex items-center gap-2 min-h-11 text-[13px] font-medium text-ink-2 rounded-full px-3 hover:bg-inset"
