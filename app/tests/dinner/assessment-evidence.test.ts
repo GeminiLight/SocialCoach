@@ -30,6 +30,18 @@ test('bounded fact checks and field corrections reserve output for JSON, preserv
  assert.equal(checks,2);assert.equal(corrections,1);
 });
 
+test('DeepSeek evidence verification keeps reasoning and reserves enough output for its verdict',async()=>{
+ let calls=0;
+ const llm:LLM={chatStream:()=>stream(''),chatText:async o=>{
+  calls++;
+  // The reproduced 5,000-token thinking check finished with no JSON body.
+  if(o.thinking===false||o.maxTokens<10000)return '';
+  return JSON.stringify({approved:true,issues:[]});
+ }};
+ assert.equal((await checkAssessment(report,input,llm,'deepseek-flash')).approved,true);
+ assert.equal(calls,1);
+});
+
 test('a pending game invitation cannot be described as already joining, even when the model approves',async()=>{
  const waiting={...input,messages:[{id:'g1',role:'learner' as const,characterId:role,text:'I would like to join the game.',ts:1},{id:'g2',role:'npc' as const,text:'The game is about to start; you can join us.',ts:2}]};
  const draft={...report,summary:'You accepted the invitation to join the game.',ratings:report.ratings!.map(r=>({...r,reason:'A clear boundary stated right after joining the game.'}))};

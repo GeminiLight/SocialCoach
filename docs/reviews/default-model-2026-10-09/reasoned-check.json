@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "checkerOutputBudget": 10000,
+  "seconds": 62.84,
+  "calls": [
+    {
+      "kind": "stream",
+      "seconds": 23.938,
+      "outputCharacters": 2179
+    },
+    {
+      "kind": "text",
+      "seconds": 38.906,
+      "outputCharacters": 126
+    }
+  ]
+}
