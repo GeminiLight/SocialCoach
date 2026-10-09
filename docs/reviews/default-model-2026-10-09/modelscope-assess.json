@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "method": "POST",
+  "path": "/api/assess",
+  "responseBytes": null,
+  "durationMilliseconds": "111270",
+  "reportRendered": true,
+  "heading": "一句清晰的「不能留下」，Michael 接受理由并转入时间协商。",
+  "appSource": "6ce65e0627db0c4e02a85baefeb6224006c1bfbc",
+  "studioCommit": "57129786590f55d0bd396cb0d47b645e2641b2b2"
+}
