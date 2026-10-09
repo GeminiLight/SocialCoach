@@ -14,6 +14,22 @@ const report:Report={objectiveResults:scenario.objectives.map((_,index)=>({index
 const stream=(value:string,refused=false)=>({deltas:(async function*(){yield value;})(),text:()=>value,refused:()=>refused});
 const isCheck=(o:ChatOpts)=>JSON.stringify(o.system).includes('ASSESSMENT FACT CHECK');
 
+test('bounded fact checks and field corrections reserve output for JSON, preserving evidence checks',async()=>{
+ let checks=0,corrections=0;
+ const wrong={...report,summary:'你喝了茶。'};
+ const llm:LLM={chatStream:()=>stream(JSON.stringify(wrong)),chatText:async o=>{
+  // A reasoning provider can use the entire bounded output on thought and return no text.
+  if(o.thinking!==false)return '';
+  if(isCheck(o))return JSON.stringify(++checks===1?{approved:false,issues:[{field:'summary',reason:'The transcript never establishes drinking.'}]}:{approved:true,issues:[]});
+  corrections++;return JSON.stringify({summary:report.summary});
+ }};
+ const result=await runAssess(input,llm,'smart');
+ assert.equal(result.summary,report.summary);
+ assert.equal(result.verdictEvidence,quote);
+ assert.deepEqual(result.ratings,report.ratings);
+ assert.equal(checks,2);assert.equal(corrections,1);
+});
+
 test('a pending game invitation cannot be described as already joining, even when the model approves',async()=>{
  const waiting={...input,messages:[{id:'g1',role:'learner' as const,characterId:role,text:'I would like to join the game.',ts:1},{id:'g2',role:'npc' as const,text:'The game is about to start; you can join us.',ts:2}]};
  const draft={...report,summary:'You accepted the invitation to join the game.',ratings:report.ratings!.map(r=>({...r,reason:'A clear boundary stated right after joining the game.'}))};

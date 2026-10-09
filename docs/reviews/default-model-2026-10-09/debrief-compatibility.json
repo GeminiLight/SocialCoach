@@ -1,0 +1,71 @@
+{
+  "baseline": {
+    "success": false,
+    "error": {
+      "name": "Error",
+      "message": "这次复盘还没能可靠地核对原话。对话已保留，请重试。",
+      "status": 502
+    },
+    "calls": [
+      {
+        "kind": "stream",
+        "maxTokens": 7000,
+        "seconds": 27.803,
+        "outputCharacters": 2378
+      },
+      {
+        "kind": "text",
+        "maxTokens": 5000,
+        "seconds": 24.545,
+        "outputCharacters": 0
+      }
+    ]
+  },
+  "candidate": {
+    "success": true,
+    "calls": [
+      {
+        "kind": "stream",
+        "maxTokens": 7000,
+        "seconds": 28.13,
+        "thinking": null,
+        "outputCharacters": 2426
+      },
+      {
+        "kind": "text",
+        "maxTokens": 5000,
+        "seconds": 3.857,
+        "thinking": false,
+        "outputCharacters": 2899
+      },
+      {
+        "kind": "text",
+        "maxTokens": 4000,
+        "seconds": 3.413,
+        "thinking": false,
+        "outputCharacters": 1792
+      },
+      {
+        "kind": "text",
+        "maxTokens": 5000,
+        "seconds": 3.633,
+        "thinking": false,
+        "outputCharacters": 1143
+      },
+      {
+        "kind": "text",
+        "maxTokens": 4000,
+        "seconds": 2.408,
+        "thinking": false,
+        "outputCharacters": 1149
+      },
+      {
+        "kind": "text",
+        "maxTokens": 5000,
+        "seconds": 0.62,
+        "thinking": false,
+        "outputCharacters": 60
+      }
+    ]
+  }
+}

@@ -240,6 +240,8 @@ type ChatRole = "learner" | "npc" | "coach" | "event";   // event = 房间里发
 | `LLM_FAST_MODEL` | 对话 / 提示 / 排程 / 生成场景 | `claude-sonnet-5` |
 | `LLM_SMART_MODEL` | 复盘报告 | `claude-opus-5` |
 
+2026-10-09：主站与 ModelScope 的默认共享模型配置为 `LLM_PROVIDER=openai`、`LLM_BASE_URL=https://api.deepseek.com`，fast / smart 均为 `deepseek-flash`；凭证保留在平台 Secret。`LLM_OPENAI_THINKING=disabled` 只对声明 `thinking:false` 的短任务生效，完整报告仍可推理；有限输出的原话校验与字段修订也声明非推理，避免思考耗尽 JSON 输出额度。显式非推理请求不同时发送 reasoning effort。NPC 自然语音通过独立 `NPC_SPEECH_API_KEY` / `NPC_SPEECH_BASE_URL` 保留原 MiMo 网关，不随对话模型切换。共享中央日上限、已用计数和并发政策保留。→ [DeepSeek 接口依据](./refs/deepseek-api.md)
+
 服务端按当前协议复用 Anthropic 或 OpenAI SDK 实例，`maxRetries: 2`，`timeout: 120_000`（`src/lib/llm.ts`）。
 
 ## 构建命令
