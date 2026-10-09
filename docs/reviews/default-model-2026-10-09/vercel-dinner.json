@@ -1,0 +1,6 @@
+{
+  "task": "dinner",
+  "status": 200,
+  "durationSeconds": 8.6,
+  "body": "{\"speakerId\":\"he\",\"text\":\"行，检查先放你名下。那数据和排版各自谁做？我六点半要按确认的内容发。\",\"cue\":\"何主管朝你倾身。\",\"reactions\":[{\"characterId\":\"he\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"ning\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"rui\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"workload\",\"beat\":\"favor\"},\"replyTo\":\"我可以做最后检查，但今晚不能接下数据和排版\",\"interjection\":{\"speakerId\":\"rui\",\"text\":\"数据我可以核，但得知道先核哪一份、要多久。\"}}"
+}

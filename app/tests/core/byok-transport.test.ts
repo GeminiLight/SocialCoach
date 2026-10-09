@@ -2,6 +2,17 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {checkByokConnection, makeByokLLM} from '../../src/lib/llm-client';
 import type {ByokConfig} from '../../src/lib/byok';
+import {openaiArgs} from '../../src/lib/llm-core';
+
+test('an explicit non-thinking request does not also request reasoning effort',()=>{
+ const options={system:'Return JSON.',messages:[{role:'user' as const,content:'Check the quoted evidence.'}],maxTokens:5000,thinking:false,effort:'low' as const};
+ const disabled=openaiArgs(options,'deepseek-flash','max_tokens',true);
+ assert.deepEqual(disabled.thinking,{type:'disabled'});
+ assert.equal('reasoning_effort' in disabled,false);
+ const unchanged=openaiArgs(options,'test-chat','max_tokens',false);
+ assert.equal('thinking' in unchanged,false);
+ assert.equal(unchanged.reasoning_effort,'low');
+});
 
 test('Anthropic full message endpoints and versioned bases produce one v1 route',async()=>{
  const original=globalThis.fetch;

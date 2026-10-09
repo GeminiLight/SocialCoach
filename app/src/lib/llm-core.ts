@@ -90,6 +90,7 @@ export function anthropicArgs(o: ChatOpts, fallbackModel: string) {
  * and system parts are joined into one system message.
  */
 export function openaiArgs(o: ChatOpts, fallbackModel: string, tokenParam: TokenParam, disableThinking = false) {
+  const nonThinking = disableThinking && o.thinking === false;
   return {
     model: o.model ?? fallbackModel,
     [tokenParam]: o.maxTokens,
@@ -97,12 +98,12 @@ export function openaiArgs(o: ChatOpts, fallbackModel: string, tokenParam: Token
     // so a short budget can come back empty. Endpoints differ on how to turn it
     // off — GLM takes `thinking`, official OpenAI rejects the field outright —
     // hence the opt-in.
-    ...(disableThinking && o.thinking === false ? { thinking: { type: "disabled" as const } } : {}),
+    ...(nonThinking ? { thinking: { type: "disabled" as const } } : {}),
     messages: [
       { role: "system" as const, content: systemParts(o.system).map((p) => p.text).join("\n\n") },
       ...o.messages.map((m) => ({ role: m.role, content: m.content })),
     ],
-    ...(o.effort ? { reasoning_effort: o.effort } : {}),
+    ...(o.effort && !nonThinking ? { reasoning_effort: o.effort } : {}),
   };
 }
 

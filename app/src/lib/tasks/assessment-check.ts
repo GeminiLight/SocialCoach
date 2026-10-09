@@ -35,7 +35,8 @@ Return ONLY JSON {"approved":true|false,"issues":[{"field":"objectiveResults|rat
 export async function checkAssessment(report:Report,input:AssessInput,llm:LLM,model:string,signal?:AbortSignal,retrievedKnowledge?:{theories:Theory[];cases:Case[]}){
  signal?.throwIfAborted();
  const publicScene=scenarioBlock(input.scenario,input.lang,input.learnerCharacterId,'learner');
- const text=await llm.chatText({model,signal,maxTokens:5000,effort:'low',system,messages:[{role:'user',content:JSON.stringify({transcript:input.messages.filter(m=>m.role!=='coach').map((m,index)=>({index,role:m.role,characterId:m.characterId,text:m.text,kind:m.kind})),publicScene,observations:input.sceneContext,retrievedKnowledge,report})}]});
+ // This bounded JSON check must leave output for the evidence verdict, rather than hidden thought.
+ const text=await llm.chatText({model,signal,maxTokens:5000,thinking:false,effort:'low',system,messages:[{role:'user',content:JSON.stringify({transcript:input.messages.filter(m=>m.role!=='coach').map((m,index)=>({index,role:m.role,characterId:m.characterId,text:m.text,kind:m.kind})),publicScene,observations:input.sceneContext,retrievedKnowledge,report})}]});
  signal?.throwIfAborted();
  let result:z.infer<typeof CheckSchema>;
  // A malformed checker response is an assessment failure, not a provider
