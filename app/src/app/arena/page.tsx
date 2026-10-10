@@ -43,7 +43,7 @@ export default function Arena() {
     if (!value || value === "all") next.delete(key); else next.set(key, value);
     if (key === "context" && value === "all") next.delete("collection");
     if (key !== "limit") next.delete("limit");
-    window.history.replaceState(null, "", `/arena${next.size ? `?${next}` : ""}`);
+    router.replace(`/arena${next.size ? `?${next}` : ""}`, { scroll: false });
   };
   const setQ = (value: string) => setFilter("q", value);
   const setCtx = (value: ContextId | "all" | "mine") => setFilter("context", value);
@@ -135,7 +135,7 @@ export default function Arena() {
   };
   const filtering = ctx !== "all" || !!skill || !!q.trim() || difficulty !== "all" || practiced !== "all" || recent;
   const reset = () => {
-    window.history.replaceState(null, "", "/arena");
+    router.replace("/arena", { scroll: false });
     searchRef.current?.focus();
   };
   const orderedSkills = [...SKILLS.filter((s) => profile?.goals.includes(s.id)), ...SKILLS.filter((s) => !profile?.goals.includes(s.id))];
