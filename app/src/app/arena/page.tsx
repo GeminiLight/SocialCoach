@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, ArrowRight, ArrowUpRight, ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import Link from "next/link";
@@ -12,7 +12,7 @@ import { CONTEXTS, SKILLS, contextById, skillById, type ContextId, type SkillId 
 import { useApp, useLang } from "@/store/useApp";
 import { pick, t } from "@/lib/i18n";
 import { buildSession } from "@/lib/session-utils";
-import { rememberArenaLocation } from "@/lib/arena-location";
+import { arenaSearchSnapshot, rememberArenaLocation, replaceArenaLocation, subscribeArenaLocation } from "@/lib/arena-location";
 import { clsx } from "clsx";
 
 const copy = {
@@ -25,7 +25,12 @@ const RECENT_IDS = new Set(SCENARIOS_D.map((s) => s.id));
 export default function Arena() {
   const lang = useLang();
   const router = useRouter();
-  const params = useSearchParams();
+  const routeParams = useSearchParams();
+  const search = useSyncExternalStore(subscribeArenaLocation, arenaSearchSnapshot, () => {
+    const query = routeParams.toString();
+    return query ? `?${query}` : "";
+  });
+  const params = useMemo(() => new URLSearchParams(search), [search]);
   useEffect(() => { rememberArenaLocation(params.toString()); }, [params]);
   const { profile, sessions, customScenarios, addSession } = useApp();
   // The URL keeps the collection intact when returning from a scene.
@@ -43,7 +48,7 @@ export default function Arena() {
     if (!value || value === "all") next.delete(key); else next.set(key, value);
     if (key === "context" && value === "all") next.delete("collection");
     if (key !== "limit") next.delete("limit");
-    router.replace(`/arena${next.size ? `?${next}` : ""}`, { scroll: false });
+    replaceArenaLocation(next.toString());
   };
   const setQ = (value: string) => setFilter("q", value);
   const setCtx = (value: ContextId | "all" | "mine") => setFilter("context", value);
@@ -135,7 +140,7 @@ export default function Arena() {
   };
   const filtering = ctx !== "all" || !!skill || !!q.trim() || difficulty !== "all" || practiced !== "all" || recent;
   const reset = () => {
-    router.replace("/arena", { scroll: false });
+    replaceArenaLocation("");
     searchRef.current?.focus();
   };
   const orderedSkills = [...SKILLS.filter((s) => profile?.goals.includes(s.id)), ...SKILLS.filter((s) => !profile?.goals.includes(s.id))];
