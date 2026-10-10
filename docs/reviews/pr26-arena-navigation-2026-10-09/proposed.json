@@ -1,0 +1,166 @@
+[
+  {
+    "label": "proposed",
+    "engine": "chromium",
+    "width": 375,
+    "initialCount": 12,
+    "category": {
+      "url": "?context=workplace",
+      "selected": [
+        "职场18"
+      ],
+      "rows": [
+        "职场进阶6 分钟",
+        "职场进阶6 分钟",
+        "职场挑战7 分钟",
+        "职场进阶4 分钟",
+        "职场进阶5 分钟",
+        "职场进阶5 分钟",
+        "职场进阶4 分钟",
+        "职场挑战5 分钟",
+        "职场挑战5 分钟",
+        "职场进阶4 分钟",
+        "职场进阶4 分钟",
+        "职场入门3 分钟"
+      ]
+    },
+    "typing": {
+      "expected": "manager",
+      "actual": "r",
+      "query": "r",
+      "results": "18 个场景"
+    },
+    "combined": {
+      "context": null,
+      "collection": "recent",
+      "selected": [
+        "本次新增12"
+      ]
+    },
+    "navigationRequests": 12,
+    "errors": []
+  },
+  {
+    "label": "proposed",
+    "engine": "chromium",
+    "width": 1440,
+    "initialCount": 12,
+    "category": {
+      "url": "?context=workplace",
+      "selected": [
+        "职场18"
+      ],
+      "rows": [
+        "职场进阶6 分钟",
+        "职场进阶6 分钟",
+        "职场挑战7 分钟",
+        "职场进阶4 分钟",
+        "职场进阶5 分钟",
+        "职场进阶5 分钟",
+        "职场进阶4 分钟",
+        "职场挑战5 分钟",
+        "职场挑战5 分钟",
+        "职场进阶4 分钟",
+        "职场进阶4 分钟",
+        "职场入门3 分钟"
+      ]
+    },
+    "typing": {
+      "expected": "manager",
+      "actual": "r",
+      "query": "r",
+      "results": "18 个场景"
+    },
+    "combined": {
+      "context": null,
+      "collection": "recent",
+      "selected": [
+        "本次新增12"
+      ]
+    },
+    "navigationRequests": 12,
+    "errors": []
+  },
+  {
+    "label": "proposed",
+    "engine": "webkit",
+    "width": 375,
+    "initialCount": 12,
+    "category": {
+      "url": "?context=workplace",
+      "selected": [
+        "职场18"
+      ],
+      "rows": [
+        "职场进阶6 分钟",
+        "职场进阶6 分钟",
+        "职场挑战7 分钟",
+        "职场进阶4 分钟",
+        "职场进阶5 分钟",
+        "职场进阶5 分钟",
+        "职场进阶4 分钟",
+        "职场挑战5 分钟",
+        "职场挑战5 分钟",
+        "职场进阶4 分钟",
+        "职场进阶4 分钟",
+        "职场入门3 分钟"
+      ]
+    },
+    "typing": {
+      "expected": "manager",
+      "actual": "r",
+      "query": "r",
+      "results": "18 个场景"
+    },
+    "combined": {
+      "context": null,
+      "collection": "recent",
+      "selected": [
+        "本次新增12"
+      ]
+    },
+    "navigationRequests": 12,
+    "errors": []
+  },
+  {
+    "label": "proposed",
+    "engine": "webkit",
+    "width": 1440,
+    "initialCount": 12,
+    "category": {
+      "url": "?context=workplace",
+      "selected": [
+        "职场18"
+      ],
+      "rows": [
+        "职场进阶6 分钟",
+        "职场进阶6 分钟",
+        "职场挑战7 分钟",
+        "职场进阶4 分钟",
+        "职场进阶5 分钟",
+        "职场进阶5 分钟",
+        "职场进阶4 分钟",
+        "职场挑战5 分钟",
+        "职场挑战5 分钟",
+        "职场进阶4 分钟",
+        "职场进阶4 分钟",
+        "职场入门3 分钟"
+      ]
+    },
+    "typing": {
+      "expected": "manager",
+      "actual": "r",
+      "query": "r",
+      "results": "18 个场景"
+    },
+    "combined": {
+      "context": null,
+      "collection": "recent",
+      "selected": [
+        "本次新增12"
+      ]
+    },
+    "navigationRequests": 12,
+    "errors": []
+  }
+]

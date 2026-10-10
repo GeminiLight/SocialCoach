@@ -188,7 +188,7 @@ type ChatRole = "learner" | "npc" | "coach" | "event";   // event = 房间里发
 
 `useSessionDraft(sessionId)` 同步写入 `sessionStorage["socialcoach.draft.<id>"]`，刷新或当前标签页返回时恢复；空文本 / 发送时删除。网络失败的已发送内容仍在本地转录中，点击重试会移回输入框，用户确认后再次发送。`PracticePage` 按 session id 给组件设置 key，避免切换场次复用草稿状态。存储权限不足时保留内存输入并提示未保存。
 
-`/arena` 的搜索、情境、技能、难度、练习记录筛选及展示数量由 URL 查询参数驱动，使用原生 `history.replaceState` 更新而不增加每次输入的返回栈。`arena-location.ts` 在标签页记住最近目录地址，简报返回时恢复；读取只接受 `/arena` 或 `/arena?...`。`useApp.reset()` 删除这两类标签页数据及原有排练草稿，不清理其他应用的键。
+`/arena` 的搜索、情境、技能、难度、练习记录筛选及展示数量由 URL 查询参数驱动，使用原生 `history.replaceState` 更新而不增加每次输入的返回栈。2026-10-10 修订：`replaceArenaLocation` 先同步写地址与目录返回位置，再通知 `useSyncExternalStore` 订阅者；页面直接读取稳定的 `location.search` 字符串，监听本地通知和 `popstate`，服务端快照仍来自 Next.js 查询参数。连续输入按已经提交的地址合并，不依赖异步导航提交或框架 History 通知；不为筛选发送 RSC 请求。`arena-location.ts` 在标签页记住最近目录地址，简报返回时恢复；读取只接受 `/arena` 或 `/arena?...`。`useApp.reset()` 删除这两类标签页数据及原有排练草稿，不清理其他应用的键。
 
 以上是浏览器交互状态，不加入导出档案，不新增 API、账号或服务端练习存储。`PracticeJourney` 只负责路径导航说明，不改变会话状态机。
 

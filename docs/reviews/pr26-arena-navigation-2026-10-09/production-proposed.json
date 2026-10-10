@@ -1,0 +1,180 @@
+[
+  {
+    "label": "production-proposed",
+    "engine": "chromium",
+    "width": 375,
+    "initialCount": 12,
+    "category": {
+      "url": "?context=workplace",
+      "selected": [
+        "职场18"
+      ],
+      "rows": [
+        "职场进阶6 分钟",
+        "职场进阶6 分钟",
+        "职场挑战7 分钟",
+        "职场进阶4 分钟",
+        "职场进阶5 分钟",
+        "职场进阶5 分钟",
+        "职场进阶4 分钟",
+        "职场挑战5 分钟",
+        "职场挑战5 分钟",
+        "职场进阶4 分钟",
+        "职场进阶4 分钟",
+        "职场入门3 分钟"
+      ]
+    },
+    "typing": {
+      "expected": "manager",
+      "actual": "manager",
+      "query": "manager",
+      "results": "6 个场景"
+    },
+    "combined": {
+      "context": null,
+      "collection": "recent",
+      "selected": [
+        "本次新增12"
+      ]
+    },
+    "navigationRequests": 14,
+    "errors": []
+  },
+  {
+    "label": "production-proposed",
+    "engine": "chromium",
+    "width": 1440,
+    "initialCount": 12,
+    "category": {
+      "url": "?context=workplace",
+      "selected": [
+        "职场18"
+      ],
+      "rows": [
+        "职场进阶6 分钟",
+        "职场进阶6 分钟",
+        "职场挑战7 分钟",
+        "职场进阶4 分钟",
+        "职场进阶5 分钟",
+        "职场进阶5 分钟",
+        "职场进阶4 分钟",
+        "职场挑战5 分钟",
+        "职场挑战5 分钟",
+        "职场进阶4 分钟",
+        "职场进阶4 分钟",
+        "职场入门3 分钟"
+      ]
+    },
+    "typing": {
+      "expected": "manager",
+      "actual": "manager",
+      "query": "manager",
+      "results": "6 个场景"
+    },
+    "combined": {
+      "context": null,
+      "collection": "recent",
+      "selected": [
+        "本次新增12"
+      ]
+    },
+    "navigationRequests": 14,
+    "errors": []
+  },
+  {
+    "label": "production-proposed",
+    "engine": "webkit",
+    "width": 375,
+    "initialCount": 12,
+    "category": {
+      "url": "?context=workplace",
+      "selected": [
+        "职场18"
+      ],
+      "rows": [
+        "职场进阶6 分钟",
+        "职场进阶6 分钟",
+        "职场挑战7 分钟",
+        "职场进阶4 分钟",
+        "职场进阶5 分钟",
+        "职场进阶5 分钟",
+        "职场进阶4 分钟",
+        "职场挑战5 分钟",
+        "职场挑战5 分钟",
+        "职场进阶4 分钟",
+        "职场进阶4 分钟",
+        "职场入门3 分钟"
+      ]
+    },
+    "typing": {
+      "expected": "manager",
+      "actual": "manager",
+      "query": "manager",
+      "results": "6 个场景"
+    },
+    "combined": {
+      "context": null,
+      "collection": "recent",
+      "selected": [
+        "本次新增12"
+      ]
+    },
+    "navigationRequests": 14,
+    "errors": [
+      "/localhost:4323/rehearse?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/arena?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/progress?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/learn?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/settings?_rsc=_i_aeImnuN6u1u1r due to access control checks."
+    ]
+  },
+  {
+    "label": "production-proposed",
+    "engine": "webkit",
+    "width": 1440,
+    "initialCount": 12,
+    "category": {
+      "url": "?context=workplace",
+      "selected": [
+        "职场18"
+      ],
+      "rows": [
+        "职场进阶6 分钟",
+        "职场进阶6 分钟",
+        "职场挑战7 分钟",
+        "职场进阶4 分钟",
+        "职场进阶5 分钟",
+        "职场进阶5 分钟",
+        "职场进阶4 分钟",
+        "职场挑战5 分钟",
+        "职场挑战5 分钟",
+        "职场进阶4 分钟",
+        "职场进阶4 分钟",
+        "职场入门3 分钟"
+      ]
+    },
+    "typing": {
+      "expected": "manager",
+      "actual": "manager",
+      "query": "manager",
+      "results": "6 个场景"
+    },
+    "combined": {
+      "context": null,
+      "collection": "recent",
+      "selected": [
+        "本次新增12"
+      ]
+    },
+    "navigationRequests": 14,
+    "errors": [
+      "/localhost:4323/?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/arena?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/progress?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/learn?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/settings?_rsc=_i_aeImnuN6u1u1r due to access control checks.",
+      "/localhost:4323/rehearse?_rsc=_i_aeImnuN6u1u1r due to access control checks."
+    ]
+  }
+]
