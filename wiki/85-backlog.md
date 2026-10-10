@@ -4,7 +4,7 @@
 
 ## 待修订 PR（2026-10-09）
 
-- [ ] PR #26 原异步筛选补丁的连续选择 / 开发搜索回归已修订，采用同步 URL 与显式订阅；开发 / 正式中英手机桌面 176 项行为断言、322 项核心 / 3D 检查通过。正在完成远端合并门槛；保留原作者与提交。→ [首次审核](./reviews/review-2026-10-09-pr26-arena-navigation.md)、[修订验收](./reviews/review-2026-10-10-pr26-arena-revision.md)
+- [x] PR #26 原异步筛选补丁的连续选择 / 开发搜索回归已修订，采用同步 URL 与显式订阅；开发 / 正式中英手机桌面 16 组浏览器验收、322 项核心 / 3D 检查通过。PR #30 远端质量与预览部署通过后保留提交合并，#26 同时标记已合并；原作者 Yi Zhan / @USTChandsomeboy 的提交保留在主线。→ [首次审核](./reviews/review-2026-10-09-pr26-arena-navigation.md)、[修订验收](./reviews/review-2026-10-10-pr26-arena-revision.md)
 
 - [ ] 真实 iPhone / 微信复核返回目录后的快速输入：首次正式 WebKit 英文自动化读到空输入，后续整组及八次针对性回归通过，尚未定位首次现象；不把它计为已证实的生产故障或声称已修复。→ [边界](./reviews/review-2026-10-10-pr26-arena-revision.md)
 

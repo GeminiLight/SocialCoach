@@ -1,0 +1,11 @@
+{
+  "kind": "studio",
+  "engine": "Chromium",
+  "viewport": 375,
+  "rapidInput": true,
+  "combinedFilters": true,
+  "visibleListMatchesContext": true,
+  "explicitSubscriptionVerified": true,
+  "rows": 3,
+  "generationRequestsSent": false
+}

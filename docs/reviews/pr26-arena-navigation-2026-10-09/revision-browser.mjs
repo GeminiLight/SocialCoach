@@ -34,4 +34,4 @@ for(const [engine,type] of [['chromium',chromium],['webkit',webkit]].filter(([en
   results.push({engine,width,lang,attempt,combinedFilters:true,refresh:true,backForward:true,sceneReturn:true,clearFocus:true,pagination:true,rapidTyping:true,chineseInput:true,emptyReset:true,missingRouterNotification:true,errors});console.log('PASS',label,engine,width,lang);await context.close();
  }}finally{await browser.close();}
 }
-await writeFile('/tmp/socialcoach-pr26-'+label+'.json',JSON.stringify(results,null,2)+'\n');console.log('Passed '+results.length+' cases, 11 behavior checks each.');
+await writeFile('/tmp/socialcoach-pr26-'+label+'.json',JSON.stringify(results,null,2)+'\n');console.log('Passed '+results.length+' browser cases.');

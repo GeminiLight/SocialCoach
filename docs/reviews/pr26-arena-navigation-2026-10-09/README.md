@@ -19,8 +19,19 @@
 
 - [本轮原补丁反例](./red-revision.json)：再次复现，未据此推断原用户设备的具体故障。
 - [修订后的快速操作](./green-revision.json)：四组均保留完整 manager 及两个条件，额外关闭框架 History 通知。
-- [开发构建完整回归](./revision-dev.json)：八组，各 11 项行为断言。
+- [开发构建完整回归](./revision-dev.json)：八组，包含全部关键流程断言。
 - [正式构建完整回归](./revision-production.json)：相同验收边界。
 - [修订验收脚本](./revision-browser.mjs)：使用真实浏览器、断言和隔离档案，不以结果文件存在作为通过。脚本仅接受本地服务器；PLAYWRIGHT_MODULE 指定与已安装浏览器匹配的只读依赖。
 
 关闭框架通知是受控代理：保留真实 History 写入及其路由状态，只绕过 Next.js 对 replaceState 的通知。它不能代替真实微信设备验收。
+
+## 合并与公开页面
+
+PR #26 经维护者修订 PR #30 保留历史合入；两项均为 MERGED，主线 `c347a8a`。原作者 Yi Zhan / @USTChandsomeboy 的 `f5f69f2` 保留，GitHub Contributors 已列出该用户。远端 PR 与主线质量检查均通过。
+
+Vercel 生产 Ready；ModelScope 来源 `c347a8a`、镜像 `6cf21c9`、411 个构建输入一致、Running。公开页面分别用主站 WebKit / 国内嵌入页 Chromium 的手机视口复核快速输入、组合选择和实际列表；额外关闭框架通知，确认发布修订确实生效，没有生成请求。
+
+- [发布与 credit 原件](./release.json)
+- [主站公开浏览器](./live-main.json)
+- [国内公开浏览器](./live-studio.json)
+- [WebKit 返回后输入的八次针对性回归](./focused-webkit.json)；首次未定位的自动化现象及真机边界保留在 Wiki，不把复跑当成根因修复。
