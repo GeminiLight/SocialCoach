@@ -6,6 +6,7 @@ import type { Scenario } from "@/data/corpus/types";
 import type { ChatMessage, Profile, Proficiency, Reflection, Report, Session } from "@/lib/types";
 import type { PatternResult } from "@/lib/tasks/types";
 import { DEVICE_KEY, OPEN_DAY_KEY } from "@/lib/analytics/keys";
+import {clearPendingTracking} from '@/lib/analytics/pending';
 import {parseArchive} from '@/lib/archive';
 import {estimateProficiency} from '@/lib/proficiency';
 import {createArchiveStorage,type SaveIssue} from './archive-storage';
@@ -202,6 +203,7 @@ export const useApp = create<AppState>()(
       setSettings: (p) => set((s) => ({ settings: { ...s.settings, ...p } })),
       setPatternInsight: (result, from) => set({ patternInsight: { result, from, at: Date.now() } }),
       reset: () => {
+        clearPendingTracking();
         archiveStorage.reset(true);
         try {
           // Clear only this app's tab state, including unsent practice drafts.

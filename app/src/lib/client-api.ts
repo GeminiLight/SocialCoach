@@ -216,6 +216,7 @@ export async function reflectStream(body:ReflectInput,onText:(full:string)=>void
 
 /** Stream plain text from an endpoint; calls onText with the accumulated text. */
 export async function streamText(url: string, body: unknown, onText: (full: string) => void, signal?: AbortSignal): Promise<string> {
+  signal?.throwIfAborted();
   const res = await safeFetch(url, { method: "POST", headers: { "Content-Type": "application/json","Accept-Language":(body as {lang?:Lang})?.lang??"zh" }, body: JSON.stringify(body), signal }, (body as { lang?: Lang })?.lang);
   if (!res.ok || !res.body) {
     let msg = res.statusText;
@@ -231,13 +232,26 @@ export async function streamText(url: string, body: unknown, onText: (full: stri
   const reader = res.body.getReader();
   const dec = new TextDecoder();
   let full = "";
-  for (;;) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    full += dec.decode(value, { stream: true });
-    onText(full);
+  const cancel = () => { void reader.cancel().catch(() => {}); };
+  signal?.addEventListener('abort', cancel, {once: true});
+  try {
+    signal?.throwIfAborted();
+    for (;;) {
+      const { value, done } = await reader.read();
+      signal?.throwIfAborted();
+      if (done) break;
+      full += dec.decode(value, { stream: true });
+      onText(full);
+    }
+    const tail = dec.decode();
+    if (tail) { full += tail; onText(full); }
+    signal?.throwIfAborted();
+    return full;
+  } finally {
+    signal?.removeEventListener('abort', cancel);
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
   }
-  return full;
 }
 
 /**
