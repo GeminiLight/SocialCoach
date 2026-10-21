@@ -2,6 +2,7 @@
 import { useApp } from "@/store/useApp";
 import { DEVICE_KEY, OPEN_DAY_KEY } from "./keys";
 import type { TrackBatch, TrackEvent } from "./schema";
+import {clearPendingTracking, pendingTracking} from './pending';
 
 /**
  * Client side of usage analytics.
@@ -20,7 +21,6 @@ import type { TrackBatch, TrackEvent } from "./schema";
 const MAX_BATCH = 20;
 const DEBOUNCE_MS = 2500;
 
-let queue: TrackEvent[] = [];
 let timer: ReturnType<typeof setTimeout> | undefined;
 let available: boolean | null = null;
 let probing: Promise<boolean> | undefined;
@@ -55,6 +55,12 @@ async function probe(): Promise<boolean> {
 function listen() {
   if (listening || typeof document === "undefined") return;
   listening = true;
+  useApp.subscribe((state, previous) => {
+    if (state.settings.telemetry === false && previous.settings.telemetry !== false) {
+      clearTimeout(timer);
+      clearPendingTracking();
+    }
+  });
   const onHide = () => { if (document.visibilityState === "hidden") void flushTracking(); };
   document.addEventListener("visibilitychange", onHide);
   window.addEventListener("pagehide", () => void flushTracking());
@@ -63,9 +69,9 @@ function listen() {
 /** Queue one event. Cheap to call; the network happens later. */
 export function track(event: TrackEvent) {
   if (typeof window === "undefined" || !enabled()) return;
-  queue.push(event);
+  pendingTracking.events.push(event);
   listen();
-  if (queue.length >= MAX_BATCH) void flushTracking();
+  if (pendingTracking.events.length >= MAX_BATCH) void flushTracking();
   else {
     clearTimeout(timer);
     timer = setTimeout(() => void flushTracking(), DEBOUNCE_MS);
@@ -75,14 +81,19 @@ export function track(event: TrackEvent) {
 /** Send whatever is queued. Safe to call any time. */
 export async function flushTracking() {
   clearTimeout(timer);
-  if (!queue.length) return;
-  if (!enabled()) { queue = []; return; }
-  if (!(await probe())) { queue = []; return; }
+  if (!pendingTracking.events.length) return;
+  if (!enabled()) { clearPendingTracking(); return; }
+  const generation = pendingTracking.generation;
+  const configured = await probe();
+  // Opt-out or reset can happen while the capability request is pending.
+  // An older flush must neither send nor erase a new identity's events.
+  if (generation !== pendingTracking.generation) return;
+  if (!enabled() || !configured) { clearPendingTracking(); return; }
   const device = deviceId();
-  if (!device) { queue = []; return; }
+  if (!device) { clearPendingTracking(); return; }
   const lang = useApp.getState().profile?.lang ?? "zh";
-  while (queue.length) {
-    const events = queue.splice(0, MAX_BATCH);
+  while (pendingTracking.events.length) {
+    const events = pendingTracking.events.splice(0, MAX_BATCH);
     const batch: TrackBatch = { id: crypto.randomUUID(), device, lang, events };
     const body = JSON.stringify(batch);
     let sent = false;

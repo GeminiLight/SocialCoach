@@ -45,8 +45,12 @@ export function createArchiveStorage(notify:(issue:SaveIssue|null)=>void,seriali
     localStorage.setItem(name,value);lastRaw=value;notify(null);
    }catch(error){blockedWrite=true;notify((error as Error)?.name==='QuotaExceededError'?'quota':'unavailable');}
    };
-   if(!locks()&&serialize){
-    const operation=serialize(write).catch(()=>{if(ticket===generation){blockedWrite=true;notify('unavailable');}});
+   // A BFCache return keeps this storage instance but pagehide released its
+   // lock. Reacquire before the next write, without accepting a changed disk
+   // snapshot. Ordinary writes by the current owner remain synchronous.
+   const needsLock=locks()&&!owner&&!blockedRead&&!blockedWrite;
+   if(needsLock||(!locks()&&serialize)){
+    const operation=(needsLock?acquire().then(write):serialize!(write)).catch(()=>{if(ticket===generation){blockedWrite=true;notify('unavailable');}});
     pending.add(operation);void operation.then(()=>pending.delete(operation));return operation;
    }
    write();
