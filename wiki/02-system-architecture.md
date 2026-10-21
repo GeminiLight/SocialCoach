@@ -4,6 +4,8 @@
 
 2026-10-06 本地 NPC 精修：文字与 3D 模拟共用 `lib/npc-craft.ts`；`voices.ts` 保存 15 位 3D 人物的双语表达方向，新局写入私有 `contentSnapshot.direction.cast[].voice?`。模拟 payload 加 `lastObservedReactions`，只取档案中最后一次已记录反应，不制造缺省心理状态。具体场景约束按开局组织；整句复播和已复现的时间 / 称谓 / 语言问题共用已有未展示修复，不增加常规模型调用。听者点头只作用于显示层，不改世界或事实。见 [NPC 方案](./specs/spec-npc-craft.md) 与 [复盘](./81-postmortem-npc-grounding.md)。
 
+复盘追问与反思在字面引文 / 来源校验后，经 `tasks/debrief-check.ts` 独立核对完整公开转录与示范意图，最多一次重新生成并再次核对，只有通过的文本交付。相同任务适用于托管与 BYOK；85 秒 / 四次调用总预算，路由 90 秒，不新增服务器档案。见 [复盘核对复盘](./81-postmortem-debrief-grounding.md)。
+
 ## 技术栈
 
 | 层 | 技术 |

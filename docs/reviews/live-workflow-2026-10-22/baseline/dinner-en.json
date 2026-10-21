@@ -1,0 +1,585 @@
+{
+  "at": "2026-10-21T17:28:25.567Z",
+  "id": "dinner-en",
+  "lang": "en",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "stage": "complete",
+  "calls": [
+    {
+      "stage": "turn-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"I cannot take all three tasks. Who owns each part?\",\"speakerId\":\"he\",\"text\":\"Fair. So final review could be yours, once data and layout exist. But that leaves data and layout unowned. Rui, Ning—can either of you take one tonight?\",\"reactions\":[{\"characterId\":\"he\",\"emotion\":\"pressing\",\"gesture\":\"lean\"},{\"characterId\":\"ning\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"rui\",\"emotion\":\"thinking\",\"gesture\":\"fold\"}],\"story\":{\"topic\":\"workload\",\"beat\":\"favor\"},\"interjection\":{\"speakerId\":\"rui\",\"text\":\"I can check sources tonight—but data summary is more than checking. Who writes it?\"}}",
+      "ok": true,
+      "ms": 4592
+    },
+    {
+      "stage": "turn-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"I have not agreed to the deadline\",\"speakerId\":\"he\",\"text\":\"The deadline isn't mine to negotiate—it's in the client's email: main proposal and data summary, by 18:30. Unchecked? The whole data summary. The proposal itself can be organized from what's confirmed. Rui offered to check sources tonight, but hasn't committed yet.\",\"reactions\":[{\"characterId\":\"he\",\"emotion\":\"pressing\",\"gesture\":\"lean\"},{\"characterId\":\"ning\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"rui\",\"emotion\":\"neutral\",\"gesture\":\"fold\"}],\"story\":{\"topic\":\"workload\",\"beat\":\"priority\"},\"interjection\":{\"speakerId\":\"ning\",\"text\":\"And layout is still nobody's. I could do it—if someone tells me what the data summary will actually contain.\"}}",
+      "ok": true,
+      "ms": 5841
+    },
+    {
+      "stage": "turn-3",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"My capacity limit remains\",\"speakerId\":\"he\",\"text\":\"Apology accepted—no offense taken. The main proposal is already yours; that's not extra. So the real question: will you do the final review once data and layout exist, yes or conditionally?\",\"reactions\":[{\"characterId\":\"he\",\"emotion\":\"pressing\",\"gesture\":\"lean\"},{\"characterId\":\"ning\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"rui\",\"emotion\":\"neutral\",\"gesture\":\"fold\"}],\"story\":{\"topic\":\"workload\",\"beat\":\"favor\"},\"interjection\":{\"speakerId\":\"rui\",\"text\":\"Before anyone commits: my source check would take until about 18:20. Result uncertain.\"}}",
+      "ok": true,
+      "ms": 5842
+    },
+    {
+      "stage": "turn-4",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"I can offer a final review after the checks\",\"speakerId\":\"he\",\"text\":\"Here's my proposal: Rui checks sources until 18:20, Ning lays out what's confirmed, you do a fast final review after. If the data check isn't done by then, I send the proposal and mark the summary as pending. Can you review in that ten-minute window?\",\"reactions\":[{\"characterId\":\"he\",\"emotion\":\"pressing\",\"gesture\":\"lean\"},{\"characterId\":\"ning\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"rui\",\"emotion\":\"neutral\",\"gesture\":\"fold\"}],\"story\":{\"topic\":\"workload\",\"beat\":\"send\"},\"interjection\":{\"speakerId\":\"ning\",\"text\":\"If it's confirmed content only, I can start layout now—say the word.\"}}",
+      "ok": true,
+      "ms": 7998
+    },
+    {
+      "stage": "turn-5",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"Who would tell the manager if those conditions are not met?\",\"speakerId\":\"he\",\"text\":\"I would. It's my call to send with the summary marked pending, so I own telling the client and my manager. Your review stays a conditional offer—nothing accepted yet.\",\"reactions\":[{\"characterId\":\"he\",\"emotion\":\"pressing\",\"gesture\":\"lean\"},{\"characterId\":\"ning\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"rui\",\"emotion\":\"neutral\",\"gesture\":\"fold\"}],\"story\":{\"topic\":\"workload\",\"beat\":\"send\"}}",
+      "ok": true,
+      "ms": 5000
+    },
+    {
+      "stage": "turn-6",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"Can we leave the deadline conditional?\",\"speakerId\":\"he\",\"text\":\"The deadline itself is fixed by the client—but what I send can be conditional: proposal now, summary marked pending unless Rui's check lands. That's the decision I'd own.\",\"reactions\":[{\"characterId\":\"he\",\"emotion\":\"pressing\",\"gesture\":\"lean\"},{\"characterId\":\"ning\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"rui\",\"emotion\":\"neutral\",\"gesture\":\"fold\"}],\"story\":{\"topic\":\"workload\",\"beat\":\"send\"},\"interjection\":{\"speakerId\":\"rui\",\"text\":\"Careful—'pending' needs wording. It can't sound like checked data that passed.\"}}",
+      "ok": true,
+      "ms": 4430
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\n  \"objectiveResults\": [\n    {\n      \"index\": 0,\n      \"status\": \"met\",\n      \"evidence\": \"I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks.\",\n      \"reason\": \"Learner explicitly scoped what they might do and stated non-acceptance of the rest, repeated as 'nothing accepted yet' in the lead's own words.\"\n    },\n    {\n      \"index\": 1,\n      \"status\": \"met\",\n      \"evidence\": \"Who owns each part?\",\n      \"npcEvidence\": \"Here's my proposal: Rui checks sources until 18:20, Ning lays out what's confirmed, you do a fast final review after.\",\n      \"reason\": \"Learner's ownership question led the lead to assign owners and a conditional deliverable scope (proposal now, summary pending).\"\n    }\n  ],\n  \"ratings\": [\n    {\n      \"skill\": \"communication\",\n      \"level\": 3,\n      \"evidence\": \"I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?\",\n      \"reason\": \"Conditional offer, honest limit, and handing the trade-off to the person with authority—exemplary calibrated communication under time pressure.\"\n    },\n    {\n      \"skill\": \"goal-setting\",\n      \"level\": 3,\n      \"evidence\": \"We have discussed a plan, but the data have not actually been checked during this conversation. Can we leave the deadline conditional?\",\n      \"reason\": \"Learner kept the goal realistic: distinguished discussed plan from completed checks and kept the deliverable scope conditional.\"\n    },\n    {\n      \"skill\": \"organizational-skills\",\n      \"level\": 2,\n      \"evidence\": \"Let us keep talking. Who would tell the manager if those conditions are not met?\",\n      \"reason\": \"Learner drove owner clarity—including escalation ownership—though actual task execution remained open, appropriately.\"\n    }\n  ],\n  \"verdictEvidence\": \"I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?\",\n  \"outcome\": \"success\",\n  \"verdict\": \"Excellent boundary-setting and trade-off delegation; conditional plan with owners emerged without the learner overcommitting.\",\n  \"summary\": \"You opened by refusing all three tasks while offering a conditional review, and asked who owns each part. That turned an impossible 'quick favor' into a lead-owned plan: Rui checks, Ning lays out confirmed content, you review conditionally. You never accepted the deadline and kept facts (unchecked data) separate from proposals.\",\n  \"strengths\": [\n    {\n      \"behavior\": \"Clear limit paired with a constructive conditional, then handing the decision to the authority.\",\n      \"evidence\": \"I cannot take all three tasks. Who owns each part?\",\n      \"skill\": \"communication\"\n    }\n  ],\n  \"weaknesses\": [],\n  \"alternatives\": [],\n  \"knowledge\": {\n    \"theoryIds\": [\"ask-for-help-prioritize\"],\n    \"caseIds\": [\"case-no-with-alternative\"],\n    \"whyThis\": \"Your lines mirror 'Ask for Help With a Prioritized Proposal'—you named what you could and couldn't do and handed the trade-off to the lead. The no-plus-alternative pattern in 'Not Tonight — But 7am Works' matches your conditional review offer.\"\n  },\n  \"reflectionQuestions\": [\n    \"Rui warned that 'pending' needs careful wording so it can't read as checked data that passed—how would you phrase that pending note if the check doesn't land by 18:20?\",\n    \"If the lead had pushed back with 'just take all three, it's a favor', what would your next sentence have been?\"\n  ],\n  \"nextStep\": \"Next time a stacked request lands, state your limit plus one conditional offer, then ask who owns the rest.\",\n  \"deltas\": {}\n}",
+      "ok": true,
+      "ms": 13255
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\"approved\":false,\"issues\":[{\"field\":\"objectiveResults\",\"reason\":\"Objective 2 (confirm priorities, owners and deliverable scope) is marked 'met', but owners were never confirmed. The lead's proposal (index 11) is an NPC proposal: Rui 'hasn't committed yet' (index 5) and only said his check 'would take until about 18:20. Result uncertain' (index 9); Ning said 'say the word' (index 12) and the learner never said the word; the learner explicitly said 'nothing accepted yet' is still the state (index 13-14). Deliverable scope was also left open with Rui's pending-wording concern unresolved (index 17). This is at most 'unknown', not 'met'.\",\"quote\":\"Learner's ownership question led the lead to assign owners and a conditional deliverable scope (proposal now, summary pending).\"},{\"field\":\"outcome\",\"reason\":\"'success' is not supported: only objective 1 is evidenced met; objective 2 has insufficient evidence (owners unconfirmed, Rui and Ning never committed). Inventing success from an unconfirmed proposal contradicts the rule that an NPC proposal is not learner/owner acceptance; outcome should reflect the unknown.\",\"quote\":\"outcome\\\":\\\"success\\\"\"},{\"field\":\"summary\",\"reason\":\"The summary presents the lead's proposal as a settled plan: 'That turned an impossible quick favor into a lead-owned plan: Rui checks, Ning lays out confirmed content, you review conditionally.' Rui never committed, Ning was still waiting for 'say the word', and the learner explicitly framed their review as a question, not acceptance. Also 'refusing all three tasks' misstates the learner, who said 'I cannot take all three tasks' while offering a conditional final review—not refusing all three.\",\"quote\":\"a lead-owned plan: Rui checks, Ning lays out confirmed content, you review conditionally\"},{\"field\":\"verdict\",\"reason\":\"The verdict claims 'conditional plan with owners emerged', but owners had not been confirmed—Rui's participation remained uncertain and uncommitted and Ning awaited a go-ahead that never came. This converts NPC proposals into completed arrangements.\",\"quote\":\"conditional plan with owners emerged without the learner overcommitting\"}],\"alternatives\":[]}",
+      "ok": true,
+      "ms": 14249
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\n  \"objectiveResults\": [\n    {\n      \"index\": 0,\n      \"status\": \"met\",\n      \"evidence\": \"I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks.\",\n      \"reason\": \"Learner explicitly scoped what they might do and stated non-acceptance of the rest; the lead later acknowledged 'nothing accepted yet'.\"\n    },\n    {\n      \"index\": 1,\n      \"status\": \"unknown\",\n      \"evidence\": \"Who owns each part?\",\n      \"npcEvidence\": \"Here's my proposal: Rui checks sources until 18:20, Ning lays out what's confirmed, you do a fast final review after.\",\n      \"reason\": \"The learner's ownership question produced the lead's proposal, but Rui had not committed, Ning still waited for a go-ahead that never came, and the 'pending' wording was left unresolved.\"\n    }\n  ],\n  \"outcome\": \"partial\",\n  \"verdict\": \"Strong, well-calibrated boundary and conditional offer; owners and scope were proposed but never confirmed.\",\n  \"summary\": \"You stated a clear limit—'I cannot take all three tasks'—with a conditional review offer, and kept asking who owns each part and who tells the manager. That drew a concrete proposal from the lead, but as the conversation ended it remained a proposal: Rui had not committed, Ning awaited a go-ahead, and the pending-summary wording was still open. Your communication was firm and precise throughout, without overcommitting.\"\n}",
+      "ok": true,
+      "ms": 8018
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\"approved\":true,\"issues\":[],\"alternatives\":[]}",
+      "ok": true,
+      "ms": 22500
+    },
+    {
+      "stage": "reflect",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.\",\"answer\":[\"Your reflection is fair, and in the transcript your apology stayed separate from your limit—you still asked to keep the deadline conditional afterward, so it didn't function as consent. On Rui's point: a good pending note states only what was checked and what wasn't, and who owns the remaining check. For example, you might suggest wording like: 'Draft proposal reviewed; data summary not verified—source check in progress, owned by [lead].' That names the gap without implying the data passed.\",\"One clarification worth asking Rui or your lead before anything is sent: who decides the exact final wording, and does the client need a delivery time for the corrected summary? A follow-up question you could pose in the conversation is, 'If the check lands after 18:30, when do we commit to sending the verified summary?' That turns the pending note from a label into a plan.\",\"example\":\"Example phrasing for the pending note: 'Summary pending—figures not yet source-verified; we will send the verified version by [time].' Use it only if your team agrees the lead owns the final wording; Rui, as the one checking sources, is the right person to confirm it doesn't overstate what was done.\",\"sources\":[{\"kind\":\"theory\",\"id\":\"check-your-paraphrase\"}]}",
+      "ok": true,
+      "ms": 13281
+    },
+    {
+      "stage": "reflect",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.\",\"answer\":[\"Your reflection makes a useful distinction: an apology addresses tone, while consent to a task is a separate decision, and you kept them apart in the conversation too. As for the pending note, the key is to state exactly what was done, what was not, and who will close the gap—for instance, wording that says the summary reflects source-checking in progress as of 18:20, with results and confirmation to follow, rather than anything implying the data passed review.\",\"One follow-up to sharpen it: who is the audience you most need the wording to be accurate for—the client, or your own lead's record of what was and wasn't sent? That changes how explicit the 'not yet checked' part should be.\",\"This is a self-report of your intent; the transcript shows your conditional offers and boundary statements, but how they landed emotionally for the others isn't observable from words alone.\"],\"example\":\"\",\"sources\":[]}",
+      "ok": true,
+      "ms": 11383
+    },
+    {
+      "stage": "debrief-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish.\",\"answer\":[\"You actually agreed to nothing binding. What you gave were conditional offers only. Your one firm commitment-shaped statement was your capacity limit: 'I cannot take all three tasks.' Everything else you offered was explicitly gated on conditions you kept naming — final review only 'if the data and layout are ready' (your opening line), and later only 'after the checks' and only within whatever window actually exists.\",\"Proposals, conditions, and completed actions sorted out. Completed actions: you discussed and clarified scope — the client's request is the main proposal plus data summary by 18:30, the data summary is entirely unchecked, Rui estimated his source check at about 18:20 with an uncertain result, and He stated he would own telling the manager if he sends with the summary marked pending. But note those are statements by others, not finished work. Conditions you attached: data and layout must exist before your review happens, and you never accepted the 18:30 deadline itself — you said so directly. Proposals still on the table at the end: Rui checking sources until 18:20, Ning laying out confirmed content (he asked for a go-ahead you never gave), you doing a ten-minute final review afterward, and He sending the proposal while marking the summary pending. The final open item is Rui's last point — the exact wording of 'pending' so it cannot read as passed data.\",\"This distinction matters because in the conversation 'we have a plan' and 'we have an agreement' look similar but are not. Your final line — 'Can we leave the deadline conditional?' — kept everything revocable, and He explicitly confirmed your review 'stays a conditional offer—nothing accepted yet.' The practical gap: nothing was executed. The data were not checked, Ning had not started layout, and the pending-summary wording was unresolved. If this conversation were real and followed up, your natural next step would be a short confirmation message naming owners and conditions — for example asking He to confirm in writing that Rui owns the source check and that your review depends on it landing — because verbal proposals dissolve unless someone confirms them. That aligns with the prioritized-proposal idea: state what you can do, hand the trade-off to the authority, and get the new expectations confirmed rather than assumed.\"],\"example\":\"A short written follow-up keeping the conditions intact: 'Confirming what we discussed: Rui checks sources by ~18:20, Ning lays out confirmed content on your go-ahead, my review happens only if both land, and the summary gets marked pending if not. If that's right, could you confirm it in writing?' — This locks in owners and conditions without accepting anything new.\",\"sources\":[{\"kind\":\"theory\",\"id\":\"ask-for-help-prioritize\"},{\"kind\":\"case\",\"id\":\"case-no-with-alternative\"}]}",
+      "ok": true,
+      "ms": 19303
+    },
+    {
+      "stage": "debrief-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I am not a three-person department, though that joke might sound dismissive. Sorry for the tone. My capacity limit remains.\",\"answer\":[\"Your refusal is already clear and well-structured — the limit plus a conditional offer follows the 'no, but here's what works' pattern: you say what you can't take, then immediately offer what you can, and hand the trade-off to your lead to decide. That structure is worth keeping. What you can soften is the packaging, not the content. Lines like 'That is a question, not my acceptance of the job' and 'I have not agreed to the deadline' are legally precise but read a bit like contract language; in a live conversation they can feel defensive even when the intent is cooperative.\",\"A more natural version keeps the same three moves — limit, conditional offer, question — in everyday wording. For example: \\\"I can't take on all three tonight. If the data and layout are done, I'm glad to do the final review — should we figure out who takes the rest?\\\" This says no just as firmly, but it sounds like a colleague problem-solving rather than someone protecting themselves on the record. You don't need the meta-commentary (\\\"that's a question, not acceptance\\\") because plain wording already implies it; He confirmed exactly that in practice, treating your review as 'a conditional offer—nothing accepted yet.'\",\"One limit to keep in mind: plainer wording is lower-friction but slightly less precise, so if a request is genuinely ambiguous or pressure-y, your more explicit phrasing is still the right tool. The goal isn't to abandon precision — it's to reserve it for when it's needed and use lighter wording for routine pushback. Also, your brief apology for tone in the joke line was fine and natural; keeping small warmth like that is what makes the direct version land well.\"],\"example\":\"Instead of 'That is a question, not my acceptance of the job,' you might say: 'Who'd loop in the manager if those conditions fall through?' — same information, sounds like ordinary planning rather than a disclaimer.\",\"sources\":[{\"kind\":\"theory\",\"id\":\"ask-for-help-prioritize\"},{\"kind\":\"case\",\"id\":\"case-no-with-alternative\"}]}",
+      "ok": true,
+      "ms": 13130
+    }
+  ],
+  "session": {
+    "id": "dinner-en",
+    "scenario": {
+      "id": "3d-office-overtime",
+      "title": {
+        "zh": "下班前，三件活都归你",
+        "en": "Three tasks before you leave"
+      },
+      "hook": {
+        "zh": "“顺手收尾”里，藏着三项还没分工的任务。",
+        "en": "A “quick finish” hides three unassigned tasks."
+      },
+      "background": {
+        "zh": "项目组 · 开放办公室。17:50，客户想在 18:30 收到材料。数据核对、排版和最终检查还没分工，主管一句“顺手”全压给你。\n当前 17:50。客户希望 18:30 收到材料。\n客户邮件：18:30 前提供主方案与数据摘要。\n待确认：数据核对、排版、最终检查。\n你、宁姐、瑞瑞的时间与负责范围都尚未确认。\n演练项目：客户回访流程。主方案草稿已有“先试点、再推广”两步；数据摘要尚未核对，主方案可以先按已确认内容整理。\n各人的时间、数据结论和三项任务的负责人未确认；愿意讨论不等于答应加班。\n何主管：想准时发给客户，但还没有确认每个人的剩余时间。\n宁姐：负责排版与对外讲解。重视效率，也习惯替别人总结重点。\n瑞瑞：能核对数据来源。没有替你或宁姐答应今晚的工作。",
+        "en": "Project team · Open office. It’s 17:50; the client wants material at 18:30. Data, layout and final checks are unassigned. Your lead calls it a quick favor for you.\nIt is 17:50. The client wants material at 18:30.\nClient email: main proposal and data summary requested by 18:30.\nUnconfirmed: data checks, layout, final review.\nYour, Ning’s and Rui’s availability and scope remain unconfirmed.\nRehearsal project: a client follow-up workflow. The main draft has two stages, pilot then rollout. The data summary is unchecked; the proposal can be organized using confirmed information.\nAvailability, data conclusions and ownership of the three tasks are unconfirmed. Discussing work is not accepting overtime.\nHe: Wants to send the material on time, without having checked everyone’s availability.\nNing: Handles layout and presentation. Values speed and often summarizes for others.\nRui: Can check the data sources. Has not agreed to tonight’s work for you or Ning."
+      },
+      "context": "workplace",
+      "contextType": {
+        "zh": "办公室",
+        "en": "Office"
+      },
+      "competencies": [
+        "relationship-skills",
+        "self-management"
+      ],
+      "skills": [
+        "communication",
+        "goal-setting",
+        "organizational-skills"
+      ],
+      "relationship": [
+        "senior",
+        "peer"
+      ],
+      "difficulty": 3,
+      "minutes": 8,
+      "characters": [
+        {
+          "id": "you",
+          "name": {
+            "zh": "你",
+            "en": "You"
+          },
+          "role": {
+            "zh": "负责主方案的项目成员",
+            "en": "Project member responsible for the main proposal"
+          },
+          "personality": {
+            "zh": "按自己的意愿表达。",
+            "en": "Speak according to your own intent."
+          },
+          "stance": {
+            "zh": "说清能做的部分，并确认优先级、负责人和可交范围。",
+            "en": "State what you can do and confirm priorities, owners and deliverable scope."
+          },
+          "playable": true,
+          "hue": 30
+        },
+        {
+          "id": "he",
+          "name": {
+            "zh": "何主管",
+            "en": "He"
+          },
+          "role": {
+            "zh": "项目主管",
+            "en": "Project lead"
+          },
+          "personality": {
+            "zh": "想准时发给客户，但还没有确认每个人的剩余时间。",
+            "en": "Wants to send the material on time, without having checked everyone’s availability."
+          },
+          "stance": {
+            "zh": "项目主管",
+            "en": "Project lead"
+          },
+          "hue": 30
+        },
+        {
+          "id": "ning",
+          "name": {
+            "zh": "宁姐",
+            "en": "Ning"
+          },
+          "role": {
+            "zh": "资深同事",
+            "en": "Senior colleague"
+          },
+          "personality": {
+            "zh": "负责排版与对外讲解。重视效率，也习惯替别人总结重点。",
+            "en": "Handles layout and presentation. Values speed and often summarizes for others."
+          },
+          "stance": {
+            "zh": "资深同事",
+            "en": "Senior colleague"
+          },
+          "hue": 30
+        },
+        {
+          "id": "rui",
+          "name": {
+            "zh": "瑞瑞",
+            "en": "Rui"
+          },
+          "role": {
+            "zh": "数据同事",
+            "en": "Data teammate"
+          },
+          "personality": {
+            "zh": "能核对数据来源。没有替你或宁姐答应今晚的工作。",
+            "en": "Can check the data sources. Has not agreed to tonight’s work for you or Ning."
+          },
+          "stance": {
+            "zh": "数据同事",
+            "en": "Data teammate"
+          },
+          "hue": 30
+        }
+      ],
+      "objectives": [
+        {
+          "zh": "明确自己能做与尚未答应的部分。",
+          "en": "State what you can do and have not accepted."
+        },
+        {
+          "zh": "确认优先级、负责人和可交范围。",
+          "en": "Confirm priorities, owners and deliverable scope."
+        }
+      ],
+      "success": {
+        "zh": "根据用户真实意图与对话中的具体约定核对，不预设成功。",
+        "en": "Check the learner’s actual intent and explicit arrangements without assuming success."
+      },
+      "failure": {
+        "zh": "没有达成预设目标不自动代表沟通失败。",
+        "en": "Not achieving the initial aim does not automatically mean poor communication."
+      },
+      "maxTurns": 12,
+      "opening": {
+        "characterId": "he",
+        "text": {
+          "zh": "还有四十分钟。数据、排版、检查你一起收尾吧，我六点半要发给客户。",
+          "en": "Forty minutes left. Finish the data, layout and checks. I need to send it to the client at 6:30."
+        }
+      },
+      "source": "Original fiction: wiki/specs/spec-feedback-refinement.md",
+      "keywords": [
+        "office-overtime",
+        "communication",
+        "goal-setting",
+        "organizational-skills"
+      ],
+      "custom": true
+    },
+    "messages": [
+      {
+        "id": "message-0",
+        "role": "npc",
+        "characterId": "he",
+        "text": "Forty minutes left. Finish the data, layout and checks. I need to send it to the client at 6:30.",
+        "ts": 0
+      },
+      {
+        "id": "message-1",
+        "role": "learner",
+        "characterId": "you",
+        "text": "I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks. Who owns each part?",
+        "ts": 0
+      },
+      {
+        "id": "message-2",
+        "role": "npc",
+        "characterId": "he",
+        "text": "Fair. So final review could be yours, once data and layout exist. But that leaves data and layout unowned. Rui, Ning—can either of you take one tonight?",
+        "ts": 0
+      },
+      {
+        "id": "interjection-2",
+        "role": "npc",
+        "characterId": "rui",
+        "text": "I can check sources tonight—but data summary is more than checking. Who writes it?",
+        "ts": 0
+      },
+      {
+        "id": "message-3",
+        "role": "learner",
+        "characterId": "you",
+        "text": "I have not agreed to the deadline. What data are still unchecked, and what was actually requested?",
+        "ts": 0
+      },
+      {
+        "id": "message-4",
+        "role": "npc",
+        "characterId": "he",
+        "text": "The deadline isn't mine to negotiate—it's in the client's email: main proposal and data summary, by 18:30. Unchecked? The whole data summary. The proposal itself can be organized from what's confirmed. Rui offered to check sources tonight, but hasn't committed yet.",
+        "ts": 0
+      },
+      {
+        "id": "interjection-4",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "And layout is still nobody's. I could do it—if someone tells me what the data summary will actually contain.",
+        "ts": 0
+      },
+      {
+        "id": "message-5",
+        "role": "learner",
+        "characterId": "you",
+        "text": "I am not a three-person department, though that joke might sound dismissive. Sorry for the tone. My capacity limit remains.",
+        "ts": 0
+      },
+      {
+        "id": "message-6",
+        "role": "npc",
+        "characterId": "he",
+        "text": "Apology accepted—no offense taken. The main proposal is already yours; that's not extra. So the real question: will you do the final review once data and layout exist, yes or conditionally?",
+        "ts": 0
+      },
+      {
+        "id": "interjection-6",
+        "role": "npc",
+        "characterId": "rui",
+        "text": "Before anyone commits: my source check would take until about 18:20. Result uncertain.",
+        "ts": 0
+      },
+      {
+        "id": "message-7",
+        "role": "learner",
+        "characterId": "you",
+        "text": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?",
+        "ts": 0
+      },
+      {
+        "id": "message-8",
+        "role": "npc",
+        "characterId": "he",
+        "text": "Here's my proposal: Rui checks sources until 18:20, Ning lays out what's confirmed, you do a fast final review after. If the data check isn't done by then, I send the proposal and mark the summary as pending. Can you review in that ten-minute window?",
+        "ts": 0
+      },
+      {
+        "id": "interjection-8",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "If it's confirmed content only, I can start layout now—say the word.",
+        "ts": 0
+      },
+      {
+        "id": "message-9",
+        "role": "learner",
+        "characterId": "you",
+        "text": "Let us keep talking. Who would tell the manager if those conditions are not met? That is a question, not my acceptance of the job.",
+        "ts": 0
+      },
+      {
+        "id": "message-10",
+        "role": "npc",
+        "characterId": "he",
+        "text": "I would. It's my call to send with the summary marked pending, so I own telling the client and my manager. Your review stays a conditional offer—nothing accepted yet.",
+        "ts": 0
+      },
+      {
+        "id": "message-11",
+        "role": "learner",
+        "characterId": "you",
+        "text": "We have discussed a plan, but the data have not actually been checked during this conversation. Can we leave the deadline conditional?",
+        "ts": 0
+      },
+      {
+        "id": "message-12",
+        "role": "npc",
+        "characterId": "he",
+        "text": "The deadline itself is fixed by the client—but what I send can be conditional: proposal now, summary marked pending unless Rui's check lands. That's the decision I'd own.",
+        "ts": 0
+      },
+      {
+        "id": "interjection-12",
+        "role": "npc",
+        "characterId": "rui",
+        "text": "Careful—'pending' needs wording. It can't sound like checked data that passed.",
+        "ts": 0
+      }
+    ],
+    "sceneContext": {
+      "kind": "3d",
+      "sceneId": "office",
+      "openingId": "office-overtime",
+      "actions": [],
+      "observations": [
+        {
+          "id": "spoken-1",
+          "turn": 1,
+          "learnerQuote": "I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks. Who owns each part?",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-2",
+          "turn": 2,
+          "learnerQuote": "I have not agreed to the deadline. What data are still unchecked, and what was actually requested?",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-3",
+          "turn": 3,
+          "learnerQuote": "I am not a three-person department, though that joke might sound dismissive. Sorry for the tone. My capacity limit remains.",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-4",
+          "turn": 4,
+          "learnerQuote": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-5",
+          "turn": 5,
+          "learnerQuote": "Let us keep talking. Who would tell the manager if those conditions are not met? That is a question, not my acceptance of the job.",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-6",
+          "turn": 6,
+          "learnerQuote": "We have discussed a plan, but the data have not actually been checked during this conversation. Can we leave the deadline conditional?",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        }
+      ]
+    },
+    "learnerCharacterId": "you",
+    "status": "assessed",
+    "origin": "arena",
+    "objectiveDone": [],
+    "startedAt": 1792603590344,
+    "endedAt": 1792603590344,
+    "reflections": [
+      {
+        "question": "Rui warned that 'pending' needs careful wording so it can't read as checked data that passed—how would you phrase that pending note if the check doesn't land by 18:20?",
+        "answer": "I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.",
+        "coachReply": "“I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.”\n\nYour reflection makes a useful distinction: an apology addresses tone, while consent to a task is a separate decision, and you kept them apart in the conversation too. As for the pending note, the key is to state exactly what was done, what was not, and who will close the gap—for instance, wording that says the summary reflects source-checking in progress as of 18:20, with results and confirmation to follow, rather than anything implying the data passed review.\n\nOne follow-up to sharpen it: who is the audience you most need the wording to be accurate for—the client, or your own lead's record of what was and wasn't sent? That changes how explicit the 'not yet checked' part should be.\n\nThis is a self-report of your intent; the transcript shows your conditional offers and boundary statements, but how they landed emotionally for the others isn't observable from words alone."
+      }
+    ],
+    "revealSeen": true,
+    "report": {
+      "sceneNotes": [],
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks.",
+          "reason": "Learner explicitly scoped what they might do and stated non-acceptance of the rest; the lead later acknowledged 'nothing accepted yet'."
+        },
+        {
+          "index": 1,
+          "status": "unknown",
+          "evidence": "Who owns each part?",
+          "npcEvidence": "Here's my proposal: Rui checks sources until 18:20, Ning lays out what's confirmed, you do a fast final review after.",
+          "reason": "The learner's ownership question produced the lead's proposal, but Rui had not committed, Ning still waited for a go-ahead that never came, and the 'pending' wording was left unresolved."
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 3,
+          "evidence": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?",
+          "reason": "Conditional offer, honest limit, and handing the trade-off to the person with authority—exemplary calibrated communication under time pressure."
+        },
+        {
+          "skill": "goal-setting",
+          "level": 3,
+          "evidence": "We have discussed a plan, but the data have not actually been checked during this conversation. Can we leave the deadline conditional?",
+          "reason": "Learner kept the goal realistic: distinguished discussed plan from completed checks and kept the deliverable scope conditional."
+        },
+        {
+          "skill": "organizational-skills",
+          "level": 2,
+          "evidence": "Let us keep talking. Who would tell the manager if those conditions are not met?",
+          "reason": "Learner drove owner clarity—including escalation ownership—though actual task execution remained open, appropriately."
+        }
+      ],
+      "stars": 3,
+      "outcome": "partial",
+      "verdictEvidence": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?",
+      "verdict": "Strong, well-calibrated boundary and conditional offer; owners and scope were proposed but never confirmed.",
+      "summary": "You stated a clear limit—'I cannot take all three tasks'—with a conditional review offer, and kept asking who owns each part and who tells the manager. That drew a concrete proposal from the lead, but as the conversation ended it remained a proposal: Rui had not committed, Ning awaited a go-ahead, and the pending-summary wording was still open. Your communication was firm and precise throughout, without overcommitting.",
+      "strengths": [
+        {
+          "behavior": "Clear limit paired with a constructive conditional, then handing the decision to the authority.",
+          "evidence": "I cannot take all three tasks. Who owns each part?",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [],
+      "alternatives": [],
+      "knowledge": {
+        "theoryIds": [
+          "ask-for-help-prioritize"
+        ],
+        "caseIds": [
+          "case-no-with-alternative"
+        ],
+        "whyThis": "Your lines mirror 'Ask for Help With a Prioritized Proposal'—you named what you could and couldn't do and handed the trade-off to the lead. The no-plus-alternative pattern in 'Not Tonight — But 7am Works' matches your conditional review offer."
+      },
+      "reflectionQuestions": [
+        "Rui warned that 'pending' needs careful wording so it can't read as checked data that passed—how would you phrase that pending note if the check doesn't land by 18:20?",
+        "If the lead had pushed back with 'just take all three, it's a favor', what would your next sentence have been?"
+      ],
+      "nextStep": "Next time a stacked request lands, state your limit plus one conditional offer, then ask who owns the rest.",
+      "deltas": {}
+    },
+    "debriefChat": [
+      {
+        "id": "d0",
+        "question": "What did I actually agree to? Separate proposals, conditions, and completed actions.",
+        "reply": {
+          "evidence": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish.",
+          "answer": "You actually agreed to nothing binding. What you gave were conditional offers only. Your one firm commitment-shaped statement was your capacity limit: 'I cannot take all three tasks.' Everything else you offered was explicitly gated on conditions you kept naming — final review only 'if the data and layout are ready' (your opening line), and later only 'after the checks' and only within whatever window actually exists.\n\nProposals, conditions, and completed actions sorted out. Completed actions: you discussed and clarified scope — the client's request is the main proposal plus data summary by 18:30, the data summary is entirely unchecked, Rui estimated his source check at about 18:20 with an uncertain result, and He stated he would own telling the manager if he sends with the summary marked pending. But note those are statements by others, not finished work. Conditions you attached: data and layout must exist before your review happens, and you never accepted the 18:30 deadline itself — you said so directly. Proposals still on the table at the end: Rui checking sources until 18:20, Ning laying out confirmed content (he asked for a go-ahead you never gave), you doing a ten-minute final review afterward, and He sending the proposal while marking the summary pending. The final open item is Rui's last point — the exact wording of 'pending' so it cannot read as passed data.\n\nThis distinction matters because in the conversation 'we have a plan' and 'we have an agreement' look similar but are not. Your final line — 'Can we leave the deadline conditional?' — kept everything revocable, and He explicitly confirmed your review 'stays a conditional offer—nothing accepted yet.' The practical gap: nothing was executed. The data were not checked, Ning had not started layout, and the pending-summary wording was unresolved. If this conversation were real and followed up, your natural next step would be a short confirmation message naming owners and conditions — for example asking He to confirm in writing that Rui owns the source check and that your review depends on it landing — because verbal proposals dissolve unless someone confirms them. That aligns with the prioritized-proposal idea: state what you can do, hand the trade-off to the authority, and get the new expectations confirmed rather than assumed.",
+          "example": "A short written follow-up keeping the conditions intact: 'Confirming what we discussed: Rui checks sources by ~18:20, Ning lays out confirmed content on your go-ahead, my review happens only if both land, and the summary gets marked pending if not. If that's right, could you confirm it in writing?' — This locks in owners and conditions without accepting anything new.",
+          "sources": [
+            {
+              "kind": "theory",
+              "id": "ask-for-help-prioritize"
+            },
+            {
+              "kind": "case",
+              "id": "case-no-with-alternative"
+            }
+          ]
+        },
+        "at": 1792603692412
+      },
+      {
+        "id": "d1",
+        "question": "I do not want to expand my commitment. Keep my refusal and suggest a more natural way to say it.",
+        "reply": {
+          "evidence": "I am not a three-person department, though that joke might sound dismissive. Sorry for the tone. My capacity limit remains.",
+          "answer": "Your refusal is already clear and well-structured — the limit plus a conditional offer follows the 'no, but here's what works' pattern: you say what you can't take, then immediately offer what you can, and hand the trade-off to your lead to decide. That structure is worth keeping. What you can soften is the packaging, not the content. Lines like 'That is a question, not my acceptance of the job' and 'I have not agreed to the deadline' are legally precise but read a bit like contract language; in a live conversation they can feel defensive even when the intent is cooperative.\n\nA more natural version keeps the same three moves — limit, conditional offer, question — in everyday wording. For example: \"I can't take on all three tonight. If the data and layout are done, I'm glad to do the final review — should we figure out who takes the rest?\" This says no just as firmly, but it sounds like a colleague problem-solving rather than someone protecting themselves on the record. You don't need the meta-commentary (\"that's a question, not acceptance\") because plain wording already implies it; He confirmed exactly that in practice, treating your review as 'a conditional offer—nothing accepted yet.'\n\nOne limit to keep in mind: plainer wording is lower-friction but slightly less precise, so if a request is genuinely ambiguous or pressure-y, your more explicit phrasing is still the right tool. The goal isn't to abandon precision — it's to reserve it for when it's needed and use lighter wording for routine pushback. Also, your brief apology for tone in the joke line was fine and natural; keeping small warmth like that is what makes the direct version land well.",
+          "example": "Instead of 'That is a question, not my acceptance of the job,' you might say: 'Who'd loop in the manager if those conditions fall through?' — same information, sounds like ordinary planning rather than a disclaimer.",
+          "sources": [
+            {
+              "kind": "theory",
+              "id": "ask-for-help-prioritize"
+            },
+            {
+              "kind": "case",
+              "id": "case-no-with-alternative"
+            }
+          ]
+        },
+        "at": 1792603705561
+      }
+    ]
+  }
+}

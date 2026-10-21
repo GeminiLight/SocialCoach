@@ -10,6 +10,7 @@ import { SlowModelNotice } from "@/components/SlowModelNotice";
 import { useApp, useLang } from "@/store/useApp";
 import { debriefChat } from "@/lib/client-api";
 import { buildDebriefInput, DEBRIEF_QUESTION_LIMIT } from "@/lib/debrief-chat";
+import { TASK_LIMITS } from "@/lib/task-runtime";
 import { uid } from "@/lib/format";
 import { t, pick } from "@/lib/i18n";
 import { useSessionDraft } from "@/lib/use-session-draft";
@@ -59,7 +60,7 @@ export function DebriefAssistant({ session, ref }: { session: Session; ref?: Ref
     request.current = controller;
     setPending(question); setError(null);
     let timedOut = false;
-    const timeout = window.setTimeout(() => { timedOut = true; controller.abort(); }, 55_000);
+    const timeout = window.setTimeout(() => { timedOut = true; controller.abort(); }, TASK_LIMITS["debrief-chat"][0]);
     try {
       const reply = await debriefChat(buildDebriefInput(current, question, lang), controller.signal);
       if (controller.signal.aborted || request.current !== controller) return;

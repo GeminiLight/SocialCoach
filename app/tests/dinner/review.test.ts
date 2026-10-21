@@ -86,7 +86,7 @@ test('3D follow-up assistant sees public observations and exact words, retaining
   const session=buildDinnerReview(reviewFixture(),'test');session.report=reportFixture(session.messages[1].text);
   const input=buildDebriefInput(session,'走近领导说这句话，旁边的人还听得见吗？','zh');
   assert.deepEqual(input.sceneContext,session.sceneContext);assert.ok(!JSON.stringify(input).includes('"deltas"'));
-  const output=await runDebriefChat(input,{chatText:async()=>JSON.stringify({evidence:session.messages[1].text,answer:['走近不会把这段对话变成私聊。在场的人都能听见这句边界。'],example:'',sources:[]}),chatStream:()=>{throw Error('Unexpected');}},'same-fast');
+  const output=await runDebriefChat(input,{chatText:async o=>JSON.stringify(JSON.stringify(o.system).includes('DEBRIEF EVIDENCE CHECK')?{approved:true,issues:[]}:{evidence:session.messages[1].text,answer:['走近不会把这段对话变成私聊。在场的人都能听见这句边界。'],example:'',sources:[]}),chatStream:()=>{throw Error('Unexpected');}},'same-fast');
   assert.equal(output.evidence,session.messages[1].text);
   const bad={...input,sceneContext:{...input.sceneContext!,observations:[{...input.sceneContext!.observations[0],learnerQuote:'我愿意喝酒。'}]}};
   let calls=0;await assert.rejects(()=>runDebriefChat(bad,{chatText:async()=>{calls++;return '{}';},chatStream:()=>{throw Error('Unexpected');}},'same-fast'));assert.equal(calls,0);

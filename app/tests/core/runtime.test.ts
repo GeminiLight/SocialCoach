@@ -36,7 +36,7 @@ test('reflection never emits an unquoted draft and verified replies lead with ac
  const input={scenario,answer,question:'你当时怎么想？',lang:'zh' as const};
  const invalid:LLM={chatText:async()=>JSON.stringify({evidence:'你总是讨好别人。',answer:'你一直在让步。',sources:[]}),chatStream:()=>{throw Error('unused');}};
  await assert.rejects(runReflect(input,invalid,'fake',d=>emitted+=d));assert.equal(emitted,'');
- const valid:LLM={...invalid,chatText:async()=>JSON.stringify({evidence:answer,answer:['你想先确认安排。'],example:'',sources:[]})};
+ const valid:LLM={...invalid,chatText:async o=>JSON.stringify(JSON.stringify(o.system).includes('DEBRIEF EVIDENCE CHECK')?{approved:true,issues:[]}:{evidence:answer,answer:['你想先确认安排。'],example:'',sources:[]})};
  const reply=await runReflect(input,valid,'fake');assert.ok(reply.startsWith('“'+answer+'”'));
 });
 test('a global revealed flag cannot invent a per-character public disclosure',()=>{

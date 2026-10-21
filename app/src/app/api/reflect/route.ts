@@ -5,7 +5,7 @@ import { runReflect } from "@/lib/tasks/reflect";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { fail, taskStream } from "@/lib/api-utils";
 
-export const maxDuration = 60;
+export const maxDuration = 90;
 
 export async function POST(req: Request) {
   try {

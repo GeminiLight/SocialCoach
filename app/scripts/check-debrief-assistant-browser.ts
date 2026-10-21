@@ -5,6 +5,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { fixtureReply, fixtureSession } from "./check-debrief-assistant";
+import {ArchiveSchema} from '../src/lib/archive';
 
 const base = process.env.UX_BASE_URL ?? "http://localhost:3101";
 assert(["localhost", "127.0.0.1"].includes(new URL(base).hostname));
@@ -22,7 +23,7 @@ const fill = (text: string) => browser(["fill", "#debrief-question", text]);
 let count = 0;
 function check(name: string, condition: unknown) { assert(condition, name); count++; console.log(`PASS ${name}`); }
 const fixture = fixtureSession();
-const state = { profile: { name: "Assistant Test", bio: "", goals: ["building-relationships"], contexts: ["intimate"], lang: "zh", createdAt: 1 }, sessions: [fixture], settings: { theme: "light", telemetry: false, tts: false }, proficiency: { "building-relationships": 2 }, practiceDays: [], customScenarios: [], bookmarks: [], todaySessionId: null, todayDate: null, patternInsight: null };
+const state = ArchiveSchema.parse({ profile: { name: "Assistant Test", bio: "", goals: ["building-relationships"], contexts: [fixture.scenario.context], lang: "zh", createdAt: 1 }, sessions: [fixture], settings: { theme: "light", telemetry: false, tts: false }, proficiency: { "building-relationships": 2 }, practiceDays: [], customScenarios: [], bookmarks: [], todaySessionId: null, todayDate: null, patternInsight: null });
 const saved = () => JSON.parse(evaluate("localStorage.getItem('socialcoach.v1')")).state;
 const installMock = () => evaluate(`window.__questions=[]; window.__mode='ok'; window.__originalFetch ??= window.fetch; window.fetch=async (url, init)=>{
  if(String(url)!=='/api/debrief-chat') return window.__originalFetch(url,init);
@@ -45,6 +46,7 @@ try {
   browser(["open", base + "/onboarding"]);
   evaluate(`localStorage.setItem('socialcoach.v1', ${JSON.stringify(JSON.stringify({ state, version: 0 }))}); true`);
   open();
+  const beforeQuestions=saved();
   button("复盘助手");
   check("reading guide brings focus to the assistant input", evaluate("document.activeElement.id === 'debrief-question'"));
   evaluate("Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes('对等的自我暴露建立亲密')).scrollIntoView({block:'center',behavior:'instant'}); true");
@@ -59,7 +61,12 @@ try {
   check("bibliography names the actual author and source", evaluate("document.querySelector('[role=log]').textContent.includes('Arthur Aron')"));
   fill("如果对方只回答一个词，怎么办？"); button("发送问题"); wait("window.__questions.length === 2 && document.querySelector('#debrief-question').value === ''");
   check("follow-up carries this practice and the prior Q&A", evaluate("window.__questions[1].history.length === 1 && window.__questions[1].transcript.length === 2 && !JSON.stringify(window.__questions).includes('PRIVATE_')"));
-  check("two replies persist separately without changing transcript, report or proficiency", saved().sessions[0].debriefChat.length === 2 && JSON.stringify(saved().sessions[0].report) === JSON.stringify(fixture.report) && saved().sessions[0].messages.length === fixture.messages.length && saved().proficiency["building-relationships"] === 2 && saved().practiceDays.length === 0);
+  const afterQuestions=saved();
+  assert.deepEqual(afterQuestions.sessions[0].report,beforeQuestions.sessions[0].report);
+  assert.deepEqual(afterQuestions.sessions[0].messages,beforeQuestions.sessions[0].messages);
+  assert.deepEqual(afterQuestions.proficiency,beforeQuestions.proficiency);
+  assert.deepEqual(afterQuestions.practiceDays,beforeQuestions.practiceDays);
+  check("two replies persist separately without changing transcript, report or proficiency", afterQuestions.sessions[0].debriefChat.length === 2);
   fill("还没发出的追问"); open();
   check("refresh restores completed history and unsent draft", saved().sessions[0].debriefChat.length === 2 && evaluate("document.querySelector('#debrief-question').value === '还没发出的追问'"));
   evaluate("window.__mode='fail'; true"); button("发送问题"); wait("document.querySelector('#review-assistant [role=alert]') !== null");

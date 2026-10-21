@@ -12,7 +12,8 @@
 | POST | `/api/schedule` | 处方 → 角色相容性 → 受约束检索 → 简报适配 | fast | JSON | 120 | A |
 | POST | `/api/roleplay` | NPC 对话回合 | fast | 文本流（自定义协议） | 60 | A |
 | POST | `/api/assess` | 复盘报告 | smart | 文本流 + `@@final` JSON | 180 | A |
-| POST | `/api/reflect` | 反思回应 | fast | 文本流 | 30 | A |
+| POST | `/api/reflect` | 反思回应 | fast | JSON / 文本流 | 90 | A |
+| POST | `/api/debrief-chat` | 复盘追问与示范 | fast | JSON | 90 | B |
 | POST | `/api/hint` | 对话中提示 | fast | JSON | 30 | A |
 | POST | `/api/rehearse` | 从真实处境生成场景 | fast | JSON | 120 | A |
 | POST | `/api/dinner/direct` | 3D 实景模型回合 | fast | JSON | 40 | A23 |
@@ -235,9 +236,9 @@ practiceId 标识设备上的同一局，继续后仍沿用、重练才更换；
 
 3D 可附同一 `sceneContext`，任务在调用前再次核对原话与观察。走近仍是公开谈话，举杯不推定饮酒 / 同意，坐立不推定逃避；问答使用真实回复判断效果，不能用 NPC 接受推定其内心感受。
 
-**响应：** `{evidence:string, answer:string, example:string, sources:[{kind:"theory"|"case",id:string}]}`。`example` 可为空；非空内容在 UI 明确标为示范，不进入真实转录。sources 只能来自本次检索，展示作者 / 书名 / 链接取自本地语料。有用户发言时 evidence 必须是连续真实原话；零发言时必须为空且只作概念指导。来源与引文不合规返回 502；请求不合规 400 / 超大 413。不呈现未验证的模型文本。
+**响应：** `{evidence:string, answer:string, example:string, sources:[{kind:"theory"|"case",id:string}]}`。`example` 可为空；非空内容在 UI 明确标为示范，不进入真实转录。sources 只能来自本次检索，展示作者 / 书名 / 链接取自本地语料。有用户发言时 evidence 必须是连续真实原话；零发言时必须为空且只作概念指导。来源、引文或内容核对不通过返回 502；请求不合规 400 / 超大 413。不呈现未验证的模型文本。
 
-服务端时限 60 秒、fast 模型、2400 输出 token；客户端 55 秒后显示重试，问题保留。`Session.debriefChat?` 只在设备保存完成问答，不更新报告 / 熟练度。AI 的语义解释仍须核对，校验不是对所有建议正确性的保证。参考 [方案](./archive/specs/spec-debrief-assistant.md)。
+生成使用 fast 模型、2400 输出 token，随后同模型独立核对解释、示范位置、责任归属与承诺范围（1600 输出 token）。最多一次重新生成并复核，反思与追问共享同一机制；总计最多四次模型调用。任务 / 追问客户端时限统一为 85 秒，路由上限 90 秒，停止与超时均保留问题。内部短段落数组合并后仍受 3600 字符总长限制，外部 answer 始终为字符串。`Session.debriefChat?` 只在设备保存完成问答，不更新报告 / 熟练度。AI 的语义解释仍须核对，校验不是对所有建议正确性的保证。参考 [方案](./archive/specs/spec-debrief-assistant.md)。
 
 ## 生成
 

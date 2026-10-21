@@ -56,9 +56,20 @@ export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):Sp
   if(denied){offered=false;continue;}
   if(/(?:我(?:能|可以|愿意|会)|我[^，,。.!?！？\n]{0,20}(?:帮|讨论|看一页|列问题)|\bI (?:can|will|could|am available))/i.test(text))offered=true;
  }
- if(offered&&beforeOffered)return undefined;
  return utterances=>{
   for(const {text} of utterances){
+   // This opening supplies unchecked figures, not a purchase order/source
+   // sheet already in Tang's possession. NPC inventions cannot seed evidence.
+   for(const part of text.match(/[^，,。！？.!?\n;；]+[，,。！？.!?;；]?/gu)??[]){
+    if(/[？?]\s*$/u.test(part)||/如果|要是|假设|并不是|不是说|\b(?:if|whether)\b|not saying/iu.test(part))continue;
+    const sourceClaim=/(?:采购单|采购订单|原始表|来源表|源数据表)(?:我)?(?:已经|已|就)?(?:在(?:我|我的)手里|手里有|拿到了|找到了|有了)|我(?:手里)?(?:已经|已)?(?:有|拿到|找到)(?:了)?(?:采购单|采购订单|原始表|来源表|源数据表)|\bI (?:already )?(?:have|found|have found|have got) (?:the |a )?(?:purchase order|source (?:sheet|spreadsheet)|original spreadsheet)\b|\b(?:the |a )?(?:purchase order|source (?:sheet|spreadsheet)|original spreadsheet) is (?:already )?(?:in my hands|with me)\b/iu.test(part);
+    if(!sourceClaim)continue;
+    const document=/采购单|采购订单|purchase order/iu.test(part)?'(?:采购单|采购订单|purchase order)':'(?:原始表|来源表|源数据表|source (?:sheet|spreadsheet)|original spreadsheet)';
+    const delivered=new RegExp(`${document}.{0,12}(?:给你了|发给你了|交给你了|在你手里)|(?:I (?:gave|sent|handed) you (?:the |a )?|you have received (?:the |a )?)${document}`,'iu');
+    // "I have it" from the learner does not put it in Tang's hands.
+    const established=messages.some(m=>m.role==='learner'&&m.text.split(/[。.!\n]/u).some(line=>delivered.test(line)&&!/[？?]|不|没|未|如果|要是|假设|\b(?:if|whether|not|never|haven't|didn't)\b/iu.test(line)));
+    if(!established)return 'The scene establishes unchecked figures, not a purchase order or source spreadsheet already held or found by Tang. Do not invent an available document as proof that checking is feasible. Offer to look for the source and leave availability and results unknown.';
+   }
    for(const clause of text.split(/[。！？.!?\n]/u)){
    const beforeClaim=/你(?:可以|会|能|在)?16:30(?:前|之前)(?:只|最多|先|会|可以|能)?(?:帮|看|聊|讨论|列)/.test(clause)&&/听到|听明白|复述|承诺|答应|约好|说好|定了/.test(text);
    const claim=/(?:你[^。！？\n]{0,65}(?:交完(?:之后|以后|后)|报告(?:之后|后))[^。！？\n]{0,15}(?:帮|聊|看|列|讨论)|交完之后只(?:帮|聊|看|列|讨论)|你[^。！？\n]{0,35}报告[，,、\s]*(?:完了|之后|以后)[^。！？\n]{0,15}(?:帮|聊|看|列|讨论)|(?:after|once)[^.!?\n]{0,35}(?:report|16:30|4:30)[^.!?\n]{0,50}\byou(?:'ll| will| can)?\s+(?:help|look|review|discuss)|\byou(?:'ll| will| can)?[^.!?\n]{0,55}(?:help|look|review|discuss)[^.!?\n]{0,40}(?:after|once)[^.!?\n]{0,25}(?:report|16:30|4:30))/i.test(clause);

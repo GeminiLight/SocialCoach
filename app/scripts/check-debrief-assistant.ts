@@ -34,7 +34,7 @@ async function main() {
   });
   check("English concept queries retrieve the sourced theory", () => assert(debriefKnowledge({ ...input, question: "How can I use self-disclosure?" }).theories.some(t => t.id === "aron-self-disclosure")));
   let request: ChatOpts | undefined;
-  const stub = (reply: unknown): LLM => ({ chatText: async o => { request = o; return JSON.stringify(reply); }, chatStream: () => { throw Error("No unverified reply may stream"); } });
+  const stub = (reply: unknown): LLM => ({ chatText: async o => { request = o; return JSON.stringify(JSON.stringify(o.system).includes('DEBRIEF EVIDENCE CHECK')?{approved:true,issues:[]}:reply); }, chatStream: () => { throw Error("No unverified reply may stream"); } });
   const output = await runDebriefChat(input, stub(fixtureReply), "test");
   check("reply preserves verified evidence and resolves only existing source IDs", () => assert.deepEqual(output, fixtureReply));
   const paragraphs = await runDebriefChat(input, stub({ ...fixtureReply, answer: ["概念解释。", "本次用法。"] }), "test");
@@ -61,7 +61,7 @@ async function main() {
   await runDebriefChat(followup, stub(fixtureReply), "test");
   check("the model receives prior answers for multi-turn questions", () => assert(request!.messages[0].content.includes("question-8")));
   let repairCalls = 0;
-  const repaired = await runDebriefChat(input, { ...stub(null), chatText: async () => JSON.stringify(++repairCalls === 1 ? { ...fixtureReply, evidence: "捏造的句子。" } : fixtureReply) }, "test");
+  const repaired = await runDebriefChat(input, { ...stub(null), chatText: async o => JSON.stringify(JSON.stringify(o.system).includes('DEBRIEF EVIDENCE CHECK')?{approved:true,issues:[]}:++repairCalls === 1 ? { ...fixtureReply, evidence: "捏造的句子。" } : fixtureReply) }, "test");
   check("one repair revalidates a fresh reply instead of replacing invented evidence", () => { assert.equal(repairCalls, 2); assert.deepEqual(repaired, fixtureReply); });
   const silent = { ...input, transcript: input.transcript.filter(t => t.role !== "learner") };
   const general = await runDebriefChat(silent, stub({ ...fixtureReply, evidence: "" }), "test");
