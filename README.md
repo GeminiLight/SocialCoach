@@ -240,9 +240,9 @@ SocialCoach 基于 Wang 等人的论文 [*SocialCoach: Personalized Social Skill
 
 欢迎扫码加入 **SocialCoach 体验交流群**，分享体验、反馈问题，一起聊聊那些难开口的场景。
 
-<img src="docs/community/wechat-group-2026-10-12.png" alt="SocialCoach 体验交流群微信二维码，2026 年 10 月 19 日前有效" width="320">
+<img src="docs/community/wechat-group-2026-10-21.png" alt="SocialCoach 体验交流群微信二维码，2026 年 10 月 28 日前有效" width="320">
 
-群二维码在 **2026 年 10 月 19 日前有效**。也可以添加我的个人微信：**`gemining2018`**。
+群二维码在 **2026 年 10 月 28 日前有效**。也可以添加我的个人微信：**`gemining2018`**。
 
 ## 参与贡献
 

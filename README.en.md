@@ -244,9 +244,9 @@ The paper studies personalized practice scheduling and tutoring with a traceable
 
 Scan the QR code to join the **SocialCoach WeChat community** and share your experience, report issues, or discuss conversations you want to practice.
 
-<img src="docs/community/wechat-group-2026-10-12.png" alt="SocialCoach WeChat community QR code, valid before October 19, 2026" width="320">
+<img src="docs/community/wechat-group-2026-10-21.png" alt="SocialCoach WeChat community QR code, valid before October 28, 2026" width="320">
 
-The group QR code is valid **before October 19, 2026**. You can also add me on WeChat: **`gemining2018`**.
+The group QR code is valid **before October 28, 2026**. You can also add me on WeChat: **`gemining2018`**.
 
 ## Contributing
 
