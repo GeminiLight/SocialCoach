@@ -1,0 +1,17 @@
+{
+  "id": "dinner-zh",
+  "mode": "projected",
+  "model": "glm-5.3",
+  "calls": [
+    {
+      "durationMs": 8070,
+      "ok": true,
+      "inputBytes": 22171,
+      "raw": "{\"approved\":false,\"issues\":[{\"field\":\"knowledge.whyThis\",\"reason\":\"引用将学习者两段不相邻的话直接拼接成一句连续引文，原话中间还有「我会自己跟大姨说，」，并非原样说出。\",\"quote\":\"「工资不要替我转述。已经发过去的消息，你会怎么补充说明？」\"}],\"alternatives\":[]}"
+    }
+  ],
+  "error": {
+    "name": "Error",
+    "message": "The assessment fact check returned no usable result"
+  }
+}

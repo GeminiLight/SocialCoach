@@ -205,8 +205,10 @@ export interface JSONCallOpts extends Omit<ChatOpts, "messages" | "system"> {
   user: string;
 }
 
-/** Non-streaming call that must return JSON. Retries once on parse failure. */
-export async function jsonCall<T>(opts: JSONCallOpts, llm: LLM): Promise<T> {
+/** Non-streaming JSON call. A task that owns its repair loop can request one
+ * attempt, so nested parse repairs cannot consume its final verification call.
+ */
+export async function jsonCall<T>(opts: JSONCallOpts, llm: LLM, maxAttempts: 1 | 2 = 2): Promise<T> {
   const attempt = async (nudge = false): Promise<T> => {
     const text = await llm.chatText({
       ...opts,
@@ -219,6 +221,7 @@ export async function jsonCall<T>(opts: JSONCallOpts, llm: LLM): Promise<T> {
   try {
     return await attempt();
   } catch (e) {
+    if (maxAttempts === 1) throw e;
     if (e instanceof LLMError && e.retryable) return attempt(true);
     if (e instanceof SyntaxError) return attempt(true);
     throw e;

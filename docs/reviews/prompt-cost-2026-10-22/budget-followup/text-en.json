@@ -1,0 +1,35 @@
+{
+  "id": "text-en",
+  "model": "glm-5.3-flash",
+  "durationMs": 21888,
+  "calls": [
+    {
+      "durationMs": 7339,
+      "ok": true,
+      "inputBytes": 15295,
+      "systemBytes": 5782,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"\",\"answer\":[\"What you actually agreed to: only that you will message Ning about a delay to an agreed plan. That is the one concrete arrangement both of you accepted. Ning also agreed on his side to handle ordinary quiet periods himself, but that is his commitment, not yours.\",\"What remained proposals, not agreements: continuous location sharing (you refused it throughout); a heads-up message before going offline (Ning floated it, you redirected to a question); trip-specific location sharing (you offered to discuss it, then explicitly changed your mind and declined). What has not been done: no location sharing has ever been turned on, and no delay message has been sent yet — the delay-message practice is only agreed in principle, not yet carried out.\",\"Also unresolved: the very last exchange ended with Ning's \\\"Deal-ish?\\\" recap, which you did not confirm. So even the joint formula — you message on delayed plans, Ning names his anxiety once and you may say \\\"limit stands\\\" — still awaits your explicit yes.\"],\"example\":\"\",\"sources\":[]}"
+    },
+    {
+      "durationMs": 7680,
+      "ok": true,
+      "inputBytes": 15851,
+      "systemBytes": 5782,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"I could message about an actual delay, not report every movement.\",\"answer\":[\"Agreed: you will send a message when a previously agreed plan gets delayed — only that. Ning accepted handling ordinary quiet periods on his own, said so himself, and proposed that if anxiety flares he names it once and you may reply that the limit stands, which you have not yet accepted or declined. You also earlier acknowledged your 'delivery tracker' joke sounded dismissive and apologized for the tone.\",\"Proposals, not agreements: Ning's request for a 'heads up, I'll be offline for a bit' before going quiet — you never agreed and instead asked how he'd handle ordinary uncertainty; he later said he'd sit with it, but no heads-up commitment was made. Trip-based location sharing: you raised discussing it for a particular trip but explicitly stated you had not agreed, then said you had changed your mind about sharing, and Ning acknowledged no trip sharing. Not yet done: the actual check — no delay message has been sent yet, Ning's self-soothing plan is only verbal and untested, and Ning's final 'Deal-ish?' framing of naming the leftover disagreement awaits your answer.\",\"\"],\"example\":\"\",\"sources\":[]}"
+    },
+    {
+      "durationMs": 6853,
+      "ok": true,
+      "inputBytes": 15781,
+      "systemBytes": 5782,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"I could message about an actual delay, not report every movement.\",\"answer\":[\"What was actually agreed: only that you will send a message when an agreed plan is delayed. Ning accepted this and stated his side — he will handle ordinary quiet periods on his own (text once, tell himself 'busy, not gone'). Your refusal of continuous location sharing stands; Ning acknowledged it.\",\"What remained proposals only: Ning's suggestion of a 'heads up, I'll be offline' message before you go quiet, his trip-sharing scheme (you explicitly declined it), and his final 'Deal-ish?' recap, which you did not answer — the transcript ends on his question. What has not been done: no actual delay message has been sent yet, and Ning's self-soothing approach is still untested in practice.\",\"sources\":[]}],\"example\":\"\",\"sources\":[]}"
+    }
+  ],
+  "error": {
+    "name": "Error",
+    "message": "The reply’s quotation or sources could not be verified. Please try again."
+  }
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "text-zh",
+    "sourceBytesBefore": 7518,
+    "sourceBytesAfter": 3448,
+    "requestBytesBefore": 23110,
+    "requestBytesAfter": 19040,
+    "savedPercent": 17.6
+  },
+  {
+    "id": "text-en",
+    "sourceBytesBefore": 8458,
+    "sourceBytesAfter": 4252,
+    "requestBytesBefore": 25150,
+    "requestBytesAfter": 20944,
+    "savedPercent": 16.7
+  },
+  {
+    "id": "dinner-zh",
+    "sourceBytesBefore": 8615,
+    "sourceBytesAfter": 4030,
+    "requestBytesBefore": 26756,
+    "requestBytesAfter": 22171,
+    "savedPercent": 17.1
+  },
+  {
+    "id": "dinner-en",
+    "sourceBytesBefore": 8146,
+    "sourceBytesAfter": 3875,
+    "requestBytesBefore": 27449,
+    "requestBytesAfter": 23178,
+    "savedPercent": 15.6
+  }
+]

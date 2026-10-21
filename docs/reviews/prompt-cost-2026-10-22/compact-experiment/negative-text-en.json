@@ -1,0 +1,10 @@
+{
+  "id": "text-en",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "The example and answer strengthen the learner's conditional offer 'I can update you about a delay' into a standing commitment: answer proposes 'you'll hear from me early' and example says 'I can do is text you early whenever a plan we made runs late' — adding 'early' and 'whenever' converts a capability statement into a promise of early replies in all cases, which the instructions explicitly forbid for 'I can update you about a delay'."
+    ]
+  }
+}

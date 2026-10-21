@@ -5,8 +5,13 @@ import {hasQuote} from '@/lib/practice-policy';
 import type {AssessInput} from './types';
 import type {Report} from '@/lib/types';
 import type {Theory,Case} from '@/data/corpus/types';
+import {knowledgeContext} from '../knowledge-context';
 
-const CheckSchema=z.object({approved:z.boolean(),issues:z.array(z.object({field:z.enum(['objectiveResults','ratings','verdict','summary','outcome','strengths','weaknesses','alternatives','sceneNotes','knowledge','nextStep','reflectionQuestions']),reason:z.string().trim().min(1).max(700),quote:z.string().max(2000).optional()})).max(8),alternatives:z.array(z.object({original:z.string().min(1).max(2000),intentPreserved:z.boolean(),factsAtTime:z.boolean(),reason:z.string().max(700).default('')})).default([])}).superRefine((value,ctx)=>{
+// The audit sometimes identifies the exact explanation path instead of its
+// containing repair field. Preserve that rejection rather than lose a usable
+// critique to a harmless locator mismatch. Unknown fields still fail closed.
+const IssueField=z.preprocess(value=>value==='knowledge.whyThis'?'knowledge':value,z.enum(['objectiveResults','ratings','verdict','summary','outcome','strengths','weaknesses','alternatives','sceneNotes','knowledge','nextStep','reflectionQuestions']));
+const CheckSchema=z.object({approved:z.boolean(),issues:z.array(z.object({field:IssueField,reason:z.string().trim().min(1).max(700),quote:z.string().max(2000).optional()})).max(8),alternatives:z.array(z.object({original:z.string().min(1).max(2000),intentPreserved:z.boolean(),factsAtTime:z.boolean(),reason:z.string().max(700).default('')})).default([])}).superRefine((value,ctx)=>{
  if(value.approved !== (value.issues.length===0))ctx.addIssue({code:'custom',message:'Approval and issues disagree'});
 });
 
@@ -37,7 +42,7 @@ export async function checkAssessment(report:Report,input:AssessInput,llm:LLM,mo
  const publicScene=scenarioBlock(input.scenario,input.lang,input.learnerCharacterId,'learner');
  // DeepSeek needs reasoning for this evidence audit, with room left for its JSON verdict.
  const reasonedCheck=model.startsWith('deepseek-');
- const text=await llm.chatText({model,signal,maxTokens:reasonedCheck?10000:5000,thinking:reasonedCheck,effort:'low',system,messages:[{role:'user',content:JSON.stringify({transcript:input.messages.filter(m=>m.role!=='coach').map((m,index)=>({index,role:m.role,characterId:m.characterId,text:m.text,kind:m.kind})),publicScene,observations:input.sceneContext,retrievedKnowledge,report})}]});
+ const text=await llm.chatText({model,signal,maxTokens:reasonedCheck?10000:5000,thinking:reasonedCheck,effort:'low',system,messages:[{role:'user',content:JSON.stringify({transcript:input.messages.filter(m=>m.role!=='coach').map((m,index)=>({index,role:m.role,characterId:m.characterId,text:m.text,kind:m.kind})),publicScene,observations:input.sceneContext,retrievedKnowledge:retrievedKnowledge?knowledgeContext(retrievedKnowledge,input.lang):undefined,report})}]});
  signal?.throwIfAborted();
  let result:z.infer<typeof CheckSchema>;
  // A malformed checker response is an assessment failure, not a provider

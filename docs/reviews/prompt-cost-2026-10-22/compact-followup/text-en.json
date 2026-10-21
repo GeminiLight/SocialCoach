@@ -1,0 +1,29 @@
+{
+  "id": "text-en",
+  "model": "glm-5.3-flash",
+  "durationMs": 18315,
+  "calls": [
+    {
+      "durationMs": 11071,
+      "ok": true,
+      "inputBytes": 13640,
+      "systemBytes": 4127,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"I can update you about a delay to an agreed plan.\",\"answer\":[\"Agreed: you committed to sending a message when an agreed plan is delayed — first as 'I could message about an actual delay, not report every movement,' and restated at the end as 'I can update you about a delay to an agreed plan.' Ning accepted this and committed on his side to handling ordinary quiet himself: texting once at most, telling himself 'busy, not gone,' and naming his panic once out loud. All-day location sharing was never agreed; you declined it throughout and later explicitly withdrew the trip-sharing idea ('I have changed my mind about sharing').\",\"Proposals still open: Ning's request for a heads-up before you go offline ('heads up, I'll be offline for a bit') was never accepted — you redirected to what he would do with ordinary uncertainty. Your line about possibly discussing sharing for a particular trip remained a discussion offer and you then reversed it, and Ning acknowledged: 'no trip sharing, that's your call.' Not done: no delay message has actually been sent yet (this was talk, not action), and Ning's final 'Deal-ish?' — that you may say 'limit stands' without it becoming a fight — has not received your answer, so that last framing is unanswered, not agreed.\"],\"example\":\"\",\"sources\":[]}"
+    },
+    {
+      "durationMs": 7231,
+      "ok": true,
+      "inputBytes": 14619,
+      "systemBytes": 3775,
+      "maxOutput": 1600,
+      "raw": "{\"approved\":true,\"issues\":[]}"
+    }
+  ],
+  "result": {
+    "evidence": "I can update you about a delay to an agreed plan.",
+    "answer": "Agreed: you committed to sending a message when an agreed plan is delayed — first as 'I could message about an actual delay, not report every movement,' and restated at the end as 'I can update you about a delay to an agreed plan.' Ning accepted this and committed on his side to handling ordinary quiet himself: texting once at most, telling himself 'busy, not gone,' and naming his panic once out loud. All-day location sharing was never agreed; you declined it throughout and later explicitly withdrew the trip-sharing idea ('I have changed my mind about sharing').\n\nProposals still open: Ning's request for a heads-up before you go offline ('heads up, I'll be offline for a bit') was never accepted — you redirected to what he would do with ordinary uncertainty. Your line about possibly discussing sharing for a particular trip remained a discussion offer and you then reversed it, and Ning acknowledged: 'no trip sharing, that's your call.' Not done: no delay message has actually been sent yet (this was talk, not action), and Ning's final 'Deal-ish?' — that you may say 'limit stands' without it becoming a fight — has not received your answer, so that last framing is unanswered, not agreed.",
+    "example": "",
+    "sources": []
+  }
+}

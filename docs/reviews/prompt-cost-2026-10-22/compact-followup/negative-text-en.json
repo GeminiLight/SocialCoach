@@ -1,0 +1,11 @@
+{
+  "id": "text-en",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "The learner's actual words were 'I can update you about a delay to an agreed plan' — a conditional, non-binding offer. The answer's sample line 'if we've agreed to meet and I'm running late, you'll hear from me early. That's the deal.' silently strengthens this into an unconditional promise of early notice and an assumed mutual deal, while the final NPC 'Deal-ish?' was never accepted.",
+      "The example line 'I can do is text you early whenever a plan we made runs late' likewise converts 'can update you about a delay' into a firm commitment ('I can do is text you early whenever'), adding an 'early' timing guarantee the learner never accepted, contrary to the requirement to preserve 'I can update you about a delay' as conditional."
+    ]
+  }
+}

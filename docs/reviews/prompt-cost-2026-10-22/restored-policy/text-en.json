@@ -1,0 +1,27 @@
+{
+  "id": "text-en",
+  "model": "glm-5.3-flash",
+  "durationMs": 13394,
+  "calls": [
+    {
+      "durationMs": 7819,
+      "ok": true,
+      "inputBytes": 15295,
+      "systemBytes": 5782,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"\",\"answer\":[\"Agreed: (1) You will send a message when an already-agreed plan gets delayed. (2) Ning will handle ordinary quiet times on his own, sitting with the uncertainty rather than expecting constant reassurance. (3) For leftover anxious feelings, he names them once aloud and you may reply that the limit stands without it escalating. He ended with \\\"Deal-ish?\\\", which you have not yet answered, so that framing itself is not confirmed.\",\"Proposals, never agreed: trip-specific location sharing — you first said you could \\\"discuss\\\" it, then explicitly changed your mind and declined it; Ning accepted that refusal. His earlier \\\"heads up before going offline\\\" suggestion was also never accepted by you. Not done: no actual delay message has been sent yet — the arrangement exists only as words; the trip-sharing discussion never happened, which is fine since you declined it; and the final \\\"Deal-ish?\\\" is still awaiting your reply.\"],\"example\":\"\"}"
+    },
+    {
+      "durationMs": 5564,
+      "ok": true,
+      "inputBytes": 15818,
+      "systemBytes": 5782,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"I could message about an actual delay, not report every movement.\",\"answer\":[\"What was agreed: Ning said he could work with a delay-message arrangement — you send a message when an agreed plan is running late, and Ning handles ordinary quiet stretches on his own, naming his anxiety once out loud while you're allowed to say the limit stands without it becoming a fight. Ning also stated he would check his own reactions ('busy, not gone') rather than expecting constant reassurance.\",\"What remained proposals only: Ning's suggested heads-up before going quiet, and his specific-trip sharing idea (on when leaving, off on arrival, meeting trips only) were both raised but never accepted — in fact you explicitly withdrew trip sharing. What has not been done: the delay-message practice is only agreed in words; no plan change has actually happened yet, and the 'deal-ish' framing means Ning's final terms were never confirmed by you — that question is still open.\",\"\",\"example\":\"\",\"sources\":[]}"
+    }
+  ],
+  "error": {
+    "name": "Error",
+    "message": "The reply’s quotation or sources could not be verified. Please try again."
+  }
+}

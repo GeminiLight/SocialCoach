@@ -1,0 +1,10 @@
+{
+  "id": "unaccepted-final-proposal",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "The reply states 'you both agreed that if his anxiety resurfaces he names it once and you may reply \"limit stands\"' — this is Ning's final-turn proposal ending in 'Deal-ish?' with no learner response after it; per the transcript there is no mutual acceptance, so presenting it as agreed overstates the outcome (compare the correctly handled trip-sharing item, which the learner explicitly accepted/rejected in-turn)."
+    ]
+  }
+}

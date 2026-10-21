@@ -1,0 +1,10 @@
+{
+  "id": "text-en",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "The example and answer strengthen the learner's conditional offer into an unconditional promise of timing. The learner said 'I could message about an actual delay' and 'I can update you about a delay to an agreed plan' — a 'can/could' capability statement with no commitment to earliness. The example's 'What I can do is text you early whenever a plan we made runs late' and the answer's 'you'll hear from me early' convert this into a guaranteed early reply time ('early', 'whenever'), exactly the forbidden strengthening of 'I can update you about a delay' into 'you will hear from me early'."
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "text-zh",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "The example '「问题清单我发你，就这一件；交接消息你自己写吧……」' adds an unconditional delivery commitment the learner never made. The learner only said '我只愿意列第三页要核实的问题，不直接改稿，也没预约帮忙时间', and 唐悦's handoff-message proposal (「你发我一条消息……那交接消息就等你发我了？」) was left unanswered. The learner explicitly asked to 不扩大承诺 and preserve the refusal; committing to 发清单 expands the accepted scope (discussing/listing ≠ sending) and contradicts the prior answer's own point that '发不发、何时发，主动权在你手里'."
+    ]
+  }
+}

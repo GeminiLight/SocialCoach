@@ -1,0 +1,18 @@
+{
+  "id": "dinner-zh",
+  "mode": "projected",
+  "model": "glm-5.3",
+  "calls": [
+    {
+      "durationMs": 3945,
+      "ok": true,
+      "inputBytes": 22171,
+      "raw": "{\"approved\":true,\"issues\":[],\"alternatives\":[]}"
+    }
+  ],
+  "result": {
+    "approved": true,
+    "issues": [],
+    "alternatives": []
+  }
+}

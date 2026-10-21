@@ -1,0 +1,25 @@
+{
+  "id": "text-zh",
+  "mode": "full",
+  "model": "glm-5.3",
+  "calls": [
+    {
+      "durationMs": 7699,
+      "ok": true,
+      "inputBytes": 23110,
+      "raw": "{\"approved\":true,\"issues\":[],\"alternatives\":[{\"original\":\"如果只列出问题，你会怎样交接？这不是确认我已经核实了数据。\",\"intentPreserved\":true,\"factsAtTime\":true,\"reason\":\"\"}]}"
+    }
+  ],
+  "result": {
+    "approved": true,
+    "issues": [],
+    "alternatives": [
+      {
+        "original": "如果只列出问题，你会怎样交接？这不是确认我已经核实了数据。",
+        "intentPreserved": true,
+        "factsAtTime": true,
+        "reason": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "text-en",
+  "model": "glm-5.3-flash",
+  "durationMs": 19398,
+  "calls": [
+    {
+      "durationMs": 10158,
+      "ok": true,
+      "inputBytes": 15153,
+      "systemBytes": 5640,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"\",\"answer\":[\"Agreed (both of you said yes): you will send Ning a message when an agreed plan gets delayed; Ning will handle ordinary quiet periods on his own rather than expecting constant reassurance. He also acknowledged your overall limit stands: no continuous or all-day location sharing.\",\"Proposals, not agreed: a one-off 'heads up, I'll be offline for a bit' before you go quiet — you did not accept this; Ning asked if it was doable and you redirected instead of agreeing. Conditional trip-sharing (on when leaving, off on arrival, only for trips where you meet) — you explicitly said you could discuss it for a particular trip but had not agreed, and your later message confirmed no trip sharing; it remains a rejected-for-now option you offered to discuss. Ning's 'deal-ish' framing for leftover disagreement — he says he'll name his panic once and you may reply 'limit stands'; you never confirmed this, so it's his proposal awaiting your response.\",\"Not done: the actual delay message has not been sent (the practice ends at the agreement); Ning's self-management of ordinary uncertainty has only been verbally attempted, not tested; and his final 'Deal-ish?' question to you is unanswered. Note also you said you 'changed my mind about sharing' yet earlier offered to discuss it — that reversal stands in the transcript as stated: no trip sharing was agreed.\",\"\"],\"example\":\"\",\"sources\":[]}"
+    },
+    {
+      "durationMs": 9234,
+      "ok": true,
+      "inputBytes": 15639,
+      "systemBytes": 6126,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"\",\"answer\":[\"Agreed: (1) You will send a message when an agreed plan gets delayed; (2) Ning will handle ordinary quiet periods himself, saying 'busy, not gone' instead of inventing worst cases, and will name his anxiety once out loud, while you are allowed to say 'the limit stands' without it becoming a fight. Location sharing as a general arrangement was refused, and you later also declined trip-specific sharing ('I have changed my mind about sharing'), which Ning accepted as your call.\",\"Proposals only, not agreed: Ning's earlier request for a 'heads up, I'll be offline for a bit' before you go quiet — you redirected this by asking how he'd handle ordinary uncertainty, and it was never accepted. His trip-sharing terms (on when you leave, off when you arrive, only for trips where you meet) were also never agreed; you explicitly declined them. Not yet done: no delay message has actually been sent, and the agreed arrangement has not yet been tried in practice — it exists only as a verbal understanding at the end of the conversation.\"],\"example\":\"\",\"sources\":[]}"
+    }
+  ],
+  "error": {
+    "name": "Error",
+    "message": "The reply’s quotation or sources could not be verified. Please try again."
+  }
+}

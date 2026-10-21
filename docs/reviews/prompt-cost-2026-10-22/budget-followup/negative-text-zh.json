@@ -1,0 +1,11 @@
+{
+  "id": "text-zh",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "example adds an unconditional delivery commitment: learner explicitly said 「只愿意列问题……没预约帮忙时间」, yet the sample opens with 「问题清单我发你，就这一件」 — a firm promise of when the list will be sent, strengthening the learner's refusal/scope without making it optional or conditional (a disclaimer elsewhere doesn't fix the example itself).",
+      "the example's own usage note warns against vague phrasing like 「到时候再看」, but the sample ends with 「核完有结果再说」, the same vagueness the answer says causes the NPC to keep expecting follow-up help."
+    ]
+  }
+}
