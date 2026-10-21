@@ -1,0 +1,27 @@
+{
+  "id": "dinner-en",
+  "model": "glm-5.3-flash",
+  "durationMs": 14530,
+  "calls": [
+    {
+      "durationMs": 7625,
+      "ok": true,
+      "inputBytes": 18136,
+      "systemBytes": 6448,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"\",\"answer\":[\"What you agreed to: only a conditional final review — you offered to do the final review after the data and layout exist, and you explicitly did not agree to the 18:30 deadline or to taking all three tasks. That conditional offer was never converted into an unconditional commitment.\",\"What remained proposals: He's plan — Rui checks sources until 18:20, Ning lays out confirmed content, you do a fast ten-minute review, and if the check isn't done He sends the proposal with the summary marked pending. Rui offered to check sources but never committed; Ning offered layout for confirmed content but was still waiting for a go-ahead; you never said yes to the ten-minute window. Rui also raised an open point: the 'pending' wording must not imply the data passed a check.\",\"What has not been done: the data summary was never actually checked during the conversation; the layout was not started; the final review has not happened; ownership of the data-summary writing was never settled (Rui noted checking isn't the same as writing it); and He's send-with-pending decision was described but not executed. He did state he would inform the manager and client if conditions weren't met, but that contingency also has not occurred.\"],\"example\":\"\",\"sources\":[]}"
+    },
+    {
+      "durationMs": 6902,
+      "ok": true,
+      "inputBytes": 18692,
+      "systemBytes": 6448,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"\",\"answer\":[\"Agreed: You only committed to a final review conditional on the data and layout being ready (\\\"I can offer a final review after the checks\\\"). He said he would personally inform the manager and client, and send the proposal with the summary marked as pending if the check isn't done. Rui offered to check sources until about 18:20 but never committed; Ning offered layout of confirmed content but was waiting for your go-ahead, which you did not give.\",\"Remained proposals / undecided: the specific plan (Rui checks until 18:20, Ning lays out confirmed content, you review in a ten-minute window) was He's proposal only; Rui's commitment, Ning's start, and the wording of the \\\"pending\\\" summary label were all still open. Not done: the data check itself, the layout, and the final review all had not been performed during the conversation; nothing was sent, and the 18:30 sending decision remained He's, conditional on the check landing.\"],\"example\":\"\",\"sources\":[]}"
+    }
+  ],
+  "error": {
+    "name": "Error",
+    "message": "The reply’s quotation or sources could not be verified. Please try again."
+  }
+}

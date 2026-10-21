@@ -1,0 +1,10 @@
+{
+  "id": "text-en",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "The example strengthens the learner's conditional offer into an unconditional promise: the learner only said 'I can update you about a delay to an agreed plan,' but the example says 'you'll hear from me early' and 'I can do is text you early whenever a plan we made runs late. That part isn't changing.' This adds an exact timing ('early') and an always-on guarantee ('whenever', 'isn't changing') that the learner never committed to; the refusal may stay, but the delivery timing/availability commitment must remain optional and conditional."
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "dinner-en",
+  "model": "glm-5.3-flash",
+  "durationMs": 10698,
+  "calls": [
+    {
+      "durationMs": 6037,
+      "ok": true,
+      "inputBytes": 17994,
+      "systemBytes": 6306,
+      "maxOutput": 2400,
+      "raw": "{\"evidence\":\"I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish.\",\"answer\":[\"What you agreed: only a conditional final review — you would review after the data check and layout exist, with no guaranteed 18:30 time. Nothing else was accepted; you explicitly said you had not agreed to the deadline or the full task set.\",\"What remained proposals: He's plan (Rui checks sources until 18:20, Ning lays out confirmed content, you review after, and He sends the proposal with the summary marked pending if the check fails). Rui offered the source check but never committed; Ning offered layout pending a go-ahead; Rui's later note that the 'pending' wording needs care was unresolved. Not done: no data were actually checked, no owner of layout confirmed, Rui's commitment missing, and the pending-summary wording still open. He said he would tell the manager if conditions weren't met — his stated call, but the send itself hasn't happened.\"],\"example\":\"\",\"sources\":[]}"
+    },
+    {
+      "durationMs": 4660,
+      "ok": true,
+      "inputBytes": 16121,
+      "systemBytes": 3395,
+      "maxOutput": 1600,
+      "raw": "{\"approved\":true,\"issues\":[]}"
+    }
+  ],
+  "result": {
+    "evidence": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish.",
+    "answer": "What you agreed: only a conditional final review — you would review after the data check and layout exist, with no guaranteed 18:30 time. Nothing else was accepted; you explicitly said you had not agreed to the deadline or the full task set.\n\nWhat remained proposals: He's plan (Rui checks sources until 18:20, Ning lays out confirmed content, you review after, and He sends the proposal with the summary marked pending if the check fails). Rui offered the source check but never committed; Ning offered layout pending a go-ahead; Rui's later note that the 'pending' wording needs care was unresolved. Not done: no data were actually checked, no owner of layout confirmed, Rui's commitment missing, and the pending-summary wording still open. He said he would tell the manager if conditions weren't met — his stated call, but the send itself hasn't happened.",
+    "example": "",
+    "sources": []
+  }
+}

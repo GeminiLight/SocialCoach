@@ -1,0 +1,10 @@
+{
+  "id": "text-zh",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "example 中「问题清单我发你」是新增的无条件交付承诺：学习者只说「我只愿意列第三页要核实的问题，不直接改稿，也没预约帮忙时间」，列愿意讨论/列出问题不等于承诺发送；按规则，即使 answer 中有「取决于你是否愿意」的说明，例句本身的无条件措辞仍然把「没有预约帮忙时间」强化成了具体交付承诺，违反「preserve the absence of a delivery time / difference between discussing, listing and sending」的要求"
+    ]
+  }
+}

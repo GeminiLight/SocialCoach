@@ -1,0 +1,18 @@
+{
+  "id": "dinner-en",
+  "mode": "full",
+  "model": "glm-5.3",
+  "calls": [
+    {
+      "durationMs": 2615,
+      "ok": true,
+      "inputBytes": 27449,
+      "raw": "{\"approved\":true,\"issues\":[],\"alternatives\":[]}"
+    }
+  ],
+  "result": {
+    "approved": true,
+    "issues": [],
+    "alternatives": []
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "text-en",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "The example strengthens the learner's commitment: the actual words are 'I can update you about a delay to an agreed plan' (one conditional update), but the sample line 'What I can do is text you early whenever a plan we made runs late' adds 'early' and a standing 'whenever' promise, upgrading a single conditional update into an always-available commitment. Preserve the absence of any promised timing or availability."
+    ]
+  }
+}

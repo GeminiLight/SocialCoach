@@ -1,0 +1,11 @@
+{
+  "id": "unaccepted-final-proposal",
+  "model": "glm-5.3-flash",
+  "check": {
+    "approved": false,
+    "issues": [
+      "The reply claims a mutual agreement that 'if his anxiety resurfaces he names it once and you may reply \"limit stands\" without it becoming a fight.' This is Ning's final-turn proposal ('Deal-ish?') with no learner response following; per the transcript rules, an NPC's final recap/proposal cannot establish mutual acceptance.",
+      "The reply states Ning 'commits to handling ordinary quiet times on his own' as agreed, but Ning's own words hedge this ('I can't promise I'll be great at that') and it appears only in his unconfirmed proposal ('and I work on the rest of it?'), to which the learner never assented; later the 'Deal-ish?' recap with no learner reply again cannot convert it into an agreement."
+    ]
+  }
+}

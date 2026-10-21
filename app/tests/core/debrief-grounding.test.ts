@@ -17,8 +17,23 @@ test('a real quote cannot bypass rejection of invented dialogue or stronger comm
  const result=await runDebriefChat(input,taskLLM(sequence([bad,{approved:false,issues:['New sample dialogue in answer; early notification expands the stated commitment.']},fixtureReply,approved],requests),'debrief-chat'),'test');
  assert.deepEqual(result,fixtureReply);assert.equal(requests.length,4);
  assert.match(JSON.stringify(requests[1].system),/DEBRIEF EVIDENCE CHECK/);
- assert.match(JSON.stringify(requests[2].system),/early notification expands/);
+ assert.match(requests[2].messages[0].content,/early notification expands/);
+ assert.deepEqual(requests[2].system,requests[0].system,'repair keeps the reusable policy prefix stable');
  assert.equal(JSON.parse(requests[3].messages[0].content).reply.answer,fixtureReply.answer);
+});
+test('JSON and semantic repairs reserve a final check within four calls',async()=>{
+ const requests:ChatOpts[]=[];
+ // Previously jsonCall repaired the first parse internally, then the outer loop
+ // generated a third draft and exhausted the budget before its final check.
+ const rejected={approved:false,issues:['The draft invents a completed action.']};
+ await assert.rejects(runDebriefChat(input,taskLLM(sequence(['not JSON',fixtureReply,rejected,fixtureReply,approved],requests),'debrief-chat'),'test'));
+ assert.equal(requests.length,3,'malformed draft + corrected draft + rejected check; never generate an unverifiable third draft');
+ const validRequests:ChatOpts[]=[];
+ assert.deepEqual(await runDebriefChat(input,taskLLM(sequence(['not JSON',fixtureReply,approved],validRequests),'debrief-chat'),'test'),fixtureReply);
+ assert.equal(validRequests.length,3);
+ const formattingRequests:ChatOpts[]=[];
+ assert.deepEqual(await runDebriefChat(input,taskLLM(sequence(['not JSON','still not JSON',fixtureReply,approved],formattingRequests),'debrief-chat'),'test'),fixtureReply);
+ assert.equal(formattingRequests.length,4,'two cheap format rejections still leave room for generation and verification');
 });
 test('an uncorrected semantic failure is never returned after the bounded repair',async()=>{
  const rejected={approved:false,issues:['The draft treats an unaccepted proposal as a completed action.']};
