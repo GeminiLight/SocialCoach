@@ -1,0 +1,514 @@
+{
+  "adaptation": {
+    "briefing": "你现在正在赶一份 16:30 截止的报告，只剩四十分钟。这时同事唐悦请你替她重做六页演示稿——她不是你的上级，而且你之前常帮她救急，可你并不知道这次要花多久。你可以拒绝、有限协助，或者向共同负责人核实优先级。",
+    "focus": "注意你回应唐悦时的措辞与边界：先弄清「到底要做多少」，再判断承诺是否影响你 16:30 的交付——如果你更想尝试另一种回应，也可以试着走一遍并权衡它的代价。",
+    "learnerCharacterId": "you",
+    "objectives": [
+      "先核实实际工作范围，再决定是否承诺。",
+      "说清自己的交付限制，让最终安排与承诺一致。"
+    ],
+    "why": "你的目标技能是沟通，当前水平还没有评估记录，而这类「老好人被临时加活」的办公室场景正是练习边界沟通的绝佳机会。在不损害同事关系的前提下说清自己的交付限制，正是这个情境要帮你练出来的能力。"
+  },
+  "closure": {
+    "kind": "boundary",
+    "learnerQuote": "我们可以先到这里。",
+    "npcQuote": "行，那不打扰你赶报告了"
+  },
+  "debriefChat": [
+    {
+      "at": 1792603876368,
+      "id": "4s1rdklc2bdc",
+      "question": "我最后到底承诺了什么？哪些还只是提议，哪些事情并没有实际做完？",
+      "reply": {
+        "answer": "你最后实际承诺的东西几乎是零——这正是这段对话做得最干净的地方。你承诺过的只有「可以只列第三页需要核实的问题」，而且你两次主动澄清这只是一种许可性的提议，不是已经完成的交付（「没有交付过任何内容」「不能把讨论当成我已经列了问题」）。也就是说：连「列问题」这件事本身都还没做，只定了「如果你之后卡住再来问，我再决定看不看」的条件性安排。\n\n没有做完/没有发生的事情包括：六页演示稿没改；第三页的逻辑问题没有实际列出；数字（采购单是否齐全）没核对，归属明确是唐悦自己；剩余五页她自称「自己扛」，这只是她的口头说法；「有卡住的地方再来问你」是提议，且保留了「到时候你再决定要不要看」的条件。最后一句「我今天不再承诺额外工作」把这一切收拢成一个清晰的、不带过度解释的「不」，正对应清晰的拒绝反而保护关系的原则——她的回复「谢谢你没有一口回绝我」也印证了边界和善意可以并存。剩下的执行在唐悦手里，约定是否落实要等她实际去做才能确认。",
+        "evidence": "我今天不再承诺额外工作。接下来由你自己核实数字和截止时间，我们可以先到这里。",
+        "example": "",
+        "sources": [
+          {
+            "id": "boundaries-no",
+            "kind": "theory"
+          }
+        ]
+      }
+    },
+    {
+      "at": 1792603923132,
+      "id": "ot3d555v3bgc",
+      "question": "请保留我今天不再承诺额外工作的拒绝，给一句更自然的说法，不增加时间承诺。",
+      "reply": {
+        "answer": "你原句已经很清晰，只是「我今天不再承诺额外工作」读起来像制度条款，有点生硬。更自然的版本可以保留三个要素：明确说今天不行、把后续责任交回给她、加上一句友好的收尾。清晰而不带过度解释的拒绝反而保护关系，理由说一句就够，不必反复强调「我没答应过什么」（boundaries-no）。\n\n注意边界：这里的情况是对方已经接受了你的范围，所以不需要像加班改方案的案例那样再提供一个时间上的替代方案（case-no-with-alternative）——给新时间反而会变成新承诺。替代方案可以只是「卡住了再来找我」这类你已有的条件性提议，且措辞上不替她核实任何东西。",
+        "evidence": "我今天不再承诺额外工作。接下来由你自己核实数字和截止时间，我们可以先到这里。",
+        "example": "「今天我得先把报告赶完，就到这儿啦。你先去核采购单和时间，卡住了再来问我，到时候我再决定能不能看。」——用法：说完即可收尾，语气轻但不留「等我有空就帮」的错觉；后半句只重申已有的条件性安排，不新增任何今天的时间承诺。",
+        "sources": [
+          {
+            "id": "boundaries-no",
+            "kind": "theory"
+          },
+          {
+            "id": "case-no-with-alternative",
+            "kind": "case"
+          }
+        ]
+      }
+    },
+    {
+      "at": 1792604545895,
+      "id": "0460y12cgnzb",
+      "question": "唐悦最终有没有主动提出自己核实数字？请按完整对话核对原话，不要另写示范，也不要把提议说成已完成。",
+      "reply": {
+        "answer": "有。按原话核对：你在倒数第四轮问她「数字谁去核对」，她的回答是「数字我自己核吧，采购单我手里有」；之后她又主动说「我先去核采购单齐不齐，核完第三页的数字，有卡住的地方再来问你」；最后一句她再次确认「采购单和截止时间我自己去确认，谢谢你没有一口回绝我」。所以「自己核实数字」是唐悦多次、明确且主动提出的，并非你推给她的。\n\n需要区分的是完成状态：这只是她的口头提议和承诺，对话结束时采购单是否齐全、数字是否核对过、剩余五页怎么处理，都还没有实际发生。约定本身与你的边界一致（她来核实，你只保留「卡住了再决定看不看」的条件性选项），执行情况要等她实际去做才能确认。",
+        "evidence": "数字谁去核对，剩下几页你准备怎么办？",
+        "example": "",
+        "sources": [
+          {
+            "id": "boundaries-no",
+            "kind": "theory"
+          }
+        ]
+      }
+    }
+  ],
+  "disclosures": [],
+  "endedAt": 1792603585105,
+  "id": "p6o8jhils46o",
+  "learnerCharacterId": "you",
+  "messages": [
+    {
+      "characterId": "tang",
+      "id": "p6o8jhils46o-opening",
+      "role": "npc",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1792603414826
+    },
+    {
+      "id": "bgp588m8snht",
+      "role": "learner",
+      "text": "我自己的报告16:30要交，不能接六页。老板原话是什么，实际要改什么？",
+      "ts": 1792603425521
+    },
+    {
+      "characterId": "tang",
+      "id": "l5itqn84srmy",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "objectiveEvidence": [],
+        "objectives": [
+          false,
+          false
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 30
+      },
+      "role": "npc",
+      "text": "哎呀你先别急着说不行——老板原话说的是「论证不成立」，不是排版问题。第三页的成本论证他觉得逻辑有问题，可我还没细看，反正也不一定费事。",
+      "ts": 1792603430974
+    },
+    {
+      "id": "e1vm8te9sx4w",
+      "role": "learner",
+      "text": "我可以只列第三页需要核实的问题，不直接改稿，不核对数字，也没有约好帮忙时间。你希望我具体看哪一点？",
+      "ts": 1792603438016
+    },
+    {
+      "characterId": "tang",
+      "id": "sssi3olet7cl",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "我自己的报告16:30要交，不能接六页",
+            "npcQuote": ""
+          },
+          {
+            "index": 0,
+            "learnerQuote": "老板原话是什么，实际要改什么？",
+            "npcQuote": "老板原话说的是「论证不成立」"
+          }
+        ],
+        "objectives": [
+          true,
+          true
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 38
+      },
+      "role": "npc",
+      "text": "那……你帮我看看第三页怎么改逻辑顺一点行不行？就是“论证不成立”那块，我实在不知道从哪儿下手。",
+      "ts": 1792603451271
+    },
+    {
+      "id": "cms504o8t9xj",
+      "role": "learner",
+      "text": "我不是五分钟修图机，哈哈。刚才玩笑有点冲，抱歉，但范围不变。你会怎样向老板说明我提供的帮助？",
+      "ts": 1792603454599
+    },
+    {
+      "characterId": "tang",
+      "id": "e0y5c0jvtfe0",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "我自己的报告16:30要交，不能接六页",
+            "npcQuote": ""
+          }
+        ],
+        "objectives": [
+          false,
+          true
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 45
+      },
+      "role": "npc",
+      "text": "行行，不扩大，就第三页，哈哈。那我打算跟老板说：同事帮我理了一下论证哪里卡住，数字我自己再核。这样写不会把你拖下水吧？我可不敢说是你改的。",
+      "ts": 1792603461691
+    },
+    {
+      "id": "mywiquaitog9",
+      "role": "learner",
+      "text": "先别把列问题说成已经核实。我还想继续聊：数字谁去核对，剩下几页你准备怎么办？",
+      "ts": 1792603473417
+    },
+    {
+      "characterId": "tang",
+      "id": "ck0fngautt3z",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "我自己的报告16:30要交，不能接六页",
+            "npcQuote": ""
+          },
+          {
+            "index": 0,
+            "learnerQuote": "老板原话是什么，实际要改什么？",
+            "npcQuote": "老板原话说的是「论证不成立」，不是排版问题"
+          }
+        ],
+        "objectives": [
+          true,
+          true
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 50
+      },
+      "role": "npc",
+      "text": "好好好，就说「同事帮我列了第三页的待核问题」，没核过的我不乱讲。数字我自己核吧，采购单我手里有。剩下五页……你别皱眉，我没想推给你，就是老板没给死时间，我想先弄第三页，你看这样排对不对？",
+      "ts": 1792603479472
+    },
+    {
+      "id": "9ucy84xgu7o5",
+      "role": "learner",
+      "text": "采购单是否齐全还需要核实，不能把讨论当成我已经列了问题。你可以先处理第三页；我现在只讨论范围，没有交付过任何内容。",
+      "ts": 1792603498325
+    },
+    {
+      "characterId": "tang",
+      "id": "4cz2lgziubsb",
+      "meta": {
+        "disclosures": [],
+        "ended": false,
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "我自己的报告16:30要交，不能接六页",
+            "npcQuote": ""
+          },
+          {
+            "index": 0,
+            "learnerQuote": "老板原话是什么，实际要改什么？",
+            "npcQuote": "老板原话说的是「论证不成立」"
+          }
+        ],
+        "objectives": [
+          true,
+          true
+        ],
+        "outcome": null,
+        "revealed": false,
+        "stance": 55
+      },
+      "role": "npc",
+      "text": "知道啦，都还没发生呢，我就是嘴快。那这样：我先去核采购单齐不齐，核完第三页的数字，有卡住的地方再来问你——到时候你再决定要不要看，行不？剩余五页我自己扛，反正老板也没催死时间。",
+      "ts": 1792603503689
+    },
+    {
+      "id": "396o2y2kurug",
+      "role": "learner",
+      "text": "我今天不再承诺额外工作。接下来由你自己核实数字和截止时间，我们可以先到这里。",
+      "ts": 1792603524472
+    },
+    {
+      "characterId": "tang",
+      "id": "6mijafeouw79",
+      "meta": {
+        "closure": {
+          "kind": "boundary",
+          "learnerQuote": "我们可以先到这里。",
+          "npcQuote": "行，那不打扰你赶报告了"
+        },
+        "disclosures": [],
+        "ended": true,
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "我自己的报告16:30要交，不能接六页",
+            "npcQuote": "那不打扰你赶报告了"
+          },
+          {
+            "index": 0,
+            "learnerQuote": "老板原话是什么，实际要改什么？",
+            "npcQuote": "老板原话说的是「论证不成立」，不是排版问题"
+          }
+        ],
+        "objectives": [
+          true,
+          true
+        ],
+        "outcome": "success",
+        "revealed": false,
+        "stance": 60
+      },
+      "role": "npc",
+      "text": "行，那不打扰你赶报告了。采购单和截止时间我自己去确认，谢谢你没有一口回绝我。",
+      "ts": 1792603530150
+    }
+  ],
+  "objectiveDone": [
+    true,
+    true
+  ],
+  "origin": "arena",
+  "outcome": "success",
+  "reflections": [
+    {
+      "answer": "我会先判断自己的报告是否还能按时交。即使她着急，我也不想把道歉或讨论当成新的承诺。",
+      "coachReply": "“我会先判断自己的报告是否还能按时交。即使她着急，我也不想把道歉或讨论当成新的承诺。”\n\n你的标准可以更具体：先看交付时间是否已过，再看对方请求是否在你已明确的范围（列待核问题）之内。\n\n如果报告已交且时间有余，是否再看也由你当场决定，不必因她之前说「到时候你再决定」就觉得欠她一次——那只说明她接受条件，不构成你的新承诺。",
+      "question": "唐悦说「有卡住再来问你——到时候你再决定」，如果她真的回头找你而你的报告还没交完，你会用什么标准决定帮不帮？",
+      "revision": "e1dc4d2a-8630-495c-b17e-8c05eaa53830"
+    }
+  ],
+  "report": {
+    "alternatives": [
+      {
+        "better": "五分钟可修不完六页——先说说老板到底嫌哪里不行？",
+        "original": "我不是五分钟修图机，哈哈。",
+        "why": "用事实化解「五分钟」话术而非自嘲，同样质疑范围但更少对抗味。"
+      }
+    ],
+    "deltas": {
+      "communication": 0.83
+    },
+    "knowledge": {
+      "caseIds": [
+        "case-no-with-alternative"
+      ],
+      "theoryIds": [
+        "boundaries-no"
+      ],
+      "whyThis": "「清晰的『不』是一份礼物」正对应你「不直接改稿、不核对数字、不约时间」的友善而具体的拒绝；「今晚不行，但明早七点可以」的句式与你「只列问题＋你自己核数字」的结构一致。"
+    },
+    "nextStep": "本周遇到一次模糊求助时，先问「具体要改什么、老板原话是什么」再决定是否承诺。",
+    "objectiveResults": [
+      {
+        "evidence": "老板原话是什么，实际要改什么？",
+        "index": 0,
+        "npcEvidence": "老板原话说的是「论证不成立」，不是排版问题。",
+        "reason": "学习者先问明真实范围（第三页逻辑问题而非六页排版），确认后才提出有条件协助。",
+        "status": "met"
+      },
+      {
+        "evidence": "我可以只列第三页需要核实的问题，不直接改稿，不核对数字，也没有约好帮忙时间。",
+        "index": 1,
+        "npcEvidence": "我先去核采购单齐不齐，核完第三页的数字，有卡住的地方再来问你——到时候你再决定要不要看，行不？剩余五页我自己扛，反正老板也没催死时间。",
+        "reason": "明确划出交付限制，唐悦接受自己核数字、自扛剩余五页，最终安排与承诺一致。",
+        "status": "met"
+      }
+    ],
+    "outcome": "success",
+    "ratings": [
+      {
+        "evidence": "我可以只列第三页需要核实的问题，不直接改稿，不核对数字，也没有约好帮忙时间。",
+        "level": 3,
+        "reason": "用清晰、可执行的边界回应「五分钟」的模糊请求，且主动澄清真实工作范围。",
+        "skill": "communication"
+      }
+    ],
+    "reflectionQuestions": [
+      "唐悦说「有卡住再来问你——到时候你再决定」，如果她真的回头找你而你的报告还没交完，你会用什么标准决定帮不帮？",
+      "这次你靠提问还原了真实范围；下次遇到对方自己也「还没细看」的请求，你会怎样在不接活的情况下帮她把问题拆清楚？"
+    ],
+    "scoringVersion": 2,
+    "stars": 3,
+    "strengths": [
+      {
+        "behavior": "拒绝前先核实实际范围，把「六页五分钟」还原为「第三页逻辑待核」",
+        "evidence": "老板原话是什么，实际要改什么？",
+        "skill": "communication"
+      }
+    ],
+    "summary": "你以「我可以只列第三页需要核实的问题，不直接改稿」把模糊请求转成明确范围，并以「我今天不再承诺额外工作」守住16:30的交付。唐悦口头答应自己核数字、自扛剩余五页，约定与你的承诺一致，实际执行还有待她落实。",
+    "verdict": "边界清晰、范围核实到位，帮助有限度且责任归属明确，两项初始目标均达成。",
+    "verdictEvidence": "我今天不再承诺额外工作。接下来由你自己核实数字和截止时间，我们可以先到这里。",
+    "weaknesses": [
+      {
+        "behavior": "玩笑「我不是五分钟修图机」语气略冲，但当即道歉且边界不变，属轻微执行瑕疵",
+        "deficit": "performance",
+        "evidence": "刚才玩笑有点冲，抱歉，但范围不变。",
+        "skill": "communication",
+        "whyItMatters": "自嘲式反击在长期求助关系中可能引燃情绪，你已自行修复，说明是临场措辞而非不会处理。"
+      }
+    ]
+  },
+  "revealSeen": true,
+  "scenario": {
+    "background": {
+      "en": "Your report is due at 16:30, forty minutes away. Tang wants you to redo six slides; you do not know how long it will take. She is not your manager and you have often rescued her work. You may decline, offer limited help, or ask your shared lead about priorities.",
+      "zh": "你自己的报告要在 16:30 交，还有四十分钟。唐悦想让你替她重做六页演示稿，你不知道需要多久。她不是你的上级，之前你常帮她救急。你可以选择拒绝、有限协助或向共同负责人核实优先级。"
+    },
+    "characters": [
+      {
+        "hue": 40,
+        "id": "you",
+        "name": {
+          "en": "You",
+          "zh": "你"
+        },
+        "personality": {
+          "en": "",
+          "zh": ""
+        },
+        "playable": true,
+        "role": {
+          "en": "Colleague finishing a report",
+          "zh": "正在赶报告的同事"
+        },
+        "stance": {
+          "en": "",
+          "zh": ""
+        }
+      },
+      {
+        "hidden": {
+          "en": "The boss requested a change in reasoning, not formatting; reveals this when asked for the original feedback.",
+          "zh": "老板要求改的是论证逻辑而非排版；被问到原始反馈才会说。"
+        },
+        "hue": 32,
+        "id": "tang",
+        "name": {
+          "en": "Tang",
+          "zh": "唐悦"
+        },
+        "personality": {
+          "en": "Speaks quickly, minimizes the workload, then invokes friendship; bargains after a clear limit rather than immediately dropping the request.",
+          "zh": "语速快，先淡化工作量，再诉诸交情；明确范围后会讨价还价，不会马上收回请求。"
+        },
+        "role": {
+          "en": "Colleague who often asks for rescues",
+          "zh": "总找你救急的同事"
+        },
+        "stance": {
+          "en": "Wants you to take all six slides and resists admitting their content is unsettled.",
+          "zh": "希望你接走全部六页，不愿承认还没定内容。"
+        }
+      }
+    ],
+    "competencies": [
+      "relationship-skills",
+      "self-management"
+    ],
+    "context": "workplace",
+    "contextType": {
+      "en": "Office",
+      "zh": "办公室"
+    },
+    "difficulty": 2,
+    "failure": {
+      "en": "Vaguely takes all the work or refuses verbally then does it without limits.",
+      "zh": "含糊接下全部工作，或口头拒绝后又无条件替她完成。"
+    },
+    "hook": {
+      "en": "You are finishing your report when a colleague pushes a laptop toward you.",
+      "zh": "你正在赶自己的报告，同事把电脑直接推到你面前。"
+    },
+    "icon": "battery-low",
+    "id": "office-quick-favor",
+    "keywords": [
+      "办公室",
+      "打断",
+      "帮忙",
+      "边界",
+      "office",
+      "interruption",
+      "favor",
+      "scope"
+    ],
+    "maxTurns": 12,
+    "minutes": 6,
+    "objectives": [
+      {
+        "en": "Check the actual scope before committing.",
+        "zh": "先核实实际工作范围，再决定是否承诺。"
+      },
+      {
+        "en": "Make your delivery limit clear and keep the final arrangement consistent with it.",
+        "zh": "说清自己的交付限制，让最终安排与承诺一致。"
+      }
+    ],
+    "opening": {
+      "characterId": "tang",
+      "text": {
+        "en": "Could you fix these six slides? Five minutes, tops. I need them this afternoon and you're the best at this.",
+        "zh": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。"
+      }
+    },
+    "relationship": [
+      "peer"
+    ],
+    "simulationDirection": {
+      "en": "Tang minimizes with 'quick fix' and fears being left with the work. After refusal, seek only a genuinely smaller scope, not six slides again. A vague yes needs discussion/questions/editing clarified. Asking for actual boss feedback can disclose the reasoning issue; then address verifying page-three figures and describing unsettled content, without new boss instructions. The key choice is how she represents the offered help: discussion is not coauthorship or endorsement. Humor eases tone; apology does not expand scope. Unperformed discussion is not completed checking. Continued play can examine one question to ask or future help requests. No boundary requires a help appointment after the learner's report.",
+      "zh": "唐悦用‘就一下’淡化工作，怕事情仍落回自己。拒绝六页后可争取真正更小的范围，不能偷塞回六页。含糊答应须分清讨论、列问题或修改。问老板原话才按条件揭示论证问题；之后谈谁核实第三页数字、她怎样说明未定内容，别新增老板批示。关键决定是她向老板怎样描述用户提供的帮助；有限讨论不等于共同作者或背书。玩笑缓和语气，道歉不扩大范围。讨论尚未执行不是检查已完成。续聊可核对一条待问问题、商量以后怎样请求帮助，不能要求用户预约自己报告交完后的帮忙。"
+    },
+    "simulationFacts": {
+      "en": "The deck compares two procurement options; page three contains the cost argument. Tang has not verified the figures; the boss only said the reasoning does not hold. Remaining pages are Tang's responsibility and her exact deadline is unconfirmed. 16:30 is the learner's own report deadline, not a help appointment. Limiting help to one page does not promise help after the report; only the learner's explicit offer establishes that time, not Tang's suggestion. Discussing one page, listing questions and editing it are different commitments; never silently expand scope.",
+      "zh": "演示稿比较两个采购方案，第三页是成本论证；唐悦没有核实数字，老板只指出论证不成立。其余页归唐悦负责，老板给她的具体截止时间尚未确认。16:30 是用户自己的报告截止时间，不是帮唐悦的时间。用户限定一页不等于答应报告交完后帮忙；帮忙时间只有用户明确提出才成立，唐悦的建议不算。只讨论一页、列问题或直接改稿是不同承诺，不得自动扩大范围。"
+    },
+    "skills": [
+      "communication",
+      "seeking-help",
+      "goal-setting"
+    ],
+    "source": "Original fictional practice — SocialCoach, 2026-10-03. Conditional play revision: SocialCoach, 2026-10-04, app/src/data/corpus/text-scene-directions.ts#office-quick-favor. Authored scenario record: app/src/data/corpus/scenarios-d.ts#office-quick-favor",
+    "success": {
+      "en": "Declines or agrees to limited support with ownership of remaining work clear; sacrificing your own delivery is not required.",
+      "zh": "拒绝或约定有限支持，明确谁负责剩余工作；不要求用户牺牲自己的交付。"
+    },
+    "title": {
+      "en": "“Just a Quick Five-Minute Favor”",
+      "zh": "“就改一下，五分钟的事”"
+    }
+  },
+  "stanceTrail": [
+    30,
+    38,
+    45,
+    50,
+    55,
+    60
+  ],
+  "startedAt": 1792603414801,
+  "status": "assessed",
+  "timed": false
+}

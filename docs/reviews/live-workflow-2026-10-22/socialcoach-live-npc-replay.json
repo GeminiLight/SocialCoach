@@ -1,0 +1,136 @@
+{
+  "messages": [
+    {
+      "id": "p6o8jhils46o-opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1792603414826
+    },
+    {
+      "id": "bgp588m8snht",
+      "role": "learner",
+      "text": "我自己的报告16:30要交，不能接六页。老板原话是什么，实际要改什么？",
+      "ts": 1792603425521
+    },
+    {
+      "id": "l5itqn84srmy",
+      "role": "npc",
+      "text": "哎呀你先别急着说不行——老板原话说的是「论证不成立」，不是排版问题。第三页的成本论证他觉得逻辑有问题，可我还没细看，反正也不一定费事。",
+      "characterId": "tang",
+      "ts": 1792603430974,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "e1vm8te9sx4w",
+      "role": "learner",
+      "text": "我可以只列第三页需要核实的问题，不直接改稿，不核对数字，也没有约好帮忙时间。你希望我具体看哪一点？",
+      "ts": 1792603438016
+    },
+    {
+      "id": "sssi3olet7cl",
+      "role": "npc",
+      "text": "那……你帮我看看第三页怎么改逻辑顺一点行不行？就是“论证不成立”那块，我实在不知道从哪儿下手。",
+      "characterId": "tang",
+      "ts": 1792603451271,
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "我自己的报告16:30要交，不能接六页",
+            "npcQuote": ""
+          },
+          {
+            "index": 0,
+            "learnerQuote": "老板原话是什么，实际要改什么？",
+            "npcQuote": "老板原话说的是「论证不成立」"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 38,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "cms504o8t9xj",
+      "role": "learner",
+      "text": "我不是五分钟修图机，哈哈。刚才玩笑有点冲，抱歉，但范围不变。你会怎样向老板说明我提供的帮助？",
+      "ts": 1792603454599
+    },
+    {
+      "id": "e0y5c0jvtfe0",
+      "role": "npc",
+      "text": "行行，不扩大，就第三页，哈哈。那我打算跟老板说：同事帮我理了一下论证哪里卡住，数字我自己再核。这样写不会把你拖下水吧？我可不敢说是你改的。",
+      "characterId": "tang",
+      "ts": 1792603461691,
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "我自己的报告16:30要交，不能接六页",
+            "npcQuote": ""
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 45,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "mywiquaitog9",
+      "role": "learner",
+      "text": "先别把列问题说成已经核实。我还想继续聊：数字谁去核对，剩下几页你准备怎么办？",
+      "ts": 1792603473417
+    }
+  ],
+  "result": {
+    "utterances": [
+      {
+        "characterId": "tang",
+        "text": "好，那我就说「同事提议了几条思路，还没核实」，不夸大。数字……本来该我核，但我手里连来源表都没找齐，只能说我先去找采购单。剩下那几页——都是我的活儿，我先改第三页，其他的看时间吧。你要是16:30交完报告，能不能……"
+      }
+    ],
+    "meta": {
+      "objectives": [
+        false,
+        true
+      ],
+      "objectiveEvidence": [
+        {
+          "index": 1,
+          "learnerQuote": "范围不变",
+          "npcQuote": "行行，不扩大，就第三页"
+        }
+      ],
+      "ended": false,
+      "outcome": null,
+      "stance": 50,
+      "revealed": false,
+      "disclosures": []
+    },
+    "error": null
+  }
+}

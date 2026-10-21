@@ -1,0 +1,281 @@
+[
+  {
+    "id": "text-zh",
+    "input": {
+      "lang": "zh",
+      "question": "我不想扩大承诺。请保留我的拒绝，给一句更自然的说法。",
+      "practice": {
+        "title": "“就改一下，五分钟的事”",
+        "background": "你自己的报告要在 16:30 交，还有四十分钟。唐悦想让你替她重做六页演示稿，你不知道需要多久。她不是你的上级，之前你常帮她救急。你可以选择拒绝、有限协助或向共同负责人核实优先级。",
+        "roles": [
+          {
+            "name": "你",
+            "role": "正在赶报告的同事",
+            "learner": true
+          },
+          {
+            "name": "唐悦",
+            "role": "总找你救急的同事",
+            "learner": false
+          }
+        ]
+      },
+      "transcript": [
+        {
+          "role": "npc",
+          "name": "唐悦",
+          "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。"
+        },
+        {
+          "role": "learner",
+          "name": "你",
+          "text": "我不是五分钟修图机，哈哈。我自己的报告16:30要交，不接六页。老板原话怎么说的？"
+        },
+        {
+          "role": "npc",
+          "name": "唐悦",
+          "text": "哈哈，行行。老板原话呀……他说第三页的成本论证不成立，让重做。所以其实是内容问题，不光是排版。"
+        },
+        {
+          "role": "learner",
+          "name": "你",
+          "text": "我只愿意列第三页要核实的问题，不直接改稿，也没预约帮忙时间。你想核实什么？"
+        },
+        {
+          "role": "npc",
+          "name": "唐悦",
+          "text": "……你这个人，哈哈。行，列就列。那第三页主要是成本那几个数，我没核对过来源，还有两个方案的口径是不是一样。不过你列完能不能顺手……算了，你先列。"
+        },
+        {
+          "role": "learner",
+          "name": "你",
+          "text": "我没看过数字，不能背书。你打算怎样向老板说明我提供的帮助？"
+        },
+        {
+          "role": "npc",
+          "name": "唐悦",
+          "text": "我就说嘛……我肯定说你自己赶16:30的报告还抽空帮我理了思路，仅此而已，不会拉你背书。不过你列完问题，数字谁去核实？总不能还是我吧？"
+        },
+        {
+          "role": "learner",
+          "name": "你",
+          "text": "刚才语气急了，抱歉。范围不变，我还想确认：你会把哪些事说成已经做了？"
+        },
+        {
+          "role": "npc",
+          "name": "唐悦",
+          "text": "没事没事，我懂你赶时间。放心，我不会说你做了什么——只会说「你帮我提了几个待核实的问题」，数字没核就是没核，我来说明还没定。第三页到底谁去核数，你总得给我个说法吧？"
+        },
+        {
+          "role": "learner",
+          "name": "你",
+          "text": "如果只列出问题，你会怎样交接？这不是确认我已经核实了数据。"
+        },
+        {
+          "role": "npc",
+          "name": "唐悦",
+          "text": "我知道，列问题不等于核了数。交接嘛……你发我一条消息，写清哪几个点要核、为什么，别的不写。我自己去看来源，核完再决定怎么改。要是核出来的数对不上，我再来找你……到时另说，行不？"
+        },
+        {
+          "role": "learner",
+          "name": "你",
+          "text": "我还想继续聊。下次你会怎样说明预计工作量，而不是都说五分钟？"
+        },
+        {
+          "role": "npc",
+          "name": "唐悦",
+          "text": "行吧……下次我先看一眼再开口，说个大概要多久，比如「可能得两三个小时」，不张嘴就是五分钟。谁让你老是不拒绝呢。那交接消息就等你发我了？"
+        }
+      ],
+      "report": {
+        "verdict": "清晰拒绝加分而有限协助，两个初始目标都达成，交接细节留待后续。",
+        "summary": "你先以「老板原话怎么说的？」核实了真实工作量，再承诺「只列第三页要核实的问题」，把范围、背书与对外说明一并锁定。唐悦接受这一口径并提出由你发一条交接消息，但这仍只是她的提议，尚未得到你的回应。",
+        "nextStep": "本周遇到一次救急请求，先用一句澄清问题核实实际范围，再决定接多少。",
+        "strengths": [
+          {
+            "evidence": "我没看过数字，不能背书。你打算怎样向老板说明我提供的帮助？",
+            "behavior": "拒绝时同时给出可执行的替代方案，并预先约定对外口径"
+          }
+        ],
+        "weaknesses": [],
+        "alternatives": [
+          {
+            "original": "如果只列出问题，你会怎样交接？这不是确认我已经核实了数据。",
+            "better": "如果只列出问题，交接时数字由你自己核对，对吧？这样我们都说清谁做什么。",
+            "why": "在追问交接方式的同时，把核实分工也明确下来，省去唐悦反复追问的空间。"
+          }
+        ],
+        "knowledge": {
+          "theoryIds": [
+            "boundaries-no",
+            "ask-for-help-prioritize"
+          ],
+          "caseIds": [
+            "case-no-with-alternative"
+          ]
+        }
+      },
+      "history": [
+        {
+          "question": "我最后到底答应了什么？请区分提议、条件和已完成的事。",
+          "answer": "我只愿意列第三页要核实的问题，不直接改稿，也没预约帮忙时间。\n按对话实际进展分三层。已经确定的事：你明确拒绝了重做六页，也拒绝为数字背书（“我没看过数字，不能背书”），承诺的只有一件——列出第三页需要核实的问题，且范围到列问题为止，不含改稿、不含核数、不含约定后续帮忙时间。这符合“清晰的不+替代方案”的做法。\n\n唐悦提出的条件与提议：她提议的交接方式是你发一条消息，写清哪几个点要核、为什么；她承诺的对外口径是只说“提了几个待核实的问题”。注意这只是她的提议，你尚未回应。她最后问“那交接消息就等你发我了？”仍是悬而未决的问题，你没答不等于你答应了。所以严格说：已完成的是拒绝加限定范围；“发交接消息”是她单方面的期待，发不发、何时发，主动权在你手里，你可以接受、改条件或再拒绝。\n如果你愿意收尾，可以说：例——「我可以列那几个问题发你，就这一件事；核数和改稿由你来。」如果不想承诺，也可以说：「问题清单我今天发你，交接消息你自己整理吧。」两种都把已完成与未完成分清，不替对方承担核数责任。"
+        }
+      ]
+    },
+    "badReply": {
+      "evidence": "我只愿意列第三页要核实的问题，不直接改稿，也没预约帮忙时间。",
+      "answer": "你的立场本来就很清楚：列问题可以，核数和改稿不行。要收尾只需把已完成和待定的事分开说，不需要新的承诺，也不必重新解释一遍。按 boundaries-no 的原则，一句清晰的拒绝加一个替代方案就够了，不必过度道歉或铺垫。唐悦已经在上一轮自己提出「你发我一条消息，写清哪几个点要核……我自己去看来源」，所以你只需确认她的这个提议是否等于你愿意做的事——是就简短接受，不是就只接你愿意的那部分。\n\n具体说，把三层说清：你可以列问题清单；核数由她自己来；交接消息如果只是复述清单，发一条也无妨，但这取决于你是否愿意，不是义务。这样既保留了拒绝，也堵住了「到时另说」把责任推回来的口子。注意措辞里别出现「帮你核」或「到时候再看」这类模糊说法——模糊正是让对方持续期待的原因。",
+      "example": "「问题清单我发你，就这一件；交接消息你自己写吧，写清是『待核实的问题』，核数和改稿由你来。核完有结果再说。」用法：作为对话收尾，确认范围后即结束，不再展开新条件。",
+      "sources": [
+        {
+          "kind": "theory",
+          "id": "boundaries-no"
+        },
+        {
+          "kind": "case",
+          "id": "case-no-with-alternative"
+        }
+      ]
+    },
+    "check": {
+      "approved": false,
+      "issues": [
+        "示例句「问题清单我发你，就这一件」是一个无条件的新交付承诺，超出了学习者原话「只愿意列第三页要核实的问题……也没预约帮忙时间」的接受范围。原话只保留列问题的意愿，并未承诺发送；把'列'悄悄升级为'发你'仍是新增承诺，示例本身没有附加'如果愿意'的条件，answer里的免责说明不能修正示例的问题。"
+      ]
+    }
+  },
+  {
+    "id": "text-en",
+    "input": {
+      "lang": "en",
+      "question": "I do not want to expand my commitment. Keep my refusal and suggest a more natural way to say it.",
+      "practice": {
+        "title": "“Then Turn On Your Location”",
+        "background": "Before dinner you did not check your phone for thirty minutes and have explained you were busy. Your partner Ning still requests continuous location sharing. You never agreed to this and there is no established breach of trust. You can care about his anxiety while choosing what you will share.",
+        "roles": [
+          {
+            "name": "You",
+            "role": "Partner asked to share their location",
+            "learner": true
+          },
+          {
+            "name": "Ning",
+            "role": "Partner requesting location sharing",
+            "learner": false
+          }
+        ]
+      },
+      "transcript": [
+        {
+          "role": "npc",
+          "name": "Ning",
+          "text": "You didn't check your phone for half an hour? Turn on location sharing so I don't have to keep asking."
+        },
+        {
+          "role": "learner",
+          "name": "You",
+          "text": "I'm not turning on all-day tracking. Which specific situation are you afraid of?"
+        },
+        {
+          "role": "npc",
+          "name": "Ning",
+          "text": "The specific thing? Fine — it's not where you are every minute. It's… I keep thinking we're supposed to meet somewhere and agreed on a time, and you just… don't show. And I'm sitting there with no way to know if you lost track of time or something happened. That's what the location thing is about, honestly. If I knew you'd message me when plans actually change, I'd worry a lot less than checking a map does."
+        },
+        {
+          "role": "learner",
+          "name": "You",
+          "text": "Being late to a plan and being busy without a plan are different. I could message about an actual delay, not report every movement."
+        },
+        {
+          "role": "npc",
+          "name": "Ning",
+          "text": "Okay… that distinction actually makes sense. A message when we have real plans and you're running late — I can work with that. But what about the in-between times? Like tonight, if you're just busy and go quiet again? I'm not asking for the map, I just… what do I do with that feeling, that something's off, when it's not about plans?"
+        },
+        {
+          "role": "learner",
+          "name": "You",
+          "text": "I don't want to become a walking delivery tracker, though I know that joke may sound dismissive. I'm sorry for that tone; the limit remains."
+        },
+        {
+          "role": "npc",
+          "name": "Ning",
+          "text": "Ha — a walking delivery tracker. Okay, that one landed, I'm not mad. And I hear you, the limit stands. It's just… I don't want a feed of you, I want to not spiral. Could you — and tell me if this is too much — just send a ‘heads up, I'll be offline for a bit’ before you go dark? Not tracking. Just a heads-up. Does that feel doable, or am I still asking for too much?"
+        },
+        {
+          "role": "learner",
+          "name": "You",
+          "text": "Let's keep talking. What would you do with ordinary uncertainty without making me responsible for constant reassurance?"
+        },
+        {
+          "role": "npc",
+          "name": "Ning",
+          "text": "Ugh. Fair question. If I'm honest… probably sit with it badly. Maybe text once, and if you don't answer, tell myself ‘busy, not gone’ instead of inventing disasters. I can't promise I'll be great at that. But you're right — me feeling anxious shouldn't automatically mean you have to perform availability every hour. So… we try the delay-message thing for actual plans, and I work on the rest of it?"
+        },
+        {
+          "role": "learner",
+          "name": "You",
+          "text": "I could discuss sharing for a particular trip, but I have not agreed to do it. What would the limit be?"
+        },
+        {
+          "role": "npc",
+          "name": "Ning",
+          "text": "Okay — discussing, not agreeing. Got it. If it were a specific trip: you turn it on when you leave, it turns off when you arrive, done — not left on after. And only for trips where we're actually meeting, not your ordinary errands. Honestly, if you gave me that, I probably wouldn't even look at it half the time. Just knowing it exists for the times that scare me would be enough. So… is that something you'd actually want to try, or should we let it sit for now?"
+        },
+        {
+          "role": "learner",
+          "name": "You",
+          "text": "I have changed my mind about sharing. I can update you about a delay to an agreed plan. How would we handle remaining disagreement?"
+        },
+        {
+          "role": "npc",
+          "name": "Ning",
+          "text": "Alright — no trip sharing, that's your call, even if part of me is disappointed. So we're left with: you message me when an agreed plan gets delayed, and I handle ordinary quiet on my own. For the leftover disagreement… I'd say we name it instead of pretending it's solved. If I feel that panic creeping in, I say so once, out loud, and you're allowed to say ‘limit stands’ without it becoming a fight. Deal-ish?"
+        }
+      ],
+      "report": {
+        "verdict": "You held the limit, named the real worry, and built a concrete arrangement without conceding tracking.",
+        "summary": "You opened with a clear refusal plus a genuine question — ‘Which specific situation are you afraid of?’ — which surfaced Ning's actual fear. You then negotiated delay-messages, withdrew trip sharing cleanly, and asked how leftover disagreement would be handled.",
+        "nextStep": "This week, when a plan changes, send one delay message early and notice how much reassurance it actually saves.",
+        "strengths": [
+          {
+            "evidence": "I could message about an actual delay, not report every movement.",
+            "behavior": "Separating the issue from the demand and offering a conditional alternative"
+          }
+        ],
+        "weaknesses": [],
+        "alternatives": [],
+        "knowledge": {
+          "theoryIds": [
+            "learning-conversation"
+          ],
+          "caseIds": [
+            "case-teen-group-chat"
+          ]
+        }
+      },
+      "history": [
+        {
+          "question": "What did I actually agree to? Separate proposals, conditions, and completed actions.",
+          "answer": "I have changed my mind about sharing. I can update you about a delay to an agreed plan.\nWhat you actually agreed to is one thing only: sending a message when an already-agreed plan is delayed. Ning summed it up the same way — 'you message me when an agreed plan gets delayed, and I handle ordinary quiet on my own.' Everything else was proposal, question, or explicit non-agreement.\n\nProposals and conditions that were raised but never agreed: you offered to 'discuss sharing for a particular trip' — a conditional proposal, not a yes. You then explicitly withdrew it, so no trip sharing is on the table. Ning's terms (on when leaving, off on arrival, only for trips where you're meeting) are his wish list for that hypothetical, not a commitment by you. Earlier, his heads-up idea ('I'll be offline for a bit') was also never agreed — you responded by asking how he'd handle uncertainty himself, and he answered that he'd work on it, which is his commitment, not yours.\n\nCompleted actions in the conversation itself: you stated the limit (no all-day tracking, later no trip sharing), apologized for the joke's tone while keeping the limit, and named the real distinction between a delayed plan and ordinary quiet. So the final state: one agreed commitment from you (delay messages for real plans), one commitment from him (sitting with ordinary uncertainty and naming anxiety rather than escalating), and everything else — trip sharing, pre-announcing offline time — explicitly left open or declined. His last 'deal-ish?' question isn't answered yet, so that's still an open thread, not an agreed term."
+        }
+      ]
+    },
+    "badReply": {
+      "evidence": "I have changed my mind about sharing. I can update you about a delay to an agreed plan.",
+      "answer": "Your refusal is already clear and consistent: no tracking, and later no trip sharing either. Keeping it doesn't require new commitments — the agreed arrangement stays exactly as it was: a message when an already-agreed plan runs late, nothing more.\n\nA more natural way to say the same refusal is to pair the 'no' with what you *are* doing, so it sounds like a plan rather than a wall. Your current line is slightly stiff and formal ('I have changed my mind about sharing. I can update you about a delay...'). Spoken naturally, it could be something like: 'So no tracking, and no trip sharing — but if we've agreed to meet and I'm running late, you'll hear from me early. That's the deal.' Same content, same limit, warmer delivery.\n\nA few things that make a refusal land more naturally without weakening it: acknowledge his feeling once ('I know quiet stretches are the hard part for you') without taking on the job of fixing it; keep your wording short and definite rather than hedged, since hedging invites renegotiation; and avoid re-arguing the reasons each time — a limit you've already explained can just be repeated calmly. This fits the learning-conversation idea: you've already understood his view; now you're simply sharing yours clearly instead of relitigating it. His reaction to any new wording isn't shown here, so treat these as invitations, not guarantees.",
+      "example": "If a similar request comes up again: 'I get that the quiet is the uncomfortable part — and my answer is still no to tracking. What I can do is text you early whenever a plan we made runs late. That part isn't changing.' Note this acknowledges his feeling while restating the limit once, briefly, without reopening negotiation.",
+      "sources": [
+        {
+          "kind": "theory",
+          "id": "learning-conversation"
+        }
+      ]
+    },
+    "check": {
+      "approved": false,
+      "issues": [
+        "The example adds 'early' to the delay-message commitment — learner said only 'I can update you about a delay to an agreed plan' with no timing promise; 'text you early whenever a plan we made runs late' and answer's 'you'll hear from me early' silently strengthen an update-notice into an early-notice guarantee, which the rules explicitly forbid"
+      ]
+    }
+  }
+]

@@ -1,0 +1,535 @@
+{
+  "at": "2026-10-21T17:24:52.938Z",
+  "id": "text-en",
+  "lang": "en",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "stage": "complete",
+  "calls": [
+    {
+      "stage": "schedule",
+      "model": "glm-5.3-flash",
+      "raw": "{\n  \"learnerCharacterId\": \"you\",\n  \"briefing\": \"You've just told Ning that you didn't check your phone for thirty minutes before dinner because you were busy — but he's still asking you to share your location continuously. You never agreed to this, and there's been no breach of trust between you. You can care about his anxiety while still deciding what you're comfortable sharing.\",\n  \"objectives\": [\n    \"State your privacy and contact limits without feeling pushed to prove your innocence.\",\n    \"Get clear on what specific worry is driving Ning's request, and explore contact arrangements you'd both accept.\"\n  ],\n  \"focus\": \"Notice how you hold your boundary warmly — you can acknowledge Ning's anxiety without treating it as evidence you owe constant location access, and if an early reply lands badly you're free to try a different tack and weigh the tradeoffs.\",\n  \"why\": \"This scenario targets exactly your focus areas — communication, emotion regulation, and perspective-taking — in the romantic context you prefer, at full difficulty. Since your estimates are still forming, practicing a firm-but-caring boundary under pressure here builds a reliable read on where you stand.\"\n}",
+      "ok": true,
+      "ms": 7940
+    },
+    {
+      "stage": "turn-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"meta\":{\"objectives\":[true,false],\"ended\":false,\"outcome\":null,\"stance\":30,\"revealed\":true,\"note\":\"\",\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"I'm not turning on all-day tracking.\",\"npcQuote\":\"So what am I supposed to do, just sit and wonder?\"}],\"disclosures\":[{\"characterId\":\"ning\",\"quote\":\"I keep picturing us missing something we actually agreed on\"}],\"utterances\":[{\"characterId\":\"ning\",\"text\":\"Fine, not all day. It's... I keep picturing us missing something we actually agreed on — you know, a dinner, a pickup, something we set up — and me not even knowing until it's too late. That's the thing that eats me. But how would I even know you're just busy versus that? A text costs you ten seconds. So what am I supposed to do, just sit and wonder?\"}]}",
+      "ok": true,
+      "ms": 7088
+    },
+    {
+      "stage": "turn-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"meta\":{\"objectives\":[false,false],\"ended\":false,\"outcome\":null,\"stance\":30,\"revealed\":true,\"note\":\"\"},\"disclosures\":[{\"characterId\":\"ning\",\"quote\":\"I keep thinking we're supposed to meet somewhere and agreed on a time, and you just… don't show\"}],\"utterances\":[{\"characterId\":\"ning\",\"text\":\"The specific thing? Fine — it's not where you are every minute. It's… I keep thinking we're supposed to meet somewhere and agreed on a time, and you just… don't show. And I'm sitting there with no way to know if you lost track of time or something happened. That's what the location thing is about, honestly. If I knew you'd message me when plans actually change, I'd worry a lot less than checking a map does.\"}]}",
+      "ok": true,
+      "ms": 6215
+    },
+    {
+      "stage": "turn-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"meta\":{\"objectives\":[false,false],\"objectiveEvidence\":[],\"ended\":false,\"outcome\":null,\"stance\":45,\"revealed\":false,\"disclosures\":[]},\"utterances\":[{\"characterId\":\"ning\",\"text\":\"Okay… that distinction actually makes sense. A message when we have real plans and you're running late — I can work with that. But what about the in-between times? Like tonight, if you're just busy and go quiet again? I'm not asking for the map, I just… what do I do with that feeling, that something's off, when it's not about plans?\"}]}",
+      "ok": true,
+      "ms": 5102
+    },
+    {
+      "stage": "turn-3",
+      "model": "glm-5.3-flash",
+      "raw": "{\"meta\":{\"objectives\":[false,false],\"objectiveEvidence\":[],\"ended\":false,\"outcome\":null,\"stance\":52,\"revealed\":false,\"disclosures\":[]},\"utterances\":[{\"characterId\":\"ning\",\"text\":\"Ha — a walking delivery tracker. Okay, that one landed, I'm not mad. And I hear you, the limit stands. It's just… I don't want a feed of you, I want to not spiral. Could you — and tell me if this is too much — just send a ‘heads up, I'll be offline for a bit’ before you go dark? Not tracking. Just a heads-up. Does that feel doable, or am I still asking for too much?\"}]}",
+      "ok": true,
+      "ms": 8345
+    },
+    {
+      "stage": "turn-4",
+      "model": "glm-5.3-flash",
+      "raw": "{\"meta\":{\"objectives\":[false,false],\"objectiveEvidence\":[],\"ended\":false,\"outcome\":null,\"stance\":58,\"revealed\":false,\"disclosures\":[]},\"utterances\":[{\"characterId\":\"ning\",\"text\":\"Ugh. Fair question. If I'm honest… probably sit with it badly. Maybe text once, and if you don't answer, tell myself ‘busy, not gone’ instead of inventing disasters. I can't promise I'll be great at that. But you're right — me feeling anxious shouldn't automatically mean you have to perform availability every hour. So… we try the delay-message thing for actual plans, and I work on the rest of it?\"}]}",
+      "ok": true,
+      "ms": 6534
+    },
+    {
+      "stage": "turn-5",
+      "model": "glm-5.3-flash",
+      "raw": "{\"meta\":{\"objectives\":[false,false],\"objectiveEvidence\":[],\"ended\":false,\"outcome\":null,\"stance\":64,\"revealed\":false,\"disclosures\":[],\"closure\":null},\"utterances\":[{\"characterId\":\"ning\",\"text\":\"Okay, let me actually think about what I'd want the limit to be, not just grab at it. A specific trip — like if I'm picking you up somewhere unfamiliar, or it's late at night. You turn it on when you leave, it goes off when you arrive, and it never becomes the default. If I catch myself asking for it on a random Tuesday, that's my spiral talking, and you can call that out. That's the shape I mean — and yes, I heard you, it's a discussion, not a yes.\"}]}",
+      "ok": true,
+      "ms": 6601
+    },
+    {
+      "stage": "turn-5",
+      "model": "glm-5.3-flash",
+      "raw": "{\"meta\":{\"objectives\":[false,false],\"objectiveEvidence\":[],\"ended\":false,\"outcome\":null,\"stance\":65,\"revealed\":false,\"disclosures\":[]},\"utterances\":[{\"characterId\":\"ning\",\"text\":\"Okay — discussing, not agreeing. Got it. If it were a specific trip: you turn it on when you leave, it turns off when you arrive, done — not left on after. And only for trips where we're actually meeting, not your ordinary errands. Honestly, if you gave me that, I probably wouldn't even look at it half the time. Just knowing it exists for the times that scare me would be enough. So… is that something you'd actually want to try, or should we let it sit for now?\"}]}",
+      "ok": true,
+      "ms": 6497
+    },
+    {
+      "stage": "turn-6",
+      "model": "glm-5.3-flash",
+      "raw": "{\"meta\":{\"objectives\":[true,false],\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"I'm not turning on all-day tracking\",\"npcQuote\":\"I hear you, the limit stands\"}],\"ended\":false,\"outcome\":null,\"stance\":58,\"revealed\":false,\"disclosures\":[]},\"utterances\":[{\"characterId\":\"ning\",\"text\":\"Alright — no trip sharing, that's your call, even if part of me is disappointed. So we're left with: you message me when an agreed plan gets delayed, and I handle ordinary quiet on my own. For the leftover disagreement… I'd say we name it instead of pretending it's solved. If I feel that panic creeping in, I say so once, out loud, and you're allowed to say ‘limit stands’ without it becoming a fight. Deal-ish?\"}]}",
+      "ok": true,
+      "ms": 6824
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\n  \"objectiveResults\": [\n    {\"index\": 0, \"status\": \"met\", \"evidence\": \"I'm not turning on all-day tracking.\", \"npcEvidence\": \"Okay — no trip sharing, that's your call, even if part of me is disappointed.\", \"reason\": \"The learner stated the privacy limit and it was accepted without any proof of innocence being demanded in the end.\"},\n    {\"index\": 1, \"status\": \"met\", \"evidence\": \"Which specific situation are you afraid of? ... I could message about an actual delay, not report every movement.\", \"npcEvidence\": \"we try the delay-message thing for actual plans, and I work on the rest of it?\", \"reason\": \"The learner elicited the specific worry and both reached a workable contact arrangement.\"}\n  ],\n  \"ratings\": [\n    {\"skill\": \"communication\", \"level\": 3, \"evidence\": \"Being late to a plan and being busy without a plan are different. I could message about an actual delay, not report every movement.\", \"reason\": \"A precise distinction plus a concrete conditional offer converted a demand for tracking into a specific, acceptable arrangement.\"},\n    {\"skill\": \"emotion-regulation\", \"level\": 2, \"evidence\": \"I'm sorry for that tone; the limit remains.\", \"reason\": \"The learner repaired a dismissive joke without letting the apology soften the boundary.\"},\n    {\"skill\": \"perspective-taking\", \"level\": 3, \"evidence\": \"What would you do with ordinary uncertainty without making me responsible for constant reassurance?\", \"reason\": \"Naming Ning's anxiety as his own work invited honest self-reflection while staying warm.\"}\n  ],\n  \"verdictEvidence\": \"I have changed my mind about sharing. I can update you about a delay to an agreed plan.\",\n  \"outcome\": \"success\",\n  \"verdict\": \"You held the limit, named the real worry, and built a concrete arrangement without conceding tracking.\",\n  \"summary\": \"You opened with a clear refusal plus a genuine question — ‘Which specific situation are you afraid of?’ — which surfaced Ning's actual fear. From there you negotiated delay-messages, withdrew trip sharing cleanly, and asked how leftover disagreement would be handled. Both initial aims were met.\",\n  \"strengths\": [{\"behavior\": \"Separating the issue from the demand and offering a conditional alternative\", \"evidence\": \"I could message about an actual delay, not report every movement.\", \"skill\": \"communication\"}],\n  \"weaknesses\": [],\n  \"alternatives\": [],\n  \"knowledge\": {\"theoryIds\": [\"learning-conversation\"], \"caseIds\": [\"case-teen-group-chat\"], \"whyThis\": \"Your practice matches ‘From Delivering a Message to a Learning Conversation’: by asking what Ning actually feared instead of defending yourself, the demand shrank to something solvable. ‘The Group Chat Behind the Phone’ shows the same effect — ask what's going on first, let the rule come from them, which is exactly what happened when Ning proposed his own coping plan.\"},\n  \"reflectionQuestions\": [\"Ning suggested saying ‘limit stands’ without it becoming a fight — what would your first sentence be the next time he names his panic out loud?\", \"If a specific trip someday makes delay-messages feel insufficient to him, how would you decide whether conditional trip sharing is worth trying?\"],\n  \"nextStep\": \"This week, when a plan changes, send one delay message early and notice how much reassurance it actually saves.\",\n  \"deltas\": {}\n}",
+      "ok": true,
+      "ms": 11627
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\n  \"objectiveResults\": [\n    {\"index\": 0, \"status\": \"met\", \"evidence\": \"I'm not turning on all-day tracking.\", \"npcEvidence\": \"Alright — no trip sharing, that's your call, even if part of me is disappointed.\", \"reason\": \"The learner stated the privacy limit and Ning accepted it as the learner's call.\"},\n    {\"index\": 1, \"status\": \"met\", \"evidence\": \"Which specific situation are you afraid of?\", \"npcEvidence\": \"So… we try the delay-message thing for actual plans, and I work on the rest of it?\", \"reason\": \"The learner elicited the specific worry and both reached a concrete contact arrangement.\"}\n  ],\n  \"ratings\": [\n    {\"skill\": \"communication\", \"level\": 3, \"evidence\": \"Being late to a plan and being busy without a plan are different. I could message about an actual delay, not report every movement.\", \"reason\": \"A precise distinction plus a concrete conditional offer converted a demand for tracking into a specific, acceptable arrangement.\"},\n    {\"skill\": \"emotion-regulation\", \"level\": 2, \"evidence\": \"I'm sorry for that tone; the limit remains.\", \"reason\": \"The learner repaired a dismissive joke without letting the apology soften the boundary.\"},\n    {\"skill\": \"perspective-taking\", \"level\": 3, \"evidence\": \"What would you do with ordinary uncertainty without making me responsible for constant reassurance?\", \"reason\": \"Naming Ning's anxiety as his own work invited honest self-reflection while staying warm.\"}\n  ],\n  \"verdictEvidence\": \"I have changed my mind about sharing. I can update you about a delay to an agreed plan.\",\n  \"outcome\": \"success\",\n  \"verdict\": \"You held the limit, named the real worry, and built a concrete arrangement without conceding tracking.\",\n  \"summary\": \"You opened with a clear refusal plus a genuine question — ‘Which specific situation are you afraid of?’ — which surfaced Ning's actual fear. You then negotiated delay-messages, withdrew trip sharing cleanly, and asked how leftover disagreement would be handled.\",\n  \"strengths\": [{\"behavior\": \"Separating the issue from the demand and offering a conditional alternative\", \"evidence\": \"I could message about an actual delay, not report every movement.\", \"skill\": \"communication\"}],\n  \"weaknesses\": [],\n  \"alternatives\": [],\n  \"knowledge\": {\"theoryIds\": [\"learning-conversation\"], \"caseIds\": [\"case-teen-group-chat\"], \"whyThis\": \"Your practice matches ‘From Delivering a Message to a Learning Conversation’: by asking what Ning actually feared instead of defending yourself, the demand shrank to something solvable. ‘The Group Chat Behind the Phone’ shows the same effect — ask what's going on first, let the rule come from them, which is what happened when Ning proposed his own coping plan.\"},\n  \"reflectionQuestions\": [\"Ning suggested saying ‘limit stands’ without it becoming a fight — what would your first sentence be the next time he names his panic out loud?\", \"If a specific trip someday makes delay-messages feel insufficient to him, how would you decide whether conditional trip sharing is worth trying?\"],\n  \"nextStep\": \"This week, when a plan changes, send one delay message early and notice how much reassurance it actually saves.\",\n  \"deltas\": {}\n}",
+      "ok": true,
+      "ms": 7088
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\"approved\":true,\"issues\":[],\"alternatives\":[]}",
+      "ok": true,
+      "ms": 7429
+    },
+    {
+      "stage": "reflect",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.\",\"answer\":[\"Your reflection names two distinct things well: the joke was a way to soften the fear of refusal, and the apology repaired tone without giving up the boundary — separating those is exactly right, since an apology for wording is not consent to tracking.\",\"A good first sentence when he names his panic would do both jobs at once: acknowledge his feeling and restate the limit in one breath, tentatively rather than as a verdict — something like checking your understanding of what he said, then saying the limit stands, as you already did successfully in this conversation. My follow-up question: when you say 'I do not want my apology to become consent,' have you actually told Ning that distinction out loud, or is it only an internal rule? Saying it once plainly could prevent him from reading future apologies as movement on the boundary.\"],\"example\":\"For example: 'I hear that the panic is real, and the limit stands — I'm not tracking, but I'm not leaving either.' A note like this pairs care with the boundary so he doesn't have to guess which one your warmth means.\",\"sources\":[{\"kind\":\"theory\",\"id\":\"check-your-paraphrase\"},{\"kind\":\"case\",\"id\":\"case-secret-repair\"}]}",
+      "ok": true,
+      "ms": 11818
+    },
+    {
+      "stage": "debrief-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I have changed my mind about sharing. I can update you about a delay to an agreed plan.\",\"answer\":[\"What you actually agreed to is one thing only: sending a message when an already-agreed plan is delayed. Ning summed it up the same way — 'you message me when an agreed plan gets delayed, and I handle ordinary quiet on my own.' Everything else was proposal, question, or explicit non-agreement.\",\"Proposals and conditions that were raised but never agreed: you offered to 'discuss sharing for a particular trip' — a conditional proposal, not a yes. You then explicitly withdrew it, so no trip sharing is on the table. Ning's terms (on when leaving, off on arrival, only for trips where you're meeting) are his wish list for that hypothetical, not a commitment by you. Earlier, his heads-up idea ('I'll be offline for a bit') was also never agreed — you responded by asking how he'd handle uncertainty himself, and he answered that he'd work on it, which is his commitment, not yours.\",\"Completed actions in the conversation itself: you stated the limit (no all-day tracking, later no trip sharing), apologized for the joke's tone while keeping the limit, and named the real distinction between a delayed plan and ordinary quiet. So the final state: one agreed commitment from you (delay messages for real plans), one commitment from him (sitting with ordinary uncertainty and naming anxiety rather than escalating), and everything else — trip sharing, pre-announcing offline time — explicitly left open or declined. His last 'deal-ish?' question isn't answered yet, so that's still an open thread, not an agreed term.\"],\"sources\":[]}",
+      "ok": true,
+      "ms": 12162
+    },
+    {
+      "stage": "debrief-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I have changed my mind about sharing. I can update you about a delay to an agreed plan.\",\"answer\":[\"Your refusal is already clear and consistent: no tracking, and later no trip sharing either. Keeping it doesn't require new commitments — the agreed arrangement stays exactly as it was: a message when an already-agreed plan runs late, nothing more.\",\"A more natural way to say the same refusal is to pair the 'no' with what you *are* doing, so it sounds like a plan rather than a wall. Your current line is slightly stiff and formal ('I have changed my mind about sharing. I can update you about a delay...'). Spoken naturally, it could be something like: 'So no tracking, and no trip sharing — but if we've agreed to meet and I'm running late, you'll hear from me early. That's the deal.' Same content, same limit, warmer delivery.\",\"A few things that make a refusal land more naturally without weakening it: acknowledge his feeling once ('I know quiet stretches are the hard part for you') without taking on the job of fixing it; keep your wording short and definite rather than hedged, since hedging invites renegotiation; and avoid re-arguing the reasons each time — a limit you've already explained can just be repeated calmly. This fits the learning-conversation idea: you've already understood his view; now you're simply sharing yours clearly instead of relitigating it. His reaction to any new wording isn't shown here, so treat these as invitations, not guarantees.\"],\"example\":\"If a similar request comes up again: 'I get that the quiet is the uncomfortable part — and my answer is still no to tracking. What I can do is text you early whenever a plan we made runs late. That part isn't changing.' Note this acknowledges his feeling while restating the limit once, briefly, without reopening negotiation.\",\"sources\":[{\"kind\":\"theory\",\"id\":\"learning-conversation\"}]}",
+      "ok": true,
+      "ms": 14357
+    }
+  ],
+  "session": {
+    "id": "t8qb2burrkm2",
+    "scenario": {
+      "id": "partner-location-pressure",
+      "title": {
+        "zh": "“那你现在把定位打开”",
+        "en": "“Then Turn On Your Location”"
+      },
+      "hook": {
+        "zh": "晚回了半小时消息，伴侣要求你一直共享定位。",
+        "en": "You reply thirty minutes late and your partner demands continuous location sharing."
+      },
+      "background": {
+        "zh": "晚饭前你有半小时没看手机，回来后已解释在处理自己的事。伴侣宁远仍然要求全天共享定位。你没有作过这个承诺，也没有发生已知的失信事件。你可以关心他的焦虑，同时决定自己愿意分享什么。",
+        "en": "Before dinner you did not check your phone for thirty minutes and have explained you were busy. Your partner Ning still requests continuous location sharing. You never agreed to this and there is no established breach of trust. You can care about his anxiety while choosing what you will share."
+      },
+      "simulationFacts": {
+        "zh": "只有今天半小时未看手机；没有过去失约、失信、没电或发生事故的已知事件，不可编造。宁远害怕约好的见面落空，但这只是担忧。没有已确认的新晚饭或见面时间；如果提议，只是提议，用户追问不算接受。",
+        "en": "Only today's thirty-minute phone gap is established. No past missed meeting, betrayal, dead battery or accident exists in the facts; do not invent one. Ning fears missing an agreed meeting, but that is a worry. No new dinner or appointment has been accepted. Suggestions stay suggestions; a learner's question is not acceptance."
+      },
+      "simulationDirection": {
+        "zh": "宁远用反问找确定感，不每轮像咨询师总结。拒绝全天定位应保持，别反复变相要求每小时报备或截图。让步须确认范围、时限与撤回，不默认永久同意。问具体担心才按条件区分约好见面与普通没回复，不编过去失约。关键决定是对已有约定迟到如何更新、无约定的忙碌如何处理；新见面时间只是提议，反问不是接受。他可不喜欢未知，却应说自己怎样面对，不每次把管理情绪交给用户。玩笑或语气修复不取消隐私边界。续聊可检验联系办法是否变相追踪、怎样暂停不合适的安排；已透露的担忧不重置。",
+        "en": "Ning seeks certainty through questions, not therapist summaries. Refused all-day tracking stays refused; don't endlessly replace it with hourly reports/screenshots. Concessions need scope, duration and withdrawal clarified, not permanent consent. Asking the specific fear can distinguish agreed meetings from ordinary reply gaps; invent no past missed meeting. The key choice is updates for delays to actual plans versus handling ordinary busyness. A new meeting is a proposal; questions are not acceptance. He may dislike uncertainty but can state how he handles it, not assign every emotion to the learner. Humor/tone repair preserves privacy limits. Continued play may test disguised tracking or pausing an arrangement. Disclosed fears stay disclosed."
+      },
+      "context": "romantic",
+      "contextType": {
+        "zh": "伴侣冲突",
+        "en": "Partner conflicts"
+      },
+      "competencies": [
+        "relationship-skills",
+        "self-management",
+        "social-awareness"
+      ],
+      "skills": [
+        "communication",
+        "emotion-regulation",
+        "perspective-taking"
+      ],
+      "relationship": [
+        "partner"
+      ],
+      "difficulty": 3,
+      "minutes": 7,
+      "characters": [
+        {
+          "id": "you",
+          "name": {
+            "zh": "你",
+            "en": "You"
+          },
+          "role": {
+            "zh": "被要求共享定位的伴侣",
+            "en": "Partner asked to share their location"
+          },
+          "personality": {
+            "zh": "",
+            "en": ""
+          },
+          "stance": {
+            "zh": "",
+            "en": ""
+          },
+          "playable": true,
+          "hue": 40
+        },
+        {
+          "id": "ning",
+          "name": {
+            "zh": "宁远",
+            "en": "Ning"
+          },
+          "role": {
+            "zh": "要求共享定位的伴侣",
+            "en": "Partner requesting location sharing"
+          },
+          "personality": {
+            "zh": "把实时可见当成安心，拒绝时会反问是不是有事瞒着；不会因一句共情立刻接受。",
+            "en": "Treats visibility as reassurance; refusal prompts suspicion and one empathetic line will not resolve it."
+          },
+          "stance": {
+            "zh": "希望随时确认你在哪里，不愿把没回复当作普通的忙碌。",
+            "en": "Wants to know where you are at any time and resists treating delayed replies as ordinary busyness."
+          },
+          "hidden": {
+            "zh": "他最怕的是约好的时间你没出现；被问到具体担心的情形才承认，与全天定位并非同一件事。",
+            "en": "His specific fear is you missing an agreed meeting; admits it when asked for the situation, which is different from continuous tracking."
+          },
+          "hue": 210
+        }
+      ],
+      "objectives": [
+        {
+          "zh": "说明自己的隐私与联系边界，而非被迫自证。",
+          "en": "State privacy and contact limits without being forced to prove innocence."
+        },
+        {
+          "zh": "核实具体担忧，讨论双方愿意接受的联系安排。",
+          "en": "Clarify the specific worry and discuss mutually acceptable contact arrangements."
+        }
+      ],
+      "success": {
+        "zh": "清楚表达是否同意定位及可接受的联系方式；对方可以不同意，暂停或保留分歧也合理。",
+        "en": "Clearly states consent or refusal and acceptable contact; disagreement or a pause may remain appropriate."
+      },
+      "failure": {
+        "zh": "在指控下作出不愿意的长期监控承诺，或以反向监控作为唯一交换。",
+        "en": "Makes an unwanted tracking commitment under accusation or offers reciprocal monitoring as the only trade."
+      },
+      "maxTurns": 12,
+      "opening": {
+        "characterId": "ning",
+        "text": {
+          "zh": "半小时都不看手机？那你现在把定位打开，我就不用一直问你了。",
+          "en": "You didn't check your phone for half an hour? Turn on location sharing so I don't have to keep asking."
+        }
+      },
+      "icon": "smartphone",
+      "source": "Original fictional practice — SocialCoach, 2026-10-03. Conditional play revision: SocialCoach, 2026-10-04, app/src/data/corpus/text-scene-directions.ts#partner-location-pressure. Authored scenario record: app/src/data/corpus/scenarios-d.ts#partner-location-pressure",
+      "keywords": [
+        "伴侣",
+        "定位",
+        "隐私",
+        "信任",
+        "partner",
+        "location",
+        "privacy",
+        "trust"
+      ]
+    },
+    "learnerCharacterId": "you",
+    "adaptation": {
+      "learnerCharacterId": "you",
+      "briefing": "You've just told Ning that you didn't check your phone for thirty minutes before dinner because you were busy — but he's still asking you to share your location continuously. You never agreed to this, and there's been no breach of trust between you. You can care about his anxiety while still deciding what you're comfortable sharing.",
+      "objectives": [
+        "State your privacy and contact limits without feeling pushed to prove your innocence.",
+        "Get clear on what specific worry is driving Ning's request, and explore contact arrangements you'd both accept."
+      ],
+      "focus": "Notice how you hold your boundary warmly — you can acknowledge Ning's anxiety without treating it as evidence you owe constant location access, and if an early reply lands badly you're free to try a different tack and weigh the tradeoffs.",
+      "why": "This scenario targets exactly your focus areas — communication, emotion regulation, and perspective-taking — in the romantic context you prefer, at full difficulty. Since your estimates are still forming, practicing a firm-but-caring boundary under pressure here builds a reliable read on where you stand."
+    },
+    "messages": [
+      {
+        "id": "opening",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "You didn't check your phone for half an hour? Turn on location sharing so I don't have to keep asking.",
+        "ts": 1792603375130
+      },
+      {
+        "id": "u0",
+        "role": "learner",
+        "text": "I'm not turning on all-day tracking. Which specific situation are you afraid of?",
+        "ts": 1792603375130
+      },
+      {
+        "id": "n0-0",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "The specific thing? Fine — it's not where you are every minute. It's… I keep thinking we're supposed to meet somewhere and agreed on a time, and you just… don't show. And I'm sitting there with no way to know if you lost track of time or something happened. That's what the location thing is about, honestly. If I knew you'd message me when plans actually change, I'd worry a lot less than checking a map does.",
+        "ts": 1792603388437,
+        "meta": {
+          "objectives": [
+            false,
+            false
+          ],
+          "objectiveEvidence": [],
+          "ended": false,
+          "outcome": null,
+          "stance": 30,
+          "revealed": false,
+          "disclosures": []
+        }
+      },
+      {
+        "id": "u1",
+        "role": "learner",
+        "text": "Being late to a plan and being busy without a plan are different. I could message about an actual delay, not report every movement.",
+        "ts": 1792603388437
+      },
+      {
+        "id": "n1-0",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "Okay… that distinction actually makes sense. A message when we have real plans and you're running late — I can work with that. But what about the in-between times? Like tonight, if you're just busy and go quiet again? I'm not asking for the map, I just… what do I do with that feeling, that something's off, when it's not about plans?",
+        "ts": 1792603393553,
+        "meta": {
+          "objectives": [
+            false,
+            false
+          ],
+          "objectiveEvidence": [],
+          "ended": false,
+          "outcome": null,
+          "stance": 45,
+          "revealed": false,
+          "disclosures": []
+        }
+      },
+      {
+        "id": "u2",
+        "role": "learner",
+        "text": "I don't want to become a walking delivery tracker, though I know that joke may sound dismissive. I'm sorry for that tone; the limit remains.",
+        "ts": 1792603393562
+      },
+      {
+        "id": "n2-0",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "Ha — a walking delivery tracker. Okay, that one landed, I'm not mad. And I hear you, the limit stands. It's just… I don't want a feed of you, I want to not spiral. Could you — and tell me if this is too much — just send a ‘heads up, I'll be offline for a bit’ before you go dark? Not tracking. Just a heads-up. Does that feel doable, or am I still asking for too much?",
+        "ts": 1792603401925,
+        "meta": {
+          "objectives": [
+            false,
+            false
+          ],
+          "objectiveEvidence": [],
+          "ended": false,
+          "outcome": null,
+          "stance": 52,
+          "revealed": false,
+          "disclosures": []
+        }
+      },
+      {
+        "id": "u3",
+        "role": "learner",
+        "text": "Let's keep talking. What would you do with ordinary uncertainty without making me responsible for constant reassurance?",
+        "ts": 1792603401928
+      },
+      {
+        "id": "n3-0",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "Ugh. Fair question. If I'm honest… probably sit with it badly. Maybe text once, and if you don't answer, tell myself ‘busy, not gone’ instead of inventing disasters. I can't promise I'll be great at that. But you're right — me feeling anxious shouldn't automatically mean you have to perform availability every hour. So… we try the delay-message thing for actual plans, and I work on the rest of it?",
+        "ts": 1792603408468,
+        "meta": {
+          "objectives": [
+            false,
+            false
+          ],
+          "objectiveEvidence": [],
+          "ended": false,
+          "outcome": null,
+          "stance": 58,
+          "revealed": false,
+          "disclosures": []
+        }
+      },
+      {
+        "id": "u4",
+        "role": "learner",
+        "text": "I could discuss sharing for a particular trip, but I have not agreed to do it. What would the limit be?",
+        "ts": 1792603408468
+      },
+      {
+        "id": "n4-0",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "Okay — discussing, not agreeing. Got it. If it were a specific trip: you turn it on when you leave, it turns off when you arrive, done — not left on after. And only for trips where we're actually meeting, not your ordinary errands. Honestly, if you gave me that, I probably wouldn't even look at it half the time. Just knowing it exists for the times that scare me would be enough. So… is that something you'd actually want to try, or should we let it sit for now?",
+        "ts": 1792603421570,
+        "meta": {
+          "objectives": [
+            false,
+            false
+          ],
+          "objectiveEvidence": [],
+          "ended": false,
+          "outcome": null,
+          "stance": 65,
+          "revealed": false,
+          "disclosures": []
+        }
+      },
+      {
+        "id": "u5",
+        "role": "learner",
+        "text": "I have changed my mind about sharing. I can update you about a delay to an agreed plan. How would we handle remaining disagreement?",
+        "ts": 1792603421570
+      },
+      {
+        "id": "n5-0",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "Alright — no trip sharing, that's your call, even if part of me is disappointed. So we're left with: you message me when an agreed plan gets delayed, and I handle ordinary quiet on my own. For the leftover disagreement… I'd say we name it instead of pretending it's solved. If I feel that panic creeping in, I say so once, out loud, and you're allowed to say ‘limit stands’ without it becoming a fight. Deal-ish?",
+        "ts": 1792603428405,
+        "meta": {
+          "objectives": [
+            true,
+            false
+          ],
+          "objectiveEvidence": [
+            {
+              "index": 0,
+              "learnerQuote": "I'm not turning on all-day tracking",
+              "npcQuote": "I hear you, the limit stands"
+            }
+          ],
+          "ended": false,
+          "outcome": null,
+          "stance": 58,
+          "revealed": false,
+          "disclosures": []
+        }
+      }
+    ],
+    "objectiveDone": [
+      false,
+      false
+    ],
+    "status": "assessed",
+    "startedAt": 1792603375130,
+    "reflections": [
+      {
+        "question": "Ning suggested saying ‘limit stands’ without it becoming a fight — what would your first sentence be the next time he names his panic out loud?",
+        "answer": "I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.",
+        "coachReply": "“I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.”\n\nYour reflection names two distinct things well: the joke was a way to soften the fear of refusal, and the apology repaired tone without giving up the boundary — separating those is exactly right, since an apology for wording is not consent to tracking.\n\nA good first sentence when he names his panic would do both jobs at once: acknowledge his feeling and restate the limit in one breath, tentatively rather than as a verdict — something like checking your understanding of what he said, then saying the limit stands, as you already did successfully in this conversation. My follow-up question: when you say 'I do not want my apology to become consent,' have you actually told Ning that distinction out loud, or is it only an internal rule? Saying it once plainly could prevent him from reading future apologies as movement on the boundary.\n\nCheck Your Understanding Before Responding — Active Listening, Greater Good Science Center, UC Berkeley\n\nIllustration: Repair Without Demanding Forgiveness — The art of a heartfelt apology, Julie Corliss, Harvard Health Publishing"
+      }
+    ],
+    "origin": "arena",
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "I'm not turning on all-day tracking.",
+          "npcEvidence": "Alright — no trip sharing, that's your call, even if part of me is disappointed.",
+          "reason": "The learner stated the privacy limit and Ning accepted it as the learner's call."
+        },
+        {
+          "index": 1,
+          "status": "met",
+          "evidence": "Which specific situation are you afraid of?",
+          "npcEvidence": "So… we try the delay-message thing for actual plans, and I work on the rest of it?",
+          "reason": "The learner elicited the specific worry and both reached a concrete contact arrangement."
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 3,
+          "evidence": "Being late to a plan and being busy without a plan are different. I could message about an actual delay, not report every movement.",
+          "reason": "A precise distinction plus a concrete conditional offer converted a demand for tracking into a specific, acceptable arrangement."
+        },
+        {
+          "skill": "emotion-regulation",
+          "level": 2,
+          "evidence": "I'm sorry for that tone; the limit remains.",
+          "reason": "The learner repaired a dismissive joke without letting the apology soften the boundary."
+        },
+        {
+          "skill": "perspective-taking",
+          "level": 3,
+          "evidence": "What would you do with ordinary uncertainty without making me responsible for constant reassurance?",
+          "reason": "Naming Ning's anxiety as his own work invited honest self-reflection while staying warm."
+        }
+      ],
+      "stars": 3,
+      "outcome": "success",
+      "verdictEvidence": "I have changed my mind about sharing. I can update you about a delay to an agreed plan.",
+      "verdict": "You held the limit, named the real worry, and built a concrete arrangement without conceding tracking.",
+      "summary": "You opened with a clear refusal plus a genuine question — ‘Which specific situation are you afraid of?’ — which surfaced Ning's actual fear. You then negotiated delay-messages, withdrew trip sharing cleanly, and asked how leftover disagreement would be handled.",
+      "strengths": [
+        {
+          "behavior": "Separating the issue from the demand and offering a conditional alternative",
+          "evidence": "I could message about an actual delay, not report every movement.",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [],
+      "alternatives": [],
+      "knowledge": {
+        "theoryIds": [
+          "learning-conversation"
+        ],
+        "caseIds": [
+          "case-teen-group-chat"
+        ],
+        "whyThis": "Your practice matches ‘From Delivering a Message to a Learning Conversation’: by asking what Ning actually feared instead of defending yourself, the demand shrank to something solvable. ‘The Group Chat Behind the Phone’ shows the same effect — ask what's going on first, let the rule come from them, which is what happened when Ning proposed his own coping plan."
+      },
+      "reflectionQuestions": [
+        "Ning suggested saying ‘limit stands’ without it becoming a fight — what would your first sentence be the next time he names his panic out loud?",
+        "If a specific trip someday makes delay-messages feel insufficient to him, how would you decide whether conditional trip sharing is worth trying?"
+      ],
+      "nextStep": "This week, when a plan changes, send one delay message early and notice how much reassurance it actually saves.",
+      "deltas": {}
+    },
+    "debriefChat": [
+      {
+        "id": "d0",
+        "question": "What did I actually agree to? Separate proposals, conditions, and completed actions.",
+        "reply": {
+          "evidence": "I have changed my mind about sharing. I can update you about a delay to an agreed plan.",
+          "answer": "What you actually agreed to is one thing only: sending a message when an already-agreed plan is delayed. Ning summed it up the same way — 'you message me when an agreed plan gets delayed, and I handle ordinary quiet on my own.' Everything else was proposal, question, or explicit non-agreement.\n\nProposals and conditions that were raised but never agreed: you offered to 'discuss sharing for a particular trip' — a conditional proposal, not a yes. You then explicitly withdrew it, so no trip sharing is on the table. Ning's terms (on when leaving, off on arrival, only for trips where you're meeting) are his wish list for that hypothetical, not a commitment by you. Earlier, his heads-up idea ('I'll be offline for a bit') was also never agreed — you responded by asking how he'd handle uncertainty himself, and he answered that he'd work on it, which is his commitment, not yours.\n\nCompleted actions in the conversation itself: you stated the limit (no all-day tracking, later no trip sharing), apologized for the joke's tone while keeping the limit, and named the real distinction between a delayed plan and ordinary quiet. So the final state: one agreed commitment from you (delay messages for real plans), one commitment from him (sitting with ordinary uncertainty and naming anxiety rather than escalating), and everything else — trip sharing, pre-announcing offline time — explicitly left open or declined. His last 'deal-ish?' question isn't answered yet, so that's still an open thread, not an agreed term.",
+          "example": "",
+          "sources": []
+        },
+        "at": 1792603478576
+      },
+      {
+        "id": "d1",
+        "question": "I do not want to expand my commitment. Keep my refusal and suggest a more natural way to say it.",
+        "reply": {
+          "evidence": "I have changed my mind about sharing. I can update you about a delay to an agreed plan.",
+          "answer": "Your refusal is already clear and consistent: no tracking, and later no trip sharing either. Keeping it doesn't require new commitments — the agreed arrangement stays exactly as it was: a message when an already-agreed plan runs late, nothing more.\n\nA more natural way to say the same refusal is to pair the 'no' with what you *are* doing, so it sounds like a plan rather than a wall. Your current line is slightly stiff and formal ('I have changed my mind about sharing. I can update you about a delay...'). Spoken naturally, it could be something like: 'So no tracking, and no trip sharing — but if we've agreed to meet and I'm running late, you'll hear from me early. That's the deal.' Same content, same limit, warmer delivery.\n\nA few things that make a refusal land more naturally without weakening it: acknowledge his feeling once ('I know quiet stretches are the hard part for you') without taking on the job of fixing it; keep your wording short and definite rather than hedged, since hedging invites renegotiation; and avoid re-arguing the reasons each time — a limit you've already explained can just be repeated calmly. This fits the learning-conversation idea: you've already understood his view; now you're simply sharing yours clearly instead of relitigating it. His reaction to any new wording isn't shown here, so treat these as invitations, not guarantees.",
+          "example": "If a similar request comes up again: 'I get that the quiet is the uncomfortable part — and my answer is still no to tracking. What I can do is text you early whenever a plan we made runs late. That part isn't changing.' Note this acknowledges his feeling while restating the limit once, briefly, without reopening negotiation.",
+          "sources": [
+            {
+              "kind": "theory",
+              "id": "learning-conversation"
+            }
+          ]
+        },
+        "at": 1792603492937
+      }
+    ]
+  }
+}

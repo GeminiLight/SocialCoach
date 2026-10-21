@@ -6,7 +6,7 @@ import { runDebriefChat } from "@/lib/tasks/debrief-chat";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { fail } from "@/lib/api-utils";
 
-export const maxDuration = 60;
+export const maxDuration = 90;
 export async function POST(req: Request) {
   try {
     checkRateLimit(req);

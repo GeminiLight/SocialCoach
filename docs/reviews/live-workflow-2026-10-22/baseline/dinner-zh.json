@@ -1,0 +1,589 @@
+{
+  "at": "2026-10-21T17:28:11.042Z",
+  "id": "dinner-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "stage": "complete",
+  "calls": [
+    {
+      "stage": "turn-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"已经发过去的消息，你会怎么补充说明？\",\"speakerId\":\"mom\",\"text\":\"发都发了……那我回头跟她说一句：变动还没定，别追问工资。可你也不说细点，我下回问你近况，你答不答我？\",\"reactions\":[{\"characterId\":\"aunt\",\"emotion\":\"annoyed\",\"gesture\":\"fold\"},{\"characterId\":\"mom\",\"emotion\":\"pressing\",\"gesture\":\"lean\"},{\"characterId\":\"dad\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"privacy\",\"beat\":\"correction\"},\"interjection\":{\"speakerId\":\"aunt\",\"text\":\"行吧，工资我不问了。那你变动到底是啥方向？\"}}",
+      "ok": true,
+      "ms": 4907
+    },
+    {
+      "stage": "turn-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"你发的原话是什么？\",\"speakerId\":\"mom\",\"text\":\"就发了一句“工作有变动”，真没提工资。你要自己回大姨也行，那你啥时候回？别拖得没影。\",\"reactions\":[{\"characterId\":\"mom\",\"emotion\":\"pressing\",\"gesture\":\"lean\"},{\"characterId\":\"aunt\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"dad\",\"emotion\":\"neutral\",\"gesture\":\"nod\"}],\"story\":{\"topic\":\"privacy\",\"beat\":\"correction\"},\"interjection\":{\"speakerId\":\"aunt\",\"text\":\"那你现在跟我说说也行，算你自己讲的。\"}}",
+      "ok": true,
+      "ms": 6277
+    },
+    {
+      "stage": "turn-3",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"不要替我转述的边界不变\",\"speakerId\":\"mom\",\"text\":\"行，玩笑归玩笑，我记住了：不替你说工资，变动也让你自己讲。\",\"reactions\":[{\"characterId\":\"mom\",\"emotion\":\"supportive\",\"gesture\":\"nod\"},{\"characterId\":\"aunt\",\"emotion\":\"thinking\",\"gesture\":\"idle\"},{\"characterId\":\"dad\",\"emotion\":\"neutral\",\"gesture\":\"nod\"}],\"story\":{\"topic\":\"privacy\",\"beat\":\"disclosure\"},\"interjection\":{\"speakerId\":\"aunt\",\"text\":\"那你自己啥时候跟我说？吃饭这会儿讲两句也行。\"}}",
+      "ok": true,
+      "ms": 7000
+    },
+    {
+      "stage": "turn-4",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"请说工作还没确定、细节由我本人决定\",\"speakerId\":\"mom\",\"text\":\"行，那我就补这一句：变动还没定，细节孩子自己定。回复时间我确实不敢替你应，你自己安排。\",\"reactions\":[{\"characterId\":\"mom\",\"emotion\":\"supportive\",\"gesture\":\"nod\"},{\"characterId\":\"aunt\",\"emotion\":\"thinking\",\"gesture\":\"lean\"},{\"characterId\":\"dad\",\"emotion\":\"neutral\",\"gesture\":\"idle\"}],\"story\":{\"topic\":\"privacy\",\"beat\":\"correction\"},\"interjection\":{\"speakerId\":\"aunt\",\"text\":\"那我不催。你哪天想说，直接跟我说一声就行。\"}}",
+      "ok": true,
+      "ms": 5088
+    },
+    {
+      "stage": "turn-5",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"转述之前先问我吗？\",\"speakerId\":\"mom\",\"text\":\"先问你一声，我能做到——不问你就不往外说。可你也别什么都掖着，妈就想知道你过得咋样。\",\"reactions\":[{\"characterId\":\"mom\",\"emotion\":\"supportive\",\"gesture\":\"nod\"},{\"characterId\":\"aunt\",\"emotion\":\"neutral\",\"gesture\":\"idle\"},{\"characterId\":\"dad\",\"emotion\":\"supportive\",\"gesture\":\"nod\"}],\"story\":{\"topic\":\"privacy\",\"beat\":\"care-channel\"},\"interjection\":{\"speakerId\":\"dad\",\"text\":\"那这条规矩咱仨都记下，先吃饭吧。\"}}",
+      "ok": true,
+      "ms": 5002
+    },
+    {
+      "stage": "turn-6",
+      "model": "glm-5.3-flash",
+      "raw": "{\"replyTo\":\"消息还没有实际发出，对吗？\",\"speakerId\":\"mom\",\"text\":\"对，还没发。就刚才商量那句：变动没定，细节你自己定。我今晚发之前，先给你看一眼行不？\",\"reactions\":[{\"characterId\":\"mom\",\"emotion\":\"supportive\",\"gesture\":\"nod\"},{\"characterId\":\"aunt\",\"emotion\":\"neutral\",\"gesture\":\"idle\"},{\"characterId\":\"dad\",\"emotion\":\"supportive\",\"gesture\":\"nod\"}],\"story\":{\"topic\":\"privacy\",\"beat\":\"correction\"},\"interjection\":{\"speakerId\":\"aunt\",\"text\":\"那我等着你那句补充，看完就不催了。\"}}",
+      "ok": true,
+      "ms": 4187
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\n  \"objectiveResults\": [\n    {\n      \"index\": 0,\n      \"status\": \"met\",\n      \"evidence\": \"工资不要替我转述。\",\n      \"npcEvidence\": \"先问你一声，我能做到——不问你就不往外说。\",\n      \"reason\": \"你明确了信息边界和转述许可规则，妈妈明确承诺转述前先问。\"\n    },\n    {\n      \"index\": 1,\n      \"status\": \"met\",\n      \"evidence\": \"如果你愿意补充说明，请说工作还没确定、细节由我本人决定。\",\n      \"npcEvidence\": \"我今晚发之前，先给你看一眼行不？\",\n      \"reason\": \"补救话术已商定，且妈妈提出发送前给你过目（尚未实际发出，属已达成的补救安排）。\"\n    }\n  ],\n  \"ratings\": [\n    {\n      \"skill\": \"communication\",\n      \"level\": 3,\n      \"evidence\": \"现在我们只是商量怎么说，消息还没有实际发出，对吗？\",\n      \"reason\": \"全程区分事实、规则与请求，最后还核实双方理解一致，清晰且不失温度。\"\n    },\n    {\n      \"skill\": \"ethical-responsibility\",\n      \"level\": 3,\n      \"evidence\": \"刚才玩笑可能有点冲，抱歉；不要替我转述的边界不变。\",\n      \"reason\": \"主动为语气道歉但不让边界随之松动，把个人责任与原则分开处理。\"\n    },\n    {\n      \"skill\": \"resolving-conflicts\",\n      \"level\": 3,\n      \"evidence\": \"如果你不接受，我们也可以保留分歧。\",\n      \"reason\": \"给对方保留分歧的出口，降低对抗，反而促成妈妈主动承诺先问再转述。\"\n    }\n  ],\n  \"verdictEvidence\": \"你能接受以后转述之前先问我吗？如果你不接受，我们也可以保留分歧。\",\n  \"outcome\": \"success\",\n  \"verdict\": \"边界与补救方案均以协商达成，语气修复与原则坚持并行，处理得非常成熟。\",\n  \"summary\": \"从「工资不要替我转述」到核实「消息还没有实际发出，对吗」，你把规则、补救和确认一步步谈实了。妈妈承诺先问再转述，补救消息也在发送前给你过目。\",\n  \"strengths\": [\n    {\n      \"behavior\": \"道歉时把语气和边界分开：为玩笑道歉，但不因此放弃「不替我转述」的规则。\",\n      \"evidence\": \"刚才玩笑可能有点冲，抱歉；不要替我转述的边界不变。\",\n      \"skill\": \"ethical-responsibility\"\n    }\n  ],\n  \"weaknesses\": [],\n  \"alternatives\": [],\n  \"knowledge\": {\n    \"theoryIds\": [\"nvc-ofnr\", \"apology-with-repair\", \"make-it-safe\"],\n    \"caseIds\": [\"case-teen-group-chat\"],\n    \"whyThis\": \"你的表达天然贴合「观察—感受—需要—请求」：先核对原话（观察），再提具体请求；道歉句正是「承担行为＋守住规则」的补救式道歉；「保留分歧」的出口修复了妈妈的安全感。后续可借鉴「手机背后的群聊」里让对方自己参与定规则的思路。\"\n  },\n  \"reflectionQuestions\": [\n    \"妈妈今晚把补充消息发给你过目时，如果措辞和你想要的不一致，你会怎么回应而不推翻刚建立的信任？\",\n    \"下次其他亲戚（比如大姨直接问你）绕过这条规则追问细节时，你打算怎样既守住「细节由我本人决定」，又不让关心你的人觉得被推开？\"\n  ],\n  \"nextStep\": \"本周内选一件你不想被转述的私事，提前告诉一位家人：转述前先问我。\",\n  \"deltas\": {}\n}",
+      "ok": true,
+      "ms": 13618
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\"approved\":false,\"issues\":[{\"field\":\"summary\",\"reason\":\"把妈妈的提议写成已成立的安排。妈妈只是问「我今晚发之前，先给你看一眼行不？」，学习者未回应接受；发送前过目是未经确认的未来提议，不是已达成的安排。\",\"quote\":\"补救消息也在发送前给你过目。\"},{\"field\":\"objectiveResults\",\"reason\":\"第2项的 reason 将未获学习者接受的「发送前过目」提议表述为已达成的补救安排；已确认的只是补充话术（「那我就补这一句」），过目是妈妈的单方提议。\",\"quote\":\"且妈妈提出发送前给你过目（尚未实际发出，属已达成的补救安排）\"},{\"field\":\"reflectionQuestions\",\"reason\":\"第一个问题预设妈妈今晚一定会把消息发给学习者过目，而该过目安排只是妈妈的未接受提议，消息也尚未实际发出。\",\"quote\":\"妈妈今晚把补充消息发给你过目时，如果措辞和你想要的不一致……\"}],\"alternatives\":[]}",
+      "ok": true,
+      "ms": 12835
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\n  \"summary\": \"从「工资不要替我转述」到核实「消息还没有实际发出，对吗？」，你把规则、补救话术和确认一步步谈实了。妈妈承诺先问再转述，也认下了那句补充说明；发送前给你过目只是她的提议，尚未敲定。\",\n  \"objectiveResults\": [\n    {\n      \"index\": 0,\n      \"status\": \"met\",\n      \"evidence\": \"工资不要替我转述。\",\n      \"npcEvidence\": \"先问你一声，我能做到——不问你就不往外说。\",\n      \"reason\": \"你明确了信息边界和转述许可规则，妈妈明确承诺转述前先问。\"\n    },\n    {\n      \"index\": 1,\n      \"status\": \"met\",\n      \"evidence\": \"如果你愿意补充说明，请说工作还没确定、细节由我本人决定。\",\n      \"npcEvidence\": \"行，那我就补这一句：变动还没定，细节孩子自己定。\",\n      \"reason\": \"补救话术已商定并获妈妈认可；发送前给你过目只是她随后提出的单方提议，消息尚未实际发出。\"\n    }\n  ],\n  \"verdict\": \"边界与补救话术均以协商达成，语气修复与原则坚持并行，处理得非常成熟。\",\n  \"knowledge\": {\n    \"theoryIds\": [\"nvc-ofnr\", \"apology-with-repair\", \"make-it-safe\"],\n    \"caseIds\": [\"case-teen-group-chat\"],\n    \"whyThis\": \"「工资不要替我转述。已经发过去的消息，你会怎么补充说明？」正是先陈述事实、再提具体请求的非暴力沟通式表达；「刚才玩笑可能有点冲，抱歉」是承担行为而不抵消规则的补救式道歉；「我们也可以保留分歧」给了妈妈保留面子的出口，修复了安全感。后续可借鉴「手机背后的群聊」里让对方参与定规则的思路。\"\n  },\n  \"reflectionQuestions\": [\n    \"妈妈提出「我今晚发之前，先给你看一眼行不？」，你还没答应——你会接受这个过目安排，还是换成别的方式确认补救消息的措辞？\",\n    \"下次其他亲戚（比如大姨直接问你）绕过这条规则追问细节时，你打算怎样既守住「细节由我本人决定」，又不让关心你的人觉得被推开？\"\n  ]\n}",
+      "ok": true,
+      "ms": 7308
+    },
+    {
+      "stage": "assess",
+      "model": "glm-5.3",
+      "raw": "{\"approved\":true,\"issues\":[],\"alternatives\":[]}",
+      "ok": true,
+      "ms": 9234
+    },
+    {
+      "stage": "reflect",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"我担心拒绝会伤关系，所以刚才用了玩笑；但不想让道歉变成同意。\",\"answer\":[\"你在反思里说清楚了两件事：玩笑是为了缓冲，道歉不等于收回边界——这个区分很重要，妈妈后来的回应也显示边界被记住了。至于「先给你看一眼」的提议，它其实是个好消息：她把最终决定权放回了你手里。\",\"你可以接受这个安排，也可以提出等价的其他选项。关键是措辞要由你把关，而不是只「看一眼」而已。比如直接给她一句你认可的版本，让她照发，这样比逐字改稿更省事，也不给她加戏的空间。\",\"如果当场不想敲定，也可以说「等我看过你写的再说」——接受过目不等于放弃否决权。你说「不用替我答应回复时间」的边界在这里同样适用：过目可以，但发不发、怎么发仍由你定。\"],\"example\":\"比如你可以说：「妈，你看之前我给你一版：『变动还没定，细节孩子自己定。』你照这句发就行。」这样既接住了她「给你过目」的提议，又把措辞权留在自己手里。\",\"sources\":[{\"kind\":\"theory\",\"id\":\"equivalent-options\"}]}",
+      "ok": true,
+      "ms": 9762
+    },
+    {
+      "stage": "debrief-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"谢谢你愿意讨论。现在我们只是商量怎么说，消息还没有实际发出，对吗？\",\"answer\":[\"先说已完成的：妈妈口头答应了「不替你说工资」「转述前先问你」，也给出了那句补充说明的措辞（变动没定、细节你自己定），并确认消息还没发出。这些是她当场说出口的承诺，属于共识层面的「已完成」，但都还没有付诸行动——补充说明和原消息都还没发给大姨。\",\"再说条件：你设定的是条件而非交换，比如「我会自己跟大姨说，工资不要替我转述」「不用替我答应回复时间」。妈妈接受了这些条件，但你并没有承诺什么时候回复大姨或透露多少细节——这是留给你的空白，不是已达成的协议。\",\"最后是提议：妈妈最后问「我今晚发之前，先给你看一眼行不？」这只是她的提议，你尚未回应，所以还不算敲定。大姨那句「等着你那句补充」也只是等待，不构成你的承诺。简单总结：已完成的是口头规则（先问再转述、不代答工资）；条件是你保留一切细节的决定权；未决的是补发消息的最终措辞确认、发送前给你过目、以及你何时回复大姨。\",\"一个实用区分法：把谈话结果分成三类——对方承诺要做的事、你同意/保留的条件、还悬着的提议。之后跟进时可以只追已承诺的部分（比如问妈妈补发了吗），对提议则按你的意愿再决定，比如：「你发之前发我看一眼可以，但内容我还得能改。」这样不会把口头共识误当成已经落实的事。\"],\"example\":\"妈妈如果今晚直接把补发消息发了，你可以说：「妈，之前说好发之前给我看一眼，这次就算了，下次记得哈。」——温和地指出承诺和执行之间的差距，而不是默认口头共识自动生效。\",\"sources\":[{\"kind\":\"theory\",\"id\":\"nvc-ofnr\"}]}",
+      "ok": true,
+      "ms": 21320
+    },
+    {
+      "stage": "debrief-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"现在我们只是商量怎么说，消息还没有实际发出，对吗？\",\"answer\":[\"已完成的事：妈妈承诺以后转述前先问你（「先问你一声，我能做到」），也接受了补充说明的措辞「变动还没定，细节由你本人决定」，并认下不替你转述工资、回复时间你自己安排。你自己的边界（工资不替我转述）已经明确说出并得到回应。\",\"条件/待定：目前只是「商量好」的措辞，补充消息还没实际发出——你最后一句确认（「消息还没有实际发出，对吗？」）妈妈答「对，还没发」。至于「今晚发之前先给你看一眼」是妈妈主动提出的提议，你并未答应或拒绝，所以它还只是待你决定的条件，不算已完成。\",\"简单说：已敲定的是「先问再转述」这条规则和补充说明的措辞；未完成的是消息发送本身；开放的是发送前是否先给你过目——那是她的提议，主动权在你。下一步如果你愿意，可以明确回复她（例如「发之前发我看一眼就好」，前提是你确实愿意这么做），把提议变成双方确认的安排；不愿意也完全可以只说「我自己安排」。\"],\"example\":\"例：「妈，补充那句可以按商量好的发；要不要先给我过目，我今晚看情况回你。」——把已敲定和待定分开说，避免提议被当成默认同意。\",\"sources\":[{\"kind\":\"theory\",\"id\":\"nvc-ofnr\"},{\"kind\":\"theory\",\"id\":\"apology-with-repair\"}]}",
+      "ok": true,
+      "ms": 12664
+    },
+    {
+      "stage": "debrief-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"我还想聊：你能接受以后转述之前先问我吗？如果你不接受，我们也可以保留分歧。\",\"answer\":[\"可以，你的拒绝本来就站得住：你只答应了「补充一句工作还没确定」，没有答应「今晚先给你看一眼」。想不扩大承诺，关键是把「已谈好的」和「还没定的」分开说，并用可以被拒绝的方式表达（OFNR 里的请求原则：具体、可执行、允许对方说不）。这样既守住边界，也不需要硬邦邦。\",\"更自然的说法可以承认她的心意，再把决定权留给自己，比如：「妈，你要先发我看一眼也行，不过我可能忙得没空回——没回你就按商量好的那句发，别等我。」或者干脆温和地保留：「看情况吧，我不一定来得及看，你别把等我当成必须。」这两句都没有承诺一定要回复或过目，同时不像「不行」那么生硬。注意 limits：这只是措辞建议，不能保证妈妈一定接受；如果她追问，你仍可以说「我自己安排」。\",\"如果这次回复你还没想好，也可以晚点再回，比如「妈，你那句直接发就行，不用等我」——一句话就把提议降回「可选项」。只要你不主动接「先给你过目」，它就始终只是她的提议，不是你的承诺。\"],\"example\":\"例：妈妈问「今晚发之前先给你看一眼行不？」你可以答「行也行，不过我可能顾不上看，没回你就发吧，别等我。」——既不冷硬拒绝，也没把「必须等我看过」变成自己的新义务。\",\"sources\":[{\"kind\":\"theory\",\"id\":\"nvc-ofnr\"}]}",
+      "ok": true,
+      "ms": 14943
+    }
+  ],
+  "session": {
+    "id": "dinner-zh",
+    "scenario": {
+      "id": "3d-family-privacy",
+      "title": {
+        "zh": "妈妈把你的近况告诉了大姨",
+        "en": "Mom shared your news with your aunt"
+      },
+      "hook": {
+        "zh": "妈妈已经转述了工作变动。工资和其他细节，你还没有告诉这一桌。",
+        "en": "Mom has shared a change at work. You have not shared pay or other details with the table."
+      },
+      "background": {
+        "zh": "团圆厅 · 家庭聚餐。妈妈把你工作变动的消息发给了大姨，没有先问你。饭桌上的追问越来越细。\n妈妈转述给大姨的已知内容：“工作有变动”。\n妈妈没有先征求你的同意。\n工资、具体变动和其他个人信息都未知。\n具体工作变动、工资与个人情况由你选择是否透露；家人的关心不是转述授权。\n大姨：听妈妈提到了你的工作变动，觉得亲戚之间问细一点很正常。\n妈妈：没有先问你，就把工作变动的消息告诉了大姨。\n爸爸：一直在听，想让这一桌先把争议说清楚。",
+        "en": "Reunion Room · Family dinner. Mom told your aunt about a change at work without asking you. The questions at dinner are getting personal.\nThe known news Mom shared with your aunt: “a change at work.”\nMom did not ask for your permission first.\nPay, the details of the change and other personal information are unknown.\nYou choose whether to disclose the work change, pay or personal details. Family concern is not permission to share.\nAunt Mei: Mom mentioned a change at work. Your aunt thinks detailed questions are normal among relatives.\nMom: Told your aunt about the work change without asking you first.\nDad: Listening, and hoping the table can clarify the disagreement."
+      },
+      "context": "family",
+      "contextType": {
+        "zh": "家庭",
+        "en": "Family"
+      },
+      "competencies": [
+        "relationship-skills",
+        "responsible-decision-making"
+      ],
+      "skills": [
+        "communication",
+        "ethical-responsibility",
+        "resolving-conflicts"
+      ],
+      "relationship": [
+        "parent"
+      ],
+      "difficulty": 3,
+      "minutes": 8,
+      "characters": [
+        {
+          "id": "you",
+          "name": {
+            "zh": "你",
+            "en": "You"
+          },
+          "role": {
+            "zh": "工作消息被家人转述的成年人",
+            "en": "An adult whose work news was shared by family"
+          },
+          "personality": {
+            "zh": "按自己的意愿表达。",
+            "en": "Speak according to your own intent."
+          },
+          "stance": {
+            "zh": "确定哪些信息能分享、谁可以转述，以及这次怎样补救。",
+            "en": "Agree what may be shared, who can share it, and how to address this disclosure."
+          },
+          "playable": true,
+          "hue": 30
+        },
+        {
+          "id": "aunt",
+          "name": {
+            "zh": "大姨",
+            "en": "Aunt Mei"
+          },
+          "role": {
+            "zh": "热心的长辈",
+            "en": "Your outspoken aunt"
+          },
+          "personality": {
+            "zh": "听妈妈提到了你的工作变动，觉得亲戚之间问细一点很正常。",
+            "en": "Mom mentioned a change at work. Your aunt thinks detailed questions are normal among relatives."
+          },
+          "stance": {
+            "zh": "热心的长辈",
+            "en": "Your outspoken aunt"
+          },
+          "hue": 30
+        },
+        {
+          "id": "mom",
+          "name": {
+            "zh": "妈妈",
+            "en": "Mom"
+          },
+          "role": {
+            "zh": "你的妈妈",
+            "en": "Your mother"
+          },
+          "personality": {
+            "zh": "没有先问你，就把工作变动的消息告诉了大姨。",
+            "en": "Told your aunt about the work change without asking you first."
+          },
+          "stance": {
+            "zh": "你的妈妈",
+            "en": "Your mother"
+          },
+          "hue": 30
+        },
+        {
+          "id": "dad",
+          "name": {
+            "zh": "爸爸",
+            "en": "Dad"
+          },
+          "role": {
+            "zh": "你的爸爸",
+            "en": "Your father"
+          },
+          "personality": {
+            "zh": "一直在听，想让这一桌先把争议说清楚。",
+            "en": "Listening, and hoping the table can clarify the disagreement."
+          },
+          "stance": {
+            "zh": "你的爸爸",
+            "en": "Your father"
+          },
+          "hue": 30
+        }
+      ],
+      "objectives": [
+        {
+          "zh": "说清哪些信息可分享、谁有转述许可。",
+          "en": "Clarify what may be shared and who has permission."
+        },
+        {
+          "zh": "确认这次未经许可转述的补救方式。",
+          "en": "Agree how to address this unpermitted disclosure."
+        }
+      ],
+      "success": {
+        "zh": "根据用户真实意图与对话中的具体约定核对，不预设成功。",
+        "en": "Check the learner’s actual intent and explicit arrangements without assuming success."
+      },
+      "failure": {
+        "zh": "没有达成预设目标不自动代表沟通失败。",
+        "en": "Not achieving the initial aim does not automatically mean poor communication."
+      },
+      "maxTurns": 12,
+      "opening": {
+        "characterId": "aunt",
+        "text": {
+          "zh": "工作变动你妈都告诉我了。工资变没变？这桌又没外人，你还瞒着？",
+          "en": "Your mom told me about the work change. Did your pay change? We’re all family here. Why hide it?"
+        }
+      },
+      "source": "Original fiction: wiki/specs/spec-feedback-refinement.md",
+      "keywords": [
+        "family-privacy",
+        "communication",
+        "ethical-responsibility",
+        "resolving-conflicts"
+      ],
+      "custom": true
+    },
+    "messages": [
+      {
+        "id": "message-0",
+        "role": "npc",
+        "characterId": "aunt",
+        "text": "工作变动你妈都告诉我了。工资变没变？这桌又没外人，你还瞒着？",
+        "ts": 0
+      },
+      {
+        "id": "message-1",
+        "role": "learner",
+        "characterId": "you",
+        "text": "妈妈，工作变动还没确定。我会自己跟大姨说，工资不要替我转述。已经发过去的消息，你会怎么补充说明？",
+        "ts": 0
+      },
+      {
+        "id": "message-2",
+        "role": "npc",
+        "characterId": "mom",
+        "text": "发都发了……那我回头跟她说一句：变动还没定，别追问工资。可你也不说细点，我下回问你近况，你答不答我？",
+        "ts": 0
+      },
+      {
+        "id": "interjection-2",
+        "role": "npc",
+        "characterId": "aunt",
+        "text": "行吧，工资我不问了。那你变动到底是啥方向？",
+        "ts": 0
+      },
+      {
+        "id": "message-3",
+        "role": "learner",
+        "characterId": "you",
+        "text": "我知道你想关心我。我可以自己回复大姨，但没有答应告诉她工资。你发的原话是什么？",
+        "ts": 0
+      },
+      {
+        "id": "message-4",
+        "role": "npc",
+        "characterId": "mom",
+        "text": "就发了一句“工作有变动”，真没提工资。你要自己回大姨也行，那你啥时候回？别拖得没影。",
+        "ts": 0
+      },
+      {
+        "id": "interjection-4",
+        "role": "npc",
+        "characterId": "aunt",
+        "text": "那你现在跟我说说也行，算你自己讲的。",
+        "ts": 0
+      },
+      {
+        "id": "message-5",
+        "role": "learner",
+        "characterId": "you",
+        "text": "我不是家庭新闻发布会，哈哈。刚才玩笑可能有点冲，抱歉；不要替我转述的边界不变。",
+        "ts": 0
+      },
+      {
+        "id": "message-6",
+        "role": "npc",
+        "characterId": "mom",
+        "text": "行，玩笑归玩笑，我记住了：不替你说工资，变动也让你自己讲。",
+        "ts": 0
+      },
+      {
+        "id": "interjection-6",
+        "role": "npc",
+        "characterId": "aunt",
+        "text": "那你自己啥时候跟我说？吃饭这会儿讲两句也行。",
+        "ts": 0
+      },
+      {
+        "id": "message-7",
+        "role": "learner",
+        "characterId": "you",
+        "text": "如果你愿意补充说明，请说工作还没确定、细节由我本人决定。不用替我答应回复时间。",
+        "ts": 0
+      },
+      {
+        "id": "message-8",
+        "role": "npc",
+        "characterId": "mom",
+        "text": "行，那我就补这一句：变动还没定，细节孩子自己定。回复时间我确实不敢替你应，你自己安排。",
+        "ts": 0
+      },
+      {
+        "id": "interjection-8",
+        "role": "npc",
+        "characterId": "aunt",
+        "text": "那我不催。你哪天想说，直接跟我说一声就行。",
+        "ts": 0
+      },
+      {
+        "id": "message-9",
+        "role": "learner",
+        "characterId": "you",
+        "text": "我还想聊：你能接受以后转述之前先问我吗？如果你不接受，我们也可以保留分歧。",
+        "ts": 0
+      },
+      {
+        "id": "message-10",
+        "role": "npc",
+        "characterId": "mom",
+        "text": "先问你一声，我能做到——不问你就不往外说。可你也别什么都掖着，妈就想知道你过得咋样。",
+        "ts": 0
+      },
+      {
+        "id": "interjection-10",
+        "role": "npc",
+        "characterId": "dad",
+        "text": "那这条规矩咱仨都记下，先吃饭吧。",
+        "ts": 0
+      },
+      {
+        "id": "message-11",
+        "role": "learner",
+        "characterId": "you",
+        "text": "谢谢你愿意讨论。现在我们只是商量怎么说，消息还没有实际发出，对吗？",
+        "ts": 0
+      },
+      {
+        "id": "message-12",
+        "role": "npc",
+        "characterId": "mom",
+        "text": "对，还没发。就刚才商量那句：变动没定，细节你自己定。我今晚发之前，先给你看一眼行不？",
+        "ts": 0
+      },
+      {
+        "id": "interjection-12",
+        "role": "npc",
+        "characterId": "aunt",
+        "text": "那我等着你那句补充，看完就不催了。",
+        "ts": 0
+      }
+    ],
+    "sceneContext": {
+      "kind": "3d",
+      "sceneId": "family",
+      "openingId": "family-privacy",
+      "actions": [],
+      "observations": [
+        {
+          "id": "spoken-1",
+          "turn": 1,
+          "learnerQuote": "妈妈，工作变动还没确定。我会自己跟大姨说，工资不要替我转述。已经发过去的消息，你会怎么补充说明？",
+          "facts": [
+            "发言面向在场所有人；走近不代表私聊。",
+            "指定回应对象：妈妈。",
+            "发言时：坐着，桌边。"
+          ]
+        },
+        {
+          "id": "spoken-2",
+          "turn": 2,
+          "learnerQuote": "我知道你想关心我。我可以自己回复大姨，但没有答应告诉她工资。你发的原话是什么？",
+          "facts": [
+            "发言面向在场所有人；走近不代表私聊。",
+            "指定回应对象：妈妈。",
+            "发言时：坐着，桌边。"
+          ]
+        },
+        {
+          "id": "spoken-3",
+          "turn": 3,
+          "learnerQuote": "我不是家庭新闻发布会，哈哈。刚才玩笑可能有点冲，抱歉；不要替我转述的边界不变。",
+          "facts": [
+            "发言面向在场所有人；走近不代表私聊。",
+            "指定回应对象：妈妈。",
+            "发言时：坐着，桌边。"
+          ]
+        },
+        {
+          "id": "spoken-4",
+          "turn": 4,
+          "learnerQuote": "如果你愿意补充说明，请说工作还没确定、细节由我本人决定。不用替我答应回复时间。",
+          "facts": [
+            "发言面向在场所有人；走近不代表私聊。",
+            "指定回应对象：妈妈。",
+            "发言时：坐着，桌边。"
+          ]
+        },
+        {
+          "id": "spoken-5",
+          "turn": 5,
+          "learnerQuote": "我还想聊：你能接受以后转述之前先问我吗？如果你不接受，我们也可以保留分歧。",
+          "facts": [
+            "发言面向在场所有人；走近不代表私聊。",
+            "指定回应对象：妈妈。",
+            "发言时：坐着，桌边。"
+          ]
+        },
+        {
+          "id": "spoken-6",
+          "turn": 6,
+          "learnerQuote": "谢谢你愿意讨论。现在我们只是商量怎么说，消息还没有实际发出，对吗？",
+          "facts": [
+            "发言面向在场所有人；走近不代表私聊。",
+            "指定回应对象：妈妈。",
+            "发言时：坐着，桌边。"
+          ]
+        }
+      ]
+    },
+    "learnerCharacterId": "you",
+    "status": "assessed",
+    "origin": "arena",
+    "objectiveDone": [],
+    "startedAt": 1792603589184,
+    "endedAt": 1792603589184,
+    "reflections": [
+      {
+        "question": "妈妈提出「我今晚发之前，先给你看一眼行不？」，你还没答应——你会接受这个过目安排，还是换成别的方式确认补救消息的措辞？",
+        "answer": "我担心拒绝会伤关系，所以刚才用了玩笑；但不想让道歉变成同意。",
+        "coachReply": "“我担心拒绝会伤关系，所以刚才用了玩笑；但不想让道歉变成同意。”\n\n你在反思里说清楚了两件事：玩笑是为了缓冲，道歉不等于收回边界——这个区分很重要，妈妈后来的回应也显示边界被记住了。至于「先给你看一眼」的提议，它其实是个好消息：她把最终决定权放回了你手里。\n\n你可以接受这个安排，也可以提出等价的其他选项。关键是措辞要由你把关，而不是只「看一眼」而已。比如直接给她一句你认可的版本，让她照发，这样比逐字改稿更省事，也不给她加戏的空间。\n\n如果当场不想敲定，也可以说「等我看过你写的再说」——接受过目不等于放弃否决权。你说「不用替我答应回复时间」的边界在这里同样适用：过目可以，但发不发、怎么发仍由你定。\n\n拿出几种你都能接受的方案 — How to Use MESOs in Business Negotiations, Program on Negotiation, Harvard Law School"
+      }
+    ],
+    "revealSeen": true,
+    "report": {
+      "sceneNotes": [],
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "工资不要替我转述。",
+          "npcEvidence": "先问你一声，我能做到——不问你就不往外说。",
+          "reason": "你明确了信息边界和转述许可规则，妈妈明确承诺转述前先问。"
+        },
+        {
+          "index": 1,
+          "status": "met",
+          "evidence": "如果你愿意补充说明，请说工作还没确定、细节由我本人决定。",
+          "npcEvidence": "行，那我就补这一句：变动还没定，细节孩子自己定。",
+          "reason": "补救话术已商定并获妈妈认可；发送前给你过目只是她随后提出的单方提议，消息尚未实际发出。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 3,
+          "evidence": "现在我们只是商量怎么说，消息还没有实际发出，对吗？",
+          "reason": "全程区分事实、规则与请求，最后还核实双方理解一致，清晰且不失温度。"
+        },
+        {
+          "skill": "ethical-responsibility",
+          "level": 3,
+          "evidence": "刚才玩笑可能有点冲，抱歉；不要替我转述的边界不变。",
+          "reason": "主动为语气道歉但不让边界随之松动，把个人责任与原则分开处理。"
+        },
+        {
+          "skill": "resolving-conflicts",
+          "level": 3,
+          "evidence": "如果你不接受，我们也可以保留分歧。",
+          "reason": "给对方保留分歧的出口，降低对抗，反而促成妈妈主动承诺先问再转述。"
+        }
+      ],
+      "stars": 3,
+      "outcome": "success",
+      "verdictEvidence": "你能接受以后转述之前先问我吗？如果你不接受，我们也可以保留分歧。",
+      "verdict": "边界与补救话术均以协商达成，语气修复与原则坚持并行，处理得非常成熟。",
+      "summary": "从「工资不要替我转述」到核实「消息还没有实际发出，对吗？」，你把规则、补救话术和确认一步步谈实了。妈妈承诺先问再转述，也认下了那句补充说明；发送前给你过目只是她的提议，尚未敲定。",
+      "strengths": [
+        {
+          "behavior": "道歉时把语气和边界分开：为玩笑道歉，但不因此放弃「不替我转述」的规则。",
+          "evidence": "刚才玩笑可能有点冲，抱歉；不要替我转述的边界不变。",
+          "skill": "ethical-responsibility"
+        }
+      ],
+      "weaknesses": [],
+      "alternatives": [],
+      "knowledge": {
+        "theoryIds": [
+          "nvc-ofnr",
+          "apology-with-repair"
+        ],
+        "caseIds": [
+          "case-teen-group-chat"
+        ],
+        "whyThis": "「工资不要替我转述。已经发过去的消息，你会怎么补充说明？」正是先陈述事实、再提具体请求的非暴力沟通式表达；「刚才玩笑可能有点冲，抱歉」是承担行为而不抵消规则的补救式道歉；「我们也可以保留分歧」给了妈妈保留面子的出口，修复了安全感。后续可借鉴「手机背后的群聊」里让对方参与定规则的思路。"
+      },
+      "reflectionQuestions": [
+        "妈妈提出「我今晚发之前，先给你看一眼行不？」，你还没答应——你会接受这个过目安排，还是换成别的方式确认补救消息的措辞？",
+        "下次其他亲戚（比如大姨直接问你）绕过这条规则追问细节时，你打算怎样既守住「细节由我本人决定」，又不让关心你的人觉得被推开？"
+      ],
+      "nextStep": "本周内选一件你不想被转述的私事，提前告诉一位家人：转述前先问我。",
+      "deltas": {}
+    },
+    "debriefChat": [
+      {
+        "id": "d0",
+        "question": "我最后到底答应了什么？请区分提议、条件和已完成的事。",
+        "reply": {
+          "evidence": "现在我们只是商量怎么说，消息还没有实际发出，对吗？",
+          "answer": "已完成的事：妈妈承诺以后转述前先问你（「先问你一声，我能做到」），也接受了补充说明的措辞「变动还没定，细节由你本人决定」，并认下不替你转述工资、回复时间你自己安排。你自己的边界（工资不替我转述）已经明确说出并得到回应。\n\n条件/待定：目前只是「商量好」的措辞，补充消息还没实际发出——你最后一句确认（「消息还没有实际发出，对吗？」）妈妈答「对，还没发」。至于「今晚发之前先给你看一眼」是妈妈主动提出的提议，你并未答应或拒绝，所以它还只是待你决定的条件，不算已完成。\n\n简单说：已敲定的是「先问再转述」这条规则和补充说明的措辞；未完成的是消息发送本身；开放的是发送前是否先给你过目——那是她的提议，主动权在你。下一步如果你愿意，可以明确回复她（例如「发之前发我看一眼就好」，前提是你确实愿意这么做），把提议变成双方确认的安排；不愿意也完全可以只说「我自己安排」。",
+          "example": "例：「妈，补充那句可以按商量好的发；要不要先给我过目，我今晚看情况回你。」——把已敲定和待定分开说，避免提议被当成默认同意。",
+          "sources": [
+            {
+              "kind": "theory",
+              "id": "nvc-ofnr"
+            },
+            {
+              "kind": "theory",
+              "id": "apology-with-repair"
+            }
+          ]
+        },
+        "at": 1792603676092
+      },
+      {
+        "id": "d1",
+        "question": "我不想扩大承诺。请保留我的拒绝，给一句更自然的说法。",
+        "reply": {
+          "evidence": "我还想聊：你能接受以后转述之前先问我吗？如果你不接受，我们也可以保留分歧。",
+          "answer": "可以，你的拒绝本来就站得住：你只答应了「补充一句工作还没确定」，没有答应「今晚先给你看一眼」。想不扩大承诺，关键是把「已谈好的」和「还没定的」分开说，并用可以被拒绝的方式表达（OFNR 里的请求原则：具体、可执行、允许对方说不）。这样既守住边界，也不需要硬邦邦。\n\n更自然的说法可以承认她的心意，再把决定权留给自己，比如：「妈，你要先发我看一眼也行，不过我可能忙得没空回——没回你就按商量好的那句发，别等我。」或者干脆温和地保留：「看情况吧，我不一定来得及看，你别把等我当成必须。」这两句都没有承诺一定要回复或过目，同时不像「不行」那么生硬。注意 limits：这只是措辞建议，不能保证妈妈一定接受；如果她追问，你仍可以说「我自己安排」。\n\n如果这次回复你还没想好，也可以晚点再回，比如「妈，你那句直接发就行，不用等我」——一句话就把提议降回「可选项」。只要你不主动接「先给你过目」，它就始终只是她的提议，不是你的承诺。",
+          "example": "例：妈妈问「今晚发之前先给你看一眼行不？」你可以答「行也行，不过我可能顾不上看，没回你就发吧，别等我。」——既不冷硬拒绝，也没把「必须等我看过」变成自己的新义务。",
+          "sources": [
+            {
+              "kind": "theory",
+              "id": "nvc-ofnr"
+            }
+          ]
+        },
+        "at": 1792603691040
+      }
+    ]
+  }
+}

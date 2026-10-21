@@ -1,0 +1,557 @@
+{
+  "at": "2026-10-21T17:30:45.590Z",
+  "id": "dinner-en",
+  "lang": "en",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "stage": "complete",
+  "calls": [
+    {
+      "stage": "reflect",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.\",\"answer\":[\"Your reflection separates two things that often get blurred: softening how a refusal lands (the joke, the apology) and actually agreeing (consent). In the transcript you kept that line visibly—your apology came with 'My capacity limit remains,' and the lead confirmed 'nothing accepted yet,' so on the words exchanged, the apology did not read as agreement. That said, I can only see what was said, not how anyone privately took it.\",\"A concrete pending note would name what was and wasn't done, in one sentence: 'Proposal reviewed on confirmed content; data summary not yet source-checked—Rui's check outstanding—so treat its figures as unverified.' The follow-up worth checking for yourself: if Rui's check hadn't landed, would you have been comfortable seeing the lead send that note, or is there wording you'd want added before your review attaches to it?\"],\"example\":\"\",\"sources\":[]}",
+      "ok": true,
+      "ms": 8609
+    },
+    {
+      "stage": "reflect",
+      "model": "glm-5.3-flash",
+      "raw": "{\"approved\":false,\"issues\":[\"The answer composes new hypothetical dialogue in 'answer' rather than 'example': 'Proposal reviewed on confirmed content; data summary not yet source-checked—Rui's check outstanding—so treat its figures as unverified.' New sample lines must appear only in the example field; answer may quote actual transcript words or compose nothing new.\"]}",
+      "ok": true,
+      "ms": 4343
+    },
+    {
+      "stage": "reflect",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.\",\"answer\":[\"Your reflection makes an important distinction: apologizing for tone is not the same as agreeing to the task, and the lead actually confirmed that—\\\"nothing accepted yet.\\\" The wording of a pending note matters for the same reason; a paraphrase-style line that states only what is known, e.g. naming that the summary is unaudited as of 18:30, checks understanding without implying the data passed review. One caveat: I can describe what such wording may invite, but the client's actual reaction isn't shown in this transcript.\",\"Follow-up: Rui's warning was that 'pending' could read as checked-and-passed—what specific phrase did you have in mind, or would you like to test one against Rui's concern?\"],\"example\":\"\",\"sources\":[]}",
+      "ok": true,
+      "ms": 7849
+    },
+    {
+      "stage": "reflect",
+      "model": "glm-5.3-flash",
+      "raw": "{\"approved\":true,\"issues\":[]}",
+      "ok": true,
+      "ms": 4716
+    },
+    {
+      "stage": "debrief-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish.\",\"answer\":[\"By the end, you had not actually agreed to anything. Everything you said stayed conditional: your line 'I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish' frames the review as an offer that activates only if Rui's source check actually lands. Earlier you said 'I cannot take all three tasks' and explicitly flagged one question as 'a question, not my acceptance of the job.' So your commitments: zero confirmed tasks, one standing conditional offer (final review, roughly a ten-minute window, if data and layout exist by then).\",\"Proposals on the table (mostly from He, not you): Rui checks sources until about 18:20 with uncertain results; Ning lays out confirmed content — but Ning was still waiting for a go-ahead ('I can start layout now—say the word'); Rui never committed, only described timing. You additionally proposed leaving the deadline conditional. He's decision: send the proposal on time and mark the summary as pending if the check misses — a condition he said he'd own and report to his manager.\",\"Completed actions in the room: a boundary was stated, ownership was clarified (He owns the send/escalation decision), the deadline's rigidity was separated from what gets sent, and the 'pending' wording was flagged by Rui as risky. Nothing about the work itself was done: data were not checked, layout had not started, no one accepted a task, and the conditional review was never triggered. If you want to close it next turn, the gap is simply Ning's go-ahead and Rui's yes/no — that follows the prioritize-and-decide move from ask-for-help-prioritize, where you hand the trade-off to the authority for an immediate call.\"],\"example\":\"If you wanted to convert the plan: 'Ning, go ahead on confirmed content; Rui, are you in or out by 18:20? If out, He's pending-summary call stands.'\",\"sources\":[{\"kind\":\"theory\",\"id\":\"ask-for-help-prioritize\"},{\"kind\":\"case\",\"id\":\"case-no-with-alternative\"}]}",
+      "ok": true,
+      "ms": 14173
+    },
+    {
+      "stage": "debrief-1",
+      "model": "glm-5.3-flash",
+      "raw": "{\"approved\":true,\"issues\":[]}",
+      "ok": true,
+      "ms": 5811
+    },
+    {
+      "stage": "debrief-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I cannot take all three tasks. Who owns each part?\",\"answer\":[\"Your refusal was already solid: \\\"I cannot take all three tasks. Who owns each part?\\\" is a clear limit plus a question that hands the trade-off back to the lead. The one slightly heavy spot was turn three, where you apologized for a joke's tone mid-refusal — you can decline without explaining or apologizing for the refusal itself. A more natural pattern is simply: short no, then the conditional you already used. That mirrors the 'no + workable but + clarifying question' shape from the Boundaries case, where the employee said they couldn't stay, named what they would do instead, and asked what the client actually needed most.\",\"A natural, shorter version of your limit could run: \\\"Not all three — the review I can take once data and layout exist. Who takes the rest?\\\" Notice it drops the apology and the justification, keeps your capacity limit intact, and doesn't add any new commitment. The Essentialism approach backs this: a recommended trade-off plus handing the decision to the authority means you never have to pad the no to make it palatable. Caveat: 'more natural' means fewer words and no hedging — it does not mean softer, and you're free to keep your original wording if it feels right to you; both say the same thing.\",\"One limit to remember: in a group setting your line lands on everyone, so the same wording may read differently to Ning and Rui than to He — the transcript doesn't show how it affected them. The paraphrase-checking habit (offering your read tentatively, e.g. 'So the summary is the blocker — did I get that right?') also lets you sound less like a refusal machine without promising anything.\"],\"example\":\"'I can't take all three tonight — if the checks land by 18:20, I'll do the final review. He, how do you want to split the rest?' Usage note: say the limit, the one conditional, then stop; resist adding 'sorry' or 'if that's okay' unless you actually want to renegotiate.\",\"sources\":[{\"kind\":\"case\",\"id\":\"case-no-with-alternative\"},{\"kind\":\"theory\",\"id\":\"ask-for-help-prioritize\"},{\"kind\":\"theory\",\"id\":\"check-your-paraphrase\"}]}",
+      "ok": true,
+      "ms": 16914
+    },
+    {
+      "stage": "debrief-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"approved\":false,\"issues\":[\"The answer composes new hypothetical dialogue outside the example field: 'A natural, shorter version of your limit could run: \\\"Not all three — the review I can take once data and layout exist. Who takes the rest?\\\"' and 'e.g. \\\"So the summary is the blocker — did I get that right?\\\"' — suggested dialogue must appear only in example.\"]}",
+      "ok": true,
+      "ms": 8506
+    },
+    {
+      "stage": "debrief-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"evidence\":\"I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks. Who owns each part?\",\"answer\":[\"Your refusal is already clear and well-built: a limit, a conditional offer, and a question that hands the trade-off to the lead. That matches the 'no plus workable alternative plus clarifying question' pattern (case-no-with-alternative). The only thing that can feel stiff in speech is the formal phrasing — 'I can discuss doing', 'My capacity limit remains', and the meta-comment about the joke all sound like written statements rather than office talk. The content stays; only the wording gets more casual.\",\"A more natural version keeps the same three moves: the limit, the one thing you can do, and the question. Short, plain sentences work better aloud. You also don't need to apologize for tone or narrate your own refusal — one calm sentence is enough, and the apologize-then-restate combo can make the limit feel negotiable.\",\"Limits to keep in mind: 'natural' does not mean softer on the substance. The case sources show the trade-off still gets handed to the decision-maker (ask-for-help-prioritize), so you're not promising the 18:30 result, only your slice. And a reworded line doesn't guarantee He reacts differently; it just removes friction that purely formal phrasing can create.\"],\"example\":\"A spoken version could be: \\\"All three is a no for me tonight. If data and layout are done, I can do the final review. Who takes the rest?\\\" — same limit and conditional, just everyday wording. If you want the joke-handled version: \\\"Ha — I'm one person, not a whole team. The limit's real though.\\\"\",\"sources\":[{\"kind\":\"theory\",\"id\":\"ask-for-help-prioritize\"},{\"kind\":\"case\",\"id\":\"case-no-with-alternative\"}]}",
+      "ok": true,
+      "ms": 13296
+    },
+    {
+      "stage": "debrief-2",
+      "model": "glm-5.3-flash",
+      "raw": "{\"approved\":true,\"issues\":[]}",
+      "ok": true,
+      "ms": 4636
+    }
+  ],
+  "session": {
+    "id": "dinner-en",
+    "scenario": {
+      "id": "3d-office-overtime",
+      "title": {
+        "zh": "下班前，三件活都归你",
+        "en": "Three tasks before you leave"
+      },
+      "hook": {
+        "zh": "“顺手收尾”里，藏着三项还没分工的任务。",
+        "en": "A “quick finish” hides three unassigned tasks."
+      },
+      "background": {
+        "zh": "项目组 · 开放办公室。17:50，客户想在 18:30 收到材料。数据核对、排版和最终检查还没分工，主管一句“顺手”全压给你。\n当前 17:50。客户希望 18:30 收到材料。\n客户邮件：18:30 前提供主方案与数据摘要。\n待确认：数据核对、排版、最终检查。\n你、宁姐、瑞瑞的时间与负责范围都尚未确认。\n演练项目：客户回访流程。主方案草稿已有“先试点、再推广”两步；数据摘要尚未核对，主方案可以先按已确认内容整理。\n各人的时间、数据结论和三项任务的负责人未确认；愿意讨论不等于答应加班。\n何主管：想准时发给客户，但还没有确认每个人的剩余时间。\n宁姐：负责排版与对外讲解。重视效率，也习惯替别人总结重点。\n瑞瑞：能核对数据来源。没有替你或宁姐答应今晚的工作。",
+        "en": "Project team · Open office. It’s 17:50; the client wants material at 18:30. Data, layout and final checks are unassigned. Your lead calls it a quick favor for you.\nIt is 17:50. The client wants material at 18:30.\nClient email: main proposal and data summary requested by 18:30.\nUnconfirmed: data checks, layout, final review.\nYour, Ning’s and Rui’s availability and scope remain unconfirmed.\nRehearsal project: a client follow-up workflow. The main draft has two stages, pilot then rollout. The data summary is unchecked; the proposal can be organized using confirmed information.\nAvailability, data conclusions and ownership of the three tasks are unconfirmed. Discussing work is not accepting overtime.\nHe: Wants to send the material on time, without having checked everyone’s availability.\nNing: Handles layout and presentation. Values speed and often summarizes for others.\nRui: Can check the data sources. Has not agreed to tonight’s work for you or Ning."
+      },
+      "context": "workplace",
+      "contextType": {
+        "zh": "办公室",
+        "en": "Office"
+      },
+      "competencies": [
+        "relationship-skills",
+        "self-management"
+      ],
+      "skills": [
+        "communication",
+        "goal-setting",
+        "organizational-skills"
+      ],
+      "relationship": [
+        "senior",
+        "peer"
+      ],
+      "difficulty": 3,
+      "minutes": 8,
+      "characters": [
+        {
+          "id": "you",
+          "name": {
+            "zh": "你",
+            "en": "You"
+          },
+          "role": {
+            "zh": "负责主方案的项目成员",
+            "en": "Project member responsible for the main proposal"
+          },
+          "personality": {
+            "zh": "按自己的意愿表达。",
+            "en": "Speak according to your own intent."
+          },
+          "stance": {
+            "zh": "说清能做的部分，并确认优先级、负责人和可交范围。",
+            "en": "State what you can do and confirm priorities, owners and deliverable scope."
+          },
+          "playable": true,
+          "hue": 30
+        },
+        {
+          "id": "he",
+          "name": {
+            "zh": "何主管",
+            "en": "He"
+          },
+          "role": {
+            "zh": "项目主管",
+            "en": "Project lead"
+          },
+          "personality": {
+            "zh": "想准时发给客户，但还没有确认每个人的剩余时间。",
+            "en": "Wants to send the material on time, without having checked everyone’s availability."
+          },
+          "stance": {
+            "zh": "项目主管",
+            "en": "Project lead"
+          },
+          "hue": 30
+        },
+        {
+          "id": "ning",
+          "name": {
+            "zh": "宁姐",
+            "en": "Ning"
+          },
+          "role": {
+            "zh": "资深同事",
+            "en": "Senior colleague"
+          },
+          "personality": {
+            "zh": "负责排版与对外讲解。重视效率，也习惯替别人总结重点。",
+            "en": "Handles layout and presentation. Values speed and often summarizes for others."
+          },
+          "stance": {
+            "zh": "资深同事",
+            "en": "Senior colleague"
+          },
+          "hue": 30
+        },
+        {
+          "id": "rui",
+          "name": {
+            "zh": "瑞瑞",
+            "en": "Rui"
+          },
+          "role": {
+            "zh": "数据同事",
+            "en": "Data teammate"
+          },
+          "personality": {
+            "zh": "能核对数据来源。没有替你或宁姐答应今晚的工作。",
+            "en": "Can check the data sources. Has not agreed to tonight’s work for you or Ning."
+          },
+          "stance": {
+            "zh": "数据同事",
+            "en": "Data teammate"
+          },
+          "hue": 30
+        }
+      ],
+      "objectives": [
+        {
+          "zh": "明确自己能做与尚未答应的部分。",
+          "en": "State what you can do and have not accepted."
+        },
+        {
+          "zh": "确认优先级、负责人和可交范围。",
+          "en": "Confirm priorities, owners and deliverable scope."
+        }
+      ],
+      "success": {
+        "zh": "根据用户真实意图与对话中的具体约定核对，不预设成功。",
+        "en": "Check the learner’s actual intent and explicit arrangements without assuming success."
+      },
+      "failure": {
+        "zh": "没有达成预设目标不自动代表沟通失败。",
+        "en": "Not achieving the initial aim does not automatically mean poor communication."
+      },
+      "maxTurns": 12,
+      "opening": {
+        "characterId": "he",
+        "text": {
+          "zh": "还有四十分钟。数据、排版、检查你一起收尾吧，我六点半要发给客户。",
+          "en": "Forty minutes left. Finish the data, layout and checks. I need to send it to the client at 6:30."
+        }
+      },
+      "source": "Original fiction: wiki/specs/spec-feedback-refinement.md",
+      "keywords": [
+        "office-overtime",
+        "communication",
+        "goal-setting",
+        "organizational-skills"
+      ],
+      "custom": true
+    },
+    "messages": [
+      {
+        "id": "message-0",
+        "role": "npc",
+        "characterId": "he",
+        "text": "Forty minutes left. Finish the data, layout and checks. I need to send it to the client at 6:30.",
+        "ts": 0
+      },
+      {
+        "id": "message-1",
+        "role": "learner",
+        "characterId": "you",
+        "text": "I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks. Who owns each part?",
+        "ts": 0
+      },
+      {
+        "id": "message-2",
+        "role": "npc",
+        "characterId": "he",
+        "text": "Fair. So final review could be yours, once data and layout exist. But that leaves data and layout unowned. Rui, Ning—can either of you take one tonight?",
+        "ts": 0
+      },
+      {
+        "id": "interjection-2",
+        "role": "npc",
+        "characterId": "rui",
+        "text": "I can check sources tonight—but data summary is more than checking. Who writes it?",
+        "ts": 0
+      },
+      {
+        "id": "message-3",
+        "role": "learner",
+        "characterId": "you",
+        "text": "I have not agreed to the deadline. What data are still unchecked, and what was actually requested?",
+        "ts": 0
+      },
+      {
+        "id": "message-4",
+        "role": "npc",
+        "characterId": "he",
+        "text": "The deadline isn't mine to negotiate—it's in the client's email: main proposal and data summary, by 18:30. Unchecked? The whole data summary. The proposal itself can be organized from what's confirmed. Rui offered to check sources tonight, but hasn't committed yet.",
+        "ts": 0
+      },
+      {
+        "id": "interjection-4",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "And layout is still nobody's. I could do it—if someone tells me what the data summary will actually contain.",
+        "ts": 0
+      },
+      {
+        "id": "message-5",
+        "role": "learner",
+        "characterId": "you",
+        "text": "I am not a three-person department, though that joke might sound dismissive. Sorry for the tone. My capacity limit remains.",
+        "ts": 0
+      },
+      {
+        "id": "message-6",
+        "role": "npc",
+        "characterId": "he",
+        "text": "Apology accepted—no offense taken. The main proposal is already yours; that's not extra. So the real question: will you do the final review once data and layout exist, yes or conditionally?",
+        "ts": 0
+      },
+      {
+        "id": "interjection-6",
+        "role": "npc",
+        "characterId": "rui",
+        "text": "Before anyone commits: my source check would take until about 18:20. Result uncertain.",
+        "ts": 0
+      },
+      {
+        "id": "message-7",
+        "role": "learner",
+        "characterId": "you",
+        "text": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?",
+        "ts": 0
+      },
+      {
+        "id": "message-8",
+        "role": "npc",
+        "characterId": "he",
+        "text": "Here's my proposal: Rui checks sources until 18:20, Ning lays out what's confirmed, you do a fast final review after. If the data check isn't done by then, I send the proposal and mark the summary as pending. Can you review in that ten-minute window?",
+        "ts": 0
+      },
+      {
+        "id": "interjection-8",
+        "role": "npc",
+        "characterId": "ning",
+        "text": "If it's confirmed content only, I can start layout now—say the word.",
+        "ts": 0
+      },
+      {
+        "id": "message-9",
+        "role": "learner",
+        "characterId": "you",
+        "text": "Let us keep talking. Who would tell the manager if those conditions are not met? That is a question, not my acceptance of the job.",
+        "ts": 0
+      },
+      {
+        "id": "message-10",
+        "role": "npc",
+        "characterId": "he",
+        "text": "I would. It's my call to send with the summary marked pending, so I own telling the client and my manager. Your review stays a conditional offer—nothing accepted yet.",
+        "ts": 0
+      },
+      {
+        "id": "message-11",
+        "role": "learner",
+        "characterId": "you",
+        "text": "We have discussed a plan, but the data have not actually been checked during this conversation. Can we leave the deadline conditional?",
+        "ts": 0
+      },
+      {
+        "id": "message-12",
+        "role": "npc",
+        "characterId": "he",
+        "text": "The deadline itself is fixed by the client—but what I send can be conditional: proposal now, summary marked pending unless Rui's check lands. That's the decision I'd own.",
+        "ts": 0
+      },
+      {
+        "id": "interjection-12",
+        "role": "npc",
+        "characterId": "rui",
+        "text": "Careful—'pending' needs wording. It can't sound like checked data that passed.",
+        "ts": 0
+      }
+    ],
+    "sceneContext": {
+      "kind": "3d",
+      "sceneId": "office",
+      "openingId": "office-overtime",
+      "actions": [],
+      "observations": [
+        {
+          "id": "spoken-1",
+          "turn": 1,
+          "learnerQuote": "I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks. Who owns each part?",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-2",
+          "turn": 2,
+          "learnerQuote": "I have not agreed to the deadline. What data are still unchecked, and what was actually requested?",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-3",
+          "turn": 3,
+          "learnerQuote": "I am not a three-person department, though that joke might sound dismissive. Sorry for the tone. My capacity limit remains.",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-4",
+          "turn": 4,
+          "learnerQuote": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-5",
+          "turn": 5,
+          "learnerQuote": "Let us keep talking. Who would tell the manager if those conditions are not met? That is a question, not my acceptance of the job.",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        },
+        {
+          "id": "spoken-6",
+          "turn": 6,
+          "learnerQuote": "We have discussed a plan, but the data have not actually been checked during this conversation. Can we leave the deadline conditional?",
+          "facts": [
+            "Everyone present can hear; moving closer does not make it private.",
+            "Selected addressee: He.",
+            "While speaking: seated, by the desk."
+          ]
+        }
+      ]
+    },
+    "learnerCharacterId": "you",
+    "status": "assessed",
+    "origin": "arena",
+    "objectiveDone": [],
+    "startedAt": 1792603590344,
+    "endedAt": 1792603590344,
+    "reflections": [
+      {
+        "question": "Rui warned that 'pending' needs careful wording so it can't read as checked data that passed—how would you phrase that pending note if the check doesn't land by 18:20?",
+        "answer": "I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.",
+        "coachReply": "“I worried refusal would hurt the relationship, so I tried a joke. I do not want my apology to become consent.”\n\nYour reflection makes an important distinction: apologizing for tone is not the same as agreeing to the task, and the lead actually confirmed that—\"nothing accepted yet.\" The wording of a pending note matters for the same reason; a paraphrase-style line that states only what is known, e.g. naming that the summary is unaudited as of 18:30, checks understanding without implying the data passed review. One caveat: I can describe what such wording may invite, but the client's actual reaction isn't shown in this transcript.\n\nFollow-up: Rui's warning was that 'pending' could read as checked-and-passed—what specific phrase did you have in mind, or would you like to test one against Rui's concern?"
+      }
+    ],
+    "revealSeen": true,
+    "report": {
+      "sceneNotes": [],
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks.",
+          "reason": "Learner explicitly scoped what they might do and stated non-acceptance of the rest; the lead later acknowledged 'nothing accepted yet'."
+        },
+        {
+          "index": 1,
+          "status": "unknown",
+          "evidence": "Who owns each part?",
+          "npcEvidence": "Here's my proposal: Rui checks sources until 18:20, Ning lays out what's confirmed, you do a fast final review after.",
+          "reason": "The learner's ownership question produced the lead's proposal, but Rui had not committed, Ning still waited for a go-ahead that never came, and the 'pending' wording was left unresolved."
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 3,
+          "evidence": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?",
+          "reason": "Conditional offer, honest limit, and handing the trade-off to the person with authority—exemplary calibrated communication under time pressure."
+        },
+        {
+          "skill": "goal-setting",
+          "level": 3,
+          "evidence": "We have discussed a plan, but the data have not actually been checked during this conversation. Can we leave the deadline conditional?",
+          "reason": "Learner kept the goal realistic: distinguished discussed plan from completed checks and kept the deliverable scope conditional."
+        },
+        {
+          "skill": "organizational-skills",
+          "level": 2,
+          "evidence": "Let us keep talking. Who would tell the manager if those conditions are not met?",
+          "reason": "Learner drove owner clarity—including escalation ownership—though actual task execution remained open, appropriately."
+        }
+      ],
+      "stars": 3,
+      "outcome": "partial",
+      "verdictEvidence": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish. What would you propose?",
+      "verdict": "Strong, well-calibrated boundary and conditional offer; owners and scope were proposed but never confirmed.",
+      "summary": "You stated a clear limit—'I cannot take all three tasks'—with a conditional review offer, and kept asking who owns each part and who tells the manager. That drew a concrete proposal from the lead, but as the conversation ended it remained a proposal: Rui had not committed, Ning awaited a go-ahead, and the pending-summary wording was still open. Your communication was firm and precise throughout, without overcommitting.",
+      "strengths": [
+        {
+          "behavior": "Clear limit paired with a constructive conditional, then handing the decision to the authority.",
+          "evidence": "I cannot take all three tasks. Who owns each part?",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [],
+      "alternatives": [],
+      "knowledge": {
+        "theoryIds": [
+          "ask-for-help-prioritize"
+        ],
+        "caseIds": [
+          "case-no-with-alternative"
+        ],
+        "whyThis": "Your lines mirror 'Ask for Help With a Prioritized Proposal'—you named what you could and couldn't do and handed the trade-off to the lead. The no-plus-alternative pattern in 'Not Tonight — But 7am Works' matches your conditional review offer."
+      },
+      "reflectionQuestions": [
+        "Rui warned that 'pending' needs careful wording so it can't read as checked data that passed—how would you phrase that pending note if the check doesn't land by 18:20?",
+        "If the lead had pushed back with 'just take all three, it's a favor', what would your next sentence have been?"
+      ],
+      "nextStep": "Next time a stacked request lands, state your limit plus one conditional offer, then ask who owns the rest.",
+      "deltas": {}
+    },
+    "debriefChat": [
+      {
+        "id": "d0",
+        "question": "What did I actually agree to? Separate proposals, conditions, and completed actions.",
+        "reply": {
+          "evidence": "I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish.",
+          "answer": "By the end, you had not actually agreed to anything. Everything you said stayed conditional: your line 'I can offer a final review after the checks; I cannot guarantee 18:30 before we know when they finish' frames the review as an offer that activates only if Rui's source check actually lands. Earlier you said 'I cannot take all three tasks' and explicitly flagged one question as 'a question, not my acceptance of the job.' So your commitments: zero confirmed tasks, one standing conditional offer (final review, roughly a ten-minute window, if data and layout exist by then).\n\nProposals on the table (mostly from He, not you): Rui checks sources until about 18:20 with uncertain results; Ning lays out confirmed content — but Ning was still waiting for a go-ahead ('I can start layout now—say the word'); Rui never committed, only described timing. You additionally proposed leaving the deadline conditional. He's decision: send the proposal on time and mark the summary as pending if the check misses — a condition he said he'd own and report to his manager.\n\nCompleted actions in the room: a boundary was stated, ownership was clarified (He owns the send/escalation decision), the deadline's rigidity was separated from what gets sent, and the 'pending' wording was flagged by Rui as risky. Nothing about the work itself was done: data were not checked, layout had not started, no one accepted a task, and the conditional review was never triggered. If you want to close it next turn, the gap is simply Ning's go-ahead and Rui's yes/no — that follows the prioritize-and-decide move from ask-for-help-prioritize, where you hand the trade-off to the authority for an immediate call.",
+          "example": "If you wanted to convert the plan: 'Ning, go ahead on confirmed content; Rui, are you in or out by 18:20? If out, He's pending-summary call stands.'",
+          "sources": [
+            {
+              "kind": "theory",
+              "id": "ask-for-help-prioritize"
+            },
+            {
+              "kind": "case",
+              "id": "case-no-with-alternative"
+            }
+          ]
+        },
+        "at": 1792603802196
+      },
+      {
+        "id": "d1",
+        "question": "I do not want to expand my commitment. Keep my refusal and suggest a more natural way to say it.",
+        "reply": {
+          "evidence": "I can discuss doing the final review if the data and layout are ready. I cannot take all three tasks. Who owns each part?",
+          "answer": "Your refusal is already clear and well-built: a limit, a conditional offer, and a question that hands the trade-off to the lead. That matches the 'no plus workable alternative plus clarifying question' pattern (case-no-with-alternative). The only thing that can feel stiff in speech is the formal phrasing — 'I can discuss doing', 'My capacity limit remains', and the meta-comment about the joke all sound like written statements rather than office talk. The content stays; only the wording gets more casual.\n\nA more natural version keeps the same three moves: the limit, the one thing you can do, and the question. Short, plain sentences work better aloud. You also don't need to apologize for tone or narrate your own refusal — one calm sentence is enough, and the apologize-then-restate combo can make the limit feel negotiable.\n\nLimits to keep in mind: 'natural' does not mean softer on the substance. The case sources show the trade-off still gets handed to the decision-maker (ask-for-help-prioritize), so you're not promising the 18:30 result, only your slice. And a reworded line doesn't guarantee He reacts differently; it just removes friction that purely formal phrasing can create.",
+          "example": "A spoken version could be: \"All three is a no for me tonight. If data and layout are done, I can do the final review. Who takes the rest?\" — same limit and conditional, just everyday wording. If you want the joke-handled version: \"Ha — I'm one person, not a whole team. The limit's real though.\"",
+          "sources": [
+            {
+              "kind": "theory",
+              "id": "ask-for-help-prioritize"
+            },
+            {
+              "kind": "case",
+              "id": "case-no-with-alternative"
+            }
+          ]
+        },
+        "at": 1792603845589
+      }
+    ]
+  }
+}
