@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { AppProviders } from "@/components/AppProviders";
+import {StartupRecovery} from '@/components/StartupRecovery';
+import {STARTUP_SCRIPT} from '@/lib/startup';
 
 const hanken = Hanken_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-hanken", display: "swap" });
 
@@ -28,6 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="zh-CN" className={`${hanken.variable}`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{__html:STARTUP_SCRIPT}}/>
+        <noscript><style>{`#startup-recovery{display:block} [data-startup-language]{display:inline!important} [data-startup-language="en"]::before{content:" / "}`}</style></noscript>
         {/* Before first paint, so a pinned light theme does not flash dark (or
             the reverse). Reads the persisted store directly; failures are
             ignored and the media query decides. It has to be in <head> and
@@ -41,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <AppProviders>{children}</AppProviders>
+        <StartupRecovery/>
       </body>
     </html>
   );

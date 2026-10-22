@@ -14,6 +14,10 @@
 
 核对的 `knowledge.whyThis` 精确位置只归一为 `knowledge` 修复项，理由和拒绝状态保留；其他非法位置仍失败关闭。完整成本审查、撤回的短 Prompt 实验及失败样本见 [验收记录](../docs/reviews/prompt-cost-2026-10-22/README.md)。
 
+## 首次启动恢复（2026-10-22）
+
+根布局在 AppProviders 外输出 StartupRecovery 静态控件；头部极小脚本仅读取语言、监听初始应用脚本失败和 12 秒超时，设置展示标记。AppProviders 完成本地初始化（包括进入档案恢复页）后清除提示与监听器。原生重新加载链接无需 React；无自动刷新、无新网络调用、无档案写入。无脚本时给出双语启用说明；页面未启动与模型连接等待分别显示。→ [验收](./reviews/review-2026-10-22-experience-polish.md)
+
 ## 技术栈
 
 | 层 | 技术 |

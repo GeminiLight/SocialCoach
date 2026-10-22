@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+/* Native recovery must work before React and respect the invitation URL language. */
+span[data-startup-language="en"] { display: none; }
+html[data-startup-language="en"] [data-startup-language="zh"] { display: none; }
+html[data-startup-language="en"] span[data-startup-language="en"] { display: inline; }
+.startup-recovery {
+  display: none;
+  position: fixed;
+  z-index: 70;
+  inset-inline: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  max-width: var(--dialog-max);
+  margin-inline: auto;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow-dialog);
+}
+html[data-startup-stalled="true"] .startup-recovery { display: block; }
+html[data-app-ready="true"] .startup-recovery { display: none; }
+
 /* ───────────── Design tokens: "warm paper" ───────────── */
 :root {
   --paper: oklch(0.984 0.006 84);

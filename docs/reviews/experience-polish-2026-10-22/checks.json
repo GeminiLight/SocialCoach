@@ -1,0 +1,49 @@
+{
+  "base": "http://localhost:3130",
+  "results": [
+    {
+      "case": "503 recovery zh",
+      "failedResources": 14,
+      "reloadRestoredDialog": true,
+      "archivePreserved": true
+    },
+    {
+      "case": "503 recovery en",
+      "failedResources": 14,
+      "reloadRestoredDialog": true,
+      "archivePreserved": true
+    },
+    {
+      "case": "slow startup with reduced motion",
+      "placeholder": true,
+      "recoveryAfterDelay": true,
+      "automaticDismissal": true
+    },
+    {
+      "case": "JavaScript disabled",
+      "nativeRecovery": true,
+      "documents": 2
+    },
+    {
+      "case": "retry journey zh",
+      "draftRestored": true,
+      "pendingResumed": true,
+      "originalPreserved": true,
+      "noExtraPracticeOrAbility": true,
+      "reviewFocus": true,
+      "modelCalls": "intercepted: 1 reply + 1 review",
+      "errors": []
+    },
+    {
+      "case": "retry journey en",
+      "draftRestored": true,
+      "pendingResumed": true,
+      "originalPreserved": true,
+      "noExtraPracticeOrAbility": true,
+      "reviewFocus": true,
+      "modelCalls": "intercepted: 1 reply + 1 review",
+      "errors": []
+    }
+  ],
+  "realModelCalls": 0
+}

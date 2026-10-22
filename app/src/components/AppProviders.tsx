@@ -13,6 +13,7 @@ import { DinnerAnnouncement } from "./DinnerEntry";
 import { StorageRecovery } from "./StorageRecovery";
 import {SaveNotice} from "./SaveNotice";
 import {useInterfaceLang} from '@/lib/ui-language';
+import {StartupPlaceholder} from './StartupRecovery';
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const hydrated = useApp((s) => s.hydrated);
@@ -30,6 +31,12 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   const challenge = path.startsWith("/challenge/");
   const canUseModel = useCanUseModel();
   const modelAccess = useModelAccess();
+
+  useEffect(()=>{
+    if(!hydrated)return;
+    document.documentElement.dataset.appReady='true';
+    window.dispatchEvent(new Event('socialcoach:ready'));
+  },[hydrated]);
 
   useEffect(() => {
     if (hydrated && byok.hydrated && !storageIssue && !learning && !challenge) promptUnavailableSharedModel();
@@ -85,7 +92,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <MotionConfig reducedMotion="user">
     <div className={dinner ? "sheet sheet-immersive" : "sheet"}>
-      {hydrated ? storageIssue ? <><SaveNotice lang={lang}/><StorageRecovery issue={storageIssue} /></> : <><SaveNotice lang={lang}/>{children}</> : challenge ? children : <div className="min-h-dvh" />}
+      {hydrated ? storageIssue ? <><SaveNotice lang={lang}/><StorageRecovery issue={storageIssue} /></> : <><SaveNotice lang={lang}/>{children}</> : challenge ? children : <StartupPlaceholder/>}
       <ModelSheet open={hydrated && !storageIssue && byok.sheetOpen} onClose={byok.closeSheet} lang={lang} />
       {hydrated && !storageIssue && !dinner && <FeedbackWidget />}
       <DinnerAnnouncement enabled={hydrated && !storageIssue && !!profile && path === "/" && canUseModel && !byok.sheetOpen && !unfinished} />

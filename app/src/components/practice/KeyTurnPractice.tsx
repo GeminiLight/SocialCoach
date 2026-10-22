@@ -20,26 +20,28 @@ import {keyTurnCopy,keyTurnHref} from './KeyTurnEntry';
 const L={
  back:{zh:'返回原场复盘',en:'Back to the original review'},
  setup:{zh:'回到这个时刻',en:'Back to this moment'},
- context:{zh:'保留原来的身份与背景。从第一次回应重来，后面发生的事不带入这次短练。',en:'Your original role and background stay the same. Replay your first response; later events are not part of this attempt.'},
+ context:{zh:'保留原来的身份与背景。从第一次回应重来，后面发生的事不带入这次尝试。',en:'Your original role and background stay the same. Replay your first response; later events are not part of this attempt.'},
  you:{zh:'你',en:'You'},input:{zh:'这次，你怎么回应？',en:'How would you respond this time?'},
  placeholder:{zh:'说清自己的限制，也可以先问清需要做什么……',en:'State your limit, or first ask what the task involves…'},
  send:{zh:'接这一句',en:'Send your response'},replying:{zh:'唐悦正在回应你的这句话…',en:'Tang is responding to your words…'},
  paused:{zh:'你的话已保留，继续获取对方回复。',en:'Your words are saved. Resume the other side’s reply.'},
  retry:{zh:'重新获取回复',en:'Retry the reply'},stop:{zh:'暂停等待',en:'Pause waiting'},
- review:{zh:'看这次短练',en:'Review this attempt'},reviewing:{zh:'正在核对这次短练的原话…',en:'Checking the words from this attempt…'},
- retryReview:{zh:'重新生成短练回顾',en:'Retry this review'},continue:{zh:'继续接招',en:'Keep responding'},
+ review:{zh:'看看这次的表达',en:'Review this attempt'},reviewing:{zh:'正在核对这次尝试的原话…',en:'Checking the words from this attempt…'},
+ retryReview:{zh:'生成这次回顾',en:'Review this attempt'},continue:{zh:'继续接招',en:'Keep responding'},
  checkpoint:{zh:'已经接了两轮。可以看看这次的表达，也可以再接两轮。',en:'Two exchanges complete. Review your words now, or try two more.'},
  cap:{zh:'四轮已完成。把这次的表达看清楚，再决定要不要换一种开口。',en:'Four exchanges complete. Review this attempt, then decide whether to try a different opening.'},
  compare:{zh:'同一个开场，两次回应',en:'One opening, two responses'},before:{zh:'原场第一次回应',en:'Original first response'},after:{zh:'这次第一次回应',en:'This attempt’s first response'},
  same:{zh:'两次开口相同。接下来的回应仍可能不同，可以在完整对话里查看。',en:'Your opening words are the same. The following exchanges may still differ; read them in the full conversation.'},
  compareNote:{zh:'先看你表达的范围、时间和责任有哪些变化。这里不据此判断整体能力提升。',en:'Notice changes in scope, timing and responsibility. This comparison does not estimate an overall ability gain.'},
- observations:{zh:'这次短练的观察',en:'Observations from this attempt'},empty:{zh:'目前没有足够的原话证据支持单项观察，你仍可以查看完整对话。',en:'There is not enough quoted evidence for a focused observation. You can still read the full conversation.'},
- estimated:{zh:'以上为模型对这次模拟的判断。短练不会改变原场评分或能力估计。',en:'These are model judgments about this simulation. This attempt does not change your original score or ability estimate.'},
+ observations:{zh:'这次尝试的观察',en:'Observations from this attempt'},empty:{zh:'目前没有足够的原话证据支持单项观察，你仍可以查看完整对话。',en:'There is not enough quoted evidence for a focused observation. You can still read the full conversation.'},
+ estimated:{zh:'以上为模型对这次模拟的判断。局部重试不会改变原场评分或能力估计。',en:'These are model judgments about this simulation. This attempt does not change your original score or ability estimate.'},
  transcript:{zh:'查看这次完整对话',en:'Read this attempt’s full conversation'},new:{zh:'再换一种开口',en:'Try a different opening'},
  saved:{zh:'草稿已保存在当前标签页',en:'Draft saved in this tab'},unsaved:{zh:'草稿暂未保存，请保留此页面',en:'Draft not saved; keep this page open'},
- changed:{zh:'记录已更新或暂时无法保存。请处理保存提示后重新打开这次短练。',en:'The record changed or could not be saved. Resolve any save notice, then reopen this attempt.'},
+ changed:{zh:'记录已更新或暂时无法保存。请处理保存提示后重新打开这次尝试。',en:'The record changed or could not be saved. Resolve any save notice, then reopen this attempt.'},
  failed:{zh:'这次没有完成，记录已保留，请重试。',en:'This request did not complete. Your record is retained; please retry.'},
- pausedReview:{zh:'短练已保留，可以稍后继续生成回顾。',en:'Your attempt is saved. You can resume its review later.'},
+ pausedReview:{zh:'这次尝试已保留，可以稍后继续生成回顾。',en:'Your attempt is saved. You can resume its review later.'},
+ leave:{zh:'可以随时返回。已发送的对话会保留，下次从这里继续。',en:'You can return at any time. Sent messages are saved so you can pick up here later.'},
+ source:{zh:'看看我原来怎么说',en:'See my original response'},
 };
 
 export function KeyTurnPractice({session,attempt}:{session:Session;attempt:KeyTurnAttempt}){
@@ -49,11 +51,11 @@ export function KeyTurnPractice({session,attempt}:{session:Session;attempt:KeyTu
  const [draft,setDraft,draftSaved]=useSessionDraft(`retry-${attempt.id}`);
  const [busy,setBusy]=useState<'reply'|'review'|null>(null),[error,setError]=useState<string|null>(null);
  const [preview,setPreview]=useState<ChatMessage[]>([]),[selection,setSelection]=useState<{source:Session;quote:string}|null>(null);
- const request=useRef<AbortController|null>(null),input=useRef<HTMLTextAreaElement>(null),latest=useRef<HTMLDivElement>(null);
+ const request=useRef<AbortController|null>(null),input=useRef<HTMLTextAreaElement>(null),latest=useRef<HTMLDivElement>(null),reviewHeading=useRef<HTMLHeadingElement>(null),previousBusy=useRef(busy);
  const checkpoint=keyTurnCheckpoint(session)!;
  const npc=session.scenario.characters.find(c=>c.id===checkpoint.prefix[0].characterId)!;
  const pending=keyTurnPending(attempt),turns=keyTurnTurns(attempt);
- const originalHref=`/practice/${encodeURIComponent(session.id)}`;
+ const originalHref=`/practice/${encodeURIComponent(session.id)}#key-turn-entry`;
  const branchView:Session={...session,messages:keyTurnMessages(session,attempt),keyTurnAttempts:undefined,report:attempt.report};
  const current=useCallback(()=>useApp.getState().sessions.find(s=>s.id===session.id)?.keyTurnAttempts?.find(a=>a.id===attempt.id),[session.id,attempt.id]);
  const commit=useCallback((a:KeyTurnAttempt,patch:Parameters<ReturnType<typeof useApp.getState>['changeKeyTurn']>[3])=>useApp.getState().changeKeyTurn(session.id,a.id,a.revision,patch),[session.id]);
@@ -64,6 +66,14 @@ export function KeyTurnPractice({session,attempt}:{session:Session;attempt:KeyTu
   return()=>{window.removeEventListener('pagehide',pause);request.current?.abort();request.current=null;};
  },[attempt.id]);
  useEffect(()=>{if(attempt.messages.length||busy)latest.current?.scrollIntoView({block:'nearest',behavior:'instant'});},[attempt.messages.length,busy]);
+ useEffect(()=>{
+  if(previousBusy.current==='reply'&&!busy&&!pending)input.current?.focus({preventScroll:true});
+  if(previousBusy.current==='review'&&attempt.status==='reviewed'){
+   reviewHeading.current?.focus({preventScroll:true});
+   reviewHeading.current?.scrollIntoView({block:'start',behavior:'instant'});
+  }
+  previousBusy.current=busy;
+ },[busy,pending,attempt.status]);
 
  const stop=()=>{request.current?.abort();request.current=null;setPreview([]);setBusy(null);setError(text(busy==='review'?'pausedReview':'paused'));};
  const reply=useCallback(async()=>{
@@ -86,7 +96,6 @@ export function KeyTurnPractice({session,attempt}:{session:Session;attempt:KeyTu
    const messages:ChatMessage[]=parsed.utterances.map(u=>({id:uid(),role:'npc',characterId:u.characterId,text:u.text,ts:Date.now()}));
    if(parsed.meta)messages[messages.length-1].meta=parsed.meta;
    if(!commit(snapshot,{messages:[...snapshot.messages,...messages]}))setError(text('changed'));
-   else if(keyTurnTurns(snapshot)<KEY_TURN_LIMIT)input.current?.focus({preventScroll:true});
   }catch(e){if(!controller.signal.aborted)setError(e instanceof Error?e.message:text('failed'));}
   finally{if(request.current===controller){request.current=null;setBusy(null);setPreview([]);}}
  },[saveIssue,current,commit,draft,setDraft,text,session,npc.id,profile]);
@@ -111,15 +120,16 @@ export function KeyTurnPractice({session,attempt}:{session:Session;attempt:KeyTu
   <Link href={originalHref} className="press inline-flex items-center gap-2 min-h-11 text-[14px] text-ink-2"><ArrowLeft size={16} aria-hidden/>{text('back')}</Link>
   <header className="pt-5 pb-7 flex flex-col gap-3"><p className="eyebrow text-ink-2">{pick(session.scenario.title,lang)}</p><h1 className="display text-[30px] sm:text-[36px]">{pick(keyTurnCopy.title,lang)}</h1><p className="text-[17px] font-medium">{pick(keyTurnCopy.focus,lang)}</p><p className="text-[13px] leading-relaxed text-ink-2">{pick(keyTurnCopy.note,lang)}</p></header>
   {attempt.status==='reviewed'?<div className="flex flex-col gap-7">
-   <section aria-labelledby="retry-comparison"><h2 id="retry-comparison" className="text-[19px] font-semibold mb-4">{text('compare')}</h2><div className="grid sm:grid-cols-2 gap-4">
+   <section aria-labelledby="retry-comparison"><h2 ref={reviewHeading} tabIndex={-1} id="retry-comparison" className="text-[19px] font-semibold mb-4 scroll-mt-6">{text('compare')}</h2><div className="grid sm:grid-cols-2 gap-4">
     {[{label:'before' as const,quote:checkpoint.original.text,source:session},{label:'after' as const,quote:attempt.messages.find(m=>m.role==='learner')!.text,source:branchView}].map(row=><div key={row.label} className="card p-5 min-w-0"><h3 className="text-[13px] text-ink-2 mb-3">{text(row.label)}</h3><button className="press text-left text-[16px] leading-relaxed whitespace-pre-wrap break-words min-h-11 w-full" onClick={()=>setSelection({source:row.source,quote:row.quote})}><span>“{row.quote}”</span><ArrowUpRight size={15} className="inline ml-2 text-action" aria-hidden/></button></div>)}
    </div><p className="text-[13px] text-ink-2 leading-relaxed mt-4">{text(checkpoint.original.text===attempt.messages.find(m=>m.role==='learner')?.text?'same':'compareNote')}</p></section>
    <section aria-labelledby="retry-observations"><h2 id="retry-observations" className="text-[19px] font-semibold mb-4">{text('observations')}</h2><div className="flex flex-col gap-4">{keyTurnObservations(attempt).length?keyTurnObservations(attempt).map((item,i)=><article key={i} className="card p-5"><button onClick={()=>setSelection({source:branchView,quote:item.quote})} className="press min-h-11 text-left text-[16px] leading-relaxed break-words text-action">“{item.quote}”<ArrowUpRight size={15} className="inline ml-2" aria-hidden/></button><p className="text-[15px] leading-relaxed mt-3">{item.text}</p></article>):<p className="text-ink-2 text-[14px]">{text('empty')}</p>}</div><p className="text-[12px] leading-relaxed text-ink-2 mt-4">{text('estimated')}</p></section>
    <button onClick={()=>setSelection({source:branchView,quote:''})} className="press min-h-11 self-start text-action text-[14px]">{text('transcript')}</button>
-   <Button disabled={!!saveIssue} onClick={()=>{const id=useApp.getState().startKeyTurn(session.id,lang);if(id)router.push(keyTurnHref(session.id,id));}}><RotateCcw size={17} aria-hidden/>{text('new')}</Button>
+   <div className="flex flex-col sm:flex-row gap-3"><Button onClick={()=>router.push(originalHref)}><ArrowLeft size={17} aria-hidden/>{text('back')}</Button><Button variant="secondary" disabled={!!saveIssue} onClick={()=>{const id=useApp.getState().startKeyTurn(session.id,lang);if(id)router.push(keyTurnHref(session.id,id));}}><RotateCcw size={17} aria-hidden/>{text('new')}</Button></div>
    <InviteEntry session={session} />
   </div>:<div className="flex flex-col gap-6">
-   <section className="rounded-[var(--radius)] bg-inset p-5"><h2 className="text-[15px] font-semibold mb-2">{text('setup')}</h2><p className="text-[14px] leading-relaxed whitespace-pre-wrap">{session.adaptation?.briefing??pick(session.scenario.background,lang)}</p><p className="mt-3 text-[12px] leading-relaxed text-ink-2">{text('context')}</p></section>
+   <section className="rounded-[var(--radius)] bg-inset p-5"><h2 className="text-[15px] font-semibold mb-2">{text('setup')}</h2><p className="text-[14px] leading-relaxed whitespace-pre-wrap">{session.adaptation?.briefing??pick(session.scenario.background,lang)}</p><p className="mt-3 text-[12px] leading-relaxed text-ink-2">{text('context')}</p><details className="mt-2"><summary className="press min-h-11 flex items-center text-[14px] cursor-pointer text-action">{text('source')}</summary><blockquote className="text-[15px] leading-relaxed whitespace-pre-wrap break-words mt-1">“{checkpoint.original.text}”</blockquote></details></section>
+   {!saveIssue&&<p className="text-[12px] leading-relaxed text-ink-2">{text('leave')}</p>}
    <section aria-label={text('transcript')} className="flex flex-col gap-4">
     {[...checkpoint.prefix,...attempt.messages,...preview].map(message=><article key={message.id} className={`rounded-[var(--radius)] p-4 sm:p-5 ${message.role==='learner'?'bg-inset sm:ml-10':'bg-card sm:mr-10'}`}><p className="text-[12px] font-semibold text-ink-2 mb-2">{message.role==='learner'?text('you'):pick(npc.name,lang)}</p><p className="text-[16px] leading-relaxed whitespace-pre-wrap break-words">{message.text}</p></article>)}
     <div ref={latest}/>

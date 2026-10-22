@@ -20,6 +20,7 @@ const L={
  goal:{zh:'试着做到',en:'What to work on'},start:{zh:'我来试试',en:'Let me try'},resume:{zh:'继续我的这场挑战',en:'Continue my challenge'},
  privacy:{zh:'不用注册。开始后，练习记录只保存在这台设备上，朋友看不到你的回答。',en:'No sign-up needed. Once you start, your practice stays on this device. Your friend cannot see your answers.'},
  busy:{zh:'正在打开你的练习…',en:'Opening your practice…'},
+ preparing:{zh:'正在准备页面…',en:'Preparing the page…'},
  source:{zh:'公共虚构场景 · SocialCoach 原创 · 2026-10-03',en:'Fictional public scene · SocialCoach original · 2026-10-03'},
  invite:{zh:'我也想邀请朋友',en:'Invite another friend'},fallback:{zh:'换个入口打开同一题',en:'Open this scene on the other site'},
  blocked:{zh:'请先处理上方的保存提示，再开始挑战。',en:'Resolve the storage notice above before starting.'},
@@ -55,8 +56,8 @@ export function ChallengeLanding({lang}:{lang:Lang}) {
   </section>
   <section className="mb-6"><h2 className="text-[14px] text-ink-2 mb-2">{text('you')} · {p.role}</h2><p className="text-base leading-relaxed">{p.background}</p></section>
   <section className="mb-7"><h2 className="text-[14px] text-ink-2 mb-3">{text('goal')}</h2><ul className="flex flex-col gap-2">{p.objectives.map((o,i)=><li key={o} className="flex items-start gap-3 text-[15px] leading-relaxed"><span className="num text-accent-deep">0{i+1}</span>{o}</li>)}</ul></section>
-  <ModelAccessNotice className="mb-4" lang={lang}/>
-  <Button requiresModel block size="lg" onClick={start} disabled={!hydrated||!!saveIssue||opening}>{opening?text('busy'):pending?text('resume'):text('start')}<ArrowRight size={18} aria-hidden/></Button>
+  {hydrated&&<ModelAccessNotice className="mb-4" lang={lang}/>}
+  <Button requiresModel block size="lg" onClick={start} disabled={!hydrated||!!saveIssue||opening}>{!hydrated?text('preparing'):opening?text('busy'):pending?text('resume'):text('start')}<ArrowRight size={18} aria-hidden/></Button>
   {saveIssue&&<p role="alert" className="text-[14px] text-danger mt-3">{text('blocked')}</p>}
   <p className="text-[13px] text-ink-2 leading-relaxed mt-4">{text('privacy')}</p>
   <p className="text-[12px] text-ink-3 leading-relaxed mt-3">{pick(inviteCopy.note,lang)}</p>
