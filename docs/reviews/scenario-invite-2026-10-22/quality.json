@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-22",
+  "base": "c9978367b78a8780efa1a29b88a72a6f5b0b94de",
+  "core": 123,
+  "dinner": 256,
+  "lint": "passed",
+  "types": "passed",
+  "build": "passed",
+  "productionDependencyAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0
+  },
+  "models": "Browser fixtures intercepted; no new inference for card or landing."
+}

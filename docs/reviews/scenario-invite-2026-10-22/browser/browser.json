@@ -1,0 +1,102 @@
+{
+  "base": "http://localhost:3119",
+  "models": "stubbed",
+  "groups": [
+    {
+      "lang": "zh",
+      "theme": "light",
+      "width": 375,
+      "qr": true,
+      "copy": true,
+      "privateExcluded": true,
+      "freshReceiver": true,
+      "resume": true,
+      "review": true,
+      "axe": 0
+    },
+    {
+      "lang": "zh",
+      "theme": "light",
+      "width": 1440,
+      "qr": true,
+      "copy": true,
+      "privateExcluded": true,
+      "freshReceiver": true,
+      "resume": true,
+      "review": true,
+      "axe": 0
+    },
+    {
+      "lang": "zh",
+      "theme": "dark",
+      "width": 375,
+      "qr": true,
+      "copy": true,
+      "privateExcluded": true,
+      "freshReceiver": true,
+      "resume": true,
+      "review": true,
+      "axe": 0
+    },
+    {
+      "lang": "zh",
+      "theme": "dark",
+      "width": 1440,
+      "qr": true,
+      "copy": true,
+      "privateExcluded": true,
+      "freshReceiver": true,
+      "resume": true,
+      "review": true,
+      "axe": 0
+    },
+    {
+      "lang": "en",
+      "theme": "light",
+      "width": 375,
+      "qr": true,
+      "copy": true,
+      "privateExcluded": true,
+      "freshReceiver": true,
+      "resume": true,
+      "review": true,
+      "axe": 0
+    },
+    {
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "qr": true,
+      "copy": true,
+      "privateExcluded": true,
+      "freshReceiver": true,
+      "resume": true,
+      "review": true,
+      "axe": 0
+    },
+    {
+      "lang": "en",
+      "theme": "dark",
+      "width": 375,
+      "qr": true,
+      "copy": true,
+      "privateExcluded": true,
+      "freshReceiver": true,
+      "resume": true,
+      "review": true,
+      "axe": 0
+    },
+    {
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "qr": true,
+      "copy": true,
+      "privateExcluded": true,
+      "freshReceiver": true,
+      "resume": true,
+      "review": true,
+      "axe": 0
+    }
+  ]
+}

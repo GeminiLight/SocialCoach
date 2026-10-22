@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Clock, MessageSquare, Timer } from "lucide-react";
 import { clsx } from "clsx";
 import { Avatar, BottomBar, Button, Marginalia, Stages, Switch } from "@/components/ui";
+import {InviteEntry} from "@/components/challenge/InviteEntry";
 import { PracticeJourney } from "./PracticeJourney";
 import { SkillTag } from "@/components/SkillBits";
 import { ScenarioCover } from "@/components/ScenarioCover";
@@ -142,6 +143,7 @@ export function Briefing({ session }: { session: Session }) {
         <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-paper to-transparent lg:hidden" />
       </div>
 
+        <InviteEntry session={session} />
         <p className="text-[12px] text-ink-3">{t(lang, "source")}: {authoredDate ? t(lang, "pr_source_original", { date: authoredDate }) : sc.source}</p>
       </motion.div>
       </div>

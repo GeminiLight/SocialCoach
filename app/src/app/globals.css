@@ -1345,3 +1345,12 @@ aside.lg\:border-dashed { border-left: 0; }
 }
 
 .avatar-crop-preview { width:min(100%,var(--avatar-crop-size)); height:auto; align-self:center; border-radius:50%; border:1px solid var(--line); background:var(--paper-deep); }
+
+/* Exported invitations use one stable paper palette, independent of the screen theme. */
+:root {
+  --invite-paper: oklch(0.984 0.006 84);
+  --invite-panel: oklch(0.943 0.022 72);
+  --invite-ink: oklch(0.235 0.012 65);
+  --invite-muted: oklch(0.4 0.012 65);
+  --invite-accent: oklch(0.46 0.085 55);
+}
