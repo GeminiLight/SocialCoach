@@ -4,11 +4,16 @@ import { BrandMark } from "./BrandMark";
 import { LanguagePicker } from "./LanguagePicker";
 import { Button, Sheet } from "./ui";
 import { useApp, useLang } from "@/store/useApp";
+import { useInterfaceLang } from "@/lib/ui-language";
+import { usePathname, useRouter } from "next/navigation";
 import { t } from "@/lib/i18n";
 
 /** Do not silently reset unreadable practice records or leave a blank shell. */
 export function StorageRecovery({ issue }: { issue: "unreadable" | "unavailable" }) {
-  const lang = useLang();
+  const path = usePathname(), router = useRouter();
+  const invitation = /^\/challenge\/[^/]+\/[^/]+\/(zh|en)\/?$/.test(path);
+  const mainLang = useLang(), interfaceLang = useInterfaceLang();
+  const lang = invitation ? interfaceLang : mainLang;
   const conflict=useApp(s=>s.saveIssue==="conflict");
   const [backedUp, setBackedUp] = useState(false);
   const [confirm, setConfirm] = useState(false);
@@ -41,7 +46,11 @@ export function StorageRecovery({ issue }: { issue: "unreadable" | "unavailable"
     <main className="min-h-dvh flex flex-col justify-center gap-6 px-5 py-12 max-w-[var(--dialog-max)] mx-auto">
       <div className="flex items-center justify-between gap-4">
         <BrandMark size={44} />
-        <LanguagePicker lang={lang} onChange={useApp.getState().setLang} />
+        <LanguagePicker lang={lang} onChange={next => {
+          if (invitation) {
+            router.replace(path.replace(/(zh|en)\/?$/, next));
+          } else useApp.getState().setLang(next);
+        }} />
       </div>
       <header>
         <p className="eyebrow text-accent-deep mb-3">{t(lang, "app_name")}</p>
