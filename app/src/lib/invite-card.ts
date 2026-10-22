@@ -4,11 +4,15 @@ import {challengePublic,challengeUrl,invitationText,inviteCopy,type InviteDestin
 import {fitCardText} from './share-card';
 import {pick} from './i18n';
 
+// The readable homepage is separate from the QR's versioned scene destination.
+export const INVITE_HOME_URL='https://socialcoach.aurax.live';
+
 export function inviteQR(lang:Lang,destination:InviteDestination) {
  const qr=qrcode(0,'M');qr.addData(challengeUrl(lang,destination),'Byte');qr.make();return qr;
 }
 export async function renderInviteCard(canvas:HTMLCanvasElement,lang:Lang,destination:InviteDestination) {
- await document.fonts.ready;
+ const logo=new Image();logo.src='/icon.svg';
+ await Promise.all([document.fonts.ready,logo.decode()]);
  const ctx=canvas.getContext('2d');if(!ctx)throw Error('Canvas unavailable');
  canvas.width=1080;canvas.height=1350;
  const css=getComputedStyle(document.documentElement),color=(token:string)=>css.getPropertyValue(token).trim();
@@ -19,15 +23,18 @@ export async function renderInviteCard(canvas:HTMLCanvasElement,lang:Lang,destin
   layout.lines.forEach((line,i)=>ctx.fillText(line,x,y+layout.size+i*layout.lineHeight));
  };
  ctx.fillStyle=color('--invite-paper');ctx.fillRect(0,0,1080,1350);
- ctx.fillStyle=color('--invite-accent');ctx.fillRect(72,76,6,40);
- ctx.fillStyle=color('--invite-ink');block('SocialCoach',98,70,650,65,36,600);
+ ctx.drawImage(logo,72,60,96,96);
+ ctx.fillStyle=color('--invite-ink');block('SocialCoach',192,80,650,65,40,600);
  ctx.fillStyle=color('--invite-muted');block(pick(inviteCopy.label,lang),72,166,936,60,27);
  ctx.fillStyle=color('--invite-ink');block(pick(inviteCopy.question,lang),72,260,936,190,76,600);
  const p=challengePublic(lang);
  ctx.fillStyle=color('--invite-panel');ctx.beginPath();ctx.roundRect(72,500,936,365,24);ctx.fill();
  ctx.fillStyle=color('--invite-accent');block(p.npc+' · '+p.npcRole,108,532,864,65,26);
  ctx.fillStyle=color('--invite-ink');block(`“${p.opening}”`,108,625,864,205,49,500);
- ctx.fillStyle=color('--invite-muted');block(pick({zh:'你的报告 16:30 要交。\n这一次，你会怎么回？',en:'Your own report is due at 16:30.\nWhat will you say?'},lang),72,925,480,190,34);
+ ctx.fillStyle=color('--invite-muted');block(pick({zh:'你的报告 16:30 要交。',en:'Your own report is due at 16:30.'},lang),72,925,480,100,32);
+ block(pick({zh:'这一次，你会怎么回？',en:'What will you say?'},lang),72,1030,480,65,32);
+ block(pick({zh:'更多练习',en:'More practice'},lang),72,1130,560,45,24);
+ ctx.fillStyle=color('--invite-ink');block(INVITE_HOME_URL,72,1174,560,55,30,500);
  const qr=inviteQR(lang,destination),count=qr.getModuleCount(),cell=Math.floor(350/(count+8)),width=(count+8)*cell,x=1008-width,y=920;
  ctx.fillStyle=color('--invite-paper');ctx.fillRect(x,y,width,width);
  ctx.fillStyle=color('--invite-ink');
