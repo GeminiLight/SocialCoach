@@ -1,0 +1,54 @@
+{
+  "id": "refusal-zh",
+  "lang": "zh",
+  "models": {
+    "roleplay": "glm-5.3",
+    "smart": "glm-5.3",
+    "configuredFast": "glm-5.3-flash"
+  },
+  "durationMs": 2614,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 2613,
+      "ok": true,
+      "inputBytes": 22127,
+      "maxOutput": 1800
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "我自己的报告16:30截止，今天不能帮你改这六页。你可以先问问别人。",
+      "ts": 1792665929418
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "别这样啊，全改不行，那你看一眼第三页总行吧？就那一页最要紧。",
+      "ts": 1792665932032,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 15,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ]
+}

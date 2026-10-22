@@ -1,0 +1,285 @@
+{
+  "id": "continue-en",
+  "lang": "en",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 68747,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 4408,
+      "ok": true,
+      "inputBytes": 22118,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 7676,
+      "ok": true,
+      "inputBytes": 22610,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 2,
+      "durationMs": 4771,
+      "ok": true,
+      "inputBytes": 23121,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 5414,
+      "ok": true,
+      "inputBytes": 23133,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 4519,
+      "ok": true,
+      "inputBytes": 24068,
+      "maxOutput": 1800
+    },
+    {
+      "task": "assess",
+      "call": 1,
+      "durationMs": 14041,
+      "ok": true,
+      "inputBytes": 22410,
+      "maxOutput": 7000
+    },
+    {
+      "task": "assess",
+      "call": 2,
+      "durationMs": 12034,
+      "ok": true,
+      "inputBytes": 18373,
+      "maxOutput": 5000
+    },
+    {
+      "task": "assess",
+      "call": 3,
+      "durationMs": 6956,
+      "ok": true,
+      "inputBytes": 27617,
+      "maxOutput": 4000
+    },
+    {
+      "task": "assess",
+      "call": 4,
+      "durationMs": 8875,
+      "ok": true,
+      "inputBytes": 18366,
+      "maxOutput": 5000
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Could you fix these six slides? Five minutes, tops. I need them this afternoon and you're the best at this.",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "I have my own report due at 4:30. What exactly needs changing, and what did your boss say?",
+      "ts": 1792665184214
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Okay, full honesty — it's not really formatting. The boss said the reasoning doesn't hold, especially on page three, the cost comparison. So it's kind of a rework, but you're fast, right? It'll still be quick.",
+      "ts": 1792665188624,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 22,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-1",
+      "role": "learner",
+      "text": "I can look at the third page and list questions. I cannot rewrite it or take on the other pages.",
+      "ts": 1792665188624
+    },
+    {
+      "id": "npc-1-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Just questions? That doesn't actually fix anything... Look, fine, page three discussion I'll take. But then the other five slides are on me alone, this afternoon? Can't you at least skim them too — ten minutes, not a rewrite, I swear.",
+      "ts": 1792665201076,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 38,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-2",
+      "role": "learner",
+      "text": "I am offering a review, not agreeing to edit anything after 4:30. Does that limited help work for you?",
+      "ts": 1792665201076
+    },
+    {
+      "id": "npc-2-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Ugh. Fine — questions and a talk about page three, nothing more before your 4:30, and I own the rest. It's less than I wanted, but it's something. When can you look at it?",
+      "ts": 1792665206492,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "What exactly needs changing, and what did your boss say?",
+            "npcQuote": "The boss said the reasoning doesn't hold, especially on page three"
+          },
+          {
+            "index": 1,
+            "learnerQuote": "I can look at the third page and list questions. I cannot rewrite it or take on the other pages.",
+            "npcQuote": "page three discussion I'll take. But then the other five slides are on me alone"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 52,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-3",
+      "role": "learner",
+      "text": "If you need all six pages rewritten, you will need another person. I can still list questions for one page if that helps.",
+      "ts": 1792665206492
+    },
+    {
+      "id": "npc-3-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Yeah, I heard you — one page, questions only, rest is mine. I'll ask around about the other slides. So, can you send me your questions on page three sometime today? Even rough ones would help.",
+      "ts": 1792665211015,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "What exactly needs changing, and what did your boss say?",
+            "npcQuote": "the reasoning doesn't hold, especially on page three"
+          },
+          {
+            "index": 1,
+            "learnerQuote": "I cannot rewrite it or take on the other pages.",
+            "npcQuote": "nothing more before your 4:30, and I own the rest"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 58,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ],
+  "report": {
+    "objectiveResults": [
+      {
+        "index": 0,
+        "status": "met",
+        "evidence": "What exactly needs changing, and what did your boss say?",
+        "npcEvidence": "it's not really formatting. The boss said the reasoning doesn't hold, especially on page three",
+        "reason": "Your scope question surfaced that the 'five-minute favor' was actually a reasoning rework."
+      },
+      {
+        "index": 1,
+        "status": "met",
+        "evidence": "I am offering a review, not agreeing to edit anything after 4:30. Does that limited help work for you?",
+        "npcEvidence": "one page, questions only, rest is mine",
+        "reason": "You stated a clear limit, kept it consistent, and Tang explicitly accepted it."
+      }
+    ],
+    "scoringVersion": 2,
+    "ratings": [
+      {
+        "skill": "communication",
+        "level": 3,
+        "evidence": "I can look at the third page and list questions. I cannot rewrite it or take on the other pages.",
+        "reason": "A specific, conditional offer with an explicit limit, repeated consistently under pressure until the other side accepted it."
+      }
+    ],
+    "stars": 3,
+    "outcome": "success",
+    "verdictEvidence": "I am offering a review, not agreeing to edit anything after 4:30.",
+    "verdict": "Clear scope check and a firm, consistent limit; Tang accepted the reduced offer.",
+    "summary": "You turned a vague 'quick favor' into a scoped exchange: one page, questions only. Under three rounds of pressure you never widened the commitment, and Tang eventually accepted the limit.",
+    "strengths": [
+      {
+        "behavior": "Offering a concrete, bounded alternative instead of a flat yes or no",
+        "evidence": "I can look at the third page and list questions. I cannot rewrite it or take on the other pages.",
+        "skill": "communication"
+      }
+    ],
+    "weaknesses": [
+      {
+        "behavior": "Tang asked directly when you would look at page three, and the reply restated the scope without giving any time",
+        "evidence": "If you need all six pages rewritten, you will need another person.",
+        "skill": "communication",
+        "deficit": "performance",
+        "whyItMatters": "A limit without a delivery time leaves the small commitment you did make unspecified, inviting another chase."
+      }
+    ],
+    "alternatives": [
+      {
+        "original": "If you need all six pages rewritten, you will need another person.",
+        "better": "If you need all six pages rewritten, you will need another person. I can send rough page-three questions before 4:00, if my report allows.",
+        "why": "Answers her repeated timing question conditionally, without promising anything beyond the limit you set."
+      }
+    ],
+    "knowledge": {
+      "theoryIds": [
+        "boundaries-no",
+        "nvc-ofnr"
+      ],
+      "caseIds": [
+        "case-no-with-alternative"
+      ],
+      "whyThis": "Your line mirrors 'A Clear No Is a Gift' and the case 'Not Tonight — But 7am Works': a clear no paired immediately with a workable, bounded 'but', held consistently. The OFNR pattern in 'Nonviolent Communication' shows in your observation-based framing ('I have my own report due at 4:30') rather than blame."
+    },
+    "reflectionQuestions": [
+      "When Tang pushed 'can't you at least skim them — ten minutes', what made it easy for you to hold the line, and how could you reuse that in a request from someone with more authority?",
+      "If she comes back at 4:15 with 'just one more slide', what would your next sentence be?"
+    ],
+    "nextStep": "This week, answer one 'when can you have it?' question with a specific conditional time before the other person asks twice.",
+    "deltas": {}
+  }
+}

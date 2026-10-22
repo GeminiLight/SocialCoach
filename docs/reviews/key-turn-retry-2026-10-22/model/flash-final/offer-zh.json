@@ -1,0 +1,53 @@
+{
+  "id": "offer-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 2814,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 2812,
+      "ok": true,
+      "inputBytes": 22134,
+      "maxOutput": 1800
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "我可以先看一页，帮你列出需要修改的点，不直接改稿。你最想先看哪页？",
+      "ts": 1792665744286
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "列点？那还得我自己动手啊……行吧，先看第三页。",
+      "ts": 1792665747100,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ]
+}

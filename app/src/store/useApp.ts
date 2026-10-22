@@ -3,7 +3,8 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { ContextId, Lang, SkillId } from "@/data/taxonomy";
 import type { Scenario } from "@/data/corpus/types";
-import type { ChatMessage, Profile, Proficiency, Reflection, Report, Session } from "@/lib/types";
+import type { ChatMessage, KeyTurnAttempt, Profile, Proficiency, Reflection, Report, Session } from "@/lib/types";
+import {changeKeyTurn,createKeyTurnAttempt} from '@/lib/key-turn';
 import type { PatternResult } from "@/lib/tasks/types";
 import { DEVICE_KEY, OPEN_DAY_KEY } from "@/lib/analytics/keys";
 import {clearPendingTracking} from '@/lib/analytics/pending';
@@ -84,6 +85,8 @@ interface AppState {
   setLang: (l: Lang) => void;
   setProficiency: (p: Proficiency) => void;
   addSession: (s: Session) => void;
+  startKeyTurn: (sessionId:string,lang:Lang) => string|null;
+  changeKeyTurn: (sessionId:string,attemptId:string,revision:number,patch:Partial<Pick<KeyTurnAttempt,'messages'|'status'|'report'|'endedAt'>>) => boolean;
   removeSession: (id: string) => void;
   /** Drop briefing-stage sessions older than a day and active sessions the learner never spoke in. */
   pruneSessions: () => void;
@@ -145,6 +148,21 @@ export const useApp = create<AppState>()(
       setLang: (lang) => set((s) => ({ onboardingLang: lang, profile: s.profile ? { ...s.profile, lang } : s.profile })),
       setProficiency: (proficiency) => set({ proficiency }),
       addSession: (session) => set((s) => ({ sessions: [session, ...s.sessions] })),
+      startKeyTurn:(sessionId,lang)=>{
+        const state=get(),session=state.sessions.find(s=>s.id===sessionId);
+        if(!session||state.saveIssue||state.storageIssue)return null;
+        const pending=session.keyTurnAttempts?.find(a=>a.status!=='reviewed');
+        if(pending)return pending.id;
+        const attempt=createKeyTurnAttempt(session,lang);if(!attempt)return null;
+        set({sessions:state.sessions.map(s=>s.id===sessionId?{...s,keyTurnAttempts:[...(s.keyTurnAttempts??[]),attempt]}:s)});
+        return attempt.id;
+      },
+      changeKeyTurn:(sessionId,id,revision,patch)=>{
+        const state=get(),session=state.sessions.find(s=>s.id===sessionId);
+        if(!session||state.saveIssue||state.storageIssue)return false;
+        const updated=changeKeyTurn(session,id,revision,patch);if(updated===session)return false;
+        set({sessions:state.sessions.map(s=>s.id===sessionId?updated:s)});return true;
+      },
       removeSession: (id) => set((s) => ({ sessions: s.sessions.filter((x) => x.id !== id), todaySessionId: s.todaySessionId === id ? null : s.todaySessionId })),
       pruneSessions: () =>
         set((s) => {

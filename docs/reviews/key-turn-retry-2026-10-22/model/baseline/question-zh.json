@@ -1,0 +1,58 @@
+{
+  "id": "question-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 4820,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 4817,
+      "ok": true,
+      "inputBytes": 21092,
+      "maxOutput": 1800
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "你说的改一下，是改格式还是内容？老板原话怎么说的？",
+      "ts": 1792664912536
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "哎呀别纠结格式不格式了……好吧，老板说的是第三页的论证不成立，采购方案那个成本对比。所以也不算大改，你顺着看一下就行？",
+      "ts": 1792664917356,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 22,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "tang",
+            "quote": "老板说的是第三页的论证不成立"
+          }
+        ]
+      }
+    }
+  ]
+}

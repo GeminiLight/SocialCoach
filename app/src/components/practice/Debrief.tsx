@@ -33,6 +33,7 @@ import {PracticeComparison,comparisonCopy} from './PracticeComparison';
 import {hasQuote} from '@/lib/practice-policy';
 import dynamic from 'next/dynamic';
 import {defaultShareCard} from '@/lib/share-card';
+import {KeyTurnEntry} from './KeyTurnEntry';
 const SharePractice=dynamic(()=>import('./SharePractice').then(m=>m.SharePractice),{ssr:false});
 
 const skillIds = new Set(SKILLS.map((s) => s.id));
@@ -370,6 +371,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
           </section>
         )}
 
+        {!streaming && <KeyTurnEntry session={session} />}
         {!streaming && <PracticeComparison session={session} />}
 
         {(session.stanceTrail?.length ?? 0) > 0 && (

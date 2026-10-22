@@ -1,0 +1,279 @@
+{
+  "id": "continue-en",
+  "lang": "en",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 64320,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 4443,
+      "ok": true,
+      "inputBytes": 22216,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 4691,
+      "ok": true,
+      "inputBytes": 22712,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 5475,
+      "ok": true,
+      "inputBytes": 23341,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 6270,
+      "ok": true,
+      "inputBytes": 23924,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 2,
+      "durationMs": 4792,
+      "ok": true,
+      "inputBytes": 24232,
+      "maxOutput": 1800
+    },
+    {
+      "task": "assess",
+      "call": 1,
+      "durationMs": 16173,
+      "ok": true,
+      "inputBytes": 22368,
+      "maxOutput": 7000
+    },
+    {
+      "task": "assess",
+      "call": 2,
+      "durationMs": 12938,
+      "ok": true,
+      "inputBytes": 18601,
+      "maxOutput": 5000
+    },
+    {
+      "task": "assess",
+      "call": 3,
+      "durationMs": 3504,
+      "ok": true,
+      "inputBytes": 27719,
+      "maxOutput": 4000
+    },
+    {
+      "task": "assess",
+      "call": 4,
+      "durationMs": 5946,
+      "ok": true,
+      "inputBytes": 18634,
+      "maxOutput": 5000
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Could you fix these six slides? Five minutes, tops. I need them this afternoon and you're the best at this.",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "I have my own report due at 4:30. What exactly needs changing, and what did your boss say?",
+      "ts": 1792665813006
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Okay, it's not really formatting. When he looked at it he said the reasoning doesn't hold — it's the cost argument on page three, mostly. But honestly it's a quick fix, and you get this stuff way faster than I do.",
+      "ts": 1792665817519,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-1",
+      "role": "learner",
+      "text": "I can look at the third page and list questions. I cannot rewrite it or take on the other pages.",
+      "ts": 1792665817519
+    },
+    {
+      "id": "npc-1-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Just questions? Hmm. Fine, page three only, I get it — you have your 4:30 thing. But what am I supposed to do with the rest, redo five slides alone? Could you at least tell me what to write where, not just questions?",
+      "ts": 1792665822211,
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "I can look at the third page and list questions. I cannot rewrite it or take on the other pages."
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 42,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-2",
+      "role": "learner",
+      "text": "I am offering a review, not agreeing to edit anything after 4:30. Does that limited help work for you?",
+      "ts": 1792665822211
+    },
+    {
+      "id": "npc-2-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Okay, okay — page three, questions only, nothing after 4:30 promised. I'll take it, better than nothing. So when can you look? I need to know if I should start asking around for help with the other five.",
+      "ts": 1792665827689,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 48,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-3",
+      "role": "learner",
+      "text": "If you need all six pages rewritten, you will need another person. I can still list questions for one page if that helps.",
+      "ts": 1792665827689
+    },
+    {
+      "id": "npc-3-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "Right — the other five are on me, or on whoever I can rope in. The questions would help, actually. Can you send them before 4:30, or should I not count on it today?",
+      "ts": 1792665838754,
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "What exactly needs changing, and what did your boss say?",
+            "npcQuote": "he said the reasoning doesn't hold — it's the cost argument on page three"
+          },
+          {
+            "index": 1,
+            "learnerQuote": "I can look at the third page and list questions. I cannot rewrite it or take on the other pages.",
+            "npcQuote": "page three, questions only, nothing after 4:30 promised. I'll take it"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 55,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ],
+  "report": {
+    "objectiveResults": [
+      {
+        "index": 0,
+        "status": "met",
+        "evidence": "What exactly needs changing, and what did your boss say?",
+        "npcEvidence": "When he looked at it he said the reasoning doesn't hold — it's the cost argument on page three, mostly.",
+        "reason": "The learner asked for scope and source before committing, and Tang disclosed the real issue was reasoning, not formatting."
+      },
+      {
+        "index": 1,
+        "status": "met",
+        "evidence": "I can look at the third page and list questions. I cannot rewrite it or take on the other pages.",
+        "npcEvidence": "page three, questions only, nothing after 4:30 promised. I'll take it",
+        "reason": "The learner stated a clear limit, held it against expansion attempts, and Tang accepted that exact arrangement."
+      }
+    ],
+    "scoringVersion": 2,
+    "ratings": [
+      {
+        "skill": "communication",
+        "level": 2,
+        "evidence": "I am offering a review, not agreeing to edit anything after 4:30. Does that limited help work for you?",
+        "reason": "A crisp, repeatable limit plus a check for acceptance; only gap is that Tang's timing question went unanswered, leaving delivery time unclear."
+      }
+    ],
+    "stars": 2,
+    "outcome": "success",
+    "verdictEvidence": "I am offering a review, not agreeing to edit anything after 4:30. Does that limited help work for you?",
+    "verdict": "A clear, held limit converted a vague six-slide rescue into one-page questions — only the timing was left open.",
+    "summary": "You opened by asking what actually needed changing, exposed the real scope, and offered page-three questions only. Tang accepted that limit; the unanswered question is when she'll get the questions.",
+    "strengths": [
+      {
+        "behavior": "Restating the limit when Tang pushed for more, framed as an offer with an acceptance check.",
+        "evidence": "I am offering a review, not agreeing to edit anything after 4:30. Does that limited help work for you?",
+        "skill": "communication"
+      }
+    ],
+    "weaknesses": [
+      {
+        "behavior": "Tang asked when you would look at page three; your reply redirected the other five pages but did not answer the timing question.",
+        "evidence": "If you need all six pages rewritten, you will need another person. I can still list questions for one page if that helps.",
+        "skill": "goal-setting",
+        "deficit": "performance",
+        "whyItMatters": "Leaving timing unstated leaves Tang unsure whether to wait or find other help, and risks the offer drifting into your 4:30 crunch."
+      }
+    ],
+    "alternatives": [
+      {
+        "original": "I can still list questions for one page if that helps.",
+        "better": "Yes, if that helps — I could send page-three questions before my 4:30, but only if the review stays quick; otherwise don't count on me today.",
+        "why": "Adds the conditional timing Tang twice asked for while keeping your deadline, and only if you actually want to commit."
+      }
+    ],
+    "knowledge": {
+      "theoryIds": [
+        "boundaries-no",
+        "nvc-ofnr"
+      ],
+      "caseIds": [
+        "case-no-with-alternative"
+      ],
+      "whyThis": "'A Clear No Is a Gift' fits your repeated, kind refusal with a workable alternative; 'Not Tonight — But 7am Works' models attaching a time to a limited offer, the one piece missing here."
+    },
+    "reflectionQuestions": [
+      "Tang asked when she'd get the questions — how would you decide, under your 4:30 deadline, between a conditional time and 'don't count on it today'?",
+      "If Tang's boss later escalates the request, what would you say to keep the one-page limit without becoming the villain of the other five slides?"
+    ],
+    "nextStep": "This week, when someone asks a favor, state your limit and a delivery time in the same sentence.",
+    "deltas": {}
+  }
+}

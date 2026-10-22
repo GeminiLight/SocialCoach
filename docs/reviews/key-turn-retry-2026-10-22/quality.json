@@ -1,0 +1,11 @@
+{
+  "core": 116,
+  "dinner": 256,
+  "lint": "passed",
+  "types": "passed",
+  "build": "passed",
+  "productionDependencyAudit": "No known vulnerabilities found",
+  "browserGroups": 9,
+  "realDevice": false,
+  "userOutcomes": "not measured"
+}

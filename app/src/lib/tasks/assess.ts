@@ -86,7 +86,7 @@ export async function runAssess(input: AssessInput, llm: LLM, smartModel: string
     model: smartModel,
     maxTokens: 7000,
     effort: "low",
-    system: [{ text: assessSystem(scenario, learnerCharacterId, lang, kb.theories, kb.cases, goals)+(sceneContext?`\n\n3D OBSERVATION POLICY: ${SCENE_ASSESS_POLICY}`:''), cache: true }],
+    system: [{ text: assessSystem(scenario, learnerCharacterId, lang, kb.theories, kb.cases, goals)+(sceneContext?`\n\n3D OBSERVATION POLICY: ${SCENE_ASSESS_POLICY}`:'')+(input.practiceMode==='key-turn'?'\nSHORT DRILL: This is only 1–4 learner responses from the opening. Evaluate the communication visible in those words, especially scope and commitments. Do not penalize the learner for stopping at a practice boundary. Keep observations concise. Do not claim improvement over a previous attempt: none was supplied. No predictions of real-world ability.':''), cache: true }],
     messages: [
       {
         role: "user" as const,

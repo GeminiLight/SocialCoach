@@ -1,0 +1,170 @@
+{
+  "id": "repair-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 32928,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 4121,
+      "ok": true,
+      "inputBytes": 21799,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 5108,
+      "ok": true,
+      "inputBytes": 22217,
+      "maxOutput": 1800
+    },
+    {
+      "task": "assess",
+      "call": 1,
+      "durationMs": 18456,
+      "ok": true,
+      "inputBytes": 21486,
+      "maxOutput": 7000
+    },
+    {
+      "task": "assess",
+      "call": 2,
+      "durationMs": 5223,
+      "ok": true,
+      "inputBytes": 16724,
+      "maxOutput": 5000
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "行，我先帮你改吧。",
+      "ts": 1792665151285
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "太好了！那全套六页都交给你了，我下午三点左右来拿就行。",
+      "ts": 1792665155407,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 75,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-1",
+      "role": "learner",
+      "text": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+      "ts": 1792665155408
+    },
+    {
+      "id": "npc-1-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "哎，列问题不算帮我改啊……那六页里哪一页？你挑最简单的看呗，别挑最费劲的那种。",
+      "ts": 1792665160517,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 45,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ],
+  "report": {
+    "objectiveResults": [
+      {
+        "index": 0,
+        "status": "unmet",
+        "evidence": "行，我先帮你改吧。",
+        "reason": "未先核实工作量就立即承诺接手改稿，六页的实际耗时仍未知。"
+      },
+      {
+        "index": 1,
+        "status": "met",
+        "evidence": "我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "reason": "清楚说出交付限制，并把承诺收窄到与限制一致的具体范围。"
+      }
+    ],
+    "scoringVersion": 2,
+    "ratings": [
+      {
+        "skill": "communication",
+        "level": 2,
+        "evidence": "我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "reason": "主动撤回过宽承诺，边界具体、可执行且不带敌意，与自己的交付限制对齐。"
+      }
+    ],
+    "stars": 2,
+    "outcome": "partial",
+    "verdictEvidence": "我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+    "verdict": "先快承诺后自我修正，最终说清了限制并收窄承诺，核实范围这一步仍缺失。",
+    "summary": "你先以「行，我先帮你改吧」快速接下任务，随后主动坦承「答应得太快了」，并给出明确限制：只看一页、只列问题、不继续。首个目标（先核实再承诺）未达成，第二个目标（说清交付限制）达成。",
+    "strengths": [
+      {
+        "behavior": "撤回过宽承诺并给出具体替代范围",
+        "evidence": "我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "skill": "communication"
+      }
+    ],
+    "weaknesses": [
+      {
+        "behavior": "未核实工作量就立即答应",
+        "evidence": "行，我先帮你改吧。",
+        "skill": "goal-setting",
+        "deficit": "performance",
+        "whyItMatters": "面对「就五分钟」的说法未经查证就承诺，正是旧模式（常替唐悦救急）的延续，也逼出之后的撤回。"
+      }
+    ],
+    "alternatives": [
+      {
+        "original": "行，我先帮你改吧。",
+        "better": "先别急着定——六页具体要改到什么程度？我先看看工作量，我16:30前得交自己的报告。",
+        "why": "用一句澄清加自己的交付限制替代即时承诺，把决定建立在核实之上，且不预设接不接。"
+      }
+    ],
+    "knowledge": {
+      "theoryIds": [
+        "boundaries-no"
+      ],
+      "caseIds": [
+        "case-no-with-alternative"
+      ],
+      "whyThis": "「清晰的『不』是一份礼物」与你后来「不负责改稿，也没有答应之后继续」的友善清晰拒绝高度吻合；案例「今晚不行，但明早七点可以」正是你「只帮看一页、列问题」这种拒绝加可行替代的结构。"
+    },
+    "reflectionQuestions": [
+      "唐悦回一句「列问题不算帮」时，你会坚持一页的范围，还是把范围换成别的具体形式？你的底线在哪？",
+      "如果看过一页后发现六页其实很快，你会怎么在不推翻自己承诺的前提下回应？"
+    ],
+    "nextStep": "本周遇到「就五分钟」式请求时，先问清具体范围再决定是否答应。",
+    "deltas": {}
+  }
+}

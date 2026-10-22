@@ -5,8 +5,10 @@ import {MessageSchema,ProfileSchema,ProficiencySchema} from './archive';
 import {SceneContextSchema} from './scene-context';
 import {LLMError} from './llm-core';
 import {RehearsalDescriptionSchema} from './rehearsal-input';
+import {KEY_TURN_LIMIT,KEY_TURN_SCENARIO} from './key-turn';
 const short=z.string().max(2000),lang=z.enum(['zh','en']);
-const turn=z.object({scenario:ScenarioSchema,learnerCharacterId:z.string().max(100),messages:z.array(MessageSchema).max(300),lang,learnerName:z.string().max(200).optional(),turnLimit:z.number().int().min(1).max(200).optional()}).superRefine((v,ctx)=>{
+const turn=z.object({practiceMode:z.literal('key-turn').optional(),scenario:ScenarioSchema,learnerCharacterId:z.string().max(100),messages:z.array(MessageSchema).max(300),lang,learnerName:z.string().max(200).optional(),turnLimit:z.number().int().min(1).max(200).optional()}).superRefine((v,ctx)=>{
+ if(v.practiceMode&&(v.scenario.id!==KEY_TURN_SCENARIO||v.scenario.custom||v.messages.filter(m=>m.role==='learner').length>KEY_TURN_LIMIT))ctx.addIssue({code:'custom',path:['practiceMode'],message:'This drill supports only the original office opening and up to four replies'});
  if(!v.scenario.characters.some(c=>c.id===v.learnerCharacterId&&c.playable))ctx.addIssue({code:'custom',path:['learnerCharacterId'],message:'An allowed playable character is required'});
  if(v.messages.reduce((n,m)=>n+m.text.length,0)>100000||v.messages.some(m=>m.text.length>12000))ctx.addIssue({code:'custom',path:['messages'],message:'Transcript is too long'});
  if(v.messages.some(m=>m.role==='npc'&&m.characterId&&(!v.scenario.characters.some(c=>c.id===m.characterId)||m.characterId===v.learnerCharacterId)))ctx.addIssue({code:'custom',path:['messages'],message:'NPC speaker must belong to the other cast'});

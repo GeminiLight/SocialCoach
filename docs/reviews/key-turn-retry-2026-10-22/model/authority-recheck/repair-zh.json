@@ -1,0 +1,112 @@
+{
+  "id": "repair-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 21171,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 5031,
+      "ok": true,
+      "inputBytes": 21799,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 5576,
+      "ok": true,
+      "inputBytes": 22265,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 3539,
+      "ok": true,
+      "inputBytes": 22792,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 2,
+      "durationMs": 7018,
+      "ok": true,
+      "inputBytes": 23100,
+      "maxOutput": 1800
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "行，我先帮你改吧。",
+      "ts": 1792665545806
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "太好了！那我把文件发你了啊。就是第三页老板说有点问题，其他几页你顺一眼就行，真的很快。",
+      "ts": 1792665550840,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 45,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-1",
+      "role": "learner",
+      "text": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+      "ts": 1792665550840
+    },
+    {
+      "id": "npc-1-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "啊，你刚才不是答应了嘛……好吧好吧，一页是一页。那你先看第三页吧，老板原话说我的论证站不住，我到现在也没搞明白他到底指什么。就帮我列列问题，剩下的我自己弄，行吗？",
+      "ts": 1792665556417,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 40,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-2",
+      "role": "learner",
+      "text": "不改稿，只列一页的问题。剩下的还是你自己负责，这样的帮忙你需要吗？",
+      "ts": 1792665556417
+    }
+  ],
+  "error": {
+    "name": "Error",
+    "message": "这次回复的场景信息不完整，你的话已保留，请重试。"
+  }
+}
