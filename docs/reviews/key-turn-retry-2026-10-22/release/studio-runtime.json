@@ -1,0 +1,34 @@
+{
+  "id": "GeminiLight/SocialCoach",
+  "repo_name": "SocialCoach",
+  "display_name": "SocialCoach",
+  "owner": "GeminiLight",
+  "description": "\u60f3\u8bf4\u7684\u8bdd\uff0c\u8bf4\u51fa\u6765\u3002Say the thing you\u2019ve been not saying. LLM \u793e\u4ea4\u6280\u80fd\u6559\u7ec3\uff1a\u771f\u5b9e\u5bf9\u8bdd\u6392\u7ec3\u4e0e\u8bc1\u636e\u5f0f\u590d\u76d8\u3002",
+  "cover_image": "https://img.alicdn.com/imgextra/i1/O1CN01jaxszG1pyzR8i9fSP_!!6000000005430-2-tps-820-400.png",
+  "likes": 7,
+  "view_count": 7959,
+  "tags": [
+    "SocialCoach",
+    "education",
+    "roleplay"
+  ],
+  "visibility": "public",
+  "private": false,
+  "status": "Running",
+  "created_at": "2026-09-08T16:09:37.000Z",
+  "last_modified": "2026-10-22T11:02:27.000Z",
+  "sdk_type": "docker",
+  "sdk_version": "",
+  "hardware": "platform/2v-cpu-16g-mem",
+  "license": "apache-2.0",
+  "host": "https://geminilight-socialcoach.ms.show",
+  "mcp_support": false,
+  "runtime": {
+    "status": "Running",
+    "active_config": {
+      "hardware": "platform/2v-cpu-16g-mem",
+      "sdk_type": "docker"
+    },
+    "created_at": "2026-10-22T11:06:04.000Z"
+  }
+}

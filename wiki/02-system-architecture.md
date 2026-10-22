@@ -76,7 +76,7 @@ SocialCoach/
 
 ## 数据流
 
-2026-10-22：`KeyTurnEntry` 从已复盘的 `office-quick-favor` 原场派生首回应检查点，`KeyTurnPractice` 在独立子路由运行短练。`Session.keyTurnAttempts` 仅存新转录、原回答指针和独立报告，原 NPC 开场从父记录读取；不把原回答与后来披露发给本次模型。写回按 attempt ID / revision 比较，旧回复、已结束回顾与档案重置不接受迟到覆盖。档案 schema 验证源指针、角色、顺序与四轮上限，旧档无需迁移。整场历史、能力估计和原话对照只消费父 `Session`，短练不加训练次数。→ [规格](./specs/spec-key-turn-retry.md)
+2026-10-22：`KeyTurnEntry` 从已复盘的 `office-quick-favor` 原场派生首回应检查点，`KeyTurnPractice` 在独立子路由运行短练。`Session.keyTurnAttempts` 仅存新转录、原回答指针和独立报告，原 NPC 开场从父记录读取；不把原回答与后来披露发给本次模型。写回按 attempt ID / revision 比较，旧回复、已结束回顾与档案重置不接受迟到覆盖。档案 schema 验证源指针、角色、顺序与四轮上限，旧档无需迁移。整场历史、能力估计和原话对照只消费父 `Session`，短练不加训练次数。→ [规格](./archive/specs/spec-key-turn-retry.md)
 
 2026-10-12：复盘内 `PracticeComparison` 从设备上的 `sessions` 派生同条件、独立场次的原话对照；`lib/practice-comparison.ts` 核验各场 learner 引文、评分格式与历史时间，3D 按 `practiceId` 去重。复用完整对话阅读器，不新增模型请求、接口、持久化字段或统计事件。→ [阶段与边界](./13-stage-e.md)
 

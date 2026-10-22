@@ -1,0 +1,24 @@
+{
+  "publicUrl": "https://modelscope.cn/studios/GeminiLight/SocialCoach?mode=full",
+  "appUrl": "https://geminilight-socialcoach.ms.show/practice/studio-key-turn-fixture/retry/gjabqy85tjsy",
+  "viewport": {
+    "width": 375,
+    "height": 900
+  },
+  "lang": "zh",
+  "theme": "dark",
+  "entry": true,
+  "retry": true,
+  "review": true,
+  "sourceTranscript": true,
+  "refresh": true,
+  "originalPreserved": true,
+  "overflow": false,
+  "pageErrors": [
+    {
+      "message": "Cannot read properties of undefined (reading 'setAttribute')",
+      "stack": "Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'setAttribute')\n    at <anonymous> (https://g.alicdn.com/sail-web/maas/1.1100.154/h5/9747.js:0:5654929)\n    at r (https://g.alicdn.com/sail-web/maas/1.1100.154/h5/9747.js:0:5650822)"
+    }
+  ],
+  "models": "stubbed; actual hosted model probe recorded separately"
+}

@@ -1,0 +1,20 @@
+{
+  "base": "https://socialcoach-ai.vercel.app",
+  "requests": [],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "user-0",
+      "role": "learner",
+      "text": "我自己的报告16:30截止。你说的改一下，是改格式还是内容？老板原话怎么说的？",
+      "ts": 1792666551813
+    }
+  ],
+  "error": "TypeError: fetch failed"
+}

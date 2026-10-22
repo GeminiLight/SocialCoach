@@ -1,0 +1,21 @@
+{
+  "publicUrl": "https://modelscope.cn/studios/GeminiLight/SocialCoach?mode=full",
+  "appUrl": "https://geminilight-socialcoach.ms.show/practice/studio-key-turn-fixture/retry/cd0scjf0n36d",
+  "viewport": {
+    "width": 375,
+    "height": 900
+  },
+  "lang": "zh",
+  "theme": "dark",
+  "entry": true,
+  "retry": true,
+  "review": true,
+  "sourceTranscript": true,
+  "refresh": true,
+  "originalPreserved": true,
+  "overflow": false,
+  "pageErrors": [
+    "Cannot read properties of undefined (reading 'setAttribute')"
+  ],
+  "models": "stubbed; actual hosted model probe recorded separately"
+}

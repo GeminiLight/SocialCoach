@@ -1,0 +1,146 @@
+{
+  "base": "https://socialcoach-ai.vercel.app",
+  "requests": [
+    {
+      "path": "/api/roleplay",
+      "status": 200,
+      "durationMs": 2645,
+      "raw": "@@meta\n{\"objectives\":[false,false],\"ended\":false,\"stance\":28,\"revealed\":false,\"outcome\":null,\"objectiveEvidence\":[],\"disclosures\":[]}\n@@tang\n老板说第三页的成本论证不成立——就是那个逻辑站不住。别的……他也没细说。"
+    },
+    {
+      "path": "/api/roleplay",
+      "status": 200,
+      "durationMs": 2106,
+      "raw": "@@meta\n{\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。\"},{\"index\":1,\"learnerQuote\":\"我自己的报告16:30截止。\"}],\"objectives\":[true,true],\"ended\":false,\"stance\":38,\"revealed\":false,\"disclosures\":[],\"outcome\":null}\n@@tang\n列问题……也行吧，总比我自己瞎改强。不过光列问题，第三页最后还得我自己收尾，这个你是这个意思吗？"
+    },
+    {
+      "path": "/api/assess",
+      "status": 200,
+      "durationMs": 68743,
+      "raw": "{\"objectiveResults\":[{\"index\":0,\"status\":\"met\",\"evidence\":\"你说的改一下，是改格式还是内容？老板原话怎么说的？\",\"reason\":\"你先问清改动性质和老板原话，随后把承诺限定为只看第三页、只列问题。\"},{\"index\":1,\"status\":\"met\",\"evidence\":\"我自己的报告16:30截止。\",\"reason\":\"你明确说出自己的交付截止，并在后续提出不改稿、16:30后不继续，交付限制与承诺一致。\"}],\"scoringVersion\":2,\"ratings\":[{\"skill\":\"communication\",\"level\":2,\"evidence\":\"我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。剩下的由你负责，这样的帮忙你需要吗？\",\"reason\":\"你把模糊请求收窄成可核对的范围和边界，并问对方是否需要；但没说列问题的时点，使下午要用的安排仍不够可执行。\"}],\"stars\":2,\"outcome\":\"success\",\"verdictEvidence\":\"我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。\",\"verdict\":\"你把「五分钟」收窄成第三页列问题，并守住16:30边界。\",\"summary\":\"你先把「改一下」问成格式还是内容、老板原话是什么，再提出只看第三页、只列问题且16:30后不继续。范围和边界因此可核对；若再补一句列问题的时点，唐悦下午要用这件事会更可执行。\",\"strengths\":[{\"behavior\":\"先澄清范围，再给有限承诺\",\"evidence\":\"你说的改一下，是改格式还是内容？老板原话怎么说的？\",\"skill\":\"communication\"}],\"weaknesses\":[{\"behavior\":\"有限协助没有说清「列问题」的时点\",\"evidence\":\"我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。\",\"skill\":\"goal-setting\",\"deficit\":\"performance\",\"whyItMatters\":\"唐悦下午要用，缺少时点会让她难以判断这份帮忙是否赶得上，边界也不够可执行。\"}],\"alternatives\":[],\"knowledge\":{\"theoryIds\":[],\"caseIds\":[],\"whyThis\":\"\"},\"reflectionQuestions\":[],\"nextStep\":\"\",\"deltas\":{}}\n@@final\n{\"objectiveResults\":[{\"index\":0,\"status\":\"met\",\"evidence\":\"你说的改一下，是改格式还是内容？老板原话怎么说的？\",\"reason\":\"你先问清改动性质和老板原话，随后把承诺限定为只看第三页、只列问题。\"},{\"index\":1,\"status\":\"met\",\"evidence\":\"我自己的报告16:30截止。\",\"reason\":\"你明确说出自己的交付截止，并在后续提出不改稿、16:30后不继续，交付限制与承诺一致。\"}],\"scoringVersion\":2,\"ratings\":[{\"skill\":\"communication\",\"level\":2,\"evidence\":\"我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。剩下的由你负责，这样的帮忙你需要吗？\",\"reason\":\"你把模糊请求收窄成可核对的范围和边界，并问对方是否需要；但没说列问题的时点，使下午要用的安排仍不够可执行。\"}],\"stars\":2,\"outcome\":\"success\",\"verdictEvidence\":\"我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。\",\"verdict\":\"你把「五分钟」收窄成第三页列问题，并守住16:30边界。\",\"summary\":\"你先把「改一下」问成格式还是内容、老板原话是什么，再提出只看第三页、只列问题且16:30后不继续。范围和边界因此可核对；若再补一句列问题的时点，唐悦下午要用这件事会更可执行。\",\"strengths\":[{\"behavior\":\"先澄清范围，再给有限承诺\",\"evidence\":\"你说的改一下，是改格式还是内容？老板原话怎么说的？\",\"skill\":\"communication\"}],\"weaknesses\":[{\"behavior\":\"有限协助没有说清「列问题」的时点\",\"evidence\":\"我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。\",\"skill\":\"goal-setting\",\"deficit\":\"performance\",\"whyItMatters\":\"唐悦下午要用，缺少时点会让她难以判断这份帮忙是否赶得上，边界也不够可执行。\"}],\"alternatives\":[],\"knowledge\":{\"theoryIds\":[],\"caseIds\":[],\"whyThis\":\"\"},\"reflectionQuestions\":[],\"nextStep\":\"\",\"deltas\":{}}"
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "user-0",
+      "role": "learner",
+      "text": "我自己的报告16:30截止。你说的改一下，是改格式还是内容？老板原话怎么说的？",
+      "ts": 1792666682481
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "老板说第三页的成本论证不成立——就是那个逻辑站不住。别的……他也没细说。",
+      "ts": 1792666685127,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 28,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "user-1",
+      "role": "learner",
+      "text": "我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。剩下的由你负责，这样的帮忙你需要吗？",
+      "ts": 1792666685127
+    },
+    {
+      "id": "npc-1-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "列问题……也行吧，总比我自己瞎改强。不过光列问题，第三页最后还得我自己收尾，这个你是这个意思吗？",
+      "ts": 1792666687233,
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。"
+          },
+          {
+            "index": 1,
+            "learnerQuote": "我自己的报告16:30截止。"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 38,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ],
+  "report": {
+    "objectiveResults": [
+      {
+        "index": 0,
+        "status": "met",
+        "evidence": "你说的改一下，是改格式还是内容？老板原话怎么说的？",
+        "reason": "你先问清改动性质和老板原话，随后把承诺限定为只看第三页、只列问题。"
+      },
+      {
+        "index": 1,
+        "status": "met",
+        "evidence": "我自己的报告16:30截止。",
+        "reason": "你明确说出自己的交付截止，并在后续提出不改稿、16:30后不继续，交付限制与承诺一致。"
+      }
+    ],
+    "scoringVersion": 2,
+    "ratings": [
+      {
+        "skill": "communication",
+        "level": 2,
+        "evidence": "我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。剩下的由你负责，这样的帮忙你需要吗？",
+        "reason": "你把模糊请求收窄成可核对的范围和边界，并问对方是否需要；但没说列问题的时点，使下午要用的安排仍不够可执行。"
+      }
+    ],
+    "stars": 2,
+    "outcome": "success",
+    "verdictEvidence": "我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。",
+    "verdict": "你把「五分钟」收窄成第三页列问题，并守住16:30边界。",
+    "summary": "你先把「改一下」问成格式还是内容、老板原话是什么，再提出只看第三页、只列问题且16:30后不继续。范围和边界因此可核对；若再补一句列问题的时点，唐悦下午要用这件事会更可执行。",
+    "strengths": [
+      {
+        "behavior": "先澄清范围，再给有限承诺",
+        "evidence": "你说的改一下，是改格式还是内容？老板原话怎么说的？",
+        "skill": "communication"
+      }
+    ],
+    "weaknesses": [
+      {
+        "behavior": "有限协助没有说清「列问题」的时点",
+        "evidence": "我可以先看第三页、列出问题，不负责改稿，也不承诺16:30之后继续。",
+        "skill": "goal-setting",
+        "deficit": "performance",
+        "whyItMatters": "唐悦下午要用，缺少时点会让她难以判断这份帮忙是否赶得上，边界也不够可执行。"
+      }
+    ],
+    "alternatives": [],
+    "knowledge": {
+      "theoryIds": [],
+      "caseIds": [],
+      "whyThis": ""
+    },
+    "reflectionQuestions": [],
+    "nextStep": "",
+    "deltas": {}
+  }
+}

@@ -8,4 +8,6 @@
 - `model/smart`：最终 smart 档位六例，11 个真实 NPC 回合；中文回顾首次失败原件保留。
 - `model/review-retry`：只对相同中文转录重试回顾，未重新生成角色台词，成功。
 
-过程、范围及未验证项见 [验收评审](../../../wiki/reviews/review-2026-10-22-key-turn-retry.md)。后续发布证据另附，不能用本地结果替代线上验收。
+- `release/`：双站生产状态、真实两轮 / 回顾、公开页面、437 个 Git blob 对齐和 Draco 字节修复；`first-attempts/` 保留网络与平台父页问题，不算成功检查。
+
+过程、范围及未验证项见 [验收评审](../../../wiki/reviews/review-2026-10-22-key-turn-retry.md)。本地结果、线上接口、公开浏览器与真实用户效果分别解释。
