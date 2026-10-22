@@ -22,7 +22,7 @@ const state=(who:number)=>ev(who,"JSON.parse(localStorage.getItem('socialcoach.v
 const init=(who:number,lang:'zh'|'en',theme:'light'|'dark',sessions:Session[]=[])=>{
  const value=JSON.stringify({version:0,state:parseArchive({sessions,settings:{tts:false,telemetry:false,theme}})});
  ev(who,`localStorage.setItem('socialcoach.v1',${JSON.stringify(value)});sessionStorage.clear();true`);
- b(who,['open',base+challengePath(lang)]);wait(who,"!!document.querySelector('#challenge-landing') && !document.querySelector('#challenge-landing button[data-variant=primary]').disabled");
+ b(who,['errors','--clear']);b(who,['open',base+challengePath(lang)]);wait(who,"!!document.querySelector('#challenge-landing') && !document.querySelector('#challenge-landing button[data-variant=primary]').disabled");
 };
 async function png(who:number,lang:'zh'|'en',destination:'main'|'studio',label:string){
  const data=await ev(who,"(async()=>{const blob=await(await fetch(document.querySelector('#invite-card img').src)).blob();return await new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result);f.readAsDataURL(blob)})})()");
@@ -74,7 +74,8 @@ try{
   click(1,lang==='zh'?'结束并复盘':'End and review');wait(1,"JSON.parse(localStorage.getItem('socialcoach.v1')).state.sessions[0].status==='assessed'");
   s=state(1).sessions[0];assert.equal(s.report?.verdictEvidence,after);assert.equal(s.challenge?.version,1);assert.equal(s.messages.length,3);
   assert.equal(state(0).sessions[0].id,'sender-private');
-  results.push({lang,theme,width,qr:true,copy:true,privateExcluded:true,freshReceiver:true,resume:true,review:true,axe:0});
+  for(let who=0;who<2;who++)assert.deepEqual(b(who,['errors']).errors,[],JSON.stringify(b(who,['errors'])));
+  results.push({lang,theme,width,pageErrors:0,qr:true,copy:true,privateExcluded:true,freshReceiver:true,resume:true,review:true,axe:0});
  }
  writeFileSync(join(out,'browser.json'),JSON.stringify({base,models:'stubbed',groups:results},null,2));
  console.log(JSON.stringify({groups:results.length,output:out}));

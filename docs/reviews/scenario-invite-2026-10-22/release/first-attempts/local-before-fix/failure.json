@@ -1,0 +1,14 @@
+{
+  "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '邀请朋友挑战同一场景', exact: true })\u001b[22m\n",
+  "errors": [
+    {
+      "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+      "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rJ (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:62606)\n    at rZ (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:63639)\n    at http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:158331\n    at sy (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:163492)\n    at sh (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:154744)\n    at http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:149562\n    at sr (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:149663)\n    at sq (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:176244)\n    at MessagePort.O (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:3356)"
+    },
+    {
+      "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+      "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rJ (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:62606)\n    at rZ (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:63639)\n    at http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:158331\n    at sy (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:163492)\n    at sh (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:154744)\n    at http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:149562\n    at sr (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:149663)\n    at sq (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:176244)\n    at MessagePort.O (http://localhost:3120/_next/static/chunks/0qm504ob67x0_.js:1:3356)"
+    }
+  ],
+  "calls": []
+}

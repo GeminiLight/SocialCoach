@@ -2,7 +2,7 @@
 import { MotionConfig } from "framer-motion";
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { observeArchiveChanges,useApp, useLang } from "@/store/useApp";
+import { observeArchiveChanges,useApp } from "@/store/useApp";
 import { observeByokChanges,useByok } from "@/lib/byok";
 import { promptUnavailableSharedModel, refreshModelAccess, syncModelConfiguration, useCanUseModel, useModelAccess } from "@/lib/model-access";
 import { ModelSheet } from "./ModelSheet";
@@ -12,7 +12,7 @@ import { trackOpen } from "@/lib/analytics/track";
 import { DinnerAnnouncement } from "./DinnerEntry";
 import { StorageRecovery } from "./StorageRecovery";
 import {SaveNotice} from "./SaveNotice";
-import {useDinnerUiLanguage} from '@/lib/ui-language';
+import {useInterfaceLang} from '@/lib/ui-language';
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const hydrated = useApp((s) => s.hydrated);
@@ -24,9 +24,8 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const immersiveReview=useApp(s=>s.sessions.some(session=>path===`/practice/${session.id}`&&session.sceneContext?.kind==='3d'&&(session.status==='ended'||session.status==='assessed')));
   const byok = useByok();
-  const mainLang=useLang(),sceneLang=useDinnerUiLanguage(s=>s.lang);
   const dinner = path === "/3d";
-  const lang=dinner&&sceneLang?sceneLang:mainLang;
+  const lang=useInterfaceLang();
   const learning = path === "/learn";
   const challenge = path.startsWith("/challenge/");
   const canUseModel = useCanUseModel();

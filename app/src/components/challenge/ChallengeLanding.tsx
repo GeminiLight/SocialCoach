@@ -55,7 +55,7 @@ export function ChallengeLanding({lang}:{lang:Lang}) {
   </section>
   <section className="mb-6"><h2 className="text-[14px] text-ink-2 mb-2">{text('you')} · {p.role}</h2><p className="text-base leading-relaxed">{p.background}</p></section>
   <section className="mb-7"><h2 className="text-[14px] text-ink-2 mb-3">{text('goal')}</h2><ul className="flex flex-col gap-2">{p.objectives.map((o,i)=><li key={o} className="flex items-start gap-3 text-[15px] leading-relaxed"><span className="num text-accent-deep">0{i+1}</span>{o}</li>)}</ul></section>
-  <ModelAccessNotice className="mb-4"/>
+  <ModelAccessNotice className="mb-4" lang={lang}/>
   <Button requiresModel block size="lg" onClick={start} disabled={!hydrated||!!saveIssue||opening}>{opening?text('busy'):pending?text('resume'):text('start')}<ArrowRight size={18} aria-hidden/></Button>
   {saveIssue&&<p role="alert" className="text-[14px] text-danger mt-3">{text('blocked')}</p>}
   <p className="text-[13px] text-ink-2 leading-relaxed mt-4">{text('privacy')}</p>
