@@ -14,5 +14,27 @@
   },
   "mirroredFiles": 450,
   "stagedGitBlobsMatch": true,
-  "researchOrCredentialsIncluded": false
+  "researchOrCredentialsIncluded": false,
+  "finalRuntime": {
+    "sourceCommit": "0e5e2cf5cce40a3cd8c0659f82d513ee345db54d",
+    "main": {
+      "id": "dpl_BeZkng6woEj2WR2sZt5rE54UMF9j",
+      "url": "socialcoach-izv64f4wf-geminilights-projects.vercel.app",
+      "readyState": "READY",
+      "target": "production"
+    },
+    "studio": {
+      "commit": "36bcc7191766021b4f29a4ed6f69db078a275f66",
+      "status": "Running",
+      "hardware": "platform/2v-cpu-16g-mem",
+      "runtimeCreatedAt": "2026-10-22T13:19:40.000Z"
+    },
+    "mirroredFiles": 451,
+    "stagedGitBlobsMatch": true,
+    "checks": [
+      "main and studio fresh first-click actual PNG download matches preview",
+      "main and studio recovery en→zh→en preserves raw archive and ordinary clicks clear overlay"
+    ],
+    "additionalModelCalls": 0
+  }
 }

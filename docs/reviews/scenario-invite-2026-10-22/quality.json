@@ -20,6 +20,32 @@
   "endToEndPageErrors": 0,
   "pullRequests": [
     43,
-    44
-  ]
+    44,
+    45,
+    46,
+    47
+  ],
+  "finalRuntimeCommit": "0e5e2cf5cce40a3cd8c0659f82d513ee345db54d",
+  "finalRuntimeCI": {
+    "run": "https://github.com/GeminiLight/SocialCoach/actions/runs/39782292578",
+    "head": "7f17fce51f893a2e0b5714660f05267405d25442",
+    "core": 123,
+    "dinner": 256,
+    "lint": "passed",
+    "types": "passed",
+    "build": "passed"
+  },
+  "finalFirstVisitImmediateInviteGroups": 4,
+  "finalPublicChecks": {
+    "downloads": [
+      "release/download-main.json",
+      "release/download-studio.json"
+    ],
+    "recovery": [
+      "release/recovery-main/checks.json",
+      "release/recovery-studio/checks.json"
+    ],
+    "appPageErrors": 0,
+    "additionalModelCalls": 0
+  }
 }

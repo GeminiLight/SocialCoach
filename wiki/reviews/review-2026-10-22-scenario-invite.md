@@ -36,6 +36,17 @@
 
 ## 独立验收与恢复页补验
 
-独立 PR #45 `9053c1f` 修复邀请中的档案恢复语言切换，主站 `dpl_CA4pndvm8ZDJHuGF1MCWbj2b76tm` READY，国内镜像 `2eb8aa6` Running；主站公开入口的英文→中文→英文及损坏原件保留已通过。国内公开手机页面复验发现平台外层悬浮控件挡住右侧 English 按钮；没有用强制点击跳过该失败。邀请模式下恢复页的语言控件改为靠左排列，避开平台浮层；其他入口布局保持原样。修复前阻挡日志保留在 first-attempts，修复后的公开双站点击验收待补齐。
+独立 PR #45 `9053c1f` 修复邀请中的档案恢复语言切换，主站 `dpl_CA4pndvm8ZDJHuGF1MCWbj2b76tm` READY，国内镜像 `2eb8aa6` Running；主站公开入口的英文→中文→英文及损坏原件保留已通过。国内公开手机页面复验发现平台外层悬浮控件挡住右侧 English 按钮；没有用强制点击跳过该失败。邀请模式下恢复页的语言控件改为靠左排列，避开平台浮层；其他入口布局保持原样。修复前阻挡日志保留在 first-attempts，修复后的公开双站点击验收已通过（最终来源与证据见下）。
 
-实际下载补测进一步复现首次点击时序问题：公开首屏可见后立即点击邀请，档案 hydration 切换会丢失弹窗，主站与国内入口均出现等待图片超时。原矩阵先初始化档案再点击，因此未覆盖此窗口。邀请按钮现在同开练按钮一样等待 hydration 后启用；首次访问脚本加入立即点击并等待图片的回归，实际 PNG 下载另行验证。失败页面截图与日志保留在 first-attempts。
+实际下载补测进一步复现首次点击时序问题：公开首屏可见后立即点击邀请，档案 hydration 切换会丢失弹窗，主站与国内入口均出现等待图片超时。原矩阵先初始化档案再点击，因此未覆盖此窗口。邀请按钮现在同开练按钮一样等待 hydration 后启用；首次访问脚本加入立即点击并等待图片的回归，实际 PNG 下载已在本地和公开双站通过（见下）。失败页面截图与日志保留在 first-attempts。
+
+
+## 最终公开入口验收
+
+最终运行代码 `0e5e2cf5cce40a3cd8c0659f82d513ee345db54d`（#45、#46、#47 修订已包含），主站生产部署 `dpl_BeZkng6woEj2WR2sZt5rE54UMF9j` READY，国内镜像 `36bcc7191766021b4f29a4ed6f69db078a275f66` Running，运行实例建立于 2026-10-22 13:19:40 UTC。451 个镜像构建输入逐个匹配主线 Git blob，Draco WASM 仍为真实字节。没有更改硬件、模型或预算。
+
+- 主站与国内公开地址均从干净手机浏览器页面立即点击邀请并实际下载，文件名 `SocialCoach-invite-zh.png`。主站卡 153773 字节，国内卡 154351 字节（二维码目的地址不同）；分别与各自预览逐字节一致。
+- 两站恢复页均以损坏的虚构档案执行 English → 中文 → English，普通点击成功，原始档案字符串不变。国内按钮位于 x=134..184，避开外层悬浮控件；应用页面异常为零。外层平台仍出现已记录的 `g.alicdn.com` 异常，未阻断操作。
+- #47 的 [CI](https://github.com/GeminiLight/SocialCoach/actions/runs/39782292578) 对合并前同内容代码通过 lint、类型、123 核心 + 256 3D、构建。四组首访检查含立即邀请回归。最终补验只覆盖这些界面修订，没有重复调用模型；前述两站真实模型闭环属于 `b099dc3`，不混记成最新代码重新执行。
+
+原件：[主站下载](../../docs/reviews/scenario-invite-2026-10-22/release/download-main.json)、[国内下载](../../docs/reviews/scenario-invite-2026-10-22/release/download-studio.json)、[主站恢复](../../docs/reviews/scenario-invite-2026-10-22/release/recovery-main/checks.json)、[国内恢复](../../docs/reviews/scenario-invite-2026-10-22/release/recovery-studio/checks.json)、[发布来源](../../docs/reviews/scenario-invite-2026-10-22/release/deployments.json)。连续问题的原因与防线见 [首访复盘](../81-postmortem-invite-first-visit.md)。剩余真机 / 微信与朋友试玩观察保留在 backlog，不影响本轮已授权工程交付的完成。
