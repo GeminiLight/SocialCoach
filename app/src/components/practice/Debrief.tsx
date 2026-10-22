@@ -496,8 +496,8 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
           </section>
         )}
         {!streaming && (
-          <BottomBar className="px-5 pb-safe pb-6 pt-4 flex flex-col sm:flex-row gap-2 lg:px-0 lg:pb-0">
-            <Button requiresModel block size="lg" onClick={onAgain}><RotateCcw size={18} />{session.sceneContext?pick(sceneReviewCopy.repeat,lang):t(lang, "rp_practice_again")}</Button>
+          <BottomBar className={clsx("px-5 pb-safe pb-6 pt-4 flex gap-2 lg:px-0 lg:pb-0",session.sceneContext?"flex-col sm:flex-row":"flex-row")}>
+            <Button requiresModel block size="lg" className="flex-1" onClick={onAgain}><RotateCcw size={18} />{session.sceneContext?pick(sceneReviewCopy.repeat,lang):pick({zh:'整场重练',en:'Full replay'},lang)}</Button>
             <Button size="lg" variant="ghost" onClick={() => router.push(session.sceneContext?'/3d':"/")} className="shrink-0">{session.sceneContext?pick(sceneReviewCopy.returnScene,lang):t(lang, "rp_back_home")}</Button>
           </BottomBar>
         )}

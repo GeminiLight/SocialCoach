@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "case": "320px long original + cancellation",
+      "expandAndCollapse": true,
+      "compactBar": true,
+      "noOverflow": true,
+      "pendingAfterRefresh": true,
+      "learnerSentOnce": true,
+      "replyAttempts": 2,
+      "errors": []
+    },
+    {
+      "case": "model checking is separate from page readiness",
+      "noStartupNoticeDuringModelWait": true,
+      "inviteWorksWithoutModel": true
+    }
+  ],
+  "realModelCalls": 0
+}
