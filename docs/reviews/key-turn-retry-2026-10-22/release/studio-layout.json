@@ -1,0 +1,16 @@
+{
+  "parent": {
+    "width": 375,
+    "scroll": 375
+  },
+  "app": {
+    "width": 375,
+    "scroll": 375
+  },
+  "frame": {
+    "x": 0,
+    "y": 0.484375,
+    "width": 375,
+    "height": 900
+  }
+}

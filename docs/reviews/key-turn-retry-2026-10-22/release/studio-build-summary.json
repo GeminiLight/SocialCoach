@@ -1,0 +1,15 @@
+[
+  "2026-10-22 19:03:13 [INFO] '###commitId###:1d4ba65b8b12a9d462ddf4f2069a1124d8c373c0###commitTime###:Thu Oct 22 19:02:23 2026 +0800###commitAuthor###:GeminiLight <wtfly2018@163.com>###commitMsg###:fix: include the Draco decoder bytes in the Studio build'",
+  "2026-10-22 19:03:13 [INFO] {\"commitId\": \"1d4ba65b8b12a9d462ddf4f2069a1124d8c373c0\", \"commitMsg\": \"fix%3A%20include%20the%20Draco%20decoder%20bytes%20in%20the%20Studio%20build\", \"commitTime\": \"Thu Oct 22 19:02:23 2026 +0800\", \"commitAuthor\": \"GeminiLight%20%3Cwtfly2018%40163.com%3E\"}",
+  "2026-10-22 19:03:13 [INFO] https://www.modelscope.cn/studios/GeminiLight/SocialCoach.git.master.lastCommitId=1d4ba65b8b12a9d462ddf4f2069a1124d8c373c0",
+  "2026-10-22 19:05:13 [INFO] #14 50.79 # tests 256",
+  "2026-10-22 19:05:13 [INFO] #14 50.79 # pass 256",
+  "2026-10-22 19:05:24 [INFO] #14 61.49 \u2713 Compiled successfully in 8.9s",
+  "2026-10-22 19:05:45 [INFO] pushing image: mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-1d4ba65b-2026-10-22-19-03-09",
+  "2026-10-22 19:05:56 [INFO] 363578-1d4ba65b-2026-10-22-19-03-09: digest: sha256:a95dde24da7e78709edb69f6daffb29e64414121a47b7b7427f3a6b0defc3592 size: 2414",
+  "2026-10-22 19:05:56 [INFO] docker rmi mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-1d4ba65b-2026-10-22-19-03-09",
+  "2026-10-22 19:05:56 [INFO] Untagged: mshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-1d4ba65b-2026-10-22-19-03-09",
+  "2026-10-22 19:05:56 [INFO] \u955c\u50cf\u516c\u7f51\u5730\u5740\uff1amshub-registry.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-1d4ba65b-2026-10-22-19-03-09",
+  "2026-10-22 19:05:56 [INFO] \u955c\u50cfVPC\u5730\u5740\uff1amshub-registry-vpc.cn-zhangjiakou.cr.aliyuncs.com/modelscope-repo/independent-service:363578-1d4ba65b-2026-10-22-19-03-09",
+  "\u001b[32m2026-10-22 19:05:56 [SUCCESS] run step successfully!\u001b[39m"
+]

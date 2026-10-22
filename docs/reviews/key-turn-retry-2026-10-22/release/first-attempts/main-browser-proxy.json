@@ -1,0 +1,7 @@
+{
+  "error": "Error: spawnSync agent-browser ETIMEDOUT",
+  "page": {
+    "text": "",
+    "url": "about:blank"
+  }
+}

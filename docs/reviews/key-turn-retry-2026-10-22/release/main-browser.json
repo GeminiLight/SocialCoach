@@ -1,0 +1,19 @@
+{
+  "publicUrl": "https://socialcoach-ai.vercel.app/practice/studio-key-turn-fixture/retry/wa9pn9upjhma",
+  "appUrl": "https://socialcoach-ai.vercel.app/practice/studio-key-turn-fixture/retry/wa9pn9upjhma",
+  "viewport": {
+    "width": 375,
+    "height": 900
+  },
+  "lang": "zh",
+  "theme": "dark",
+  "entry": true,
+  "retry": true,
+  "review": true,
+  "sourceTranscript": true,
+  "refresh": true,
+  "originalPreserved": true,
+  "overflow": false,
+  "pageErrors": [],
+  "models": "stubbed; actual hosted model probe recorded separately"
+}

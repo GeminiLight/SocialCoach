@@ -1,0 +1,7 @@
+{
+  "appSource": "cefa202c37a877a659bd324ff6838107eb1b3706",
+  "studioCommit": "1d4ba65b8b12a9d462ddf4f2069a1124d8c373c0",
+  "gitBlobInputsCompared": 437,
+  "mismatches": [],
+  "studioOnlyPackaging": ".gitattributes inline exception for the small Draco WASM"
+}

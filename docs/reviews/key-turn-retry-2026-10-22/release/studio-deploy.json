@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "request_id": "89f5bc4e-635a-43c3-afb4-6c749d4ea030",
+  "data": {
+    "status": "Building",
+    "active_config": {
+      "hardware": "platform/2v-cpu-16g-mem",
+      "sdk_type": "docker"
+    },
+    "created_at": "2026-10-22T10:57:57.000Z"
+  }
+}
