@@ -61,7 +61,7 @@ export function ChallengeLanding({lang}:{lang:Lang}) {
   <p className="text-[13px] text-ink-2 leading-relaxed mt-4">{text('privacy')}</p>
   <p className="text-[12px] text-ink-3 leading-relaxed mt-3">{pick(inviteCopy.note,lang)}</p>
   <div className="flex flex-wrap gap-x-5 gap-y-2 mt-7">
-   <Button variant="ghost" onClick={()=>setShowInvite(true)}><Share2 size={16} aria-hidden/>{text('invite')}</Button>
+   <Button variant="ghost" disabled={!hydrated} onClick={()=>setShowInvite(true)}><Share2 size={16} aria-hidden/>{text('invite')}</Button>
    <a href={challengeUrl(lang,destination==='studio'?'main':'studio')} target="_blank" rel="noopener noreferrer" className="press inline-flex min-h-11 items-center text-[13px] text-action">{text('fallback')} ↗</a>
   </div>
   <p className="text-[12px] text-ink-3 mt-6">{text('source')} · v1</p>
