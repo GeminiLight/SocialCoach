@@ -15,6 +15,8 @@ async function main(){try{
  b(['network','route','**/api/health','--body',JSON.stringify({state:'unavailable',issue:'setup'})]);
  b(['network','route','**/api/track','--body','{"available":false}']);
  b(['open',base+challengePath('zh')]);
+ // Public HTML precedes archive hydration. Wait before seeding a test profile.
+ b(['wait','--fn',"!!document.querySelector('button[aria-label=反馈]') && !!document.querySelector('#challenge-landing aside button')"]);
  for(const lang of ['zh','en'] as const)for(const existing of [false,true]){
   const profile=existing?{name:'Synthetic retained profile',bio:'',goals:['communication'],contexts:[],lang:lang==='en'?'zh':'en',createdAt:1}:null;
   const archive=JSON.stringify({version:0,state:{sessions:[],profile,settings:{tts:false,telemetry:false}}});

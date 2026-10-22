@@ -1,0 +1,37 @@
+{
+  "publicUrl": "https://socialcoach-ai.vercel.app/challenge/office-quick-favor/v1/zh",
+  "appUrl": "https://socialcoach-ai.vercel.app/practice/6yq2fadd9twj",
+  "mode": "real hosted model",
+  "qr": "https://socialcoach-ai.vercel.app/challenge/office-quick-favor/v1/zh",
+  "freshProfile": true,
+  "frozenScene": true,
+  "firstReply": true,
+  "parentReloadResume": true,
+  "independentReview": true,
+  "reinvitePrivateExcluded": true,
+  "layout": {
+    "parent": {
+      "width": 375,
+      "scroll": 375
+    },
+    "app": {
+      "width": 375,
+      "scroll": 375
+    }
+  },
+  "errors": [],
+  "calls": [
+    {
+      "path": "/api/roleplay",
+      "at": 1792671412440
+    },
+    {
+      "path": "/api/roleplay",
+      "at": 1792671414973
+    },
+    {
+      "path": "/api/assess",
+      "at": 1792671421483
+    }
+  ]
+}

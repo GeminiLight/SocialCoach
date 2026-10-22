@@ -44,7 +44,7 @@ export function StorageRecovery({ issue }: { issue: "unreadable" | "unavailable"
   };
   return (
     <main className="min-h-dvh flex flex-col justify-center gap-6 px-5 py-12 max-w-[var(--dialog-max)] mx-auto">
-      <div className="flex items-center justify-between gap-4">
+      <div className={`flex items-center gap-4 ${invitation ? "justify-start" : "justify-between"}`}>
         <BrandMark size={44} />
         <LanguagePicker lang={lang} onChange={next => {
           if (invitation) {

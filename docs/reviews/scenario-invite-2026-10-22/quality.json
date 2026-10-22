@@ -13,5 +13,13 @@
     "high": 0,
     "critical": 0
   },
-  "models": "Browser fixtures intercepted; no new inference for card or landing."
+  "models": "Browser fixtures intercepted; no new inference for card or landing.",
+  "validatedProductCommit": "b099dc3f040435f0c244f55f5f61f73e5cdece20",
+  "firstVisitLanguageGroups": 4,
+  "endToEndGroups": 8,
+  "endToEndPageErrors": 0,
+  "pullRequests": [
+    43,
+    44
+  ]
 }

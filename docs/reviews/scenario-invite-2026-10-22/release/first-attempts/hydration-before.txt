@@ -1,0 +1,43 @@
+CONSOLE
+Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template).
+ERROR
+Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+      <LoadingBoundary name="zh/" loading={null}>
+        <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+          <RedirectBoundary>
+            <RedirectErrorBoundary router={{...}}>
+              <InnerLayoutRouter url="/challenge..." tree={[...]} params={{id:"office...", ...}} ...>
+                <SegmentViewNode type="page" pagePath="challenge/...">
+                  <SegmentTrieNode>
+                  <Page>
+                    <ChallengeLanding lang="zh">
+                      <main id="challenge-..." lang="zh" className="min-h-dvh ...">
+                        <header>
+                        <p>
+                        <h1>
+                        <section>
+                        <section>
+                        <section>
+                        <ModelAccessNotice className="mb-4">
+                          <aside aria-live="polite" className="rounded-xl...">
+                            <div className="flex flex-...">
+                              <div className="min-w-0 fl...">
+                                <p className="text-ink-2 leading-relaxed">
++                                 正在检查模型连接…
+-                                 Checking the model connection…
+                        ...
+                ...
+              ...
