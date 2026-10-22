@@ -1,0 +1,95 @@
+[
+  {
+    "lang": "zh",
+    "theme": "light",
+    "viewport": 375,
+    "heading": "今日练习",
+    "noOverflow": true,
+    "ratio": 0.6666666666666666,
+    "sizes": "(min-width: 1024px) 104px, 88px",
+    "uncropped": true,
+    "width": 88
+  },
+  {
+    "lang": "zh",
+    "theme": "light",
+    "viewport": 1440,
+    "heading": "今日练习",
+    "noOverflow": true,
+    "ratio": 0.6666666666666666,
+    "sizes": "(min-width: 1024px) 104px, 88px",
+    "uncropped": true,
+    "width": 104
+  },
+  {
+    "lang": "zh",
+    "theme": "dark",
+    "viewport": 375,
+    "heading": "今日练习",
+    "noOverflow": true,
+    "ratio": 0.6666666666666666,
+    "sizes": "(min-width: 1024px) 104px, 88px",
+    "uncropped": true,
+    "width": 88
+  },
+  {
+    "lang": "zh",
+    "theme": "dark",
+    "viewport": 1440,
+    "heading": "今日练习",
+    "noOverflow": true,
+    "ratio": 0.6666666666666666,
+    "sizes": "(min-width: 1024px) 104px, 88px",
+    "uncropped": true,
+    "width": 104
+  },
+  {
+    "lang": "en",
+    "theme": "light",
+    "viewport": 375,
+    "heading": "Today's practice",
+    "noOverflow": true,
+    "ratio": 0.6666666666666666,
+    "sizes": "(min-width: 1024px) 104px, 88px",
+    "uncropped": true,
+    "width": 88
+  },
+  {
+    "lang": "en",
+    "theme": "light",
+    "viewport": 1440,
+    "heading": "Today's practice",
+    "noOverflow": true,
+    "ratio": 0.6666666666666666,
+    "sizes": "(min-width: 1024px) 104px, 88px",
+    "uncropped": true,
+    "width": 104
+  },
+  {
+    "lang": "en",
+    "theme": "dark",
+    "viewport": 375,
+    "heading": "Today's practice",
+    "noOverflow": true,
+    "ratio": 0.6666666666666666,
+    "sizes": "(min-width: 1024px) 104px, 88px",
+    "uncropped": true,
+    "width": 88
+  },
+  {
+    "lang": "en",
+    "theme": "dark",
+    "viewport": 1440,
+    "heading": "Today's practice",
+    "noOverflow": true,
+    "ratio": 0.6666666666666666,
+    "sizes": "(min-width: 1024px) 104px, 88px",
+    "uncropped": true,
+    "width": 104
+  },
+  {
+    "viewport": 320,
+    "longUnbrokenName": true,
+    "noOverflow": true
+  }
+]
