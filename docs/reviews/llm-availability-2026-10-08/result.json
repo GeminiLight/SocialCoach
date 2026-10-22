@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-08T01:40:09+08:00",
+  "test": "Cloud default model availability; no BYOK credentials used",
+  "free_metadata": {
+    "vercel": {
+      "http_status": 200,
+      "state": "available"
+    },
+    "modelscope": {
+      "http_status": 200,
+      "state": "available"
+    }
+  },
+  "actual_hint_requests": {
+    "vercel": {
+      "http_status": 429,
+      "modelIssue": "quota",
+      "seconds": 1.86
+    },
+    "modelscope": {
+      "http_status": 429,
+      "modelIssue": "quota",
+      "seconds": 1.12
+    }
+  },
+  "shared_budget_readonly": {
+    "reserved_tokens": 1998465,
+    "daily_cap": 2000000,
+    "remaining_tokens": 1535,
+    "active_calls": 0,
+    "reset_at": "2026-10-08T08:00:00+08:00"
+  },
+  "conclusion": "Application shared daily reservation budget rejects generation before the upstream model call. Metadata availability does not prove generation eligibility. Upstream generation was not verified.",
+  "production_configuration_changed": false,
+  "budget_counters_changed": false,
+  "network_note": "Vercel direct access from this machine failed; an existing local proxy allowed health and hint requests. ModelScope dedicated API was checked with platform access authentication."
+}
