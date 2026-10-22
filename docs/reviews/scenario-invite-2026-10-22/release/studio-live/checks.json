@@ -1,0 +1,46 @@
+{
+  "publicUrl": "https://modelscope.cn/studios/GeminiLight/SocialCoach?mode=full&app_path=%2Fchallenge%2Foffice-quick-favor%2Fv1%2Fzh",
+  "appUrl": "https://geminilight-socialcoach.ms.show/practice/sv3j3862cdnu",
+  "mode": "real hosted model",
+  "qr": "https://modelscope.cn/studios/GeminiLight/SocialCoach?mode=full&app_path=%2Fchallenge%2Foffice-quick-favor%2Fv1%2Fzh",
+  "freshProfile": true,
+  "frozenScene": true,
+  "firstReply": true,
+  "parentReloadResume": true,
+  "independentReview": true,
+  "reinvitePrivateExcluded": true,
+  "layout": {
+    "parent": {
+      "width": 375,
+      "scroll": 375
+    },
+    "app": {
+      "width": 375,
+      "scroll": 375
+    }
+  },
+  "errors": [
+    {
+      "message": "Cannot read properties of undefined (reading 'setAttribute')",
+      "stack": "Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'setAttribute')\n    at <anonymous> (https://g.alicdn.com/sail-web/maas/1.1100.154/h5/9747.js:0:5654929)\n    at r (https://g.alicdn.com/sail-web/maas/1.1100.154/h5/9747.js:0:5650822)"
+    },
+    {
+      "message": "Cannot read properties of undefined (reading 'setAttribute')",
+      "stack": "Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'setAttribute')\n    at <anonymous> (https://g.alicdn.com/sail-web/maas/1.1100.154/h5/9747.js:0:5654929)\n    at r (https://g.alicdn.com/sail-web/maas/1.1100.154/h5/9747.js:0:5650822)"
+    }
+  ],
+  "calls": [
+    {
+      "path": "/api/roleplay",
+      "at": 1792671530945
+    },
+    {
+      "path": "/api/roleplay",
+      "at": 1792671533076
+    },
+    {
+      "path": "/api/assess",
+      "at": 1792671540915
+    }
+  ]
+}

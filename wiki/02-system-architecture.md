@@ -78,7 +78,7 @@ SocialCoach/
 
 2026-10-22 同题邀请：`data/challenges/office-quick-favor-v1.json` 保存带 source 的不可变公共场景快照。`challenge.ts` 只从批准的公共配置派生分享文字和链接，`InviteCard` 在浏览器用本地二维码与 Canvas 生成 PNG，不读取转录 / 评分，也不调用模型。`/challenge/[id]/[version]/[lang]` 提供双语元信息和首屏正文，允许访客预览；明确开练才沿用欢迎页的空白访客档案并创建固定适配的独立 session，`Session.challenge` 仅保留公共 ID / 版本 / 语言，随本地备份恢复。未知版本显示失效与明确重新选择入口。
 
-分享主站使用正式域名路径，国内使用公开创空间 `?mode=full&app_path=<encoded path>`；不使用会丢路径的统一分流域名。两入口不拼接设备或档案；无发送者身份、邀请关系或新增统计事件。现有对练 / 复盘 / BYOK、限额及匿名事件开关保持原行为。→ [规格](./specs/spec-scenario-invite.md)
+分享主站使用正式域名路径，国内使用公开创空间 `?mode=full&app_path=<encoded path>`；不使用会丢路径的统一分流域名。两入口不拼接设备或档案；无发送者身份、邀请关系或新增统计事件。现有对练 / 复盘 / BYOK、限额及匿名事件开关保持原行为。→ [规格](./archive/specs/spec-scenario-invite.md)
 
 2026-10-22：`KeyTurnEntry` 从已复盘的 `office-quick-favor` 原场派生首回应检查点，`KeyTurnPractice` 在独立子路由运行短练。`Session.keyTurnAttempts` 仅存新转录、原回答指针和独立报告，原 NPC 开场从父记录读取；不把原回答与后来披露发给本次模型。写回按 attempt ID / revision 比较，旧回复、已结束回顾与档案重置不接受迟到覆盖。档案 schema 验证源指针、角色、顺序与四轮上限，旧档无需迁移。整场历史、能力估计和原话对照只消费父 `Session`，短练不加训练次数。→ [规格](./archive/specs/spec-key-turn-retry.md)
 

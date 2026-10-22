@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "b099dc3f040435f0c244f55f5f61f73e5cdece20",
+  "main": {
+    "id": "dpl_GK8YNp4Tsxg4Soa6Ck1Pe2MBjaWr",
+    "url": "socialcoach-m8hf86duv-geminilights-projects.vercel.app",
+    "readyState": "READY",
+    "target": "production"
+  },
+  "studio": {
+    "commit": "8428410f4833b39442ed77c200ae106acb3e26b6",
+    "status": "Running",
+    "hardware": "platform/2v-cpu-16g-mem",
+    "runtimeCreatedAt": "2026-10-22T12:17:14.000Z"
+  },
+  "mirroredFiles": 450,
+  "stagedGitBlobsMatch": true,
+  "researchOrCredentialsIncluded": false
+}

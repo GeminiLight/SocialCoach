@@ -1,0 +1,16 @@
+{
+  "title": "换你，这句话怎么接？ · SocialCoach",
+  "image": "https://socialcoach-ai.vercel.app/invites/office-quick-favor-v1-zh.png",
+  "assets": {
+    "/invites/office-quick-favor-v1-zh.png": {
+      "status": 200,
+      "bytes": 153773,
+      "sha256": "fc0190bc7d2105741f5c69aec0512e08466a68a203d38f0f925dbb1e6717e001"
+    },
+    "/3d/draco/draco_decoder.wasm": {
+      "status": 200,
+      "bytes": 192420,
+      "sha256": "a680d927bed9cb864ddbd63521868891af2bfbe755092761b4837487618df8ac"
+    }
+  }
+}
