@@ -24,7 +24,7 @@
 |---|---|---|---|
 | E1 | 最新主线可靠性复核 | ✅ 相关回归通过 | 已修档案 / 密钥 / 额度 / 输出边界复测；真机与用户效果继续跟踪 |
 | E2 | 同条件独立重练的原话对照 | ✅ 双站已发布 | 333 项核心 / 3D（含 11 项对照）、主站 9 组与国内公开嵌入页验收；真机 / 用户效果待验 → [规格](./archive/specs/spec-practice-comparison.md)、[验收](./reviews/review-2026-10-12-practice-comparison.md) |
-| E3 | 这一句，重来 | ✅ 双站已发布，用户效果待验 | 唐悦六页请求，一个动作、最多四轮；372 项检查、双站真实短练 / 回顾与公开页面核验 → [规格](./archive/specs/spec-key-turn-retry.md)、[验收](./reviews/review-2026-10-22-key-turn-retry.md) |
+| E3 | 这一句，重来 | ✅ 双站已发布，用户效果待验 | 唐悦六页请求，一个动作、最多四轮；10-23 原句入口 / 恢复 / 返回精修、383 项检查与双站公开验收 → [精修记录](./reviews/review-2026-10-22-experience-polish.md)；原版真实短练 / 回顾核验 → [规格](./archive/specs/spec-key-turn-retry.md)、[验收](./reviews/review-2026-10-22-key-turn-retry.md) |
 | E5a | 公共场景同题邀请卡 | ✅ 双站已发布；传播效果待验 | 用户已选定；唐悦固定 v1、中英 PNG / 二维码 / 链接、接收方独立练习、国内直达；不携带私人记录 → [规格](./archive/specs/spec-scenario-invite.md) |
 
 ### Stage A — 产品与语料建成

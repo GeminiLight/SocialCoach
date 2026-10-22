@@ -1,0 +1,197 @@
+{
+  "sourceCommit": "f3a19a681677aedceafc7c66597498d043526d13",
+  "vercel": {
+    "id": "dpl_88mmJG1ihBmK57C87bD58jzaap2U",
+    "state": "READY",
+    "url": "https://socialcoach-ai.vercel.app"
+  },
+  "studio": {
+    "mirrorCommit": "2970ddbc88ac482e50dbadcfa114a870b3083283",
+    "sourceFilesVerified": 454,
+    "state": "Running",
+    "createdAt": "2026-10-22T16:11:01.000Z",
+    "hardware": "platform/2v-cpu-16g-mem"
+  },
+  "ci": "https://github.com/GeminiLight/SocialCoach/actions/runs/39811354837",
+  "realModelCalls": 0,
+  "checks": {
+    "main": {
+      "site": "main",
+      "checks": [
+        {
+          "case": "public invite zh",
+          "actualCardDownload": true,
+          "brandingUnchanged": true,
+          "appErrors": []
+        },
+        {
+          "case": "public invite en",
+          "actualCardDownload": true,
+          "brandingUnchanged": true,
+          "appErrors": []
+        },
+        {
+          "case": "public blocked startup + actual native reload",
+          "blocked": 14,
+          "archivePreserved": true,
+          "languageFromInvite": true
+        },
+        {
+          "case": "public optional retry",
+          "sourceQuote": true,
+          "fullReplayLabel": true,
+          "resumeDraft": true,
+          "appErrors": []
+        }
+      ],
+      "realModelCalls": 0,
+      "network": [
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/05jhv7loj4uuk.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/0d4nms23ph_ae.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/2a6qy6aw5a0qi.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/0xuvmd8j8dsfu.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/turbopack-1fcbkkyorej-o.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/10z8vusf-wv4m.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/1b_f5sc2sw2bb.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/2ydp0utdzl451.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/11op0ns-70tql.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/41s7ks9z1reg_.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/0if01xkji85m1.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/1eavloc3nyj3w.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/0i4mmmcpqla09.js",
+          "status": 503
+        },
+        {
+          "url": "https://socialcoach-ai.vercel.app/_next/static/immutable/chunks/3k5acpjorj5hc.js",
+          "status": 503
+        }
+      ]
+    },
+    "studio": {
+      "site": "studio",
+      "checks": [
+        {
+          "case": "public invite zh",
+          "actualCardDownload": true,
+          "brandingUnchanged": true,
+          "appErrors": []
+        },
+        {
+          "case": "public invite en",
+          "actualCardDownload": true,
+          "brandingUnchanged": true,
+          "appErrors": []
+        },
+        {
+          "case": "public blocked startup + actual native reload",
+          "blocked": 14,
+          "archivePreserved": true,
+          "languageFromInvite": true
+        },
+        {
+          "case": "public optional retry",
+          "sourceQuote": true,
+          "fullReplayLabel": true,
+          "resumeDraft": true,
+          "appErrors": []
+        }
+      ],
+      "realModelCalls": 0,
+      "network": [
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/0jrdty78uy2uu.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/03_eom7vzijnv.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/0qm504ob67x0_.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/1y2lej-itm1w6.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/turbopack-1ogu0msn8xnbl.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/3-8le76o0l0_7.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/274mspmzotakp.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/0vbi6-u632l-b.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/131vl68okti3q.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/2p6g3jocg_3px.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/420uej5u6h183.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/41yiorg5pqpxu.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/24ra0sbdxyk53.js",
+          "status": 503
+        },
+        {
+          "url": "https://geminilight-socialcoach.ms.show/_next/static/chunks/3nzcgniet8p02.js",
+          "status": 503
+        }
+      ]
+    }
+  }
+}
