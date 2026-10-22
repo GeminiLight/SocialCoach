@@ -1,0 +1,63 @@
+{
+  "base": "http://localhost:3130",
+  "models": "intercepted; no inference",
+  "groups": [
+    {
+      "lang": "zh",
+      "destination": "main",
+      "qrAtWidths": [
+        1080,
+        540,
+        360
+      ],
+      "previewMatchesDownload": true,
+      "bytes": 168023,
+      "sha256": "85fbe414fab8ca5f06ccae3c899f82ac853b89da2fc411363f2201794f1aa648",
+      "pageErrors": []
+    },
+    {
+      "lang": "zh",
+      "destination": "studio",
+      "qrAtWidths": [
+        1080,
+        540,
+        360
+      ],
+      "previewMatchesDownload": true,
+      "bytes": 168626,
+      "sha256": "83368494c45439db4b17ac5dab062d2a821595ee83e6b9de2736f9f3d97b79ee",
+      "pageErrors": []
+    },
+    {
+      "lang": "en",
+      "destination": "main",
+      "qrAtWidths": [
+        1080,
+        540,
+        360
+      ],
+      "previewMatchesDownload": true,
+      "bytes": 161381,
+      "sha256": "b13fb781d248fa7d5f59552acc34827632bb9d903ea1ae8eb9347bdf20e412c1",
+      "pageErrors": []
+    },
+    {
+      "lang": "en",
+      "destination": "studio",
+      "qrAtWidths": [
+        1080,
+        540,
+        360
+      ],
+      "previewMatchesDownload": true,
+      "bytes": 162230,
+      "sha256": "ab63647154196bca0d0b243f14ba3c709f1bb2d4ec922c1bfac8ac4a7744688f",
+      "pageErrors": []
+    }
+  ],
+  "logoUnavailable": {
+    "linkPreserved": true,
+    "retry": true
+  },
+  "homepage": "https://socialcoach.aurax.live"
+}

@@ -7,7 +7,7 @@ import {pick} from '@/lib/i18n';
 import type {Lang} from '@/data/taxonomy';
 import {challengeUrl,invitationText,inviteCopy,inviteDestination,type InviteDestination} from '@/lib/challenge';
 import {copyShareText} from '@/lib/share-card';
-import {renderInviteCard,shareInvitation} from '@/lib/invite-card';
+import {INVITE_HOME_URL,renderInviteCard,shareInvitation} from '@/lib/invite-card';
 const L={
  title:{zh:'邀请朋友来接这一句',en:'Invite a friend to try'},
  preview:{zh:'朋友会看到这张邀请卡',en:'The invitation your friend sees'},
@@ -45,7 +45,7 @@ export function InviteCard({lang:initialLang,onClose}:{lang:Lang;onClose:()=>voi
    <p className="text-[14px] leading-relaxed text-ink-2">{pick(inviteCopy.privacy,lang)}</p>
    <div className="grid md:grid-cols-2 gap-6 items-start">
     <figure className="min-w-0 flex flex-col gap-2">
-     {current?/* The downloadable PNG is the preview, so both always match. */<Image unoptimized src={current.url} width={1080} height={1350} alt={`${text('preview')}: ${pick(inviteCopy.question,lang)}`} className="w-full h-auto rounded-[var(--radius)] border border-line"/>:<div className="aspect-[4/5] rounded-[var(--radius)] bg-inset grid place-items-center p-6 text-[14px] text-ink-2" role="status">{failed===key?<div className="flex flex-col gap-4"><p>{text('failed')}</p><Button variant="secondary" onClick={()=>setRetry(n=>n+1)}>{text('retry')}</Button></div>:text('preparing')}</div>}
+     {current?/* The downloadable PNG is the preview, so both always match. */<Image unoptimized src={current.url} width={1080} height={1350} alt={`SocialCoach · ${text('preview')}: ${pick(inviteCopy.question,lang)} · ${INVITE_HOME_URL}`} className="w-full h-auto rounded-[var(--radius)] border border-line"/>:<div className="aspect-[4/5] rounded-[var(--radius)] bg-inset grid place-items-center p-6 text-[14px] text-ink-2" role="status">{failed===key?<div className="flex flex-col gap-4"><p>{text('failed')}</p><Button variant="secondary" onClick={()=>setRetry(n=>n+1)}>{text('retry')}</Button></div>:text('preparing')}</div>}
      <figcaption className="text-[12px] text-ink-3">{text('preview')}</figcaption>
     </figure>
     <div className="flex flex-col gap-5 min-w-0">
