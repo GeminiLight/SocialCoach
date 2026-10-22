@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { create } from "zustand";
 import { Check, CheckCircle2, MessageSquare, Send, ThumbsDown, ThumbsUp } from "lucide-react";
-import { useLang } from "@/store/useApp";
+import { useInterfaceLang as useLang } from "@/lib/ui-language";
 import { pick } from "@/lib/i18n";
 import { feedbackPage, type Feedback } from "@/lib/feedback/schema";
 import { Button, Sheet } from "./ui";

@@ -1,0 +1,42 @@
+{
+  "base": "http://localhost:3120",
+  "models": "unavailable fixture; no generation",
+  "groups": [
+    {
+      "lang": "zh",
+      "existing": false,
+      "profilePreserved": true,
+      "serverLanguage": true,
+      "noticeAndButtonLanguage": true,
+      "modelSheetLanguage": true,
+      "pageErrors": 0
+    },
+    {
+      "lang": "zh",
+      "existing": true,
+      "profilePreserved": true,
+      "serverLanguage": true,
+      "noticeAndButtonLanguage": true,
+      "modelSheetLanguage": true,
+      "pageErrors": 0
+    },
+    {
+      "lang": "en",
+      "existing": false,
+      "profilePreserved": true,
+      "serverLanguage": true,
+      "noticeAndButtonLanguage": true,
+      "modelSheetLanguage": true,
+      "pageErrors": 0
+    },
+    {
+      "lang": "en",
+      "existing": true,
+      "profilePreserved": true,
+      "serverLanguage": true,
+      "noticeAndButtonLanguage": true,
+      "modelSheetLanguage": true,
+      "pageErrors": 0
+    }
+  ]
+}
