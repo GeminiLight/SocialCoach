@@ -159,6 +159,8 @@ export interface KeyTurnAttempt {
 }
 
 export interface Session {
+  /** Public invitation content/version; no sender identity. */
+  challenge?: {id: "office-quick-favor"; version: 1; lang: Lang};
   keyTurnAttempts?: KeyTurnAttempt[];
   /** Public per-turn evidence from a 3D practice; preserved in device exports. */
   sceneContext?: SceneContext;

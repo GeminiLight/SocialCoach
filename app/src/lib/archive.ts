@@ -22,6 +22,7 @@ export const MessageSchema=z.object({id:text.min(1),role:z.enum(['learner','npc'
 const reply=z.object({evidence:text,answer:text,example:text,sources:z.array(z.object({kind:z.enum(['theory','case']),id:text}))});
 const KeyTurnSchema=z.object({version:z.literal(1),id:text.min(1),sourceMessageId:text.min(1),lang:z.enum(['zh','en']),startedAt:num,endedAt:num.optional(),revision:z.number().int().nonnegative(),status:z.enum(['active','ended','reviewed']),messages:z.array(MessageSchema),report:ReportSchema.optional()});
 const SessionSchema=z.object({
+ challenge:z.object({id:z.literal("office-quick-favor"),version:z.literal(1),lang:z.enum(["zh","en"])}).optional(),
  keyTurnAttempts:z.array(KeyTurnSchema).optional(),
  id:text.min(1),scenario:ScenarioSchema,learnerCharacterId:text,messages:z.array(MessageSchema),objectiveDone:z.array(z.boolean()),status:z.enum(['briefing','active','ended','assessed']),startedAt:num,endedAt:num.optional(),reflections:z.array(z.object({question:text,answer:text,coachReply:text.optional(),revision:text.optional()})),origin:z.enum(['scheduled','arena','rehearse']),
  adaptation:AdaptationSchema.extend({briefing:text,objectives:strings,focus:text}).optional(),prescription:z.object({query:text,core_constraints:z.object({target_skills:z.array(SkillSchema),contexts:strings.optional()}),optional_constraints:z.object({related_skills:z.array(SkillSchema).optional(),relationship_types:strings.optional(),difficulty:z.number().int().min(1).max(3).optional()}).optional(),rationale:text}).optional(),
@@ -30,6 +31,7 @@ const SessionSchema=z.object({
  disclosures:z.array(z.object({characterId:text,messageId:text,quote:text,turn:num})).optional(),
 }).superRefine((s,ctx)=>{
  if(!s.scenario.characters.some(c=>c.id===s.learnerCharacterId))ctx.addIssue({code:'custom',path:['learnerCharacterId'],message:'Learner must belong to the saved cast'});
+ if(s.challenge&&(s.scenario.id!==s.challenge.id||s.scenario.custom||s.sceneContext))ctx.addIssue({code:'custom',path:['challenge'],message:'Invalid public challenge scene'});
  if(s.keyTurnAttempts&&(new Set(s.keyTurnAttempts.map(a=>a.id)).size!==s.keyTurnAttempts.length||s.keyTurnAttempts.some(a=>!validKeyTurnAttempt(s as Session,a as KeyTurnAttempt))))ctx.addIssue({code:'custom',path:['keyTurnAttempts'],message:'Invalid retry checkpoint or conversation'});
 });
 export const ArchiveSchema=z.object({

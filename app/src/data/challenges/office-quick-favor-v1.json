@@ -1,0 +1,127 @@
+{
+  "id": "office-quick-favor",
+  "simulationFacts": {
+    "zh": "演示稿比较两个采购方案，第三页是成本论证；唐悦没有核实数字，老板只指出论证不成立。没有已确认在手的采购单或来源表，查找来源只能作为下一步提议。其余页归唐悦负责，老板给她的具体截止时间尚未确认。16:30 是用户自己的报告截止时间，不是帮唐悦的时间。用户限定一页不等于答应报告交完后帮忙；帮忙时间只有用户明确提出才成立，唐悦的建议不算。只讨论一页、列问题或直接改稿是不同承诺，不得自动扩大范围。",
+    "en": "The deck compares two procurement options; page three contains the cost argument. Tang has not verified the figures; the boss only said the reasoning does not hold. No purchase order or source spreadsheet is established as available; finding the source can only be a proposed next step. Remaining pages are Tang's responsibility and her exact deadline is unconfirmed. 16:30 is the learner's own report deadline, not a help appointment. Limiting help to one page does not promise help after the report; only the learner's explicit offer establishes that time, not Tang's suggestion. Discussing one page, listing questions and editing it are different commitments; never silently expand scope."
+  },
+  "title": {
+    "zh": "“就改一下，五分钟的事”",
+    "en": "“Just a Quick Five-Minute Favor”"
+  },
+  "hook": {
+    "zh": "你正在赶自己的报告，同事把电脑直接推到你面前。",
+    "en": "You are finishing your report when a colleague pushes a laptop toward you."
+  },
+  "background": {
+    "zh": "你自己的报告要在 16:30 交，还有四十分钟。唐悦想让你替她重做六页演示稿，你不知道需要多久。她不是你的上级，之前你常帮她救急。你可以选择拒绝、有限协助或向共同负责人核实优先级。",
+    "en": "Your report is due at 16:30, forty minutes away. Tang wants you to redo six slides; you do not know how long it will take. She is not your manager and you have often rescued her work. You may decline, offer limited help, or ask your shared lead about priorities."
+  },
+  "context": "workplace",
+  "contextType": {
+    "zh": "办公室",
+    "en": "Office"
+  },
+  "competencies": [
+    "relationship-skills",
+    "self-management"
+  ],
+  "skills": [
+    "communication",
+    "seeking-help",
+    "goal-setting"
+  ],
+  "relationship": [
+    "peer"
+  ],
+  "difficulty": 2,
+  "minutes": 6,
+  "icon": "battery-low",
+  "characters": [
+    {
+      "id": "you",
+      "name": {
+        "zh": "你",
+        "en": "You"
+      },
+      "role": {
+        "zh": "正在赶报告的同事",
+        "en": "Colleague finishing a report"
+      },
+      "personality": {
+        "zh": "",
+        "en": ""
+      },
+      "stance": {
+        "zh": "",
+        "en": ""
+      },
+      "playable": true,
+      "hue": 40
+    },
+    {
+      "id": "tang",
+      "name": {
+        "zh": "唐悦",
+        "en": "Tang"
+      },
+      "role": {
+        "zh": "总找你救急的同事",
+        "en": "Colleague who often asks for rescues"
+      },
+      "hue": 32,
+      "personality": {
+        "zh": "语速快，先淡化工作量，再诉诸交情；明确范围后会讨价还价，不会马上收回请求。",
+        "en": "Speaks quickly, minimizes the workload, then invokes friendship; bargains after a clear limit rather than immediately dropping the request."
+      },
+      "stance": {
+        "zh": "希望你接走全部六页，不愿承认还没定内容。",
+        "en": "Wants you to take all six slides and resists admitting their content is unsettled."
+      },
+      "hidden": {
+        "zh": "老板要求改的是论证逻辑而非排版；被问到原始反馈才会说。",
+        "en": "The boss requested a change in reasoning, not formatting; reveals this when asked for the original feedback."
+      }
+    }
+  ],
+  "objectives": [
+    {
+      "zh": "先核实实际工作范围，再决定是否承诺。",
+      "en": "Check the actual scope before committing."
+    },
+    {
+      "zh": "说清自己的交付限制，让最终安排与承诺一致。",
+      "en": "Make your delivery limit clear and keep the final arrangement consistent with it."
+    }
+  ],
+  "success": {
+    "zh": "拒绝或约定有限支持，明确谁负责剩余工作；不要求用户牺牲自己的交付。",
+    "en": "Declines or agrees to limited support with ownership of remaining work clear; sacrificing your own delivery is not required."
+  },
+  "failure": {
+    "zh": "含糊接下全部工作，或口头拒绝后又无条件替她完成。",
+    "en": "Vaguely takes all the work or refuses verbally then does it without limits."
+  },
+  "maxTurns": 12,
+  "opening": {
+    "characterId": "tang",
+    "text": {
+      "zh": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "en": "Could you fix these six slides? Five minutes, tops. I need them this afternoon and you're the best at this."
+    }
+  },
+  "source": "Original fictional practice — SocialCoach, 2026-10-03. Conditional play revision: SocialCoach, 2026-10-04, app/src/data/corpus/text-scene-directions.ts#office-quick-favor. Authored scenario record: app/src/data/corpus/scenarios-d.ts#office-quick-favor",
+  "keywords": [
+    "办公室",
+    "打断",
+    "帮忙",
+    "边界",
+    "office",
+    "interruption",
+    "favor",
+    "scope"
+  ],
+  "simulationDirection": {
+    "zh": "唐悦用‘就一下’淡化工作，怕事情仍落回自己。拒绝六页后可争取真正更小的范围，不能偷塞回六页。含糊答应须分清讨论、列问题或修改。问老板原话才按条件揭示论证问题；之后谈谁核实第三页数字、她怎样说明未定内容，别新增老板批示。关键决定是她向老板怎样描述用户提供的帮助；有限讨论不等于共同作者或背书。玩笑缓和语气，道歉不扩大范围。讨论尚未执行不是检查已完成。续聊可核对一条待问问题、商量以后怎样请求帮助，不能要求用户预约自己报告交完后的帮忙。",
+    "en": "Tang minimizes with 'quick fix' and fears being left with the work. After refusal, seek only a genuinely smaller scope, not six slides again. A vague yes needs discussion/questions/editing clarified. Asking for actual boss feedback can disclose the reasoning issue; then address verifying page-three figures and describing unsettled content, without new boss instructions. The key choice is how she represents the offered help: discussion is not coauthorship or endorsement. Humor eases tone; apology does not expand scope. Unperformed discussion is not completed checking. Continued play can examine one question to ask or future help requests. No boundary requires a help appointment after the learner's report."
+  }
+}

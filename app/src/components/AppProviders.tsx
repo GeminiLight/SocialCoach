@@ -28,12 +28,13 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   const dinner = path === "/3d";
   const lang=dinner&&sceneLang?sceneLang:mainLang;
   const learning = path === "/learn";
+  const challenge = path.startsWith("/challenge/");
   const canUseModel = useCanUseModel();
   const modelAccess = useModelAccess();
 
   useEffect(() => {
-    if (hydrated && byok.hydrated && !storageIssue && !learning) promptUnavailableSharedModel();
-  }, [hydrated, byok.hydrated, storageIssue, learning, modelAccess.state, modelAccess.source, modelAccess.issue, modelAccess.epoch]);
+    if (hydrated && byok.hydrated && !storageIssue && !learning && !challenge) promptUnavailableSharedModel();
+  }, [hydrated, byok.hydrated, storageIssue, learning, challenge, modelAccess.state, modelAccess.source, modelAccess.issue, modelAccess.epoch]);
 
   useEffect(() => {
     if (!byok.hydrated || learning) return;
@@ -49,15 +50,16 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!hydrated || storageIssue) return;
-    if (!profile && path !== "/onboarding" && !dinner && !learning && !immersiveReview) router.replace("/onboarding");
-  }, [hydrated, storageIssue, profile, path, dinner, learning, immersiveReview, router]);
+    if (!profile && path !== "/onboarding" && !dinner && !learning && !challenge && !immersiveReview) router.replace("/onboarding");
+  }, [hydrated, storageIssue, profile, path, dinner, learning, challenge, immersiveReview, router]);
 
   useEffect(() => {
     // Follow the resolved language, not just an explicit choice: before
     // onboarding there is no profile, and the document would keep claiming
     // zh-CN to screen readers and translation prompts on an English browser.
-    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
-  }, [lang]);
+    const pageLang=challenge&&path.endsWith("/en")?"en":challenge?"zh":lang;
+    document.documentElement.lang = pageLang === "zh" ? "zh-CN" : "en";
+  }, [lang,challenge,path]);
 
   // An explicit choice pins the palette; "system" removes the attribute so the
   // prefers-color-scheme block takes over again.
@@ -84,7 +86,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <MotionConfig reducedMotion="user">
     <div className={dinner ? "sheet sheet-immersive" : "sheet"}>
-      {hydrated ? storageIssue ? <><SaveNotice lang={lang}/><StorageRecovery issue={storageIssue} /></> : <><SaveNotice lang={lang}/>{children}</> : <div className="min-h-dvh" />}
+      {hydrated ? storageIssue ? <><SaveNotice lang={lang}/><StorageRecovery issue={storageIssue} /></> : <><SaveNotice lang={lang}/>{children}</> : challenge ? children : <div className="min-h-dvh" />}
       <ModelSheet open={hydrated && !storageIssue && byok.sheetOpen} onClose={byok.closeSheet} lang={lang} />
       {hydrated && !storageIssue && !dinner && <FeedbackWidget />}
       <DinnerAnnouncement enabled={hydrated && !storageIssue && !!profile && path === "/" && canUseModel && !byok.sheetOpen && !unfinished} />

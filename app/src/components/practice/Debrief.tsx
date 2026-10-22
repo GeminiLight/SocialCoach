@@ -33,6 +33,7 @@ import {PracticeComparison,comparisonCopy} from './PracticeComparison';
 import {hasQuote} from '@/lib/practice-policy';
 import dynamic from 'next/dynamic';
 import {defaultShareCard} from '@/lib/share-card';
+import {InviteEntry} from "@/components/challenge/InviteEntry";
 import {KeyTurnEntry} from './KeyTurnEntry';
 const SharePractice=dynamic(()=>import('./SharePractice').then(m=>m.SharePractice),{ssr:false});
 
@@ -100,6 +101,7 @@ export function Debrief({ session }: { session: Session }) {
     restarting.current = true;
     if(session.sceneContext){const c=session.sceneContext;router.push(`/3d?scene=${encodeURIComponent(c.sceneId)}&opening=${encodeURIComponent(c.openingId)}&restart=1`);return;}
     const s = buildSession(sc, session.origin, lang, session.adaptation ? { adaptation: session.adaptation } : undefined);
+    if(session.challenge)s.challenge={...session.challenge,lang};
     addSession(s);
     router.push(`/practice/${s.id}`);
   };
@@ -373,6 +375,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
 
         {!streaming && <KeyTurnEntry session={session} />}
         {!streaming && <PracticeComparison session={session} />}
+        {!streaming && <InviteEntry session={session} />}
 
         {(session.stanceTrail?.length ?? 0) > 0 && (
           <Section title={t(lang, "rp_map_title")}>

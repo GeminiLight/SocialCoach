@@ -1,0 +1,15 @@
+{
+  "clipboardDenied": true,
+  "nativeCancel": true,
+  "nativeUnsupported": true,
+  "nativeFailure": true,
+  "imageFailureRetry": true,
+  "rapidLanguageDestination": true,
+  "keyboardFocusReturn": true,
+  "doubleClick": true,
+  "backResume": true,
+  "oldProfileHistoryPreserved": true,
+  "unknownVersion": true,
+  "corruptArchiveRetained": true,
+  "exportQrAt360And540": true
+}

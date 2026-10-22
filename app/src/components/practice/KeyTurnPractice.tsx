@@ -1,4 +1,5 @@
 'use client';
+import {InviteEntry} from "@/components/challenge/InviteEntry";
 import {useCallback,useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
@@ -116,6 +117,7 @@ export function KeyTurnPractice({session,attempt}:{session:Session;attempt:KeyTu
    <section aria-labelledby="retry-observations"><h2 id="retry-observations" className="text-[19px] font-semibold mb-4">{text('observations')}</h2><div className="flex flex-col gap-4">{keyTurnObservations(attempt).length?keyTurnObservations(attempt).map((item,i)=><article key={i} className="card p-5"><button onClick={()=>setSelection({source:branchView,quote:item.quote})} className="press min-h-11 text-left text-[16px] leading-relaxed break-words text-action">“{item.quote}”<ArrowUpRight size={15} className="inline ml-2" aria-hidden/></button><p className="text-[15px] leading-relaxed mt-3">{item.text}</p></article>):<p className="text-ink-2 text-[14px]">{text('empty')}</p>}</div><p className="text-[12px] leading-relaxed text-ink-2 mt-4">{text('estimated')}</p></section>
    <button onClick={()=>setSelection({source:branchView,quote:''})} className="press min-h-11 self-start text-action text-[14px]">{text('transcript')}</button>
    <Button disabled={!!saveIssue} onClick={()=>{const id=useApp.getState().startKeyTurn(session.id,lang);if(id)router.push(keyTurnHref(session.id,id));}}><RotateCcw size={17} aria-hidden/>{text('new')}</Button>
+   <InviteEntry session={session} />
   </div>:<div className="flex flex-col gap-6">
    <section className="rounded-[var(--radius)] bg-inset p-5"><h2 className="text-[15px] font-semibold mb-2">{text('setup')}</h2><p className="text-[14px] leading-relaxed whitespace-pre-wrap">{session.adaptation?.briefing??pick(session.scenario.background,lang)}</p><p className="mt-3 text-[12px] leading-relaxed text-ink-2">{text('context')}</p></section>
    <section aria-label={text('transcript')} className="flex flex-col gap-4">
