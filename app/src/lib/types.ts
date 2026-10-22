@@ -143,7 +143,23 @@ export interface DebriefExchange {
 
 export type SessionStatus = "briefing" | "active" | "ended" | "assessed";
 
+/** A bounded drill belongs to its source record, never to the full-practice cohort. */
+export interface KeyTurnAttempt {
+  version: 1;
+  id: string;
+  sourceMessageId: string;
+  lang: Lang;
+  startedAt: number;
+  endedAt?: number;
+  revision: number;
+  status: "active" | "ended" | "reviewed";
+  /** Only new speech. The opening is read from the immutable source checkpoint. */
+  messages: ChatMessage[];
+  report?: Report;
+}
+
 export interface Session {
+  keyTurnAttempts?: KeyTurnAttempt[];
   /** Public per-turn evidence from a 3D practice; preserved in device exports. */
   sceneContext?: SceneContext;
   id: string;

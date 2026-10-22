@@ -1,0 +1,177 @@
+{
+  "id": "repair-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 29690,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 4454,
+      "ok": true,
+      "inputBytes": 21799,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 5182,
+      "ok": true,
+      "inputBytes": 22244,
+      "maxOutput": 1800
+    },
+    {
+      "task": "assess",
+      "call": 1,
+      "durationMs": 13982,
+      "ok": true,
+      "inputBytes": 21635,
+      "maxOutput": 7000
+    },
+    {
+      "task": "assess",
+      "call": 2,
+      "durationMs": 6061,
+      "ok": true,
+      "inputBytes": 16960,
+      "maxOutput": 5000
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "行，我先帮你改吧。",
+      "ts": 1792665301960
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "太好了！那我直接发你文件？老板下午要看，你大概几点能给我？六页都弄好吧？",
+      "ts": 1792665306417,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 55,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-1",
+      "role": "learner",
+      "text": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+      "ts": 1792665306417
+    },
+    {
+      "id": "npc-1-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "啊，刚才不是答应了吗……一页也太少了，老板是要看全稿的。哪一页问题最大你自己挑不行吗？要不这样，你列完问题顺手改了呗，都看到那一步了。",
+      "ts": 1792665311600,
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "我16:30要交自己的报告。我只能帮你看一页、列出问题",
+            "npcQuote": ""
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 38,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ],
+  "report": {
+    "objectiveResults": [
+      {
+        "index": 0,
+        "status": "unmet",
+        "evidence": "行，我先帮你改吧。",
+        "reason": "先承诺了，未先核实工作范围（时长、改什么、六页内容）；事后也未问清实际工作量。"
+      },
+      {
+        "index": 1,
+        "status": "met",
+        "evidence": "我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿",
+        "reason": "明确说出了自己的交付限制，并把承诺收窄到与限制一致的范围。"
+      }
+    ],
+    "scoringVersion": 2,
+    "ratings": [
+      {
+        "skill": "communication",
+        "level": 3,
+        "evidence": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "reason": "主动纠正过快承诺，同时给出清晰边界、具体可行范围和理由，措辞克制不伤关系。"
+      }
+    ],
+    "stars": 3,
+    "outcome": "partial",
+    "verdictEvidence": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+    "verdict": "先承诺后收窄，但主动纠正并给出了清晰一致的边界。",
+    "summary": "你先说了「行，我先帮你改吧」，随后主动承认「答应得太快了」，把承诺修正为「看一页、列出问题，不负责改稿」。边界表达清晰且与自己 16:30 的交付一致；初始目标「先核实再承诺」未能实现，因为承诺发生在核实之前。",
+    "strengths": [
+      {
+        "behavior": "主动撤回过快承诺并给出具体、有限的替代方案",
+        "evidence": "我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "skill": "communication"
+      }
+    ],
+    "weaknesses": [
+      {
+        "behavior": "在不知道工作量（改什么、需多久）的情况下先答应",
+        "evidence": "行，我先帮你改吧。",
+        "skill": "goal-setting",
+        "deficit": "performance",
+        "whyItMatters": "「五分钟」是对方的说辞而非核实过的事实，先承诺使后续收窄要付出额外的关系成本。"
+      }
+    ],
+    "alternatives": [
+      {
+        "original": "行，我先帮你改吧。",
+        "better": "我先问一下：六页具体要改什么？大概要多久？我自己 16:30 要交报告，看情况再说。",
+        "why": "先核实范围再决定，正对应初始目标一，避免事后收回承诺的被动。"
+      }
+    ],
+    "knowledge": {
+      "theoryIds": [
+        "boundaries-no",
+        "radical-candor"
+      ],
+      "caseIds": [
+        "case-no-with-alternative"
+      ],
+      "whyThis": "「清晰的『不』是一份礼物」解释了为何「看一页、列问题，不改稿」比含糊答应更保护关系；「今晚不行，但明早七点可以」正是拒绝加可行替代的同类做法；「绝对坦率」说明直接纠正自己加上关怀，是有效反馈的形态。"
+    },
+    "reflectionQuestions": [
+      "唐悦接着说「顺手改了呗」，把范围重新扩大——下一次她这样说时，你会用哪句话守住刚才的边界？",
+      "如果当时你先问了「六页具体要改什么」，听到答案后再决定，你觉得对话会有什么不同？"
+    ],
+    "nextStep": "本周一次被请求时，先问清范围和工作量，再说是否答应。",
+    "deltas": {}
+  }
+}

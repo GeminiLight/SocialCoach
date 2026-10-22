@@ -1,0 +1,53 @@
+{
+  "id": "question-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 7743,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 7741,
+      "ok": true,
+      "inputBytes": 21847,
+      "maxOutput": 1800
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "你说的改一下，是改格式还是内容？老板原话怎么说的？",
+      "ts": 1792665139404
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "呃……原话是「论证逻辑有问题，不是排版」。第三页的成本论证不成立，得重写。其他页顺手顺一下就行，真没多少活儿。",
+      "ts": 1792665147147,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 25,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ]
+}

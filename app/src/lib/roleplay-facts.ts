@@ -2,12 +2,15 @@ import type { ChatMessage } from './types';
 
 type Speech = { characterId:string; text:string };
 export type SpeechGuard = (utterances:Speech[]) => string|undefined;
+export function officeFeedbackRequested(messages:ChatMessage[]){
+ return messages.some(m=>m.role==='learner'&&/(?:老板|负责人).{0,24}(?:原话|说|反馈|要求)|原始反馈|\b(?:boss|manager)\b.{0,30}\b(?:say|said|feedback|ask|want|request)|\boriginal feedback\b/iu.test(m.text));
+}
 
 const afterReport = /(?:报告.{0,8}(?:交完|提交)(?:之后|以后|后)|(?:交完|提交).{0,8}报告(?:之后|以后|后)|交完(?:之后|以后|后)|报告(?:之后|后)|16:30(?:之后|后)|(?:after|once)[^.!?\n]{0,35}(?:report|16:30|4:30))/i;
 
 /** Narrow evidence guard for a reproduced mistake, not a general consent classifier.
  * Source: office-quick-favor.simulationFacts and the scene-craft replay. */
-export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):SpeechGuard|undefined {
+export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[],strictOpening=false):SpeechGuard|undefined {
  if(scenarioId==='declining-extra-hours'){
   const known=messages.filter(m=>m.role==='learner').map(m=>m.text.toLowerCase());
   const lastQuestion=[...messages].reverse().find(m=>m.role==='learner')?.text??'';
@@ -58,6 +61,18 @@ export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[]):Sp
  }
  return utterances=>{
   for(const {text} of utterances){
+   if(strictOpening&&!officeFeedbackRequested(messages)&&/论证|论据|逻辑|\breasoning\b|\bargument\b.{0,15}(?:wrong|weak|hold|redo|rewrite)/iu.test(text))return 'The learner has not asked for the boss’s original feedback in this replay. Do not disclose the private reasoning problem yet. You may name page three and negotiate the limited offer without revealing its hidden reason. Do not invent a different problem as a substitute.';
+   if(strictOpening&&/(?:上次|之前|以前).{0,12}我.{0,20}帮(?:过|了|你)|\bI (?:helped|rescued|bailed) you\b|\bI helped you (?:last|before)\b/iu.test(text))return 'The established history is that the learner often rescued Tang’s work. No reciprocal rescue or debt is recorded in this replay. Do not invent a previous favor by Tang or pressure the learner with a fabricated debt.';
+   if(strictOpening&&/(?:肯定|一定|必须).{0,8}(?:早于|比你.{0,10}早)|\b(?:my deadline|mine)\b.{0,20}\b(?:before|earlier than)\b/iu.test(text))return 'Tang’s exact deadline and its ordering relative to the learner’s report are both unknown. Do not invent an earlier deadline as leverage; say you still need to confirm it.';
+   // Tang's afternoon need is known, but no exact clock time was established.
+   // Quoting the learner's report time or proposing a handoff remains allowed.
+   for(const part of text.match(/[^，,。！？.!?\n;；]+[，,。！？.!?;；]?/gu)??[]){
+    if(/[？?]\s*$/u.test(part)||/如果|要是|假设|要不|不如|建议|提议|\b(?:if|whether|could|would|propose)\b/iu.test(part))continue;
+    const ownDeadline=/(?:我(?:这边|的稿子|的演示稿)?|老板)(?:下午|今天|必须|得|要|需要|最迟|是|在|的截止时间是){0,3}(?:[一二三四五六七八九十两\d]{1,2}(?:点|[:：]\d{2}))|\b(?:I (?:need|have to|must)|I(?:'ll| will) (?:come|pick|collect)|my boss (?:needs|wants|expects)|my (?:slides|deck|deadline) (?:is|are))\b.{0,35}\b(?:by|before|at)\s+\d{1,2}(?::\d{2})?(?:\s*[ap]\.?m\.?)?\b/iu.test(part);
+    if(ownDeadline&&!/没有|尚未|未确认|不确定|不知道|not (?:confirmed|sure|known)|unknown/iu.test(part))return 'Tang only needs the slides this afternoon; no exact clock deadline from her or her boss is established. Remove the invented deadline. The learner’s 16:30 report is their own obligation. Keep Tang’s exact deadline unknown; urgency does not permit inventing a time.';
+    if(!/没(?:有)?要求|并非|不是|不代表|not|never/iu.test(part)&&/老板.{0,10}(?:要|得|要求).{0,8}(?:全稿|六页|全部)|老板.{0,10}下午.{0,5}(?:要看|要用)|\bboss\b.{0,25}\b(?:needs|wants|requires)\b.{0,25}\b(?:all six|whole deck|this afternoon)\b/iu.test(part))return 'Tang wants all six slides and needs them this afternoon. Those are Tang’s own demands, not established boss requirements. The boss only identified faulty reasoning on page three. Keep resistance in Tang’s own voice; do not invent external authority or deadlines.';
+    if(!/几点|时间|截止|deadline|time|when/iu.test(part)&&/老板.{0,20}(?:没(?:有)?细说|没说(?:具体|哪)|什么都没说)|\b(?:boss|he)\b.{0,25}\b(?:didn.t|did not|never)\s+(?:say|specify|explain)\b/iu.test(part))return 'Tang knows the boss identified faulty reasoning on page three. Do not replace withholding that private feedback with a contradictory claim that the boss gave no specific feedback. If the learner asks for the original feedback, reveal it accurately; otherwise name the page without revealing the hidden reason.';
+   }
    // This opening supplies unchecked figures, not a purchase order/source
    // sheet already in Tang's possession. NPC inventions cannot seed evidence.
    for(const part of text.match(/[^，,。！？.!?\n;；]+[，,。！？.!?;；]?/gu)??[]){

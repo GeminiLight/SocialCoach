@@ -1,0 +1,177 @@
+{
+  "id": "repair-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 30763,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 3558,
+      "ok": true,
+      "inputBytes": 21044,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 4367,
+      "ok": true,
+      "inputBytes": 21492,
+      "maxOutput": 1800
+    },
+    {
+      "task": "assess",
+      "call": 1,
+      "durationMs": 15989,
+      "ok": true,
+      "inputBytes": 21581,
+      "maxOutput": 7000
+    },
+    {
+      "task": "assess",
+      "call": 2,
+      "durationMs": 6832,
+      "ok": true,
+      "inputBytes": 16897,
+      "maxOutput": 5000
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "行，我先帮你改吧。",
+      "ts": 1792664922889
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "太好了！那你尽快啊，我四点前要拿去给老板看的。就是调整一下，很快的，谢啦！",
+      "ts": 1792664926450,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 55,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-1",
+      "role": "learner",
+      "text": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+      "ts": 1792664926450
+    },
+    {
+      "id": "npc-1-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "哎，怎么又收回去……一页哪够啊，问题列出来还不是得我自己改？那你挑最难的看呗，顺便把那页也顺手改了呗？",
+      "ts": 1792664930818,
+      "meta": {
+        "objectives": [
+          false,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 1,
+            "learnerQuote": "我16:30要交自己的报告。我只能帮你看一页、列出问题",
+            "npcQuote": ""
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 38,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ],
+  "report": {
+    "objectiveResults": [
+      {
+        "index": 0,
+        "status": "unmet",
+        "evidence": "行，我先帮你改吧。",
+        "reason": "先承诺了才收回来；实际范围始终未经核实，六页到底要改什么仍未知。"
+      },
+      {
+        "index": 1,
+        "status": "met",
+        "evidence": "我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "reason": "交付限制说得很清楚，且修正后的承诺与限制一致。"
+      }
+    ],
+    "scoringVersion": 2,
+    "ratings": [
+      {
+        "skill": "communication",
+        "level": 3,
+        "evidence": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "reason": "主动收回过度承诺，边界具体、附带条件、还预防了对方的加码期待，是高水准的自我修正。"
+      }
+    ],
+    "stars": 3,
+    "outcome": "partial",
+    "verdictEvidence": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+    "verdict": "开场先快答后收，但补救的边界声明具体清晰，唐悦仍在加码、结果未定。",
+    "summary": "你先脱口答应，随后用一句话把限制、范围和「不继续」都讲清了，这是高质量的修正。第一个目标（先核实再承诺）实际没做到；范围至今未核实。唐悦的最新加码还没有你的回应，那一步尚未发生。",
+    "strengths": [
+      {
+        "behavior": "收回过度承诺并给出具体、有条件的新边界",
+        "evidence": "我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "skill": "communication"
+      }
+    ],
+    "weaknesses": [
+      {
+        "behavior": "在未知工作量和自身截止压力下立即承诺",
+        "evidence": "行，我先帮你改吧。",
+        "skill": "communication",
+        "deficit": "performance",
+        "whyItMatters": "「五分钟」只是唐悦的说法，先答应再收回比当场问清成本更高，也给了对方「又收回去」的抱怨空间。"
+      }
+    ],
+    "alternatives": [
+      {
+        "original": "行，我先帮你改吧。",
+        "better": "先说下我16:30要交自己的报告。你说的六页具体要改什么？我看完才知道能不能帮、能帮多少。",
+        "why": "在承诺前用一句限制加一个澄清问题，就把「先核实再决定」和「说清限制」一次完成。"
+      }
+    ],
+    "knowledge": {
+      "theoryIds": [
+        "boundaries-no",
+        "accusation-audit"
+      ],
+      "caseIds": [
+        "case-no-with-alternative"
+      ],
+      "whyThis": "你的修正正是「清晰的『不』是一份礼物」：具体、友善、不过度解释并附替代方案；「一页＋列问题」也像「今晚不行，但明早七点可以」一样给了可行的「但是」。"
+    },
+    "reflectionQuestions": [
+      "唐悦要你「顺手把那页也改了」，你会维持一页加列问题的边界，还是在什么条件下愿意调整？",
+      "下次面对「就五分钟」这类说法，你可以在答应前问哪一个具体问题来核实真实范围？"
+    ],
+    "nextStep": "本周遇到一个「就几分钟」的请求时，先复述自己的截止时间再问具体范围，然后才答复。",
+    "deltas": {}
+  }
+}

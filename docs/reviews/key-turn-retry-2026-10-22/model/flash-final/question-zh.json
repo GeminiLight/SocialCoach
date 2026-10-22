@@ -1,0 +1,53 @@
+{
+  "id": "question-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 3975,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 3975,
+      "ok": true,
+      "inputBytes": 21945,
+      "maxOutput": 1800
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "你说的改一下，是改格式还是内容？老板原话怎么说的？",
+      "ts": 1792665750693
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "不是排版啦……老板原话是说第三页的论证不成立，让我重新理一遍。成本对比那页，两个方案的价格逻辑他没认可。所以内容也得动，不只是换个字体的事。",
+      "ts": 1792665754668,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ]
+}

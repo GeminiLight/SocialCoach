@@ -48,6 +48,7 @@ export interface RehearseInput {
 }
 
 export interface TurnInput {
+  practiceMode?: 'key-turn';
   scenario: Scenario;
   learnerCharacterId: string;
   messages: ChatMessage[];

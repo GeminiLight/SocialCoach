@@ -1,0 +1,53 @@
+{
+  "id": "joke-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 5527,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 5526,
+      "ok": true,
+      "inputBytes": 21104,
+      "maxOutput": 1800
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "五分钟改六页，我这键盘怕是要冒烟。先说说最要紧的是哪一页？",
+      "ts": 1792664917359
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "哈哈，别贫了，我这儿真急。要紧的是……老板说改完才能用，具体他没细说，反正整体都不太行。你要是真没空，那你先挑着看，哪页顺手改哪页呗，行不行？",
+      "ts": 1792664922886,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 25,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ]
+}

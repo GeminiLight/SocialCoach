@@ -1,0 +1,59 @@
+{
+  "id": "question-zh",
+  "lang": "zh",
+  "models": {
+    "roleplay": "glm-5.3",
+    "smart": "glm-5.3",
+    "configuredFast": "glm-5.3-flash"
+  },
+  "durationMs": 3996,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 3995,
+      "ok": true,
+      "inputBytes": 21945,
+      "maxOutput": 1800
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "你说的改一下，是改格式还是内容？老板原话怎么说的？",
+      "ts": 1792665932033
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "呃……老板说第三页的论证站不住，让我把成本那块的逻辑重新理。所以不全是排版的事，但你只要帮我把第三页捋顺就行，剩下几页我自己看看。",
+      "ts": 1792665936029,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 25,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "tang",
+            "quote": "老板说第三页的论证站不住，让我把成本那块的逻辑重新理"
+          }
+        ]
+      }
+    }
+  ]
+}

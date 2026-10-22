@@ -12,7 +12,7 @@ import type { LLM } from "./llm-core";
 import { runSchedule } from "./tasks/schedule";
 import { runRehearse } from "./tasks/rehearse";
 import { runHint } from "./tasks/hint";
-import { runRoleplay } from "./tasks/roleplay";
+import { roleplayModel,runRoleplay } from "./tasks/roleplay";
 import { runReflect } from "./tasks/reflect";
 import { runDebriefChat } from "./tasks/debrief-chat";
 import type { DebriefChatInput } from "./debrief-chat";
@@ -192,7 +192,7 @@ export async function roleplayStream(body: TurnInput, onText: (full: string) => 
   return watched("roleplay", !!o, body.lang, async () => {
     if (o) {
       let acc = "";
-      return runRoleplay(taskInput(TaskInputSchemas["roleplay"],body), taskLLM(o.llm,"roleplay",signal,undefined,body.lang), o.fast, (d) => {
+      return runRoleplay(taskInput(TaskInputSchemas["roleplay"],body), taskLLM(o.llm,"roleplay",signal,undefined,body.lang), roleplayModel(body,o.fast,o.smart), (d) => {
         acc += d;
         onText(acc);
       });

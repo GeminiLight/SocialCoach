@@ -1,0 +1,219 @@
+{
+  "id": "repair-zh",
+  "lang": "zh",
+  "models": {
+    "fast": "glm-5.3-flash",
+    "smart": "glm-5.3"
+  },
+  "durationMs": 54853,
+  "calls": [
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 5342,
+      "ok": true,
+      "inputBytes": 22062,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 3768,
+      "ok": true,
+      "inputBytes": 22513,
+      "maxOutput": 1800
+    },
+    {
+      "task": "roleplay",
+      "call": 1,
+      "durationMs": 5848,
+      "ok": true,
+      "inputBytes": 23021,
+      "maxOutput": 1800
+    },
+    {
+      "task": "assess",
+      "call": 1,
+      "durationMs": 13485,
+      "ok": true,
+      "inputBytes": 21971,
+      "maxOutput": 7000
+    },
+    {
+      "task": "assess",
+      "call": 2,
+      "durationMs": 9411,
+      "ok": true,
+      "inputBytes": 17442,
+      "maxOutput": 5000
+    },
+    {
+      "task": "assess",
+      "call": 3,
+      "durationMs": 4866,
+      "ok": true,
+      "inputBytes": 26996,
+      "maxOutput": 4000
+    },
+    {
+      "task": "assess",
+      "call": 4,
+      "durationMs": 12115,
+      "ok": true,
+      "inputBytes": 17602,
+      "maxOutput": 5000
+    }
+  ],
+  "messages": [
+    {
+      "id": "opening",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。",
+      "ts": 1
+    },
+    {
+      "id": "learner-0",
+      "role": "learner",
+      "text": "行，我先帮你改吧。",
+      "ts": 1792665758128
+    },
+    {
+      "id": "npc-0-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "真的？太好了！那我直接把文件发你，第三页你多费心看看，别的地方你顺一遍就行。",
+      "ts": 1792665763471,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 75,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-1",
+      "role": "learner",
+      "text": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+      "ts": 1792665763471
+    },
+    {
+      "id": "npc-1-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "啊？刚才不是说好了吗……行吧，可一页哪够，六页里问题不止一处。你看第三页行不行？那页最急，我今天下午就得交，具体几点老板没说死，但肯定早于你那个16:30。",
+      "ts": 1792665767239,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 40,
+        "revealed": false,
+        "disclosures": []
+      }
+    },
+    {
+      "id": "learner-2",
+      "role": "learner",
+      "text": "不改稿，只列一页的问题。剩下的还是你自己负责，这样的帮忙你需要吗？",
+      "ts": 1792665767239
+    },
+    {
+      "id": "npc-2-0",
+      "role": "npc",
+      "characterId": "tang",
+      "text": "……行吧，有总比没有强。那就第三页，你把问题列给我，我自己改。不过丑话说前头，你光列问题不给我提思路，我可能还是来不及，到时候别怪我再来烦你。",
+      "ts": 1792665773088,
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 48,
+        "revealed": false,
+        "disclosures": []
+      }
+    }
+  ],
+  "report": {
+    "objectiveResults": [
+      {
+        "index": 0,
+        "status": "unmet",
+        "evidence": "行，我先帮你改吧。",
+        "npcEvidence": "那我直接把文件发你，第三页你多费心看看，别的地方你顺一遍就行。",
+        "reason": "学习者未核实范围就先承诺改六页，之后才收窄为只列一页问题；「先核实再承诺」的顺序未实现，只是事后补救。"
+      },
+      {
+        "index": 1,
+        "status": "met",
+        "evidence": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "reason": "学习者说清了自己的交付截止，最终安排（只列一页问题、不改稿）与该限制一致。"
+      }
+    ],
+    "scoringVersion": 2,
+    "ratings": [
+      {
+        "skill": "communication",
+        "level": 3,
+        "evidence": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "reason": "主动撤回仓促承诺、说明理由、给出清晰有限的边界，并预先封住「之后继续」的期待，校准得非常准确。"
+      }
+    ],
+    "stars": 3,
+    "outcome": "partial",
+    "verdictEvidence": "我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+    "verdict": "开局未经核实即承诺，但迅速自我纠正、立起清晰边界，沟通质量高。",
+    "summary": "你先脱口「我先帮你改吧」，随即自我纠正：「我16:30要交自己的报告」，把范围收窄到一页、只列问题。最终与唐悦达成一致，双方责任清楚，未牺牲自己的交付。",
+    "strengths": [
+      {
+        "behavior": "主动撤回仓促承诺，并一次性说明理由、新范围和后续期待",
+        "evidence": "我刚才答应得太快了，我16:30要交自己的报告。我只能帮你看一页、列出问题，不负责改稿，也没有答应之后继续。",
+        "skill": "communication"
+      }
+    ],
+    "weaknesses": [
+      {
+        "behavior": "在未核实工作范围（六页实际需要多久）前就先答应了改稿",
+        "evidence": "行，我先帮你改吧。",
+        "skill": "goal-setting",
+        "deficit": "performance",
+        "whyItMatters": "先承诺后核实的顺序造成了需要当场撤回的被动局面；好在你的纠正迅速而清晰。"
+      }
+    ],
+    "alternatives": [
+      {
+        "original": "行，我先帮你改吧。",
+        "better": "六页具体要改什么？我16:30前得交自己的报告，先说清楚范围我再看能帮多少。",
+        "why": "先问范围、先亮限制，能避免随后撤回承诺的反复；也仍不预设拒绝或答应。"
+      }
+    ],
+    "knowledge": {
+      "theoryIds": [
+        "boundaries-no"
+      ],
+      "caseIds": [
+        "case-no-with-alternative"
+      ],
+      "whyThis": "你的修正话术正是「清晰的『不』是一份礼物」：不带过度解释、附带可行替代（只列一页问题）；「今晚不行，但明早七点可以」一案的「不＋但是＋澄清问题」结构，与「这样的帮忙你需要吗？」如出一辙。前者可帮助你预防首轮的仓促答应。"
+    },
+    "reflectionQuestions": [
+      "唐悦最后说「光列问题不给我提思路，我可能还是来不及，到时候别怪我再来烦你」——下次遇到这种预告式加压，你会怎么回应才能既不接活又不撕破脸？"
+    ],
+    "nextStep": "本周遇到一次请求时，先问清范围和自己的截止时间，再决定答不答应。",
+    "deltas": {}
+  }
+}

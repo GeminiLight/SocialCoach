@@ -1,6 +1,8 @@
 import {z} from 'zod';
 import {ScenarioSchema,SkillSchema,ContextSchema,AdaptationSchema} from './runtime-contracts';
 import {SceneContextSchema} from './scene-context';
+import {validKeyTurnAttempt} from './key-turn';
+import type {Session,KeyTurnAttempt} from './types';
 
 const text=z.string(),strings=z.array(text),num=z.number().finite();
 export const ProficiencySchema=z.partialRecord(SkillSchema,num.min(1).max(5));
@@ -18,13 +20,18 @@ const closure=z.object({kind:z.enum(['agreement','boundary','deferred','withdraw
 export const MetaSchema=z.object({objectiveEvidence:z.array(z.object({index:z.number().int().nonnegative(),learnerQuote:text,npcQuote:text.optional()})).optional(),objectives:z.array(z.boolean()),ended:z.boolean(),closure:closure.optional(),outcome:z.enum(['success','partial','failure']).nullable().optional(),note:text.optional(),stance:num.min(0).max(100).optional(),revealed:z.boolean().optional(),disclosures:z.array(z.object({characterId:text,quote:text})).optional()});
 export const MessageSchema=z.object({id:text.min(1),role:z.enum(['learner','npc','coach','event']),characterId:text.optional(),text,ts:num,kind:z.enum(['hint','silence']).optional(),seconds:num.optional(),meta:MetaSchema.optional()});
 const reply=z.object({evidence:text,answer:text,example:text,sources:z.array(z.object({kind:z.enum(['theory','case']),id:text}))});
+const KeyTurnSchema=z.object({version:z.literal(1),id:text.min(1),sourceMessageId:text.min(1),lang:z.enum(['zh','en']),startedAt:num,endedAt:num.optional(),revision:z.number().int().nonnegative(),status:z.enum(['active','ended','reviewed']),messages:z.array(MessageSchema),report:ReportSchema.optional()});
 const SessionSchema=z.object({
+ keyTurnAttempts:z.array(KeyTurnSchema).optional(),
  id:text.min(1),scenario:ScenarioSchema,learnerCharacterId:text,messages:z.array(MessageSchema),objectiveDone:z.array(z.boolean()),status:z.enum(['briefing','active','ended','assessed']),startedAt:num,endedAt:num.optional(),reflections:z.array(z.object({question:text,answer:text,coachReply:text.optional(),revision:text.optional()})),origin:z.enum(['scheduled','arena','rehearse']),
  adaptation:AdaptationSchema.extend({briefing:text,objectives:strings,focus:text}).optional(),prescription:z.object({query:text,core_constraints:z.object({target_skills:z.array(SkillSchema),contexts:strings.optional()}),optional_constraints:z.object({related_skills:z.array(SkillSchema).optional(),relationship_types:strings.optional(),difficulty:z.number().int().min(1).max(3).optional()}).optional(),rationale:text}).optional(),
  retrieval:z.object({relaxed:strings,candidates:num,chosen:text,roleFit:z.object({characterId:text,fit:z.enum(['compatible','uncertain']),reason:text}).optional()}).optional(),
  sceneContext:SceneContextSchema.optional(),report:ReportSchema.optional(),outcome:z.enum(['success','partial','failure']).optional(),outcomeNote:text.optional(),closure:closure.optional(),turnLimit:num.optional(),continuedFrom:text.optional(),stanceTrail:z.array(num).optional(),revealedAtTurn:num.optional(),revealSeen:z.boolean().optional(),timed:z.boolean().optional(),debriefChat:z.array(z.object({id:text,question:text,reply,at:num})).optional(),
  disclosures:z.array(z.object({characterId:text,messageId:text,quote:text,turn:num})).optional(),
-}).superRefine((s,ctx)=>{if(!s.scenario.characters.some(c=>c.id===s.learnerCharacterId))ctx.addIssue({code:'custom',path:['learnerCharacterId'],message:'Learner must belong to the saved cast'});});
+}).superRefine((s,ctx)=>{
+ if(!s.scenario.characters.some(c=>c.id===s.learnerCharacterId))ctx.addIssue({code:'custom',path:['learnerCharacterId'],message:'Learner must belong to the saved cast'});
+ if(s.keyTurnAttempts&&(new Set(s.keyTurnAttempts.map(a=>a.id)).size!==s.keyTurnAttempts.length||s.keyTurnAttempts.some(a=>!validKeyTurnAttempt(s as Session,a as KeyTurnAttempt))))ctx.addIssue({code:'custom',path:['keyTurnAttempts'],message:'Invalid retry checkpoint or conversation'});
+});
 export const ArchiveSchema=z.object({
  profile:ProfileSchema.nullable().default(null),onboardingLang:z.enum(['zh','en']).optional(),proficiency:ProficiencySchema.default({}),sessions:z.array(SessionSchema).default([]),customScenarios:z.array(ScenarioSchema).default([]),bookmarks:strings.default([]),practiceDays:strings.default([]),todaySessionId:text.nullable().default(null),todayDate:text.nullable().default(null),
  settings:z.object({tts:z.boolean(),voiceEngine:z.enum(['natural','system']).optional(),theme:z.enum(['system','light','dark']).optional(),voiceNoticeSeen:z.boolean().optional(),avatarSeed:num.optional(),avatarPortrait:text.optional(),avatarImage:text.optional(),timed:z.boolean().optional(),patience:z.union([z.literal(10),z.literal(15),z.literal(20)]).optional(),telemetry:z.boolean().optional()}).default({tts:true}),
