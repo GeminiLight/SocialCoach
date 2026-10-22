@@ -1,0 +1,137 @@
+[
+  {
+    "lang": "zh",
+    "theme": "light",
+    "width": 375,
+    "draftRefresh": true,
+    "checkpoint": true,
+    "independentQuotes": true,
+    "originalPreserved": true,
+    "repeatedAttempt": true,
+    "a11y": {
+      "inapplicable": 48,
+      "incomplete": 0,
+      "passes": 11,
+      "violations": 0
+    }
+  },
+  {
+    "lang": "zh",
+    "theme": "light",
+    "width": 1440,
+    "draftRefresh": true,
+    "checkpoint": true,
+    "independentQuotes": true,
+    "originalPreserved": true,
+    "repeatedAttempt": true,
+    "a11y": {
+      "inapplicable": 48,
+      "incomplete": 0,
+      "passes": 11,
+      "violations": 0
+    }
+  },
+  {
+    "lang": "zh",
+    "theme": "dark",
+    "width": 375,
+    "draftRefresh": true,
+    "checkpoint": true,
+    "independentQuotes": true,
+    "originalPreserved": true,
+    "repeatedAttempt": true,
+    "a11y": {
+      "inapplicable": 48,
+      "incomplete": 0,
+      "passes": 11,
+      "violations": 0
+    }
+  },
+  {
+    "lang": "zh",
+    "theme": "dark",
+    "width": 1440,
+    "draftRefresh": true,
+    "checkpoint": true,
+    "independentQuotes": true,
+    "originalPreserved": true,
+    "repeatedAttempt": true,
+    "a11y": {
+      "inapplicable": 48,
+      "incomplete": 0,
+      "passes": 11,
+      "violations": 0
+    }
+  },
+  {
+    "lang": "en",
+    "theme": "light",
+    "width": 375,
+    "draftRefresh": true,
+    "checkpoint": true,
+    "independentQuotes": true,
+    "originalPreserved": true,
+    "repeatedAttempt": true,
+    "a11y": {
+      "inapplicable": 48,
+      "incomplete": 0,
+      "passes": 11,
+      "violations": 0
+    }
+  },
+  {
+    "lang": "en",
+    "theme": "light",
+    "width": 1440,
+    "draftRefresh": true,
+    "checkpoint": true,
+    "independentQuotes": true,
+    "originalPreserved": true,
+    "repeatedAttempt": true,
+    "a11y": {
+      "inapplicable": 48,
+      "incomplete": 0,
+      "passes": 11,
+      "violations": 0
+    }
+  },
+  {
+    "lang": "en",
+    "theme": "dark",
+    "width": 375,
+    "draftRefresh": true,
+    "checkpoint": true,
+    "independentQuotes": true,
+    "originalPreserved": true,
+    "repeatedAttempt": true,
+    "a11y": {
+      "inapplicable": 48,
+      "incomplete": 0,
+      "passes": 11,
+      "violations": 0
+    }
+  },
+  {
+    "lang": "en",
+    "theme": "dark",
+    "width": 1440,
+    "draftRefresh": true,
+    "checkpoint": true,
+    "independentQuotes": true,
+    "originalPreserved": true,
+    "repeatedAttempt": true,
+    "a11y": {
+      "inapplicable": 48,
+      "incomplete": 0,
+      "passes": 11,
+      "violations": 0
+    }
+  },
+  {
+    "failedReplyResumed": true,
+    "noDuplicateLearner": true,
+    "failedReviewResumed": true,
+    "cancelResumed": true,
+    "fourTurnLimit": true
+  }
+]

@@ -644,7 +644,8 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .coach-mascot-figure img { width: 100%; height: auto; }
 .coach-mascot-portrait { width: 48px; aspect-ratio: 1; overflow: hidden; border-radius: 50%; background: var(--paper-deep); position: relative; }
 .coach-mascot-portrait img { position: absolute; width: 142%; max-width: none; height: auto; left: -21%; top: -4%; }
-.home-coach-portrait { width: 64px; }
+.home-coach-figure { width: 88px; }
+.home-greeting .eyebrow { overflow-wrap: anywhere; }
 .home-greeting h1 { margin-top: 8px; }
 .home-greeting h1 + p { margin-top: 8px; }
 
@@ -663,7 +664,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .welcome-local { text-align: center; line-height: 1.6; padding: 16px var(--page-gutter) max(24px, env(safe-area-inset-bottom)); }
 @keyframes coach-arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (min-width: 64rem) {
-  .home-coach-portrait { width: 88px; }
+  .home-coach-figure { width: 104px; }
   .onboarding-intro { max-width: var(--focus-max); }
   .onboarding-intro .onboarding-top { padding-top: 32px; }
   .welcome-page-body { justify-content: center; padding-block: 40px; }
