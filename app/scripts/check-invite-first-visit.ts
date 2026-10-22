@@ -15,6 +15,9 @@ async function main(){try{
  b(['network','route','**/api/health','--body',JSON.stringify({state:'unavailable',issue:'setup'})]);
  b(['network','route','**/api/track','--body','{"available":false}']);
  b(['open',base+challengePath('zh')]);
+ // Click as soon as the public page appears: hydration must not swallow this action.
+ b(['find','role','button','click','--name','我也想邀请朋友','--exact']);
+ b(['wait','--fn',"!!document.querySelector('#invite-card img')"]);b(['press','Escape']);
  // Public HTML precedes archive hydration. Wait before seeding a test profile.
  b(['wait','--fn',"!!document.querySelector('button[aria-label=反馈]') && !!document.querySelector('#challenge-landing aside button')"]);
  for(const lang of ['zh','en'] as const)for(const existing of [false,true]){
@@ -34,6 +37,6 @@ async function main(){try{
   results.push({lang,existing,profilePreserved:true,serverLanguage:true,noticeAndButtonLanguage:true,modelSheetLanguage:true,pageErrors:0});
   b(['press','Escape']);
  }
- writeFileSync(join(out,'first-visit.json'),JSON.stringify({base,models:'unavailable fixture; no generation',groups:results},null,2));console.log(JSON.stringify({groups:results.length,output:out}));
+ writeFileSync(join(out,'first-visit.json'),JSON.stringify({base,models:'unavailable fixture; no generation',firstClickPreview:true,groups:results},null,2));console.log(JSON.stringify({groups:results.length,output:out}));
 }finally{b(['close']);}}
 void main().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,0 +1,51 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('#invite-card img') to be visible[22m
+
+    at /private/tmp/socialcoach-invite-download.mjs:7:294 {
+  log: [ "  - waiting for locator('#invite-card img') to be visible" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.20.0
+
+SocialCoach
+中文
+English
+
+朋友邀你来接这一句
+
+换你，这句话怎么接？
+
+唐悦 · 总找你救急的同事
+
+“你帮我把这六页改一下吧，就五分钟。我下午得用，你最会做这个了。”
+你在这场对话里 · 正在赶报告的同事
+
+你自己的报告要在 16:30 交，还有四十分钟。唐悦想让你替她重做六页演示稿，你不知道需要多久。她不是你的上级，之前你常帮她救急。你可以选择拒绝、有限协助或向共同负责人核实优先级。
+
+试着做到
+01
+先核实实际工作范围，再决定是否承诺。
+02
+说清自己的交付限制，让最终安排与承诺一致。
+
+练习需要连接一个模型。
+
+场景、知识和已有记录仍可查看。
+
+接入模型
+我来试试
+
+不用注册。开始后，练习记录只保存在这台设备上，朋友看不到你的回答。
+
+同一版本的开场，后续由你的回应决定。各自的练习只保存在自己的设备上。
+
+我也想邀请朋友
+换个入口打开同一题 ↗
+
+公共虚构场景 · SocialCoach 原创 · 2026-10-03 · v1

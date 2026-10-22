@@ -38,5 +38,6 @@
       "modelSheetLanguage": true,
       "pageErrors": 0
     }
-  ]
+  ],
+  "firstClickPreview": true
 }
