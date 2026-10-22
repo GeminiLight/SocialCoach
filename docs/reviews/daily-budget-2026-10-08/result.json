@@ -1,0 +1,72 @@
+{
+  "requested_at": "2026-10-07T17:48:33.005781+00:00",
+  "daily_cap": 20000000,
+  "vercel_environment_updated": true,
+  "vercel_deployment_url": "https://socialcoach-gebsh0sdt-geminilights-projects.vercel.app",
+  "modelscope_variable_verified": 20000000,
+  "modelscope_deploy_accepted": true,
+  "hardware": "platform/2v-cpu-16g-mem",
+  "visibility": "public",
+  "shared_counter_reset": false,
+  "vercel_deployment_id": "dpl_Dwq7d9KaGJS4WL6UCSDVXejucRyo",
+  "vercel_ready": true,
+  "modelscope_running": true,
+  "modelscope_runtime_created_at": "2026-10-07T17:48:50.000Z",
+  "shared_pool_change": {
+    "old_cap": 2000000,
+    "new_cap": 20000000,
+    "reserved_tokens_preserved": 1998465,
+    "remaining_tokens": 18001535,
+    "utc_day": 20733,
+    "applied_at_utc_seconds": 1791395460
+  },
+  "platform_checks": [
+    {
+      "platform": "Vercel",
+      "free_health": {
+        "status": 200,
+        "seconds": 2.44,
+        "response": {
+          "serverKey": true,
+          "requireByok": false,
+          "state": "available"
+        }
+      },
+      "actual_hint": {
+        "status": 200,
+        "seconds": 3.39,
+        "response": {
+          "hint": "先补一个具体替代方案，再弄清需求：问「客户明早重点要看哪部分？我明早九点前能改完核心页。」"
+        }
+      }
+    },
+    {
+      "platform": "ModelScope",
+      "free_health": {
+        "status": 200,
+        "seconds": 0.49,
+        "response": {
+          "serverKey": true,
+          "requireByok": false,
+          "state": "available"
+        }
+      },
+      "actual_hint": {
+        "status": 200,
+        "seconds": 2.36,
+        "response": {
+          "hint": "先给替代方案，同时弄清需求：问「明早客户具体要哪部分？」，再提「明早九点前我改完关键页」。先别解释晚餐细节。"
+        }
+      }
+    }
+  ],
+  "checked_at": "2026-10-07T17:51:31.764992+00:00",
+  "generation_verified": true,
+  "final_shared_pool": {
+    "reserved_tokens": 2050857,
+    "daily_cap": 20000000,
+    "remaining_tokens": 17949143,
+    "active_calls": 0,
+    "checked_at_utc_seconds": 1791395530
+  }
+}

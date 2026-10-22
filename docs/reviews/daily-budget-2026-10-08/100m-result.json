@@ -1,0 +1,87 @@
+{
+  "requested_at": "2026-10-07T17:55:22.550176+00:00",
+  "daily_cap": 100000000,
+  "previous_daily_cap": 20000000,
+  "vercel_environment_updated": true,
+  "vercel_previous_deployment_id": "dpl_Dwq7d9KaGJS4WL6UCSDVXejucRyo",
+  "modelscope_variable_verified": 100000000,
+  "concurrency": "8",
+  "modelscope_previous_runtime_created_at": "2026-10-07T17:48:50.000Z",
+  "hardware": "platform/2v-cpu-16g-mem",
+  "visibility": "public",
+  "shared_counter_reset": false,
+  "vercel_deployment_url": "https://socialcoach-ocrrnjoxu-geminilights-projects.vercel.app",
+  "vercel_deployment_id": "dpl_6LKfShpXxNRUqB3tMrw1mt72Xsdv",
+  "modelscope_deploy_accepted": true,
+  "vercel_ready": {
+    "deployment_id": "dpl_6LKfShpXxNRUqB3tMrw1mt72Xsdv",
+    "deployment_url": "https://socialcoach-ocrrnjoxu-geminilights-projects.vercel.app",
+    "ready": true,
+    "production_alias_confirmed": true,
+    "exit_code": 0
+  },
+  "modelscope_ready": {
+    "platform": "ModelScope",
+    "status": "Running",
+    "runtime_status": "Running",
+    "runtime_created_at": "2026-10-07T17:58:17.000Z",
+    "hardware": "platform/2v-cpu-16g-mem",
+    "visibility": "public"
+  },
+  "shared_pool_change": {
+    "old_cap": 10000000,
+    "new_cap": 100000000,
+    "reserved_tokens_preserved": 2355495,
+    "utc_day": 20733,
+    "applied_at_utc_seconds": 1791395962
+  },
+  "platform_checks": [
+    {
+      "platform": "Vercel",
+      "free_health": {
+        "status": 200,
+        "seconds": 2.54,
+        "response": {
+          "serverKey": true,
+          "requireByok": false,
+          "state": "available"
+        }
+      },
+      "actual_hint": {
+        "status": 200,
+        "seconds": 3.63,
+        "response": {
+          "hint": "先问清需求再提替代方案，避免空泛拒绝；试试问：「明早客户最关键要看到哪部分？」然后补一句：「明早九点前我能改完核心页。」"
+        }
+      }
+    },
+    {
+      "platform": "ModelScope",
+      "free_health": {
+        "status": 200,
+        "seconds": 0.46,
+        "response": {
+          "serverKey": true,
+          "requireByok": false,
+          "state": "available"
+        }
+      },
+      "actual_hint": {
+        "status": 200,
+        "seconds": 2.24,
+        "response": {
+          "hint": "现在补一个可行替代方案并问清需求，比如「明早客户具体要看哪部分？我可以明早九点前先把关键页发你」。"
+        }
+      }
+    }
+  ],
+  "final_shared_pool": {
+    "reserved_tokens": 2407887,
+    "daily_cap": 100000000,
+    "remaining_tokens": 97592113,
+    "active_calls": 0,
+    "checked_at_utc_seconds": 1791395970
+  },
+  "generation_verified": true,
+  "checked_at": "2026-10-07T17:59:31.477569+00:00"
+}
