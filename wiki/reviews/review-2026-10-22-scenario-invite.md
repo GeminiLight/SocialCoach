@@ -33,3 +33,7 @@
 原件：[主站真实模型](../../docs/reviews/scenario-invite-2026-10-22/release/main-live/)、[国内公开入口真实模型](../../docs/reviews/scenario-invite-2026-10-22/release/studio-live/)、[首轮失败和修复证据](../../docs/reviews/scenario-invite-2026-10-22/release/first-attempts/)。真实模型只处理虚构验收输入；统计与语音拦截，无真实朋友邀请、对外反馈消息或新增实验配置。仍无真实微信 / iPhone 系统分享面板、朋友对照试玩或传播转化数据；程序解码不代替实体相机扫描。系统分享 Promise 完成不表示朋友收到，也不显示“已发送”或记录成功转发。未知版本不会静默换题。
 
 官方机制参考：[二维码库](https://github.com/kazuhikoarase/qrcode-generator)、[Web Share 行为](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share)（查阅 2026-10-22）；国内 `app_path` 以平台当日源码与实际页面验证为准。
+
+## 独立验收与恢复页补验
+
+独立 PR #45 `9053c1f` 修复邀请中的档案恢复语言切换，主站 `dpl_CA4pndvm8ZDJHuGF1MCWbj2b76tm` READY，国内镜像 `2eb8aa6` Running；主站公开入口的英文→中文→英文及损坏原件保留已通过。国内公开手机页面复验发现平台外层悬浮控件挡住右侧 English 按钮；没有用强制点击跳过该失败。邀请模式下恢复页的语言控件改为靠左排列，避开平台浮层；其他入口布局保持原样。修复前阻挡日志保留在 first-attempts，修复后的公开双站点击验收待补齐。

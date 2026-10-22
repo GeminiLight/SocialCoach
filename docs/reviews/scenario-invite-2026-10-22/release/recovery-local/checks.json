@@ -1,0 +1,14 @@
+{
+  "publicUrl": "http://localhost:3120/challenge/office-quick-favor/v1/en",
+  "model": "unavailable fixture; no inference",
+  "recoveryLanguageSwitch": "en→zh→en",
+  "rawArchivePreserved": true,
+  "languageBounds": {
+    "x": 134,
+    "y": 206.40625,
+    "width": 50,
+    "height": 44
+  },
+  "appErrors": [],
+  "externalErrors": []
+}
