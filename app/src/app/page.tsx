@@ -98,8 +98,8 @@ export default function Home() {
       <Page className="home-page pt-5 lg:pt-10 flex flex-col gap-7 lg:gap-9">
         {/* header */}
         <header className="home-header flex flex-wrap items-end justify-between gap-4 pb-6 border-b border-line">
-          <div className="home-greeting flex items-center gap-4 lg:gap-6">
-            <CoachMascot variant="portrait" className="home-coach-portrait" preload sizes="(min-width: 1024px) 128px, 96px" />
+          <div className="home-greeting flex min-w-0 items-center gap-4 lg:gap-6">
+            <CoachMascot variant="figure" className="home-coach-figure" preload sizes="(min-width: 1024px) 104px, 88px" />
             <div className="min-w-0">
             <p className="eyebrow text-accent-deep">
               {t(lang, "coach_identity")}<span className="text-ink-3"> · {t(lang, greet)}
