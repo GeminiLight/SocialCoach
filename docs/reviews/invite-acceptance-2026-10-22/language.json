@@ -1,0 +1,12 @@
+{
+  "bothLanguages": true,
+  "modelNotice": true,
+  "disabledHint": true,
+  "modelDialogAndClose": true,
+  "feedbackDialog": true,
+  "archiveUnchanged": true,
+  "unknownVersion": true,
+  "recoveryLanguageSwitch": true,
+  "ordinaryRecoveryLanguageSwitch": true,
+  "corruptArchiveRetained": true
+}

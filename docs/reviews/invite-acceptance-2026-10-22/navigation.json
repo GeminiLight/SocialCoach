@@ -1,0 +1,31 @@
+{
+  "engine": "independent Playwright Chromium",
+  "build": "production",
+  "models": "blocked; no inference",
+  "groups": [
+    {
+      "run": 1,
+      "doubleClickOneSession": true,
+      "browserBackResume": true,
+      "refreshRetained": true,
+      "privateProfileRetained": true,
+      "pageErrors": 0
+    },
+    {
+      "run": 2,
+      "doubleClickOneSession": true,
+      "browserBackResume": true,
+      "refreshRetained": true,
+      "privateProfileRetained": true,
+      "pageErrors": 0
+    },
+    {
+      "run": 3,
+      "doubleClickOneSession": true,
+      "browserBackResume": true,
+      "refreshRetained": true,
+      "privateProfileRetained": true,
+      "pageErrors": 0
+    }
+  ]
+}

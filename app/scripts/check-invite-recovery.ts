@@ -15,7 +15,7 @@ const click=(s:string)=>b(['find','role','button','click','--name',s,'--exact'])
 async function main(){try{
  b(['open','about:blank']);for(const [path,body] of [['health','{"state":"available","serverKey":true,"requireByok":false}'],['track','{"available":false}']])b(['network','route','**/api/'+path,'--body',body]);
  b(['network','route','**/api/roleplay','--abort']);b(['network','route','**/api/assess','--abort']);
- b(['open',base+challengePath('zh')]);wait("!!document.querySelector('#challenge-landing')");
+ b(['open',base+challengePath('zh')]);wait("!!document.querySelector('#challenge-landing button[data-variant=primary]:not(:disabled)')");
  const other={...buildChallengeSession('en'),challenge:undefined,id:'preserved-practice'},profile={name:'Existing learner',bio:'Private bio',goals:['communication'],contexts:[],lang:'en',createdAt:1};
  const value=JSON.stringify({version:0,state:parseArchive({profile,sessions:[other],settings:{tts:false,telemetry:false}})});
  ev(`localStorage.setItem('socialcoach.v1',${JSON.stringify(value)});true`);b(['reload']);wait("!!document.querySelector('#challenge-landing')");
@@ -42,5 +42,5 @@ async function main(){try{
  ev("localStorage.setItem('socialcoach.v1','{broken');true");b(['open',base+challengePath('zh')]);wait("!document.querySelector('#challenge-landing')");assert.equal(ev("localStorage.getItem('socialcoach.v1')"),'{broken');
  for(const lang of ['zh','en'] as const){const img=readFileSync(`public/invites/office-quick-favor-v1-${lang}.png`);for(const width of [360,540]){const {data,info}=await sharp(img).resize({width}).ensureAlpha().raw().toBuffer({resolveWithObject:true});assert.equal(jsQR(new Uint8ClampedArray(data),info.width,info.height)?.data,challengeUrl(lang,'main'));}}
  writeFileSync(out+'/recovery.json',JSON.stringify({clipboardDenied:true,nativeCancel:true,nativeUnsupported:true,nativeFailure:true,imageFailureRetry:true,rapidLanguageDestination:true,keyboardFocusReturn:true,doubleClick:true,backResume:true,oldProfileHistoryPreserved:true,unknownVersion:true,corruptArchiveRetained:true,exportQrAt360And540:true},null,2));console.log(out);
-}finally{b(['close']);}}
+}catch(error){console.error('Failure URL',b(['get','url']));console.error('Failure UI',b(['snapshot']));throw error;}finally{b(['close']);}}
 void main().catch(e=>{console.error(e);process.exitCode=1;});
