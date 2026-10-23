@@ -694,6 +694,8 @@ for (const f of readdirSync(join(here, "assets"))) copyFileSync(join(here, "asse
 const pdfSrc = join(root, "docs", "social-coach-paper.pdf");
 if (!existsSync(pdfSrc)) throw new Error("Missing docs/social-coach-paper.pdf; cannot publish the paper sitemap entry");
 copyFileSync(pdfSrc, join(out, site.localPdf));
+// Keep the PDF URL used by earlier paper metadata and supplementary pages.
+copyFileSync(pdfSrc, join(out, "assets", "socialcoach-paper.pdf"));
 
 writeFileSync(join(out, ".nojekyll"), "");
 
