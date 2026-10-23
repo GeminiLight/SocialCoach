@@ -26,7 +26,7 @@ open site/dist/index.html          # 或 npx serve site/dist
 
 用 GitHub Pages 的 **GitHub Actions** 来源，不需要 `gh-pages` 分支：仓库 Settings → Pages → Source 选 "GitHub Actions"，之后改动 `site/**`、`app/src/app/globals.css`、`app/src/data/corpus/**`、`app/src/data/taxonomy.ts` 或论文 PDF 并推送到 `main` 即发布。绑自有域名后 `configure-pages` 会把域名传给构建；工作流统一把它转成 HTTPS，使 canonical、hreflang、sitemap、OG 和 JSON-LD 使用同一地址。
 
-本地构建默认以 `https://tianfuwang.tech/SocialCoach` 为站点地址，用 `SITE_URL=https://example.com node site/build.mjs` 覆盖。线上应用入口由 `content.mjs` 的 `site.appUrl` 配置。
+本地构建默认以 `https://tianfu.wang/SocialCoach` 为站点地址，用 `SITE_URL=https://example.com node site/build.mjs` 覆盖。线上应用入口由 `content.mjs` 的 `site.appUrl` 配置。
 
 同一份 `dist/` 也可以直接丢给 Vercel / Cloudflare Pages / 任何静态托管，资源使用相对路径；canonical 与跨页面链接由 `SITE_URL` 决定。
 

@@ -11,7 +11,7 @@ export const pick = (v, lang) => (v && typeof v === "object" && "zh" in v ? v[la
 export const site = {
   // Where the built site lives. GitHub Actions overrides this with whatever
   // configure-pages reports; the account's Pages domain makes that this URL.
-  defaultUrl: "https://tianfuwang.tech/SocialCoach",
+  defaultUrl: "https://tianfu.wang/SocialCoach",
   // Geo-aware share URL redirects to a platform homepage and drops subpaths.
   appUrl: "https://socialcoach.aurax.live",
   appDeepUrl: "https://socialcoach-ai.vercel.app",
@@ -21,7 +21,7 @@ export const site = {
   pdfUrl: "https://arxiv.org/pdf/2606.04155",
   // Copied from ../docs at build time so Scholar can find PDF + abstract on one host.
   localPdf: "paper/socialcoach-2606.04155.pdf",
-  supplementaryUrl: "https://tianfuwang.tech/SocialCoach-SupplementaryMaterials/",
+  supplementaryUrl: "https://tianfu.wang/SocialCoach-SupplementaryMaterials/",
   name: "SocialCoach",
   year: 2026,
 };
