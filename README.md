@@ -84,7 +84,7 @@
 | 处理分歧 | 和伴侣分担家务、与父母讨论职业选择 |
 | 建立连接 | 欢迎新同事、支持遇到困难的朋友、加入一场交谈 |
 
-先看看五个双语练习情境：[和老板谈加薪](https://tianfuwang.tech/SocialCoach/guides/salary-raise/)、[拒绝临时加班](https://tianfuwang.tech/SocialCoach/guides/declining-extra-hours/)、[会议上被同事质问](https://tianfuwang.tech/SocialCoach/guides/meeting-tension/)、[和伴侣谈家务分工](https://tianfuwang.tech/SocialCoach/guides/spouse-chores/)、[请朋友还钱](https://tianfuwang.tech/SocialCoach/guides/friend-borrowed-money/)。每页都能进入应用练对应场景。
+先看看五个双语练习情境：[和老板谈加薪](https://tianfu.wang/SocialCoach/guides/salary-raise/)、[拒绝临时加班](https://tianfu.wang/SocialCoach/guides/declining-extra-hours/)、[会议上被同事质问](https://tianfu.wang/SocialCoach/guides/meeting-tension/)、[和伴侣谈家务分工](https://tianfu.wang/SocialCoach/guides/spouse-chores/)、[请朋友还钱](https://tianfu.wang/SocialCoach/guides/friend-borrowed-money/)。每页都能进入应用练对应场景。
 
 从覆盖 **7 类生活情境的 58 个场景**中选择，跟随个性化推荐练习，也可以描述你自己的处境。界面与练习内容均支持**中文和英文**。
 
@@ -101,7 +101,7 @@
 
 ## 社交技能与社交情绪学习（SEL）
 
-SocialCoach 是聚焦社交技能练习的 AI 学习工具。它参考 [CASEL 的五类社交与情绪学习能力](https://casel.org/what-is-sel/)，将 34 项技能组织为自我觉察、自我管理、社会觉察、人际关系技能和负责任的决策。你可以在困难对话中反复练习，再根据自己的原话复盘。它是面向个人的练习工具，不是经过认证的学校课程，也不是临床评估。更具体的能力与练习说明见[双语官网](https://tianfuwang.tech/SocialCoach/)。
+SocialCoach 是聚焦社交技能练习的 AI 学习工具。它参考 [CASEL 的五类社交与情绪学习能力](https://casel.org/what-is-sel/)，将 34 项技能组织为自我觉察、自我管理、社会觉察、人际关系技能和负责任的决策。你可以在困难对话中反复练习，再根据自己的原话复盘。它是面向个人的练习工具，不是经过认证的学校课程，也不是临床评估。更具体的能力与练习说明见[双语官网](https://tianfu.wang/SocialCoach/)。
 
 ## 本地运行
 

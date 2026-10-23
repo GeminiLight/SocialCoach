@@ -63,7 +63,7 @@ html_paths = list(Path(".").rglob("index.html"))
 expected = [base + path.as_posix().removesuffix("index.html") for path in html_paths]
 expected += [base + path.as_posix() for path in Path("paper").glob("*.pdf")]
 assert sorted(urls) == sorted(expected), "Sitemap omits a published page or paper"
-materials = "https://tianfuwang.tech/SocialCoach-SupplementaryMaterials/"
+materials = "https://tianfu.wang/SocialCoach-SupplementaryMaterials/"
 assert materials in Path("index.html").read_text()
 assert materials in Path("en/index.html").read_text()
 print("Verified complete bilingual page and paper coverage, plus both materials links.")
