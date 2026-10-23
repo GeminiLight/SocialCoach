@@ -16,7 +16,7 @@
 | B6 | LICENSE | 📋 | 需要用户选定许可证 |
 | B7 | Live 站点地址 | ✅ | `socialcoach-app.vercel.app`，README 两处 + 仓库 homepage |
 | B8 | wiki 文档体系 | 🚧 | 本次建立 |
-| B9 | 官网 | ✅ | `site/` → `https://tianfuwang.tech/SocialCoach/`（GitHub Pages，Actions 来源） |
+| B9 | 官网 | ✅ | `site/` → `https://tianfu.wang/SocialCoach/`（GitHub Pages，Actions 来源） |
 
 ---
 
