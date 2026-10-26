@@ -1,0 +1,57 @@
+{
+  "platform": "vercel",
+  "checkedAt": "2026-10-26T03:36:29.369258+00:00",
+  "media": [
+    {
+      "id": "transparency",
+      "bytes": 3945700,
+      "sha256": "4cfcc89f1c11c01a203ca59cdecb7790a5a4cfc30d1c6511ba3d295a038fa370",
+      "head": 200,
+      "range": 206,
+      "contentRange": "bytes 0-1023/3945700",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "posterCoverCaptions": "exact-byte-match"
+    },
+    {
+      "id": "weak-ties",
+      "bytes": 4016388,
+      "sha256": "de900ca88d532089713647bd20056cb7d5d8a3f1a1dd79ea001020401a3513f6",
+      "head": 200,
+      "range": 206,
+      "contentRange": "bytes 0-1023/4016388",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "posterCoverCaptions": "exact-byte-match"
+    },
+    {
+      "id": "front-back-stage",
+      "bytes": 4227001,
+      "sha256": "69bfeab94966733f9a105f379679af1b1caf32039ee45b7989f58a7b5626a835",
+      "head": 200,
+      "range": 206,
+      "contentRange": "bytes 0-1023/4227001",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "posterCoverCaptions": "exact-byte-match"
+    },
+    {
+      "id": "self-fulfilling-prophecy",
+      "bytes": 3638335,
+      "sha256": "79fd71948497225b6b41bb3d645fa09af1025e11fc704d00d50f55f631529a8d",
+      "head": 200,
+      "range": 206,
+      "contentRange": "bytes 0-1023/3638335",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "posterCoverCaptions": "exact-byte-match"
+    },
+    {
+      "id": "schelling-neighbors",
+      "bytes": 5237626,
+      "sha256": "0b11a562393528cd1e8dcf2d0cbde20989dd5cc75680578c4d1ba09f145ed0ea",
+      "head": 200,
+      "range": 206,
+      "contentRange": "bytes 0-1023/5237626",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "posterCoverCaptions": "exact-byte-match"
+    }
+  ],
+  "learnStatus": 200
+}

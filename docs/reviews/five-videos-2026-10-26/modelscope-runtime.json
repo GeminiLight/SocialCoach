@@ -1,0 +1,17 @@
+{
+  "cover_image": "https://img.alicdn.com/imgextra/i1/O1CN01jaxszG1pyzR8i9fSP_!!6000000005430-2-tps-820-400.png",
+  "visibility": "public",
+  "status": "Running",
+  "sdk_type": "docker",
+  "sdk_version": "",
+  "hardware": "platform/2v-cpu-16g-mem",
+  "host": "https://geminilight-socialcoach.ms.show",
+  "runtime": {
+    "status": "Running",
+    "active_config": {
+      "hardware": "platform/2v-cpu-16g-mem",
+      "sdk_type": "docker"
+    },
+    "created_at": "2026-10-26T03:36:06.000Z"
+  }
+}
