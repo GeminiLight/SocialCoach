@@ -1,0 +1,42 @@
+{
+  "videos": [
+    {
+      "slug": "transparency",
+      "decode_exit": 0,
+      "ssim_vs_scaled_original": 0.982876,
+      "bytes": 3945700,
+      "source_bytes": 27951475
+    },
+    {
+      "slug": "weak-ties",
+      "decode_exit": 0,
+      "ssim_vs_scaled_original": 0.982822,
+      "bytes": 4016388,
+      "source_bytes": 29259921
+    },
+    {
+      "slug": "front-back-stage",
+      "decode_exit": 0,
+      "ssim_vs_scaled_original": 0.98322,
+      "bytes": 4227001,
+      "source_bytes": 31280531
+    },
+    {
+      "slug": "self-fulfilling-prophecy",
+      "decode_exit": 0,
+      "ssim_vs_scaled_original": 0.982379,
+      "bytes": 3638335,
+      "source_bytes": 25159247
+    },
+    {
+      "slug": "schelling-neighbors",
+      "decode_exit": 0,
+      "ssim_vs_scaled_original": 0.981122,
+      "bytes": 5237626,
+      "source_bytes": 40025920
+    }
+  ],
+  "original_total": 153677094,
+  "web_total": 21065050,
+  "note": "SSIM compares the web encode with the source scaled to 720p; it is not a human audio review."
+}

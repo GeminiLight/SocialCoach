@@ -201,7 +201,7 @@ export default function Learn() {
                       />
                     </div>
                     <div className={video ? "video-library-intro" : "contents"}>
-                      {video && <span className="video-library-poster"><Image src={it.video.cover} alt="" fill sizes="96px" /></span>}
+                      {video && <span className="video-library-poster"><Image src={it.video.cover} alt="" fill sizes="96px" loading="lazy" /></span>}
                       <span className={video ? "video-library-description" : "contents"}>
                         <span className="display block text-[18px] leading-snug">{it.title[lang]}</span>
                         <span className={clsx("block text-[13px] text-ink-3 line-clamp-2 leading-snug", isOpen && "hidden lg:line-clamp-2")}>
@@ -274,7 +274,7 @@ export default function Learn() {
 
 /** The body of a theory or case — same content in the phone accordion and the desktop pane. */
 function ItemBody({ it, lang, saved, onSave, onPractice, onClose }: { it: LibraryItem; lang: Lang; saved: boolean; onSave: () => void; onPractice: (scene: Scenario) => void; onClose?: () => void }) {
-  if (isVideo(it)) return <VideoLesson lesson={it} lang={lang} saved={saved} onSave={onSave} onClose={onClose} />;
+  if (isVideo(it)) return <VideoLesson key={it.id} lesson={it} lang={lang} saved={saved} onSave={onSave} onClose={onClose} />;
   const isTheory = "principle" in it;
   const related = SCENARIOS.map((scene) => ({ scene, overlap: it.skills.filter((skill) => scene.skills.includes(skill)).length }))
     .filter(({ overlap }) => overlap > 0)

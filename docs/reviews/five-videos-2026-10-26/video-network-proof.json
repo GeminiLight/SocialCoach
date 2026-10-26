@@ -1,0 +1,81 @@
+{
+  "stages": [
+    {
+      "stage": "desktop_initial",
+      "at": 1792980945.1073222,
+      "mp4_requests": 0,
+      "vtt_requests": 0,
+      "note": "Learning page rendered seven entries and the selected poster. No playback gesture yet."
+    },
+    {
+      "stage": "desktop_select_and_read_transcript",
+      "at": 1792980985.376241,
+      "mp4_requests": 0,
+      "vtt_requests": 0
+    },
+    {
+      "stage": "desktop_play_from_chapter",
+      "at": 1792980999.3144908,
+      "unique_mp4_paths": [
+        "/videos/learning/social-science/schelling-neighbors-0b11a5623935.mp4"
+      ],
+      "requests": [
+        {
+          "at": 1792980993.365817,
+          "method": "GET",
+          "path": "/videos/learning/social-science/schelling-neighbors-0b11a5623935.mp4",
+          "status": 206,
+          "range": "bytes=0-"
+        },
+        {
+          "at": 1792980993.3659132,
+          "method": "GET",
+          "path": "/videos/learning/social-science/schelling-neighbors.en.vtt",
+          "status": 200,
+          "range": null
+        },
+        {
+          "at": 1792980993.367137,
+          "method": "GET",
+          "path": "/videos/learning/social-science/schelling-neighbors.zh.vtt",
+          "status": 200,
+          "range": null
+        }
+      ]
+    },
+    {
+      "stage": "desktop_switch_to_unplayed_lesson",
+      "at": 1792981047.020843,
+      "unique_mp4_paths": [
+        "/videos/learning/social-science/schelling-neighbors-0b11a5623935.mp4"
+      ],
+      "observed_dom": {
+        "new_video_src": null,
+        "paused": true,
+        "time": 0,
+        "tracks": 0
+      }
+    },
+    {
+      "stage": "mobile_open_without_play",
+      "at": 1792981272.8334742,
+      "unique_mp4_paths": [
+        "/videos/learning/social-science/schelling-neighbors-0b11a5623935.mp4"
+      ],
+      "note": "390px iframe, Chinese interface, front/back-stage expanded; that film has not been requested."
+    },
+    {
+      "stage": "mobile_play_then_close",
+      "at": 1792981384.578767,
+      "unique_mp4_paths": [
+        "/videos/learning/social-science/front-back-stage-69bfeab94966.mp4",
+        "/videos/learning/social-science/schelling-neighbors-0b11a5623935.mp4"
+      ],
+      "note": "Actual 390px playback screenshot captured; close returned to the collapsed course list with no player controls."
+    }
+  ],
+  "limitations": [
+    "Viewport check used a focused iframe in the user Chrome session, not a physical iOS/Android device.",
+    "No subjective listening judgment."
+  ]
+}
