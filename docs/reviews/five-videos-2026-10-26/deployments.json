@@ -1,0 +1,37 @@
+{
+  "applicationCommit": "1995e1e6433e24efda0f3eaf5895840dc8bfb332",
+  "pullRequest": "https://github.com/GeminiLight/SocialCoach/pull/55",
+  "vercel": {
+    "id": "dpl_3QJwrtmC5FQU2kkyZZTgzFBRrBvJ",
+    "state": "READY",
+    "target": "production",
+    "alias": [
+      "socialcoach-ai.vercel.app",
+      "socialcoach-app.vercel.app",
+      "socialcoach-geminilights-projects.vercel.app",
+      "socialcoach-git-main-geminilights-projects.vercel.app"
+    ],
+    "commit": "1995e1e6433e24efda0f3eaf5895840dc8bfb332"
+  },
+  "modelscope": {
+    "commit": "a16f061c4890a59ff3e77cb43af02d7fcfc63971",
+    "image": "363578-a16f061c-2026-10-26-11-33-27",
+    "imageDigest": "sha256:1630bea020c3880a8774304c17855576380c65b1034599697c694fb1a3129ed5",
+    "productFilesMatched": 482,
+    "visibility": "public",
+    "hardware": "platform/2v-cpu-16g-mem",
+    "port": 7860,
+    "next": "16.4.1"
+  },
+  "checks": {
+    "quality": "success",
+    "build": "success",
+    "preview": "success",
+    "coreMediaPlayerTests": 8,
+    "productionAudit": "No known vulnerabilities found"
+  },
+  "browser": {
+    "localChromeDesktopAnd390px": "passed",
+    "productionInteraction": "Not completed: embedded-page reads timed out and native browser control was interrupted; HTTP checks are recorded separately."
+  }
+}

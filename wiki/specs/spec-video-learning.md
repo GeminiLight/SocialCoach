@@ -2,7 +2,7 @@
 
 状态：2026-10-08 Vercel / ModelScope 已发布；真实设备与更多网络待补验。→ [验收原件](../../docs/reviews/video-learning-2026-10-07/README.md)
 
-2026-10-26：五期 H 社会科学短片接入及点击后加载已在本地完成，双平台发布验收进行中。→ [本轮记录](../reviews/review-2026-10-26-five-video-lessons.md)
+2026-10-26：五期 H 社会科学短片、压缩和点击后加载已在 Vercel / ModelScope 发布，线上媒体字节、Range 和缓存验收通过；本轮正式页面互动受浏览器控制中断影响，真实手机仍待补验。→ [本轮记录](../reviews/review-2026-10-26-five-video-lessons.md)
 
 ## 用户任务
 

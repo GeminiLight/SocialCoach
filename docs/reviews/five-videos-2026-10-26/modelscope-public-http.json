@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-10-26T03:40:51.606617+00:00",
+  "publicBase": "https://geminilight-socialcoach.ms.show",
+  "authentication": "none; normal browser User-Agent and ModelScope Referer",
+  "learnStatus": 200,
+  "media": [
+    {
+      "id": "transparency",
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1023/3945700",
+      "prefixSha256": "32ba757d474296912670da9be7e28f4e58c568b55133c262ba9ebfc5b5e57781",
+      "cacheControl": "public, max-age=31536000, immutable"
+    },
+    {
+      "id": "weak-ties",
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1023/4016388",
+      "prefixSha256": "36a2fd5add554ba8756853bfcec05558621aedc0193affdf0935ca3000b85270",
+      "cacheControl": "public, max-age=31536000, immutable"
+    },
+    {
+      "id": "front-back-stage",
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1023/4227001",
+      "prefixSha256": "38905c971134603a9856aee32fb42d9885d48dc497a8f8aba892760bd56646fd",
+      "cacheControl": "public, max-age=31536000, immutable"
+    },
+    {
+      "id": "self-fulfilling-prophecy",
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1023/3638335",
+      "prefixSha256": "d8703cf7dfcf076b46d9243d3bebeabdcbdf42d38777da95b890ca2db8b73e4e",
+      "cacheControl": "public, max-age=31536000, immutable"
+    },
+    {
+      "id": "schelling-neighbors",
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1023/5237626",
+      "prefixSha256": "03350247df4cdbb5a43841e20b9e1a2afce89f21616f1ce69c5f4750068acacb",
+      "cacheControl": "public, max-age=31536000, immutable"
+    }
+  ],
+  "browserInteractionVerified": false,
+  "clientBundleCheck": {
+    "scripts": 17,
+    "allFiveMediaPathsPresent": true
+  }
+}

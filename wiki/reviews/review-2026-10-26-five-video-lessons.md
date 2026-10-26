@@ -1,7 +1,7 @@
 <!-- Last verified: 2026-10-26 | Current stage: E -->
 # 五期 H 视频接入与按需加载
 
-状态：本地实现和验收完成；Vercel / ModelScope 发布验收进行中。
+状态：已合并并发布至 Vercel / ModelScope；本地交互与线上资源验收完成，正式页面互动 / 真实手机补验范围如下。
 
 用户授权把已经完成的五期 H 配音短片更新到两站，并要求观看时才加载、压缩资源。随后用户明确确认已有适用于 SocialCoach 产品公开使用的书面授权；未在本次流程中查阅授权文件，也未上传模型权重或参考音频。
 
@@ -16,7 +16,7 @@
 ## 本地验证
 
 - `pnpm check` 通过（lint、路由类型、TypeScript、核心与3D检查）；新增媒体预算 / faststart / 引用时间 / 双语文本 / 初始不带src或track检查。小型辅助技术修订后相关8项再次通过。
-- `pnpm build` 通过。最终提交还需通过 GitHub CI 的检查与构建。
+- `pnpm build` 通过。最终依赖修复提交的 GitHub CI 完整检查与构建均已通过。
 - 五片完整解码通过，720p SSIM为0.9811–0.9832。没有重新合成配音或整体变速。
 - 用户日常 Chrome：桌面英文目录、七条影片、实际章节播放、英文字幕显示模式、切换后新影片src空 / 时间0 / 字幕0；手机宽度中文展开、实际播放、返回关闭。观看无需模型接入。
 - 初次进入、选择、展开全文：0个MP4/VTT。明确播放后仅选中影片；切换与手机仅展开没有新影片请求。
@@ -26,7 +26,15 @@
 
 ## 发布
 
-待实际发布后补入提交、Vercel Ready / ModelScope Running、媒体字节与 Range 验收。沿用既有空间、公开性、免费硬件与模型配置，不改域名、费用方案或账号体系。
+PR [#55](https://github.com/GeminiLight/SocialCoach/pull/55) 合并，应用源 `1995e1e6433e24efda0f3eaf5895840dc8bfb332`。
+
+- Vercel 正式部署 `dpl_3QJwrtmC5FQU2kkyZZTgzFBRrBvJ` Ready，正式别名 `socialcoach-ai.vercel.app` / `socialcoach-app.vercel.app` 已关联源提交。
+- ModelScope `a16f061c4890a59ff3e77cb43af02d7fcfc63971`，482个已提交产品输入逐项一致，空间 README / Git 属性保留；显式触发重建，镜像 `363578-a16f061c-2026-10-26-11-33-27`，构建成功、Next.js16.4.1在7860启动 Ready，平台 Running。原公开性、免费 `platform/2v-cpu-16g-mem`、模型 / 预算配置保留。
+- 两端 `/learn` 200；五片完整 GET 字节及SHA256、封面 / poster / 中英文VTT逐项一致。全部MP4 Range请求206、Content-Range正确，15个哈希媒体长期 immutable 缓存通过。
+- ModelScope 专用认证后端的 HEAD 返回Content-Length0，实际长度由完整GET和Content-Range验证；不是媒体被截断。公开 `ms.show` 另用正常浏览器User-Agent与平台Referer核验，证据与专用后端分开保存。
+- 本轮正式页面互动**未完成**：扩展读取魔搭嵌入页与Vercel页超时，原生Chrome控制遭中断。曾实际看到魔搭“空间正在发布”提示，不能把它当作发布后的播放截图；也不把后台或公开HTTP成功等同于公开浏览器播放通过。本地同一播放器已完成真实Chrome交互验收，实体手机与更多网络未覆盖。
+
+[发布与线上资源原件](../../docs/reviews/five-videos-2026-10-26/README.md)。本次没有社交媒体自动发布。
 
 ## 发布门禁发现的依赖修复
 
