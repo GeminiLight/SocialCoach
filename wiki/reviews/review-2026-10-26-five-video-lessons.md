@@ -27,3 +27,9 @@
 ## 发布
 
 待实际发布后补入提交、Vercel Ready / ModelScope Running、媒体字节与 Range 验收。沿用既有空间、公开性、免费硬件与模型配置，不改域名、费用方案或账号体系。
+
+## 发布门禁发现的依赖修复
+
+首次 CI 的应用构建通过，但生产依赖审计发现既有 Next.js 16.3.8 与 Zod 4.5.x 已有新公告。按官方修复版本将 Next.js / eslint-config-next 更新到 16.4.1、Zod 更新到 4.6.7（修复下限4.6.6），并重新生成锁文件；不关闭审计门禁。原始公告：[Next.js](https://github.com/advisories/GHSA-2464-fhr4-w9xw)、[Zod](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5)。
+
+更新后的锁文件生产依赖审计通过，报告没有已知漏洞。最终源码在 CI 重新执行完整检查与构建。
