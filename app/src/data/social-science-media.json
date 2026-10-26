@@ -1,0 +1,72 @@
+{
+  "transparency": {
+    "src": "/videos/learning/social-science/transparency-4cfcc89f1c11.mp4",
+    "poster": "/videos/learning/social-science/transparency-poster-467ba4670692.webp",
+    "cover": "/videos/learning/social-science/transparency-cover-b7e1333bae88.webp",
+    "seconds": 84.2,
+    "frames": 2526,
+    "width": 720,
+    "height": 1280,
+    "bytes": 3945700,
+    "sourceBytes": 27951475,
+    "sha256": "4cfcc89f1c11c01a203ca59cdecb7790a5a4cfc30d1c6511ba3d295a038fa370",
+    "sourceSha256": "1e36c19df6e5c1cf4b88b65c8530c24e0fb964d60246be4deba69084e9d4cc7b",
+    "profile": "720x1280-30fps-x264-slow-animation-crf27-aac96k-faststart-v1"
+  },
+  "weak-ties": {
+    "src": "/videos/learning/social-science/weak-ties-de900ca88d53.mp4",
+    "poster": "/videos/learning/social-science/weak-ties-poster-7138cd288b20.webp",
+    "cover": "/videos/learning/social-science/weak-ties-cover-f0342283da95.webp",
+    "seconds": 88.96666666666667,
+    "frames": 2669,
+    "width": 720,
+    "height": 1280,
+    "bytes": 4016388,
+    "sourceBytes": 29259921,
+    "sha256": "de900ca88d532089713647bd20056cb7d5d8a3f1a1dd79ea001020401a3513f6",
+    "sourceSha256": "01e5d76528dab6eff64584746b231fd4e99890d11806c8fdd499ccfdb4b6704b",
+    "profile": "720x1280-30fps-x264-slow-animation-crf27-aac96k-faststart-v1"
+  },
+  "front-back-stage": {
+    "src": "/videos/learning/social-science/front-back-stage-69bfeab94966.mp4",
+    "poster": "/videos/learning/social-science/front-back-stage-poster-a78fe6440eb3.webp",
+    "cover": "/videos/learning/social-science/front-back-stage-cover-0c38f3672da8.webp",
+    "seconds": 91.46666666666667,
+    "frames": 2744,
+    "width": 720,
+    "height": 1280,
+    "bytes": 4227001,
+    "sourceBytes": 31280531,
+    "sha256": "69bfeab94966733f9a105f379679af1b1caf32039ee45b7989f58a7b5626a835",
+    "sourceSha256": "50c5728a9afe993188e34c5168428e855972d5a9e1052c165fcc1d7176c83126",
+    "profile": "720x1280-30fps-x264-slow-animation-crf27-aac96k-faststart-v1"
+  },
+  "self-fulfilling-prophecy": {
+    "src": "/videos/learning/social-science/self-fulfilling-prophecy-79fd71948497.mp4",
+    "poster": "/videos/learning/social-science/self-fulfilling-prophecy-poster-569591c6b42c.webp",
+    "cover": "/videos/learning/social-science/self-fulfilling-prophecy-cover-f6f477b5c534.webp",
+    "seconds": 88.5,
+    "frames": 2655,
+    "width": 720,
+    "height": 1280,
+    "bytes": 3638335,
+    "sourceBytes": 25159247,
+    "sha256": "79fd71948497225b6b41bb3d645fa09af1025e11fc704d00d50f55f631529a8d",
+    "sourceSha256": "ccd6c12e985f7bd4a6935ae321b81633615eeb3b5b45d975ea64d5b81148f7cd",
+    "profile": "720x1280-30fps-x264-slow-animation-crf27-aac96k-faststart-v1"
+  },
+  "schelling-neighbors": {
+    "src": "/videos/learning/social-science/schelling-neighbors-0b11a5623935.mp4",
+    "poster": "/videos/learning/social-science/schelling-neighbors-poster-1cd93b5d02ba.webp",
+    "cover": "/videos/learning/social-science/schelling-neighbors-cover-c93a22dee1d9.webp",
+    "seconds": 83.7,
+    "frames": 2511,
+    "width": 720,
+    "height": 1280,
+    "bytes": 5237626,
+    "sourceBytes": 40025920,
+    "sha256": "0b11a562393528cd1e8dcf2d0cbde20989dd5cc75680578c4d1ba09f145ed0ea",
+    "sourceSha256": "603f9127167708281f029a3c6f8c4eccea4984c7af732b56fa5bb069f3caaecc",
+    "profile": "720x1280-30fps-x264-slow-animation-crf27-aac96k-faststart-v1"
+  }
+}

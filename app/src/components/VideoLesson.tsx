@@ -8,9 +8,14 @@ import type { Lang } from '@/data/taxonomy';
 import { pick } from '@/lib/i18n';
 
 const copy = {
-  play: { zh: '播放这段示范', en: 'Play this demonstration' },
+  play: { zh: '播放视频', en: 'Play video' },
   segments: { zh: '跳到关键片段', en: 'Jump to a moment' },
   watch: { zh: '看清楚，哪一步改变了对话', en: 'Notice what changes the conversation' },
+  conceptWatch: { zh: '从画面看懂这个概念', en: 'Understand the idea through the film' },
+  conceptBreakdown: { zh: '概念、证据与边界', en: 'The idea, evidence and limits' },
+  conceptBoundary: { zh: '原文与适用边界', en: 'The source and its limits' },
+  choosePractice: { zh: '选一场对话，自己试试', en: 'Choose a conversation to practise' },
+  paper: { zh: '阅读原始文献', en: 'Read the original source' },
   saved: { zh: '已收藏', en: 'Saved' }, save: { zh: '收藏这段视频', en: 'Save this video' },
   buffering: { zh: '正在加载视频…', en: 'Loading the video…' },
   error: { zh: '视频暂时没能加载。可以重试，或先阅读下面的完整文本。', en: 'The video could not load. Try again, or read the full transcript below.' },
@@ -36,6 +41,8 @@ export function VideoLesson({ lesson, lang, saved, onSave, onClose }: { lesson: 
   const [buffering, setBuffering] = useState(false);
   const [failed, setFailed] = useState(false);
   const [playNotice, setPlayNotice] = useState(false);
+  const [activated, setActivated] = useState(false);
+  const concept = lesson.kind === 'concept';
 
   // The film already has burned-in Chinese text. English captions are enabled
   // for the English UI; either track remains available in the native controls.
@@ -46,18 +53,32 @@ export function VideoLesson({ lesson, lang, saved, onSave, onClose }: { lesson: 
   useEffect(() => {
     const tracks = player.current?.textTracks;
     if (tracks) for (const track of Array.from(tracks)) track.mode = lang === 'en' && track.language === 'en' ? 'showing' : 'disabled';
-  }, [lang]);
+  }, [lang, activated]);
   useEffect(() => {
     const element = player.current;
     const pauseWhenHidden = () => { if (document.hidden) element?.pause(); };
     document.addEventListener('visibilitychange', pauseWhenHidden);
-    return () => { document.removeEventListener('visibilitychange', pauseWhenHidden); element?.pause(); };
+    return () => {
+      document.removeEventListener('visibilitychange', pauseWhenHidden);
+      if (element?.hasAttribute('src')) {
+        element.pause();
+        element.removeAttribute('src');
+        element.load(); // Cancel the previous movie's pending download on close/switch.
+      }
+    };
   }, []);
 
   const seek = (at: number) => {
     const element = player.current;
     if (!element || failed) return;
     setPlayNotice(false);
+    if (!element.hasAttribute('src')) {
+      // Attach only in the explicit play/seek gesture, including on desktop.
+      // Keep play() in that gesture for mobile browsers' playback policy.
+      element.src = lesson.video.src;
+      setActivated(true);
+      element.load();
+    }
     if (element.readyState >= 1) element.currentTime = Math.min(at, element.duration);
     else pendingSeek.current = at;
     void element.play().catch(() => { setBuffering(false); setPlayNotice(true); });
@@ -85,17 +106,19 @@ export function VideoLesson({ lesson, lang, saved, onSave, onClose }: { lesson: 
       <div className="video-lesson-layout">
         <div className="video-watch">
           <div className="lesson-player">
-            <video ref={player} controls playsInline preload="none" width={720} height={1280}
+            <video ref={player} controls={activated} aria-hidden={!activated} playsInline preload="none" width={720} height={1280}
               poster={lesson.video.poster} aria-label={`${pick(copy.play, lang)} · ${pick(lesson.title, lang)}`}
               onLoadedMetadata={metadataLoaded} onPlay={() => setBuffering((player.current?.readyState ?? 0) < 3)} onPause={() => setBuffering(false)}
               onWaiting={() => setBuffering(true)} onPlaying={() => { setBuffering(false); setPlayNotice(false); }}
               onCanPlay={() => setBuffering(false)} onSeeked={() => setBuffering(false)}
               onError={() => { setFailed(true); setBuffering(false); }}
               onTimeUpdate={() => setChapter(chapterAt(lesson, player.current?.currentTime ?? 0))}>
-              <source src={lesson.video.src} type="video/mp4" />
-              {lesson.video.captions.map(track => <track key={track.lang} src={track.src} kind="captions" srcLang={track.lang} label={pick(track.label, lang)} default={lang === 'en' && track.lang === 'en'} />)}
+              {activated && lesson.video.captions.map(track => <track key={track.lang} src={track.src} kind="captions" srcLang={track.lang} label={pick(track.label, lang)} default={lang === 'en' && track.lang === 'en'} />)}
               {pick(copy.error, lang)}
             </video>
+            {!activated && <button type="button" className="lesson-start press" onClick={() => seek(0)} aria-label={`${pick(copy.play, lang)} · ${pick(lesson.title, lang)}`}>
+              <span><Play size={20} aria-hidden />{pick(copy.play, lang)}</span>
+            </button>}
           </div>
           <p className="lesson-media-note">{pick(copy.captions, lang)}</p>
           <p className="lesson-play-status" role={failed ? 'alert' : 'status'}>
@@ -110,8 +133,8 @@ export function VideoLesson({ lesson, lang, saved, onSave, onClose }: { lesson: 
           <button type="button" className="lesson-save press" aria-pressed={saved} onClick={onSave}><Bookmark size={15} fill={saved ? 'currentColor' : 'none'} aria-hidden />{pick(saved ? copy.saved : copy.save, lang)}</button>
         </div>
 
-        <section className="lesson-notes" aria-label={pick(copy.breakdown, lang)}>
-          <p className="eyebrow text-teal">{pick(copy.watch, lang)}</p>
+        <section className="lesson-notes" aria-label={pick(concept ? copy.conceptBreakdown : copy.breakdown, lang)}>
+          <p className="eyebrow text-teal">{pick(concept ? copy.conceptWatch : copy.watch, lang)}</p>
           <ol className="lesson-takeaways">
             {lesson.takeaways.map((item, index) => <li key={`${item.at}-${index}`}>
               <h3><span className="num">{String(index + 1).padStart(2, '0')}</span>{pick(item.title, lang)}</h3>
@@ -133,14 +156,14 @@ export function VideoLesson({ lesson, lang, saved, onSave, onClose }: { lesson: 
       </details>
 
       <section className="lesson-practice">
-        <p className="eyebrow">{pick(copy.fictional, lang)}</p>
+        <p className="eyebrow">{pick(concept ? copy.conceptBoundary : copy.fictional, lang)}</p>
         <p>{pick(lesson.boundary, lang)}</p>
-        <Link prefetch={false} href={`/3d?scene=${lesson.practice.scene}&opening=${lesson.practice.opening}`} className="lesson-practice-link press">
-          {pick(lesson.practice.label, lang)}<ArrowRight size={17} aria-hidden />
+        <Link prefetch={false} href={lesson.practice ? `/3d?scene=${lesson.practice.scene}&opening=${lesson.practice.opening}` : '/arena'} className="lesson-practice-link press">
+          {pick(lesson.practice?.label ?? copy.choosePractice, lang)}<ArrowRight size={17} aria-hidden />
         </Link>
-        <p className="lesson-media-note">{pick(copy.practiceNote, lang)}</p>
+        {lesson.practice && <p className="lesson-media-note">{pick(copy.practiceNote, lang)}</p>}
       </section>
-      <p className="lesson-source">{pick(lesson.source.label, lang)} · <a href={lesson.source.href} target="_blank" rel="noopener noreferrer">{pick(copy.source, lang)}<ArrowUpRight size={12} aria-hidden /></a></p>
+      <p className="lesson-source">{pick(lesson.source.label, lang)} · <a href={lesson.source.href} target="_blank" rel="noopener noreferrer">{pick(concept ? copy.paper : copy.source, lang)}<ArrowUpRight size={12} aria-hidden /></a></p>
     </div>
   );
 }

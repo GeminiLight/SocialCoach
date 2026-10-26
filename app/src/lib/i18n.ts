@@ -448,7 +448,7 @@ const dict = {
   ln_title: { zh: "学习", en: "Learn" },
   ln_source_link: { zh: "查看方法依据", en: "Read the source" },
   ln_steps: { zh: "{n} 步做法", en: "{n} steps" },
-  ln_sub: { zh: "看一段示范，读清关键选择，再自己练一遍。每条内容都有来源。", en: "Watch a demonstration, understand the choices, then try them yourself. Every item has a source." },
+  ln_sub: { zh: "看清一个现象，或一段回应。带着理解，回到自己的对话里练。每条内容都有来源。", en: "Understand a social pattern or a response, then return to your own conversations and practise. Every item has a source." },
   ln_videos: { zh: "视频", en: "Videos" },
   ln_theories: { zh: "理论", en: "Theories" },
   ln_cases: { zh: "案例", en: "Cases" },

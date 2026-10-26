@@ -1,14 +1,16 @@
 import { L, type L as Localized, type SkillId } from './taxonomy';
+import { SOCIAL_SCIENCE_LESSONS } from './social-science-lessons';
 
 export interface VideoLesson {
   id: string;
+  kind: 'demonstration' | 'concept';
   title: Localized;
   synopsis: Localized;
   skills: SkillId[];
   keywords: string[];
   video: { src: string; poster: string; cover: string; seconds: number; captions: { lang: 'zh' | 'en'; src: string; label: Localized }[] };
   source: { label: Localized; href: string; provenance: Localized };
-  practice: { scene: string; opening: string; label: Localized };
+  practice?: { scene: string; opening: string; label: Localized };
   chapters: { at: number; title: Localized }[];
   transcript: { from: number; to: number; text: Localized }[];
   takeaways: { at: number; title: Localized; quote: Localized; explanation: Localized }[];
@@ -16,8 +18,9 @@ export interface VideoLesson {
 }
 
 /** Timings and quoted dialogue come from the supplied final film, not its earlier storyboard. */
-export const VIDEO_LESSONS: VideoLesson[] = [{
+const DEMONSTRATION_LESSONS: VideoLesson[] = [{
   id: 'video-dinner-toast',
+  kind: 'demonstration',
   title: L('饭局上，领导替你答应了', 'Your boss promises on your behalf'),
   synopsis: L('一杯酒，一个替你答应的日期。看三种回应，再自己接住这场压力。', 'A toast and a deadline you never agreed to. Compare three responses, then try the conversation yourself.'),
   skills: ['standing-up', 'communication', 'resolving-conflicts'],
@@ -83,6 +86,7 @@ export const VIDEO_LESSONS: VideoLesson[] = [{
   boundary: L('这是剪辑后的虚构示范。真实练习中，对方可能继续劝酒、反问或追问日期；一句话不保证让步，也没有必须照背的答案。', 'This is an edited fictional demonstration. In practice, the other person may keep pushing, question you or demand a date. A line does not guarantee agreement, and you do not need to memorize an answer.'),
 }, {
   id: 'video-elevator-hr',
+  kind: 'demonstration',
   title: L('领导当众问：是不是要离职？', 'Your boss asks: are you resigning?'),
   synopsis: L('电梯口，旁人都在听。看三种回应，练习把私事与工作安排分开。', 'At the elevator, colleagues can hear everything. Compare three responses and separate private matters from work plans.'),
   skills: ['standing-up', 'communication', 'emotion-regulation'],
@@ -144,6 +148,8 @@ export const VIDEO_LESSONS: VideoLesson[] = [{
   ],
   boundary: L('这是剪辑后的虚构示范。影片中的传言与让步是剧情，不是对你现实处境的判断。守住隐私并不必然损害关系；真实对方可能继续追问，你仍可以澄清边界、修复表达或另约沟通。', 'This is an edited fictional demonstration. Its rumors and agreements are plot, not judgments about your situation. Protecting privacy does not inevitably harm a relationship. The other person may keep asking; you can restate the boundary, repair your wording or arrange a separate conversation.'),
 }];
+
+export const VIDEO_LESSONS: VideoLesson[] = [...SOCIAL_SCIENCE_LESSONS, ...DEMONSTRATION_LESSONS];
 
 export function chapterAt(lesson: VideoLesson, seconds: number): number {
   if (!Number.isFinite(seconds) || seconds < 0) return 0;

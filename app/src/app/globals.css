@@ -606,8 +606,10 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .lesson-back { display: inline-flex; align-items: center; gap: var(--space-sm); min-height: 44px; margin-bottom: var(--space-sm); color: var(--ink-2); font-size: 12px; border-radius: var(--radius-sm); }
 .video-lesson-layout { display: grid; gap: var(--space-xl); align-items: start; }
 .video-watch { min-width: 0; }
-.lesson-player { width: min(100%, 36svh); margin-inline: auto; overflow: hidden; border-radius: var(--radius); background: var(--inset); }
+.lesson-player { position: relative; width: min(100%, 36svh); margin-inline: auto; overflow: hidden; border-radius: var(--radius); background: var(--inset); }
 .lesson-player video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: contain; }
+.lesson-start { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; border: 0; background: transparent; border-radius: inherit; }
+.lesson-start > span { display: inline-flex; align-items: center; gap: var(--space-sm); min-height: 48px; padding: var(--space-sm) var(--space-lg); border-radius: var(--radius); background: var(--ink); color: var(--paper); font-size: 13px; box-shadow: var(--shadow-paper); }
 .lesson-media-note { margin-top: var(--space-sm); font-size: 11px; line-height: 1.65; color: var(--ink-3); }
 .lesson-play-status { margin-top: var(--space-xs); font-size: 12px; line-height: 1.6; color: var(--ink-2); }
 .lesson-play-status:empty { display: none; }

@@ -20,6 +20,8 @@
 
 ## 技术栈
 
+2026-10-26 视频学习：`social-science-lessons.ts` 的五期双语源文本 / 证据边界与 `social-science-media.json` 的压缩资源合并进既有 `VIDEO_LESSONS`，不改变档案结构。页面只挂当前课程，播放器起初无 src / track；明确播放或时间点手势才连接媒体，卸载时取消旧媒体。内容哈希 MP4 / WebP 由现有静态资源层缓存，字幕正常重新验证；不新增视频 API、对象存储或观看进度服务。→ [视频规格](./specs/spec-video-learning.md)
+
 | 层 | 技术 |
 |---|---|
 | 框架 | Next.js 16.3.6（App Router）· React 19.2.8 · TypeScript 5 |
