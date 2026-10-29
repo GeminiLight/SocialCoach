@@ -62,7 +62,9 @@ export function roleplaySpeechGuard(scenarioId:string,messages:ChatMessage[],str
  return utterances=>{
   for(const {text} of utterances){
    if(strictOpening&&!officeFeedbackRequested(messages)&&/论证|论据|逻辑|\breasoning\b|\bargument\b.{0,15}(?:wrong|weak|hold|redo|rewrite)/iu.test(text))return 'The learner has not asked for the boss’s original feedback in this replay. Do not disclose the private reasoning problem yet. You may name page three and negotiate the limited offer without revealing its hidden reason. Do not invent a different problem as a substitute.';
-   if(strictOpening&&/(?:上次|之前|以前).{0,12}我.{0,20}帮(?:过|了|你)|\bI (?:helped|rescued|bailed) you\b|\bI helped you (?:last|before)\b/iu.test(text))return 'The established history is that the learner often rescued Tang’s work. No reciprocal rescue or debt is recorded in this replay. Do not invent a previous favor by Tang or pressure the learner with a fabricated debt.';
+   const reciprocalHelp=/(?:上次|之前|以前).{0,12}我.{0,20}帮(?:过|了|你)|\bI (?:helped|rescued|bailed) you\b|\bI helped you (?:last|before)\b/iu.test(text);
+   const confirmedHelp=messages.some(m=>m.role==='learner'&&/(?:上次|之前|以前).{0,12}你.{0,20}帮(?:过|了|我)|\byou (?:helped|rescued|bailed) me\b/iu.test(m.text)&&!/[？?]|如果|假如|你说|没|不|未|\b(?:if|whether|not|never|didn't)\b/iu.test(m.text));
+   if(reciprocalHelp&&!confirmedHelp)return 'The established history is that the learner often rescued Tang’s work. No reciprocal rescue or debt is recorded. Do not invent a previous favor by Tang or pressure the learner with a fabricated debt.';
    if(strictOpening&&/(?:肯定|一定|必须).{0,8}(?:早于|比你.{0,10}早)|\b(?:my deadline|mine)\b.{0,20}\b(?:before|earlier than)\b/iu.test(text))return 'Tang’s exact deadline and its ordering relative to the learner’s report are both unknown. Do not invent an earlier deadline as leverage; say you still need to confirm it.';
    // Tang's afternoon need is known, but no exact clock time was established.
    // Quoting the learner's report time or proposing a handoff remains allowed.

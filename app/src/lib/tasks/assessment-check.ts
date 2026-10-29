@@ -42,7 +42,7 @@ export async function checkAssessment(report:Report,input:AssessInput,llm:LLM,mo
  const publicScene=scenarioBlock(input.scenario,input.lang,input.learnerCharacterId,'learner');
  // DeepSeek needs reasoning for this evidence audit, with room left for its JSON verdict.
  const reasonedCheck=model.startsWith('deepseek-');
- const text=await llm.chatText({model,signal,maxTokens:reasonedCheck?10000:5000,thinking:reasonedCheck,effort:'low',system,messages:[{role:'user',content:JSON.stringify({transcript:input.messages.filter(m=>m.role!=='coach').map((m,index)=>({index,role:m.role,characterId:m.characterId,text:m.text,kind:m.kind})),publicScene,observations:input.sceneContext,retrievedKnowledge:retrievedKnowledge?knowledgeContext(retrievedKnowledge,input.lang):undefined,report})}]});
+ const text=await llm.chatText({model,signal,maxTokens:reasonedCheck?10000:5000,thinking:reasonedCheck,effort:'low',system,messages:[{role:'user',content:JSON.stringify({transcript:input.messages.filter(m=>m.role!=='coach').map((m,index)=>({index,role:m.role,characterId:m.characterId,text:m.text,kind:m.kind})),initialPracticeIntent:input.practiceIntent,setupPolicy:'The initial preference is not a spoken turn or proof of action. Later learner words take precedence.',publicScene,observations:input.sceneContext,retrievedKnowledge:retrievedKnowledge?knowledgeContext(retrievedKnowledge,input.lang):undefined,report})}]});
  signal?.throwIfAborted();
  let result:z.infer<typeof CheckSchema>;
  // A malformed checker response is an assessment failure, not a provider

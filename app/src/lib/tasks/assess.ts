@@ -9,6 +9,7 @@ import type { AssessInput } from "./types";
 import {validateSceneContext,sanitizeSceneNotes,SCENE_ASSESS_POLICY,type SceneContext} from '../scene-context';
 import {ReportSchema} from '../archive';
 import {checkAssessment} from './assessment-check';
+import {hasAssessableSpeech,practiceIntentContext} from '../practice-intent';
 
 const skillIds = new Set(SKILLS.map((s) => s.id));
 
@@ -67,10 +68,11 @@ export function sanitizeReport(raw: Partial<Report>, scenario: Scenario, theorie
 export async function runAssess(input: AssessInput, llm: LLM, smartModel: string, onDelta?: (d: string) => void, signal?:AbortSignal): Promise<Report> {
   signal?.throwIfAborted();
   const { scenario, learnerCharacterId, messages, goals, lang } = input;
+  if(!hasAssessableSpeech(messages))throw new LLMError(pick({zh:'还没有可引用的发言。回到对话说一句，再来复盘。',en:'There are no learner words to quote yet. Return to the conversation and respond before reviewing.'},lang),422,true);
   let sceneContext:SceneContext|undefined;
   try{sceneContext=validateSceneContext(input.sceneContext,messages);}catch{throw new LLMError(pick({zh:'现场记录与原话不一致，请重新打开复盘。',en:'The scene record does not match the transcript. Please reopen the debrief.'},lang),400);}
   const name = input.learnerName || pick(scenario.characters.find((c) => c.id === learnerCharacterId)!.name, lang);
-  const transcript = transcriptBlock(messages, scenario, lang, name);
+  const transcript = transcriptBlock(messages, scenario, lang, name)+practiceIntentContext(input.practiceIntent);
   const learnerText = messages.filter(m=>m.role === "learner"||m.role === "npc").map(m=>m.text).join(" ");
 
   const kb = retrieveKnowledge({

@@ -17,6 +17,14 @@ const utterances=(text:string)=>[{characterId:'tang',text}];
 const guard=roleplaySpeechGuard(scenario.id,initial)!;
 let checks=0;
 function check(label:string,fn:()=>void){fn();checks++;console.log('PASS',label);}
+check('full practice rejects the same invented reciprocal debt as the short replay',()=>{
+ const invented='上次我帮你救场的时候你可没算时间。';
+ assert.ok(guard(utterances(invented)));
+ assert.ok(roleplaySpeechGuard(scenario.id,initial,true)!(utterances(invented)));
+ assert.equal(roleplaySpeechGuard(scenario.id,[...initial,learner('上次你帮我赶完了报告。')])!(utterances(invented)),undefined);
+ assert.ok(roleplaySpeechGuard(scenario.id,[...initial,learner('你说上次你帮我救场，我不记得有这回事。')])!(utterances(invented)));
+ assert.equal(guard(utterances('我知道以前一直是你帮我，可我这次确实还没改完。')),undefined);
+});
 check('a report deadline and limited help do not establish a post-report appointment',()=>{
  assert.ok(guard(utterances(bad)));assert.equal(guard(utterances(good)),undefined);
  assert.ok(guard(utterances('After you finish your report, you will help me with page three.')));

@@ -2,6 +2,12 @@
 
 # API 参考
 
+## 复盘交付与本次打算（2026-10-29）
+
+`roleplay` / `assess` 可带 `practiceIntent:string`（trim、最多 300 字），仅作初始偏好，不能替代原目标或评分引文，后来实际表达优先。`assess` 另接受 `requestId:UUID` 用于脱敏日志关联。响应增加前置空白与每十秒保活，首段非空正文后停止；仍以 `@@final` 为有效报告、`@@error` 为失败。无用户发言快速返回流内 422，165 秒任务截止为可恢复 504，浏览器另有 180 秒传输截止；核对与修复预算不变。
+
+`/api/track` 新严格事件 `assessment_stage`：`session,scenario,mode,request:UUID,stage:started|completed|failed|cancelled,duration_ms:0..300000,byok,status?:0..999,practice?:UUID`。完成仅指有效结果抵达客户端；拒绝额外打算、转录或错误正文，旧事件兼容。推荐的相容判断缺少真实背景引文时降为未知。见 [本轮验收](./reviews/review-2026-10-29-debrief-delivery-goals.md)。
+
 ## 关键回应短练（2026-10-22）
 
 `roleplay` / `assess` 请求新增可选 `practiceMode: "key-turn"`，托管与 BYOK 共用输入验证和任务。只允许非自定义 `office-quick-favor`，最多四句 learner 消息；其他练习省略该字段，保持原行为。客户端只发送原 NPC 开场与这次新转录，不传原回答 / 后续剧情 / 原报告。短练 NPC 使用既有 smart 档位，其他对练仍 fast；响应协议、限流、取消和任务预算不变。短练报告只展示引用本次用户原话的沟通观察，不应用能力 / 星级更新。

@@ -22,6 +22,8 @@ import { runPattern } from "./tasks/pattern";
 import type { AssessInput, PatternInput, PatternResult, ReflectInput, ScheduleInput, TurnInput } from "./tasks/types";
 import { track } from "./analytics/track";
 import type { TrackEvent } from "./analytics/schema";
+import {assessmentDeadline} from './assessment-delivery';
+import {ReportSchema} from './archive';
 
 /**
  * The one place that decides where a model call goes.
@@ -131,9 +133,16 @@ export async function assessStream(
   body: AssessInput,
   onPartial: (p: Partial<Report>) => void,
   signal?:AbortSignal,
+  context?:{session:string;scenario:string;mode:'text'|'3d'|'rehearse';practice?:string},
 ): Promise<Report> {
   const o = own();
-  return watched("assess", !!o, body.lang, async () => {
+  const requestId=crypto.randomUUID(),started=Date.now();
+  const stage=(stage:'started'|'completed'|'failed'|'cancelled',error?:unknown)=>{
+    if(context)track({name:'assessment_stage',ts:Date.now(),...context,request:requestId,stage,duration_ms:Math.min(300000,Math.max(0,Date.now()-started)),byok:!!o,...(stage==='failed'?{status:Math.max(0,Math.min(999,typeof (error as {status?:unknown})?.status==='number'?(error as {status:number}).status:0))}:{})});
+  };
+  stage('started');
+  try{
+  const report=await watched("assess", !!o, body.lang, () => assessmentDeadline(async signal => {
     signal?.throwIfAborted();
     if (o) {
       let acc = "";
@@ -144,7 +153,7 @@ export async function assessStream(
         if (p) onPartial(p);
       },signal);
     }
-    const full = await streamText("/api/assess", body, (acc) => {
+    const full = await streamText("/api/assess", {...body,requestId}, (acc) => {
       const cut = acc.indexOf("\n@@");
       const head = cut === -1 ? acc : acc.slice(0, cut);
       const p = parsePartialJSON<Report>(head);
@@ -154,10 +163,13 @@ export async function assessStream(
     const err = full.indexOf(ERR);
     if (err !== -1) throw streamFailure(full.slice(err + ERR.length).trim());
     const fin = full.indexOf(FIN);
-    if (fin === -1) throw new ApiError("Assessment ended unexpectedly.", 200, "stream");
+    if (fin === -1) throw new ApiError(body.lang==='en'?'Assessment ended unexpectedly. Your transcript is saved; retry.':'复盘连接提前结束。对话已保留，请重试。',502,'stream',null);
     signal?.throwIfAborted();
-    return JSON.parse(full.slice(fin + FIN.length)) as Report;
-  });
+    try{return ReportSchema.parse(JSON.parse(full.slice(fin + FIN.length))) as Report;}
+    catch{throw new ApiError(body.lang==='en'?'The review response was incomplete. Your transcript is saved; retry.':'复盘响应不完整。对话已保留，请重试。',502,'stream',null);}
+  },body.lang,signal));
+  stage('completed');return report;
+  }catch(error){stage(signal?.aborted||(error as Error)?.name==='AbortError'?'cancelled':'failed',error);throw error;}
 }
 
 export function hint(body: TurnInput) {

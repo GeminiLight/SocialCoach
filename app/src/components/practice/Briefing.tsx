@@ -11,6 +11,7 @@ import { SkillTag } from "@/components/SkillBits";
 import { ScenarioCover } from "@/components/ScenarioCover";
 import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
 import { t, tList } from "@/lib/i18n";
+import {pick} from '@/lib/i18n';
 import { useCanUseModel } from "@/lib/model-access";
 import { schedule } from "@/lib/client-api";
 import { historyFor, npcsOf } from "@/lib/session-utils";
@@ -21,6 +22,8 @@ import { learnerSeed } from "@/data/avatars";
 import { arenaReturnPath } from "@/lib/arena-location";
 import { practiceTurnLimit } from "@/lib/practice-policy";
 import { unlockSpeech } from "@/lib/speech";
+import {PracticeSetup} from './PracticeSetup';
+import {useSessionDraft} from '@/lib/use-session-draft';
 
 
 export function Briefing({ session }: { session: Session }) {
@@ -31,6 +34,7 @@ export function Briefing({ session }: { session: Session }) {
   const [err, setErr] = useState<string | null>(null);
   const inflight = useRef(false);
   const [attempt, setAttempt] = useState(0);
+  const [intent,setIntent]=useSessionDraft('intent.'+session.id,session.practiceIntent??'');
   const sc = session.scenario;
   const authoredDate = /^Original fictional practice — SocialCoach, (\d{4}-\d{2}-\d{2})\./u.exec(sc.source)?.[1];
   const adapting = !session.adaptation;
@@ -66,7 +70,7 @@ export function Briefing({ session }: { session: Session }) {
     if (adapting || !canUseModel) return;
     if (settings.tts) unlockSpeech();
     const startedAt = Date.now();
-    updateSession(session.id, { status: "active", startedAt, timed });
+    updateSession(session.id, { status: "active", startedAt, timed,practiceIntent:intent.trim()||undefined });
     track({ name: "session_start", ts: startedAt, session: session.id, scenario: sc.custom ? "custom" : sc.id, origin: session.origin, context: sc.context, difficulty: sc.difficulty, timed, wait_s: shownAt.current ? Math.max(0, Math.round((startedAt - shownAt.current) / 1000)) : 0 });
   };
 
@@ -124,9 +128,11 @@ export function Briefing({ session }: { session: Session }) {
         </section>
 
         <section className="flex flex-col gap-3 lg:hidden">
-          <span className="eyebrow">{t(lang, "pr_objectives")}</span>
+          <span className="eyebrow">{pick({zh:'场景原有目标',en:'The scene’s original aims'},lang)}</span>
           <ObjectiveList items={objectives} />
         </section>
+
+        <PracticeSetup session={session} lang={lang} value={intent} onChange={setIntent}/>
 
         {session.adaptation?.focus && (
           <section className="bubble-coach px-4 py-3.5 flex flex-col gap-1">
@@ -150,7 +156,7 @@ export function Briefing({ session }: { session: Session }) {
 
       {/* the margin: what you are trying to do, right next to the briefing */}
       <Marginalia lgOnly className="lg:sticky lg:top-6 lg:h-[calc(100dvh-3rem)] lg:gap-5">
-        <span className="eyebrow">{t(lang, "pr_objectives")}</span>
+        <span className="eyebrow">{pick({zh:'场景原有目标',en:'The scene’s original aims'},lang)}</span>
         <ObjectiveList items={objectives} />
         <ClockRow timed={timed} seconds={settings.patience ?? DEFAULT_PATIENCE} onChange={(v) => setSettings({ timed: v })} />
         <Button requiresModel block size="lg" variant="primary" onClick={enter} disabled={adapting} className="mt-1">

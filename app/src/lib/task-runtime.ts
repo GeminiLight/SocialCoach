@@ -8,7 +8,12 @@ export function taskLLM(llm:LLM,task:ModelTask,signal?:AbortSignal,onCall?:(even
  const [timeout,maxCalls]=TASK_LIMITS[task];
  const deadline=AbortSignal.timeout(timeout),combined=signal?AbortSignal.any([signal,deadline]):deadline;
  let calls=0;
+ const failure=(error:unknown):never=>{
+  if(deadline.aborted&&!signal?.aborted)throw new LLMError(pick({zh:'这次模型处理超时，记录已保留，请稍后重试。',en:'The model task timed out. Your record is kept; retry when ready.'},lang),504,true);
+  throw error;
+ };
  const prepare=(o:ChatOpts)=>{
+  if(deadline.aborted)failure(deadline.reason);
   combined.throwIfAborted();o.signal?.throwIfAborted();
   if(++calls>maxCalls)throw new LLMError(pick({zh:'这次模型处理已到调用上限，记录已保留，请重试。',en:'The model task reached its call budget. Your record is kept; please retry.'},lang),502);
   const inputBytes=new TextEncoder().encode([...systemParts(o.system).map(p=>p.text),...o.messages.map(m=>m.content)].join('\n')).length;
@@ -16,7 +21,7 @@ export function taskLLM(llm:LLM,task:ModelTask,signal?:AbortSignal,onCall?:(even
   return {options:{...o,lang,signal:o.signal?AbortSignal.any([combined,o.signal]):combined},call:calls,inputBytes,start:Date.now()};
  };
  return {
-  async chatText(o){const ctx=prepare(o);let ok=false;try{const value=await llm.chatText(ctx.options);ctx.options.signal.throwIfAborted();ok=true;return value;}finally{onCall?.({task,call:ctx.call,durationMs:Date.now()-ctx.start,ok,inputBytes:ctx.inputBytes,maxOutput:o.maxTokens});}},
-  chatStream(o){let text='',refused=false;async function* deltas(){const ctx=prepare(o);let ok=false;try{const run=llm.chatStream(ctx.options);for await(const d of run.deltas){ctx.options.signal.throwIfAborted();text+=d;yield d;}ctx.options.signal.throwIfAborted();refused=run.refused();ok=true;}finally{onCall?.({task,call:ctx.call,durationMs:Date.now()-ctx.start,ok,inputBytes:ctx.inputBytes,maxOutput:o.maxTokens});}}return {deltas:deltas(),text:()=>text,refused:()=>refused};},
+  async chatText(o){const ctx=prepare(o);let ok=false;try{const value=await llm.chatText(ctx.options);ctx.options.signal.throwIfAborted();ok=true;return value;}catch(error){return failure(error);}finally{onCall?.({task,call:ctx.call,durationMs:Date.now()-ctx.start,ok,inputBytes:ctx.inputBytes,maxOutput:o.maxTokens});}},
+  chatStream(o){let text='',refused=false;async function* deltas(){const ctx=prepare(o);let ok=false;try{const run=llm.chatStream(ctx.options);for await(const d of run.deltas){ctx.options.signal.throwIfAborted();text+=d;yield d;}ctx.options.signal.throwIfAborted();refused=run.refused();ok=true;}catch(error){failure(error);}finally{onCall?.({task,call:ctx.call,durationMs:Date.now()-ctx.start,ok,inputBytes:ctx.inputBytes,maxOutput:o.maxTokens});}}return {deltas:deltas(),text:()=>text,refused:()=>refused};},
  };
 }

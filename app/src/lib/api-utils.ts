@@ -20,18 +20,22 @@ export const asLang = (v: unknown): Lang => (v === "en" ? "en" : "zh");
  * only the model's raw output. Failures mid-stream are appended as
  * `\n@@error\n<{error,status,modelIssue}>` because headers have already been sent.
  */
-export function taskStream<T>(run:(onDelta:(d:string)=>void,signal:AbortSignal)=>Promise<T>,opts:{final?:boolean;signal?:AbortSignal}={}){
+export function taskStream<T>(run:(onDelta:(d:string)=>void,signal:AbortSignal)=>Promise<T>,opts:{final?:boolean;signal?:AbortSignal;heartbeat?:boolean}={}){
  const enc=new TextEncoder(),abort=new AbortController();
  const signal=opts.signal?AbortSignal.any([opts.signal,abort.signal]):abort.signal;
  let cancelled=false;
+ let heartbeat:ReturnType<typeof setInterval>|undefined;
  const body=new ReadableStream<Uint8Array>({
   async start(controller){
-   const emit=(text:string)=>{if(!cancelled&&!signal.aborted)controller.enqueue(enc.encode(text));};
+   const emit=(text:string)=>{if(text.trim())clearInterval(heartbeat);if(!cancelled&&!signal.aborted)controller.enqueue(enc.encode(text));};
+   // Whitespace is ignored by both JSON parsers. Open the transport promptly
+   // without exposing the draft, then keep idle proxies alive during checks.
+   if(opts.heartbeat){emit('\n');heartbeat=setInterval(()=>emit('\n'),10000);}
    try{const result=await run(emit,signal);if(opts.final)emit(`\n@@final\n${JSON.stringify(result)}`);}
    catch(error){if(!cancelled&&!signal.aborted){const {status,message,modelIssue,retryAt}=toHttpError(error);observeServerFailure(modelIssue);emit(`\n@@error\n${JSON.stringify({error:message,status,modelIssue:modelIssue??null,...(retryAt?{retryAt}:{})})}`);}}
-   finally{if(!cancelled)controller.close();}
+   finally{clearInterval(heartbeat);if(!cancelled)controller.close();}
   },
-  cancel(){cancelled=true;abort.abort();},
+  cancel(){cancelled=true;clearInterval(heartbeat);abort.abort();},
  });
  return new Response(body,{headers:{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store','X-Accel-Buffering':'no'}});
 }

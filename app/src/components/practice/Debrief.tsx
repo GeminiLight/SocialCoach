@@ -35,6 +35,8 @@ import dynamic from 'next/dynamic';
 import {defaultShareCard} from '@/lib/share-card';
 import {InviteEntry} from "@/components/challenge/InviteEntry";
 import {KeyTurnEntry} from './KeyTurnEntry';
+import {PracticeIntentNote} from './PracticeIntentNote';
+import {hasAssessableSpeech} from '@/lib/practice-intent';
 const SharePractice=dynamic(()=>import('./SharePractice').then(m=>m.SharePractice),{ssr:false});
 
 const skillIds = new Set(SKILLS.map((s) => s.id));
@@ -51,10 +53,12 @@ export function Debrief({ session }: { session: Session }) {
   const restarting = useRef(false);
   const sc = session.scenario;
   const report = session.report;
+  const hasSpeech=hasAssessableSpeech(session.messages);
 
   const run = useCallback(async () => {
-    if (!canUseModel || (!profile&&!session.sceneContext) || inflight.current) return;
+    if (!canUseModel || !hasSpeech || (!profile&&!session.sceneContext) || inflight.current) return;
     inflight.current = true;
+    setErr(null);
     const controller=new AbortController();assessment.current=controller;
     try {
       const final = await assessStream(
@@ -68,9 +72,11 @@ export function Debrief({ session }: { session: Session }) {
           objectiveDone: session.sceneContext?undefined:session.objectiveDone,
           outcome: session.outcome,
           sceneContext:session.sceneContext,
+          practiceIntent:session.practiceIntent,
         },
         (p) => {if(!controller.signal.aborted)setPartial(p);},
         controller.signal,
+        {session:session.id,scenario:session.sceneContext?sc.id:sc.custom?'custom':sc.id,mode:session.sceneContext?'3d':sc.custom?'rehearse':'text',practice:session.sceneContext?.practiceId},
       );
       if(controller.signal.aborted)return;
       applyReport(session.id, final);
@@ -86,7 +92,7 @@ export function Debrief({ session }: { session: Session }) {
     } finally {
       if(assessment.current===controller){inflight.current=false;assessment.current=null;}
     }
-  }, [profile, sc, session, lang, applyReport, canUseModel]);
+  }, [profile, sc, session, lang, applyReport, canUseModel,hasSpeech]);
 
   useEffect(()=>()=>{assessment.current?.abort();assessment.current=null;inflight.current=false;},[session.id,lang]);
 
@@ -101,6 +107,7 @@ export function Debrief({ session }: { session: Session }) {
     restarting.current = true;
     if(session.sceneContext){const c=session.sceneContext;router.push(`/3d?scene=${encodeURIComponent(c.sceneId)}&opening=${encodeURIComponent(c.openingId)}&restart=1`);return;}
     const s = buildSession(sc, session.origin, lang, session.adaptation ? { adaptation: session.adaptation } : undefined);
+    s.practiceIntent=session.practiceIntent;
     if(session.challenge)s.challenge={...session.challenge,lang};
     addSession(s);
     router.push(`/practice/${s.id}`);
@@ -117,6 +124,15 @@ export function Debrief({ session }: { session: Session }) {
      It holds the stage until dismissed rather than for as long as the report
      takes, because a moment that vanishes on a timer is not a moment. */
   const withHidden = sc.characters.filter((c) => c.id !== session.learnerCharacterId && c.hidden);
+  if(!report&&!hasSpeech)return <div className="min-h-dvh pt-safe px-5 mx-auto w-full max-w-[var(--focus-max)] flex flex-col gap-6">
+    <PracticeJourney phase={2} onBack={()=>router.push(session.sceneContext?'/3d':'/')} />
+    <div className="card p-6 flex flex-col gap-4 mt-8">
+      <h1 className="display text-[26px]">{pick({zh:'还没有你的发言',en:'No learner words to review yet'},lang)}</h1>
+      <p className="text-ink-2">{pick({zh:'复盘需要引用你说过的话。这次先不评分，场景和已有对话已保留。',en:'A review needs your actual words. This attempt is not scored; the scene and existing conversation are saved.'},lang)}</p>
+      {!session.sceneContext&&<Button onClick={()=>updateSession(session.id,{status:'active',endedAt:undefined,outcome:undefined,closure:undefined})}>{pick({zh:'回到对话，说一句',en:'Return and respond'},lang)}</Button>}
+      <Button variant="secondary" onClick={()=>router.push(session.sceneContext?'/3d':'/arena')}>{pick({zh:'换一个场景',en:'Choose another scene'},lang)}</Button>
+    </div>
+  </div>;
   if (withHidden.length > 0 && !session.revealSeen) {
     return (
       <HiddenReveal
@@ -152,7 +168,7 @@ export function Debrief({ session }: { session: Session }) {
                   <Button requiresModel variant="secondary" onClick={() => { setErr(null); void run(); }}>{t(lang, "retry")}</Button>
                 </div>
               ) : (
-                canUseModel ? <Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} /> : <p className="text-[14px] text-ink-3">{pick(M.pending, lang)}</p>
+                canUseModel ? <><Stages title={t(lang, "pr_assessing")} steps={tList(lang, "pr_assess_steps")} /><SlowModelNotice /></> : <p className="text-[14px] text-ink-3">{pick(M.pending, lang)}</p>
               )}
             </div>
           </div>
@@ -244,6 +260,8 @@ function HiddenReveal({
             {t(lang,"pr_reveal_context_detail")}
           </p>
         </motion.div>
+        <details className="dotted pt-4"><summary className="cursor-pointer text-[14px] text-ink-2">{pick({zh:'查看已保存的对话',en:'Read the saved conversation'},lang)}</summary><Transcript session={session}/></details>
+        {!ready&&!err&&<SlowModelNotice />}
       </div>
 
       <BottomBar className="pb-safe pb-6 pt-3">
@@ -346,9 +364,9 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
             {rated && <Stars n={stars} of={quality ? 3 : sc.objectives.length} size={20} />}
             <span className="text-[12px] text-ink-3">{starLabel}</span>
           </div>
-          {quality&&!session.sceneContext && <p className="text-[12px] text-ink-3">{t(lang, "rp_stars_of", { n: session.objectiveDone.filter(Boolean).length, m: sc.objectives.length })}</p>}
           {report.summary && <p className="text-[15px] leading-[1.65] text-ink-2 lg:max-w-[var(--measure)]">{report.summary}{streaming && !strengths.length && <Caret />}</p>}
           <OriginalAims results={report.objectiveResults} session={session} lang={lang} onInspect={setTranscriptSelection}/>
+          <PracticeIntentNote intent={session.practiceIntent} lang={lang}/>
         </header>
 
         {!streaming && (

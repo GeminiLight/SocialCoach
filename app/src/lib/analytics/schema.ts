@@ -20,6 +20,7 @@ const origin = z.enum(["scheduled", "arena", "rehearse"]);
 export const TASKS = ["schedule", "roleplay", "hint", "assess", "reflect", "debrief-chat", "rehearse", "pattern", "dinner"] as const;
 
 export const eventSchema = z.discriminatedUnion("name", [
+  z.object({name:z.literal('assessment_stage'),ts,session,scenario,mode:z.enum(['text','3d','rehearse']),practice:z.string().uuid().optional(),request:z.string().uuid(),stage:z.enum(['started','completed','failed','cancelled']),duration_ms:z.number().int().min(0).max(300000),status:z.number().int().min(0).max(999).optional(),byok:z.boolean()}).strict(),
   z.object({name:z.literal("practice_stage"),ts,mode:z.literal("3d"),practice:z.string().uuid(),scenario,stage:z.enum(["loaded","started","first_reply","review","restart"]),duration_ms:z.number().int().min(0).max(300000),turns:z.number().int().min(0).max(24),byok:z.boolean()}).strict(),
   /**
    * Once per device per day, from the client, with or without a profile:

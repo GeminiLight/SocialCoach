@@ -10,6 +10,15 @@ import {eventSchema} from '../../src/lib/analytics/schema';
 import {SCENARIOS} from '../../src/data/corpus';
 import type {LLM,ChatOpts} from '../../src/lib/llm-core';
 const opts:ChatOpts={system:'test',messages:[{role:'user',content:'test'}],maxTokens:100};
+test('task deadline is a recoverable 504, not an opaque abort or connection failure',async()=>{
+ const original=AbortSignal.timeout,deadline=new AbortController();
+ AbortSignal.timeout=()=>deadline.signal;
+ try{
+  const llm=taskLLM({chatText:async o=>{deadline.abort();o.signal!.throwIfAborted();return '';},chatStream:()=>{throw Error('unused');}},'assess');
+  await assert.rejects(llm.chatText(opts),e=>(e as {status:number}).status===504);
+  await assert.rejects(llm.chatText(opts),e=>(e as {status:number}).status===504);
+ }finally{AbortSignal.timeout=original;}
+});
 test('one task cancellation reaches every repair and stops further model calls',async()=>{
  let calls=0,received:AbortSignal|undefined;
  const stub:LLM={chatText:async o=>{calls++;received=o.signal;return '{}';},chatStream:()=>{throw Error('not used');}};

@@ -54,6 +54,7 @@ test('a changed NPC information boundary does not silently become the same pract
 test('changed identity, difficulty, briefing, goals and scene facts are not treated as equal conditions',async()=>{
  const old=practice('old',1,before),current=practice('current',2);
  for(const changed of [
+  {...old,practiceIntent:'先修复关系'},
   {...old,learnerCharacterId:'different'},
   {...old,scenario:{...scene,difficulty:scene.difficulty===1?2:1} as Session['scenario']},
   {...old,scenario:{...scene,background:{...scene.background,zh:'另一个公开背景'}}},

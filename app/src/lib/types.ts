@@ -159,6 +159,8 @@ export interface KeyTurnAttempt {
 }
 
 export interface Session {
+  /** Learner-chosen initial approach, distinct from original scenario aims. */
+  practiceIntent?:string;
   /** Public invitation content/version; no sender identity. */
   challenge?: {id: "office-quick-favor"; version: 1; lang: Lang};
   keyTurnAttempts?: KeyTurnAttempt[];
