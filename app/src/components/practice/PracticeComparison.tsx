@@ -1,10 +1,10 @@
 'use client';
-import {useMemo,useState} from 'react';
+import {useState} from 'react';
 import Link from 'next/link';
 import {ArrowUpRight,MessageSquareText} from 'lucide-react';
-import {useApp,useLang} from '@/store/useApp';
+import {useLang} from '@/store/useApp';
 import {pick} from '@/lib/i18n';
-import {comparePractice} from '@/lib/practice-comparison';
+import type {PracticeComparison as Comparison} from '@/lib/practice-comparison';
 import {skillById} from '@/data/taxonomy';
 import type {Session} from '@/lib/types';
 import {TranscriptReader} from './TranscriptReader';
@@ -23,13 +23,11 @@ export const comparisonCopy={
 };
 const copy=comparisonCopy;
 
-export function PracticeComparison({session}:{session:Session}){
- const lang=useLang(),sessions=useApp(s=>s.sessions);
- const comparison=useMemo(()=>comparePractice(session,sessions),[session,sessions]);
+export function PracticeComparison({session,comparison}:{session:Session;comparison:Comparison}){
+ const lang=useLang();
  const [selection,setSelection]=useState<{session:Session;quote:string}|null>(null);
  return <section id="review-comparison" aria-labelledby="comparison-title" className="flex flex-col gap-4">
   <div className="flex items-center gap-2"><MessageSquareText size={18} className="text-teal" aria-hidden/><h2 id="comparison-title" className="text-[17px] font-semibold">{pick(copy.title,lang)}</h2></div>
-  {!comparison?<p className="text-[14px] leading-relaxed text-ink-2">{pick(copy.empty,lang)}</p>:<>
    <p className="text-[14px] leading-relaxed text-ink-2">{pick(copy.intro,lang)}</p>
    <div className="flex flex-col gap-5">{comparison.rows.map(row=><article key={row.skill} className="card p-4 sm:p-5 flex flex-col gap-4">
     <h3 className="text-[14px] font-semibold text-ink-2">{skillById(row.skill).name[lang]}</h3>
@@ -44,7 +42,6 @@ export function PracticeComparison({session}:{session:Session}){
    </article>)}</div>
    <p className="text-[12px] text-ink-2 leading-relaxed">{pick(copy.estimate,lang)}</p>
    <Link href={`/practice/${encodeURIComponent(comparison.previous.id)}`} className="press inline-flex items-center gap-1.5 text-[13px] text-action min-h-11 self-start">{pick(copy.older,lang)}<ArrowUpRight size={15} aria-hidden/></Link>
-  </>}
   {selection&&<TranscriptReader session={selection.session} lang={lang} selection={selection.quote} onClose={()=>setSelection(null)}/>}
  </section>;
 }

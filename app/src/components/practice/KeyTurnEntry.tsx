@@ -17,7 +17,7 @@ export const keyTurnCopy={
  expand:{zh:'展开原话',en:'Read the full response'},collapse:{zh:'收起原话',en:'Show less'},
  start:{zh:'试试另一种回应',en:'Try another response'},
  resume:{zh:'继续这次尝试',en:'Continue this attempt'},
- note:{zh:'接一轮就能回顾，最多四轮。原场对话与复盘保留；这次尝试不计入整场评分和能力估计。',en:'Review after one exchange, with room for four. Your original conversation and review stay intact; this attempt does not affect full-practice scores or ability estimates.'},
+ note:{zh:'1轮可回顾，最多4轮；原练习保留，不计评分或能力估计。',en:'Review after 1–4 exchanges. Original practice kept; scores and ability estimates unchanged.'},
  history:{zh:'这句话的重练记录',en:'Attempts at this line'},
  reviewed:{zh:'查看原话与回顾',en:'View words and review'},
  unsaved:{zh:'请先处理页面上的保存提示，再开始重试。',en:'Resolve the save notice on this page before starting.'},
@@ -34,7 +34,6 @@ export function KeyTurnEntry({session}:{session:Session}){
  return <section id="key-turn-entry" aria-labelledby="key-turn-title" className="card p-5 sm:p-6 flex flex-col gap-4 scroll-mt-24">
   <div className="flex items-center gap-2 text-action"><RotateCcw size={18} aria-hidden/><h2 id="key-turn-title" className="text-[18px] font-semibold">{pick(keyTurnCopy.title,lang)}</h2></div>
   <div className="rounded-[var(--radius-sm)] bg-inset p-4"><p className="text-[12px] text-ink-2 mb-2">{pick(keyTurnCopy.original,lang)}</p><blockquote id="key-turn-original" className={`text-[16px] leading-relaxed whitespace-pre-wrap break-words ${checkpoint.original.text.length>200&&!expanded?'line-clamp-4':''}`}>“{checkpoint.original.text}”</blockquote>{checkpoint.original.text.length>200&&<button className="press min-h-11 text-[13px] text-action mt-1" aria-controls="key-turn-original" aria-expanded={expanded} onClick={()=>setExpanded(x=>!x)}>{pick(expanded?keyTurnCopy.collapse:keyTurnCopy.expand,lang)}</button>}</div>
-  <p className="text-[14px] leading-relaxed text-ink-2">{pick(keyTurnCopy.intro,lang)}</p>
   <p className="text-[14px] font-medium">{pick(keyTurnCopy.focus,lang)}</p>
   <Button variant="secondary" disabled={!!saveIssue} onClick={()=>{const id=start(session.id,lang);if(id)router.push(keyTurnHref(session.id,id));}}>{pick(pending?keyTurnCopy.resume:keyTurnCopy.start,lang)}<ArrowUpRight size={17} aria-hidden/></Button>
   <p className="text-[12px] leading-relaxed text-ink-2">{pick(saveIssue?keyTurnCopy.unsaved:keyTurnCopy.note,lang)}</p>

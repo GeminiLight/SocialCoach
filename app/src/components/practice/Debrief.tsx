@@ -36,6 +36,8 @@ import {defaultShareCard} from '@/lib/share-card';
 import {InviteEntry} from "@/components/challenge/InviteEntry";
 import {KeyTurnEntry} from './KeyTurnEntry';
 import {PracticeIntentNote} from './PracticeIntentNote';
+import {comparePractice} from '@/lib/practice-comparison';
+import {InfoDisclosure} from '@/components/InfoDisclosure';
 import {hasAssessableSpeech} from '@/lib/practice-intent';
 const SharePractice=dynamic(()=>import('./SharePractice').then(m=>m.SharePractice),{ssr:false});
 
@@ -324,7 +326,8 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
   const { proficiency, bookmarks, toggleBookmark, addReflection, updateReflection } = useApp();
   const goals = useApp((s) => s.profile?.goals) ?? session.scenario.skills;
   const sc = session.scenario;
-  const [showTranscript, setShowTranscript] = useState(false);
+  const sessions=useApp(s=>s.sessions);
+  const comparison=useMemo(()=>comparePractice(session,sessions),[session,sessions]);
   const [transcriptSelection,setTranscriptSelection]=useState<string|null>(null);
   const [showShare,setShowShare]=useState(false);
   const assistant = useRef<DebriefAssistantHandle>(null);
@@ -345,7 +348,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
       <div className="px-3 lg:px-0 mb-6">
         <PracticeJourney phase={2} onBack={() => router.push(session.sceneContext?'/3d':"/")} actions={<IconButton label={t(lang, "rp_share")} onClick={()=>setShowShare(true)} disabled={streaming}><Share2 size={18} /></IconButton>} />
       </div>
-      <ReviewSplit lang={lang} aside={<div className="lg:sticky lg:top-6 lg:h-[calc(100dvh-5rem)] lg:overflow-y-auto"><button className="press min-h-11 text-[13px] text-action" onClick={()=>setTranscriptSelection('')}>{pick({zh:'展开完整对话',en:'Open full conversation'},lang)}</button><Transcript session={session} title={t(lang, "rp_transcript")} /></div>}>
+      <ReviewSplit lang={lang} aside={<div className="lg:sticky lg:top-6 lg:h-[calc(100dvh-5rem)] lg:overflow-y-auto"><button className="press min-h-11 text-[13px] text-action mb-2" onClick={()=>setTranscriptSelection('')}>{pick({zh:'放大阅读完整对话',en:'Read conversation in full'},lang)}</button><Transcript session={session} /></div>}>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }} className="px-5 flex flex-col gap-9 lg:px-0">
         <header className="flex flex-col gap-3">
           <p className="eyebrow">{t(lang, "rp_title")} · {sc.title[lang]}</p>
@@ -371,7 +374,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
 
         {!streaming && (
           <nav aria-label={t(lang, "rp_reading_guide")} className="review-index sticky top-0 z-10 flex gap-1 overflow-x-auto bg-paper py-2 border-y border-line">
-            <a href="#review-comparison" className="press shrink-0 inline-flex items-center justify-center rounded-full px-3 min-h-11 text-[13px] text-ink-2 hover:bg-inset">{pick(comparisonCopy.tab,lang)}</a>
+            {comparison&&<a href="#review-comparison" className="press shrink-0 inline-flex items-center justify-center rounded-full px-3 min-h-11 text-[13px] text-ink-2 hover:bg-inset">{pick(comparisonCopy.tab,lang)}</a>}
             {[
               { id: "review-strengths", label: "rp_strengths" as const, show: strengths.length > 0 },
               { id: "review-weaknesses", label: "rp_weaknesses" as const, show: weaknesses.length > 0 },
@@ -387,18 +390,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
           <section className="bg-slab text-slab-ink rounded-[var(--radius)] p-6 flex flex-col gap-3">
             <h2 className="eyebrow text-slab-ink">{t(lang, "rp_next_step")}</h2>
             <p className="display text-[20px] leading-relaxed">{report.nextStep}</p>
-            <p className="text-[13px] leading-relaxed">{t(lang, "rp_repeat_note")}</p>
           </section>
-        )}
-
-        {!streaming && <KeyTurnEntry session={session} />}
-        {!streaming && <PracticeComparison session={session} />}
-        {!streaming && <InviteEntry session={session} />}
-
-        {(session.stanceTrail?.length ?? 0) > 0 && (
-          <Section title={t(lang, "rp_map_title")}>
-            <TurnMap session={session} lang={lang} />
-          </Section>
         )}
 
         {session.sceneContext&&<SceneReview context={session.sceneContext} notes={report.sceneNotes} lang={lang}/>}
@@ -457,6 +449,11 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
           </Section>
         )}
 
+        {!streaming && <KeyTurnEntry session={session} />}
+        {!streaming && comparison && <PracticeComparison session={session} comparison={comparison}/>}
+        {!streaming && <InviteEntry session={session} />}
+        {(session.stanceTrail?.length ?? 0) > 0 && <InfoDisclosure label={t(lang,'rp_map_title')}><TurnMap session={session} lang={lang}/></InfoDisclosure>}
+
         {!streaming && (theories.length > 0 || cases.length > 0) && (
           <Section title={t(lang, "rp_knowledge")} sub={report.knowledge?.whyThis}>
             <div className="flex flex-col gap-3">
@@ -507,10 +504,7 @@ function ReportView({ session, report, streaming, onAgain }: { session: Session;
 
         {!streaming && (
           <section>
-            <button className="press min-h-11 text-[14px] text-action mr-4" onClick={()=>setTranscriptSelection('')}>{pick({zh:'完整对话',en:'Full conversation'},lang)}</button><button aria-expanded={showTranscript} aria-controls="review-transcript" onClick={() => setShowTranscript((x) => !x)} className="press inline-flex items-center gap-1.5 text-[13px] text-ink-3 min-h-11">
-              {t(lang, "rp_transcript")} <ChevronDown size={14} className={clsx("transition-transform", showTranscript && "rotate-180")} />
-            </button>
-            <div id="review-transcript" hidden={!showTranscript} className="pt-3"><Transcript session={session} /></div>
+            <button className="press min-h-11 text-[14px] text-action" onClick={()=>setTranscriptSelection('')}>{t(lang,'rp_transcript')}</button>
           </section>
         )}
         {!streaming && (

@@ -15,6 +15,7 @@ import { buildSession } from "@/lib/session-utils";
 import type { Scenario } from "@/data/corpus/types";
 import { contextById } from "@/data/taxonomy";
 import {RehearsalContext} from '@/components/RehearsalContext';
+import {InfoDisclosure} from '@/components/InfoDisclosure';
 import {readRehearsalDraft,REHEARSAL_DRAFT_KEY,RehearsalDescriptionSchema,type RehearsalDraft} from '@/lib/rehearsal-input';
 
 export default function Rehearse() {
@@ -88,7 +89,31 @@ export default function Rehearse() {
   };
 
   const examples = ["rh_ex_1", "rh_ex_2", "rh_ex_3", "rh_ex_4"] as const;
-
+  const guide = <>
+    <ol className="flex flex-col gap-3">
+      {(
+        [
+          ["rh_who", "rh_who_sub"],
+          ["rh_want", "rh_want_sub"],
+          ["rh_worry", "rh_worry_sub"],
+        ] as const
+      ).map(([title, body], i) => (
+        <li key={title} className="flex items-start gap-3">
+          <span className="num text-[11px] text-accent-deep bg-card border border-line h-7 w-7 shrink-0 inline-flex items-center justify-center rounded-full">
+            0{i + 1}
+          </span>
+          <div>
+            <h3 className="text-[14px] font-semibold">{t(lang, title)}</h3>
+            <p className="text-[13px] text-ink-3 mt-1.5 leading-relaxed">{t(lang, body)}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <section className="mt-4">
+      <h2 className="text-[13px] font-semibold">{t(lang, "rh_how")}</h2>
+      <p className="text-[13px] text-ink-3 leading-relaxed mt-2">{t(lang, "rh_how_body")}</p>
+    </section>
+  </>;
   return (
     <Shell>
       <Page className="pt-4 lg:pt-8 flex flex-col gap-6 pb-8 max-w-[var(--focus-max)] mx-auto">
@@ -101,13 +126,12 @@ export default function Rehearse() {
         </Link>
         {!preview && (
           <>
-            <header className="border-b border-line pb-6">
+            <header className="pb-2">
               <p className="eyebrow flex items-center gap-2">
                 <PenLine size={14} className="text-accent-deep" />
                 {t(lang, "rh_eyebrow")}
               </p>
               <h1 className="display text-[32px] lg:text-[40px] leading-[1.3] whitespace-pre-line mt-3">{t(lang, "rh_heading")}</h1>
-              <p className="text-[14px] text-ink-2 mt-4 leading-relaxed max-w-[var(--measure)]">{t(lang, "rh_sub")}</p>
             </header>
             <div className="flex flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,1fr)_var(--margin-w)] xl:gap-8 mt-2 items-start">
               <div className="w-full min-w-0">
@@ -117,8 +141,8 @@ export default function Rehearse() {
                 >
                   <RehearsalContext draft={draft} onChange={updateDraft} lang={lang} disabled={busy} draftSaved={draftSaved} textarea={textarea} onGenerate={description=>void generate(description)}/>
                   {!text.trim() && !busy && (
-                    <div className="flex flex-col gap-2 pt-1 pb-2">
-                      <span className="eyebrow">{t(lang, "rh_examples")}</span>
+                    <InfoDisclosure label={t(lang,'rh_examples')}>
+                      <div className="flex flex-col gap-1">
                       {examples.map((key) => (
                         <button
                           type="button"
@@ -127,13 +151,14 @@ export default function Rehearse() {
                             updateText(t(lang, key));
                             textarea.current?.focus();
                           }}
-                          className="press flex items-start justify-between gap-3 text-left text-[13px] text-ink-2 py-2.5 border-b border-dashed border-line-strong hover:text-accent-deep"
+                          className="press flex items-start justify-between gap-3 text-left text-[13px] text-ink-2 min-h-11 py-2.5 hover:text-accent-deep"
                         >
                           <span>{t(lang, key)}</span>
                           <ArrowUpRight size={15} className="shrink-0 mt-0.5" />
                         </button>
                       ))}
-                    </div>
+                      </div>
+                    </InfoDisclosure>
                   )}
                   {err && (
                     <div role="alert" className="rounded-[var(--radius-sm)] p-4 bg-danger-soft text-[13px] text-danger leading-relaxed">
@@ -162,31 +187,9 @@ export default function Rehearse() {
                   </section>
                 )}
               </div>
-              <aside className="w-full rehearsal-guide rounded-2xl p-5 xl:sticky xl:top-6">
-                <h2 className="eyebrow mb-5">{t(lang, "rh_guide")}</h2>
-                <ol className="flex flex-col gap-5">
-                  {(
-                    [
-                      ["rh_who", "rh_who_sub"],
-                      ["rh_want", "rh_want_sub"],
-                      ["rh_worry", "rh_worry_sub"],
-                    ] as const
-                  ).map(([title, body], i) => (
-                    <li key={title} className="flex items-start gap-3">
-                      <span className="num text-[11px] text-accent-deep bg-card border border-line h-7 w-7 shrink-0 inline-flex items-center justify-center rounded-full">
-                        0{i + 1}
-                      </span>
-                      <div>
-                        <h3 className="text-[14px] font-semibold">{t(lang, title)}</h3>
-                        <p className="text-[13px] text-ink-3 mt-1.5 leading-relaxed">{t(lang, body)}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-                <section className="border-t border-line mt-7 pt-5">
-                  <h2 className="text-[13px] font-semibold">{t(lang, "rh_how")}</h2>
-                  <p className="text-[13px] text-ink-3 leading-relaxed mt-2">{t(lang, "rh_how_body")}</p>
-                </section>
+              <aside className="w-full rehearsal-guide rounded-2xl px-5 xl:py-5 xl:sticky xl:top-6">
+                <div className="hidden xl:block"><h2 className="eyebrow mb-4">{t(lang,"rh_guide")}</h2>{guide}</div>
+                <InfoDisclosure label={t(lang,'rh_guide')} className="xl:hidden">{guide}</InfoDisclosure>
               </aside>
             </div>
           </>
