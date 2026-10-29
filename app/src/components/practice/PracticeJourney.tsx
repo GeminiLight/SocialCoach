@@ -27,7 +27,7 @@ export function PracticeJourney({ phase, onBack, backLabel, actions }: {
             <span aria-hidden className={clsx("h-5 w-5 rounded-full inline-flex items-center justify-center text-[10px] num", phase === i ? "bg-ink text-paper" : "bg-inset text-ink-3")}>
               {i < phase ? <Check size={12} /> : i + 1}
             </span>
-            {t(lang, key)}
+            <span className={phase === i ? undefined : "max-[359px]:sr-only"}>{t(lang, key)}</span>
           </li>
         ))}
       </ol>

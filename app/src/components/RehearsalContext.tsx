@@ -2,6 +2,7 @@
 import {useEffect,useRef,useState,type RefObject} from 'react';
 import {Paperclip,ArrowRight} from 'lucide-react';
 import {Button,Sheet} from './ui';
+import {InfoDisclosure} from './InfoDisclosure';
 import {pick} from '@/lib/i18n';
 import type {Lang} from '@/data/taxonomy';
 import {buildRehearsalDescription,rehearsalFields,MAX_REHEARSAL_CHARS,type RehearsalDraft,type RehearsalField} from '@/lib/rehearsal-input';
@@ -10,16 +11,17 @@ import {validateAttachment,extractAttachment} from '@/lib/local-attachment';
 const L={
  details:{zh:'补充背景（可选）',en:'Add context (optional)'},
  detailsNote:{zh:'只填对这场对话有用的部分。留空的内容会保持未知。',en:'Fill only what matters for this conversation. Blank fields stay unknown.'},
- attach:{zh:'从文件或聊天截图提取',en:'Read a file or chat screenshot'},
+ attach:{zh:'添加文件或截图',en:'Add a file or screenshot'},
  limits:{zh:'TXT、Markdown、DOCX、PDF 或 PNG/JPG/WebP · 每份 ≤8MB · PDF ≤20页',en:'TXT, Markdown, DOCX, PDF or PNG/JPG/WebP · ≤8MB each · PDF ≤20 pages'},
- local:{zh:'原文件留在设备上。提取后可删改，只发送你最后确认的文字。首次读图需加载本地识别工具。',en:'The file stays on this device. Edit the extracted text; only the text you confirm is sent. The first image requires loading the local reading tools.'},
+ local:{zh:'文件留在本机，只发送你确认的文字。',en:'Files stay on this device. Only the text you confirm is sent.'},
+ supported:{zh:'支持的文件与大小',en:'Supported files and limits'},
  reading:{zh:'正在设备上提取文字…',en:'Reading text on this device…'},
  fileTitle:{zh:'检查提取的文字',en:'Review extracted text'},
  extractionNote:{zh:'识别可能出错。请核对谁说了什么，删除姓名、联系方式或不想发送的内容。',en:'Extraction can make mistakes. Check who said what and remove names, contact details or anything you do not want to send.'},
  add:{zh:'加入背景',en:'Add to context'},
  attachmentLabel:{zh:'经我核对的材料：',en:'Source text I have reviewed:'},
  reviewTitle:{zh:'确认这场对话的背景',en:'Confirm the rehearsal context'},
- reviewNote:{zh:'下面是将发送给当前模型的全部处境描述。你可以继续删改；原文件、截图和文件名不会发送。',en:'This is the full situation description to send to your selected model. You can edit it; original files, screenshots and filenames are not sent.'},
+ reviewNote:{zh:'以下文字将发给当前模型，可继续删改。原文件、截图和文件名不会发送。',en:'Edit this text before sending it to your model. Files, screenshots and filenames are not sent.'},
  description:{zh:'发送的处境描述',en:'Situation description to send'},
  confirm:{zh:'确认发送并生成',en:'Confirm and generate'},
  cancel:{zh:'取消',en:'Cancel'},
@@ -66,7 +68,7 @@ export function RehearsalContext({draft,onChange,lang,disabled,draftSaved,textar
   <div>
    <input ref={input} type="file" className="hidden" accept=".txt,.md,.docx,.pdf,.png,.jpg,.jpeg,.webp" onChange={e=>{const file=e.target.files?.[0];e.target.value='';if(file)void read(file);}}/>
    <Button type="button" variant="ghost" disabled={disabled||reading} onClick={()=>input.current?.click()}><Paperclip size={16}/>{text('attach')}</Button>
-   <p className="text-[12px] text-ink-3 leading-relaxed mt-2">{text('limits')}</p>
+   <InfoDisclosure label={text('supported')}><p>{text('limits')}</p></InfoDisclosure>
    <p className="text-[13px] text-ink-2 leading-relaxed mt-2">{text('local')}</p>
   </div>
   {error&&<p role="alert" className="text-danger text-[14px]">{error}</p>}

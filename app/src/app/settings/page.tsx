@@ -20,6 +20,7 @@ import { AvatarFigure, learnerSeed } from "@/data/avatars";
 import { AvatarPicker } from "@/components/AvatarPicker";
 import { LanguagePicker } from "@/components/LanguagePicker";
 import {BackupRestore} from "@/components/BackupRestore";
+import {InfoDisclosure} from '@/components/InfoDisclosure';
 import { FeedbackButton } from "@/components/Feedback";
 
 export default function Settings() {
@@ -190,7 +191,7 @@ export default function Settings() {
                   </button>)}
                 </div>
               </Row>}
-              <Row label={t(lang, "pr_clock_title")} hint={t(lang, "pr_clock_explain", clockMarks(settings.patience ?? DEFAULT_PATIENCE))}>
+              <Row label={t(lang, "pr_clock_title")} hint={t(lang, "pr_clock_brief_on", clockMarks(settings.patience ?? DEFAULT_PATIENCE))}>
                 <Switch checked={!!settings.timed} onChange={(v) => setSettings({ timed: v })} label={t(lang, "pr_clock_title")} />
               </Row>
               <Row label={t(lang, "pr_clock_patience")}>
@@ -247,6 +248,13 @@ export default function Settings() {
                 {t(lang, "st_reset")}
               </button>
             </div>
+            <InfoDisclosure label={t(lang,'st_privacy_title')}>
+              <ul className="flex flex-col gap-2 list-disc pl-4">
+                <li>{t(lang,'st_privacy_local')}</li>
+                <li>{t(lang,'st_privacy_voice')}</li>
+                <li>{t(lang,'st_privacy_stats')}</li>
+              </ul>
+            </InfoDisclosure>
           </section>
 
           <section className="flex flex-col gap-2">
@@ -254,16 +262,15 @@ export default function Settings() {
             <FeedbackButton className="self-start mb-2" />
             <div>
               <GitHubLink lang={lang} className="self-start" />
-              <p className="px-3 text-[12px] text-ink-3 leading-relaxed">{t(lang, "github_hint")}</p>
             </div>
-            <p className="text-[13px] text-ink-3 leading-relaxed lg:max-w-[var(--measure)]">{t(lang, "st_about_body")}</p>
+            <p className="text-[13px] text-ink-3 leading-relaxed lg:max-w-[var(--measure)]">{t(lang, "st_about_summary")}</p>
             <a
               className="text-[13px] text-teal underline underline-offset-2"
               href="https://arxiv.org/abs/2606.04155"
               target="_blank"
               rel="noreferrer"
             >
-              arXiv:2606.04155
+              {t(lang,'st_research_link')}
             </a>
           </section>
         </div>

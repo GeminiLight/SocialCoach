@@ -246,6 +246,8 @@ PR #11 预览 / 全量检查、本地构建和两站构建成功，但 main 的�
 - **解决方案：** 已删除（2026-09-03）。
 - **教训：** 临时端点从写下第一行起就加 `if (process.env.NODE_ENV === "production") return new Response(null, {status: 404})`，不要依赖注释和记性。
 
+2026-10-30 补充：移除临时路由后，`next typegen` 可能仍保留 `.next/dev/types` 内对应路由的类型文件，导致类型检查找不到模块。先停本轮开发服务，再清理该临时路由的生成缓存并重跑检查；不能把夹具放回源码绕过报错。
+
 ### 本机 headless Chrome 截图写完文件却不退出
 - **现象：** `Google Chrome --headless --screenshot=x.png …` 产出了 PNG，但进程一直挂着，工具超时。`--headless=new`、`--timeout`、`--virtual-time-budget` 都没用。
 - **原因：** 未定位（Chrome 152 / macOS 25.5）。文件在几秒内就写好了，是退出卡住。
