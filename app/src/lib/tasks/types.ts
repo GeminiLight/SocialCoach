@@ -48,6 +48,8 @@ export interface RehearseInput {
 }
 
 export interface TurnInput {
+  practiceIntent?:string;
+  requestId?:string;
   practiceMode?: 'key-turn';
   scenario: Scenario;
   learnerCharacterId: string;

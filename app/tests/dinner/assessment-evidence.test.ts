@@ -14,6 +14,21 @@ const report:Report={objectiveResults:scenario.objectives.map((_,index)=>({index
 const stream=(value:string,refused=false)=>({deltas:(async function*(){yield value;})(),text:()=>value,refused:()=>refused});
 const isCheck=(o:ChatOpts)=>JSON.stringify(o.system).includes('ASSESSMENT FACT CHECK');
 
+test('an ended practice without learner speech fails before spending any model calls',async()=>{
+ let calls=0;
+ const llm:LLM={chatStream:()=>{calls++;return stream('{}');},chatText:async()=>{calls++;return '{}';}};
+ await assert.rejects(runAssess({...input,messages:messages.filter(m=>m.role!=='learner')},llm,'smart'),e=>(e as {status:number}).status===422);
+ assert.equal(calls,0);
+});
+
+test('initial practice intent reaches assessment and fact check without becoming quotation evidence',async()=>{
+ const intent='先问清楚，再决定是否帮忙';let checks=0;
+ const llm:LLM={chatStream:o=>{assert.ok(o.messages[0].content.includes(intent));return stream(JSON.stringify(report));},chatText:async o=>{checks++;assert.ok(o.messages[0].content.includes(intent));return JSON.stringify({approved:true,issues:[]});}};
+ const result=await runAssess({...input,practiceIntent:intent},llm,'smart');assert.equal(result.verdictEvidence,quote);assert.equal(checks,1);
+ const wrong={...report,verdictEvidence:intent};
+ await assert.rejects(runAssess({...input,practiceIntent:intent},{...llm,chatStream:()=>stream(JSON.stringify(wrong)),chatText:async()=>JSON.stringify(wrong)},'smart'));
+});
+
 test('bounded fact checks and field corrections reserve output for JSON, preserving evidence checks',async()=>{
  let checks=0,corrections=0;
  const wrong={...report,summary:'你喝了茶。'};

@@ -10,7 +10,7 @@ export interface PracticeComparison {
 function conditions(session:Session){
  const {scenario:s,adaptation:a,sceneContext:c}=session;
  return JSON.stringify({
-  id:s.id,learner:session.learnerCharacterId,mode:c?'3d':'text',
+  id:s.id,learner:session.learnerCharacterId,mode:c?'3d':'text',intent:session.practiceIntent?.trim()||undefined,
   scene:c?.sceneId,opening:c?.openingId,difficulty:s.difficulty,timed:!!session.timed,
   background:s.background,objectives:s.objectives,openingLine:s.opening,maxTurns:s.maxTurns,
   characters:s.characters.map(p=>({id:p.id,role:p.role,stance:p.stance,personality:p.personality,hidden:p.hidden})),

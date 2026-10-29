@@ -22,6 +22,7 @@ export const MessageSchema=z.object({id:text.min(1),role:z.enum(['learner','npc'
 const reply=z.object({evidence:text,answer:text,example:text,sources:z.array(z.object({kind:z.enum(['theory','case']),id:text}))});
 const KeyTurnSchema=z.object({version:z.literal(1),id:text.min(1),sourceMessageId:text.min(1),lang:z.enum(['zh','en']),startedAt:num,endedAt:num.optional(),revision:z.number().int().nonnegative(),status:z.enum(['active','ended','reviewed']),messages:z.array(MessageSchema),report:ReportSchema.optional()});
 const SessionSchema=z.object({
+ practiceIntent:z.string().max(300).optional(),
  challenge:z.object({id:z.literal("office-quick-favor"),version:z.literal(1),lang:z.enum(["zh","en"])}).optional(),
  keyTurnAttempts:z.array(KeyTurnSchema).optional(),
  id:text.min(1),scenario:ScenarioSchema,learnerCharacterId:text,messages:z.array(MessageSchema),objectiveDone:z.array(z.boolean()),status:z.enum(['briefing','active','ended','assessed']),startedAt:num,endedAt:num.optional(),reflections:z.array(z.object({question:text,answer:text,coachReply:text.optional(),revision:text.optional()})),origin:z.enum(['scheduled','arena','rehearse']),

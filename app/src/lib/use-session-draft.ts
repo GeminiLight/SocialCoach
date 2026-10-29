@@ -2,13 +2,13 @@
 import { useCallback, useState } from "react";
 
 /** Drafts belong to a tab and session, never to a server or analytics event. */
-export function useSessionDraft(sessionId: string) {
+export function useSessionDraft(sessionId: string,initialText="") {
   const key = `socialcoach.draft.${sessionId}`;
   const [draft, setDraft] = useState(() => {
     try {
-      const text = sessionStorage.getItem(key) ?? "";
+      const text = sessionStorage.getItem(key) ?? initialText;
       return { text, saved: !!text };
-    } catch { return { text: "", saved: false }; }
+    } catch { return { text: initialText, saved: false }; }
   });
   const setText = useCallback((text: string) => {
     let saved = false;

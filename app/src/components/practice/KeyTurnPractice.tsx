@@ -86,7 +86,7 @@ export function KeyTurnPractice({session,attempt}:{session:Session;attempt:KeyTu
   }
   const snapshot=live,controller=new AbortController();request.current=controller;setBusy('reply');setError(null);
   try{
-   const full=await roleplayStream({practiceMode:'key-turn',scenario:session.scenario,learnerCharacterId:session.learnerCharacterId,messages:keyTurnMessages(session,snapshot),lang:snapshot.lang,learnerName:profile?.name},raw=>{
+   const full=await roleplayStream({practiceIntent:session.practiceIntent,practiceMode:'key-turn',scenario:session.scenario,learnerCharacterId:session.learnerCharacterId,messages:keyTurnMessages(session,snapshot),lang:snapshot.lang,learnerName:profile?.name},raw=>{
     if(controller.signal.aborted)return;
     const parsed=parseRoleplay(raw,[npc.id]);
     setPreview(parsed.utterances.map((u,i)=>({id:`preview-${i}`,role:'npc',characterId:u.characterId,text:u.text,ts:Date.now()})));
@@ -109,7 +109,7 @@ export function KeyTurnPractice({session,attempt}:{session:Session;attempt:KeyTu
   }
   const snapshot=live,controller=new AbortController();request.current=controller;setBusy('review');setError(null);
   try{
-   const report=await assessStream({practiceMode:'key-turn',scenario:session.scenario,learnerCharacterId:session.learnerCharacterId,messages:keyTurnMessages(session,snapshot),lang:snapshot.lang,goals:['communication'],learnerName:profile?.name},()=>{},controller.signal);
+   const report=await assessStream({practiceIntent:session.practiceIntent,practiceMode:'key-turn',scenario:session.scenario,learnerCharacterId:session.learnerCharacterId,messages:keyTurnMessages(session,snapshot),lang:snapshot.lang,goals:['communication'],learnerName:profile?.name},()=>{},controller.signal);
    controller.signal.throwIfAborted();
    if(!commit(snapshot,{status:'reviewed',report}))setError(text('changed'));
   }catch(e){if(!controller.signal.aborted)setError(e instanceof Error?e.message:text('failed'));}

@@ -23,6 +23,7 @@ import { PracticeJourney } from "./PracticeJourney";
 import { SlowModelNotice } from "@/components/SlowModelNotice";
 import { useSessionDraft } from "@/lib/use-session-draft";
 import { Stance } from "./Stance";
+import {PracticeIntentNote} from './PracticeIntentNote';
 import { clockMarks, PatiencePicker, useReplyClock, type ClockStage } from "./ReplyClock";
 
 export function Chat({ session }: { session: Session }) {
@@ -229,7 +230,7 @@ export function Chat({ session }: { session: Session }) {
       const ids: string[] = [];
       try {
         const full = await roleplayStream(
-          { scenario: sc, learnerCharacterId: session.learnerCharacterId, messages: history, lang, learnerName,
+          { practiceIntent:session.practiceIntent,scenario: sc, learnerCharacterId: session.learnerCharacterId, messages: history, lang, learnerName,
             turnLimit: practiceTurnLimit(useApp.getState().sessions.find((s) => s.id === session.id) ?? session) },
           (acc) => {
             if (controller.signal.aborted) return;
@@ -382,7 +383,7 @@ export function Chat({ session }: { session: Session }) {
     if (hintBusy || busy) return;
     setHintBusy(true);
     try {
-      const { hint } = await hintApi({ scenario: sc, learnerCharacterId: session.learnerCharacterId, messages: session.messages, lang, learnerName });
+      const { hint } = await hintApi({ practiceIntent:session.practiceIntent,scenario: sc, learnerCharacterId: session.learnerCharacterId, messages: session.messages, lang, learnerName });
       if (useApp.getState().sessions.find((s) => s.id === session.id)?.status === "active") {
         appendMessage(session.id, { id: uid(), role: "coach", text: hint, ts: Date.now(), kind: "hint" });
       }
@@ -521,6 +522,7 @@ export function Chat({ session }: { session: Session }) {
             <span className="flex items-center gap-2"><span className="num">{session.objectiveDone.filter(Boolean).length}/{objectives.length}</span><ChevronDown size={15} /></span>
           </summary>
           <div className="pb-4 flex flex-col gap-4 max-h-[30dvh] overflow-y-auto">
+            <PracticeIntentNote intent={session.practiceIntent} lang={lang}/>
             <Stance name={stanceName} value={stance} prev={prevStance} lang={lang} />
             <Objectives items={objectives} done={session.objectiveDone} label={t(lang, "pr_objectives_estimate")} layout="stack" />
           </div>
@@ -678,6 +680,7 @@ export function Chat({ session }: { session: Session }) {
 
       {/* the margin: what you are trying to do, and who you are up against */}
       <Marginalia lgOnly className="lg:min-h-0 lg:overflow-y-auto lg:py-6">
+        <PracticeIntentNote intent={session.practiceIntent} lang={lang}/>
         <section className="flex flex-col gap-3">
           <span className="eyebrow">{t(lang, "pr_stance_label")}</span>
           <Stance name={stanceName} value={stance} prev={prevStance} lang={lang} layout="block" />
