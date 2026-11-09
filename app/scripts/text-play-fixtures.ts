@@ -229,4 +229,76 @@ export const textPlayFixtures: {id:string;lang:Lang;routes:Record<string,string[
   "I can't take the technical proposal this weekend. Could someone else pick it up, or could the draft move by two days?",
   "If I did all three this weekend, the draft would be mostly a title page.",
  ]}},
+ // Pronoun probes (2026-11-09): multi-NPC scenes where characters may talk ABOUT the learner.
+ // The learner's gender is never set, so no NPC may refer to them as he/she (他/她).
+ {id:'meeting-tension',lang:'zh',routes:{pronoun:[
+  'Jason，反馈确实是我拖了，这点我认。不过文档里缺了验收标准，我卡在那儿了。',
+  'Sam，你怎么看？是我这边该先改，还是我们先把文档补全？',
+  'Anna，你刚才一直没说话，你觉得我刚才那样讲公平吗？',
+ ]}},
+ {id:'meeting-tension',lang:'en',routes:{pronoun:[
+  "Jason, I did sit on the feedback, that's on me. But the doc had no acceptance criteria and I got stuck there.",
+  "Sam, what's your read? Should I fix my side first, or do we fill the gaps in the doc?",
+  "Anna, you've been quiet. Was what I just said fair?",
+ ]}},
+ {id:'classroom-speak-up',lang:'zh',routes:{pronoun:[
+  '我有点不同意。Marcus 的结论依赖一个前提，但材料里没有证据支持它。',
+  '教授，您觉得我刚才说的那个前提，算不算一个合理的质疑？',
+  'Marcus，你怎么回应我刚才的问题？',
+ ]}},
+ {id:'classroom-speak-up',lang:'en',routes:{pronoun:[
+  "I see it a bit differently. Marcus's conclusion rests on an assumption the readings don't support.",
+  "Professor, does the assumption I just pointed to count as a fair objection?",
+  "Marcus, how would you answer what I just asked?",
+ ]}},
+ {id:'colleague-microaggression',lang:'zh',routes:{pronoun:[
+  'Doug，等一下，我想先听 Mei 把她刚才的想法说完。',
+  'Mei，你刚才说到分阶段上线的哪一步了？',
+  'Doug，我刚才打断你了，你觉得我这样做不合适吗？',
+ ]}},
+ {id:'colleague-microaggression',lang:'en',routes:{pronoun:[
+  "Doug, hold on. I'd like to hear Mei finish her point first.",
+  "Mei, where were you going with the phased rollout?",
+  "Doug, I just cut you off. Did that seem out of line to you?",
+ ]}},
+ {id:'parent-career-choice',lang:'zh',routes:{pronoun:[
+  '爸，我想清楚了。我不是一时冲动，我存了一年的生活费才做的决定。',
+  '妈，你一直没说话，你是不是也觉得我太冒险了？',
+  '爸，你跟妈私下聊过我这件事吗？你们最担心的是什么？',
+ ]}},
+ {id:'parent-career-choice',lang:'en',routes:{pronoun:[
+  "Dad, I've thought it through. It isn't a whim. I saved a year of living costs before deciding.",
+  "Mum, you've been quiet. Do you think I'm taking too big a risk as well?",
+  "Dad, have you and Mum talked about this between yourselves? What worries you most?",
+ ]}},
+ {id:'birthday-toast',lang:'zh',routes:{pronoun:[
+  '放心，黑历史我留着下次再讲。我和 Hana 认识十年了，她是那种你半夜打电话一定会接的人。',
+  '大家觉得我这句开场怎么样？要不要再来一个？',
+  'Hana，你觉得我刚才说得太煽情了吗？',
+ ]}},
+ {id:'birthday-toast',lang:'en',routes:{pronoun:[
+  "Relax, the embarrassing stories can wait. I've known Hana ten years. She's the person who picks up at 3am.",
+  "How was that for an opener, everyone? Should I keep going?",
+  "Hana, too sentimental?",
+ ]}},
+ {id:'wine-party-disagreement',lang:'zh',routes:{pronoun:[
+  'Victor，我不太同意。把一整群人说成不想努力，这个说法不公平。',
+  '我不想吵起来，我只是不想大家以为我默认了。你能说说你是根据什么这么觉得的吗？',
+  '（转向主人）抱歉在你的饭桌上提这个，我是不是让气氛太僵了？',
+ ]}},
+ {id:'wine-party-disagreement',lang:'en',routes:{pronoun:[
+  "Victor, I don't agree. Saying a whole group of people won't work hard isn't fair.",
+  "I don't want a fight. I just don't want anyone to think I agree by staying quiet. What's that view based on?",
+  "(to the host) Sorry to bring this up at your table. Have I made things awkward?",
+ ]}},
+ {id:'elevator-confidential-question',lang:'en',routes:{pronoun:[
+  "I can't talk about names in here. Why are you so keen to know?",
+  "Ms. Lin, is it a staffing list you need, or the contact for your project?",
+  "Chen, do you think I'm being unfair by not saying more?",
+ ]}},
+ {id:'group-chat-blame',lang:'en',routes:{pronoun:[
+  "Xu, I submitted the original checklist at 17:00. The three additions came at 18:10. Which part is late?",
+  "Zhou, which part do you actually need today?",
+  "Xu, do you think I'm wrong to correct this in front of the client?",
+ ]}},
 ];

@@ -1,0 +1,1474 @@
+{
+  "at": "2026-11-09T09:48:10.118Z",
+  "model": "claude-opus-5-5",
+  "phase": "current",
+  "samples": 40,
+  "issues": [
+    "Error: This reply has incomplete scene information. Your words are saved; please retry."
+  ],
+  "records": [
+    {
+      "label": "current",
+      "id": "meeting-tension",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 1,
+      "learner": "Jason, I did sit on the feedback, that's on me. But the doc had no acceptance criteria and I got stuck there.",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 22,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "jason",
+          "text": "Okay, but if you got stuck, you could've just pinged me. Two weeks of silence, and now I'm hearing about acceptance criteria for the first time, in front of everyone."
+        },
+        {
+          "characterId": "sam",
+          "text": "Let's not relitigate the two weeks. What do you two need to get this unstuck?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 6993,
+      "ms": 7037
+    },
+    {
+      "label": "current",
+      "id": "classroom-speak-up",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "我有点不同意。Marcus 的结论依赖一个前提，但材料里没有证据支持它。",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 25,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "marcus",
+          "text": "哪个前提？我刚才说的每一步都是从材料推出来的，你说没证据，总得指出是哪一句吧。"
+        },
+        {
+          "characterId": "prof",
+          "text": "好，这个质疑有意思。说具体点——你指的是 Marcus 论证里的哪一环？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7895,
+      "ms": 7928
+    },
+    {
+      "label": "current",
+      "id": "meeting-tension",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "Jason，反馈确实是我拖了，这点我认。不过文档里缺了验收标准，我卡在那儿了。",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 25,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "jason",
+          "text": "你认就行。但缺验收标准，你直接问我一句不就完了？卡两周才在会上说，我怎么知道你卡在哪儿。"
+        },
+        {
+          "characterId": "sam",
+          "text": "好，先别翻旧账。缺的东西说清楚，然后定个时间。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8172,
+      "ms": 8188
+    },
+    {
+      "label": "current",
+      "id": "classroom-speak-up",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "教授，您觉得我刚才说的那个前提，算不算一个合理的质疑？",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 22,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "prof",
+          "text": "合不合理，我现在还判断不了，因为我还不知道你指的是哪个前提。你先把它说出来，用你自己的话讲讲 Marcus 的推理是怎么走的，卡在哪儿。"
+        },
+        {
+          "characterId": "marcus",
+          "text": "对，你先说是哪一个。不说出来，我也没法回应。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 6800,
+      "ms": 6845
+    },
+    {
+      "label": "current",
+      "id": "meeting-tension",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 2,
+      "learner": "Sam, what's your read? Should I fix my side first, or do we fill the gaps in the doc?",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 20,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "sam",
+          "text": "My read? It's not either-or. Get Jason feedback on what's there, and send him your questions on the criteria along with it. When can you do that?"
+        },
+        {
+          "characterId": "jason",
+          "text": "And I'm sitting right here. If something's missing from the doc, ask me. I'd rather hear it from you than from Sam."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9188,
+      "ms": 9313
+    },
+    {
+      "label": "current",
+      "id": "meeting-tension",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "Sam，你怎么看？是我这边该先改，还是我们先把文档补全？",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 22,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "jason",
+          "text": "等下，你问Sam干嘛？我人就坐这儿。缺什么你跟我说啊。"
+        },
+        {
+          "characterId": "sam",
+          "text": "这不是二选一。你直接跟Jason说缺哪几项，他补；然后你给个反馈时间。别在会上绕。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8948,
+      "ms": 9001
+    },
+    {
+      "label": "current",
+      "id": "meeting-tension",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "Anna，你刚才一直没说话，你觉得我刚才那样讲公平吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 18,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "anna",
+          "text": "啊……我？我觉得，嗯，你们俩说的都有道理吧。要不就像Sam说的，把缺的列一下，定个时间？"
+        },
+        {
+          "characterId": "jason",
+          "text": "你看，你又绕开我了。先问Sam，现在又问Anna，我都快成局外人了。你到底什么时候给我反馈？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 5353,
+      "ms": 5407
+    },
+    {
+      "label": "current",
+      "id": "classroom-speak-up",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "Marcus，你怎么回应我刚才的问题？",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 19,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "marcus",
+          "text": "我的回应就是：我不觉得有哪个前提缺证据。你要是不同意，就别绕了，直接说是我推理里哪一步，开头那步、中间那步，还是结论之前那步都行。"
+        },
+        {
+          "characterId": "prof",
+          "text": "我插一句：不用一次说完整，你就先讲讲你理解的 Marcus 的论证是什么，从那儿开始也可以。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8557,
+      "ms": 8564
+    },
+    {
+      "label": "current",
+      "id": "meeting-tension",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 3,
+      "learner": "Anna, you've been quiet. Was what I just said fair?",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 17,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "anna",
+          "text": "Oh, um… I don't really want to grade anyone here. I think you both have a point? But Jason's right there, so maybe just talk it through with him."
+        },
+        {
+          "characterId": "jason",
+          "text": "Yeah, why are we polling the room? I'm the one who's been waiting. Sam asked you a simple question: when?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7214,
+      "ms": 7277
+    },
+    {
+      "label": "current",
+      "id": "classroom-speak-up",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 1,
+      "learner": "I see it a bit differently. Marcus's conclusion rests on an assumption the readings don't support.",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 28,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "marcus",
+          "text": "Okay, which assumption? Because I'm pretty sure I'm not sneaking anything in."
+        },
+        {
+          "characterId": "prof",
+          "text": "Good, let's hear it. Can you tell us what you understood Marcus to be arguing, and then where you think it breaks down?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 5951,
+      "ms": 5998
+    },
+    {
+      "label": "current",
+      "id": "colleague-microaggression",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 1,
+      "learner": "Doug, hold on. I'd like to hear Mei finish her point first.",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I'd like to hear Mei finish her point first.",
+            "npcQuote": "Thanks. Um, so what I was actually trying to say"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 40,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "doug",
+          "text": "Oh! Yeah, sure, sorry. Go for it, Mei."
+        },
+        {
+          "characterId": "mei",
+          "text": "Thanks. Um, so what I was actually trying to say is a bit different from a phased rollout. It's more that we test it with one group first and let what we learn there decide the rest. But, I mean, if that overlaps with Doug's idea..."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8739,
+      "ms": 8792
+    },
+    {
+      "label": "current",
+      "id": "colleague-microaggression",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "Doug，等一下，我想先听 Mei 把她刚才的想法说完。",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "我想先听 Mei 把她刚才的想法说完",
+            "npcQuote": "那我接着刚才说"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 35,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "doug",
+          "text": "哦——行行，你说你说。我就是怕跑题，顺手接了一下。"
+        },
+        {
+          "characterId": "mei",
+          "text": "……谢谢。那我接着刚才说，其实我的意思跟「分阶段上线」不太一样，我是想先——"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10154,
+      "ms": 10199
+    },
+    {
+      "label": "current",
+      "id": "classroom-speak-up",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 2,
+      "learner": "Professor, does the assumption I just pointed to count as a fair objection?",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 26,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "prof",
+          "text": "It might be. I can't tell yet, because you haven't told us what the assumption is. Name it, and tell us why you think the readings don't back it up."
+        },
+        {
+          "characterId": "marcus",
+          "text": "Yeah, I'd actually like to know. Which part do you think I'm assuming?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 5142,
+      "ms": 5194
+    },
+    {
+      "label": "current",
+      "id": "colleague-microaggression",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 2,
+      "learner": "Mei, where were you going with the phased rollout?",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I'd like to hear Mei finish her point first.",
+            "npcQuote": "Thanks. Um, so what I was actually trying to say"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 44,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "mei",
+          "text": "Well, it's not really a phased rollout. A phased rollout assumes we're going ahead no matter what. I'm saying the one group is a real test. If it doesn't work there, we change it or we stop, before anyone else gets—"
+        },
+        {
+          "characterId": "doug",
+          "text": "Right, right, so pilot first, then phase it in. That's what I've been saying. So for the first phase, I'd—"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7465,
+      "ms": 8088
+    },
+    {
+      "label": "current",
+      "id": "classroom-speak-up",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 3,
+      "learner": "Marcus, how would you answer what I just asked?",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 23,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "marcus",
+          "text": "I can't, honestly. You haven't said what the assumption is, so right now I'm defending against a mystery. Give me the actual point and I'll answer it."
+        },
+        {
+          "characterId": "prof",
+          "text": "Start smaller if it helps. Just say back what you heard Marcus claim, in your own words, and we'll go from there."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 5947,
+      "ms": 6003
+    },
+    {
+      "label": "current",
+      "id": "colleague-microaggression",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "Mei，你刚才说到分阶段上线的哪一步了？",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "我想先听 Mei 把她刚才的想法说完",
+            "npcQuote": "那我接着刚才说"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 38,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "mei",
+          "text": "呃，其实不是分阶段上线那个……我是想，上线之前先找一小批用户试用，看他们实际怎么用，再决定后面要不要分阶段、怎么分。"
+        },
+        {
+          "characterId": "doug",
+          "text": "诶，这个好！其实就是我说的第一阶段嘛，咱们可以先圈一批种子用户，然后——"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10069,
+      "ms": 10120
+    },
+    {
+      "label": "current",
+      "id": "colleague-microaggression",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 3,
+      "learner": "Doug, I just cut you off. Did that seem out of line to you?",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I'd like to hear Mei finish her point first.",
+            "npcQuote": "Thanks. Um, so what I was actually trying to say"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 47,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "doug",
+          "text": "Out of line? No, no, you're fine, I just get going sometimes. ...Wait. Hang on, are you saying I just did that to Mei?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9284,
+      "ms": 9334
+    },
+    {
+      "label": "current",
+      "id": "colleague-microaggression",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "Doug，我刚才打断你了，你觉得我这样做不合适吗？",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "我想先听 Mei 把她刚才的想法说完",
+            "npcQuote": "那我接着刚才说"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 36,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "doug",
+          "text": "啊？没有没有，完全没问题！我这人一兴奋嘴就停不下来，你拦一下挺好。那咱们接着说种子用户这个第一阶段，我觉得名单可以——"
+        },
+        {
+          "characterId": "mei",
+          "text": "……其实试用跟第一阶段不是一回事，不过……算了，你们先说吧。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 14739,
+      "ms": 14796
+    },
+    {
+      "label": "current",
+      "id": "parent-career-choice",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 1,
+      "learner": "Dad, I've thought it through. It isn't a whim. I saved a year of living costs before deciding.",
+      "error": "Error: This reply has incomplete scene information. Your words are saved; please retry.",
+      "modelRaw": "{\"meta\":{\"objectives\":[false,false,false],\"ended\":false,\"outcome\":null,\"stance\":25,\"revealed\":false},\"utterances\":[{\"characterId\":\"dad\",\"text\":\"A year. Okay, that's something. But then what? Most of these little companies fold before they ever make money. You know that, right?\"},{\"characterId\":\"mom\":\"\",\"text\":\"\"}]}",
+      "preview": "@@meta\n{\"objectives\":[false,false,false],\"ended\":false,\"stance\":25,\"revealed\":false,\"outcome\":null,\"objectiveEvidence\":[],\"disclosures\":[]}\n@@dad\nA year. Okay, that's something. But then what? Most of these little companies fold before they ever make money. You know that, right?",
+      "repairs": 0
+    },
+    {
+      "label": "current",
+      "id": "birthday-toast",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "放心，黑历史我留着下次再讲。我和 Hana 认识十年了，她是那种你半夜打电话一定会接的人。",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "放心，黑历史我留着下次再讲。",
+            "npcQuote": "好好好，下次再讲"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 38,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "hana",
+          "text": "好好好，下次再讲，你可记着啊！哎，十年……你这么一说我突然觉得自己好老。"
+        },
+        {
+          "characterId": "crowd",
+          "text": "半夜打电话？哪一次啊！讲讲讲！"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7132,
+      "ms": 7170
+    },
+    {
+      "label": "current",
+      "id": "parent-career-choice",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "爸，我想清楚了。我不是一时冲动，我存了一年的生活费才做的决定。",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 22,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "dad",
+          "text": "存了一年？一年够干什么的。我们那时候，谁不是先把饭碗端稳了再说别的。人家都说创业公司十个里头九个撑不下去，一年以后要是黄了，你怎么办？"
+        },
+        {
+          "characterId": "mom",
+          "text": "哎，先吃菜，边吃边说……孩子，你那个新公司，社保什么的还给交吗？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7384,
+      "ms": 8789
+    },
+    {
+      "label": "current",
+      "id": "birthday-toast",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "大家觉得我这句开场怎么样？要不要再来一个？",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "放心，黑历史我留着下次再讲。",
+            "npcQuote": "好好好，下次再讲"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 35,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "crowd",
+          "text": "开场过关过关！别再来了，我们要听半夜那个电话！"
+        },
+        {
+          "characterId": "hana",
+          "text": "哈哈哈，你是不是还没想好在这儿拖时间？大家酒杯都举酸了啊。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9120,
+      "ms": 9149
+    },
+    {
+      "label": "current",
+      "id": "parent-career-choice",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "妈，你一直没说话，你是不是也觉得我太冒险了？",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 23,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "mom",
+          "text": "我哪是没说话……我就是怕你累。冒不冒险我也说不好，我就想知道，你去了那边每个月还有没有准钱，万一生个病，有没有保障？"
+        },
+        {
+          "characterId": "dad",
+          "text": "你妈刚才问你社保的事，你还没回答呢。还有我那句，一年以后要是黄了，你怎么打算？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8493,
+      "ms": 8613
+    },
+    {
+      "label": "current",
+      "id": "birthday-toast",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "Hana，你觉得我刚才说得太煽情了吗？",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "放心，黑历史我留着下次再讲。",
+            "npcQuote": "好好好，下次再讲"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 34,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "hana",
+          "text": "不煽情啊，刚刚好……我其实还挺爱听的。哎你别问我了，你一问我反而不好意思了！"
+        },
+        {
+          "characterId": "crowd",
+          "text": "别互相客气了！半夜电话！半夜电话！"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7212,
+      "ms": 8018
+    },
+    {
+      "label": "current",
+      "id": "parent-career-choice",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "爸，你跟妈私下聊过我这件事吗？你们最担心的是什么？",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 26,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "dad",
+          "text": "聊过，怎么没聊。最担心的？就是你把稳当的路扔了，到时候进退两难，三十来岁再回头找工作，人家还要不要你。我把话说完了，你别光问我们，刚才那两个问题你也得给个说法。"
+        },
+        {
+          "characterId": "mom",
+          "text": "我就是怕你一个人在外头熬，饭也不好好吃，身体搞垮了……钱的事倒在其次。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9648,
+      "ms": 9750
+    },
+    {
+      "label": "current",
+      "id": "birthday-toast",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 1,
+      "learner": "Relax, the embarrassing stories can wait. I've known Hana ten years. She's the person who picks up at 3am.",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 40,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "crowd",
+          "text": "Ooooh, ‘can wait’ — so there ARE stories! 3am, huh? Who's calling her at 3am?"
+        },
+        {
+          "characterId": "hana",
+          "text": "Okay, okay, that's — hey, don't start, I'm already wearing mascara. Which 3am are we talking about, though? Be careful."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 5083,
+      "ms": 5119
+    },
+    {
+      "label": "current",
+      "id": "wine-party-disagreement",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "Victor，我不太同意。把一整群人说成不想努力，这个说法不公平。",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "Victor，我不太同意。把一整群人说成不想努力，这个说法不公平。"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 20,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "victor",
+          "text": "不公平？我说的是我亲眼看到的情况好吗。怎么，说句实话就成坏人了？"
+        },
+        {
+          "characterId": "host",
+          "text": "哎哎，那个……甜点马上好了，谁要再来点酒？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 5158,
+      "ms": 5178
+    },
+    {
+      "label": "current",
+      "id": "wine-party-disagreement",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 1,
+      "learner": "Victor, I don't agree. Saying a whole group of people won't work hard isn't fair.",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "Victor, I don't agree. Saying a whole group of people won't work hard isn't fair."
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 18,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "victor",
+          "text": "Oh, come on, 'isn't fair'? I'm just saying what everybody sees and nobody wants to say out loud. You're telling me you've never noticed?"
+        },
+        {
+          "characterId": "host",
+          "text": "Okay, um, who needs a top-up? There's still half a bottle of the red here..."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 6279,
+      "ms": 6343
+    },
+    {
+      "label": "current",
+      "id": "birthday-toast",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 2,
+      "learner": "How was that for an opener, everyone? Should I keep going?",
+      "meta": {
+        "objectives": [
+          false,
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 40,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "crowd",
+          "text": "Six out of ten, needs more 3am! Keep going, our arms are getting tired up here!"
+        },
+        {
+          "characterId": "hana",
+          "text": "Don't ask them, they'll rate anything. You can't just say ‘3am' and leave me hanging. Go on, which one?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 6328,
+      "ms": 6346
+    },
+    {
+      "label": "current",
+      "id": "wine-party-disagreement",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我不想吵起来，我只是不想大家以为我默认了。你能说说你是根据什么这么觉得的吗？",
+      "meta": {
+        "objectives": [
+          true,
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "我只是不想大家以为我默认了"
+          },
+          {
+            "index": 1,
+            "learnerQuote": "你能说说你是根据什么这么觉得的吗？"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "victor",
+          "text": "根据？就……我身边见过的啊，有人领着补助就不急着找活儿了。嗯……当然，我也就见过那么几个。"
+        },
+        {
+          "characterId": "host",
+          "text": "（小声）你们俩……慢慢聊，别太大声就行啊。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 6344,
+      "ms": 7708
+    },
+    {
+      "label": "current",
+      "id": "wine-party-disagreement",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 2,
+      "learner": "I don't want a fight. I just don't want anyone to think I agree by staying quiet. What's that view based on?",
+      "meta": {
+        "objectives": [
+          true,
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I just don't want anyone to think I agree by staying quiet."
+          },
+          {
+            "index": 1,
+            "learnerQuote": "What's that view based on?"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "victor",
+          "text": "Based on... I mean, it's just... (pause) Okay, honestly? Mostly stuff I read, and a couple of guys I've worked with. That's not nothing, though. You're saying that's not enough to go on?"
+        },
+        {
+          "characterId": "host",
+          "text": "I'll just, uh, bring the cheese out in a sec. Sorry, keep going. Or don't. Either's fine."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7807,
+      "ms": 9641
+    },
+    {
+      "label": "current",
+      "id": "birthday-toast",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 3,
+      "learner": "Hana, too sentimental?",
+      "meta": {
+        "objectives": [
+          true,
+          false,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "Relax, the embarrassing stories can wait.",
+            "npcQuote": "Ooooh, ‘can wait’ — so there ARE stories!"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 37,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "hana",
+          "text": "Too sentimental? You've said, like, one sentence! Stop checking on me and just tell it. I can handle it. Probably."
+        },
+        {
+          "characterId": "crowd",
+          "text": "Story! Story! Story!"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8343,
+      "ms": 8432
+    },
+    {
+      "label": "current",
+      "id": "wine-party-disagreement",
+      "route": "pronoun",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "（转向主人）抱歉在你的饭桌上提这个，我是不是让气氛太僵了？",
+      "meta": {
+        "objectives": [
+          true,
+          true,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "Victor，我不太同意。把一整群人说成不想努力，这个说法不公平。"
+          },
+          {
+            "index": 1,
+            "learnerQuote": "你能说说你是根据什么这么觉得的吗？"
+          },
+          {
+            "index": 2,
+            "learnerQuote": "抱歉在你的饭桌上提这个，我是不是让气氛太僵了？",
+            "npcQuote": "没有没有，你说话挺客气的"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 35,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "host",
+          "text": "啊？没有没有，你说话挺客气的……我就是怕一会儿嗓门大起来。来，先尝尝这个甜点，我烤了一下午呢。"
+        },
+        {
+          "characterId": "victor",
+          "text": "我又没想吵架。……行吧，几个人确实也说明不了一大群人，这我承认。但你总不能说一点问题都没有吧？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10242,
+      "ms": 10278
+    },
+    {
+      "label": "current",
+      "id": "wine-party-disagreement",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 3,
+      "learner": "(to the host) Sorry to bring this up at your table. Have I made things awkward?",
+      "meta": {
+        "objectives": [
+          true,
+          true,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I just don't want anyone to think I agree by staying quiet."
+          },
+          {
+            "index": 1,
+            "learnerQuote": "What's that view based on?"
+          },
+          {
+            "index": 2,
+            "learnerQuote": "Sorry to bring this up at your table. Have I made things awkward?",
+            "npcQuote": "Honestly? A little. But you're being nice about it, so"
+          }
+        ],
+        "ended": false,
+        "outcome": "success",
+        "stance": 34,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "host",
+          "text": "Oh, no, it's... Honestly? A little. But you're being nice about it, so. Maybe we could just, you know, land the plane before dessert?"
+        },
+        {
+          "characterId": "victor",
+          "text": "Hey, I'm not fighting anybody here. But you didn't answer me. Reading stuff and working with people isn't enough to go on?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9486,
+      "ms": 9537
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 1,
+      "learner": "I can't talk about names in here. Why are you so keen to know?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 28,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "chen",
+            "quote": "my project got reassigned yesterday"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "'Not in here,' so later, over coffee? Look, my project got reassigned yesterday, no explanation, and now everyone's whispering about changes. I just want to know if I'm next."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7253,
+      "ms": 7268
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 1,
+      "learner": "Xu, I submitted the original checklist at 17:00. The three additions came at 18:10. Which part is late?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "Fine, the original came in at 17:00. It's the three additions that aren't done, and I still haven't heard when they will be. This isn't the place to argue timestamps."
+        },
+        {
+          "characterId": "client",
+          "text": "Honestly, I don't need the back-and-forth. What's actually usable right now, and what isn't confirmed yet?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10954,
+      "ms": 10978
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 2,
+      "learner": "Ms. Lin, is it a staffing list you need, or the contact for your project?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 32,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "visitor",
+            "quote": "I have to submit a contact list for our project next week"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "visitor",
+          "text": "The contact, honestly. I have to submit a contact list for our project next week, and I can't put down names that might change. So who confirms that, you or someone else?"
+        },
+        {
+          "characterId": "chen",
+          "text": "And you still haven't said whether 'not in here' means later."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9332,
+      "ms": 9356
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 2,
+      "learner": "Zhou, which part do you actually need today?",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I submitted the original checklist at 17:00. The three additions came at 18:10.",
+            "npcQuote": "Fine, the original came in at 17:00. It's the three additions that aren't done"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 42,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "client",
+            "quote": "For today I only need the original completed checklist for our internal review."
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "client",
+          "text": "For today I only need the original completed checklist for our internal review. The added items can wait, as long as nobody tells me they're done when they're not."
+        },
+        {
+          "characterId": "xu",
+          "text": "Then the original goes to Zhou. But I still need to know who's handling the additions and when. I'm not leaving that open-ended in front of the client."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7772,
+      "ms": 8005
+    },
+    {
+      "label": "current",
+      "id": "elevator-confidential-question",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 3,
+      "learner": "Chen, do you think I'm being unfair by not saying more?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 29,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "chen",
+          "text": "Unfair? Kind of, yeah. We've worked together for ages, and you're treating me like I'm going to post it online. I'm not asking for the whole list. Just tell me, yes or no, am I on it?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10603,
+      "ms": 10612
+    },
+    {
+      "label": "current",
+      "id": "group-chat-blame",
+      "route": "pronoun",
+      "lang": "en",
+      "turn": 3,
+      "learner": "Xu, do you think I'm wrong to correct this in front of the client?",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I submitted the original checklist at 17:00. The three additions came at 18:10.",
+            "npcQuote": "Fine, the original came in at 17:00. It's the three additions that aren't done"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 39,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "xu",
+          "text": "Wrong about the times? No. But turning this into who's right, in front of Zhou, doesn't help either of us. What I need from you is simple: the additions. Who's checking them, and when will we know?"
+        },
+        {
+          "characterId": "client",
+          "text": "I'd rather this stay on status, please."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10334,
+      "ms": 10394
+    }
+  ]
+}
