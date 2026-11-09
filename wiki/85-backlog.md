@@ -6,8 +6,10 @@
 
 - [x] 春节亲戚、年终评级、离职挽留、亲戚借钱、导师周末任务五个场景上线，58 → 63；三轮真实模型实测与修订 → [验收记录](./reviews/review-2026-11-09-new-scenarios.md)
 - [x] 修复：同一目标多条原话证据导致合法回复被判「不完整」（`roleplay-output.ts`）
-- [ ] 对五个新场景各跑一次完整复盘并盲评；目前只验收了对话
-- [ ] 用同样的代词扫描复测既有的刻板情境场景（`spouse-chores`、`parent-career-choice`、`saying-i-love-you`、`first-date-silence` 等），必要时在场景事实里写明称呼
+- [x] 对五个新场景各跑一次完整复盘：15 段 0 条不存在的原话，人工阅读判断准确（`scripts/eval-replay-debriefs.ts`）
+- [x] 旧场景代词扫描：8 个多 NPC 场景中英 40 回合，没有给学习者指定性别（单 NPC 场景只用「你」对话，风险低）
+- [ ] **ModelScope 落后**：仍为 2026-10-30 `21af528`，缺 #61–#73。同步提交 `56ff1ca` 已在本地空间克隆（`/tmp/ms-check/space`）准备好，本机已无 ModelScope 凭证；提供后 `git push origin master` 并调用 OpenAPI 重建。
+- [ ] 偶发：模型输出畸形 JSON（`"characterId":"mom":"","text":""`）被拒、提示重试；若频率上升再考虑容错，不为单例加特判。
 - [ ] 五个场景 issue 已由维护者完成，新访客暂时没有可领的场景 issue；收到投稿后整理一批新的 good first issue
 
 ## 2026-11-09 全仓审查（分支 `fix/review-2026-11-09`）

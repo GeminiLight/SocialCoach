@@ -1,0 +1,1245 @@
+[
+  {
+    "id": "lunar-new-year-relatives",
+    "lang": "en",
+    "route": "boundary",
+    "ms": 31236,
+    "outcome": "success",
+    "stars": 3,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "Auntie, I'll keep the salary number to myself, but I'm doing fine out there.",
+          "reason": "You declined the salary figure openly and truthfully. You gave only a brief 'Not yet' on relationships, which you chose to share, and you never lied or raised your voice."
+        },
+        {
+          "index": 1,
+          "status": "met",
+          "evidence": "I know you ask because you care. If there's ever someone serious, you'll be the first to meet them.",
+          "reason": "You named the care behind the questions and offered something you were willing to give: a future introduction. Earlier, you also turned the conversation toward Auntie's family."
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 3,
+          "evidence": "If I earned enough to pay for this whole dinner, I'd announce it, promise.",
+          "reason": "Auntie had pushed twice. This joke held your salary boundary without lying and got a laugh, and she replied 'Fine, fine, keep your little secrets.'"
+        },
+        {
+          "skill": "emotion-regulation",
+          "level": 3,
+          "evidence": "I'm not upset, I just want us to say the same thing.",
+          "reason": "Your mum's 'soon' had put you on the spot, yet you raised the mismatch calmly and without blame, which kept the table from tipping into conflict."
+        },
+        {
+          "skill": "perspective-taking",
+          "level": 2,
+          "evidence": "I know you ask because you care.",
+          "reason": "Naming Auntie's care before saying 'Not yet' let you hold your boundary while still treating her questions as well-meant."
+        }
+      ],
+      "stars": 3,
+      "outcome": "success",
+      "verdictEvidence": "I know you ask because you care. If there's ever someone serious, you'll be the first to meet them. Not yet, though.",
+      "verdict": "Warm, truthful boundaries held under pressure; one alignment question landed a little publicly on Mum.",
+      "summary": "Lines like 'I'll keep the salary number to myself' and 'Not yet, though' kept your privacy honest and light, and Auntie eventually said she'd drop it. Asking Mum about 'soon' at the table cleared things up, but it also exposed her in front of her sister.",
+      "strengths": [
+        {
+          "behavior": "You paired each boundary with warmth, either acknowledging care or offering a future step, so your refusals never read as cold.",
+          "evidence": "I know you ask because you care. If there's ever someone serious, you'll be the first to meet them.",
+          "skill": "perspective-taking"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "Your aim of getting aligned with Mum was sound, but you asked it in front of Auntie, which put Mum in the position of admitting a white lie publicly.",
+          "evidence": "Mum, what made you tell Auntie it'd be soon?",
+          "skill": "perspective-taking",
+          "deficit": "performance",
+          "whyItMatters": "Mum's reply led Auntie to say 'I've been told stories at my own sister's table', a small sting between the sisters that a private word might have avoided."
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "Mum, what made you tell Auntie it'd be soon? I'm not upset, I just want us to say the same thing.",
+          "better": "Mum, I'm not upset at all. Can we have a quick chat after dinner about what we tell people? I'd like us to be on the same page.",
+          "why": "This keeps your exact goal and your calm tone, but it gives Mum a private moment instead of putting her on the spot at her sister's table."
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [],
+        "caseIds": [
+          "case-passed-over-composure"
+        ],
+        "whyThis": "'One Sentence at the Celebration' fits well. You already had the calm, honest sentence, and the next refinement is moving the deeper conversation to a specific private time."
+      },
+      "reflectionQuestions": [
+        "Auntie has now asked what you actually do all day. In a future dinner like this, how much about your work would you be comfortable sharing, and where would you stop?"
+      ],
+      "nextStep": "Before your next family gathering, agree privately with Mum on one shared line about your relationship status.",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "lunar-new-year-relatives",
+    "lang": "zh",
+    "route": "boundary",
+    "ms": 37944,
+    "outcome": "success",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "工资这个我就不在饭桌上报数啦，够我自己在那边过得挺好。",
+          "npcEvidence": "冲啥呀，大姨又不是小心眼的人。",
+          "reason": "你没报收入，也没编造对象进展，只说「现在还没到那一步」。大姨最后回了「冲啥呀」，场面没有闹僵。"
+        },
+        {
+          "index": 1,
+          "status": "met",
+          "evidence": "年后我们再好好聊聊，我也想听听表哥那边的情况。",
+          "reason": "你先接住了「我知道您是关心我」，再提出年后私下聊。大姨回的是「年后再说吧」，所以这只是提出了安排，还没有真正谈过。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 1,
+          "evidence": "要是我工资高到能请全家吃这顿饭，我肯定主动报，哈哈。",
+          "reason": "收入和感情两条线你守得很清楚。但大姨问的是「到底干啥的」，你答的却是工资，她随后澄清「谁又问你工资了」，最后还说你「绕来绕去一句没说」。"
+        },
+        {
+          "skill": "emotion-regulation",
+          "level": 2,
+          "evidence": "刚才我语气可能有点冲，大姨别往心里去。",
+          "reason": "被连续追问、又被妈妈要求「好好跟她说说」，你没有顶回去，而是主动缓和气氛。大姨也顺势说「冲啥呀」。"
+        },
+        {
+          "skill": "perspective-taking",
+          "level": 2,
+          "evidence": "我知道您是关心我。对象的事我自己有数，真有了一定第一个带回来",
+          "reason": "你先认可了大姨追问背后的在意，再划出界限，所以拒绝听起来不像嫌她多管闲事。"
+        }
+      ],
+      "stars": 2,
+      "outcome": "success",
+      "verdictEvidence": "我知道您是关心我。对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。",
+      "verdict": "收入和感情守得稳又不伤和气，但工作问题被你答偏成了工资。",
+      "summary": "你一句「我知道您是关心我」先接住了大姨的关心，再划清界限，没撒谎也没翻脸。不足在于工作这个问题被问了三次都没接上，大姨因此觉得你在「打太极」。",
+      "strengths": [
+        {
+          "behavior": "拒绝报数时同时说明自己过得挺好，再把话题转向对方，既有边界又有温度。",
+          "evidence": "工资这个我就不在饭桌上报数啦，够我自己在那边过得挺好。倒是您最近怎么样？",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "大姨问的是做什么工作，你用一句工资玩笑来回应，问题和答案没有对上。",
+          "evidence": "要是我工资高到能请全家吃这顿饭，我肯定主动报，哈哈。",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "工作并不在你说过不想公开的范围里。答偏之后，大姨会把你所有的回避都归到「糊弄」里，连你守得合理的边界也一起显得像躲闪。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "要是我工资高到能请全家吃这顿饭，我肯定主动报，哈哈。",
+          "better": "（如果工作内容你愿意说的话）我在那边做（用一句你愿意讲的话概括，比如行业），年底事多所以忙。工资就真不报啦，哈哈。",
+          "why": "先正面回答大姨真正问的问题，再用玩笑守住收入，你想保密的内容一点不变，也不会被说成绕弯子。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [],
+        "caseIds": [
+          "case-passed-over-composure"
+        ],
+        "whyThis": "「庆功会上的一句话」讲的是当众保持体面、推迟深谈。你最后那句缓和加上年后再聊，正是这个思路。下一步可以补上的是「一句真话」：对能说的问题，给一句真实又简短的回答。"
+      },
+      "reflectionQuestions": [
+        "你当着大姨的面问妈妈「快了」是怎么回事，结果大姨说「合着是拿话糊弄我呢」。如果下次想和妈妈统一对外说法，你会选择在什么场合、用什么方式开口？"
+      ],
+      "nextStep": "本周遇到你愿意回答的追问时，先用一句话正面答出能说的部分，再划出不想说的那部分。",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "lunar-new-year-relatives",
+    "lang": "zh",
+    "route": "yield",
+    "ms": 56188,
+    "outcome": "failure",
+    "stars": 1,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "unmet",
+          "evidence": "你们怎么老是问这些，烦不烦啊！",
+          "npcEvidence": "怎么跟大姨说话呢？大过年的，一桌人都看着。",
+          "reason": "收入和感情细节确实没公开，也看不出编造。但中途当着全桌发了火，没有做到「不当众翻脸」。之后的道歉缓和了气氛。"
+        },
+        {
+          "index": 1,
+          "status": "unmet",
+          "evidence": "我们换个话题吧，大姨您家今年过年怎么安排的？",
+          "reason": "你提出了换话题，但没有回应大姨刚说出的担心「怕你在外头一个人」。大姨也觉得自家的事「没什么好说的」，话题又转回到你身上。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "我就是不想在饭桌上讲收入，不是针对您。",
+          "reason": "这句话把边界和对人的态度分开讲清楚了，大姨随即回了「不讲就不讲」。"
+        },
+        {
+          "skill": "emotion-regulation",
+          "level": 1,
+          "evidence": "对不起，刚才不该当着大家发火。",
+          "reason": "你很快认了错、修复了场面，但前一句「烦不烦啊」已经让大姨说出「好心当成驴肝肺」，妈妈也当众责备了你。"
+        },
+        {
+          "skill": "perspective-taking",
+          "level": 1,
+          "evidence": "我们换个话题吧，大姨您家今年过年怎么安排的？",
+          "reason": "把话题引向大姨是一种照顾，但跳过了她刚说出口的担心，所以她的在意没有被接住。"
+        }
+      ],
+      "stars": 1,
+      "outcome": "failure",
+      "verdictEvidence": "我就是不想在饭桌上讲收入，不是针对您。",
+      "verdict": "边界最终说清了，但中途发火，大姨的担心也没被接住。",
+      "summary": "你说「我就是不想在饭桌上讲收入，不是针对您」，这句话清楚又不伤人，大姨也接受了不问数字。代价是之前那句「烦不烦啊」让场面僵了一下，后面换话题时也没有回应她「怕你在外头一个人」的牵挂。",
+      "strengths": [
+        {
+          "behavior": "发火后主动道歉，并把「不想公开」和「不是针对您」分开说，迅速修复了气氛。",
+          "evidence": "对不起，刚才不该当着大家发火。我就是不想在饭桌上讲收入，不是针对您。",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "你之前已经说过不想当众谈，被继续追问后，情绪一下冲了出来，指向了一桌人。",
+          "evidence": "你们怎么老是问这些，烦不烦啊！",
+          "skill": "emotion-regulation",
+          "deficit": "performance",
+          "whyItMatters": "大姨其实刚说了「不问钱了」，这句话让她觉得好心被拒，也让妈妈不得不当众站出来说你。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "我们换个话题吧，大姨您家今年过年怎么安排的？",
+          "better": "大姨，我知道您是怕我一个人在外头，家里不知道我过得怎么样，谢谢您惦记。大姨您家今年过年怎么安排的？",
+          "why": "大姨刚说完「怕你在外头一个人」，先把这份担心说出来再换话题，她会觉得被听见了，而不是被岔开。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [
+          "listening-first-parents"
+        ],
+        "caseIds": [
+          "case-passed-over-composure"
+        ],
+        "whyThis": "「庆功会上的一句话」讲的是被当众触动时，先稳住情绪、说一句真话，正对应你从「烦不烦啊」到道歉的那段转折。「先让父母说完，再解释」提醒你，长辈追问的背后常常是担心，先把这份担心说出来，它才会变小。"
+      },
+      "reflectionQuestions": [
+        "大姨最后问你「这趟回来能待几天」，关于你在那边的生活，有哪些是你愿意在饭桌上说给她听、又不碰收入和感情的？"
+      ],
+      "nextStep": "这周再被长辈追问时，先说一句「我知道您是担心我」，再讲你的边界。",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "year-end-review-rating",
+    "lang": "en",
+    "route": "boundary",
+    "ms": 34546,
+    "outcome": "partial",
+    "stars": 3,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "The second project got two clients to renew. Did that reach the evaluation? If not, what was missing?",
+          "npcEvidence": "the director pushed back because the second project's business impact wasn't documented. The on-time launch counted.",
+          "reason": "Your questions surfaced the basis of the rating. The on-time launch counted, the second project's impact was undocumented, and the renewals never reached calibration."
+        },
+        {
+          "index": 1,
+          "status": "unknown",
+          "evidence": "Seriously though, what does 'exceeds' look like next year?",
+          "npcEvidence": "if you get the renewal data logged, how about we sit down early next year and write down what 'exceeds' means for your projects",
+          "reason": "Han Lei proposed a next step at the very end, and you have not yet had a turn to reply, so nothing is agreed yet."
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 3,
+          "evidence": "Can you walk me through how the rating was decided and which results counted?",
+          "reason": "Your opening question was open, specific and non-accusatory. It drew out the calibration story and the exact documentation gap."
+        },
+        {
+          "skill": "emotion-regulation",
+          "level": 3,
+          "evidence": "I'd half-written an acceptance speech, so that's going in the bin.",
+          "reason": "You named your disappointment lightly and honestly, then moved on. Han Lei laughed and opened up about what 'exceeds' requires."
+        },
+        {
+          "skill": "standing-up",
+          "level": 2,
+          "evidence": "The second project got two clients to renew. Did that reach the evaluation?",
+          "reason": "You put a concrete result on the table as a fact plus a question, and Han Lei acknowledged it was now on the record."
+        }
+      ],
+      "stars": 3,
+      "outcome": "partial",
+      "verdictEvidence": "I'm not asking you to change it today. What's the next step, submitting the renewal data or a written review?",
+      "verdict": "Calm, precise questioning surfaced the missing evidence; the proposed next step still awaits your answer.",
+      "summary": "Asking 'which results counted?' and then raising the two renewals uncovered exactly why the rating landed where it did. The calibration explanation came from Han Lei, and the plan to log the data and set criteria is still only his proposal.",
+      "strengths": [
+        {
+          "behavior": "You removed the pressure from your manager before asking for a path forward, which kept him collaborative.",
+          "evidence": "I'm not asking you to change it today. What's the next step",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "When Han Lei asked whether you wanted to pursue the HR review or start with the data, you moved straight to next year's criteria and left that choice unstated.",
+          "evidence": "Seriously though, what does 'exceeds' look like next year?",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "Who logs the renewal data, and whether the review route is still open, can drift if nobody names it."
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "Seriously though, what does 'exceeds' look like next year?",
+          "better": "Seriously though, I'd like to start with getting the renewal data into the system. I'll think separately about whether the HR route is worth it. And what does 'exceeds' look like next year?",
+          "why": "This is optional and only fits if it matches your preference. It answers the choice Han Lei had just offered while keeping your joke and your question."
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [
+          "state-my-path"
+        ],
+        "caseIds": [
+          "case-passed-over-composure"
+        ],
+        "whyThis": "You already used much of 'STATE Your Path' by leading with the renewals as a fact and asking tentatively. 'One Sentence at the Celebration' mirrors your move of naming the disappointment in one honest line, then steering toward something specific."
+      },
+      "reflectionQuestions": [
+        "Han Lei has just suggested logging the renewal data and sitting down early next year. What would you want settled about who logs the data, and by when, before you agree?"
+      ],
+      "nextStep": "Find out who can enter the client renewal data into the system, and ask them about the timing this week.",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "year-end-review-rating",
+    "lang": "zh",
+    "route": "yield",
+    "ms": 67238,
+    "outcome": "partial",
+    "stars": 1,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "我想知道到底缺了什么。",
+          "npcEvidence": "总监觉得项目二的业务影响没有材料支撑，就压下来了。项目一按时上线大家都看得到，项目二那块，桌面上确实拿不出东西。",
+          "reason": "你问清了缺什么，韩蕾说明了评级依据：缺的是项目二业务影响的支撑材料。"
+        },
+        {
+          "index": 1,
+          "status": "unknown",
+          "evidence": "那下一步怎么做比较好？我可以补什么？",
+          "npcEvidence": "公司好像有个书面复核的流程，细节我不太熟，可以先帮你去问问人力。",
+          "reason": "韩蕾提出补材料，也提出可以代问复核流程。你还没来得及回应，双方的约定尚未确立。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "我想知道到底缺了什么。",
+          "reason": "这个问题把谈话从情绪拉回到评估依据上，随后韩蕾坦白了校准会上的经过。"
+        },
+        {
+          "skill": "emotion-regulation",
+          "level": 1,
+          "evidence": "要是这样评，我可能得考虑一下还要不要留下来了。",
+          "reason": "韩蕾听后觉得这句话「有点重了」。你接着用「抱歉，刚才那句是气话」主动修复，把对话拉了回来。"
+        },
+        {
+          "skill": "standing-up",
+          "level": 1,
+          "evidence": "不过说实话我挺失望的，我今年做了那么多，这样评我不太能接受。",
+          "reason": "你说出了不满，但「做了那么多」比较笼统。韩蕾请你「具体说说」后，你接下来谈的是去留，没有提到你知道的客户续约。"
+        }
+      ],
+      "stars": 1,
+      "outcome": "partial",
+      "verdictEvidence": "抱歉，刚才那句是气话，我没有要威胁你的意思。我想知道到底缺了什么。",
+      "verdict": "一句气话差点带偏谈话，你及时道歉并追问，问出了真正的缺口。",
+      "summary": "你道歉后问「我想知道到底缺了什么。」，这是整场的转折，韩蕾随后说出项目二的业务影响缺少材料支撑。下一步目前只是韩蕾的提议，你还没有回应。",
+      "strengths": [
+        {
+          "behavior": "说了重话之后，你主动认领并道歉，紧接着提出一个具体问题，没让对话僵住。",
+          "evidence": "抱歉，刚才那句是气话，我没有要威胁你的意思。我想知道到底缺了什么。",
+          "skill": "emotion-regulation"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "韩蕾请你具体说说哪里没被看到，你回应的却是考虑去留，而不是你的成果。",
+          "evidence": "要是这样评，我可能得考虑一下还要不要留下来了。",
+          "skill": "emotion-regulation",
+          "deficit": "performance",
+          "whyItMatters": "在有上下级关系的面谈里，谈去留容易被听成威胁。韩蕾随后回应：「评级已经定了，我今天没办法因为这句话去改它」。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "要是这样评，我可能得考虑一下还要不要留下来了。",
+          "better": "我确实挺失望的。具体说一个：我主导的两个项目里，有一个带来了客户续约，我不确定这个结果有没有进入评估，你能告诉我吗？",
+          "why": "开场前你就知道自己主导了两个项目，其中一个带来了客户续约。先说这个事实再提问，能直接回应韩蕾「具体说说」的邀请，也保留了你的失望。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [],
+        "caseIds": [
+          "case-passed-over-composure",
+          "case-facts-then-story"
+        ],
+        "whyThis": "「庆功会上的一句话」示范了失落时先命名情绪、只说一句真话，可以替代那句关于去留的气话。「走廊里三句话要回功劳」用的是「事实 → 解读 → 邀请对方说」，正好用在韩蕾请你「具体说说」的那一刻。"
+      },
+      "reflectionQuestions": [
+        "韩蕾最后问你手上有没有能说明项目二业务影响的具体材料。如果你还不确定能拿到什么，你会怎样回应她，并和她约定下一步？"
+      ],
+      "nextStep": "这周整理项目二与客户续约相关的现有材料，并和韩蕾确认她何时去问人力的书面复核流程。",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "year-end-review-rating",
+    "lang": "zh",
+    "route": "boundary",
+    "ms": 46660,
+    "outcome": "partial",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "项目二帮两家客户续了约，这部分有没有进到评估里？如果没有，是缺了什么材料？",
+          "npcEvidence": "缺的就是能证明这两家续约跟项目二有关的书面材料，比如续约记录。",
+          "reason": "你问清了评级依据：校准会认可项目一，项目二缺续约的书面材料。"
+        },
+        {
+          "index": 1,
+          "status": "unknown",
+          "evidence": "续约数据录进系统这件事，谁来跟进比较合适？",
+          "npcEvidence": "这样分工，你看行不行？",
+          "reason": "韩蕾提出了分工方案，但对话停在她的提问上，双方还没有约定下一步。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "项目二帮两家客户续了约，这部分有没有进到评估里？如果没有，是缺了什么材料？",
+          "reason": "你用一个具体事实加一个直接问题，问出了评级被压下来的确切原因。"
+        },
+        {
+          "skill": "emotion-regulation",
+          "level": 2,
+          "evidence": "我不是要你现在改分，我想知道接下来能做什么",
+          "reason": "听到「没法当场改」后，你没有纠缠分数，而是把话题转向可以做的事，对方也就继续给你实在的信息。"
+        },
+        {
+          "skill": "standing-up",
+          "level": 2,
+          "evidence": "补交续约数据，还是走书面复核？",
+          "reason": "你明确提出了复核这个选项，为自己的成果争取了渠道，同时没有把关系推向对立。"
+        }
+      ],
+      "stars": 2,
+      "outcome": "partial",
+      "verdictEvidence": "我不是要你现在改分，我想知道接下来能做什么",
+      "verdict": "你冷静地问清了评级缘由，但对方两次问续约记录，你都没有回应。",
+      "summary": "你一句「这部分有没有进到评估里」就问到了症结：项目二缺续约的书面材料。下一步还停在韩蕾提出的分工方案上，没有落定。",
+      "strengths": [
+        {
+          "behavior": "你先感谢经理直接告知，再追问评级依据，在不满中仍保持探询的姿态。",
+          "evidence": "谢谢你直接告诉我。我想先弄清楚：这个评级是怎么定的？主要看了哪些成果？",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "韩蕾两次问你能否拿到续约记录，你回应时转去问谁来跟进录入，没有回答她的问题。",
+          "evidence": "我们继续，续约数据录进系统这件事，谁来跟进比较合适？",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "按韩蕾的说法，续约记录正是她上会能拿给总监看的材料；这个问题没有回答，她提出的分工方案就建立在一个还没确认的前提上。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "刚才语气急了一点，抱歉。我们继续，续约数据录进系统这件事，谁来跟进比较合适？",
+          "better": "续约记录我去确认一下能不能拿到，能拿到的话我整理给你。另外，录系统这件事谁来跟进比较合适？",
+          "why": "这样既回应了她问了两次的问题，又保留了你想问的分工；措辞是有条件的，不会替你许下拿不到也得交的承诺。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [],
+        "caseIds": [
+          "case-facts-then-story"
+        ],
+        "whyThis": "你已经在用「走廊里三句话要回功劳」里的事实加提问的做法；接下来可以练习先接住对方的问题，再提出自己的问题。"
+      },
+      "reflectionQuestions": [
+        "如果接下来你回应韩蕾的分工方案时，发现续约记录不在你手上，你会怎么说明，同时继续推动复核？"
+      ],
+      "nextStep": "本周确认能否拿到两家客户的续约记录，并把结果告诉韩蕾。",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "resignation-counteroffer",
+    "lang": "zh",
+    "route": "boundary",
+    "ms": 34703,
+    "outcome": "partial",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "开个玩笑，决定不会变。",
+          "reason": "你一开始就说明「这次是来正式提离职的」，经过加薪追问后又明确重申决定，没有回到重新谈判。"
+        },
+        {
+          "index": 1,
+          "status": "unmet",
+          "evidence": "最后工作日我想定在下个月这一天，交接清单我这周给你。",
+          "npcEvidence": "最后一天就按你说的，下个月这一天，我不拦了。",
+          "reason": "宋启同意了最后工作日，但交接范围还没谈定，目前只是你承诺这周给清单。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "谢谢你一直看好我，这对我很重要。不过我已经接受了新的工作，这次是来正式提离职的。",
+          "reason": "你先回应了对方的认可，再说清这是已定的正式离职，宋启随即明白「已经接了」。"
+        },
+        {
+          "skill": "goal-setting",
+          "level": 2,
+          "evidence": "按合同我提前三十天通知，最后工作日我想定在下个月这一天，交接清单我这周给你。",
+          "reason": "你给出了依据、具体日期和交付时间，把谈话从挽留引向安排，最后工作日因此得到确认。"
+        },
+        {
+          "skill": "analyzing-consequences",
+          "level": 1,
+          "evidence": "你说的加薪，现在能书面确认吗？是谁来批？",
+          "reason": "你本来已经定了要走，这个追问却像在核实条件，宋启紧接着就问「你愿不愿意再想想」。"
+        }
+      ],
+      "stars": 2,
+      "outcome": "partial",
+      "verdictEvidence": "按合同我提前三十天通知，最后工作日我想定在下个月这一天，交接清单我这周给你。",
+      "verdict": "决定表达得坚定具体，最后工作日已获同意；交接范围还在待定。",
+      "summary": "你说「最后工作日我想定在下个月这一天，交接清单我这周给你」，把挽留谈话转成了具体安排，宋启也同意了日期。加薪追问一度给对方留了回谈的空间，好在你后来清楚地收住了。",
+      "strengths": [
+        {
+          "behavior": "面对上线压力，你没有争辩，而是用合同、日期和清单给出具体方案。",
+          "evidence": "按合同我提前三十天通知，最后工作日我想定在下个月这一天，交接清单我这周给你。",
+          "skill": "goal-setting"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "说完「不是钱的问题」之后，你又追问加薪能否书面确认、由谁来批，信号前后不一致。",
+          "evidence": "你说的加薪，现在能书面确认吗？是谁来批？",
+          "skill": "analyzing-consequences",
+          "deficit": "performance",
+          "whyItMatters": "这个问题让宋启以为条件还能谈，于是提出「批下来了，你愿不愿意再想想」，你只好多花一轮把话收回来。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "不是钱的问题，是我想去做的方向不一样。你说的加薪，现在能书面确认吗？是谁来批？",
+          "better": "不是钱的问题，是我想去做的方向不一样，所以加薪这块就不用为我去争取了。我更想跟你商量怎么把交接做好。",
+          "why": "这样保留了你的理由和决定，同时直接关上加码的门，把话题引向交接。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [
+          "boundaries-no"
+        ],
+        "caseIds": [
+          "case-no-with-alternative"
+        ],
+        "whyThis": "「清晰的「不」是一份礼物」说明，留一点余地反而会让对方继续抱有期待，这正是加薪追问引出的情况。「「今晚不行，但明早七点可以」」则和你给出日期与清单的做法相呼应：先说清楚「不」，再跟上一个可行的方案。"
+      },
+      "reflectionQuestions": [
+        "宋启请你在清单里分出「必须找懂上下文的人接」和「谁接都行」两类。面对三月上线，你会用什么标准来划分？如果有些事在你离开前确实做不完，你打算怎么跟他说明？"
+      ],
+      "nextStep": "这周先列出手上的工作，按「需懂上下文」和「谁接都行」分成两类，再标注预计能否在最后一天前完成，然后发给宋启。",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "resignation-counteroffer",
+    "lang": "en",
+    "route": "boundary",
+    "ms": 79946,
+    "outcome": "partial",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "I've accepted another role, and I'm here to resign.",
+          "npcEvidence": "Fine, I hear you. I'll stop pushing on March.",
+          "reason": "You stated the decision at the outset and restated it with 'The decision stands'. Your question about the raise briefly reopened the topic, but you never agreed to consider the offer."
+        },
+        {
+          "index": 1,
+          "status": "unmet",
+          "evidence": "My notice is thirty days, so my last day would be the 14th. I'll send a handover list this week.",
+          "npcEvidence": "But if the 14th is your last day, the list needs names.",
+          "reason": "You proposed a date and a list. Song Qi replied conditionally and is still asking about successors and scope, so neither has been agreed yet."
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 1,
+          "evidence": "It isn't the money. About the raise, though: could that be confirmed in writing? Who would approve it?",
+          "reason": "Your 'no' to the money question was clear, but the follow-up about approval sounded like a negotiation step. Song Qi immediately asked whether you'd stay if he got it signed off."
+        },
+        {
+          "skill": "goal-setting",
+          "level": 2,
+          "evidence": "My notice is thirty days, so my last day would be the 14th. I'll send a handover list this week.",
+          "reason": "This moved the conversation from 'whether' to 'how' with a specific date and a deliverable you chose. Song Qi read it correctly as a firm no."
+        },
+        {
+          "skill": "analyzing-consequences",
+          "level": 2,
+          "evidence": "If the offers keep climbing I'll start wondering what I've been underpaid all these years. Joking. The decision stands.",
+          "reason": "The light joke paired with a firm restatement drew a laugh rather than friction. Song Qi said 'I walked into that one', agreed to stop pushing on March, and moved on to handover names and scope."
+        }
+      ],
+      "stars": 2,
+      "outcome": "partial",
+      "verdictEvidence": "The decision stands.",
+      "verdict": "You held your decision with warmth; one question about the raise briefly invited renegotiation.",
+      "summary": "Your line 'I've accepted another role, and I'm here to resign' plus 'The decision stands' kept the outcome clear, and Song Qi stopped pushing. The handover scope and successors are still open, because that is the question Song Qi has just asked.",
+      "strengths": [
+        {
+          "behavior": "You answered pressure to stay by naming a concrete date and a handover deliverable rather than arguing.",
+          "evidence": "My notice is thirty days, so my last day would be the 14th. I'll send a handover list this week.",
+          "skill": "goal-setting"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "Asking who would approve the raise, after already resigning, signalled the offer might still matter.",
+          "evidence": "could that be confirmed in writing? Who would approve it?",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "Song Qi heard it as an opening and asked whether you'd stay if he got it signed off, which prolonged the pressure."
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "It isn't the money. About the raise, though: could that be confirmed in writing? Who would approve it?",
+          "better": "It isn't the money, and I really do appreciate the offer. But my decision's made, so there's no need to put a raise together for me.",
+          "why": "At that point Song Qi had only offered a raise and the project. This answers his money question directly and keeps your thanks without signalling that the offer could still change your decision."
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [
+          "boundaries-no"
+        ],
+        "caseIds": [
+          "case-angry-client-label"
+        ],
+        "whyThis": "'A Clear No Is a Gift' fits the raise moment: a kind, unhedged no spares both of you a false hope. ''It Sounds Like Next Week's Meeting Is What Worries You'' fits what comes next, because Song Qi's real fear is that the launch knowledge is 'mostly in your head'."
+      },
+      "reflectionQuestions": [
+        "Song Qi now wants names and a split between what you'll finish and what you'll hand over. What would you propose, and how would you leave the staffing call to him?"
+      ],
+      "nextStep": "Before a hard conversation, write one sentence stating your decision, and skip any question that could reopen it.",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "resignation-counteroffer",
+    "lang": "zh",
+    "route": "yield",
+    "ms": 59239,
+    "outcome": "partial",
+    "stars": 1,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "其实我已经签了新公司，入职日期也定了。我刚才说考虑，是不想当场驳你。",
+          "reason": "开头那句「再考虑一下」让宋启以为可以谈条件。但你随后讲明已签约、入职日期已定，又拒绝了留到三月，离职决定已经说清楚。"
+        },
+        {
+          "index": 1,
+          "status": "unmet",
+          "evidence": "对不起，刚才含糊了让你误会。我们具体说说最后一天和交接范围吧。",
+          "npcEvidence": "眼下最后一天你还没给我个准话呢。",
+          "reason": "你提议具体谈最后一天和交接范围，但记录到结尾时，日期和交接清单都还没有定下来。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "其实我已经签了新公司，入职日期也定了。我刚才说考虑，是不想当场驳你。",
+          "reason": "这句话用事实收回了前面的含糊，也坦白了原因。宋启紧接着仍追问是不是钱的问题、表示还能再往上谈；直到你又说「留到三月我做不到」，他才接受决定已定，转而问最后一天和交接清单。"
+        },
+        {
+          "skill": "goal-setting",
+          "level": 1,
+          "evidence": "以后要是有合作机会，我也希望还能保持联系。",
+          "reason": "你自己把话题引到了最后一天和交接范围上。宋启接着问你是卡着三十天走还是留点余量，你却转去谈以后保持联系，日期这个目标没有往前推。"
+        },
+        {
+          "skill": "analyzing-consequences",
+          "level": 1,
+          "evidence": "……加薪吗？那我再考虑一下吧。",
+          "reason": "这句客气话说出后，宋启当真开始定条件，还让你「先别跟别人说要走」。你后来做了补救，但多花了几轮来澄清。"
+        }
+      ],
+      "stars": 1,
+      "outcome": "partial",
+      "verdictEvidence": "其实我已经签了新公司，入职日期也定了。",
+      "verdict": "你及时用事实把离职决定说清了，但最后一天始终没给出准话。",
+      "summary": "你那句「其实我已经签了新公司，入职日期也定了」扭转了被挽留的局面，宋启也接受了你确实要走。交接安排这边，你提议具体谈之后没有接住日期的问题，所以还停在待定。",
+      "strengths": [
+        {
+          "behavior": "你主动承认之前说得含糊，并把谈话拉回到具体安排上，修复做得干脆。",
+          "evidence": "对不起，刚才含糊了让你误会。我们具体说说最后一天和交接范围吧。",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "你提议具体谈，宋启也具体问了，你却转向谈关系，没有回答日期。",
+          "evidence": "以后要是有合作机会，我也希望还能保持联系。",
+          "skill": "goal-setting",
+          "deficit": "performance",
+          "whyItMatters": "日子不定，宋启没法上报，也没法跟团队开口。拖得越久，你想要的体面交接越难兑现。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "以后要是有合作机会，我也希望还能保持联系。",
+          "better": "最后一天我想按合同的三十天来走，具体日期我对一下入职时间再确认给你。日子定了我们逐项过交接。以后有机会，也希望还能保持联系。",
+          "why": "这样先回应宋启当时问的日期，再表达保持联系的心意，两个目标都能照顾到。具体走法和日期由你按自己的实际情况来定。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [
+          "boundaries-no"
+        ],
+        "caseIds": [
+          "case-no-with-alternative"
+        ],
+        "whyThis": "「清晰的「不」是一份礼物」解释了为什么「再考虑一下」反而让宋启继续抱有期待。「「今晚不行，但明早七点可以」」示范了说清拒绝之后，紧接着给出一个具体可行的安排，正适合你回答最后一天时用。"
+      },
+      "reflectionQuestions": [
+        "下次走进类似的谈话之前，你会提前想好哪一两个具体信息（比如最后一天的范围），好在对方追问时直接说出来？"
+      ],
+      "nextStep": "这周遇到需要拒绝的请求时，先说一句明确结论，再补一个具体时间或安排，不用「考虑一下」缓冲。",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "relative-loan-request",
+    "lang": "zh",
+    "route": "boundary",
+    "ms": 39156,
+    "outcome": "partial",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "五万我借不了，那是我攒着付首付的钱。",
+          "reason": "你用真实理由清楚拒绝了五万，没有编借口。后来又提出「我们可以只谈这一笔」，把愿意考虑的范围也说了出来。"
+        },
+        {
+          "index": 1,
+          "status": "unknown",
+          "evidence": "如果真正急的是供货商尾款，我们可以只谈这一笔。上次三千你拖了八个月，所以这次我想写个借条，说好哪天还。",
+          "npcEvidence": "你到底借我多少，给个准数？",
+          "reason": "实际需要已经问清，是一万二的尾款。你也提出了借条条件。但借不借、借多少，在表哥最后追问时还没到你回答的时候，所以还不能下结论。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "五万我借不了，那是我攒着付首付的钱。你这个月具体是哪一笔最急？",
+          "reason": "一句话里有明确的「不」、真实的理由，还有一个具体问题。表哥因此说出了最急的是一万二尾款。"
+        },
+        {
+          "skill": "analyzing-consequences",
+          "level": 2,
+          "evidence": "上次三千你拖了八个月，所以这次我想写个借条，说好哪天还。",
+          "reason": "你用已知的还款记录来定条件，没有空泛地担心。表哥最后同意写清金额和还款日并签名。"
+        },
+        {
+          "skill": "empathy",
+          "level": 2,
+          "evidence": "刚才提上次的事可能让你不舒服，抱歉。我不是翻旧账，是想这次说清楚。",
+          "reason": "你照顾到了对方的面子，同时没有撤回借条的要求。表哥随后承认「上次是拖得久了点」，态度也松动了。"
+        }
+      ],
+      "stars": 2,
+      "outcome": "partial",
+      "verdictEvidence": "如果真正急的是供货商尾款，我们可以只谈这一笔。",
+      "verdict": "拒绝清楚，问出真实需要，借条条件也谈下来了；最终金额还待你定。",
+      "summary": "你先说「五万我借不了」，再追问哪一笔最急，把五万缩小到了一万二尾款。中间一句玩笑岔开了两万的追问，但你随后用道歉和提问把对话拉了回来。",
+      "strengths": [
+        {
+          "behavior": "清楚拒绝的同时，马上问对方的实际需要，没让拒绝变成谈话的终点。",
+          "evidence": "五万我借不了，那是我攒着付首付的钱。你这个月具体是哪一笔最急？",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "表哥提出凑两万、并质疑借条后，你用一句玩笑带过，没有回应这两点。",
+          "evidence": "你再这么夸我仗义，我都要以为这是诈骗电话了，哈哈。",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "表哥接着回了「我哪夸你了？」，然后又追问一遍金额和借条，这句玩笑没能推进你的立场。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "你再这么夸我仗义，我都要以为这是诈骗电话了，哈哈。",
+          "better": "两万我先不考虑，要谈就谈尾款这一万二。借条不是见外，写清金额和哪天还就行，对我们俩都踏实。",
+          "why": "这样能直接回应他「凑两万」和「借条见外」两点，同时保留你已经提出的范围和条件。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [
+          "boundaries-no"
+        ],
+        "caseIds": [
+          "case-angry-client-label"
+        ],
+        "whyThis": "你开头的拒绝正体现了「清晰的「不」是一份礼物」：清楚、友善，还附带了替代方向。面对两万的追问，可以参考「「听起来您现在最担心的是下周那个会」」：先点出他担心下个月流水不够，再守住你的范围。"
+      },
+      "reflectionQuestions": [
+        "表哥最后问你「一万二还是两万」，他说想多留活钱，你也记得上次的拖欠，你会怎样权衡，给出一个自己能安心的数？"
+      ],
+      "nextStep": "这周遇到别人请求时，先说清自己能和不能承担的部分，再问一句对方最急的具体是什么。",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "relative-loan-request",
+    "lang": "en",
+    "route": "boundary",
+    "ms": 39036,
+    "outcome": "partial",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "I can't lend 50,000. That's my house deposit.",
+          "reason": "You named what you won't do and gave the real reason. You also limited what you'd consider: 'let's talk about just that' with it 'written down with a date.'"
+        },
+        {
+          "index": 1,
+          "status": "unmet",
+          "evidence": "Which payment is actually the most urgent this month?",
+          "npcEvidence": "The one that can't wait is the supplier's final invoice, 12,000.",
+          "reason": "You uncovered the real need, but the amount and repayment date were still open when the record ends, and Zhao Lei's request for twenty is unanswered."
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "I can't lend 50,000. That's my house deposit. Which payment is actually the most urgent this month?",
+          "reason": "A clear, honest limit followed by a real question turned a 50,000 ask into a specific 12,000 need."
+        },
+        {
+          "skill": "analyzing-consequences",
+          "level": 2,
+          "evidence": "Last time took eight months, so this time I'd want it written down with a date.",
+          "reason": "You tied your condition to a known fact rather than a vague worry, and he eventually agreed to sign something."
+        },
+        {
+          "skill": "empathy",
+          "level": 2,
+          "evidence": "Sorry, bringing up last time probably stung. I'm not keeping score. I just want this one to be clear.",
+          "reason": "You named his likely feeling without dropping your condition, and he admitted 'it stung a bit' and accepted writing it down."
+        }
+      ],
+      "stars": 2,
+      "outcome": "partial",
+      "verdictEvidence": "If the supplier invoice is what's urgent, let's talk about just that.",
+      "verdict": "You protected your deposit and narrowed the ask to a real need. Amount and date are still open.",
+      "summary": "You said 'let's talk about just that' and attached a written date, which kept help bounded to the 12,000 invoice. He accepted writing it down, though how much you'll lend and when it's due remain undecided.",
+      "strengths": [
+        {
+          "behavior": "You paired a firm no with a curious question, so you never had to invent an excuse.",
+          "evidence": "I can't lend 50,000. That's my house deposit. Which payment is actually the most urgent this month?",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "When he asked directly whether you were saying yes to the twelve, the joke sidestepped the question, and it mentioned a 'favourite' he hadn't said.",
+          "evidence": "Keep calling me your favourite cousin and I'll start thinking this is a scam call.",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "His very next move was to ask you to stretch it to twenty, so the open question invited a bigger request."
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "Keep calling me your favourite cousin and I'll start thinking this is a scam call.",
+          "better": "Not a yes yet. I'm open to talking about the twelve for the supplier, as long as we put a date on it in writing.",
+          "why": "This answers his direct question and keeps your exact conditions, without leaving room for the ask to grow."
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [],
+        "caseIds": [
+          "case-angry-client-label"
+        ],
+        "whyThis": "In ''It Sounds Like Next Week's Meeting Is What Worries You'', naming the real fear leads into a plan for that fear. You did this when you reflected that the reminder stung. Doing it again when he asked yes or no could have kept the plan moving."
+      },
+      "reflectionQuestions": [
+        "He's now asking how much and when, and he's also hinted at twenty. What would you need to know about your deposit timeline to choose between twelve, twenty, or a smaller figure?"
+      ],
+      "nextStep": "Before any money talk this week, write down the most you can lend and the latest date it must return.",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "relative-loan-request",
+    "lang": "zh",
+    "route": "yield",
+    "error": "Error: 这次复盘还没能可靠地核对原话。对话已保留，请重试。"
+  },
+  {
+    "id": "advisor-weekend-request",
+    "lang": "en",
+    "route": "boundary",
+    "ms": 31277,
+    "outcome": "success",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "Before I start, what exactly is in the package, and when is each part needed?",
+          "npcEvidence": "Honestly, only the budget sheet has to be in Monday morning; the technical proposal can wait until next Wednesday.",
+          "reason": "You asked about scope and deadlines before committing, and the answer showed that only the budget sheet was urgent."
+        },
+        {
+          "index": 1,
+          "status": "met",
+          "evidence": "I'm working on the draft you asked for by Wednesday. If only the budget sheet is needed Monday, I can send it by Sunday night.",
+          "npcEvidence": "Okay, Sunday night for the budget sheet works.",
+          "reason": "You named your thesis deadline and offered to do part of the work. Professor Meng accepted the Sunday-night budget sheet."
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "goal-setting",
+          "level": 3,
+          "evidence": "If only the budget sheet is needed Monday, I can send it by Sunday night.",
+          "reason": "You used the deadline information he had just given you to commit only to the urgent part, with a specific delivery time."
+        },
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "I can't take the technical proposal this weekend. Could someone else pick it up, or could the draft move by two days?",
+          "reason": "This was a clear, polite limit followed by two concrete options he could decide on, though your next line then missed his weekday question."
+        },
+        {
+          "skill": "standing-up",
+          "level": 2,
+          "evidence": "I can't take the technical proposal this weekend.",
+          "reason": "You protected your thesis weekend without apologising or over-explaining, and he acknowledged it: 'Okay, not this weekend, understood.'"
+        }
+      ],
+      "stars": 2,
+      "outcome": "success",
+      "verdictEvidence": "If only the budget sheet is needed Monday, I can send it by Sunday night.",
+      "verdict": "You asked first, then committed only to the urgent piece. It was a well-calibrated, respectful limit.",
+      "summary": "Asking 'what exactly is in the package' first let you offer just the budget sheet by Sunday night, and Professor Meng accepted. His final question about a weekday proposal with the draft moved to Friday is still open, and you haven't had the chance to answer it yet.",
+      "strengths": [
+        {
+          "behavior": "You clarified the scope before saying yes, which turned a vague weekend request into a small, specific commitment.",
+          "evidence": "Before I start, what exactly is in the package, and when is each part needed?",
+          "skill": "goal-setting"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "When he asked whether you'd write the proposal by Wednesday if your draft moved to Friday, your reply was about doing everything this weekend.",
+          "evidence": "If I did all three this weekend, the draft would be mostly a title page.",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "Your reply didn't address the either/or question he had actually asked, so he had to spell it out again."
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "If I did all three this weekend, the draft would be mostly a title page.",
+          "better": "Just to check: you mean the proposal during the week, due Wednesday, with my draft moving to Friday? Can I look at how much of the draft is left before I say yes or no?",
+          "why": "This responds to the offer he actually made in his previous message and keeps your weekend limit intact, without committing you to anything yet."
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [
+          "ask-for-help-prioritize"
+        ],
+        "caseIds": [
+          "case-money-friend"
+        ],
+        "whyThis": "'Ask for Help With a Prioritized Proposal' describes what you did well: you handed him a trade-off he could decide on. 'Halfway Through the Coffee, She Just Asked' shows how answering the real question plainly, without deflecting, keeps the exchange easy for both sides."
+      },
+      "reflectionQuestions": [
+        "Faced with his final choice, the proposal by Wednesday with your draft moved to Friday or him asking others, what would you need to know about your draft's progress to answer honestly?"
+      ],
+      "nextStep": "Next time someone asks you for extra work, ask what is truly due first and when, then offer only the part you can do well.",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "advisor-weekend-request",
+    "lang": "zh",
+    "route": "yield",
+    "ms": 29403,
+    "outcome": "partial",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "您最急的是哪一部分？我看看能做多少。",
+          "npcEvidence": "周一一早要交的其实只有预算表，技术方案下周三之前给都来得及。",
+          "reason": "你在承诺之前问清了最急的部分，孟老师给出了范围和截止时间。至于最终承诺多少，你还没有回答。"
+        },
+        {
+          "index": 1,
+          "status": "unmet",
+          "evidence": "不过这个周末我其实在赶初稿，可能全部做完有点困难。",
+          "reason": "你说明了在赶初稿，但没有提出具体替代方案，比如只做预算表、换个时间，或者请老师调整初稿日期。后面你问的是以后能否提前告知，这和眼下的替代方案不是一回事。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 1,
+          "evidence": "我还是不做了吧，我自己的事情太多了。",
+          "reason": "这句拒绝用了「吧」，理由也很笼统，而且紧接在「没问题」之后。孟老师随后说「我是按你能做来安排的」，可见前后不一致的表态给对方带来了困扰。好在你后来主动修复了。"
+        },
+        {
+          "skill": "goal-setting",
+          "level": 2,
+          "evidence": "您最急的是哪一部分？我看看能做多少。",
+          "reason": "这个问题把讨论从「做或不做」拉回到具体范围，直接换来了关键信息：只有预算表周一要交。"
+        },
+        {
+          "skill": "standing-up",
+          "level": 2,
+          "evidence": "那以后要是有课题外的任务，能不能早几天告诉我？",
+          "reason": "你提出了一条面向以后的合理要求，孟老师明确同意会「尽量提前几天」告知。这是一个已获得的口头承诺，以后能否兑现还有待观察。"
+        }
+      ],
+      "stars": 2,
+      "outcome": "partial",
+      "verdictEvidence": "抱歉老师，刚才说得太硬了。您最急的是哪一部分？我看看能做多少。",
+      "verdict": "开头表态反复，后来修复得很好：问清了范围，也争取到了以后提前告知。",
+      "summary": "你说「您最急的是哪一部分？」，把僵局转成了具体信息：只有预算表周一要交。这次的预算表你还没有回答做不做，这一步还在你手里。",
+      "strengths": [
+        {
+          "behavior": "在关系变冷后主动承认语气，并转向问清范围。",
+          "evidence": "抱歉老师，刚才说得太硬了。您最急的是哪一部分？",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "你先答应「没问题」，随后又含糊地说「可能有点困难」，再到直接拒绝，三次表态互相冲突。",
+          "evidence": "好的老师，没问题。",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "孟老师据此做了安排，后面的反复让他更被动，你也需要花力气修复关系。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "好的老师，没问题。",
+          "better": "老师，我先看下材料。这周末我在赶您要的初稿，想先确认一下：周一必须交的是哪几部分？",
+          "why": "开场时你已经知道初稿要在周三前交，先问范围再表态，就不会出现后面的反复。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [],
+        "caseIds": [
+          "case-no-with-alternative"
+        ],
+        "whyThis": "你已经会问澄清问题，难点在于先说出一个清楚的界限，再给一个可行的选项。「「今晚不行，但明早七点可以」」正好示范了这种顺序。"
+      },
+      "reflectionQuestions": [
+        "孟老师现在问预算表你周末能不能做，你会怎样在论文初稿和预算表之间安排时间，又打算怎样把这个决定告诉他？"
+      ],
+      "nextStep": "本周遇到临时请求时，先问一句「最急的是哪部分、什么时候要」，再决定答应多少。",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "advisor-weekend-request",
+    "lang": "zh",
+    "route": "boundary",
+    "ms": 35054,
+    "outcome": "success",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "材料具体包括哪些部分？各自什么时候一定要？",
+          "reason": "你先问清楚范围和截止时间，得知周一只需交预算表后，才承诺周日晚上前交出预算表。"
+        },
+        {
+          "index": 1,
+          "status": "met",
+          "evidence": "技术方案部分我这次没法接，可能要请您另外安排，或者我们把初稿日期往后挪两天？",
+          "npcEvidence": "技术方案我自己再琢磨琢磨。",
+          "reason": "你说明了自己在赶初稿，提出了「只做预算表」和「挪初稿日期」两个替代方案；孟老师同意你只做预算表，技术方案由他自己想办法。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "想先确认一下：材料具体包括哪些部分？各自什么时候一定要？",
+          "reason": "你开口就问范围和时间，让孟老师主动说出「周一真正要交的是预算表」，后面的谈判有了事实基础。"
+        },
+        {
+          "skill": "goal-setting",
+          "level": 2,
+          "evidence": "如果周一只需要预算表，我可以周日晚上前把预算表给您。",
+          "reason": "你的承诺有明确的范围和时间，而且只承诺真正卡在周一截止的那部分，护住了写初稿的时间。"
+        },
+        {
+          "skill": "standing-up",
+          "level": 2,
+          "evidence": "技术方案部分我这次没法接，可能要请您另外安排",
+          "reason": "你对导师的拒绝清楚又不生硬，同时给了替代方案，孟老师接受了你的边界。"
+        }
+      ],
+      "stars": 2,
+      "outcome": "success",
+      "verdictEvidence": "技术方案部分我这次没法接，可能要请您另外安排",
+      "verdict": "先问清范围再划边界，你只接了预算表；但初稿日期又交回给导师来定。",
+      "summary": "你先问「各自什么时候一定要」，再说「技术方案部分我这次没法接」，拿到了只做预算表的约定。不足之处是孟老师请你直接报一个日子，你却反问他「您看要不要调整」。",
+      "strengths": [
+        {
+          "behavior": "你先弄清实际截止时间，再按真实需要决定承诺多少，没有被「周末一起弄完」的说法带着走。",
+          "evidence": "如果周一只需要预算表，我可以周日晚上前把预算表给您。",
+          "skill": "goal-setting"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "孟老师说「要挪的话直接跟我说个日子，别让我猜」之后，你没有给出日期，又把决定交还给了他。",
+          "evidence": "初稿您看要不要调整？",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "对方已经明确要一个日子。你自己报出需要的时间，才能确保新期限真的够你用，而不是靠他来猜。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "刚才回得有点直接，抱歉。我们说定：预算表周日晚上给您，初稿您看要不要调整？",
+          "better": "刚才回得有点直接，抱歉。我们说定：预算表周日晚上给您；初稿我想按刚才说的往后挪两天，到下周五交，您看行吗？",
+          "why": "挪两天是你之前自己提的方案，孟老师也已经请你直说日子，把这个方案落成具体日期就能直接回答他。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [],
+        "caseIds": [
+          "case-no-with-alternative"
+        ],
+        "whyThis": "「「今晚不行，但明早七点可以」」讲的是一句清晰的「不」后面紧跟一个具体可行的「但是」。你拒绝技术方案时做到了这一点，到了初稿日期这一步，也可以同样给出具体的时间。"
+      },
+      "reflectionQuestions": [
+        "孟老师提出初稿放到下周五，并说「不够就直说」。你会根据什么来判断这个时间够不够，又会怎么回复他？"
+      ],
+      "nextStep": "这周遇到别人请你定时间时，直接报一个具体日期，再问对方「行吗」。",
+      "deltas": {}
+    }
+  }
+]

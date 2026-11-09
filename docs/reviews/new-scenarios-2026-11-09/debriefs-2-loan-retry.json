@@ -1,0 +1,267 @@
+[
+  {
+    "id": "relative-loan-request",
+    "lang": "zh",
+    "route": "yield",
+    "ms": 26308,
+    "outcome": "partial",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "好吧，钱是有，但那是首付，我不想全部动。",
+          "reason": "你先编了「手头也没什么钱」，随后自己更正并道歉，最终说清了「首付不想全部动」这个范围。"
+        },
+        {
+          "index": 1,
+          "status": "unknown",
+          "evidence": "你具体需要多少？用在哪儿？",
+          "npcEvidence": "最急的就是供货商那边的尾款，一万二，月底前得结",
+          "reason": "你问清了实际需要是一万二尾款，也提出了写下来的条件，但借不借、借多少还没定。赵磊最后正在问你，这一步还没轮到你回答。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 1,
+          "evidence": "……五万啊，那我想想办法吧。",
+          "reason": "开头含糊，接着又说没钱，让赵磊追问「到底是真没有，还是不想借」。后来你主动更正，才把话说清楚。"
+        },
+        {
+          "skill": "analyzing-consequences",
+          "level": 2,
+          "evidence": "那我们说说怎么还吧，这次能不能写下来？",
+          "reason": "考虑到上次三千拖了八个月，你在谈金额前先提出书面约定，保护的是自己的首付计划。"
+        },
+        {
+          "skill": "empathy",
+          "level": 2,
+          "evidence": "刚才说没钱是我没说实话，对不起。你具体需要多少？用在哪儿？",
+          "reason": "你坦诚道歉，再问他的真实处境，赵磊回了「说开了就好」，并主动说出最急的一万二。"
+        }
+      ],
+      "stars": 2,
+      "outcome": "partial",
+      "verdictEvidence": "刚才说没钱是我没说实话，对不起。",
+      "verdict": "开局含糊又编了理由，但你主动纠正，把谈话拉回了真实需要。",
+      "summary": "「刚才说没钱是我没说实话，对不起」是这段对话的转折点：你承认了前面的说法，把气氛从互相猜疑变成了说实话。之后你问出了一万二这个真实缺口，还提出写借条，借多少还在待定。",
+      "strengths": [
+        {
+          "behavior": "主动承认前面的不实说法，再问对方的具体需要，换来了对方的实话。",
+          "evidence": "刚才说没钱是我没说实话，对不起。你具体需要多少？用在哪儿？",
+          "skill": "empathy"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "一开始用「想想办法」拖着，接着又编了没钱的理由，两句话互相矛盾，削弱了你的可信度。",
+          "evidence": "其实我手头也没什么钱，最近也挺紧的。",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "含糊加编造让赵磊开始怀疑你的动机，你后面得先花力气修复信任。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "……五万啊，那我想想办法吧。",
+          "better": "五万啊……我有点存款，但那是攒了几年的首付，我不想全动。你先说说具体缺多少、急在哪儿？",
+          "why": "首付这个事实你一开始就知道。直接说出范围再问需要，就不用后面更正了。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [
+          "boundaries-no"
+        ],
+        "caseIds": [
+          "case-angry-client-label"
+        ],
+        "whyThis": "「清晰的「不」是一份礼物」正好对应你开头那句「想想办法」引起的追问。「「听起来您现在最担心的是下周那个会」」则说明，抓住对方最急的那部分需要（这里是一万二尾款）再谈方案，更容易谈下去。"
+      },
+      "reflectionQuestions": [
+        "赵磊问「是一万二，还是能多给点」，又对写借条有抵触。你会怎么把借多少和写下来这两件事放在一起讲？"
+      ],
+      "nextStep": "下次有人找你借钱或提要求时，先说一句真实的范围，再问对方具体需要多少。",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "relative-loan-request",
+    "lang": "en",
+    "route": "boundary",
+    "ms": 36265,
+    "outcome": "partial",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "unknown",
+          "evidence": "I can't lend 50,000. That's my house deposit.",
+          "reason": "You gave a clear, honest refusal of the 50,000, but the amount you will take on is still open when Zhao Lei asks 'how much are you actually putting in'."
+        },
+        {
+          "index": 1,
+          "status": "met",
+          "evidence": "Which payment is actually the most urgent this month?",
+          "npcEvidence": "The one that can't wait is the supplier's final invoice, 12,000.",
+          "reason": "Your question surfaced the real urgent need before you discussed any amount, and you then set a term: written down with a date."
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "I can't lend 50,000. That's my house deposit. Which payment is actually the most urgent this month?",
+          "reason": "You gave a plain no with the true reason and moved straight to the real need, which reframed the request from 50,000 to a 12,000 invoice."
+        },
+        {
+          "skill": "analyzing-consequences",
+          "level": 2,
+          "evidence": "Last time took eight months, so this time I'd want it written down with a date.",
+          "reason": "You tied a concrete safeguard to an observed fact and protected your deposit plan without exaggerating it."
+        },
+        {
+          "skill": "empathy",
+          "level": 2,
+          "evidence": "Sorry, bringing up last time probably stung. I'm not keeping score. I just want this one to be clear.",
+          "reason": "You named his likely hurt while keeping your condition, and he answered 'Yeah, it stung a bit' and agreed to sign something."
+        }
+      ],
+      "stars": 2,
+      "outcome": "partial",
+      "verdictEvidence": "If the supplier invoice is what's urgent, let's talk about just that.",
+      "verdict": "You held your deposit and narrowed the ask to the real need. The amount and date are still open.",
+      "summary": "You said 'let's talk about just that' and asked for a written date, which turned a 50,000 plea into a 12,000 question with terms. The joke broke the thread at one point, but your apology repaired it and he agreed to sign.",
+      "strengths": [
+        {
+          "behavior": "You asked about the real need instead of debating the full 50,000.",
+          "evidence": "Which payment is actually the most urgent this month?",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "When he asked directly whether you were saying yes to the twelve, you answered with a joke about something he hadn't said.",
+          "evidence": "Keep calling me your favourite cousin and I'll start thinking this is a scam call.",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "His question went unanswered, and his next move was to ask you to stretch it to twenty."
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "Keep calling me your favourite cousin and I'll start thinking this is a scam call.",
+          "better": "Still talking, honestly. The supplier invoice is the part I'm willing to consider, and only if we write down a date.",
+          "why": "It answers his yes-or-talking question with your own condition and keeps the scope you had just set, without promising money."
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [],
+        "caseIds": [
+          "case-angry-client-label"
+        ],
+        "whyThis": "Your apology already worked like ''It Sounds Like Next Week's Meeting Is What Worries You'': you named the sting first, then held your plan. Using that pattern when he presses for an answer, rather than deflecting with a joke, keeps you steady."
+      },
+      "reflectionQuestions": [
+        "He has now asked 'how much are you actually putting in, and when do you want it back': what amount and date would protect your deposit plan, and how would you respond to the twenty?"
+      ],
+      "nextStep": "Before your next money or favour request, write down your maximum and your one condition, then say both plainly when asked.",
+      "deltas": {}
+    }
+  },
+  {
+    "id": "relative-loan-request",
+    "lang": "zh",
+    "route": "boundary",
+    "ms": 41630,
+    "outcome": "partial",
+    "stars": 2,
+    "unquoted": [],
+    "report": {
+      "objectiveResults": [
+        {
+          "index": 0,
+          "status": "met",
+          "evidence": "五万我借不了，那是我攒着付首付的钱。",
+          "reason": "你用真实理由明确拒绝了五万，随后又用「我们可以只谈这一笔」划出了愿意谈的范围，没有编造借口。"
+        },
+        {
+          "index": 1,
+          "status": "unknown",
+          "evidence": "如果真正急的是供货商尾款，我们可以只谈这一笔。",
+          "npcEvidence": "你到底借我多少，给个准数？",
+          "reason": "你先问清了真实需要，也提出了借条和还款日期的条件。不过借一万二还是两万还没定，赵磊最后的问题你还没来得及回答。"
+        }
+      ],
+      "scoringVersion": 2,
+      "ratings": [
+        {
+          "skill": "communication",
+          "level": 2,
+          "evidence": "五万我借不了，那是我攒着付首付的钱。你这个月具体是哪一笔最急？",
+          "reason": "你一句话说清了拒绝和原因，紧接着问真实需求，赵磊也就说出了一万二尾款这件实事。"
+        },
+        {
+          "skill": "analyzing-consequences",
+          "level": 2,
+          "evidence": "上次三千你拖了八个月，所以这次我想写个借条，说好哪天还。",
+          "reason": "你把过去的拖欠和这次的条件直接挂钩，赵磊后来提出了写清金额和日期的借条方案。"
+        },
+        {
+          "skill": "empathy",
+          "level": 2,
+          "evidence": "刚才提上次的事可能让你不舒服，抱歉。我不是翻旧账，是想这次说清楚。",
+          "reason": "你照顾到了对方的面子，但没有收回借条的要求。赵磊随后承认「上次是拖得久了点」，态度也松动了。"
+        }
+      ],
+      "stars": 2,
+      "outcome": "partial",
+      "verdictEvidence": "如果真正急的是供货商尾款，我们可以只谈这一笔。",
+      "verdict": "边界清楚、需求问到了，条件也谈出了雏形。只是中途一句玩笑没接住两万的请求。",
+      "summary": "你说「五万我借不了」，又问「哪一笔最急」，既守住了首付，也把谈话拉回到一万二这件实事上。借条和还款日期已经有了方案，借多少还等你给准数。",
+      "strengths": [
+        {
+          "behavior": "你先拒绝大额请求，再追问具体需求，让后面的谈判有了一个真实的数字可谈。",
+          "evidence": "你这个月具体是哪一笔最急？",
+          "skill": "communication"
+        }
+      ],
+      "weaknesses": [
+        {
+          "behavior": "赵磊请你凑两万时，你用了一句玩笑，没有回应金额，而他其实并没有夸你。",
+          "evidence": "你再这么夸我仗义，我都要以为这是诈骗电话了，哈哈。",
+          "skill": "communication",
+          "deficit": "performance",
+          "whyItMatters": "他接着反问「我哪夸你了？」，又追着你要准话。两万的请求一直悬着，压力也回到了你身上。"
+        }
+      ],
+      "alternatives": [
+        {
+          "original": "你再这么夸我仗义，我都要以为这是诈骗电话了，哈哈。",
+          "better": "我明白你想手里留点活钱。不过我现在愿意谈的就是一万二那笔尾款，两万我还没打算。",
+          "why": "这样既回应了他担心手头没钱的那份顾虑，又重申了你刚说过的「只谈这一笔」，不让新的请求悬着。"
+        }
+      ],
+      "knowledge": {
+        "theoryIds": [
+          "boundaries-no"
+        ],
+        "caseIds": [
+          "case-angry-client-label"
+        ],
+        "whyThis": "「清晰的「不」是一份礼物」说明了，对加码请求给出一句明确回应，比打趣更能保护关系。「「听起来您现在最担心的是下周那个会」」示范了怎样先点出对方的担忧，再坚持自己的方案。"
+      },
+      "reflectionQuestions": [
+        "赵磊最后给了一万二和两万两套还款方案。结合你的首付计划和他上次的还款记录，你会怎么给他一个准数，又会怎么说出口？"
+      ],
+      "nextStep": "这周遇到别人临时加码的请求时，先复述对方的需要，再用一句话说清你愿意承担的范围。",
+      "deltas": {}
+    }
+  }
+]
