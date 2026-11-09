@@ -11,7 +11,7 @@ import { attentionSubject, eyeHeight, cameraPose, constrainCamera, dialogueFrami
 import {actorActionLabel,type Drama} from '../lib/drama';
 import {TableCups,ScenarioObjects,PlayerHands} from './DinnerProps';
 import {RiggedCharacter} from './RiggedCharacter';
-import {AssetRoom,useSceneAsset,preloadPlayerAsset} from './SceneAssets';
+import {AssetRoom,useSceneAsset,retainSceneAssets,sceneAssetNames} from './SceneAssets';
 import {RenderBudget} from './RenderBudget';
 import {RoomLighting} from './RoomLighting';
 import {useFamilyArt} from '../lib/surfaces';
@@ -20,6 +20,10 @@ import type { TiltOutput } from '../lib/tilt';
 import { aimedPerson, GazeRecipient } from '../lib/gazeRecipient';
 
 type SceneProps = { hudHeight:number; drama:Drama; line:string; speaking:boolean; scenario: Scenario; lang: Lang; reactions: Reply['reactions']; speakerId: string; selectedId: string | null; onSelect: (id: string) => void; onEvidence:()=>void; reduced: boolean; started: boolean; viewReset: number; world:World; view:ViewMode; input:RefObject<Point>; tilt:RefObject<TiltOutput>; gazeEnabled:boolean; gazeActive:boolean; onGazeRecipient:(id:string)=>void; paused:boolean; onWorldChange:(save:RoomSave,event:RoomEvent)=>void; onAvailability:(available:boolean)=>void };
+type Rect={x:number;y:number;w:number;h:number};
+const LABEL_OFFSETS=[0,16,32,48,64];
+/** Allocation-free: labels are placed at 30 Hz. */
+function overlaps(rects:Rect[],x:number,y:number,w:number,h:number){for(const r of rects)if(Math.abs(r.x-x)<(r.w+w)/2+5&&Math.abs(r.y-y)<(r.h+h)/2+5)return true;return false;}
 function ProjectLabels({ elements, world, speakerId, selectedId, view }: { elements:RefObject<(HTMLButtonElement|null)[]>; world:World; speakerId:string; selectedId:string|null; view:ViewMode }) {
   const {invalidate}=useThree();
   const vectors=useMemo(()=>({point:new Vector3(),right:new Vector3(),center:new Vector3(),projected:new Vector3(),side:new Vector3(),top:new Vector3(),bottom:new Vector3()}),[]);
@@ -70,7 +74,8 @@ function ProjectLabels({ elements, world, speakerId, selectedId, view }: { eleme
       const {el}=candidate;if(!el)continue;
       const dimensions=cache.dimensions.get(el);if(!dimensions){cache.dirty=true;invalidate();continue;}
       const {w,h}=dimensions,x=MathUtils.clamp(candidate.x,w/2+6,size.width-w/2-6);
-      const y=[0,16,32,48,64].map(offset=>candidate.y-offset).find(y=>y>h/2+80&&![...occupied,...faces].some(r=>Math.abs(r.x-x)<(r.w+w)/2+5&&Math.abs(r.y-y)<(r.h+h)/2+5));
+      let y:number|undefined;
+      for(const offset of LABEL_OFFSETS){const at=candidate.y-offset;if(at>h/2+80&&!overlaps(occupied,x,at,w,h)&&!overlaps(faces,x,at,w,h)){y=at;break;}}
       const visible=candidate.visible&&y!==undefined;
       const transform=`translate(${x.toFixed(1)}px,${(y??candidate.y).toFixed(1)}px) translate(-50%,-50%)`,visibility=visible?'visible':'hidden';
       if(el.style.transform!==transform)el.style.transform=transform;if(el.style.visibility!==visibility)el.style.visibility=visibility;
@@ -84,6 +89,27 @@ function WorldDirector({props,heading}:{props:SceneProps;heading:RefObject<numbe
   useEffect(()=>{const down=(e:KeyboardEvent)=>{if(props.paused||e.target instanceof HTMLElement&&e.target.closest('textarea,input,select,[contenteditable=true],dialog'))return;if(['w','a','s','d'].includes(e.key.toLowerCase())){keys.current.add(e.key.toLowerCase());e.preventDefault();}};const up=(e:KeyboardEvent)=>keys.current.delete(e.key.toLowerCase());const clear=()=>{keys.current.clear();props.input.current={x:0,z:0};};window.addEventListener('keydown',down);window.addEventListener('keyup',up);window.addEventListener('blur',clear);return ()=>{window.removeEventListener('keydown',down);window.removeEventListener('keyup',up);window.removeEventListener('blur',clear);clear();};},[props.paused,props.input]);
   useFrame((_,dt)=>{const k=keys.current;const input={x:props.input.current.x+(k.has('d')?1:0)-(k.has('a')?1:0),z:props.input.current.z+(k.has('w')?1:0)-(k.has('s')?1:0)};stepWorld(props.world,dt,input,heading.current,props.reactions,props.paused);if(!props.paused&&!props.world.player.seated&&!props.world.player.moving)props.world.player.heading=props.world.viewYaw;marker.current.visible=!!props.world.destination;if(props.world.destination)marker.current.position.set(props.world.destination.x,.016,props.world.destination.z);elapsed.current+=dt;if(elapsed.current>.2||revision.current!==props.world.revision){elapsed.current=0;const state=snapshot(props.world);const serialized=roomUiKey(state);if(serialized!==last.current||revision.current!==props.world.revision){last.current=serialized;revision.current=props.world.revision;props.onWorldChange(state,props.world.event);}}},-2);
   const p=useMemo(()=>getPalette(),[]);return <mesh ref={marker} rotation={[-Math.PI/2,0,0]} visible={false}><ringGeometry args={[.16,.23,32]}/><meshBasicMaterial color={p.brass} transparent opacity={.85} toneMapped={false}/></mesh>;
+}
+/**
+ * Contact shadows are a depth render plus two blur passes. A static room needs
+ * one; walking or standing up needs them to follow. drei resets its frame count
+ * on every render, so a still → moving → still cycle re-renders exactly once more
+ * at the final pose, and nothing is redrawn while everyone stays put.
+ */
+const SHADOW_SETTLE_SECONDS=.6;
+function LiveContactShadows({world,color}:{world:World;color:string}) {
+  const [live,setLive]=useState(false),settle=useRef(0),seated=useRef('');
+  useFrame((_,dt)=>{
+    let posture='',moving=world.player.moving;
+    for(const actor of world.npcs){moving||=actor.moving;posture+=actor.seated?'1':'0';}
+    posture+=world.player.seated?'1':'0';
+    // A posture change animates the body; keep following until it settles.
+    if(moving||posture!==seated.current){settle.current=SHADOW_SETTLE_SECONDS;seated.current=posture;}
+    else settle.current=Math.max(0,settle.current-dt);
+    const next=settle.current>0;
+    if(next!==live)setLive(next);
+  });
+  return <ContactShadows position={[0,.02,0]} opacity={.24} scale={14} blur={2.5} far={4.5} resolution={256} frames={live?Infinity:1} color={color} />;
 }
 function CameraRig({props,heading,lookOffset}:{props:SceneProps;heading:RefObject<number>;lookOffset:RefObject<number>}) {
   const {camera,size,gl,invalidate,scene}=useThree();
@@ -141,7 +167,7 @@ function CameraRig({props,heading,lookOffset}:{props:SceneProps;heading:RefObjec
       if(id){
         const actor=props.world.npcs.find(n=>n.id===id)!;
         aimPoint.set(actor.x,eyeHeight(actor),actor.z).sub(camera.position);
-        ray.set(camera.position,aimPoint.clone().normalize());ray.near=.05;ray.far=Math.max(.05,aimPoint.length()-.18);
+        const reach=aimPoint.length();ray.set(camera.position,aimPoint.normalize());ray.near=.05;ray.far=Math.max(.05,reach-.18);
         const occluders=[scene.getObjectByName('dinner-room'),...[...props.world.npcs,props.world.player].filter(other=>other.id!==id).map(other=>scene.getObjectByName(`dinner-actor-${other.id}`))].filter((object):object is Object3D=>!!object);
         const blocked=ray.intersectObjects(occluders,true).some(hit=>{let object=hit.object;while(object){if(!object.visible)return false;if(!object.parent)break;object=object.parent;}return true;});
         if(blocked)aim.current.blocked();else props.onGazeRecipient(id);
@@ -159,15 +185,13 @@ function AssetReady({scenario,view,onReady}:{scenario:Scenario;view:ViewMode;onR
   useSceneAsset(scenario.characters[2].id);
   useSceneAsset('props');
   useSceneAsset(view==='third'?'player':'hand-grip');
+  const assetKey=sceneAssetNames(scenario).join('|');
+  useEffect(()=>{retainSceneAssets(assetKey.split('|'));},[assetKey]);
   useEffect(()=>{
     onReady(true);
-    // Decode only the shared player after the room is usable; never preload
-    // every cast. Respect an explicitly data-saving browser connection.
-    const connection=(navigator as Navigator&{connection?:{saveData?:boolean}}).connection;
-    if(connection?.saveData)return()=>onReady(false);
-    const prime=()=>preloadPlayerAsset();
-    if(window.requestIdleCallback){const id=window.requestIdleCallback(prime,{timeout:1200});return()=>{window.cancelIdleCallback(id);onReady(false);};}
-    const id=window.setTimeout(prime,150);return()=>{window.clearTimeout(id);onReady(false);};
+    // The 1.7 MB player model is fetched only when the learner reaches for the
+    // view switch (see DinnerApp), never on idle for every first-person visit.
+    return()=>onReady(false);
   },[onReady]);
   return null;
 }
@@ -204,7 +228,7 @@ export default function DinnerScene(props: SceneProps) {
     {props.scenario.characters.map((c,i)=><RiggedCharacter key={c.id} character={c} actor={props.world.npcs[i]} world={props.world} reaction={props.reactions.find(r=>r.characterId===c.id)} active={props.speaking&&props.speakerId===c.id} onSelect={()=>props.onSelect(c.id)} p={p} reduced={props.reduced} drama={props.drama} index={i} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} />)}
     {props.view==='third'&&<RiggedCharacter character={playerCharacter} actor={props.world.player} world={props.world} active={false} onSelect={()=>{}} p={p} reduced={props.reduced} drama={props.drama} index={3} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} lookOffset={lookOffset} player/>}
     {props.view==='first'&&<PlayerHands p={p} drama={props.drama} lang={props.lang} scenario={props.scenario} hudHeight={props.hudHeight}/>}
-    <ContactShadows position={[0,.02,0]} opacity={.24} scale={14} blur={2.5} far={4.5} resolution={256} frames={1} color={p.dark} />
+    <LiveContactShadows world={props.world} color={p.dark}/>
     <CameraRig props={props} heading={heading} lookOffset={lookOffset}/>
     <ProjectLabels elements={labels} world={props.world} speakerId={props.speakerId} selectedId={props.selectedId} view={props.view}/>
   </Canvas></Suspense>{ready&&<div className="scene-labels">{props.scenario.characters.map((c,i)=>{const reaction=props.reactions.find(r=>r.characterId===c.id);const active=props.speaking&&props.speakerId===c.id;const selected=props.selectedId===c.id;const actor=props.world.npcs[i];const eventGesture=actorActionLabel(props.drama,i,props.scenario.id,props.lang);return <button key={c.id} ref={el=>{labels.current[i]=el;}} className={`npc-label ${active?'is-speaking':''} ${selected?'is-selected':''} ${actor.seated?'':'is-standing'}`} onClick={()=>props.onSelect(c.id)} aria-pressed={selected}><span className="npc-name">{active&&<i/>}{pick(c.name,props.lang)}</span><span className="npc-state sr-only">{actor.moving?pick(ui.walking,props.lang):!actor.seated?pick(ui.standing,props.lang):active?pick(ui.speaking,props.lang):pick(emotions[reaction?.emotion??'neutral'],props.lang)}<span className="npc-gesture"><span className="label-divider">/</span>{eventGesture??pick(gestures[reaction?.gesture??'idle'],props.lang)}</span></span></button>;})}</div>}</div></SceneBoundary>;
