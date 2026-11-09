@@ -1,0 +1,932 @@
+{
+  "at": "2026-11-09T09:17:33.640Z",
+  "model": "claude-opus-5-5",
+  "phase": "current",
+  "samples": 27,
+  "issues": [
+    "Error: 这次回复的场景信息不完整，你的话已保留，请重试。"
+  ],
+  "records": [
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "嗯……还行吧，比在老家多一点。对象也在看了。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 22,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "「多一点」是多少嘛，这有什么不能说的？都是自家人。还有「在看了」——那就是有人选了呗？你妈说快了，我看八九不离十。"
+        },
+        {
+          "characterId": "mother",
+          "text": "哎呀，吃菜吃菜，你大姨也是关心你。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8374,
+      "ms": 8391
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 1,
+      "learner": "Auntie, I'll keep the salary number to myself, but I'm doing fine out there. How about you? How's my cousin this year?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 25,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "aunt",
+            "quote": "he's taking a break at home for a bit"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "Ha! 'Doing fine', what's there to hide from your own auntie? Your cousin… oh, he's taking a break at home for a bit, nothing to talk about. Anyway, we were talking about you. What about this someone your mum says is coming soon?"
+        },
+        {
+          "characterId": "mother",
+          "text": "Have some fish, it's getting cold. Your aunt just cares, that's all."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8370,
+      "ms": 8543
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "大姨，工资这个我就不在饭桌上报数啦，够我自己在那边过得挺好。倒是您最近怎么样？表哥今年忙不忙？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 28,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "aunt",
+            "quote": "他今年……在家歇一阵"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "嗨，这有什么不能说的，一家人还藏着掖着。你表哥啊……他今年……在家歇一阵，也挺好，正好陪陪他爸。不说他了，那对象呢？你妈可说快了啊。"
+        },
+        {
+          "characterId": "mother",
+          "text": "吃菜吃菜，这鱼凉了就腥了。你大姨也是关心你。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9783,
+      "ms": 9860
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "其实我不太想在这么多人面前说这些，大姨您别追着问了行吗？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 20,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "哟，跟大姨还见外上了？人家别的孩子过年回来，工资对象张口就说，多大方。行行行，不问不问——那你在那边忙不忙啊，一年能回来几趟？"
+        },
+        {
+          "characterId": "mother",
+          "text": "这孩子脸皮薄，大姨不跟你计较。来，给大姨倒点饮料。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9195,
+      "ms": 9263
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我知道您是关心我。对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "工资这个我就不在饭桌上报数啦，够我自己在那边过得挺好。",
+            "npcQuote": ""
+          },
+          {
+            "index": 0,
+            "learnerQuote": "对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。",
+            "npcQuote": ""
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 32,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "还没到那一步？那你妈怎么跟我说快了呢。二十九了啊，别人家孩子这岁数，娃都会打酱油了。行行行，你有数就行——那你在那边一个人，平时下了班都干啥呀？"
+        },
+        {
+          "characterId": "mother",
+          "text": "我那就是……随口一说。来，你大姨爱吃这个，给你大姨夹一块。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10904,
+      "ms": 10956
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 2,
+      "learner": "I know you ask because you care. If there's ever someone serious, you'll be the first to meet them. Not yet, though.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I'll keep the salary number to myself, but I'm doing fine out there."
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 30,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "The first to meet them, I'll hold you to that! But 'not yet' at twenty-nine? Other people's kids your age are already pushing strollers. And your mum said soon, so which is it?"
+        },
+        {
+          "characterId": "mother",
+          "text": "Oh, I just meant… they've been busy with work. Here, more dumplings, Sis."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 12432,
+      "ms": 12570
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "你们怎么老是问这些，烦不烦啊！",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 12,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "哎——我这不都换着问了吗？问你一年回来几趟也烦？行，大姨多嘴，好心当成驴肝肺。"
+        },
+        {
+          "characterId": "mother",
+          "text": "你怎么跟大姨说话呢？大过年的，一桌人都看着。你大姨也是关心你，快跟大姨说句软话。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8460,
+      "ms": 8469
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 3,
+      "learner": "If I earned enough to pay for this whole dinner, I'd announce it, promise.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I'll keep the salary number to myself, but I'm doing fine out there."
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 35,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "Ha! Pay for the whole dinner, listen to this one! Fine, fine, keep your little secrets. So what do you actually do all day over there? Your mum can never explain it properly."
+        },
+        {
+          "characterId": "mother",
+          "text": "I try, but it all sounds like computer words to me. Go on, tell your aunt, and eat while you talk."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8683,
+      "ms": 8701
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "要是我工资高到能请全家吃这顿饭，我肯定主动报，哈哈。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "工资这个我就不在饭桌上报数啦，够我自己在那边过得挺好。",
+            "npcQuote": ""
+          },
+          {
+            "index": 0,
+            "learnerQuote": "对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。",
+            "npcQuote": ""
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 34,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "哈哈哈，你这孩子，嘴是越来越会绕了，绕半天还是不说。行，钱的事大姨不问了。哎，我刚问你呢，你一个人在那边，下了班都干啥？吃饭谁给你做？"
+        },
+        {
+          "characterId": "mother",
+          "text": "就是，平时也不跟家里说说。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8009,
+      "ms": 9226
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "对不起，刚才不该当着大家发火。我就是不想在饭桌上讲收入，不是针对您。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 20,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "行了行了，大姨也不是那小心眼的人。不说钱就不说钱——可刚才问你一年回来几趟，你还没答我呢，这个总能说吧？"
+        },
+        {
+          "characterId": "mother",
+          "text": "就是，好好说话嘛。来，给大姨夹块鱼。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 11575,
+      "ms": 11583
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 4,
+      "learner": "Mum, what made you tell Auntie it'd be soon? I'm not upset, I just want us to say the same thing.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I'll keep the salary number to myself, but I'm doing fine out there."
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 40,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "mother",
+            "quote": "I said 'soon' just so she'd stop asking. I'm not in any hurry, really."
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "Oh… honestly? Your aunt brought it up every time we talked, so I said 'soon' just so she'd stop asking. I'm not in any hurry, really. We can sort out what to tell everyone later, just the two of us."
+        },
+        {
+          "characterId": "aunt",
+          "text": "Well! Fobbed off by my own sister, at New Year. Fine, fine. But you still haven't told me what this job of yours actually is."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9890,
+      "ms": 9894
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 5,
+      "learner": "我们换个话题吧，大姨您家今年过年怎么安排的？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 21,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "我家？还能怎么安排，吃完饭看看电视、初二走走亲戚，年年都一样，没啥好说的。你别拿大姨打岔啊，我刚问你一年回来几趟，这个又不是工资，你妈可天天惦记着呢。"
+        },
+        {
+          "characterId": "mother",
+          "text": "……也是，说说嘛，大姨又不是外人。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 12428,
+      "ms": 12433
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "妈，你跟大姨说「快了」，是怎么回事呀？我不怪你，就想知道咱俩以后对外怎么说。",
+      "error": "Error: 这次回复的场景信息不完整，你的话已保留，请重试。",
+      "modelRaw": "{\"meta\":{\"objectives\":[true,true],\"objectiveEvidence\":[{\"index\":0,\"learnerQuote\":\"工资这个我就不在饭桌上报数啦，够我自己在那边过得挺好。\",\"npcQuote\":\"\"},{\"index\":0,\"learnerQuote\":\"对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。\",\"npcQuote\":\"\"},{\"index\":1,\"learnerQuote\":\"我不怪你，就想知道咱俩以后对外怎么说。\",\"npcQuote\":\"这个回头咱娘俩再商量，啊\"}],\"ended\":false,\"outcome\":\"success\",\"stance\":40,\"revealed\":true,\"disclosures\":[{\"characterId\":\"mother\",\"quote\":\"你大姨每回都问，我就随口说了个“快了”，应付一下\"}]},\"utterances\":[{\"characterId\":\"mother\",\"text\":\"哎呀……你大姨每回都问，我就随口说了个“快了”，应付一下，其实妈也没催你。这个回头咱娘俩再商量，啊，先吃饭。\"},{\"characterId\":\"aunt\",\"text\":\"好哇，合着拿“快了”打发我呢！行，你们娘俩一伙的。那我问点能说的——你一个人在外头，过年回来待几天？\"}]}",
+      "preview": "",
+      "repairs": 1
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "五万我借不了，那是我攒着付首付的钱。你这个月具体是哪一笔最急？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "五万我借不了，那是我攒着付首付的钱。"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 30,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "cousin",
+            "quote": "最急的是供货商那边一万二的尾款"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "啊？首付……你这一下就把话说死了，我还以为咱俩这点忙好说呢。最急的是供货商那边一万二的尾款，人家一直催。剩下的嘛，我是想多留点余地，店里开销你也知道，说不准哪天又要用钱。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8253,
+      "ms": 8297
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "……五万啊，那我想想办法吧。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 20,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "哎，我就知道找你准没错！那你「想办法」是能凑齐五万的意思吧？我这边挺急的，你大概什么时候能转过来？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8158,
+      "ms": 8310
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 1,
+      "learner": "I can't lend 50,000. That's my house deposit. Which payment is actually the most urgent this month?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "cousin",
+            "quote": "the one that's really breathing down my neck is the supplier, 12,000 for the final invoice"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "Wow, your house deposit, huh? You won't even help with this? ...Fine, honestly, the one that's really breathing down my neck is the supplier, 12,000 for the final invoice. The rest was just so I'd have a cushion and wouldn't have to call you again."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10145,
+      "ms": 10147
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "其实我手头也没什么钱，最近也挺紧的。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 18,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "啊？你刚才还说「想想办法」，怎么一下就没钱了？你上班这么多年，平时也不乱花，总攒下点吧，跟我还用这么说吗？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 6669,
+      "ms": 6729
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "如果真正急的是供货商尾款，我们可以只谈这一笔。上次三千你拖了八个月，所以这次我想写个借条，说好哪天还。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "五万我借不了，那是我攒着付首付的钱。"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 40,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "上次那三千……那会儿店刚开张，手里是真紧，又不是存心拖你的。写借条也太见外了吧，搞得跟外人似的——行行行，你非要写我也不拦着。就是一万二只够填尾款，你看能不能凑个两万，让我也喘口气？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 11328,
+      "ms": 12077
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "好吧，钱是有，但那是首付，我不想全部动。",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 24,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "首付啊……行，我懂，买房是大事。可你首付又不是这个月就要交，我下个月就还上，钱在你那儿放着也是放着。那这样，不动全部，你先借我三万，总行吧？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7470,
+      "ms": 7511
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 2,
+      "learner": "If the supplier invoice is what's urgent, let's talk about just that. Last time took eight months, so this time I'd want it written down with a date.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I can't lend 50,000. That's my house deposit."
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 36,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "Eight months... come on, that was a rough patch, and I paid back every cent, didn't I? Writing it down between cousins, though, feels like you're treating me like a stranger. So are you saying you'll lend the 12,000? Honestly, if you could stretch it to 15, I'd breathe a lot easier."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 13363,
+      "ms": 13438
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "你再这么夸我仗义，我都要以为这是诈骗电话了，哈哈。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "五万我借不了，那是我攒着付首付的钱。"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 42,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "哈哈，诈骗电话能知道你小时候尿过我床？我可没夸你啊，我是真着急。别打岔了，你给句准话，一万二还是两万？借条你想怎么写、哪天还，你说个日子。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7576,
+      "ms": 7584
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 3,
+      "learner": "Keep calling me your favourite cousin and I'll start thinking this is a scam call.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I can't lend 50,000. That's my house deposit."
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 38,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "Ha! I didn't even get to 'favourite' yet. Okay, okay, no sweet talk. So straight up: are you lending the 12,000 or not? And if you really want it on paper... what are we talking, a text, a signed note?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 6991,
+      "ms": 7043
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "刚才说没钱是我没说实话，对不起。你具体需要多少？用在哪儿？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "cousin",
+            "quote": "最急的是供货商那边的尾款，一万二"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "嗐，行了，你也是怕我开口太大，我懂。说实话……最急的是供货商那边的尾款，一万二，这个拖不得。剩下的是我想手里多留点，万一后面还有要花钱的地方，不至于再到处求人。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8377,
+      "ms": 8485
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "刚才提上次的事可能让你不舒服，抱歉。我不是翻旧账，是想这次说清楚。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "五万我借不了，那是我攒着付首付的钱。"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 46,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "嗨，也没啥不舒服的……说实话那回确实拖久了，是我不对。行，那就说清楚，你要是借一万二，我照下个月还写上，借条你拟个格式发我，我签。你就直说吧，是一万二，还是能多给点？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9390,
+      "ms": 9457
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "yield",
+      "lang": "zh",
+      "turn": 5,
+      "learner": "那我们说说怎么还吧，这次能不能写下来？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 27,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "写下来？咱俩还要打借条啊……搞得跟外人似的。行吧，你要写也不是不行。那你先给我个准话，这回到底借我多少？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8311,
+      "ms": 8348
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 4,
+      "learner": "Sorry, bringing up last time probably stung. I'm not keeping score. I just want this one to be clear.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "I can't lend 50,000. That's my house deposit."
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 44,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "Yeah... it stung a bit, but fair enough, I did drag that one out. Okay, clear it is. If it's the 12,000, I could send you a message saying the amount and when I'll pay it back. I'm thinking half next month, the rest the month after. Does that work for you, or what were you picturing?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10159,
+      "ms": 10470
+    },
+    {
+      "label": "current",
+      "id": "relative-loan-request",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 5,
+      "learner": "我们继续说，借条怎么写、几号还，你觉得哪天能做到？",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "五万我借不了，那是我攒着付首付的钱。"
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 52,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "cousin",
+          "text": "日子嘛……说下个月月底吧，月初进账得先顾着店里，月底我能腾出来。借条就写借多少、哪天还、咱俩签字，你拍个照留着也行。不过你到现在还没说定借多少啊，一万二是吧？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9858,
+      "ms": 9862
+    }
+  ]
+}

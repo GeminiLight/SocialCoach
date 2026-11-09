@@ -32,8 +32,8 @@ export const meta = {
     "SocialCoach — Your AI Social Skills Coach · Practice & 3D Scenes",
   ),
   description: L(
-    "想说的话，说出来。SocialCoach 陪你练习难开口的对话：58 个场景、3D 饭局与办公室、视频示范，以及引用原话的复盘。无需注册，支持自己的模型。",
-    "Practice difficult conversations with SocialCoach: 58 scenarios, 3D dinners and offices, video demonstrations, and feedback grounded in your own words. No account required. Bring your own model or use the shared quota.",
+    "想说的话，说出来。SocialCoach 陪你练习难开口的对话：63 个场景、3D 饭局与办公室、视频示范，以及引用原话的复盘。无需注册，支持自己的模型。",
+    "Practice difficult conversations with SocialCoach: 63 scenarios, 3D dinners and offices, video demonstrations, and feedback grounded in your own words. No account required. Bring your own model or use the shared quota.",
   ),
 };
 
@@ -80,7 +80,7 @@ export const trust = {
   eyebrow: L("语料与出处", "Corpus and sources"),
   title: L("判断有证据，建议有出处", "Evidence before judgment, sources before advice"),
   stats: [
-    { n: "58", icon: "scene", label: L("双语场景", "bilingual scenarios") },
+    { n: "63", icon: "scene", label: L("双语场景", "bilingual scenarios") },
     { n: "42", icon: "book", label: L("策略", "strategies") },
     { n: "30", icon: "quote", label: L("案例", "cases") },
     { n: "7", icon: "pin", label: L("类生活情境", "context types") },
@@ -293,7 +293,7 @@ export const experience = {
   practiceTitle: L("第一句之后，\n对方还会接着问。", "After your opening line,\nthey’ll have another question."),
   practiceLead: L("角色有自己的立场。你可以追问、拒绝、改口，也可以继续谈。结束后，教练回到你的原话，和你一起看清刚才发生了什么。", "Characters have positions of their own. Ask, decline, reconsider or keep talking. When you finish, revisit your own words with the coach and see what happened."),
   flow: [
-    { title: L("选一场，或带来自己的处境", "Pick a scene, or bring your own"), body: L("58 个双语场景覆盖 7 类生活情境，也可以描述你真正要面对的那场对话。", "58 bilingual scenarios across seven everyday contexts, plus custom rehearsals for the conversation ahead of you.") },
+    { title: L("选一场，或带来自己的处境", "Pick a scene, or bring your own"), body: L("63 个双语场景覆盖 7 类生活情境，也可以描述你真正要面对的那场对话。", "63 bilingual scenarios across seven everyday contexts, plus custom rehearsals for the conversation ahead of you.") },
     { title: L("开口，接住下一句", "Speak, then handle the reply"), body: L("用文字或语音组织回应。想增加压力，可以开启限时应答；还没谈完，就继续聊。", "Respond in text or use voice input. Add timed replies for more pressure, or keep the conversation going when you need to.") },
     { title: L("回到原话，再试一次", "Revisit your words. Try again."), body: L("看具体反馈、尝试改写、继续问教练。练习记录也会帮助安排接下来练什么。", "Read specific feedback, try another phrasing and ask the coach follow-up questions. Your practice history helps shape what comes next.") },
   ],

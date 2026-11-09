@@ -1,0 +1,374 @@
+{
+  "at": "2026-11-09T09:20:43.509Z",
+  "model": "claude-opus-5-5",
+  "phase": "current",
+  "samples": 9,
+  "issues": [],
+  "records": [
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 1,
+      "learner": "Auntie, I'll keep the salary number to myself, but I'm doing fine out there. How about you? How's my cousin this year?",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 28,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "aunt",
+            "quote": "he's, uh… taking a break at home for now"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "Ha! ‘Doing fine,’ what's there to hide from your own auntie? Your cousin? Oh, he's, uh… taking a break at home for now. Anyway, you skipped my other question. When's this someone coming home, hm?"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 7664,
+      "ms": 7716
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 1,
+      "learner": "大姨，工资这个我就不在饭桌上报数啦，够我自己在那边过得挺好。倒是您最近怎么样？表哥今年忙不忙？",
+      "meta": {
+        "objectives": [
+          false,
+          false
+        ],
+        "objectiveEvidence": [],
+        "ended": false,
+        "outcome": null,
+        "stance": 30,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "aunt",
+            "quote": "他今年……在家歇一阵"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "哟，还不在饭桌上报，跟大姨还保密呢？你表哥啊……他今年……在家歇一阵，不急。哎，别光说他，对象呢？工资不说，对象总能说吧？"
+        },
+        {
+          "characterId": "mother",
+          "text": "吃菜吃菜，你大姨也是关心你。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 11469,
+      "ms": 11479
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 2,
+      "learner": "I know you ask because you care. If there's ever someone serious, you'll be the first to meet them. Not yet, though.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "Auntie, I'll keep the salary number to myself, but I'm doing fine out there."
+          },
+          {
+            "index": 0,
+            "learnerQuote": "If there's ever someone serious, you'll be the first to meet them. Not yet, though."
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 32,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "‘Not yet'? But your mum told me soon! At twenty-nine, other people's kids already have a little one running around. So which is it?"
+        },
+        {
+          "characterId": "mother",
+          "text": "Aiya, eat while it's hot. Here, have some fish. Your aunt just cares about you, that's all."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 14979,
+      "ms": 15272
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 2,
+      "learner": "我知道您是关心我。对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 32,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "还没到那一步？那你妈怎么跟我说快了呀？哎你也二十九了，人家好些跟你一般大的，孩子都上幼儿园了，你可得抓点紧。"
+        },
+        {
+          "characterId": "mother",
+          "text": "哎呀，孩子大了，心里有主意……来，尝尝这个鱼，今天烧得入味。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 13930,
+      "ms": 13951
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 3,
+      "learner": "If I earned enough to pay for this whole dinner, I'd announce it, promise.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "Auntie, I'll keep the salary number to myself, but I'm doing fine out there."
+          },
+          {
+            "index": 0,
+            "learnerQuote": "If I earned enough to pay for this whole dinner, I'd announce it, promise."
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 36,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "Ha! Pay for this whole table? Then you'd better get working, it'll take a while! Fine, fine, keep your little secret. So what do you actually do all day out there? Your mum never explains it properly."
+        },
+        {
+          "characterId": "mother",
+          "text": "I explain it, you just don't listen. Go on, tell her, and have some fish while you're at it."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9917,
+      "ms": 9957
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 3,
+      "learner": "要是我工资高到能请全家吃这顿饭，我肯定主动报，哈哈。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 36,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "哈哈，这孩子，嘴倒是越来越贫了！行行行，不说就不说，大姨还能扒你工资条啊。那你在那边到底干的啥活儿？天天加班不？过年能在家待几天？"
+        },
+        {
+          "characterId": "mother",
+          "text": "就是，难得回来一趟，跟你大姨说说那边的事。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 8351,
+      "ms": 9408
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "en",
+      "turn": 4,
+      "learner": "Mum, what made you tell Auntie it'd be soon? I'm not upset, I just want us to say the same thing.",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "Auntie, I'll keep the salary number to myself, but I'm doing fine out there."
+          },
+          {
+            "index": 0,
+            "learnerQuote": "If I earned enough to pay for this whole dinner, I'd announce it, promise."
+          }
+        ],
+        "ended": false,
+        "outcome": "partial",
+        "stance": 40,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "mother",
+            "quote": "I only said ‘soon’ so she'd stop asking. I'm not in any hurry, you know that."
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "Aiya… honestly? Your aunt kept bringing it up, so I only said ‘soon’ so she'd stop asking. I'm not in any hurry, you know that."
+        },
+        {
+          "characterId": "aunt",
+          "text": "Hah! So my own sister's been fobbing me off! Fine, fine, ‘not yet’ it is. But you still haven't told me what you actually do all day out there."
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10812,
+      "ms": 10833
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 4,
+      "learner": "妈，你跟大姨说「快了」，是怎么回事呀？我不怪你，就想知道咱俩以后对外怎么说。",
+      "meta": {
+        "objectives": [
+          true,
+          false
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。"
+          }
+        ],
+        "ended": false,
+        "outcome": null,
+        "stance": 41,
+        "revealed": true,
+        "disclosures": [
+          {
+            "characterId": "mother",
+            "quote": "我那是被你大姨问烦了，随口应付一句"
+          }
+        ]
+      },
+      "npc": [
+        {
+          "characterId": "mother",
+          "text": "哎……我那是被你大姨问烦了，随口应付一句，哪有什么快不快的。我也没急着让你结婚，这事儿……咱回头再说，啊？"
+        },
+        {
+          "characterId": "aunt",
+          "text": "好哇，合着你们娘俩糊弄我呢！行，那大姨不管了。刚问你的还没答呢，在那边到底干啥的，过年能待几天？"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 10940,
+      "ms": 10955
+    },
+    {
+      "label": "current",
+      "id": "lunar-new-year-relatives",
+      "route": "boundary",
+      "lang": "zh",
+      "turn": 5,
+      "learner": "刚才我语气可能有点冲，大姨别往心里去。年后我们再好好聊聊，我也想听听表哥那边的情况。",
+      "meta": {
+        "objectives": [
+          true,
+          true
+        ],
+        "objectiveEvidence": [
+          {
+            "index": 0,
+            "learnerQuote": "对象的事我自己有数，真有了一定第一个带回来，现在还没到那一步。"
+          },
+          {
+            "index": 1,
+            "learnerQuote": "年后我们再好好聊聊，我也想听听表哥那边的情况。",
+            "npcQuote": "行，年后就年后"
+          }
+        ],
+        "ended": false,
+        "outcome": "success",
+        "stance": 46,
+        "revealed": false,
+        "disclosures": []
+      },
+      "npc": [
+        {
+          "characterId": "aunt",
+          "text": "冲啥呀，大姨没那么小气。行，年后就年后……你表哥那边也没啥好聊的，就是歇着。倒是你，刚问你的还没说呢，这回能在家待几天？"
+        },
+        {
+          "characterId": "mother",
+          "text": "对对，跟你大姨说说，她念叨你好几回了。"
+        }
+      ],
+      "repairs": 0,
+      "firstVisibleMs": 9116,
+      "ms": 9196
+    }
+  ]
+}

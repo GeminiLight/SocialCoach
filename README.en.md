@@ -76,7 +76,7 @@ A conversation with your manager. A boundary with a friend. A disagreement at ho
 
 Preview five bilingual practice scenarios: [asking for a raise](https://tianfu.wang/SocialCoach/en/guides/salary-raise/), [declining extra hours](https://tianfu.wang/SocialCoach/en/guides/declining-extra-hours/), [being called out in a meeting](https://tianfu.wang/SocialCoach/en/guides/meeting-tension/), [sharing chores with a partner](https://tianfu.wang/SocialCoach/en/guides/spouse-chores/), and [asking a friend to repay a loan](https://tianfu.wang/SocialCoach/en/guides/friend-borrowed-money/). Each preview leads to the corresponding role-play in the app.
 
-Choose from **58 scenarios across 7 areas of life**, follow a personalized recommendation, or describe your own situation. The interface and practice content are available in **English and Simplified Chinese**.
+Choose from **63 scenarios across 7 areas of life**, follow a personalized recommendation, or describe your own situation. The interface and practice content are available in **English and Simplified Chinese**.
 
 Text practice starts with at least 12 learner turns. Continue the same conversation in eight-turn segments, keeping its history and commitments; you decide when to end and debrief.
 
