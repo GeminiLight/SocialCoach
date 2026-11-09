@@ -13,8 +13,8 @@ export const maxDuration = 180;
  */
 export async function POST(req: Request) {
   try {
-    checkRateLimit(req);
     const body = await readTaskBody(req,TaskInputSchemas["assess"]);
+    checkRateLimit(req);
     const input = body;
     return taskStream(async(onDelta,signal) => {
       const started=Date.now();

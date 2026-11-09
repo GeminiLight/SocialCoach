@@ -9,8 +9,8 @@ export const maxDuration = 60;
 
 export async function POST(req: Request) {
   try {
-    checkRateLimit(req);
     const body = await readTaskBody(req,TaskInputSchemas["roleplay"]);
+    checkRateLimit(req);
     const input = body;
     return taskStream((onDelta,signal) => runRoleplay(input, taskLLM(serverLLM,"roleplay",signal,event=>console.info("[model_task]",event),body.lang), roleplayModel(input,FAST_MODEL,SMART_MODEL), onDelta),{signal:req.signal});
   } catch (e) {

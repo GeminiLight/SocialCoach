@@ -27,9 +27,26 @@ export function continuePractice(s: Pick<Session, "scenario" | "turnLimit" | "me
   };
 }
 
-/** Match an actual contiguous quotation, never fuzzy-match a different claim. */
-export function hasQuote(quote: unknown, texts: string[]): quote is string {
+/** Roughly how much content a span carries: one per CJK character, two per Latin word or number. */
+function quoteWeight(text: string): number {
+  const cjk = text.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu)?.length ?? 0;
+  const words = text.match(/[\p{L}\p{N}]+/gu)?.filter((w) => !/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(w)).length ?? 0;
+  return cjk + words * 2;
+}
+/** Evidence needs a phrase, not a lone character or word; a whole short reply ("不行", "No.") still counts. */
+export const MIN_QUOTE_WEIGHT = 4;
+
+/** Any non-empty contiguous span. Only for checking that words *attributed* in prose really occur; never as evidence. */
+export function appearsVerbatim(quote: unknown, texts: string[]): quote is string {
   return typeof quote === "string" && quote.trim().length > 0 && texts.some((text) => text.includes(quote.trim()));
+}
+
+/** Evidence: an actual contiguous quotation with enough content to stand on its own. */
+export function hasQuote(quote: unknown, texts: string[]): quote is string {
+  if (typeof quote !== "string") return false;
+  const q = quote.trim(), weight = quoteWeight(q);
+  if (!weight) return false;
+  return texts.some((text) => text.includes(q) && (weight >= MIN_QUOTE_WEIGHT || weight === quoteWeight(text)));
 }
 
 /** These bins describe original goal attainment only, never communication skill. */

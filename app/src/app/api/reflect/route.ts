@@ -9,8 +9,8 @@ export const maxDuration = 90;
 
 export async function POST(req: Request) {
   try {
-    checkRateLimit(req);
     const body = await readTaskBody(req,TaskInputSchemas["reflect"]);
+    checkRateLimit(req);
     const input = body;
     if(body.responseFormat==='json')return Response.json({reply:await runReflect(input,taskLLM(serverLLM,'reflect',req.signal,event=>console.info('[model_task]',event),body.lang),FAST_MODEL,undefined,req.signal)});
     return taskStream((onDelta,signal) => runReflect(input, taskLLM(serverLLM,"reflect",signal,event=>console.info("[model_task]",event),body.lang), FAST_MODEL, onDelta),{signal:req.signal});

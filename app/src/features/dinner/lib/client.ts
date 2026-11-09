@@ -10,6 +10,10 @@ import { byokConfig } from '@/lib/byok';
 import type { DinnerInput } from './director';
 import { scenarios } from './content';
 import { validateReply } from './engine';
+import { pick } from '@/lib/i18n';
+
+const offline = { zh: '看起来断网了，连上网络后再试。', en: 'You seem to be offline. Reconnect and try again.' };
+const unavailable = { zh: '这一轮回复暂时没有生成，请重试。', en: 'This reply could not be generated. Please retry.' };
 
 export async function directDinner(input: DinnerInput, signal: AbortSignal) {
   const own = byokConfig();
@@ -21,15 +25,15 @@ export async function directDinner(input: DinnerInput, signal: AbortSignal) {
     return runDinner(input, taskLLM(makeByokLLM(own),"dinner",signal,undefined,input.lang), own.fastModel.trim(), signal);
   }
   const response = await fetch('/api/dinner/direct', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept-Language': input.lang },
     body: JSON.stringify(input), signal,
   }).catch(error => {
     if (signal.aborted) throw error;
-    throw new DinnerRequestError('Connection failed', 0, 'network');
+    throw new DinnerRequestError(pick(offline, input.lang), 0, 'network');
   });
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
-    throw new DinnerRequestError(body.error || 'Reply unavailable', response.status, body.modelIssue);
+    throw new DinnerRequestError(body.error || pick(unavailable, input.lang), response.status, body.modelIssue);
   }
   return validateReply(await response.json(), scenarios.find(s => s.id === input.scenarioId)!);
   });

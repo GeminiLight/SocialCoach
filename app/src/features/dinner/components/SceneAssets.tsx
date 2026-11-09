@@ -82,7 +82,7 @@ function WorkArtwork() {
   return <mesh position={[0,3.55,-4.972]}><planeGeometry args={[3.84,1.77]}/><meshStandardMaterial map={local} roughness={1}/></mesh>;
 }
 
-export function AssetRoom({p,world,scenario,lang,paused,onEvidence,surfaces}:{p:Palette;world:World;scenario:Scenario;lang:Lang;paused:boolean;onEvidence:()=>void;surfaces:{landscape:import('three').Texture|null;familyArt:import('three').Texture|null}}) {
+export function AssetRoom({p,world,scenario,lang,paused,onEvidence,familyArt}:{p:Palette;world:World;scenario:Scenario;lang:Lang;paused:boolean;onEvidence:()=>void;familyArt:import('three').Texture|null}) {
   const kind=scenario.space??scenario.id;
   const asset=useSceneAsset(`room-${kind}`);
   const instance=useMemo(()=>instantiateAsset(asset.scene,p),[asset.scene,p]);
@@ -102,7 +102,7 @@ export function AssetRoom({p,world,scenario,lang,paused,onEvidence,surfaces}:{p:
     <primitive object={instance.scene} dispose={null}/>
     {['family','school','office'].includes(kind)&&<RoomWindows p={p} kind={kind} time={scenario.time}/>}
     {kind==='work'&&<WorkArtwork/>}
-    {kind==='family'&&surfaces.familyArt&&<mesh position={[4,2.7,-5.028]}><planeGeometry args={[.70,.58]}/><meshStandardMaterial map={surfaces.familyArt} roughness={1}/></mesh>}
+    {kind==='family'&&familyArt&&<mesh position={[4,2.7,-5.028]}><planeGeometry args={[.70,.58]}/><meshStandardMaterial map={familyArt} roughness={1}/></mesh>}
     {kind==='elevator'&&<>
       <Sign at={[0,4.72,-2.077]} size={[1.36,.36]} lines={[l('12 F','12 F')]} p={p} lang={lang} dark/>
       <Sign at={[-3.76,3.55,-2.182]} size={[2.0,.92]} lines={[l('12  项目组','12  PROJECT TEAM'),l('会议室  ←','MEETING ROOMS  ←'),l('等候区  →','LOBBY  →')]} p={p} lang={lang}/>

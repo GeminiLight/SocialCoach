@@ -10,8 +10,8 @@ export const maxDuration = 120;
 
 export async function POST(req: Request) {
   try {
-    checkRateLimit(req);
     const body = await readTaskBody(req,TaskInputSchemas["rehearse"]);
+    checkRateLimit(req);
     return NextResponse.json(await runRehearse(body, taskLLM(serverLLM,"rehearse",req.signal,event=>console.info("[model_task]",event),body.lang), FAST_MODEL));
   } catch (e) {
     return fail(e);

@@ -151,4 +151,4 @@ Community and feedback → Contributing → Contributors → Star history → Fr
 
 - **B5 截图**是当前 README 最大的缺口。banner 解决「第一眼有设计感」，但决定是否试用看的是复盘页长什么样。
 - **B6 LICENSE 缺失**是实际采用阻碍：团队与公司看到无许可证仓库会直接放弃。需要用户选定。
-- **B7** README 两处 `REPLACE-WITH-YOUR-URL` 必须在推送前替换，否则第一个徽章点下去 404。注：`socialcoach.vercel.app` 已被他人占用。→ [80-known-pitfalls.md](./80-known-pitfalls.md#部署)
+- **B7** README 两处 `REPLACE-WITH-YOUR-URL` 必须在推送前替换，否则第一个徽章点下去 404。注：`socialcoach.vercel.app` 已被他人占用。→ [80-known-pitfalls.md](./80-known-pitfalls.md#构建--部署)

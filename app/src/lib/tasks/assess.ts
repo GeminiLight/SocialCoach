@@ -118,7 +118,7 @@ export async function runAssess(input: AssessInput, llm: LLM, smartModel: string
     for(const item of [...list(raw.ratings),...list(raw.strengths),...list(raw.weaknesses)])if(item&&typeof item==='object')item.evidence=literal(item.evidence,learnerLines)!;
     for(const item of list(raw.alternatives))if(item&&typeof item==='object')item.original=literal(item.original,learnerLines)!;
     const quoteErrors:string[]=[];
-    if(!hasQuote(raw.verdictEvidence,learnerLines))quoteErrors.push(`verdictEvidence must be a contiguous literal learner quotation, not NPC dialogue: ${JSON.stringify(raw.verdictEvidence)}. Learner source lines: ${JSON.stringify(learnerLines.length<=8?learnerLines:[...learnerLines.slice(0,3),...learnerLines.slice(-5)])}`);
+    if(!hasQuote(raw.verdictEvidence,learnerLines))quoteErrors.push(`verdictEvidence must be a contiguous literal learner quotation (a full phrase, not a lone word), not NPC dialogue: ${JSON.stringify(raw.verdictEvidence)}. Learner source lines: ${JSON.stringify(learnerLines.length<=8?learnerLines:[...learnerLines.slice(0,3),...learnerLines.slice(-5)])}`);
     if(!Array.isArray(raw.objectiveResults)||raw.objectiveResults.length!==scenario.objectives.length)throw new Error(`objectiveResults must have ${scenario.objectives.length} items, in initial objective order.`);
     for(const [index,result] of raw.objectiveResults.entries()){
       if(!result||result.index!==index||!['met','unmet','unknown'].includes(result.status)||!str(result.reason))throw new Error(`objectiveResults[${index}] needs its index, status and a reason.`);
@@ -133,7 +133,7 @@ export async function runAssess(input: AssessInput, llm: LLM, smartModel: string
           const body=label?literal(label[2],lines):undefined;
           if(!hasQuote(quote,lines)&&label&&scenario.characters.some(c=>c.id!==learnerCharacterId&&[c.id,c.name.zh,c.name.en].includes(label[1].trim()))&&hasQuote(body,lines))quote=result.npcEvidence=body.trim();
         }
-        if(!hasQuote(quote,lines))quoteErrors.push(`objectiveResults[${index}].${field} is not a contiguous literal quote: ${JSON.stringify(quote)}. Do not join fragments or alter punctuation. Source lines: ${JSON.stringify(lines.length<=8?lines:[...lines.slice(0,3),...lines.slice(-5)])}`);
+        if(!hasQuote(quote,lines))quoteErrors.push(`objectiveResults[${index}].${field} is not a contiguous literal quote: ${JSON.stringify(quote)}. Quote a full phrase, not a lone word or character; do not join fragments or alter punctuation. Source lines: ${JSON.stringify(lines.length<=8?lines:[...lines.slice(0,3),...lines.slice(-5)])}`);
       }
     }
     if(quoteErrors.length)throw new Error(quoteErrors.join('\n'));

@@ -197,9 +197,12 @@ function httpError(e: unknown): { status: number; message: string } {
   return { status: 500, message: e instanceof Error ? e.message : "Unknown error" };
 }
 
-export function toHttpError(e: unknown): { status: number; message: string; modelIssue?: ModelIssue;retryAt?:number } {
+export function toHttpError(e: unknown): { status: number; message: string; modelIssue?: ModelIssue;retryAt?:number;serverWide:boolean } {
   const result = httpError(e);
-  const issue = modelIssue(e) ?? ((e instanceof Anthropic.APIError || e instanceof OpenAI.APIError) && e.status === 400 ? "model" : undefined);
+  const known = modelIssue(e);
+  // An unexplained 400 may be a model mismatch, but it may equally be this one
+  // request's content. Tell this visitor, but never disable the shared model for everyone.
+  const issue = known ?? ((e instanceof Anthropic.APIError || e instanceof OpenAI.APIError) && e.status === 400 ? "model" : undefined);
   // Model errors expose only a safe category. Provider payloads can echo keys.
-  return { ...result, message: issue ? `Model connection: ${issue}.` : result.message.replaceAll(API_KEY || "\u0000", "[redacted]"), modelIssue: issue,...(e instanceof LLMError&&Number.isFinite(e.retryAt)?{retryAt:e.retryAt}:{}) };
+  return { ...result, message: issue ? `Model connection: ${issue}.` : result.message.replaceAll(API_KEY || "\u0000", "[redacted]"), modelIssue: issue,serverWide:!!known,...(e instanceof LLMError&&Number.isFinite(e.retryAt)?{retryAt:e.retryAt}:{}) };
 }

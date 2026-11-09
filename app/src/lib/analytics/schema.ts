@@ -10,7 +10,8 @@ import { z } from "zod";
  * Rows are the scarce resource (a Feishu table holds 20,000), so a new
  * question is answered with a field on an existing event wherever it can be.
  */
-const ts = z.number().int().min(0);
+/** Any real clock reading (≤ 2100); the table month comes from the server, not this value. */
+const ts = z.number().int().min(0).max(4_102_444_800_000);
 const session = z.string().regex(/^[a-z0-9-]{4,40}$/);
 /** A corpus id, or the literal `custom` — never the text of a generated scenario. */
 const scenario = z.string().regex(/^[a-z0-9-]{1,80}$/);

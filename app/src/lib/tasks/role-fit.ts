@@ -1,6 +1,6 @@
 import { jsonCall, LLMError, type LLM } from "@/lib/llm-core";
 import { pick } from "@/lib/prompts";
-import { hasQuote } from "@/lib/practice-policy";
+import { appearsVerbatim } from "@/lib/practice-policy";
 import type { Scenario } from "@/data/corpus/types";
 import type { Lang } from "@/data/taxonomy";
 import type { Profile } from "@/lib/types";
@@ -35,10 +35,10 @@ Return ONLY JSON {"fits":[{"scenarioId":"...","characterId":"...","fit":"compati
     const r = rows[0];
     const ids = (playable(s).length ? playable(s) : [s.characters[0]]).map((c) => c.id);
     if (rows.length !== 1 || !ids.includes(r.characterId) || !["compatible", "uncertain", "conflict"].includes(r.fit) || typeof r.reason !== "string") throw new LLMError(pick(invalidFit, lang), 502, true);
-    if (r.fit === "conflict" && !hasQuote(r.evidence, [profile.bio])) throw new LLMError(pick(invalidFit, lang), 502, true);
+    if (r.fit === "conflict" && !appearsVerbatim(r.evidence, [profile.bio])) throw new LLMError(pick(invalidFit, lang), 502, true);
     // Compatibility is also a factual claim. An unsupported confident label
     // must not outrank candidates grounded in the learner's actual biography.
-    if(r.fit==='compatible'&&!hasQuote(r.evidence,[profile.bio]))return {...r,fit:'uncertain',evidence:'',reason:pick({zh:'当前背景不足以确认这个练习身份，请先核对角色与可用条件。',en:'Your background does not establish this role. Check the relationship and available authority first.'},lang)};
+    if(r.fit==='compatible'&&!appearsVerbatim(r.evidence,[profile.bio]))return {...r,fit:'uncertain',evidence:'',reason:pick({zh:'当前背景不足以确认这个练习身份，请先核对角色与可用条件。',en:'Your background does not establish this role. Check the relationship and available authority first.'},lang)};
     return r;
   });
 }

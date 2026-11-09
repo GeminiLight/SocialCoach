@@ -89,7 +89,7 @@ app/ 缺 OG 图  JSON-LD  hreflang(zh/en)
 
 ## 前置依赖
 
-C 阶段开工前需要 Stage B 收口：**必须先有线上地址**（`metadataBase`、canonical、sitemap 都要绝对 URL），且 `socialcoach.vercel.app` 已被占用。→ [80-known-pitfalls.md](./80-known-pitfalls.md#部署)
+C 阶段开工前需要 Stage B 收口：**必须先有线上地址**（`metadataBase`、canonical、sitemap 都要绝对 URL），且 `socialcoach.vercel.app` 已被占用。→ [80-known-pitfalls.md](./80-known-pitfalls.md#构建--部署)
 
 ## 遗留讨论
 

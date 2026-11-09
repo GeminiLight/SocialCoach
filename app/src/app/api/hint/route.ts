@@ -10,8 +10,8 @@ export const maxDuration = 30;
 
 export async function POST(req: Request) {
   try {
-    checkRateLimit(req);
     const body = await readTaskBody(req,TaskInputSchemas["hint"]);
+    checkRateLimit(req);
     return NextResponse.json(await runHint(body, taskLLM(serverLLM,"hint",req.signal,event=>console.info("[model_task]",event),body.lang), FAST_MODEL));
   } catch (e) {
     return fail(e);
