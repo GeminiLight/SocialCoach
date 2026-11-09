@@ -10,8 +10,8 @@ export const maxDuration = 60;
 
 export async function POST(req: Request) {
   try {
-    checkRateLimit(req);
     const body = await readTaskBody(req,TaskInputSchemas["pattern"]);
+    checkRateLimit(req);
     return NextResponse.json(await runPattern(body, taskLLM(serverLLM,"pattern",req.signal,event=>console.info("[model_task]",event),body.lang), SMART_MODEL));
   } catch (e) {
     return fail(e);

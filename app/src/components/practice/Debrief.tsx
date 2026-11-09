@@ -310,7 +310,7 @@ function Transcript({ session, title }: { session: Session; title?: string }) {
           const mine = m.role === "learner";
           return (
             <li key={m.id} className={clsx("text-[14px] leading-relaxed", mine && "pl-6")}>
-              <span className={clsx("font-semibold mr-1", mine ? "text-accent-deep" : "text-ink-2")}>{mine ? (lang === "zh" ? "你" : "You") : c?.name[lang]}：</span>
+              <span className={clsx("font-semibold mr-1", mine ? "text-accent-deep" : "text-ink-2")}>{mine ? pick({ zh: "你", en: "You" }, lang) : c?.name[lang]}{pick({ zh: "：", en: ": " }, lang)}</span>
               <span className={mine ? "text-ink" : "text-ink-2"}>{m.text}</span>
             </li>
           );

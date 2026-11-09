@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import { buildVersion, deploymentName, feishuAppConfigured, feishuBaseToken, feishuCall } from "@/lib/feishu";
 import type { TrackBatch, TrackEvent } from "./schema";
 
@@ -186,24 +185,15 @@ export async function resolveTable(month: string): Promise<string> {
 }
 
 /**
- * Write one client flush. Events are grouped by month (a flush that straddles
- * midnight on the first is the only case with two groups), and the batch id is
- * Feishu's idempotency key, so a beacon the browser retried lands once.
+ * Write one client flush. The table is chosen by the server's receive month,
+ * never the client clock: a forged or skewed `ts` cannot create tables, and one
+ * flush is one write, so the batch id stays Feishu's idempotency key and a
+ * beacon the browser retried lands once. Each row keeps its own event time.
  */
-export async function deliverEvents(batch: TrackBatch): Promise<void> {
-  const groups = new Map<string, TrackEvent[]>();
-  for (const e of batch.events) {
-    const m = monthOf(e.ts);
-    groups.set(m, [...(groups.get(m) ?? []), e]);
-  }
-  let first = true;
-  for (const [month, events] of groups) {
-    const table = encodeURIComponent(await resolveTable(month));
-    const token = first ? batch.id : randomUUID();
-    first = false;
-    await feishuCall("analytics_write", `/bitable/v1/apps/${app()}/tables/${table}/records/batch_create?client_token=${encodeURIComponent(token)}`, {
-      method: "POST",
-      body: JSON.stringify({ records: events.map((e) => ({ fields: toFields(e, batch) })) }),
-    });
-  }
+export async function deliverEvents(batch: TrackBatch, now = Date.now()): Promise<void> {
+  const table = encodeURIComponent(await resolveTable(monthOf(now)));
+  await feishuCall("analytics_write", `/bitable/v1/apps/${app()}/tables/${table}/records/batch_create?client_token=${encodeURIComponent(batch.id)}`, {
+    method: "POST",
+    body: JSON.stringify({ records: batch.events.map((e) => ({ fields: toFields(e, batch) })) }),
+  });
 }

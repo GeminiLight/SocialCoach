@@ -4,12 +4,19 @@ import { readTaskBody } from "@/lib/task-input";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { reserveSharedBudget } from "@/lib/shared-budget";
 import { pick } from "@/lib/i18n";
+import { serverRequiresByok } from "@/lib/llm";
+
+/** Speech that would spend the shared model key obeys the same BYOK-only switch as every model route. */
+const availableSpeech = () => {
+  const configuration = speechConfiguration();
+  return configuration && (process.env.NPC_SPEECH_API_KEY || !serverRequiresByok()) ? configuration : null;
+};
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
 export async function GET() {
-  return NextResponse.json({ configured: !!speechConfiguration() }, { headers: { "Cache-Control": "no-store" } });
+  return NextResponse.json({ configured: !!availableSpeech() }, { headers: { "Cache-Control": "no-store" } });
 }
 
 /** Only synthesize the supplied line. Audio and credentials are never persisted. */
@@ -21,9 +28,9 @@ export async function POST(request: Request) {
   let pcm: AsyncGenerator<Uint8Array> | undefined;
   const controller = new AbortController();
   try {
-    checkRateLimit(request);
     const input = await readTaskBody(request, SpeechInputSchema);
-    const configuration = speechConfiguration();
+    checkRateLimit(request);
+    const configuration = availableSpeech();
     if (!configuration) return NextResponse.json({ error: pick({ zh: "自然语音暂未接入。", en: "Natural speech is not connected." }, lang) }, { status: 503 });
     const signal = AbortSignal.any([request.signal, controller.signal, AbortSignal.timeout(20_000)]);
     const payload = speechPayload(input);

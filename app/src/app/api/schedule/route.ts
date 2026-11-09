@@ -10,8 +10,8 @@ export const maxDuration = 120;
 
 export async function POST(req: Request) {
   try {
-    checkRateLimit(req);
     const body = await readTaskBody(req,TaskInputSchemas["schedule"]);
+    checkRateLimit(req);
     const out = await runSchedule(body, taskLLM(serverLLM,"schedule",req.signal,event=>console.info("[model_task]",event),body.lang), FAST_MODEL);
     return NextResponse.json(out);
   } catch (e) {

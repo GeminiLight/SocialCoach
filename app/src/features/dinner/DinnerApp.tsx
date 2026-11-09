@@ -14,7 +14,7 @@ import {GitHubLink} from '@/components/GitHubLink';
 import {SlowModelNotice} from '@/components/SlowModelNotice';
 import {M} from '@/lib/model-copy';
 import {useDinnerUiLanguage} from '@/lib/ui-language';
-import {createDinnerStorage,DINNER_SAVE_KEY,type DinnerSaveIssue} from './storage';
+import {createDinnerStorage,DINNER_SAVE_KEY,hasUnreviewedTurns,type DinnerSaveIssue} from './storage';
 import {createSaveScheduler} from './lib/saveScheduler';
 import {directDinner} from './lib/client';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
@@ -51,8 +51,10 @@ function readInitial() {
 }
 function requestedOpening(){const id=requestedScene();if(!id)return;const raw=new URLSearchParams(window.location.search).get('opening');return variants.find(v=>v.scene===id&&v.id===raw)?.id;}
 function freshRequest(){return !!requestedScene()&&new URLSearchParams(window.location.search).get('restart')==='1';}
-function initial(lang:Lang){
+function initial(lang:Lang):{save:Save|null;corrupt:string|null;pendingRestart?:boolean}{
   const existing=readInitial();if(existing.corrupt||!freshRequest())return existing;
+  // Keep the current practice and open the scene picker instead: it already warns and offers export.
+  if(hasUnreviewedTurns(existing.save))return {...existing,pendingRestart:true};
   const id=requestedScene()!,variant=variantFor(id,requestedOpening());const scene=storyScenario(scenarios.find(s=>s.id===id)!,variant);
   return {save:SaveSchema.parse({version:1,contentSnapshot:captureDinnerContent(id,variant.id,DEFAULT_DINNER_TURNS,BRIEF_VERSION),briefVersion:BRIEF_VERSION,scenarioId:id,variantId:variant.id,messages:[opening(scene,lang,variant.id)],started:false,complete:false,lang,draft:''}),corrupt:null};
 }
@@ -108,7 +110,7 @@ export default function App() {
   const storageError=saveIssue!==null;
   const [corrupt,setCorrupt]=useState<string|null>(boot.corrupt);
   const [selectedId,setSelectedId]=useState<string|null>(null);
-  const [modal,setModal]=useState<'scenes'|'report'|'history'|'about'|'brief'|'evidence'|'controls'|null>(()=>requestedScene()&&!freshRequest()?'scenes':null);
+  const [modal,setModal]=useState<'scenes'|'report'|'history'|'about'|'brief'|'evidence'|'controls'|null>(()=>requestedScene()&&(!freshRequest()||boot.pendingRestart)?'scenes':null);
   const [walkingOpen,setWalkingOpen]=useState(false);
   const [actionsFor,setActionsFor]=useState<string|null>(null);
   const [suggestionsOpen,setSuggestionsOpen]=useState(false);

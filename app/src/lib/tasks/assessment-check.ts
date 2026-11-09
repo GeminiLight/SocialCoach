@@ -1,7 +1,7 @@
 import {z} from 'zod';
 import {extractJSON,type LLM} from '@/lib/llm-core';
 import {scenarioBlock} from '@/lib/prompts';
-import {hasQuote} from '@/lib/practice-policy';
+import {appearsVerbatim} from '@/lib/practice-policy';
 import type {AssessInput} from './types';
 import type {Report} from '@/lib/types';
 import type {Theory,Case} from '@/data/corpus/types';
@@ -71,7 +71,7 @@ export async function checkAssessment(report:Report,input:AssessInput,llm:LLM,mo
   const pattern=/你(?:说(?:过|了)?|写(?:过|下)?|对[^「“。！？]{1,12}|的(?:话|原话|发言|表达))[^「“。！？]{0,12}[「“]([^」”]+)[」”]|(?:you (?:said|wrote|told|asked)|your (?:words|statement|reply))[^“".!?]{0,18}[“"]([^”"]+)[”"]/gi;
   for(const match of claim.text.matchAll(pattern)){
    const prefix=claim.text.slice(0,match.index).split(/[。！？.!?\n]/).at(-1)??'';
-   if(/如果|假设|假如|\bif\b|\bcould\b|\bwould\b/i.test(prefix)||hasQuote(match[1]??match[2],learnerLines))continue;
+   if(/如果|假设|假如|\bif\b|\bcould\b|\bwould\b/i.test(prefix)||appearsVerbatim(match[1]??match[2],learnerLines))continue;
    result.approved=false;result.issues.push({field:claim.field,reason:`The report explicitly attributes altered or joined words to the learner: ${JSON.stringify(match[1]??match[2])}. Use an exact contiguous quotation from the transcript, or refer to already-verified evidence without a new quotation.`});
   }
  }

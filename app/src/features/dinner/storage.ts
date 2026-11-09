@@ -2,6 +2,8 @@ import {storageWriteCoordinator} from '@/lib/storage-write';
 export const DINNER_SAVE_KEY = 'socialcoach-dinner-v1';
 export const DINNER_LAUNCH_KEY = 'socialcoach.3d-launch.v1';
 export type DinnerSaveIssue='conflict'|'quota'|'unavailable';
+/** Unreviewed turns live only in this save; a link must never discard them silently. */
+export const hasUnreviewedTurns=(save:{reviewSessionId?:string;messages:{role:string}[]}|null|undefined)=>!!save&&!save.reviewSessionId&&save.messages.some(m=>m.role==='user');
 
 /** Independent writer for the 3D record. External restores/deletions invalidate
  * this snapshot; camera changes must never overwrite a newer practice. */

@@ -5,7 +5,7 @@ import { Check, Download, Monitor, Moon, Pencil, Sun, Trash2, ChevronRight, Hard
 import { SkillTag } from "@/components/SkillBits";
 import { Shell } from "@/components/Shell";
 import { GitHubLink } from "@/components/GitHubLink";
-import { dinnerBackup, DINNER_SAVE_KEY, DINNER_LAUNCH_KEY } from "@/features/dinner/storage";
+import { DINNER_SAVE_KEY, DINNER_LAUNCH_KEY } from "@/features/dinner/storage";
 import { Button, Chip, Page, SectionTitle, Sheet, Switch, useToast } from "@/components/ui";
 import { useModelAccess } from "@/lib/model-access";
 import { M } from "@/lib/model-copy";
@@ -28,17 +28,12 @@ export default function Settings() {
   const modelAccess = useModelAccess();
   const {
     profile,
-    proficiency,
-    sessions,
     settings,
     saveIssue,
     setSettings,
     setLang,
     updateProfile,
     reset,
-    customScenarios,
-    bookmarks,
-    practiceDays,
   } = useApp();
   const toast = useToast((s) => s.show);
   const [edit, setEdit] = useState(false);
@@ -51,22 +46,13 @@ export default function Settings() {
   const [bio, setBio] = useState(profile?.bio ?? "");
   if (!profile) return null;
 
-  const exportData = () => {
-    const blob = new Blob(
-      [
-        JSON.stringify(
-          { profile, proficiency, sessions, customScenarios, bookmarks, practiceDays, dinner3d: dinnerBackup(), avatar: { seed: settings.avatarSeed, portrait: settings.avatarPortrait, image: settings.avatarImage }, exportedAt: new Date().toISOString() },
-          null,
-          2,
-        ),
-      ],
-      { type: "application/json" },
-    );
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `socialcoach-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(a.href);
+  const exportData = async () => {
+    try {
+      const [{ downloadArchive }, { parseArchive }] = await Promise.all([import("@/lib/backup"), import("@/lib/archive")]);
+      downloadArchive(parseArchive(useApp.getState()), `socialcoach-${new Date().toISOString().slice(0, 10)}.json`);
+    } catch {
+      toast(pick({ zh: "导出失败，档案未改动。请稍后重试。", en: "Export failed. Your records are unchanged. Please retry." }, lang));
+    }
   };
 
   const toggleGoal = (id: SkillId) => {
@@ -229,7 +215,7 @@ export default function Settings() {
                 <Switch checked={settings.telemetry !== false} onChange={(v) => setSettings({ telemetry: v })} label={t(lang, "st_telemetry")} />
               </Row>
               <button
-                onClick={exportData}
+                onClick={() => void exportData()}
                 className="press w-full flex items-center gap-3 px-4 min-h-16 py-3.5 text-left text-[14px] font-medium"
               >
                 <Download size={17} className="text-ink-3" />
@@ -352,10 +338,17 @@ export default function Settings() {
       <Sheet open={confirm} onClose={() => setConfirm(false)} title={t(lang, "st_reset")}>
         <div className="flex flex-col gap-4 pt-2">
           <p className="text-[14px] text-ink-2 leading-relaxed">{t(lang, "st_reset_confirm")}</p>
+          {saveIssue === "conflict" && (
+            <p role="status" className="text-[13px] text-ink-2 leading-relaxed">
+              {pick({ zh: "另一个窗口正在保存档案。请关闭其他 SocialCoach 窗口后再重置，以免只清除一部分。", en: "Another window is saving your records. Close other SocialCoach windows before resetting, so nothing is cleared halfway." }, lang)}
+            </p>
+          )}
           <Button
             block
             variant="danger"
+            disabled={saveIssue === "conflict"}
             onClick={() => {
+              if (useApp.getState().saveIssue === "conflict") return;
               try {
                 byok.clear();
                 localStorage.removeItem(DINNER_SAVE_KEY);

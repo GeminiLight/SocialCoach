@@ -4,8 +4,8 @@ import type { Lang } from "@/data/taxonomy";
 import { observeServerFailure } from "./server-model-observation";
 
 export function fail(e: unknown) {
-  const { status, message, modelIssue,retryAt } = toHttpError(e);
-  observeServerFailure(modelIssue);
+  const { status, message, modelIssue,retryAt,serverWide } = toHttpError(e);
+  if(serverWide)observeServerFailure(modelIssue);
   console.error("[api]", status, modelIssue ?? "task_error"); // Never log learner words or provider payloads.
   return NextResponse.json({ error: message, modelIssue: modelIssue ?? null,...(retryAt?{retryAt}:{}) }, { status });
 }
@@ -32,7 +32,7 @@ export function taskStream<T>(run:(onDelta:(d:string)=>void,signal:AbortSignal)=
    // without exposing the draft, then keep idle proxies alive during checks.
    if(opts.heartbeat){emit('\n');heartbeat=setInterval(()=>emit('\n'),10000);}
    try{const result=await run(emit,signal);if(opts.final)emit(`\n@@final\n${JSON.stringify(result)}`);}
-   catch(error){if(!cancelled&&!signal.aborted){const {status,message,modelIssue,retryAt}=toHttpError(error);observeServerFailure(modelIssue);emit(`\n@@error\n${JSON.stringify({error:message,status,modelIssue:modelIssue??null,...(retryAt?{retryAt}:{})})}`);}}
+   catch(error){if(!cancelled&&!signal.aborted){const {status,message,modelIssue,retryAt,serverWide}=toHttpError(error);if(serverWide)observeServerFailure(modelIssue);emit(`\n@@error\n${JSON.stringify({error:message,status,modelIssue:modelIssue??null,...(retryAt?{retryAt}:{})})}`);}}
    finally{clearInterval(heartbeat);if(!cancelled)controller.close();}
   },
   cancel(){cancelled=true;clearInterval(heartbeat);abort.abort();},

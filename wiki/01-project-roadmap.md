@@ -90,7 +90,7 @@
 | # | 功能 | 状态 | 备注 |
 |---|---|---|---|
 | B1 | 核心定位陈述（敌人是「建议」；知道≠做到；A/B 客户分层） | ✅ | → [00-product-proposal](./00-product-proposal.md#产品定位) |
-| B2 | 主句定稿并三处对齐 | ✅ | README / `layout.tsx` / `manifest.webmanifest` |
+| B2 | 主句定稿并四处对齐 | ✅ | README / `layout.tsx` / `manifest.webmanifest` / `site/content.mjs` |
 | B3 | README 按开源产品惯例重排 | ✅ | 2026-10-05 中英以“开始一场练习”为首个体验章节，接 3D / 场景 / 核心功能，SEL 学习依据后置；本地运行单独命名，3D 截图中英更新，News 保留四个发布节点，新增 2026-10-08 社交知识视频上线。维护规则见 [README 结构](./11-stage-b.md#b3-readme-结构)。2026-09-21 基础精修 → [评审](./reviews/review-2026-09-21-readme.md) |
 | B4 | 品牌 banner（明暗双版 SVG，色值由 `globals.css` OKLCH 精确换算） | ✅ | `docs/banner.svg` / `banner-dark.svg` |
 | B5 | 产品截图（首页 / 场景目录 / 对话中 / 复盘 / 今日推荐） | ✅ | `site/scripts/screenshots.mjs` 对线上正式版自动拍摄，中英各五张，存 `docs/screenshots/` 与 `site/assets/`；官网四步流程各配对应截图 |
@@ -120,7 +120,7 @@
 | 日期 | 里程碑 | 状态 |
 |---|---|---|
 | 2026-09-03 | Stage A 全量交付（首个 commit `bae956f`） | ✅ |
-| 2026-09-03 | 定位定稿 + 主句三处对齐 + README 重排 + banner | ✅ |
+| 2026-09-03 | 定位定稿 + 主句三处对齐（后扩为四处，见 B2） + README 重排 + banner | ✅ |
 | 2026-09-03 | wiki 体系建立 | 🚧 |
 | — | 线上可访问 + LICENSE + 截图（Stage B 收口） | 📋 |
 | — | 236 个落地页可被 LLM 爬虫读到（Stage C 收口） | 📋 |

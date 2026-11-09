@@ -2,7 +2,7 @@ import {z} from 'zod';
 import {extractJSON,type LLM} from '../llm-core';
 import type {DebriefChatInput} from '../debrief-chat';
 import type {DebriefReply} from '../types';
-import {hasQuote} from '../practice-policy';
+import {appearsVerbatim} from '../practice-policy';
 
 /** A literal, reproduced presentation violation need not spend a model check.
  * Only explicit proposed quoted dialogue is recognized; real transcript quotes
@@ -11,7 +11,7 @@ import {hasQuote} from '../practice-policy';
 export function proposedDialogueInAnswer(input:DebriefChatInput,reply:DebriefReply):boolean{
  const pattern=/(?:for example|something like|you (?:could|can|might) say|例如|比如|可以(?:试着)?说|先说|再说|这样说)[^\n。.!?「“"'‘]{0,30}(?:「([^」]+)」|“([^”]+)”|"([^"]+)"|‘([^’]+)’|'((?:[^']|'(?=\p{L}))+?)'(?=$|[\s.,;:!?]))/giu;
  const spoken=input.transcript.map(m=>m.text);
- return [...reply.answer.matchAll(pattern)].some(match=>!hasQuote(match.slice(1).find(Boolean),spoken));
+ return [...reply.answer.matchAll(pattern)].some(match=>!appearsVerbatim(match.slice(1).find(Boolean),spoken));
 }
 
 const CheckSchema=z.object({approved:z.boolean(),issues:z.array(z.string().trim().min(1).max(700)).max(4)}).superRefine((value,ctx)=>{

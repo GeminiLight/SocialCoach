@@ -382,9 +382,12 @@ export function Chat({ session }: { session: Session }) {
     if (!canUseModel) return;
     if (hintBusy || busy) return;
     setHintBusy(true);
+    const askedAt = session.messages.at(-1)?.id;
     try {
       const { hint } = await hintApi({ practiceIntent:session.practiceIntent,scenario: sc, learnerCharacterId: session.learnerCharacterId, messages: session.messages, lang, learnerName });
-      if (useApp.getState().sessions.find((s) => s.id === session.id)?.status === "active") {
+      const live = useApp.getState().sessions.find((s) => s.id === session.id);
+      // A hint is for the moment it was asked; once anyone has spoken since, it is stale.
+      if (live?.status === "active" && live.messages.at(-1)?.id === askedAt) {
         appendMessage(session.id, { id: uid(), role: "coach", text: hint, ts: Date.now(), kind: "hint" });
       }
     } catch (e) {

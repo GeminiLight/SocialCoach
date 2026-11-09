@@ -30,8 +30,8 @@ export function BackupRestore(){
  const choose=async(file:File)=>{const ticket=++selection.current;setBackup(null);setError(null);setReady(false);try{if(file.size>20*1024*1024)throw Error('size');const {decodeBackup}=await import('@/lib/backup');const result=await decodeBackup(await file.text());if(ticket===selection.current)setBackup(result);}catch{if(ticket===selection.current)setError(pick(copy.error,lang));}};
  const prepare=async()=>{try{const {downloadArchive}=await import('@/lib/backup');downloadArchive(parseArchive(useApp.getState()));setReady(true);}catch{setError(pick(copy.error,lang));}};
  const restore=async()=>{if(!backup||!ready)return;try{
-  const {mergeArchives}=await import('@/lib/backup');
-  const current=parseArchive(useApp.getState()),archive=mode==='merge'?mergeArchives(current,backup.archive):backup.archive;
+  const {mergeArchives,restoredSettings}=await import('@/lib/backup');
+  const current=parseArchive(useApp.getState()),archive=mode==='merge'?mergeArchives(current,backup.archive):{...backup.archive,settings:restoredSettings(current.settings,backup)};
   const saved=await useApp.getState().restoreArchive(archive,mode==='replace');
   if(!saved){setError(pick({zh:'恢复结果尚未保存，设备中的原档案仍被保留。关闭预览，先处理顶部保存提示。',en:'The restored records have not been saved. The original device archive is retained. Close this preview and resolve the save notice at the top.'},lang));return;}
   setDinner(mode==='replace'?backup.dinner??null:null);setQuarantined(backup.dinnerOriginal??null);setBackup(null);setReady(false);setError(pick(copy.done,lang));

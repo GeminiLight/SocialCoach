@@ -203,7 +203,8 @@ export const useApp = create<AppState>()(
           // Changes are derived from verified recent observations. A model's
           // proposed reward cannot alter ability, including on legacy reports.
           creditedReport.deltas=Object.fromEntries(Object.entries(prof).filter(([k,v])=>v!==s.proficiency[k as SkillId]).map(([k,v])=>[k,+((v??2.5)-(s.proficiency[k as SkillId]??2.5)).toFixed(2)]));
-          const day = todayKey();
+          // Credit the day the learner practised; a debrief may arrive later, once a model is back.
+          const session=s.sessions.find(x=>x.id===id),day = todayKey(new Date(session?.endedAt??session?.startedAt??Date.now()));
           return {
             proficiency: prof,
             practiceDays: s.practiceDays.includes(day) ? s.practiceDays : [...s.practiceDays, day],

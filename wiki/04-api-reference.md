@@ -46,7 +46,7 @@
 
 ### NPC 语音 `GET /api/speech` / `POST /api/speech`（2026-10-08）
 
-GET 返回 `{configured:boolean}`，仅表示配置齐备，不证明音频生成可用。POST 接收 `{text:string,lang:"zh"|"en",voice:"白桦"|"苏打"|"茉莉"|"冰糖"|"Mia"|"Chloe"|"Milo"|"Dean",tone?:"neutral"|"firm"|"gentle",delivery?:"wav"|"pcm",stream?:boolean}`。台词 1–500 字符、未知字段拒绝，最终 assistant 消息保留原文。固定 `mimo-v2.5-tts`，不优化文字、不克隆声音。
+GET 返回 `{configured:boolean}`，仅表示配置齐备，不证明音频生成可用。未配置专用 `NPC_SPEECH_API_KEY`、借用部署模型密钥时，与模型接口一样受 `LLM_REQUIRE_BYOK` / 预算未配置约束，此时 GET 为 false、POST 503。POST 接收 `{text:string,lang:"zh"|"en",voice:"白桦"|"苏打"|"茉莉"|"冰糖"|"Mia"|"Chloe"|"Milo"|"Dean",tone?:"neutral"|"firm"|"gentle",delivery?:"wav"|"pcm",stream?:boolean}`。台词 1–500 字符、未知字段拒绝，最终 assistant 消息保留原文。固定 `mimo-v2.5-tts`，不优化文字、不克隆声音。
 
 默认 WAV 下载；`stream:true` 为试听收集上游 PCM SSE 后封装 WAV，附真实 `Server-Timing` / `X-Speech-Chunks`。练习使用 `delivery:"pcm"`，直接转发音频块，`audio/pcm;rate=24000;channels=1` / PCM16LE / 单声道，先验证真实首块再发成功响应，不等整段生成。`Server-Timing.speech_first` 为上游首块耗时，不能等同用户实际首声。流完成 / 断开取消上游并释放并发预留。
 
@@ -60,9 +60,9 @@ GET 返回 `{configured:boolean}`，仅表示配置齐备，不证明音频生�
 
 先只读核对中央共享预算：低于任何任务的最低预留返回 shared_quota，有效并发满返回 shared_busy；检查不修改计数。resetAt 与错误 retryAt 是 UTC 毫秒，可在客户端按本地时区显示。budgetLimit / budgetRemaining 是保守预留口径，不是供应商余额。特定任务仍按完整上下文预留，metadata available 不能保证其成功。
 
-元数据在同一进程缓存 120 秒、合并并发检查；实际模型失败在进程内保留 120 秒，浏览器另有独立的即时失败状态。单用户限流不写入全站观察。`?retry=1` 可显式重新免费检查，不自动重试付费生成。Vercel 实例间不共享内存观察。
+元数据在同一进程缓存 120 秒、合并并发检查；实际模型失败在进程内保留 120 秒，浏览器另有独立的即时失败状态。单用户限流不写入全站观察；只有可确认的模型故障（认证、额度、模型不存在、服务 / 网络）才写入，原因不明的服务商 400 只回给本次请求方（2026-11-09）。`?retry=1` 可显式重新免费检查，不自动重试付费生成。Vercel 实例间不共享内存观察。
 
-共享额度不足返回 429/shared_quota，可带 retryAt；共享并发满为 429/shared_busy。供应商余额与限流继续使用 quota / rate_limit。API 日志只记录状态与类别，不记录错误正文或用户原话。
+所有模型路由先读取并校验请求体，再计入每 IP / 全站限流：格式错误、空白回复等 400 / 413 请求不消耗额度。对练类请求中 learner 消息不能为空白。共享额度不足返回 429/shared_quota，可带 retryAt；共享并发满为 429/shared_busy。供应商余额与限流继续使用 quota / rate_limit。API 日志只记录状态与类别，不记录错误正文或用户原话。
 
 HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如格式 / 引文校验，不因此禁用模型。新版客户端兼容旧版纯文本 `@@error`。方案和验收见 [模型连接](./archive/specs/spec-model-availability.md)。
 
@@ -160,7 +160,7 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 
 **响应：** `202 { ok: true }`，写入在 `after()` 里完成；未配置 `204`；跨站 `403`；超 16 KB `413`；每 IP 每小时 240 次后 `429`。
 
-落点是飞书 Base 按月建表，配置见 `.env.example` 的 `ANALYTICS_FEISHU_*`。→ [spec-analytics](./specs/spec-analytics.md)
+落点是飞书 Base 按月建表：月份取服务器接收时间，不取事件 `ts`（客户端时钟可能错误或被伪造），一次上报只写一张表、一次写入，批次 id 即幂等键；每行仍记录事件自身时间。配置见 `.env.example` 的 `ANALYTICS_FEISHU_*`。→ [spec-analytics](./specs/spec-analytics.md)
 
 ---
 

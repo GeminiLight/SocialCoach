@@ -14,7 +14,7 @@ import {RiggedCharacter} from './RiggedCharacter';
 import {AssetRoom,useSceneAsset,preloadPlayerAsset} from './SceneAssets';
 import {RenderBudget} from './RenderBudget';
 import {RoomLighting} from './RoomLighting';
-import {useDinnerSurfaces} from '../lib/surfaces';
+import {useFamilyArt} from '../lib/surfaces';
 import type { Reply } from '../lib/engine';
 import type { TiltOutput } from '../lib/tilt';
 import { aimedPerson, GazeRecipient } from '../lib/gazeRecipient';
@@ -181,7 +181,7 @@ class SceneBoundary extends Component<{ fallback: ReactNode; children: ReactNode
 
 export default function DinnerScene(props: SceneProps) {
   const p=useMemo(()=>getPalette(),[]);
-  const surfaces=useDinnerSurfaces(p,props.scenario.space?'none':props.scenario.id==='family'?'family':'landscape');
+  const familyArt=useFamilyArt(p,!props.scenario.space&&props.scenario.id==='family');
   const labels=useRef<(HTMLButtonElement|null)[]>([]);
   const [ready,setReady]=useState(false);
   const availability=props.onAvailability;
@@ -198,7 +198,7 @@ export default function DinnerScene(props: SceneProps) {
     <AssetReady key={`${props.scenario.id}-${props.view}`} scenario={props.scenario} view={props.view} onReady={assetReady}/>
     <WorldDirector props={props} heading={heading}/>
     <RenderBudget active={!props.paused&&visible} onChange={setDpr}/>
-    <AssetRoom p={p} world={props.world} scenario={props.scenario} lang={props.lang} paused={props.paused} onEvidence={props.onEvidence} surfaces={surfaces}/>
+    <AssetRoom p={p} world={props.world} scenario={props.scenario} lang={props.lang} paused={props.paused} onEvidence={props.onEvidence} familyArt={familyArt}/>
     {!props.scenario.space&&<><TableCups p={p} world={props.world} drama={props.drama} scenario={props.scenario} reactions={props.reactions} line={props.line} paused={props.paused}/><ScenarioObjects p={p} drama={props.drama} scenario={props.scenario} lang={props.lang} reduced={props.reduced}/></>}
 
     {props.scenario.characters.map((c,i)=><RiggedCharacter key={c.id} character={c} actor={props.world.npcs[i]} world={props.world} reaction={props.reactions.find(r=>r.characterId===c.id)} active={props.speaking&&props.speakerId===c.id} onSelect={()=>props.onSelect(c.id)} p={p} reduced={props.reduced} drama={props.drama} index={i} scenario={props.scenario} lang={props.lang} line={props.line} paused={props.paused} />)}
