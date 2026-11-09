@@ -1,8 +1,8 @@
 # 视频学习模块
 
-状态：2026-10-08 Vercel / ModelScope 已发布；真实设备与更多网络待补验。→ [验收原件](../../docs/reviews/video-learning-2026-10-07/README.md)
+状态：2026-10-08 Vercel / ModelScope 已发布；真实设备与更多网络待补验。→ [验收原件](../../../docs/reviews/video-learning-2026-10-07/README.md)
 
-2026-10-26：五期 H 社会科学短片、压缩和点击后加载已在 Vercel / ModelScope 发布，线上媒体字节、Range 和缓存验收通过；本轮正式页面互动受浏览器控制中断影响，真实手机仍待补验。→ [本轮记录](../reviews/review-2026-10-26-five-video-lessons.md)
+2026-10-26：五期 H 社会科学短片、压缩和点击后加载已在 Vercel / ModelScope 发布，线上媒体字节、Range 和缓存验收通过；本轮正式页面互动受浏览器控制中断影响，真实手机仍待补验。→ [本轮记录](../../reviews/review-2026-10-26-five-video-lessons.md)
 
 ## 用户任务
 
@@ -41,16 +41,16 @@
 
 电梯影片按最终制作源码与成片核对 17 段双语字幕、四个片段、三条引用拆解；保留“项目照常推进”必须真实、“约谈不等于公开私人内容”的适用边界。素材编码为 720p MP4 / faststart，使用用户封面和实际 0.8 秒画面，观看不增加模型调用。
 
-本次同时修复短英文搜索词误匹配（HR 命中 three）及同时间点多个拆解项的重复 React key。经验及前次手机标题层级问题合并见 [学习模块复盘](../81-postmortem-video-learning.md)。
+本次同时修复短英文搜索词误匹配（HR 命中 three）及同时间点多个拆解项的重复 React key。经验及前次手机标题层级问题合并见 [学习模块复盘](../../81-postmortem-video-learning.md)。
 
-[第二条影片验收原件](../../docs/reviews/elevator-video-2026-10-08/README.md)。
+[第二条影片验收原件](../../../docs/reviews/elevator-video-2026-10-08/README.md)。
 
 
 ## 发布文案（2026-10-08）
 
 用户确认发布时，第二条列表 / 阅读标题改为“领导当众问：是不是要离职？”，简短来源显示为“饭局承诺”“当众问离职”，不显示品牌和“原创虚构场景”前缀。原始来源保留在内容元数据、引用链接与素材核对记录；字幕与原片台词仍保持一致。
 
-[双平台发布记录](../../docs/reviews/video-release-2026-10-08/README.md)。
+[双平台发布记录](../../../docs/reviews/video-release-2026-10-08/README.md)。
 
 ## 五期 H 社会科学短片与媒体加载（2026-10-26）
 

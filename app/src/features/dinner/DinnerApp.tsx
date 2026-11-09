@@ -40,6 +40,7 @@ import {tableEvidence} from './lib/tableEvidence';
 import {BRIEF_VERSION,publicSceneBrief} from './lib/briefing';
 import {SceneBrief} from './components/SceneBrief';
 import {useTiltLook} from './lib/useTiltLook';
+import {enterFullscreen,exitFullscreen,fullscreenElement,fullscreenSupported,onFullscreenChange} from './lib/fullscreen';
 const DinnerScene=lazy(()=>import('./components/DinnerScene'));
 const SAVE_KEY=DINNER_SAVE_KEY;
 const speechCopy:Record<SpeechNotice,keyof typeof ui>={ready:'voiceReady',editing:'voiceEditing',cancelled:'voiceCancelled',limit:'voiceLimit',unsupported:'voiceUnsupported',permission:'voicePermission',microphone:'voiceMicrophone',network:'voiceNetwork',language:'voiceLanguage',empty:'voiceEmpty',unavailable:'voiceUnavailable'};
@@ -116,6 +117,8 @@ export default function App() {
   const [suggestionsOpen,setSuggestionsOpen]=useState(false);
   const [viewReset,setViewReset]=useState(0);
   const [fullscreen,setFullscreen]=useState(false);
+  // iPhone Safari cannot make an element fullscreen; hide the control rather than offer a dead button.
+  const [canFullscreen]=useState(()=>fullscreenSupported());
   const shell=useRef<HTMLDivElement>(null);
   const [nextScene,setNextScene]=useState<Scenario['id']>(()=>requestedScene()??scenarioId);
   const [nextVariant,setNextVariant]=useState<VariantId>(()=>requestedScene()?variantFor(requestedScene()!,requestedOpening()).id:variantId);
@@ -208,7 +211,7 @@ export default function App() {
 
   useEffect(()=>{const node=conversation.current;if(!node)return;const observer=new ResizeObserver(()=>setHudHeight(node.getBoundingClientRect().height));observer.observe(node);return ()=>observer.disconnect();},[]);
 
-  useEffect(()=>{const change=()=>setFullscreen(!!document.fullscreenElement);document.addEventListener('fullscreenchange',change);return ()=>document.removeEventListener('fullscreenchange',change);},[]);
+  useEffect(()=>onFullscreenChange(()=>setFullscreen(!!fullscreenElement())),[]);
 
   useEffect(()=>{
     const stage=sceneReady?(turn?'first_reply':started?'started':'loaded'):undefined;
@@ -257,7 +260,7 @@ export default function App() {
       if(session!==cached)store.addSession(session);
       store.setLang(lang);setComplete(true);
       saveScheduler.cancel();
-      if(document.fullscreenElement)await document.exitFullscreen().catch(()=>{});
+      await exitFullscreen().catch(()=>{});
       if(generation!==reviewGeneration.current)return;
       track({name:"practice_stage",ts:Date.now(),mode:"3d",practice:practiceId,scenario:`3d-${variantId}`,stage:"review",duration_ms:Math.min(300000,Date.now()-enteredAt.current),turns:turn,byok:!!useByok.getState().enabled});
       router.push(`/practice/${session.id}`);
@@ -265,7 +268,12 @@ export default function App() {
   }
   async function soundToggle(){if(!sound)unlockSpeech();try{await toggleRoom(!sound);setSound(!sound);}catch{setSound(false);}}
 
-  async function fullscreenToggle(){try{if(document.fullscreenElement)await document.exitFullscreen();else await shell.current?.requestFullscreen();}catch{/* Full-viewport mode still works when fullscreen is unavailable. */}}
+  /** Fetch the third-person model only when the learner reaches for the switch; the scene chunk is already loaded. */
+  function primeThirdPerson(){
+    if(view!=='first'||(navigator as Navigator&{connection?:{saveData?:boolean}}).connection?.saveData)return;
+    void import('./components/SceneAssets').then(m=>m.preloadPlayerAsset()).catch(()=>{});
+  }
+  async function fullscreenToggle(){try{if(fullscreenElement())await exitFullscreen();else if(shell.current)await enterFullscreen(shell.current);}catch{/* Full-viewport mode still works when fullscreen is unavailable. */}}
 
   return <div ref={shell} lang={lang==='zh'?'zh-CN':'en'} style={{'--dinner-hud-height':`${hudHeight}px`} as CSSProperties} className={`app-shell ${started?'is-seated':'is-arriving'}`}>
     <main id="main" className="immersive-stage">
@@ -277,7 +285,7 @@ export default function App() {
         <Link href="/" className="back-home" aria-label={pick({zh:"返回 SocialCoach 首页",en:"Back to SocialCoach home"},lang)} title={pick({zh:"返回首页",en:"Back to home"},lang)}><ArrowLeft size={19}/></Link>
         <a className="brand" href="#main" aria-label="SocialCoach"><span className="brand-mark"><Users size={19} strokeWidth={1.65}/></span><span><strong>SocialCoach<span className="brand-version">3D</span></strong><small>{t('subtitle')}</small></span></a>
         <nav aria-label={t('navLabel')}>
-          <button className="icon-button view-toggle" data-view={view} disabled={!sceneReady} onClick={()=>setView(current=>current==='first'?'third':'first')} aria-label={viewToggleLabel} title={viewToggleLabel}><SwitchCamera size={18} aria-hidden="true"/></button>
+          <button className="icon-button view-toggle" data-view={view} disabled={!sceneReady} onPointerEnter={primeThirdPerson} onFocus={primeThirdPerson} onClick={()=>setView(current=>current==='first'?'third':'first')} aria-label={viewToggleLabel} title={viewToggleLabel}><SwitchCamera size={18} aria-hidden="true"/></button>
           <button className="icon-button history-button" onClick={()=>setModal('history')} aria-label={t('recap')} title={t('recap')}><MessageSquare size={18}/>{turn>0&&<span className="history-count">{turn}</span>}</button>
           <button className="icon-button more-button" onClick={()=>setModal('controls')} aria-label={t('more')} title={t('more')} aria-haspopup="dialog"><MoreHorizontal size={21}/></button>
         </nav>
@@ -331,7 +339,7 @@ export default function App() {
       <div className="scene-options-links">
         <button disabled={!sceneReady} onClick={()=>{tilt.recenter();setViewReset(v=>v+1);setModal(null);}}><Crosshair size={17}/>{t('recenter')}</button>
         <button disabled={busy} onClick={switchLanguage} aria-label={t('switchLanguage')}><Languages size={17}/>{t('languageSetting')}<small>{pick({zh:'English',en:'中文'},lang)}</small></button>
-        <button onClick={()=>{setModal(null);void fullscreenToggle();}}>{fullscreen?<Minimize size={17}/>:<Maximize size={17}/>}<span>{t(fullscreen?'exitFullscreen':'fullscreen')}</span></button>
+        {canFullscreen&&<button onClick={()=>{setModal(null);void fullscreenToggle();}}>{fullscreen?<Minimize size={17}/>:<Maximize size={17}/>}<span>{t(fullscreen?'exitFullscreen':'fullscreen')}</span></button>}
         <button onClick={()=>{setModal(null);openModelSheet();}}><span className={`mode-dot ${model?'live':''}`}/><span>{pick(M.title,lang)}</span><ArrowRight size={15}/></button>
       </div>
       <p className="scene-options-guide">{t('mobileLookHint')}</p>

@@ -22,7 +22,7 @@
 
 ## 技术栈
 
-2026-10-26 视频学习：`social-science-lessons.ts` 的五期双语源文本 / 证据边界与 `social-science-media.json` 的压缩资源合并进既有 `VIDEO_LESSONS`，不改变档案结构。页面只挂当前课程，播放器起初无 src / track；明确播放或时间点手势才连接媒体，卸载时取消旧媒体。内容哈希 MP4 / WebP 由现有静态资源层缓存，字幕正常重新验证；不新增视频 API、对象存储或观看进度服务。→ [视频规格](./specs/spec-video-learning.md)
+2026-10-26 视频学习：`social-science-lessons.ts` 的五期双语源文本 / 证据边界与 `social-science-media.json` 的压缩资源合并进既有 `VIDEO_LESSONS`，不改变档案结构。页面只挂当前课程，播放器起初无 src / track；明确播放或时间点手势才连接媒体，卸载时取消旧媒体。内容哈希 MP4 / WebP 由现有静态资源层缓存，字幕正常重新验证；不新增视频 API、对象存储或观看进度服务。→ [视频规格](archive/specs/spec-video-learning.md)
 
 | 层 | 技术 |
 |---|---|
@@ -68,7 +68,7 @@ SocialCoach/
 │   ├── PRODUCT.md                早期产品定义（已被 wiki/00 取代，保留作历史）
 │   ├── banner.svg / banner-dark.svg   README 品牌 banner
 │   ├── screenshots/              真实产品截图（中英各三张，1170×2532）；raw/ 全页原图不入库
-│   └── reference/                paper.txt · fig10/11
+│   └── research/                 本地论文材料（含 paper.txt · fig10/11），.gitignore 排除，不入库
 ├── site/                         官网：一页式双语静态站，独立于 app/ → 详见 ./11-stage-b.md#b9-官网
 │   ├── content.mjs               全部文案（L(zh, en) 双语对象）+ 站点 / app / 论文 URL
 │   ├── home.mjs                  当前首页内容区与响应式样式
@@ -400,7 +400,7 @@ AppProviders 在确认默认 API 不可用时自动打开可关闭的配置弹�
 
 ## 视频学习（2026-10-07）
 
-`data/video-lessons.ts` 的已核对静态内容 → `/learn` 统一索引 / 检索 → `VideoLesson` 原生视频、字幕、转录与引用式拆解 → 既有 `/3d` 的场景 / 开局确认。观看不经过 LLM；学习区允许本地游客，不触发模型检查或自动接入弹窗，AI 路径继续使用原门控。视频书签进入既有 `bookmarks` 字符串数组及档案导出，未增加学习数据库或持久化播放状态。VTT 由开发脚本生成并随 public 素材提供，播放只在用户操作后请求 MP4。见 [视频模块](./specs/spec-video-learning.md)。
+`data/video-lessons.ts` 的已核对静态内容 → `/learn` 统一索引 / 检索 → `VideoLesson` 原生视频、字幕、转录与引用式拆解 → 既有 `/3d` 的场景 / 开局确认。观看不经过 LLM；学习区允许本地游客，不触发模型检查或自动接入弹窗，AI 路径继续使用原门控。视频书签进入既有 `bookmarks` 字符串数组及档案导出，未增加学习数据库或持久化播放状态。VTT 由开发脚本生成并随 public 素材提供，播放只在用户操作后请求 MP4。见 [视频模块](archive/specs/spec-video-learning.md)。
 
 ## 保存、预算与公开输出边界（2026-10-08）
 

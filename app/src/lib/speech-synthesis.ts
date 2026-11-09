@@ -73,7 +73,15 @@ export async function* speechPcm(response: Response): AsyncGenerator<Uint8Array>
   const reader = response.body?.getReader();
   if (!reader) throw new Error("Missing speech audio");
   const decoder = new TextDecoder();
-  let buffer = "", transferred = 0, size = 0, done = false;
+  let buffer = "", transferred = 0, size = 0, done = false, carry: number | undefined;
+  /** PCM16 samples are two bytes: never forward half a sample, or every later sample plays as noise. */
+  const aligned = (bytes: Uint8Array | undefined) => {
+    if (!bytes?.length) return;
+    const whole = carry === undefined ? bytes : Uint8Array.of(carry, ...bytes);
+    carry = whole.length % 2 ? whole[whole.length - 1] : undefined;
+    const out = carry === undefined ? whole : whole.subarray(0, whole.length - 1);
+    return out.length ? out : undefined;
+  };
   const event = (frame: string) => {
     const data = frame.split(/\r?\n/).filter(line => line.startsWith("data:")).map(line => line.slice(5).trimStart()).join("\n");
     if (!data) return;
@@ -91,14 +99,14 @@ export async function* speechPcm(response: Response): AsyncGenerator<Uint8Array>
   try {
     while (!done) {
       const part = await reader.read();
-      if (part.done) { buffer += decoder.decode(); if (buffer.trim()) { const bytes = event(buffer); if (bytes) yield bytes; } break; }
+      if (part.done) { buffer += decoder.decode(); if (buffer.trim()) { const bytes = aligned(event(buffer)); if (bytes) yield bytes; } break; }
       transferred += part.value.length;
       if (transferred > 8_000_000) throw new Error("Speech response too large");
       buffer += decoder.decode(part.value, { stream: true });
       let boundary: RegExpMatchArray | null;
       while ((boundary = buffer.match(/\r?\n\r?\n/))) {
         const end = boundary.index!;
-        const bytes = event(buffer.slice(0, end));
+        const bytes = aligned(event(buffer.slice(0, end)));
         buffer = buffer.slice(end + boundary[0].length);
         if (bytes) yield bytes;
         if (done) break;

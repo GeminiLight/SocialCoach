@@ -6,6 +6,7 @@ import {SceneContextSchema} from './scene-context';
 import {LLMError} from './llm-core';
 import {RehearsalDescriptionSchema} from './rehearsal-input';
 import {KEY_TURN_LIMIT,KEY_TURN_SCENARIO} from './key-turn';
+import {scenarioById} from '@/data/corpus';
 const short=z.string().max(2000),lang=z.enum(['zh','en']);
 const turn=z.object({practiceIntent:z.string().trim().max(300).optional(),requestId:z.string().uuid().optional(),practiceMode:z.literal('key-turn').optional(),scenario:ScenarioSchema,learnerCharacterId:z.string().max(100),messages:z.array(MessageSchema).max(300),lang,learnerName:z.string().max(200).optional(),turnLimit:z.number().int().min(1).max(200).optional()}).superRefine((v,ctx)=>{
  if(v.practiceMode&&(v.scenario.id!==KEY_TURN_SCENARIO||v.scenario.custom||v.messages.filter(m=>m.role==='learner').length>KEY_TURN_LIMIT))ctx.addIssue({code:'custom',path:['practiceMode'],message:'This drill supports only the original office opening and up to four replies'});
@@ -23,10 +24,19 @@ export const TaskInputSchemas={
  reflect:z.object({learnerCharacterId:z.string().max(100).optional(),responseFormat:z.literal("json").optional(),scenario:ScenarioSchema,question:z.string().min(1).max(1000),answer:z.string().trim().min(1).max(4000),lang,summary:z.string().max(8000).optional(),messages:z.array(MessageSchema).max(300).optional()}).refine(v=>!v.learnerCharacterId||v.scenario.characters.some(c=>c.id===v.learnerCharacterId&&c.playable),"An allowed learner is required"),
  pattern:z.object({lang,goals:z.array(SkillSchema),sessions:z.array(z.object({sessionId:z.string().min(1).max(100),practiceId:z.string().max(100).optional(),title:short,at:z.number(),outcome:short.optional(),verdict:short.optional(),gaveGroundOn:z.array(z.number()).max(200),turns:z.number().int().nonnegative(),weaknesses:z.array(z.object({messageId:z.string().min(1).max(100),behavior:short,evidence:short,skill:z.string(),deficit:z.string()})).max(10)})).max(20)}),
 };
+/** The drill only replays the published office scene: the server's copy is authoritative, never the client's. */
+function canonicalKeyTurn<T>(value:T):T|undefined{
+ const v=value as {practiceMode?:unknown;scenario?:unknown;learnerCharacterId?:unknown};
+ if(!v||typeof v!=='object'||v.practiceMode!=='key-turn')return value;
+ const scenario=scenarioById(KEY_TURN_SCENARIO);
+ if(!scenario||!scenario.characters.some(c=>c.id===v.learnerCharacterId&&c.playable))return;
+ return {...value,scenario};
+}
 export function taskInput<T>(schema:z.ZodType<T>,raw:unknown):T{
  const parsed=schema.safeParse(raw);
- if(!parsed.success)throw new LLMError(pick({zh:'提交的练习资料不完整或过长，本地记录已保留。请检查后重试。',en:'The practice context is invalid or too long. Your local record is retained. Check it and retry.'},(raw as {lang?:unknown})?.lang==='en'?'en':'zh'),400);
- return parsed.data;
+ const value=parsed.success?canonicalKeyTurn(parsed.data):undefined;
+ if(!parsed.success||value===undefined)throw new LLMError(pick({zh:'提交的练习资料不完整或过长，本地记录已保留。请检查后重试。',en:'The practice context is invalid or too long. Your local record is retained. Check it and retry.'},(raw as {lang?:unknown})?.lang==='en'?'en':'zh'),400);
+ return value;
 }
 export const MAX_TASK_BODY=192000;
 /** Read incrementally; neither a missing length nor chunked uploads bypass the cap. */

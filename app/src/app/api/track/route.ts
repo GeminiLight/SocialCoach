@@ -1,3 +1,4 @@
+import { clientKey } from "@/lib/rate-limit";
 import { createHash } from "node:crypto";
 import { after } from "next/server";
 import { batchSchema } from "@/lib/analytics/schema";
@@ -56,7 +57,7 @@ export async function POST(req: Request) {
 
   const now = Date.now();
   total = total.filter((t) => now - t < HOUR);
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown";
+  const ip = clientKey(req);
   const key = createHash("sha256").update(ip).digest("hex");
   const mine = (hits.get(key) || []).filter((t) => now - t < HOUR);
   if (mine.length >= PER_IP || total.length >= GLOBAL) return response({ error: "rate_limited" }, 429, { "Retry-After": "3600" });

@@ -1,3 +1,4 @@
+import { clientKey } from "@/lib/rate-limit";
 import { createHash } from "node:crypto";
 import { feedbackSchema } from "@/lib/feedback/schema";
 import { deliverFeedback, feedbackConfigured } from "@/lib/feedback/feishu";
@@ -42,7 +43,7 @@ export async function POST(req: Request) {
   if (previous && previous.hash !== hash) return response({ error: "id_conflict" }, 409);
   if (!previous) {
     total = total.filter(t => now - t < HOUR);
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown";
+    const ip = clientKey(req);
     const key = createHash("sha256").update(ip).digest("hex");
     const mine = (hits.get(key) || []).filter(t => now - t < HOUR);
     if (mine.length >= 5 || total.length >= 200) return response({ error: "rate_limited" }, 429, { "Retry-After": "3600" });

@@ -6,8 +6,12 @@ import {sharedBudgetHealth} from './shared-budget';
 let cached: { check: ModelCheck; at: number } | undefined;
 let pending: Promise<ModelCheck> | undefined;
 
-export async function serverModelHealth(fresh = false): Promise<ModelCheck> {
-  if (fresh) { cached = undefined; clearServerObservation(); }
+/** A visitor's "check again" may refresh a result at most this often; anything more is free load on the provider. */
+export const FRESH_CHECK_INTERVAL = 15_000;
+let lastFresh = 0;
+
+export async function serverModelHealth(fresh = false, now = Date.now()): Promise<ModelCheck> {
+  if (fresh && now - lastFresh >= FRESH_CHECK_INTERVAL) { lastFresh = now; cached = undefined; clearServerObservation(); }
   if (!hasServerCredential() || serverRequiresByok()) return { state: "unavailable", issue: "setup" };
   const budget=await sharedBudgetHealth();
   if(budget?.state==='unavailable')return budget;

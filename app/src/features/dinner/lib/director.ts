@@ -34,6 +34,15 @@ export function parseDinnerInput(input: unknown) {
   const turn=history.filter(m=>m.role==='user').length;
   const save=SaveSchema.safeParse({version:1,contentSnapshot:body.contentSnapshot,scenarioId,maxTurns,variantId:body.variantId,targetId,messages:history,lang,started:true,complete:false,draft:''});
   if(!save.success)throw invalid('对话记录或剧情状态不完整，请刷新后再试。','The conversation or story state is incomplete. Refresh and try again.');
+  // The frozen snapshot keeps an old practice consistent after content edits, so it
+  // comes from the device. Bound it to this scene's shape: it cannot recast the
+  // table or carry an arbitrary prompt (current scenes stay under ~300 chars a field).
+  const snapshot=body.contentSnapshot;
+  if(snapshot){
+   const strings:string[]=[];const walk=(v:unknown)=>{if(typeof v==='string')strings.push(v);else if(v&&typeof v==='object')Object.values(v).forEach(walk);};walk(snapshot.direction);
+   const cast=snapshot.direction.cast.map(c=>c.id).sort().join(),expected=storyScenario(scene,variantFor(scenarioId,body.variantId)).characters.map(c=>c.id).sort().join();
+   if(cast!==expected||strings.some(t=>t.length>1200)||snapshot.direction.facts.zh.length>12||snapshot.direction.facts.en.length>12||snapshot.direction.brief.lines.length>10||JSON.stringify(snapshot).length>32000)throw invalid('这一局的场景快照与当前场景不一致，请导出记录后重新开一局。','This practice’s scene snapshot does not match the scene. Export it, then start a new practice.');
+  }
   if(turn>=maxTurns)throw invalid('这一段已到设定回合数，点击继续聊再开口。','This segment has reached its turn limit. Choose Continue before speaking again.');
   const ids=scene.characters.map(c=>c.id);
   if(heard&&!ids.includes(heard.speakerId))throw invalid('插话的人物不属于这个场景。','The interjection is from a different scene.');

@@ -19,6 +19,7 @@ const copy={
  download:{zh:'下载当前档案并准备恢复',en:'Download current records and prepare restoration'},
  damagedDinner:{zh:'文字档案可恢复。备份中的 3D 记录未通过校验，将保留原件供你下载，不会写入当前 3D 局。',en:'The main archive can be restored. Its 3D record could not be verified. Keep the original download; it will not replace your current 3D practice.'},
  downloadDinner:{zh:'下载未通过校验的 3D 原件',en:'Download the unverified 3D original'},
+ otherWindow:{zh:'另一个窗口正在保存档案。请关闭其他 SocialCoach 窗口后再恢复，以免覆盖那边的新记录。',en:'Another window is saving your records. Close other SocialCoach windows before restoring, so their newer records are not overwritten.'},
 };
 export function BackupRestore(){
  const lang=useLang(),input=useRef<HTMLInputElement>(null),saveIssue=useApp(s=>s.saveIssue);
@@ -28,8 +29,9 @@ export function BackupRestore(){
  const [backup,setBackup]=useState<Awaited<ReturnType<typeof decodeBackup>>|null>(null),[error,setError]=useState<string|null>(null),[ready,setReady]=useState(false),[mode,setMode]=useState<'merge'|'replace'>('merge');
  const selection=useRef(0);
  const choose=async(file:File)=>{const ticket=++selection.current;setBackup(null);setError(null);setReady(false);try{if(file.size>20*1024*1024)throw Error('size');const {decodeBackup}=await import('@/lib/backup');const result=await decodeBackup(await file.text());if(ticket===selection.current)setBackup(result);}catch{if(ticket===selection.current)setError(pick(copy.error,lang));}};
- const prepare=async()=>{try{const {downloadArchive}=await import('@/lib/backup');downloadArchive(parseArchive(useApp.getState()));setReady(true);}catch{setError(pick(copy.error,lang));}};
- const restore=async()=>{if(!backup||!ready)return;try{
+ const blocked=()=>{if(useApp.getState().saveIssue!=='conflict')return false;setError(pick(copy.otherWindow,lang));return true;};
+ const prepare=async()=>{if(blocked())return;try{const {downloadArchive}=await import('@/lib/backup');downloadArchive(parseArchive(useApp.getState()));setReady(true);}catch{setError(pick(copy.error,lang));}};
+ const restore=async()=>{if(!backup||!ready||blocked())return;try{
   const {mergeArchives,restoredSettings}=await import('@/lib/backup');
   const current=parseArchive(useApp.getState()),archive=mode==='merge'?mergeArchives(current,backup.archive):{...backup.archive,settings:restoredSettings(current.settings,backup)};
   const saved=await useApp.getState().restoreArchive(archive,mode==='replace');

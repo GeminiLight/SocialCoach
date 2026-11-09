@@ -25,7 +25,10 @@ export function RiggedCharacter({character,actor,world,reaction,active,onSelect,
     const bones:Record<string,Bone>={},faces:Mesh[]=[];
     instance.scene.traverse(object=>{if(object instanceof Bone)bones[object.name]=object;if(object instanceof Mesh&&object.morphTargetDictionary)faces.push(object);});
     const presentation=Object.fromEntries(Object.keys(bones).map(name=>[name,new Quaternion()]));
-    return {...instance,...animation,bones,faces,presentation};
+    // Per-frame loops read these flat lists instead of rebuilding entries each frame.
+    const actionList=Object.entries(animation.actions).map(([name,action])=>({name,action,seated:name.startsWith('Seated'),idle:name.endsWith('Idle')}));
+    const morphs=faces.map(face=>({dict:face.morphTargetDictionary!,values:face.morphTargetInfluences!}));
+    return {...instance,...animation,bones,faces,presentation,actionList,morphs,target:{browInnerUp:0,browDown:0,mouthPress:0,smile:0,blink:0,jawOpen:0} as Record<string,number>};
   },[asset,p]);
   useEffect(()=>{rig.start();return()=>{rig.stop();rig.dispose();};},[rig]);
   const presence=useRef(createPresence(character.id));
@@ -49,9 +52,9 @@ export function RiggedCharacter({character,actor,world,reaction,active,onSelect,
     root.current.position.set(actor.x,0,actor.z);root.current.rotation.y+=wrapAngle(actor.heading-root.current.rotation.y)*smoothing;
     const gesture=state.phone>.01?'Phone':state.raise>.01?'Toast':state.palm>.01?'Palm':state.fold>.01?'Fold':state.lean>.01?'Lean':'Idle';
     const amount=MathUtils.clamp(gesture==='Phone'?state.phone:gesture==='Toast'?state.raise:gesture==='Palm'?state.palm:gesture==='Fold'?state.fold:gesture==='Lean'?state.lean:0,0,1);
-    for(const [name,action] of Object.entries(rig.actions)) {
-      const seat=name.startsWith('Seated')?state.seat:1-state.seat;
-      const weight=name.endsWith(gesture)&&gesture!=='Idle'?amount:name.endsWith('Idle')?1-amount:0;
+    for(const {name,action,seated,idle} of rig.actionList) {
+      const seat=seated?state.seat:1-state.seat;
+      const weight=name.endsWith(gesture)&&gesture!=='Idle'?amount:idle?1-amount:0;
       action.setEffectiveWeight(seat*weight);
     }
     undoPresentation(rig.bones,rig.presentation);
@@ -73,7 +76,10 @@ export function RiggedCharacter({character,actor,world,reaction,active,onSelect,
     turn(rig.bones.head,gaze.pitch+(reaction?.gesture==='nod'&&!actor.moving?presenceState.nod:0),gaze.head*.85);
     if(actor.moving&&!reduced){const stride=Math.sin(timing.time*8)*.26;turn(rig.bones.thigh_l,stride,0);turn(rig.bones.thigh_r,-stride,0);turn(rig.bones.upperarm_l,-stride*.5,0);turn(rig.bones.upperarm_r,stride*.5,0);}
     const expression=facialExpression(player?'neutral':reaction?.emotion);
-    for(const face of rig.faces){const dict=face.morphTargetDictionary!,values=face.morphTargetInfluences!;for(const [name,value] of Object.entries({...expression,blink:1-presenceState.blink,jawOpen:presenceState.speech*.34,browInnerUp:expression.browInnerUp+presenceState.emphasis*.10,mouthPress:expression.mouthPress*(1-presenceState.speech)})){if(dict[name]!==undefined)values[dict[name]]=name==='blink'||name==='jawOpen'?value:MathUtils.lerp(values[dict[name]],value,smoothing);}}
+    const morph=rig.target;
+    morph.browInnerUp=expression.browInnerUp+presenceState.emphasis*.10;morph.browDown=expression.browDown;morph.mouthPress=expression.mouthPress*(1-presenceState.speech);morph.smile=expression.smile;
+    morph.blink=1-presenceState.blink;morph.jawOpen=presenceState.speech*.34;
+    for(const {dict,values} of rig.morphs){for(const name in morph){const value=morph[name],slot=dict[name];if(slot!==undefined)values[slot]=name==='blink'||name==='jawOpen'?value:MathUtils.lerp(values[slot],value,smoothing);}}
     root.current.updateMatrixWorld(true);
     if(held.current&&rig.bones.hand_r){
       rig.bones.hand_r.getWorldQuaternion(rotations.parent);rotations.target.setFromEuler(rotations.euler.set(beat.sip*.14,root.current.rotation.y,0));

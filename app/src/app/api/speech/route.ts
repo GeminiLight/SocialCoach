@@ -29,7 +29,7 @@ export async function POST(request: Request) {
   const controller = new AbortController();
   try {
     const input = await readTaskBody(request, SpeechInputSchema);
-    checkRateLimit(request);
+    checkRateLimit(request, "speech");
     const configuration = availableSpeech();
     if (!configuration) return NextResponse.json({ error: pick({ zh: "自然语音暂未接入。", en: "Natural speech is not connected." }, lang) }, { status: 503 });
     const signal = AbortSignal.any([request.signal, controller.signal, AbortSignal.timeout(20_000)]);

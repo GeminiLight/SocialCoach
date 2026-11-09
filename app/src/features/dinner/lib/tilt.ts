@@ -71,10 +71,12 @@ export class TiltSession {
       this.update('calibrating');
       this.detach = source.listen(sample => {
         if (generation !== this.generation) return;
+        // Any numeric reading proves the sensor works, even from a phone lying flat
+        // whose lean is undefined; only a silent or empty API reaches the watchdog.
+        const reading = sample.beta !== null && sample.gamma !== null && Number.isFinite(sample.beta) && Number.isFinite(sample.gamma);
+        if (reading) { clearTimeout(this.timer); this.timer = undefined; this.update('active'); }
         const lean = screenLean(sample);
         if (lean === null) { this.recenter(); return; }
-        clearTimeout(this.timer); this.timer = undefined;
-        this.update('active');
         if (this.angle !== sample.angle) { this.angle = sample.angle; this.recenter(); }
         if (this.paused) { this.recenter(); return; }
         if (this.baseline === null) this.baseline = lean;
