@@ -10,7 +10,7 @@ import { PracticeJourney } from "./PracticeJourney";
 import { SkillTag } from "@/components/SkillBits";
 import { ScenarioCover } from "@/components/ScenarioCover";
 import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
-import { t, tList } from "@/lib/i18n";
+import { t, tCount, tList } from "@/lib/i18n";
 import {pick} from '@/lib/i18n';
 import { useCanUseModel } from "@/lib/model-access";
 import { schedule } from "@/lib/client-api";
@@ -84,7 +84,7 @@ export function Briefing({ session }: { session: Session }) {
           <h1 className="display text-[30px] leading-[1.15]">{sc.title[lang]}</h1>
           <div className="flex items-center gap-3 text-[13px] text-ink-2 num">
             <span className="inline-flex shrink-0 whitespace-nowrap items-center gap-1"><Clock size={13} />{sc.minutes} {t(lang, "min")}</span>
-            <span className="inline-flex items-center gap-1"><MessageSquare size={13} />{t(lang, "pr_segment_budget", { n: practiceTurnLimit(session) })}</span>
+            <span className="inline-flex items-center gap-1"><MessageSquare size={13} />{tCount(lang, { one: "pr_segment_budget_one", other: "pr_segment_budget" }, practiceTurnLimit(session))}</span>
             <span className="shrink-0 whitespace-nowrap">{t(lang, `diff_${sc.difficulty}` as "diff_1")}</span>
           </div>
           <div className="flex flex-wrap gap-1.5 mt-1">{sc.skills.map((k) => <SkillTag key={k} id={k} lang={lang} small />)}</div>

@@ -8,7 +8,7 @@ import { clsx } from "clsx";
 import { ArrowUp, ArrowDown, ChevronDown, Lightbulb, Mic, MicOff, Timer, LogOut } from "lucide-react";
 import { Avatar, Button, IconButton, Marginalia, Sheet, Spinner, Switch } from "@/components/ui";
 import { DEFAULT_PATIENCE, useApp, useLang } from "@/store/useApp";
-import { t } from "@/lib/i18n";
+import { t, tCount } from "@/lib/i18n";
 import { hint as hintApi, parseRoleplay, roleplayStream } from "@/lib/client-api";
 import { lastSpoken, npcsOf, silenceStreak } from "@/lib/session-utils";
 import { continuePractice, practiceCheckpoint, practiceTurnLimit, supportedClosure } from "@/lib/practice-policy";
@@ -505,7 +505,7 @@ export function Chat({ session }: { session: Session }) {
         <div className="flex items-center gap-2 py-2">
           <div className="flex-1 min-w-0 px-1">
             <h1 className="text-[16px] font-semibold truncate">{sc.title[lang]}</h1>
-            <p className="text-[12px] text-ink-3 num">{t(lang, "pr_turn_progress", { n: learnerTurns })}</p>
+            <p className="text-[12px] text-ink-3 num">{tCount(lang, { one: "pr_turn_progress_one", other: "pr_turn_progress" }, learnerTurns)}</p>
           </div>
           <button onClick={() => setEndOpen(true)} className="press min-h-11 px-2 text-[12px] font-medium text-ink-2 whitespace-nowrap">{t(lang, "pr_review_action")}</button>
           <IconButton label={t(lang, "pr_clock_title")} aria-pressed={timed} onClick={() => setClockOpen(true)}>

@@ -207,9 +207,12 @@ const dict = {
   pr_end_early: { zh: "结束对话", en: "End scene" },
   pr_end_confirm: { zh: "现在结束？你可以直接进入复盘。", en: "End now? You'll go straight to the debrief." },
   pr_turns_left: { zh: "还剩 {n} 回合", en: "{n} turns left" },
+  pr_turns_left_one: { zh: "还剩 {n} 回合", en: "{n} turn left" },
   pr_last_turn: { zh: "最后一回合", en: "Last turn" },
   pr_segment_budget: { zh: "先练 {n} 回合，可继续", en: "Start with {n} turns · extend anytime" },
+  pr_segment_budget_one: { zh: "先练 {n} 回合，可继续", en: "Start with {n} turn · extend anytime" },
   pr_turn_progress: { zh: "已聊 {n} 回合 · 随时可收尾", en: "{n} turns · finish when ready" },
+  pr_turn_progress_one: { zh: "已聊 {n} 回合 · 随时可收尾", en: "{n} turn · finish when ready" },
   pr_source_original: { zh: "SocialCoach 原创虚构练习 · {date}", en: "Original fictional practice by SocialCoach · {date}" },
   pr_review_action: { zh: "收尾 / 复盘", en: "Finish / review" },
   pr_checkpoint_segment: { zh: "这一段聊完了，还想接着说吗？", en: "A segment complete. Have more to say?" },
@@ -533,6 +536,13 @@ export function t(lang: Lang, key: TKey, vars?: Record<string, string | number>)
   let s: string = pick(dict[key], lang);
   if (vars) for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, String(v));
   return s;
+}
+
+/** English inflects the noun after a count, Chinese does not: a count of one
+ *  reads `1 turn`, every other count `2 turns`, so the caller pairs the two
+ *  keys and this picks the one the count asks for. */
+export function tCount(lang: Lang, keys: { one: TKey; other: TKey }, n: number): string {
+  return t(lang, n === 1 ? keys.one : keys.other, { n });
 }
 
 export function tList(lang: Lang, key: TKey): string[] {
