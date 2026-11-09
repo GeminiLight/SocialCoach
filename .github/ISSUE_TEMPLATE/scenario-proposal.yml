@@ -1,0 +1,75 @@
+name: 场景投稿 · Scenario proposal
+description: 描述一场你难开口的对话，不需要写代码。Describe a conversation you find hard to start. No code needed.
+title: "[场景 · Scenario] "
+labels: ["scenario"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        谢谢投稿！中文或英文都可以，维护者会整理成双语。请去掉真实姓名、公司和其他能认出具体人的细节。
+        Thanks! Write in Chinese or English; a maintainer will make it bilingual. Please remove real names, employers and other identifying details.
+  - type: textarea
+    id: situation
+    attributes:
+      label: 情境 · Situation
+      description: 发生在哪里、什么时候、为什么现在必须谈？Where, when, and why does it have to happen now?
+      placeholder: 下班前十分钟，经理让我今晚留下改方案，而我早就约了家人吃饭。
+    validations:
+      required: true
+  - type: textarea
+    id: opening
+    attributes:
+      label: 对方的第一句话 · The other person's opening line
+      placeholder: 嘿，还没走吧？客户明早九点要看方案，你最熟，帮我盯一下？
+    validations:
+      required: true
+  - type: textarea
+    id: characters
+    attributes:
+      label: 对方是谁、想要什么 · Who they are and what they want
+      description: 关系、性格、立场，以及他们不会轻易让步的地方。Relationship, temperament, position, and where they will not easily give way.
+    validations:
+      required: true
+  - type: textarea
+    id: hidden
+    attributes:
+      label: 对方没说出口的事（可选）· What they are not saying (optional)
+      description: 只有被问到才会透露的顾虑或事实。A worry or fact they reveal only if asked.
+  - type: textarea
+    id: goal
+    attributes:
+      label: 怎样算谈成，怎样算失败 · What success and failure look like
+      description: 部分成功也可以。对方仍然不满意，不一定等于失败。Partial success counts; the other person staying unhappy is not automatically failure.
+    validations:
+      required: true
+  - type: dropdown
+    id: context
+    attributes:
+      label: 情境类别 · Context
+      options:
+        - 职场 · Workplace
+        - 家庭 · Family
+        - 友情 · Friendship
+        - 恋爱 · Romantic
+        - 校园 · Education
+        - 公共/陌生人 · Public / Strangers
+        - 社交场合 · Party / Social
+        - 不确定 · Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: 出处 · Source
+      description: >-
+        受哪篇研究、哪本书或哪个公开指南启发？请附链接。来自自己的经历也可以，写「原创虚构练习」。
+        Which study, book or public guideline inspired it? Link it. Personal experience is fine; write "original fictional practice".
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 确认 · Confirm
+      options:
+        - label: 我已去掉可以认出真实人物的信息，并同意按项目许可证使用这份投稿。I removed identifying details and agree this proposal may be used under the project licence.
+          required: true

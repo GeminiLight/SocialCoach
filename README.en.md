@@ -47,23 +47,9 @@ https://github.com/user-attachments/assets/8d645827-c03c-44e9-aea0-ef1b9131d2e5
 2. **Practice the exchange.** Talk to characters with their own goals, concerns, and limits. They can disagree, ask questions, and hold their position.
 3. **Review and try again.** See feedback tied to your actual words, consider another way to respond, and carry that lesson into your next attempt.
 
-<table align="center">
-<tr>
-<th width="33%">1 · Your next practice</th>
-<th width="33%">2 · The conversation</th>
-<th width="33%">3 · Your feedback</th>
-</tr>
-<tr>
-<td><a href="docs/screenshots/screenshot-01-home-en.png"><img src="docs/screenshots/screenshot-01-home-en.png" width="260" alt="A personalized recommendation to practice declining extra hours, with an explanation of why it fits"></a></td>
-<td><a href="docs/screenshots/screenshot-02-pushback-en.png"><img src="docs/screenshots/screenshot-02-pushback-en.png" width="260" alt="A practice conversation with a manager who challenges the learner's response"></a></td>
-<td><a href="docs/screenshots/screenshot-03-evidence-debrief-en.png"><img src="docs/screenshots/screenshot-03-evidence-debrief-en.png" width="260" alt="Feedback quoting the learner's words and suggesting a clearer way to set a boundary"></a></td>
-</tr>
-<tr>
-<td><sub>A scenario matched to your goals.</sub></td>
-<td><sub>Room to respond, disagree, and retry.</sub></td>
-<td><sub>Your words, the feedback, the next step.</sub></td>
-</tr>
-</table>
+<p align="center"><img src="docs/screenshots/demo-practice-en.gif" width="380" alt="A real recorded practice of declining extra hours: a vague first answer gets taken as a yes; a clear limit with a plan gets accepted for tonight while the manager bargains over details; the manager’s private setup is revealed and the debrief quotes the learner’s words"></p>
+
+<p align="center"><sub>One real recorded session, lines unedited: the vague first answer is heard as a yes, the clear one still gets bargained over, and the debrief starts from your own words.</sub></p>
 
 <p align="center"><a href="https://socialcoach.aurax.live"><strong>Start a practice session →</strong></a></p>
 
@@ -252,7 +238,9 @@ The group QR code is valid **until November 16, 2026**. You can also add me on W
 
 Bug reports, translations, and contributions are welcome. For bugs, include reproduction steps, your browser, and model configuration without API keys or private conversations.
 
-For corpus contributions, start in [`app/src/data/corpus/`](app/src/data/corpus). Keep entries bilingual, provide a `source`, and label teaching examples. For development, read [`AGENTS.md`](AGENTS.md) and [`app/AGENTS.md`](app/AGENTS.md).
+**You can contribute a scenario without writing code**: describe a conversation you find hard to start in the [scenario proposal form](https://github.com/GeminiLight/SocialCoach/issues/new?template=scenario-proposal.yml), and a maintainer turns it into a tested bilingual scenario. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+To edit the corpus directly, start in [`app/src/data/corpus/`](app/src/data/corpus). Keep entries bilingual, provide a `source`, and label teaching examples. For development, read [`AGENTS.md`](AGENTS.md) and [`app/AGENTS.md`](app/AGENTS.md).
 
 ## Contributors
 

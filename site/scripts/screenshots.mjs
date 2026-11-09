@@ -4,6 +4,8 @@
 //   node site/scripts/screenshots.mjs [--base=https://socialcoach-ai.vercel.app] [--lang=zh] [--out=docs/screenshots]
 //   node site/scripts/screenshots.mjs --arena-only --lang=zh --out=docs/screenshots
 //   node site/scripts/screenshots.mjs --home-only --lang=zh --out=docs/screenshots
+//   node site/scripts/screenshots.mjs --base=http://localhost:3000 --lang=zh --frames=/tmp/sc-frames-zh
+//     (also records phase-tagged JPEG frames of the chat → debrief for site/scripts/demo-gif.py)
 //
 // Flow: seed a demo profile → home (today's pick + "why this one") → start →
 // briefing → chat: one soft reply, the character pushes back → one clear
@@ -23,8 +25,8 @@ const zh = LANG === "zh";
 mkdirSync(join(OUT, "raw"), { recursive: true });
 
 const S = zh
-  ? { start: "开始练习", why: "为什么是这个", another: ["换一个", "再来一个"], enter: "进入对话", send: "发送", end: "结束对话", endReview: "结束并复盘", toReport: "看复盘", writing: "教练正在写", stillWriting: "还在写", wantTitle: "拒绝临时加班" }
-  : { start: "Start practice", why: "Why this one", another: ["One more", "Swap"], enter: "Enter the scene", send: "Send", end: "End scene", endReview: "End and review", toReport: "See the debrief", writing: "Coach is writing", stillWriting: "Still writing", wantTitle: "Declining Extra Hours" };
+  ? { start: "开始练习", why: "为什么是这个", another: ["换一个", "再来一个"], enter: "进入对话", send: "发送", end: "结束对话", finish: "收尾 / 复盘", endReview: "结束并复盘", toReport: "看复盘", writing: "教练正在写", stillWriting: "还在写", better: "可以更好的", wantTitle: "拒绝临时加班" }
+  : { start: "Start practice", why: "Why this one", another: ["One more", "Swap"], enter: "Enter the scene", send: "Send", end: "End scene", finish: "Finish / review", endReview: "End and review", toReport: "See the debrief", writing: "Coach is writing", stillWriting: "Still writing", better: "What could be better", wantTitle: "Declining Extra Hours" };
 
 const profile = zh
   ? { name: "小周", bio: "工作两年的产品经理，不太会拒绝别人，最近总被临时加活。", goals: ["seeking-help", "communication", "goal-setting"], contexts: ["workplace"], lang: "zh", createdAt: Date.now() }
@@ -156,6 +158,24 @@ const shot = async (name, { full = false } = {}) => {
   log("saved", file);
 };
 
+/* ------------------------- optional frame recorder ------------------------ */
+// Frames are named `<index>-<phase>.jpg`; demo-gif.py captions and times them by phase.
+const FRAMES = opt.frames && opt.frames !== "true" ? opt.frames : null;
+if (FRAMES) mkdirSync(FRAMES, { recursive: true });
+let phase = null, frameNo = 0, recorder = null;
+const frame = async () => {
+  const tag = phase; // Tag with the phase the capture started in; it may end after stopRecording().
+  const { data } = await cdp("Page.captureScreenshot", { format: "jpeg", quality: 85 });
+  writeFileSync(join(FRAMES, `${String(frameNo++).padStart(4, "0")}-${tag}.jpg`), Buffer.from(data, "base64"));
+};
+const record = (name) => {
+  if (!FRAMES) return;
+  phase = name;
+  if (recorder) return;
+  recorder = (async () => { while (phase) { try { await frame(); } catch {} await sleep(250); } })();
+};
+const stopRecording = async () => { phase = null; await recorder; recorder = null; };
+
 /* --------------------------------- flow ---------------------------------- */
 
 try {
@@ -172,7 +192,13 @@ try {
     await sleep(700);
     await shot(`screenshot-04-arena-${LANG}`);
     await shot(`screenshot-04-arena-${LANG}`, { full: true });
-  } else {
+  } else if (FRAMES) {
+    // The recording only needs the practice; open the overtime scene from the catalogue.
+    await goto(`${BASE}/arena?q=${encodeURIComponent(S.wantTitle)}`);
+    await waitFor(`$(".arena-row", ${JSON.stringify(S.wantTitle)})`, "overtime scene in catalogue", 30000);
+    await click(`$(".arena-row", ${JSON.stringify(S.wantTitle)})`);
+  }
+  if (!opt["arena-only"] && !FRAMES) {
   // 01 · home: today's pick, reason expanded.
   await goto(`${BASE}/`);
   await waitFor(`$("button", ${JSON.stringify(S.start)})`, "today card", 240000);
@@ -198,6 +224,9 @@ try {
   await shot(`screenshot-01-home-${LANG}`, { full: true });
   // Start → briefing → enter.
   await click(`$("button", ${JSON.stringify(S.start)})`);
+  }
+  }
+  if (!opt["arena-only"] && !opt["home-only"]) {
   await waitFor(`location.pathname.startsWith("/practice/")`, "practice route", 30000);
   await waitFor(`(() => { const b = $("button", ${JSON.stringify(S.enter)}); return b && !b.disabled; })()`, "briefing adapted", 120000);
   await sleep(600);
@@ -208,13 +237,21 @@ try {
   // Chat: type a line, send, wait for the character to finish.
   const say = async (text) => {
     await evaluate(`document.querySelector("textarea").focus(); "ok"`);
-    await cdp("Input.insertText", { text });
+    if (FRAMES) {
+      // Type in short bursts so the recording shows the line being written.
+      const step = zh ? 4 : 10;
+      for (let i = 0; i < text.length; i += step) { await cdp("Input.insertText", { text: text.slice(i, i + step) }); await sleep(220); }
+    } else await cdp("Input.insertText", { text });
     await waitFor(`(() => { const b = $('button[aria-label=${JSON.stringify(S.send)}]'); return b && !b.disabled; })()`, "send enabled", 10000);
     await click(`$('button[aria-label=${JSON.stringify(S.send)}]')`);
+    if (FRAMES) record(`${phase}reply`);
     try { await waitFor(`document.querySelector("textarea")?.disabled`, "busy", 8000, 100); } catch {}
     await waitFor(`!document.querySelector("textarea")?.disabled`, "character replied", 120000, 300);
     await sleep(1200);
   };
+  record("open");
+  await sleep(1800);
+  record("soft");
   await say(lines[0]);
   // 02 · pushback: the polite reply did not get a yes.
   await evaluate(`window.scrollTo(0, document.body.scrollHeight); "ok"`);
@@ -222,18 +259,32 @@ try {
   await shot(`screenshot-02-pushback-${LANG}`);
   await shot(`screenshot-02-pushback-${LANG}`, { full: true });
 
+  record("clear");
   await say(lines[1]);
   await shot(`screenshot-02b-after-boundary-${LANG}`, { full: true });
 
+  record("end");
   // End → reveal → report.
-  await click(`$('button[aria-label=${JSON.stringify(S.end)}]')`);
+  await click(`$('button[aria-label=${JSON.stringify(S.end)}]') || $("button", ${JSON.stringify(S.finish)})`);
   await waitFor(`$("button", ${JSON.stringify(S.endReview)})`, "end sheet", 15000);
   await click(`$("button", ${JSON.stringify(S.endReview)})`);
   await waitFor(`(() => { const b = $("button", ${JSON.stringify(S.toReport)}); return b && !b.disabled; })()`, "report ready", 180000, 500);
   await sleep(800);
+  record("reveal"); await sleep(1200);
   await shot(`screenshot-03a-reveal-${LANG}`);
+  await stopRecording();
   await click(`$("button", ${JSON.stringify(S.toReport)})`);
   await waitFor(`!body().includes(${JSON.stringify(S.writing)}) && !body().includes(${JSON.stringify(S.stillWriting)})`, "report written", 180000, 500);
+  if (FRAMES) {
+    // Debrief: hold on the first quoted learner line, the product's core claim.
+    await ev(`(() => { const q = $("blockquote") || $("q") || $("[class*=quote]"); if (q) { q.scrollIntoView({ block: "start" }); window.scrollBy(0, -140); } return true; })()`);
+    await sleep(600);
+    record("debrief"); await sleep(1500); await stopRecording();
+    // Then the first "could be better" note, which quotes the vaguer reply.
+    await ev(`(() => { const h = $$("h2,h3", ${JSON.stringify(S.better)}).pop(); if (h) { h.scrollIntoView({ block: "start" }); window.scrollBy(0, -24); } return true; })()`);
+    await sleep(600);
+    record("better"); await sleep(1500); await stopRecording();
+  }
   await sleep(1500);
   await evaluate(`window.scrollTo(0, 0); "ok"`);
   await sleep(300);
@@ -245,11 +296,11 @@ try {
   await shot(`screenshot-03b-evidence-scrolled-${LANG}`);
   log("done. practice url:", await ev(`location.href`));
   }
-  }
 } catch (e) {
   console.error("FAILED:", e.message);
   try { await shot(`failure-${LANG}`); await shot(`failure-${LANG}`, { full: true }); } catch {}
   process.exitCode = 1;
 } finally {
+  await stopRecording();
   cleanup();
 }
