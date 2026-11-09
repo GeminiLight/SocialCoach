@@ -167,7 +167,7 @@ R1 共享池/健康检查已修订，沿用用户最新批准的 1 亿中央政�
 
 ## 技术债
 
-- [ ] 2026-09-21 README 截图仍是 2026-09-08 的真实演示，早于本次核心路径 UI 精修；需重新采集中英各三张同一流程截图，可再录制一段真实对练到复盘的短演示。英文 README 已先切换为现有英文素材。
+- [x] 2026-09-21 README 截图仍是 2026-09-08 的真实演示。2026-11-09 改为中英各一段真实录制的对练到复盘 GIF（`docs/screenshots/demo-practice-{zh,en}.gif`，由 `site/scripts/screenshots.mjs --frames` 录制、`site/scripts/demo-gif.py` 合成）；字幕按当次录制内容写，重录后须重读。旧三张截图仍被官网使用，保留。
 - [x] 默认模型空值配置已采用 `trim() || DEFAULT_MODELS`，空白字符串与空值均回退。2026-10-08 对照当前 `llm.ts` 清理过期待办；该逻辑此前已实现。
 
 - [ ] **46 个场景里有 29 个包含 `hidden`（底牌，2026-10-01 实数）。** 其余 17 个会跳过揭示屏，直接进报告。是否补齐应按场景教学目标判断，并保留来源；补语料另行定义范围。
@@ -226,7 +226,9 @@ R1 共享池/健康检查已修订，沿用用户最新批准的 1 亿中央政�
 - [ ] README 章节名是否加 emoji（三个参考项目都加，与设计反参考冲突）——需要显式决定，见 [11-stage-b.md](./11-stage-b.md#b3-readme-结构)
 - [ ] Star History 图表（等 star 有量后再加）
 - [ ] `Architecture` 流程图的节点名仍是论文术语（`Prescription` / `Adaptation` / `Bounded proficiency delta`）。是否换成用户语言待定——换了对产品读者友好，但与代码的对应关系变弱
-- [ ] 发布火力句 `ChatGPT will agree with you. Your boss won't.` 已定稿待用，用于 HN / Product Hunt / 小红书发布帖
+- [ ] 发布火力句 `ChatGPT will agree with you. Your boss won't.` 已定稿待用，用于 HN / Product Hunt / 小红书发布帖。2026-11-09 用户同意：只用于发布文案与短视频开头，不进 README 副标题或主句。
+- [ ] 2026-11-09 国内分流 `socialcoach.aurax.live/*` 302 到 ModelScope 创空间根页，`/3d`、`/learn` 等路径丢失；同题邀请已用 ModelScope `app_path` 保留入口（#43），Cloudflare 跳转规则可同样拼接 `app_path`。修好后 README 与 `challenge.ts`、`site/content.mjs` 的 vercel 深链接可统一为主域名。
+- [ ] 2026-11-09 增长第一阶段：v1.0.0 Release、场景投稿表单与 `CONTRIBUTING.md`、首批 good first issue 已就绪；待办：开启 Discussions、HelloGitHub / 科技爱好者周刊 / HF Papers / awesome 清单投稿、感恩节前（11/18）英文发布。
 - [ ] `You know what to say. You just can't say it yet.` 作为落地页副本 / 广告变体
 - [ ] 统计后续：真实飞书凭证下验证自动建月表（`bitable:app`）与 `search` 过滤语法；飞书仪表盘按「事件 = session_start」建每日局数与场景分布两张图；Postgres 迁移路径：Supabase / Neon 免费档（0.5 GB，免费档一周不用会暂停，Pro 每月约 25 美元）或阿里云 RDS PostgreSQL Serverless（每月几十元），迁移是导出各月表 CSV 灌库并替换 `deliverEvents`，客户端不改
 - [ ] 限时应答后续：耐心秒数按场景难度给默认值（difficulty 3 → 10 秒）；沉默事件是否进入跨场次模式识别（`/api/pattern`）作为「一被顶就冻住」的证据；reduced motion 下的墨线与「开着朗读时等台词读完再计时」未单独验证
