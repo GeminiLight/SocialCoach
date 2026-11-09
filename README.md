@@ -72,7 +72,7 @@
 
 先看看五个双语练习情境：[和老板谈加薪](https://tianfu.wang/SocialCoach/guides/salary-raise/)、[拒绝临时加班](https://tianfu.wang/SocialCoach/guides/declining-extra-hours/)、[会议上被同事质问](https://tianfu.wang/SocialCoach/guides/meeting-tension/)、[和伴侣谈家务分工](https://tianfu.wang/SocialCoach/guides/spouse-chores/)、[请朋友还钱](https://tianfu.wang/SocialCoach/guides/friend-borrowed-money/)。每页都能进入应用练对应场景。
 
-从覆盖 **7 类生活情境的 58 个场景**中选择，跟随个性化推荐练习，也可以描述你自己的处境。界面与练习内容均支持**中文和英文**。
+从覆盖 **7 类生活情境的 63 个场景**中选择，跟随个性化推荐练习，也可以描述你自己的处境。界面与练习内容均支持**中文和英文**。
 
 文字练习至少从 12 个用户回合开始，可以每次增加 8 回合继续同一场对话，保留此前的内容和承诺，由你决定何时结束并复盘。
 

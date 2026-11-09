@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Shell } from "@/components/Shell";
 import { Button, Chip, ChoiceGroup, Empty, IconButton, Page } from "@/components/ui";
 import { SCENARIOS } from "@/data/corpus";
-import { SCENARIOS_D } from "@/data/corpus/scenarios-d";
+import { SCENARIOS_E } from "@/data/corpus/scenarios-e";
 import type { Scenario } from "@/data/corpus/types";
 import { CONTEXTS, SKILLS, contextById, skillById, type ContextId, type SkillId } from "@/data/taxonomy";
 import { useApp, useLang } from "@/store/useApp";
@@ -20,7 +20,7 @@ const copy = {
   skills: { zh: "练习技能", en: "Practice skill" },
 };
 
-const RECENT_IDS = new Set(SCENARIOS_D.map((s) => s.id));
+const RECENT_IDS = new Set(SCENARIOS_E.map((s) => s.id));
 
 export default function Arena() {
   const lang = useLang();

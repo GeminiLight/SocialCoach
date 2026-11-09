@@ -5,6 +5,7 @@ import { buildSession } from "../src/lib/session-utils";
 import { SCENARIOS, THEORIES, CASES } from "../src/data/corpus";
 import { SCENARIOS_C } from "../src/data/corpus/scenarios-c";
 import { SCENARIOS_D } from "../src/data/corpus/scenarios-d";
+import { SCENARIOS_E } from "../src/data/corpus/scenarios-e";
 import { THEORIES_C } from "../src/data/corpus/theories-c";
 import { CASES_C } from "../src/data/corpus/cases-c";
 import { SKILLS, COMPETENCIES, CONTEXTS, RELATIONSHIPS } from "../src/data/taxonomy";
@@ -46,7 +47,7 @@ for (const s of SCENARIOS) {
   for (const relationship of s.relationship) assert(relationship in RELATIONSHIPS, `${s.id}: relationship`);
   for (const skill of s.relatedSkills ?? []) assert(skills.has(skill), `${s.id}: related skill`);
 }
-for (const item of [...SCENARIOS_C, ...SCENARIOS_D, ...THEORIES_C, ...CASES_C]) {
+for (const item of [...SCENARIOS_C, ...SCENARIOS_D, ...SCENARIOS_E, ...THEORIES_C, ...CASES_C]) {
   bilingual(item, item.id);
   for (const skill of item.skills) assert(item.competencies.includes(skills.get(skill)!), `${item.id}: missing competency for ${skill}`);
   assert(
@@ -55,7 +56,7 @@ for (const item of [...SCENARIOS_C, ...SCENARIOS_D, ...THEORIES_C, ...CASES_C]) 
   );
   if (typeof item.source !== "string") assert.equal(new URL(item.source.url!).protocol, "https:");
 }
-for (const s of [...SCENARIOS_C, ...SCENARIOS_D]) {
+for (const s of [...SCENARIOS_C, ...SCENARIOS_D, ...SCENARIOS_E]) {
   assert(s.icon && s.icon in SCENARIO_ICONS, `${s.id}: unknown icon`);
   assert(
     s.characters.every((c) => c.hidden && c.stance.en && c.personality.en),
@@ -69,8 +70,10 @@ for (const c of CASES_C) {
 assert.equal(SCENARIOS_C.length, 12);
 assert.equal(SCENARIOS_D.length, 12);
 assert.equal(new Set(SCENARIOS_D.map((s) => s.context)).size, 7, "new scenes must span every existing context");
-for (const s of SCENARIOS_D) {
-  assert(s.source.endsWith(`scenarios-d.ts#${s.id}`), `${s.id}: original source must point to its authored record`);
+assert.equal(SCENARIOS_E.length, 5);
+for (const s of [...SCENARIOS_D, ...SCENARIOS_E]) {
+  assert(s.source.endsWith(`${SCENARIOS_D.includes(s) ? "scenarios-d" : "scenarios-e"}.ts#${s.id}`), `${s.id}: original source must point to its authored record`);
+  assert(s.simulationFacts && s.simulationDirection, `${s.id}: missing simulation facts or direction`);
   for (const lang of ["zh", "en"] as const) {
     const session = buildSession(SCENARIOS.find((item) => item.id === s.id)!, "arena", lang);
     assert.equal(session.learnerCharacterId, "you");

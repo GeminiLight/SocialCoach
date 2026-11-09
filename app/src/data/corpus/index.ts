@@ -4,6 +4,7 @@ import { THEORIES as THEORIES_BASE } from "./theories";
 import { THEORIES_C } from "./theories-c";
 import { SCENARIOS_C } from "./scenarios-c";
 import { SCENARIOS_D } from "./scenarios-d";
+import { SCENARIOS_E } from "./scenarios-e";
 import { CASES_C } from "./cases-c";
 import { CASES as CASES_BASE } from "./cases";
 import type { Case, Character, Scenario, Theory } from "./types";
@@ -11,6 +12,11 @@ import { L } from "../taxonomy";
 
 /** Role the learner plays in each corpus scenario (they are always "you"). */
 const LEARNER_ROLE: Record<string, { zh: string; en: string }> = {
+  "lunar-new-year-relatives": L("回家过年的成年子女", "Adult child home for the New Year"),
+  "year-end-review-rating": L("主导两个项目的员工", "Employee who led two projects"),
+  "resignation-counteroffer": L("已接受新工作的员工", "Employee who has accepted another job"),
+  "relative-loan-request": L("在攒首付的表弟 / 表妹", "Cousin saving for a home deposit"),
+  "advisor-weekend-request": L("赶论文初稿的研究生", "Graduate student finishing a thesis draft"),
   "elevator-confidential-question": L("协助安排面试的员工", "Employee assisting with interviews"),
   "office-quick-favor": L("正在赶报告的同事", "Colleague finishing a report"),
   "group-chat-blame": L("整理上线清单的成员", "Team member compiling a launch checklist"),
@@ -87,7 +93,7 @@ export function withLearner(s: Scenario): Scenario {
   return { ...s, characters: [you, ...s.characters] };
 }
 
-export const SCENARIOS: Scenario[] = [...SCENARIOS_A, ...SCENARIOS_B, ...SCENARIOS_C, ...SCENARIOS_D].map(withLearner);
+export const SCENARIOS: Scenario[] = [...SCENARIOS_A, ...SCENARIOS_B, ...SCENARIOS_C, ...SCENARIOS_D, ...SCENARIOS_E].map(withLearner);
 export const THEORIES: Theory[] = [...THEORIES_BASE, ...THEORIES_C];
 export const CASES: Case[] = [...CASES_BASE, ...CASES_C];
 export type { Case, Scenario, Theory };
