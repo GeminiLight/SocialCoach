@@ -46,8 +46,9 @@ export function roleplayOutput(scenario: Scenario, learnerId: string, lang: Lang
       } catch { return match; }
     },
   );
+  // Several quotes may support one objective; a bounded surplus is valid evidence, not an incomplete reply.
   const meta = z.object({
-    objectiveEvidence:z.array(z.object({index:z.number().int().min(0).max(scenario.objectives.length-1),learnerQuote:z.string().min(1).max(1200),npcQuote:z.string().max(1200).optional()})).max(scenario.objectives.length).optional(),
+    objectiveEvidence:z.array(z.object({index:z.number().int().min(0).max(scenario.objectives.length-1),learnerQuote:z.string().min(1).max(1200),npcQuote:z.string().max(1200).optional()})).max(scenario.objectives.length*3).optional(),
     objectives: z.array(z.boolean()).length(scenario.objectives.length), ended: z.boolean(),
     stance: z.number().int().min(0).max(100), revealed: z.boolean(),
     disclosures:z.array(z.object({characterId:z.string(),quote:z.string().min(1).max(2000)})).max(cast.length).optional(), note: z.string().max(300).optional(),
