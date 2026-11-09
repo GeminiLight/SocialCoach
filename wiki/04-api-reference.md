@@ -4,13 +4,13 @@
 
 ## 复盘交付与本次打算（2026-10-29）
 
-`roleplay` / `assess` 可带 `practiceIntent:string`（trim、最多 300 字），仅作初始偏好，不能替代原目标或评分引文，后来实际表达优先。`assess` 另接受 `requestId:UUID` 用于脱敏日志关联。响应增加前置空白与每十秒保活，首段非空正文后停止；仍以 `@@final` 为有效报告、`@@error` 为失败。无用户发言快速返回流内 422，165 秒任务截止为可恢复 504，浏览器另有 180 秒传输截止；核对与修复预算不变。
+`roleplay` / `assess` 可带 `practiceIntent:string`（trim、最多 300 字），仅作初始偏好，不能替代原目标或评分引文，后来实际表达优先。`assess` 另接受 `requestId:UUID` 用于脱敏日志关联。响应增加前置空白与每十秒保活，首段非空正文后停止；仍以 `@@final` 为有效报告、`@@error` 为失败。无用户发言快速返回流内 422，模型拒写复盘同为本地化 422（此前为 500 英文），165 秒任务截止为可恢复 504，浏览器另有 180 秒传输截止；核对与修复预算不变。
 
 `/api/track` 新严格事件 `assessment_stage`：`session,scenario,mode,request:UUID,stage:started|completed|failed|cancelled,duration_ms:0..300000,byok,status?:0..999,practice?:UUID`。完成仅指有效结果抵达客户端；拒绝额外打算、转录或错误正文，旧事件兼容。推荐的相容判断缺少真实背景引文时降为未知。见 [本轮验收](./reviews/review-2026-10-29-debrief-delivery-goals.md)。
 
 ## 关键回应短练（2026-10-22）
 
-`roleplay` / `assess` 请求新增可选 `practiceMode: "key-turn"`，托管与 BYOK 共用输入验证和任务。只允许非自定义 `office-quick-favor`，最多四句 learner 消息；其他练习省略该字段，保持原行为。客户端只发送原 NPC 开场与这次新转录，不传原回答 / 后续剧情 / 原报告。短练 NPC 使用既有 smart 档位，其他对练仍 fast；响应协议、限流、取消和任务预算不变。短练报告只展示引用本次用户原话的沟通观察，不应用能力 / 星级更新。
+`roleplay` / `assess` 请求新增可选 `practiceMode: "key-turn"`，托管与 BYOK 共用输入验证和任务。只允许非自定义 `office-quick-favor`，最多四句 learner 消息；输入校验后一律换用语料中的场景原件，客户端传来的场景字段不进入提示词；其他练习省略该字段，保持原行为。客户端只发送原 NPC 开场与这次新转录，不传原回答 / 后续剧情 / 原报告。短练 NPC 使用既有 smart 档位，其他对练仍 fast；响应协议、限流、取消和任务预算不变。短练报告只展示引用本次用户原话的沟通观察，不应用能力 / 星级更新。
 
 该场景新增已复现反例校验：唐悦不能虚构自己的具体截止 / 取稿时间、把自己的六页诉求归给老板，或否认老板给过具体逻辑反馈。短练还检查用户是否询问原始反馈，未询问时不直接披露逻辑问题。只在未展示 NPC 正文时使用原有一次修复；失败不提交台词。此校验覆盖明确句型，不构成通用语义保证。
 
@@ -60,9 +60,9 @@ GET 返回 `{configured:boolean}`，仅表示配置齐备，不证明音频生�
 
 先只读核对中央共享预算：低于任何任务的最低预留返回 shared_quota，有效并发满返回 shared_busy；检查不修改计数。resetAt 与错误 retryAt 是 UTC 毫秒，可在客户端按本地时区显示。budgetLimit / budgetRemaining 是保守预留口径，不是供应商余额。特定任务仍按完整上下文预留，metadata available 不能保证其成功。
 
-元数据在同一进程缓存 120 秒、合并并发检查；实际模型失败在进程内保留 120 秒，浏览器另有独立的即时失败状态。单用户限流不写入全站观察；只有可确认的模型故障（认证、额度、模型不存在、服务 / 网络）才写入，原因不明的服务商 400 只回给本次请求方（2026-11-09）。`?retry=1` 可显式重新免费检查，不自动重试付费生成。Vercel 实例间不共享内存观察。
+元数据在同一进程缓存 120 秒、合并并发检查；实际模型失败在进程内保留 120 秒，浏览器另有独立的即时失败状态。单用户限流不写入全站观察；只有可确认的模型故障（认证、额度、模型不存在、服务 / 网络）才写入，原因不明的服务商 400 只回给本次请求方（2026-11-09）。`?retry=1` 可显式重新免费检查（同一进程每 15 秒最多真正刷新一次），不自动重试付费生成。Vercel 实例间不共享内存观察。
 
-所有模型路由先读取并校验请求体，再计入每 IP / 全站限流：格式错误、空白回复等 400 / 413 请求不消耗额度。对练类请求中 learner 消息不能为空白。共享额度不足返回 429/shared_quota，可带 retryAt；共享并发满为 429/shared_busy。供应商余额与限流继续使用 quota / rate_limit。API 日志只记录状态与类别，不记录错误正文或用户原话。
+所有模型路由先读取并校验请求体，再计入每 IP / 全站限流（地址取 `X-Forwarded-For` 右起第 `TRUSTED_PROXY_HOPS` 个，默认 1；左侧值由客户端决定、不可信。NPC 语音单独计数：`RATE_LIMIT_SPEECH_PER_IP` 默认 240 / 时，`RATE_LIMIT_SPEECH_GLOBAL_DAILY` 默认 10 000）：格式错误、空白回复等 400 / 413 请求不消耗额度。对练类请求中 learner 消息不能为空白。共享额度不足返回 429/shared_quota，可带 retryAt；共享并发满为 429/shared_busy。供应商余额与限流继续使用 quota / rate_limit。API 日志只记录状态与类别，不记录错误正文或用户原话。
 
 HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如格式 / 引文校验，不因此禁用模型。新版客户端兼容旧版纯文本 `@@error`。方案和验收见 [模型连接](./archive/specs/spec-model-availability.md)。
 
@@ -120,7 +120,7 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 
 `turnLimit` 是当前段落的累计用户回合边界，缺省至少 12 回合；客户端选择续聊后增加 8。场景原来的 `maxTurns` 仍可读取旧档案，但不再触发结束。完整回复的最后一条 NPC 消息可带 `meta`，用于保留已生成的进度与输出格式；旧档案没有这个字段也能继续。
 
-`messages` 里可以出现 `{ role: "event", kind: "silence", seconds }`：限时应答里用户到点没开口。它占用户的位置进入回合（`(名字 says nothing for 15 seconds.)`），**不计入 `maxTurns`**；服务端按连续沉默次数追加一行系统提示，第二次连续沉默要求 NPC 收场（`ended: true`）。→ [spec-timed-reply](./specs/spec-timed-reply.md)
+`messages` 里可以出现 `{ role: "event", kind: "silence", seconds }`：限时应答里用户到点没开口。它占用户的位置进入回合（`(名字 says nothing for 15 seconds.)`），**不计入 `maxTurns`**；服务端按连续沉默次数追加一行系统提示，第二次连续沉默要求 NPC 收场（`ended: true`）。→ [spec-timed-reply](archive/specs/spec-timed-reply.md)
 
 **响应：** `text/plain` 流。格式严格如下：
 
@@ -160,7 +160,7 @@ HTTP / 流式错误的 `modelIssue:null` 明确表示任务自身错误，例如
 
 **响应：** `202 { ok: true }`，写入在 `after()` 里完成；未配置 `204`；跨站 `403`；超 16 KB `413`；每 IP 每小时 240 次后 `429`。
 
-落点是飞书 Base 按月建表：月份取服务器接收时间，不取事件 `ts`（客户端时钟可能错误或被伪造），一次上报只写一张表、一次写入，批次 id 即幂等键；每行仍记录事件自身时间。配置见 `.env.example` 的 `ANALYTICS_FEISHU_*`。→ [spec-analytics](./specs/spec-analytics.md)
+落点是飞书 Base 按月建表：月份取服务器接收时间，不取事件 `ts`（客户端时钟可能错误或被伪造），一次上报只写一张表、一次写入，批次 id 即幂等键；每行仍记录事件自身时间。配置见 `.env.example` 的 `ANALYTICS_FEISHU_*`。→ [spec-analytics](archive/specs/spec-analytics.md)
 
 ---
 
@@ -338,7 +338,7 @@ JSON：`{ id: UUID, category: bug|character|assessment|idea|other, detail?: stri
 
 新增空间：`elevator-privacy/elevator-blame` 与 `office-overtime/office-interruption`，各自独立资料、角色与话题；`responsibility` 和 `speaking` 新增话题。办公室、电梯口拒绝 `toast` 动作，禁止饭局道具。空间证据 `room` 新增可选 `space:"dinner"|"elevator"|"office"`、`liftDoors:"open"|"opening"|"closing"|"closed"`；`zone` 允许 `lobby/cabin/desk/board`，并与场景交叉校验。现场事件新增 `elevator-door/office-task/office-floor`；动作 `hold-door/release-door/step-aside/inspect/request/board`。它们只有实际抵达后才写入动作记录，保持 `silent:true`，不生成自动同意台词。门仍停在同层，不把关门当作私聊。客户端 v1 档案的 `room.space` 与 `room.lift:{openness,target}` 是可选扩展；旧饭桌不需要这些字段。
 
-错误：400 输入 / 状态无效；413 过长；429 沿用主站限流；503 部署无密钥或强制 BYOK；模型错误沿用 `fail()`，无剧本静默替代。服务器请求 30 秒取消、路由 `maxDuration=40`；客户端 35 秒取消，草稿保留。响应 `Cache-Control: no-store`。
+错误：400 输入 / 状态无效（含 `contentSnapshot` 与本场景人物不符或超出字段上限）；413 过长；429 沿用主站限流；503 部署无密钥或强制 BYOK；模型错误沿用 `fail()`，无剧本静默替代。服务器请求 30 秒取消、路由 `maxDuration=40`；客户端 35 秒取消，草稿保留。响应 `Cache-Control: no-store`。
 
 BYOK 在浏览器运行同一任务，密钥不发送到此路由。可用性复用 `/api/health` 的连接状态与浏览器统一的运行时失败状态，无新增公开配置端点。
 

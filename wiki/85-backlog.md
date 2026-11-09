@@ -11,12 +11,13 @@
 - [x] 统计按服务器接收月份建表，伪造 / 错误的 `ts` 不能新建表；一批只写一次，重试幂等。
 - [x] 借用部署密钥的 `/api/speech` 遵守 `LLM_REQUIRE_BYOK`；3D 错误文案随语言；冲突窗口禁止设置页半重置；迟到提示不插入用户新发言之后；连续天数按练习日记；家庭场景只绘制实际使用的挂画（绘制调用逐一核对不变），删除五个无引用的旧 3D 组件。
 - [x] README 中英微信群二维码换为 2026-11-09 新图（11-16 前有效，已解码核对为微信群链接），删除三张过期旧图。微信群码约 7 天过期，需定期更新。
-- [ ] 「这一句，重来」只核对场景 id：服务端应以语料快照校验 `office-quick-favor` 内容，需先确认旧档案场景快照与当前语料的兼容。
-- [ ] `/api/dinner/direct` 信任客户端 `contentSnapshot`：评估改为按 `variantId` + `BRIEF_VERSION` 在服务端重建，或对字段设长度上限。
-- [ ] 客户端 IP 取 `X-Forwarded-For` 最左值：ModelScope 等追加型代理下可伪造，需按部署确认可信代理跳数。
-- [ ] `/api/health?retry=1` 无节流；`/api/schedule` 最坏 8 次调用超过预算 6；复盘拒答返回 500 英文错误（对练为 422 本地化）。
+- [x] 「这一句，重来」在 `taskInput` 统一换用语料中的 `office-quick-favor` 原件（托管与 BYOK 同一路径），客户端场景内容不再进入提示词。
+- [x] `/api/dinner/direct` 的 `contentSnapshot` 必须与本场景人物一致，单字段 ≤ 1200 字、事实 ≤ 12 条、简报 ≤ 10 行、总长 ≤ 32 000；旧局冻结快照照常可玩。
+- [x] 客户端地址从 `X-Forwarded-For` 右侧按 `TRUSTED_PROXY_HOPS`（默认 1）读取，限流 / 反馈 / 统计共用 `clientKey`。ModelScope 实际代理层数仍需上线后核对日志再定。
+- [x] `?retry=1` 每 15 秒最多真正刷新一次；`validatedJSON` 自持修复循环（每轮单次调用），schedule 最坏 6 次；复盘拒答改为本地化 422。另：NPC 语音单独计数（每 IP 240 / 时），PCM 按整样本对齐转发；恢复备份在多窗口冲突时禁止执行。
 - [ ] 3D 手机内存：`useGLTF` 缓存跨场景累积（五空间约 100 MB+），每次换场景新建 WebGL 上下文；与真机性能补测一起验证。第一人称默认仍预载 1.7 MB 玩家模型；接触阴影只渲染一帧；平放手机倾斜看门狗误报不可用；iPhone 全屏按钮无效。
-- [ ] wiki 时效：多份 spec 已完成未归档（timed-reply、analytics、video-learning、repo-quality）；`wiki_audit.py` 本机缺失；`docs/reference/paper.txt`（含作者邮箱的论文全文）是否留在仓库待定。
+- [x] 四份完成的 spec 归档到 `archive/specs/` 并更新全部引用；`docs/reference/`（论文全文提取与插图页）移出仓库，保留在被忽略的 `docs/research/reference/`。
+- [ ] `wiki_audit.py` 本机缺失，AGENTS.md 要求的阶段审计暂时只能人工完成；需重新安装 project-wiki 技能脚本。
 
 ## 2026-10-29 复盘交付与目标（已授权双站上线）
 
@@ -78,7 +79,7 @@
 
 - [x] 视频搜索的短英文词按词匹配，HR 不再命中 three；允许多个拆解引用同一时间点而不发生重复 key。→ [学习模块复盘](./81-postmortem-video-learning.md)
 
-- [x] 双平台已发布：首版及第二条 HR 电梯影片，真实影片 / 成片字幕 / 引用拆解 / 检索收藏 / 游客访问 / 网络重试 / 对应 3D 开局；8 种组合与真实播放已验证。→ [方案](./specs/spec-video-learning.md)
+- [x] 双平台已发布：首版及第二条 HR 电梯影片，真实影片 / 成片字幕 / 引用拆解 / 检索收藏 / 游客访问 / 网络重试 / 对应 3D 开局；8 种组合与真实播放已验证。→ [方案](archive/specs/spec-video-learning.md)
 - [x] 2026-10-08 双平台发布，国内公开浏览器与 Range 通过。→ [发布记录](../docs/reviews/video-release-2026-10-08/README.md)
 - [ ] 补充真实手机全屏 / 字幕、弱网及更多生产网络验证。当前饭局影片约 10MB、HR 电梯影片约 5MB，多影片或实际流量增长后再验证 CDN / 对象存储方案；不把桌面会话通过写成实体设备验收。
 

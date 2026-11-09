@@ -12,4 +12,4 @@
 
 新增影片需核对实际成片、字幕时长、引用与适用条件，并覆盖多条索引、缩写搜索、重复引用时间、手机展开、语言切换及正确练习开局。动画与路由应在目标控件可操作后检查；热更新前的旧页面错误和缓存条件需与最终冷会话验证区分，不能据临时快照宣称修复失败或关闭检查。
 
-[首版验收](../docs/reviews/video-learning-2026-10-07/README.md) · [当前模块方案](./specs/spec-video-learning.md)
+[首版验收](../docs/reviews/video-learning-2026-10-07/README.md) · [当前模块方案](archive/specs/spec-video-learning.md)

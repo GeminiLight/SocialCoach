@@ -51,7 +51,7 @@
 | A14 | 对方立场表盘（`@@meta.stance`，允许下降并标出退让位置） | ✅ | 同批把 `@@meta` 移到回合最前，修掉长期静默失效的目标追踪 |
 | A15 | 判决式复盘开场 + 对话地图（按回合画推进 / 没动 / 让了一步） | ✅ | `Report.verdict`；地图数据来自 `session.stanceTrail` |
 | A16 | 跨场次模式识别（`/api/pattern`，引文防伪 + 至少两个场次） | ✅ | 产品提案里的 A→B 转化引擎，此前无实现 |
-| A17 | 限时应答（可选模式：对方耐心 10 / 15 / 20 秒，三段升级，沉默进转录，连续两次对方离场） | ✅ | 2026-09-09；默认关闭，`role: "event"` 沉默事件不计回合 → [spec](./specs/spec-timed-reply.md) |
+| A17 | 限时应答（可选模式：对方耐心 10 / 15 / 20 秒，三段升级，沉默进转录，连续两次对方离场） | ✅ | 2026-09-09；默认关闭，`role: "event"` 沉默事件不计回合 → [spec](archive/specs/spec-timed-reply.md) |
 | A18 | 通用练习策略：角色匹配、信息边界、收尾证据、表现/结果分离 | ✅ 已部署 | 2026-09-21 双平台上线；真实模型小样本通过，仍需扩大盲测 → [方案](./archive/specs/spec-general-practice-policy.md) |
 | A19 | 核心练习路径 UI/UX 精修 | ✅ 已部署 | 2026-09-21 今日 / 目录 / 准备 / 对话 / 复盘统一路径，草稿与目录状态恢复、真实等待、触控与可访问性 → [评审](./archive/reviews/review-2026-09-21-product-ux.md) |
 | A20 | 首次进入与重复练习闭环精修 | ✅ 已部署 | 2026-10-02 Vercel / ModelScope 更新；快速排练 / 选场景、按需推荐、待完成复盘续接、知识关联场景、明确重练及触控修复；中英明暗浏览器矩阵 → [评审](./reviews/review-2026-10-01-product-maturity.md) |
@@ -80,7 +80,7 @@
 | A33 | 全仓质量与数据契约修订 | ✅ 双站已发布，真机待验 | 证据身份、运行时契约、档案写入/恢复/窗口权限、能力估计、排程诊断、双语检索、3D 内容快照、调用预算/取消与 CI；免费预算已配置、真实 REST / 两条线上对练通过；供应商金额上限与模型/设备盲测待补 → [发布记录](../docs/reviews/product-sync-2026-10-06/README.md)、[修订复核](./reviews/review-2026-10-06-repo-quality.md) |
 | A34 | NPC 口吻与连续反应精修 | ✅ 双平台已发布，扩样待验 | 文字 / 3D 共用表演方向、15 位人物口吻快照、最近反应、场景指令收敛、有限听者点头、复读 / 时间 / 称谓 / 语言边界；程序与真实合成回放见 [方案](./specs/spec-npc-craft.md)、[评审](./reviews/review-2026-10-06-npc-craft.md)；PR #11 合并及 P2 复播误判修订、249 项 3D 检查见 [合并发布记录](../docs/reviews/npc-merge-2026-10-06/README.md) |
 
-| A35 | 视频观摩与同场景练习 | ✅ 七条影片双站已发布 | 2026-10-26 新增五期 H 社会科学短片、720p 压缩及明确播放后加载；CI、本地 Chrome 交互与两站线上媒体验收通过，本轮线上浏览器交互 / 真机仍待补验 → [本轮记录](./reviews/review-2026-10-26-five-video-lessons.md)。原职场饭局与 HR 电梯两条动画保留；原生播放 / 双语字幕 / 时间戳拆解 / 统一检索与收藏 / 游客入口 / 3D 确认；8 种浏览器组合和真实播放、重试与跳转已验证；2026-10-08 发布与国内公开播放复核 → [发布记录](../docs/reviews/video-release-2026-10-08/README.md)； [方案](./specs/spec-video-learning.md)、[验收](../docs/reviews/video-learning-2026-10-07/README.md) |
+| A35 | 视频观摩与同场景练习 | ✅ 七条影片双站已发布 | 2026-10-26 新增五期 H 社会科学短片、720p 压缩及明确播放后加载；CI、本地 Chrome 交互与两站线上媒体验收通过，本轮线上浏览器交互 / 真机仍待补验 → [本轮记录](./reviews/review-2026-10-26-five-video-lessons.md)。原职场饭局与 HR 电梯两条动画保留；原生播放 / 双语字幕 / 时间戳拆解 / 统一检索与收藏 / 游客入口 / 3D 确认；8 种浏览器组合和真实播放、重试与跳转已验证；2026-10-08 发布与国内公开播放复核 → [发布记录](../docs/reviews/video-release-2026-10-08/README.md)； [方案](archive/specs/spec-video-learning.md)、[验收](../docs/reviews/video-learning-2026-10-07/README.md) |
 | A36 | NPC 自然语音与等待上限 | ✅ 双平台已发布，真机待验 | MiMo PCM 实时播放；3.5 秒首样本截止 / 一分钟降级冷却；文字先显示、开麦 / 发言 / 切页取消、设备选择与个人模型零共享请求；真实网页约 3.26 秒调度首声、国内首段音频约 2.08 秒，314 项检查 → [方案](./archive/specs/spec-natural-npc-speech.md)、[实测与发布](../docs/reviews/mimo-speech-2026-10-08/README.md) |
 
 ### Stage B — 定位与对外物料
@@ -101,7 +101,7 @@
 | B10 | ModelScope 公开体验入口 | ✅ | 2026-09-09 `GeminiLight/SocialCoach`；免费 CPU Docker 创空间，Apache-2.0；页面与线上对话 / 复盘流式验证通过 → [部署记录](./specs/spec-modelscope-deployment.md) |
 
 | B11 | 用户反馈 → 飞书 | ✅ | 双部署真实提交通过；2026-09-17 本人 Base 可管理权限已添加并读回确认 → [反馈方案](./archive/specs/spec-user-feedback.md) |
-| B12 | 匿名使用统计 → 飞书（四个事件、按月建表、留存脚本） | ✅ | 2026-09-10 Vercel 生产上线并跑通一局无错误；ModelScope 通过 OpenAPI 加变量并重建，`/api/track` 已可用 → [spec-analytics](./specs/spec-analytics.md) |
+| B12 | 匿名使用统计 → 飞书（四个事件、按月建表、留存脚本） | ✅ | 2026-09-10 Vercel 生产上线并跑通一局无错误；ModelScope 通过 OpenAPI 加变量并重建，`/api/track` 已可用 → [spec-analytics](archive/specs/spec-analytics.md) |
 | B13 | 品牌教练 IP 与关键触点 | ✅ 已部署 | 2026-10-05 Vercel / ModelScope 同步；用户提供的小猫形象：欢迎页完整展示、首页教练问候、复盘助手肖像；统一透明素材、克制展示、双语 / 双主题 / 短屏 / 减少动效与访客入口；141 项浏览器检查 → [接入评审](./reviews/review-2026-10-04-coach-identity.md) |
 
 ### Stage C — 可索引化与 GEO

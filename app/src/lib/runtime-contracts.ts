@@ -36,7 +36,14 @@ export async function validatedJSON<T>(opts:JSONCallOpts,llm:LLM,schema:z.ZodTyp
  let correction='';
  for(let attempt=0;attempt<2;attempt++){
   opts.signal?.throwIfAborted();
-  const value=await jsonCall<unknown>({...opts,user:opts.user+correction},llm);
+  // This loop owns repair: one call per attempt, so nested parse retries cannot
+  // double the task's call budget (schedule: prescription + role fit + this = 6).
+  let value:unknown;
+  try{value=await jsonCall<unknown>({...opts,user:opts.user+correction},llm,1);}
+  catch(error){
+   if(!(error instanceof SyntaxError)&&!(error instanceof LLMError&&error.retryable))throw error;
+   correction='\nThe previous response was not one complete JSON object. Return ONLY the JSON object for the SAME context. No prose.';continue;
+  }
   const parsed=schema.safeParse(value);
   if(parsed.success)return parsed.data;
   correction=`\nThe previous response failed the runtime contract: ${parsed.error.issues.map(i=>i.path.join('.')+': '+i.message).join('; ')}. Return a complete corrected JSON for the SAME context. Do not invent facts or replace the learner's description.`;

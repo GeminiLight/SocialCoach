@@ -99,7 +99,7 @@ export async function runAssess(input: AssessInput, llm: LLM, smartModel: string
   const run = llm.chatStream(request);
   for await (const delta of run.deltas) { void delta; signal?.throwIfAborted(); }
   signal?.throwIfAborted();
-  if (run.refused()) throw new Error("The model declined this request.");
+  if (run.refused()) throw new LLMError(pick({zh:'模型未能完成这次复盘，对话已保留。请稍后重试。',en:'The model declined to write this debrief. Your transcript is saved; please retry later.'},lang),422);
   const unavailable=()=>new LLMError(pick({zh:'这次复盘还没能可靠地核对原话。对话已保留，请重试。',en:'This debrief could not reliably verify the conversation. Your transcript is saved; please retry.'},lang),502,true);
   const parse=(text:string)=>{
     const raw=extractJSON<Partial<Report>>(text);
