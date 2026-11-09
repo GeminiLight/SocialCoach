@@ -179,7 +179,7 @@ R1 共享池/健康检查已修订，沿用用户最新批准的 1 亿中央政�
 - [ ] 2026-09-23 SEO 复核：域名根目录的 `robots.txt` 仅指向个人站点 sitemap，该 sitemap 不含 SocialCoach；官网子路径 sitemap 已扩充至 12 页。个人站点 [PR #14](https://github.com/GeminiLight/geminilight.github.io/pull/14) 增加第二条 Sitemap 指令，但私有仓库 CI 因 GitHub 账户付款 / Actions 额度问题未启动，按该仓库规则暂不合并。之后仍需在 Search Console 核对实际收录与搜索查询。
 - [ ] 2026-09-23 HTTP 版官网仍返回 200。Pages API 开启 `https_enforced` 因证书不存在被拒绝；构建里的绝对 URL 已统一为 HTTPS，后续仍应在域名托管层配置 HTTP → HTTPS 重定向或修复 Pages 证书配置。
 - [ ] 2026-09-23 arXiv 摘要页与 v2 PDF 首页的作者顺序不一致；官网和 README 按 PDF 排列，论文提交者需核对上游元数据。→ [80-known-pitfalls.md](./80-known-pitfalls.md#arxiv-摘要页与-pdf-首页的作者顺序不同)
-- [ ] `docs/PRODUCT.md` 已被 [00-product-proposal.md](./00-product-proposal.md) 取代。保留作历史，但需在文件头加一行指向 wiki，避免 Agent 读到过时定位
+- [x] `docs/PRODUCT.md` 已被 [00-product-proposal.md](./00-product-proposal.md) 取代。保留作历史，但需在文件头加一行指向 wiki，避免 Agent 读到过时定位（2026-11-09 已加，#70）
 - [x] 已有语料 / 头像检查和浏览器体验回归。2026-10-01 本地正式构建通过 152 个页面组合、80 次自动可访问性扫描及关键行为回归；这不覆盖模型语义质量或真实设备。→ [成熟度评审](./reviews/review-2026-10-01-product-maturity.md)
 - [x] 2026-09-09 `app/scripts/check-avatars.ts` 已同步新版 `portraitFor`，验证保存、改名稳定性与旧种子回退；全量 `tsc --noEmit` 通过。
 

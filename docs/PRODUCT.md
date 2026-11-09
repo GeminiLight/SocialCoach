@@ -1,5 +1,8 @@
 # SocialCoach — 产品定义
 
+> **历史文档。** 本文件为早期产品定义，仅作历史保留；当前定位与边界见 [`wiki/00-product-proposal.md`](../wiki/00-product-proposal.md)。
+> **Historical document.** Kept for reference only; the current product proposal is [`wiki/00-product-proposal.md`](../wiki/00-product-proposal.md).
+
 > 参考论文：Wang et al., *SocialCoach: Personalized Social Skill Learning with Agentic Tutoring and Practice* (arXiv 2606.04155v2)。
 
 ## 一句话

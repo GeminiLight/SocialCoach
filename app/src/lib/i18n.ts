@@ -51,7 +51,7 @@ const dict = {
   arena_heading: { zh: "哪场对话，让你难开口？", en: "Which conversation is on your mind?" },
   arena_catalog: { zh: "场景目录", en: "The scenario collection" },
   arena_recommend_reason: { zh: "根据你的目标与常用情境挑选", en: "Selected for your goals and settings" },
-  arena_results: { zh: "{n} 个场景", en: "{n} scenarios" },
+  arena_results: { zh: "{n} 个场景", en: "{n} {n:scenario|scenarios}" },
   arena_reset: { zh: "清除筛选", en: "Clear filters" },
   arena_clear_search: { zh: "清空搜索", en: "Clear search" },
   arena_any_difficulty: { zh: "全部难度", en: "Any difficulty" },
@@ -206,10 +206,10 @@ const dict = {
   pr_hint_loading: { zh: "教练在想…", en: "Coach is thinking…" },
   pr_end_early: { zh: "结束对话", en: "End scene" },
   pr_end_confirm: { zh: "现在结束？你可以直接进入复盘。", en: "End now? You'll go straight to the debrief." },
-  pr_turns_left: { zh: "还剩 {n} 回合", en: "{n} turns left" },
+  pr_turns_left: { zh: "还剩 {n} 回合", en: "{n} {n:turn|turns} left" },
   pr_last_turn: { zh: "最后一回合", en: "Last turn" },
-  pr_segment_budget: { zh: "先练 {n} 回合，可继续", en: "Start with {n} turns · extend anytime" },
-  pr_turn_progress: { zh: "已聊 {n} 回合 · 随时可收尾", en: "{n} turns · finish when ready" },
+  pr_segment_budget: { zh: "先练 {n} 回合，可继续", en: "Start with {n} {n:turn|turns} · extend anytime" },
+  pr_turn_progress: { zh: "已聊 {n} 回合 · 随时可收尾", en: "{n} {n:turn|turns} · finish when ready" },
   pr_source_original: { zh: "SocialCoach 原创虚构练习 · {date}", en: "Original fictional practice by SocialCoach · {date}" },
   pr_review_action: { zh: "收尾 / 复盘", en: "Finish / review" },
   pr_checkpoint_segment: { zh: "这一段聊完了，还想接着说吗？", en: "A segment complete. Have more to say?" },
@@ -302,7 +302,7 @@ const dict = {
   pr_clock_look_one: { zh: "{name}看着你，等你开口。", en: "{name} is looking at you, waiting." },
   pr_clock_look_all: { zh: "大家都看向你。", en: "Everyone turns to you." },
   pr_clock_impatient: { zh: "{name}有点不耐烦了。", en: "{name} is getting impatient." },
-  pr_clock_lapsed: { zh: "你沉默了 {n} 秒。", en: "You were silent for {n} seconds." },
+  pr_clock_lapsed: { zh: "你沉默了 {n} 秒。", en: "You were silent for {n} {n:second|seconds}." },
   pr_clock_floor: { zh: "{name}不再等了。你开口，对话才会继续。", en: "{name} has stopped waiting. Say something and the scene goes on." },
   rp_failed: { zh: "复盘没能生成完整，再试一次通常就好。", en: "The debrief didn't come through cleanly. Trying again usually fixes it." },
   rp_writing: { zh: "教练正在写", en: "Coach is writing" },
@@ -417,12 +417,12 @@ const dict = {
   pg_footprint: { zh: "练习足迹", en: "Practice footprint" },
   pg_footprint_sub: { zh: "填墨的格子是练过的那天。", en: "Filled cells are days you practised." },
   pg_footprint_streak: { zh: "当前连续 {n} 天", en: "{n}-day streak" },
-  pg_footprint_total: { zh: "共 {n} 天", en: "{n} days total" },
+  pg_footprint_total: { zh: "共 {n} 天", en: "{n} {n:day|days} total" },
   pg_journal_empty: { zh: "复盘时写下的反思会收在这里。", en: "Reflections you write in debriefs collect here." },
 
   // learn
   ln_heading: { zh: "把懂得的，变成说得出的。", en: "Turn understanding into words." },
-  ln_results: { zh: "{n} 条学习内容", en: "{n} items to explore" },
+  ln_results: { zh: "{n} 条学习内容", en: "{n} {n:item|items} to explore" },
   ln_saved_empty: { zh: "给值得再看的内容，留个书签。", en: "Save something to come back to." },
   ln_saved_hint: { zh: "打开视频、理论或案例，点击收藏，就能在这里找到它。", en: "Open a video, theory or case and save it to find it here." },
   ln_search_empty: { zh: "暂时没有匹配的内容", en: "No matching content yet" },
@@ -447,7 +447,7 @@ const dict = {
   st_voice_system: { zh: "设备", en: "Device" },
   ln_title: { zh: "学习", en: "Learn" },
   ln_source_link: { zh: "查看方法依据", en: "Read the source" },
-  ln_steps: { zh: "{n} 步做法", en: "{n} steps" },
+  ln_steps: { zh: "{n} 步做法", en: "{n} {n:step|steps}" },
   ln_sub: { zh: "看清一个现象，或一段回应。带着理解，回到自己的对话里练。每条内容都有来源。", en: "Understand a social pattern or a response, then return to your own conversations and practise. Every item has a source." },
   ln_videos: { zh: "视频", en: "Videos" },
   ln_theories: { zh: "理论", en: "Theories" },
@@ -531,7 +531,10 @@ export type TKey = keyof typeof dict;
 
 export function t(lang: Lang, key: TKey, vars?: Record<string, string | number>): string {
   let s: string = pick(dict[key], lang);
-  if (vars) for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, String(v));
+  if (!vars) return s;
+  // `{n:turn|turns}` picks the singular form when the variable equals 1 (English copy only).
+  s = s.replace(/\{(\w+):([^|}]*)\|([^}]*)\}/g, (token, k: string, one: string, other: string) => (k in vars ? (Number(vars[k]) === 1 ? one : other) : token));
+  for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, String(v));
   return s;
 }
 
