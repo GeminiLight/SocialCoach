@@ -19,6 +19,7 @@ test('the client address comes from the trusted proxy hop, never the client-chos
 });
 
 test('one voiced practice does not spend the practice allowance',()=>{
+ delete process.env.RATE_LIMIT_DISABLED;delete process.env.RATE_LIMIT_GLOBAL_DAILY;delete process.env.RATE_LIMIT_SPEECH_GLOBAL_DAILY;
  process.env.RATE_LIMIT_PER_IP='2';process.env.RATE_LIMIT_SPEECH_PER_IP='5';
  const visitor=()=>req({'x-forwarded-for':'9.9.9.9'});
  for(let i=0;i<5;i++)checkRateLimit(visitor(),'speech');
@@ -60,8 +61,9 @@ test('PCM never forwards half a sample, even when the provider splits one across
 });
 
 test('a forced health recheck refreshes at most once per interval',async()=>{
- Object.assign(process.env,{LLM_PROVIDER:'openai',LLM_API_KEY:'k',LLM_FAST_MODEL:'m',LLM_SMART_MODEL:'m'});
- delete process.env.LLM_REQUIRE_BYOK;
+ // Hermetic: Vercel runs this suite with production settings (budget store, provider, models).
+ Object.assign(process.env,{NODE_ENV:'test',LLM_PROVIDER:'openai',LLM_BASE_URL:'https://model.test/v1',LLM_API_KEY:'k',LLM_FAST_MODEL:'m',LLM_SMART_MODEL:'m'});
+ for(const key of ['LLM_REQUIRE_BYOK','LLM_BUDGET_REDIS_URL','LLM_BUDGET_REDIS_TOKEN','LLM_BUDGET_DAILY_TOKENS','LLM_BUDGET_CONCURRENCY'])delete process.env[key];
  const realFetch=globalThis.fetch;let lists=0;
  globalThis.fetch=(async(input:RequestInfo|URL)=>{const url=String(input instanceof Request?input.url:input);if(url.includes('/models')){lists++;return Response.json({object:'list',data:[{id:'m'}]});}return Response.json({});}) as typeof fetch;
  try{
