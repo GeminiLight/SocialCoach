@@ -68,6 +68,13 @@ test('a device API without useful readings times out and removes its listener', 
   t.mock.timers.tick(8000); assert.equal(h.session.status, 'unavailable'); assert.deepEqual(h.counts(), { listeners: 1, removals: 1 });
 });
 
+test('a phone lying flat keeps tilt on: real readings without a lean still cancel the watchdog', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] }); const h = harness(); await h.session.start(); h.sample(0, 0);
+  assert.equal(h.session.status, 'active'); assert.equal(h.session.output.yaw, 0);
+  t.mock.timers.tick(8000); assert.equal(h.session.status, 'active'); assert.deepEqual(h.counts(), { listeners: 1, removals: 0 });
+  h.sample(45, -30); h.sample(45, -10); assert.ok(h.session.output.yaw !== 0, 'lifting the phone resumes looking');
+});
+
 test('gaze ignores offscreen / ambiguous faces and never changes recipients while sweeping past', () => {
   assert.equal(aimedPerson([{ id: 'left', x: -.3, y: 0, visible: true }, { id: 'centre', x: 0, y: 0, visible: true }, { id: 'behind', x: 0, y: 0, visible: false }]), 'centre');
   assert.equal(aimedPerson([{ id: 'one', x: .01, y: 0, visible: true }, { id: 'two', x: -.01, y: 0, visible: true }]), undefined);

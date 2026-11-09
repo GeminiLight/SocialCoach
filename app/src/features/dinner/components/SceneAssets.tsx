@@ -13,6 +13,21 @@ import { sceneSurface } from '../lib/sceneSurface';
 useGLTF.setDecoderPath('/3d/draco/');
 export const assetUrl = (name:string) => `/3d/v2/${name}.glb`;
 export const preloadPlayerAsset = () => useGLTF.preload(assetUrl('player'),true);
+/**
+ * Assets that every scene shares stay cached. Room and cast GLBs are scene
+ * specific; without eviction, visiting all five spaces keeps ~100 MB of decoded
+ * geometry and morph targets alive in the JS heap on a phone.
+ */
+const SHARED_ASSETS=new Set(['props','player','hand-grip','hand-open']);
+let cachedScene:string[]=[];
+export const sceneAssetNames=(scenario:Pick<Scenario,'id'|'space'|'characters'>)=>[`room-${scenario.space??scenario.id}`,...scenario.characters.map(c=>c.id)];
+/** Called once the next scene is mounted: evict only what the previous scene used and this one does not.
+ * The unmounted Canvas already disposed its renderer and lost its context (R3F), so no live mesh reads them. */
+export function retainSceneAssets(names:string[],clear:(url:string)=>void=useGLTF.clear){
+  const keep=new Set(names);
+  for(const name of cachedScene)if(!keep.has(name)&&!SHARED_ASSETS.has(name))clear(assetUrl(name));
+  cachedScene=[...keep];
+}
 export function useSceneAsset(name:string) {
   const asset=useGLTF(assetUrl(name),true),{gl,invalidate}=useThree();
   useEffect(()=>{
