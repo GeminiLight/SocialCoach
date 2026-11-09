@@ -4,6 +4,13 @@
 
 复盘输入 / 传输 / 截止 / 展示的共同边界见 [复盘交付链路复盘](./81-postmortem-debrief-delivery.md)。
 
+### Vercel 用生产环境变量跑全部测试（2026-11-09）
+
+- **现象**：本地与 GitHub CI 通过，Vercel 预览构建失败。
+- **原因**：`app/vercel.json` 的构建命令是 `pnpm check && pnpm build`，测试在 `NODE_ENV=production` 与线上变量（预算存储、模型、限流）下运行；依赖「未配置」默认值的测试会走到别的分支。另：`import('…?query')` 重新加载模块的做法在 CI 解析不稳定。
+- **解法**：涉及环境的测试显式设置 / 删除所需变量；需要可调参数时在调用时读取 `process.env`，不要在模块加载时固化。本地可用 `NODE_ENV=production LLM_BUDGET_REDIS_URL=… pnpm test:core` 复现。
+- **教训**：「本地过」不等于 Vercel 过；新测试先在生产样式环境变量下跑一遍。
+
 ### drei `ContactShadows` 每次 React 渲染都会重置帧计数（2026-11-09）
 
 - **现象**：`frames={1}` 的接触阴影在人物起身、走动后留在原位。
