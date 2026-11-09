@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {z} from 'zod';
 import {SCENARIOS,scenarioById} from '../../src/data/corpus';
-import {clientKey} from '../../src/lib/rate-limit';
+import {checkRateLimit,clientKey} from '../../src/lib/rate-limit';
 import {validatedJSON} from '../../src/lib/runtime-contracts';
 import {taskInput,TaskInputSchemas} from '../../src/lib/task-input';
 import {KEY_TURN_SCENARIO} from '../../src/lib/key-turn';
@@ -18,14 +18,14 @@ test('the client address comes from the trusted proxy hop, never the client-chos
  assert.equal(clientKey(req({'x-real-ip':'4.4.4.4'}),{}),'4.4.4.4');
 });
 
-test('one voiced practice does not spend the practice allowance',async()=>{
+test('one voiced practice does not spend the practice allowance',()=>{
  process.env.RATE_LIMIT_PER_IP='2';process.env.RATE_LIMIT_SPEECH_PER_IP='5';
- const {checkRateLimit}=await import('../../src/lib/rate-limit?scoped' as string) as typeof import('../../src/lib/rate-limit');
  const visitor=()=>req({'x-forwarded-for':'9.9.9.9'});
  for(let i=0;i<5;i++)checkRateLimit(visitor(),'speech');
  assert.throws(()=>checkRateLimit(visitor(),'speech'),/hour|小时/);
  checkRateLimit(visitor());checkRateLimit(visitor());
  assert.throws(()=>checkRateLimit(req({'x-forwarded-for':'9.9.9.9','accept-language':'en'})),/this hour/,'limits answer in the visitor’s language');
+ delete process.env.RATE_LIMIT_PER_IP;delete process.env.RATE_LIMIT_SPEECH_PER_IP;
 });
 
 test('a contract repair loop never nests parse retries, so schedule stays within six calls',async()=>{

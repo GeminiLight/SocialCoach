@@ -12,20 +12,14 @@ const num = (v: string | undefined, fallback: number) => {
   return Number.isFinite(n) && n >= 0 ? n : fallback;
 };
 
-/** ~3 practice sessions per hour from one address. */
-const PER_IP = num(process.env.RATE_LIMIT_PER_IP, 45);
-/** Best-effort per-instance request ceiling. */
-const GLOBAL_DAILY = num(process.env.RATE_LIMIT_GLOBAL_DAILY, 2000);
-const DISABLED = process.env.RATE_LIMIT_DISABLED === "true";
-/** One request per NPC line: a voiced practice must not spend the practice allowance above. */
-const SPEECH_PER_IP = num(process.env.RATE_LIMIT_SPEECH_PER_IP, 240);
-const SPEECH_GLOBAL_DAILY = num(process.env.RATE_LIMIT_SPEECH_GLOBAL_DAILY, 10000);
+/** Read at call time, so a deployment's settings (and tests) never depend on import order. */
+const limits = (scope: Scope, env = process.env) => scope === "speech"
+  // One request per NPC line: a voiced practice must not spend the practice allowance.
+  ? { perIp: num(env.RATE_LIMIT_SPEECH_PER_IP, 240), daily: num(env.RATE_LIMIT_SPEECH_GLOBAL_DAILY, 10000) }
+  // ~3 practice sessions per hour from one address; a best-effort per-instance daily ceiling.
+  : { perIp: num(env.RATE_LIMIT_PER_IP, 45), daily: num(env.RATE_LIMIT_GLOBAL_DAILY, 2000) };
 
 type Scope = "model" | "speech";
-const limits: Record<Scope, { perIp: number; daily: number }> = {
-  model: { perIp: PER_IP, daily: GLOBAL_DAILY },
-  speech: { perIp: SPEECH_PER_IP, daily: SPEECH_GLOBAL_DAILY },
-};
 const buckets: Record<Scope, { hits: Map<string, number[]>; global: number[] }> = {
   model: { hits: new Map(), global: [] },
   speech: { hits: new Map(), global: [] },
@@ -57,8 +51,8 @@ export function clientKey(req: Request, env: Readonly<Record<string, string | un
  * out we already built: their own key, which does not touch this server at all.
  */
 export function checkRateLimit(req: Request, scope: Scope = "model") {
-  if (DISABLED) return;
-  const now = Date.now(), { perIp, daily } = limits[scope], bucket = buckets[scope];
+  if (process.env.RATE_LIMIT_DISABLED === "true") return;
+  const now = Date.now(), { perIp, daily } = limits(scope), bucket = buckets[scope];
   const en = req.headers.get("accept-language")?.startsWith("en");
 
   bucket.global = prune(bucket.global, DAY, now);
